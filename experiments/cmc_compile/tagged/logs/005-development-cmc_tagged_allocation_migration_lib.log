@@ -1,0 +1,39 @@
+Chars 0 - 73 [Require~Export~SimpleC.EE.QCP_...] 1.462 secs (1.361u,0.096s)
+Chars 74 - 119 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.012u,0.s)
+Chars 120 - 141 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 142 - 167 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 168 - 360 [Lemma~cm_activate_live_old~sp~...] 0. secs (0.u,0.s)
+Chars 361 - 367 [Proof.] 0. secs (0.u,0.s)
+Chars 369 - 438 [(intros~BEFORE~[r~[IN~[LIVE~[L...] 0. secs (0.u,0.s)
+Chars 439 - 460 [(split;~[~exact~LIVE~|~~]).] 0. secs (0.u,0.s)
+Chars 462 - 576 [(pose~proof~~~(cm_activate_loc...] 0. secs (0.u,0.s)
+Chars 577 - 581 [Qed.] 0. secs (0.u,0.s)
+Chars 582 - 999 [Lemma~cm_activate_live_old_or_...] 0. secs (0.u,0.s)
+Chars 1000 - 1006 [Proof.] 0. secs (0.u,0.s)
+Chars 1008 - 1118 [(intros~BEFORE~[r~[IN~[LIVE~[L...] 0. secs (0.u,0.s)
+Chars 1120 - 1121 [-] 0. secs (0.u,0.s)
+Chars 1122 - 1298 [(subst~r;~right;~~~cbn[cm_acti...] 0.002 secs (0.001u,0.s)
+Chars 1300 - 1301 [-] 0. secs (0.u,0.s)
+Chars 1302 - 1359 [(left;~exists~r;~split;~[~exac...] 0. secs (0.u,0.s)
+Chars 1363 - 1486 [(pose~proof~~~(cm_activate_loc...] 0. secs (0.u,0.s)
+Chars 1487 - 1491 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 1492 - 1697 [Lemma~cm_tagged_span_activate_...] 0. secs (0.u,0.s)
+Chars 1698 - 1704 [Proof.] 0. secs (0.u,0.s)
+Chars 1706 - 1805 [(intros~BEFORE~VALID;~eapply~c...] 0. secs (0.u,0.s)
+Chars 1807 - 1808 [-] 0. secs (0.u,0.s)
+Chars 1809 - 1849 [now~apply~cm_activate_live_old...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/tagged/build/Rocq/examples/QCP_demos_human/cmc_tagged_allocation_migration_lib.v", line 22, characters 3-42:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid, slot : Z
+st : cm_src_state
+BEFORE : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+VALID : cm_tagged_span_valid st
+Unable to unify
+ "forall region : cm_region,
+  In region (cm_state_regions ?M2542) ->
+  cm_region_gen region < cm_state_nextgen ?M2542" with 
+"Z".
+

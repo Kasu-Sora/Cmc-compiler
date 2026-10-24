@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-program-context",
+      "location": "cmc_emit_code: before reading program->functions",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "program/emitter @pre bridges; program non-null"
+      ],
+      "resources": [
+        "functions local is uninitialized; full program fields and struct/global/string lists; function-list ownership; emitter plan"
+      ],
+      "mathematical_state": "Expose exactly the stored functions pointer while retaining the whole intended code fragment and all source preconditions.",
+      "internal_predicates": []
+    },
+    {
+      "id": "compose-helper-plans",
+      "location": "cmc_emit_code: after reading functions, before cmc_emit_prelude",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program/emitter @pre bridges; functions = functions_ptr; function PC at zero = 11 derived from prefix-zero semantics"
+      ],
+      "resources": [
+        "restored program context; complete function-list ownership; resolved emitter plan"
+      ],
+      "mathematical_state": "The pending model code splits into prelude followed by all functions from fid zero; immutable source facts remain available to the second call.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

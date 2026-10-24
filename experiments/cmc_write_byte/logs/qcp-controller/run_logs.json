@@ -1,0 +1,20 @@
+{"at": "2026-10-15T07:15:44.146620Z", "details": {"run_id": "cmc_write_byte_migration-20261015151544"}, "event": "run-initialized", "phase": "intake"}
+{"at": "2026-10-15T07:15:49.964367Z", "details": {"actions": ["spawn-cmc_write_byte_migration-annotation-r1-attempt-1"]}, "event": "controller-step", "phase": "annotation"}
+{"at": "2026-10-15T07:15:57.326432Z", "details": {"action": "spawn-cmc_write_byte_migration-annotation-r1-attempt-1", "attempt": "cmc_write_byte_migration-annotation-r1-attempt-1", "owner": "annotation/cmc_write_byte_migration-20261015151544"}, "event": "attempt-claimed", "phase": "annotation"}
+{"at": "2026-10-15T07:20:03.183548Z", "details": {"attempt": "cmc_write_byte_migration-annotation-r1-attempt-1", "owner": "annotation/cmc_write_byte_migration-20261015151544"}, "event": "delivery-finalized", "phase": "annotation"}
+{"at": "2026-10-15T07:20:03.208398Z", "details": {"attempt": "cmc_write_byte_migration-annotation-r1-attempt-1", "errors": [], "status": "ready-for-main-check"}, "event": "round-attempt-validated", "phase": "annotation"}
+{"at": "2026-10-15T07:20:15.701336Z", "details": {"actions": ["annotation-check-cmc_write_byte_migration-annotation-r1"]}, "event": "controller-step", "phase": "annotation"}
+{"at": "2026-10-15T07:20:27.956884Z", "details": {"round": "cmc_write_byte_migration-annotation-r1"}, "event": "annotation-round-accepted", "phase": "annotation"}
+{"at": "2026-10-15T07:20:42.551560Z", "details": {"actions": ["dune-build"]}, "event": "controller-step", "phase": "dune-build"}
+{"at": "2026-10-15T07:20:48.311695Z", "details": {}, "event": "dune-preparation-started", "phase": "dune-build"}
+{"at": "2026-10-15T07:20:55.356553Z", "details": {"dependency_count": 143, "snapshot_digest": "26ff9adb776a28cdb0aeb0b6cde8301c7d4490a3491887ec0ba4252870b505dc"}, "event": "dune-preparation-passed", "phase": "dune-build"}
+{"at": "2026-10-15T07:21:02.964400Z", "details": {"witness_count": 0}, "event": "vc-checking-skipped", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T07:21:02.964403Z", "details": {"actions": ["vc-proving-preparing-cmc_write_byte_migration-vc-proving-r1"]}, "event": "controller-step", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T07:21:09.166589Z", "details": {"group_count": 0, "previous_proving_round": null, "round": "cmc_write_byte_migration-vc-proving-r1"}, "event": "vc-proving-prepared", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T07:21:21.425196Z", "details": {"round": "cmc_write_byte_migration-vc-proving-r1"}, "event": "vc-proving-verified", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T07:21:43.217251Z", "details": {"actions": ["final-candidate-apply"]}, "event": "controller-step", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T07:21:49.068318Z", "details": {"transaction_id": "64bd38c56be242cda65f0471498b3c49"}, "event": "final-apply-transaction-prepared", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T07:21:49.078840Z", "details": {"transaction_id": "64bd38c56be242cda65f0471498b3c49"}, "event": "final-apply-backups-sealed", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T07:21:49.085437Z", "details": {"files": ["Rocq/examples/QCP_demos_human/cmc_write_byte_migration_proof_manual.v", "Rocq/examples/QCP_demos_human/cmc_write_byte_migration_lib.v"]}, "event": "final-candidate-applied", "phase": "final-check"}
+{"at": "2026-10-15T07:21:57.302464Z", "details": {"actions": ["final-check"]}, "event": "controller-step", "phase": "final-check"}
+{"at": "2026-10-15T07:22:19.552347Z", "details": {"failure_classes": []}, "event": "final-check-passed", "phase": "done"}

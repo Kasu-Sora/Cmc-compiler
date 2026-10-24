@@ -1,0 +1,46 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_control_invariant_migration_lib.
+Goal True. idtac "AUDIT cmc_target_control_invariant_migration_lib.cm_code_support_c_target_step". exact I. Qed.
+Check cmc_target_control_invariant_migration_lib.cm_code_support_c_target_step.
+Print Assumptions cmc_target_control_invariant_migration_lib.cm_code_support_c_target_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_control_total_migration_lib.
+Goal True. idtac "AUDIT cmc_target_control_total_migration_lib.cm_target_c_phase_step". exact I. Qed.
+Check cmc_target_control_total_migration_lib.cm_target_c_phase_step.
+Print Assumptions cmc_target_control_total_migration_lib.cm_target_c_phase_step.
+Goal True. idtac "AUDIT cmc_target_control_total_migration_lib.cm_target_c_task_step". exact I. Qed.
+Check cmc_target_control_total_migration_lib.cm_target_c_task_step.
+Print Assumptions cmc_target_control_total_migration_lib.cm_target_c_task_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_return_code_migration_lib.
+Goal True. idtac "AUDIT cmc_target_return_code_migration_lib.cm_tvm_return_epilogue". exact I. Qed.
+Check cmc_target_return_code_migration_lib.cm_tvm_return_epilogue.
+Print Assumptions cmc_target_return_code_migration_lib.cm_tvm_return_epilogue.
+Goal True. idtac "AUDIT cmc_target_return_code_migration_lib.cm_tvm_return_value". exact I. Qed.
+Check cmc_target_return_code_migration_lib.cm_tvm_return_value.
+Print Assumptions cmc_target_return_code_migration_lib.cm_tvm_return_value.
+Goal True. idtac "AUDIT cmc_target_return_code_migration_lib.cm_tvm_return_zero". exact I. Qed.
+Check cmc_target_return_code_migration_lib.cm_tvm_return_zero.
+Print Assumptions cmc_target_return_code_migration_lib.cm_tvm_return_zero.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_return_dispatch_migration_lib.
+Goal True. idtac "AUDIT cmc_target_return_dispatch_migration_lib.cm_target_c_call_step". exact I. Qed.
+Check cmc_target_return_dispatch_migration_lib.cm_target_c_call_step.
+Print Assumptions cmc_target_return_dispatch_migration_lib.cm_target_c_call_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_return_fallthrough_migration_lib.
+Goal True. idtac "AUDIT cmc_target_return_fallthrough_migration_lib.cm_target_c_fallthrough_step". exact I. Qed.
+Check cmc_target_return_fallthrough_migration_lib.cm_target_c_fallthrough_step.
+Print Assumptions cmc_target_return_fallthrough_migration_lib.cm_target_c_fallthrough_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_return_memory_migration_lib.
+Goal True. idtac "AUDIT cmc_target_return_memory_migration_lib.cm_runtime_fp_slot_disjoint". exact I. Qed.
+Check cmc_target_return_memory_migration_lib.cm_runtime_fp_slot_disjoint.
+Print Assumptions cmc_target_return_memory_migration_lib.cm_runtime_fp_slot_disjoint.
+Goal True. idtac "AUDIT cmc_target_return_memory_migration_lib.cm_machine_restore_call_return". exact I. Qed.
+Check cmc_target_return_memory_migration_lib.cm_machine_restore_call_return.
+Print Assumptions cmc_target_return_memory_migration_lib.cm_machine_restore_call_return.
+Goal True. idtac "AUDIT cmc_target_return_memory_migration_lib.cm_runtime_return_slot_safe". exact I. Qed.
+Check cmc_target_return_memory_migration_lib.cm_runtime_return_slot_safe.
+Print Assumptions cmc_target_return_memory_migration_lib.cm_runtime_return_slot_safe.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_return_value_migration_lib.
+Goal True. idtac "AUDIT cmc_target_return_value_migration_lib.cm_restore_convert_number". exact I. Qed.
+Check cmc_target_return_value_migration_lib.cm_restore_convert_number.
+Print Assumptions cmc_target_return_value_migration_lib.cm_restore_convert_number.
+Goal True. idtac "AUDIT cmc_target_return_value_migration_lib.cm_target_c_return_step". exact I. Qed.
+Check cmc_target_return_value_migration_lib.cm_target_c_return_step.
+Print Assumptions cmc_target_return_value_migration_lib.cm_target_c_return_step.

@@ -1,0 +1,138 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "point-1",
+      "location": "cm_emit_raw: entry before parallel array writes",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "Emitter prefix lengths give the same next index; owned capacity field supplies int upper bound."
+      ],
+      "resources": [
+        "Owned emitter/output fields; int/int64 written prefixes and undef suffixes."
+      ],
+      "mathematical_state": "Opening the representation exposes exactly the next uninitialized instruction slot.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-2",
+      "location": "cm_emit: before cm_emit_raw",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Encoded opcode equality; plan length gives strict capacity margin."
+      ],
+      "resources": [
+        "cm_emitter_rep with projections of done."
+      ],
+      "mathematical_state": "A planned instruction is represented by one opcode/immediate pair.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-3",
+      "location": "cm_emit_normalize: char branch before first cm_emit",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "ty encoded equality and wf distinguish char from all other types."
+      ],
+      "resources": [
+        "Emitter plan over the six-instruction normalization fragment."
+      ],
+      "mathematical_state": "The emitted suffix implements char normalization; nonchar fragment is empty.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-4",
+      "location": "cm_emit_load: each branch before cm_emit",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Encoded char test chooses byte versus word opcode."
+      ],
+      "resources": [
+        "Emitter plan over one load instruction."
+      ],
+      "mathematical_state": "Transfer exactly the selected load instruction from todo to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-5",
+      "location": "cm_emit_store: each branch before cm_emit",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Encoded char test chooses byte versus word opcode."
+      ],
+      "resources": [
+        "Emitter plan over one store instruction."
+      ],
+      "mathematical_state": "Transfer exactly the selected store instruction from todo to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-6",
+      "location": "cm_emit_fp_address: before first cm_emit",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Offset stays equal to its entry value."
+      ],
+      "resources": [
+        "Emitter plan over four frame-relative-address instructions."
+      ],
+      "mathematical_state": "Transfer the precise PUSH 8, LOAD, PUSH offset, ADD fragment.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-7",
+      "location": "cm_emit_temp_store: before cmc_temp_offset",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "All original pure facts retained; representation-size and semantic-size bridge gives helper upper bound."
+      ],
+      "resources": [
+        "Function fields and parameter/local slot lists; emitter plan."
+      ],
+      "mathematical_state": "The concrete helper offset equals the semantic frame temporary offset.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-8",
+      "location": "cm_emit_temp_store: after cmc_temp_offset before cm_emit_fp_address",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Returned offset equals cm_temp_offset under the same total lookup policy."
+      ],
+      "resources": [
+        "Reclosed function context; emitter plan with explicit fp-address fragment and STORE tail."
+      ],
+      "mathematical_state": "Compose temporary-address emission with its trailing store.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-9",
+      "location": "cm_emit_temp_load: before cmc_temp_offset",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "All original pure facts retained; representation-size and semantic-size bridge gives helper upper bound."
+      ],
+      "resources": [
+        "Function fields and parameter/local slot lists; emitter plan."
+      ],
+      "mathematical_state": "The concrete helper offset equals the semantic frame temporary offset.",
+      "internal_predicates": []
+    },
+    {
+      "id": "point-10",
+      "location": "cm_emit_temp_load: after cmc_temp_offset before cm_emit_fp_address",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Returned offset equals cm_temp_offset under the same total lookup policy."
+      ],
+      "resources": [
+        "Reclosed function context; emitter plan with explicit fp-address fragment and LOAD tail."
+      ],
+      "mathematical_state": "Compose temporary-address emission with its trailing load.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

@@ -1,0 +1,234 @@
+{
+  "groups": [
+    {
+      "id": "store_bounds",
+      "estimated_difficulty": 5,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_args_store_plan_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_1": "Use the cons equality to expand one store step. By cm_emit_pair_lengths__store_bounds the head-code length is head_count; temp-store code has length 5. Zlength_app gives total length=head_count+5+tail-code length. Both list lengths are nonnegative and cm_i32_code_count pc plus the whole endpoint bound are supplied. The recursive endpoint equals the whole endpoint exactly; unfold cm_i32_code_count and finish by arithmetic.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_2": "Use the cons equality to expand one store step. By cm_emit_pair_lengths__store_bounds the head-code length is head_count; temp-store code has length 5. Zlength_app gives total length=head_count+5+tail-code length. Both list lengths are nonnegative and cm_i32_code_count pc plus the whole endpoint bound are supplied. Bound pc+head_count+5 between pc and the whole endpoint; unfold cm_i32_code_count and finish by arithmetic.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_3": "Use the cons equality to expand one store step. By cm_emit_pair_lengths__store_bounds the head-code length is head_count; temp-store code has length 5. Zlength_app gives total length=head_count+5+tail-code length. Both list lengths are nonnegative and cm_i32_code_count pc plus the whole endpoint bound are supplied. Drop the nonnegative tail-code length from the whole endpoint upper bound.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_4": "Use the cons equality to expand one store step. By cm_emit_pair_lengths__store_bounds the head-code length is head_count; temp-store code has length 5. Zlength_app gives total length=head_count+5+tail-code length. Both list lengths are nonnegative and cm_i32_code_count pc plus the whole endpoint bound are supplied. The head count is a list length, so pc>=0 gives the required lower bound.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_5": "Use the cons equality to expand one store step. By cm_emit_pair_lengths__store_bounds the head-code length is head_count; temp-store code has length 5. Zlength_app gives total length=head_count+5+tail-code length. Both list lengths are nonnegative and cm_i32_code_count pc plus the whole endpoint bound are supplied. Drop 5 and the nonnegative tail-code length from the whole endpoint upper bound.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_6": "Use the cons equality to expand one store step. By cm_emit_pair_lengths__store_bounds the head-code length is head_count; temp-store code has length 5. Zlength_app gives total length=head_count+5+tail-code length. Both list lengths are nonnegative and cm_i32_code_count pc plus the whole endpoint bound are supplied. The head count is a list length; combine its nonnegativity with pc>=0.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_7": "Expand one store step and Zlength_app. The head expression code is a prefix of the total store code, with a five-instruction store and nonnegative tail length. Use pc>=0 and the total endpoint bound to prove both inequalities in cm_i32_code_count.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_8": "The cons length equality and slot+Zlength args=scratch<=temp_limit give slot<=temp_limit. Unfold the affine cm_temp_offset definition; the common frame-size constant cancels and arithmetic transfers its upper bound.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_9": "Rewrite args=head::tail in cm_args_apair. Its depth is cm_imax(head rtemps, tail depth); use the right maximum inequality with the supplied scratch+depth bound.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_10": "Reduce cm_expr_temps_for(head,0) to head rtemps. The cons cm_args_apair depth is cm_imax(head rtemps,tail depth), so the left maximum inequality yields the requested scratch bound.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_11": "Rewrite Zlength args=1+Zlength tail from the cons equality and use slot+Zlength args=scratch.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_5_split_goal_12": "The cons length equality, nonnegative tail length and scratch<=temp_limit<=INT_MAX imply slot+1<=INT_MAX."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_emit_pair_lengths__store_bounds",
+          "visibility": "public",
+          "strategy": "Prove forall policy p fid e pc temp, Zlength(cm_lcode_of(cm_emit_expr_pair policy p fid pc temp e))=cm_lvalue_code_count policy p fid e /\\ Zlength(cm_rcode_of(cm_emit_expr_pair policy p fid pc temp e))=cm_rvalue_code_count policy p fid e, with no wellformedness premise. Use structural recursion on e carrying both equalities and generalized pc/temp; split the matching boolean branches, reduce primitive code lengths and Zlength_app. In CMCallE use an inner induction on args for the local store fixpoint and cm_args_reload_length; child IHs must permit shifted pc and scratch. This is a mathematical code-model theorem, not an implementation proof of external cm_emit_expr. Its rvalue projection supplies the head_count/length bridge in store-bound splits 1-6."
+        }
+      ]
+    },
+    {
+      "id": "call_bounds",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_call_expr_which_implies_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_1": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. Rewrite cm_expr_tpair_call, cm_expr_temps_for and cm_args_temps; cm_args_apair_count_depth__call_bounds replaces acount by Zlength. The supplied temp+temps<=temp_limit is exactly this goal after arithmetic reassociation.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_2": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. Derive temp+Zlength args<=temp_limit from the call temporary-depth bound and nonnegative depth. Derive temp_limit<=INT_MAX from affine cm_temp_offset, f lookup and nonnegative parameter/local slot sizes using cm_slots_size_nonnegative__call_bounds; combine the bounds.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_3": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. The call temporary budget is Zlength args+depth by cm_expr_tpair_call and cm_args_apair_count_depth__call_bounds; drop the nonnegative depth from its bound.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_4": "Combine the given temp>=0 with Zlength_nonneg; no heap resource or constructor reasoning is needed.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_5": "Use f=cm_function_at and both supplied cm_slots_wf facts with cm_slots_size_nonnegative__call_bounds. Unfold cm_temp_offset=8+params_size+locals_size+8*temp_limit; temp_limit>=0 follows from 0<=temp<=temp_limit. Arithmetic with the offset upper bound yields temp_limit<=INT_MAX.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_6": "Unfold cm_rep_args_length; the equality to Zlength is definitional.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_7": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. The call temporary budget and nonnegative depth imply Zlength args<=temp_limit. Obtain temp_limit<=INT_MAX from the slot-size/offset argument and apply cm_rep_args_safe_of_length__call_bounds to the resulting length bound.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_8": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. Unfold one cm_expr_counts_representable call layer. Its nested list-safe fixpoint is definitionally cm_args_counts_representable; project that conjunct.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_9": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. Unfold the call branch of cm_expr_wf. Its nested argument/parameter typing fixpoint is definitionally cm_args_wf; project the conjunct with the callee function parameters.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_10": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. Unfold one cm_expr_counts_representable call layer and cm_i32_code_count; project the callee upper bound.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_2_split_goal_11": "Use kind=8 to expose CMCallE and substitute lvalue_pre=0. Unfold one cm_expr_counts_representable call layer and cm_i32_code_count; project the callee nonnegative bound."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_args_apair_count_depth__call_bounds",
+          "visibility": "public",
+          "strategy": "Prove forall args, cm_acount(cm_args_apair args)=Zlength args /\\ 0<=cm_adepth(cm_args_apair args). Induct on args, use Zlength_cons and that cm_imax dominates its second operand; no assumptions on expressions are needed. Used to convert call temporary budget to scratch and argument-length bounds."
+        },
+        {
+          "name": "cm_slots_size_nonnegative__call_bounds",
+          "visibility": "public",
+          "strategy": "Prove forall structs slots, cm_slots_wf structs slots -> 0<=cm_slots_size structs slots. Induct on slots; obtain head positivity from index 0 and tail wellformedness by shifting a valid tail index to index+1, using cm_slot_at list lookup equations. Sum nonnegative sizes. Both parameter and local instances are explicitly supplied by the call-bound VC."
+        },
+        {
+          "name": "cm_rep_args_safe_of_length__call_bounds",
+          "visibility": "public",
+          "strategy": "Prove forall args, Zlength args<=2147483647 -> cm_rep_args_safe args. Induct on args; each cons has nonnegative tail length and tail length strictly below 2147483647 by Zlength_cons, and the induction hypothesis applies to the tail. cm_rep_args_length is Zlength. Used after deriving argument-length bound from temporary budget."
+        }
+      ]
+    },
+    {
+      "id": "reload_equations",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_reload_plan_return_wit_1_split_goal_spatial": "Substitute args=nil; reduce the corresponding cm_emit_args_reload to nil, rewrite done++nil=done and nil++tail=tail, then cancel the unchanged list, context and emitter-plan resources in their new order."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_reload_plan_return_wit_2_split_goal_spatial": "Use args=head::tail to unfold one reload step, then reassociate (done++load)++reload_tail to done++(load++reload_tail). Cancel cm_arg_list_rep, cm_function_context_rep and the now-identical emitter-plan assertion."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_reload_plan_which_implies_wit_3_split_goal_1": "From args=head::tail and Zlength_nonneg obtain slot<=temp_limit; unfold cm_temp_offset at slot and temp_limit, cancel the identical frame-size constant and use its affine coefficient 8 with the given upper bound.",
+            "proof_of_cm_emit_args_reload_plan_which_implies_wit_3_split_goal_2": "Rewrite Zlength args=1+Zlength(cm_args_tail args) using the cons equality; the required slot+1+tail-length bound is the original slot+length bound by arithmetic.",
+            "proof_of_cm_emit_args_reload_plan_which_implies_wit_3_split_goal_3": "Use the cons length equality and nonnegative tail length to derive slot+1<=temp_limit, then apply temp_limit<=INT_MAX."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_reload_plan_which_implies_wit_4_split_goal_spatial": "Rewrite args=head::tail only at the outer reload occurrence, reduce the reload equation and reassociate append. The same emitter, out, capacity, done and pending code remain; close by reflexive entailment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "reload_representation",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the original whole-goal disjunct. Substitute arg_pre=0 and destruct args; the nil case retains cm_arg_list_rep and proves the pure equality, while the cons case exposes the contradictory nonzero pointer fact from cm_arg_list_rep. Keep the heap premise throughout."
+        },
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose a whole-goal disjunct and destruct args. Nil contradicts arg<>0 through cm_arg_list_rep; cons unfolds one list cell. Extract its existing expression and next pointers, use them as ep and np, reduce cm_args_head/tail, and cancel the same two fields, expression representation and tail representation."
+        },
+        {
+          "name": "proof_of_cm_emit_args_reload_plan_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_reload_plan_which_implies_wit_5_split_goal_spatial": "Use the given args=head::tail equality to expose exactly one cm_arg_list_rep cell. Instantiate its pointers with ep and np, discharge arg<>0 from the premise, and cancel the two field cells, head expression representation and tail list representation; no new resource is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "store_representation",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_args_store_plan_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the original whole-goal disjunct. Substitute arg_pre=0 and destruct args; the nil case retains cm_arg_list_rep and proves the pure equality, while the cons case exposes the contradictory nonzero pointer fact from cm_arg_list_rep. Keep the heap premise throughout."
+        },
+        {
+          "name": "proof_of_cm_emit_args_store_plan_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose a whole-goal disjunct and destruct args. Nil contradicts arg<>0 through cm_arg_list_rep; cons unfolds one list cell. Extract its existing expression and next pointers, use them as ep and np, reduce cm_args_head/tail, and cancel the same two fields, expression representation and tail representation."
+        },
+        {
+          "name": "proof_of_cm_emit_args_store_plan_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_3_split_goal_1": "Rewrite args=head::tail in cm_args_counts_representable, unfold one recursive layer and project tail representability; the goal is pure.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_3_split_goal_2": "Destruct args and slots. The given cons equality excludes nil args; cm_args_wf excludes nil slots. Unfold one cm_args_wf layer, project the recursive tail conjunct and reduce cm_call_slots_tail.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_3_split_goal_3": "Rewrite args=head::tail in cm_args_counts_representable and project the head cm_expr_counts_representable conjunct.",
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_3_split_goal_4": "Destruct args and slots as for the tail-wellformedness target; cm_args_wf of nonempty matched lists directly supplies the head cm_expr_wf conjunct."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_args_store_plan_which_implies_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_6_split_goal_spatial": "Use the given args=head::tail equality to expose exactly one cm_arg_list_rep cell. Instantiate its pointers with ep and np, discharge arg<>0 from the premise, and cancel the two field cells, head expression representation and tail list representation; no new resource is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "store_equations",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_args_store_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_store_plan_return_wit_1_split_goal_spatial": "Substitute args=nil; reduce the corresponding cm_emit_args_store to nil, rewrite done++nil=done and nil++tail=tail, then cancel the unchanged list, context and emitter-plan resources in their new order."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_args_store_plan_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_store_plan_return_wit_2_split_goal_spatial": "Expand the outer store equation using args=head::tail. The antecedent already uses the same head rvalue count in the recursive pc. Reassociate the three accumulated code fragments with done and cancel program/function/list/emitter-plan resources."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_args_store_plan_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_args_store_plan_which_implies_wit_4_split_goal_spatial": "Rewrite the outer store equation with args=head::tail, replace head_count by its given cm_rvalue_code_count equality, and reassociate app. All arguments of cm_resolved_emitter_plan_rep then match, so use reflexive entailment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "call_equations",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_call_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_expr_return_wit_1_split_goal_spatial": "Use kind=8 and lvalue_pre=0, then cm_call_code_equation to expose store++reload++[call]. Reassociate done and the three emitted fragments; cancel the unchanged program context, function context and expression representation and the equal emitter-plan assertion."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_call_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_expr_return_wit_2_split_goal_spatial": "Use kind=8 to expose the call constructor and cm_call_lvalue_empty with lvalue_pre<>0. Rewrite the empty generated code and append identities; all four spatial resources cancel unchanged."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_call_expr_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the original whole-goal disjunct. Use cm_rep_expr_kind e=8 to eliminate every constructor except CMCallE (or cm_call_source_coverage), then unfold cm_expr_rep_node and its call payload. Extract a,b,xargs, substitute the payload facts a=b=0, retain expr<>0, instantiate xargs with the stored args pointer, and cancel all seven field cells plus cm_arg_list_rep."
+        },
+        {
+          "name": "proof_of_cm_emit_call_expr_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_expr_which_implies_wit_3_split_goal_1": "Use kind=8, lvalue_pre=0 and count=Zlength args with cm_call_code_equation. Zlength_app shows the store list is a prefix of the full call code, with nonnegative reload length and one call instruction. The given pc and full endpoint bounds prove the store endpoint lies in i32; lift the pure fact to the entailment.",
+            "proof_of_cm_emit_call_expr_which_implies_wit_3_split_goal_spatial": "Use kind=8, lvalue_pre=0 and count=Zlength args with cm_call_code_equation; reassociate append, reducing singleton-call++tail to call::tail. The emitter plan has identical arguments after rewriting; close by reflexive entailment."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_call_expr_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_expr_which_implies_wit_4_split_goal_spatial": "Use kind=8 to reduce e to CMCallE, unfold cm_expr_rep_node and the call payload, and instantiate its a,b,args pointers with 0,0,xargs. The nonnull premise and supplied seven field cells establish the node; the list resource establishes its payload. Cancel exactly these resources."
+          }
+        }
+      ]
+    }
+  ]
+}

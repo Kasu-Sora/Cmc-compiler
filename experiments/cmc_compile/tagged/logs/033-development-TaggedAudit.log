@@ -1,0 +1,837 @@
+Chars 0 - 78 [Require~Import~SimpleC.EE.QCP_...] 1.456 secs (1.195u,0.106s)
+Chars 79 - 89 [Goal~True.] 0.001 secs (0.u,0.s)
+AUDIT cmc_tagged_allocation_migration_lib.cm_activate_live_old
+Chars 90 - 161 [idtac~"AUDIT~cmc_tagged_alloca...] 0. secs (0.u,0.s)
+Chars 162 - 170 [exact~I.] 0. secs (0.u,0.s)
+Chars 171 - 175 [Qed.] 0. secs (0.u,0.s)
+cm_activate_live_old
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid slot : BinNums.Z) (st : cm_src_state) 
+         (a : BinNums.Z),
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_live_address st a ->
+       cm_live_address (cm_activate_local sp p fid slot st) a
+Chars 176 - 239 [Check~cmc_tagged_allocation_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 240 - 315 [Print~Assumptions~cmc_tagged_a...] 0.121 secs (0.115u,0.003s)
+Chars 316 - 326 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_allocation_migration_lib.cm_activate_live_old_or_local
+Chars 327 - 407 [idtac~~"AUDIT~cmc_tagged_alloc...] 0. secs (0.u,0.s)
+Chars 408 - 416 [exact~I.] 0. secs (0.u,0.s)
+Chars 417 - 421 [Qed.] 0. secs (0.u,0.s)
+cm_activate_live_old_or_local
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid slot : BinNums.Z) (st : cm_src_state) 
+         (a : BinNums.Z),
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_live_address (cm_activate_local sp p fid slot st) a ->
+       cm_live_address st a \/
+       BinInt.Z.le (cm_local_base sp p fid slot (cm_state_fp st)) a /\
+       BinInt.Z.lt a
+         (BinInt.Z.add (cm_local_base sp p fid slot (cm_state_fp st))
+            (cm_slot_size (cm_program_structs p)
+               (cm_source_slot_at sp slot
+                  (cm_function_locals (cm_source_function_at sp fid p)))))
+Chars 422 - 494 [Check~cmc_tagged_allocation_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 495 - 579 [Print~Assumptions~cmc_tagged_a...] 0.083 secs (0.083u,0.s)
+Chars 580 - 590 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_allocation_migration_lib.cm_tagged_span_activate_local
+Chars 591 - 671 [idtac~~"AUDIT~cmc_tagged_alloc...] 0. secs (0.u,0.s)
+Chars 672 - 680 [exact~I.] 0. secs (0.u,0.s)
+Chars 681 - 685 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_activate_local
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid slot : BinNums.Z) (st : cm_src_state),
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_tagged_span_valid st ->
+       cm_tagged_span_valid (cm_activate_local sp p fid slot st)
+Chars 686 - 758 [Check~cmc_tagged_allocation_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 759 - 843 [Print~Assumptions~cmc_tagged_a...] 0.15 secs (0.141u,0.003s)
+Chars 844 - 916 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 917 - 927 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_call_migration_lib.cm_slots_prefix_zero
+Chars 928 - 993 [idtac~"AUDIT~cmc_tagged_call_m...] 0. secs (0.u,0.s)
+Chars 994 - 1002 [exact~I.] 0. secs (0.u,0.s)
+Chars 1003 - 1007 [Qed.] 0. secs (0.u,0.s)
+cm_slots_prefix_zero
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d),
+       cm_slots_prefix structs slots BinNums.Z0 = BinNums.Z0
+Chars 1008 - 1065 [Check~cmc_tagged_call_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1066 - 1135 [Print~Assumptions~cmc_tagged_c...] 0. secs (0.u,0.s)
+Chars 1136 - 1146 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_call_migration_lib.cm_tagged_span_enter_call
+Chars 1147 - 1217 [idtac~"AUDIT~cmc_tagged_call_m...] 0. secs (0.u,0.s)
+Chars 1218 - 1226 [exact~I.] 0. secs (0.u,0.s)
+Chars 1227 - 1231 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_enter_call
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (st : cm_src_state),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_call_ok sp p fid values st = true ->
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_tagged_span_valid st ->
+       cm_tagged_span_valid (cm_enter_call sp p fid values st)
+Chars 1232 - 1294 [Check~cmc_tagged_call_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1295 - 1369 [Print~Assumptions~cmc_tagged_c...] 0.096 secs (0.093u,0.s)
+Chars 1370 - 1447 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 1448 - 1458 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_invariant_migration_lib.cm_task_tagged_step_support
+Chars 1459 - 1536 [idtac~"AUDIT~cmc_tagged_invari...] 0. secs (0.u,0.s)
+Chars 1537 - 1545 [exact~I.] 0. secs (0.u,0.s)
+Chars 1546 - 1550 [Qed.] 0. secs (0.u,0.s)
+cm_task_tagged_step_support
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (task : cm_task) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_annotation_erases task ann ->
+       cm_task_runtime_invariant (cm_source_function_policy sp) ap p task ann ->
+       cm_task_tagged_valid task -> cm_task_tagged_valid (cm_step sp task)
+Chars 1551 - 1620 [Check~cmc_tagged_invariant_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1621 - 1702 [Print~Assumptions~cmc_tagged_i...] 0.321 secs (0.32u,0.001s)
+Chars 1703 - 1713 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_invariant_migration_lib.cm_tagged_support_initial
+Chars 1714 - 1789 [idtac~"AUDIT~cmc_tagged_invari...] 0. secs (0.u,0.s)
+Chars 1790 - 1798 [exact~I.] 0. secs (0.u,0.s)
+Chars 1799 - 1803 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_support_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_tagged_support_invariants sp ap p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Chars 1804 - 1871 [Check~cmc_tagged_invariant_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1872 - 1951 [Print~Assumptions~cmc_tagged_i...] 0.004 secs (0.003u,0.s)
+Chars 1952 - 1962 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_invariant_migration_lib.cm_tagged_support_step
+Chars 1963 - 2035 [idtac~"AUDIT~cmc_tagged_invari...] 0. secs (0.u,0.s)
+Chars 2036 - 2044 [exact~I.] 0. secs (0.u,0.s)
+Chars 2045 - 2049 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_support_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_tagged_support_invariants sp ap p ast ->
+       cm_tagged_support_invariants sp ap p (cm_annotated_step sp ap ast)
+Chars 2050 - 2114 [Check~cmc_tagged_invariant_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2115 - 2191 [Print~Assumptions~cmc_tagged_i...] 6.165 secs (6.142u,0.017s)
+Chars 2192 - 2202 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_invariant_migration_lib.cm_tagged_support_iter
+Chars 2203 - 2275 [idtac~"AUDIT~cmc_tagged_invari...] 0. secs (0.u,0.s)
+Chars 2276 - 2284 [exact~I.] 0. secs (0.u,0.s)
+Chars 2285 - 2289 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_support_iter
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (n : nat) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_tagged_support_invariants sp ap p ast ->
+       cm_tagged_support_invariants sp ap p (cm_annotated_iter sp ap n ast)
+Chars 2290 - 2354 [Check~cmc_tagged_invariant_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2355 - 2431 [Print~Assumptions~cmc_tagged_i...] 5.647 secs (5.628u,0.013s)
+Chars 2432 - 2442 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_invariants
+Chars 2443 - 2532 [idtac~~"AUDIT~cmc_tagged_invar...] 0. secs (0.u,0.s)
+Chars 2533 - 2541 [exact~I.] 0. secs (0.u,0.s)
+Chars 2542 - 2546 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_tagged_invariants
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_tagged_support_invariants sp ap p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Chars 2547 - 2628 [Check~~~cmc_tagged_invariant_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2629 - 2722 [Print~Assumptions~cmc_tagged_i...] 5.728 secs (5.716u,0.01s)
+Chars 2723 - 2733 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_valid
+Chars 2734 - 2818 [idtac~~"AUDIT~cmc_tagged_invar...] 0. secs (0.u,0.s)
+Chars 2819 - 2827 [exact~I.] 0. secs (0.u,0.s)
+Chars 2828 - 2832 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_tagged_valid
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_task_tagged_valid
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Chars 2833 - 2909 [Check~cmc_tagged_invariant_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2910 - 2998 [Print~Assumptions~cmc_tagged_i...] 5.669 secs (5.649u,0.016s)
+Chars 2999 - 3081 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 3082 - 3092 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member_nat
+Chars 3093 - 3179 [idtac~~"AUDIT~cmc_tagged_param...] 0. secs (0.u,0.s)
+Chars 3180 - 3188 [exact~I.] 0. secs (0.u,0.s)
+Chars 3189 - 3193 [Qed.] 0. secs (0.u,0.s)
+cm_regions_for_slots_member_nat
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d)
+         (gen base : BinNums.Z) (i : nat),
+       i < length slots ->
+       List.In
+         (CMRegion (BinInt.Z.add gen (BinInt.Z.of_nat i))
+            (BinInt.Z.add base
+               (cm_slots_prefix structs slots (BinInt.Z.of_nat i)))
+            BinNums.Z0
+            (cm_slot_size structs (List.nth i slots cm_default_slot)) true
+            true) (cm_regions_for_slots structs slots gen base)
+Chars 3194 - 3272 [Check~cmc_tagged_param_geometr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3273 - 3363 [Print~Assumptions~cmc_tagged_p...] 0.091 secs (0.091u,0.s)
+Chars 3364 - 3374 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member
+Chars 3375 - 3457 [idtac~~"AUDIT~cmc_tagged_param...] 0. secs (0.u,0.s)
+Chars 3458 - 3466 [exact~I.] 0. secs (0.u,0.s)
+Chars 3467 - 3471 [Qed.] 0. secs (0.u,0.s)
+cm_regions_for_slots_member
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d)
+         (gen base i : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 i /\ BinInt.Z.lt i (Zcomplements.Zlength slots) ->
+       List.In
+         (CMRegion (BinInt.Z.add gen i)
+            (BinInt.Z.add base (cm_slots_prefix structs slots i)) BinNums.Z0
+            (cm_slot_size structs (cm_slot_at i slots)) true true)
+         (cm_regions_for_slots structs slots gen base)
+Chars 3472 - 3546 [Check~cmc_tagged_param_geometr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3547 - 3633 [Print~Assumptions~cmc_tagged_p...] 0.086 secs (0.086u,0.s)
+Chars 3634 - 3644 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_geometry_migration_lib.cm_param_slot_store_width
+Chars 3645 - 3725 [idtac~~"AUDIT~cmc_tagged_param...] 0. secs (0.u,0.s)
+Chars 3726 - 3734 [exact~I.] 0. secs (0.u,0.s)
+Chars 3735 - 3739 [Qed.] 0. secs (0.u,0.s)
+cm_param_slot_store_width
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d)
+         (i : BinNums.Z),
+       cm_params_wf structs slots ->
+       BinInt.Z.le BinNums.Z0 i /\ BinInt.Z.lt i (Zcomplements.Zlength slots) ->
+       cm_slot_size structs (cm_slot_at i slots) =
+       cm_store_width (cm_slot_ty (cm_slot_at i slots))
+Chars 3740 - 3812 [Check~cmc_tagged_param_geometr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3813 - 3897 [Print~Assumptions~cmc_tagged_p...] 0. secs (0.u,0.s)
+Chars 3898 - 3908 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_geometry_migration_lib.cm_call_param_geometry
+Chars 3909 - 3986 [idtac~"AUDIT~cmc_tagged_param_...] 0. secs (0.u,0.s)
+Chars 3987 - 3995 [exact~I.] 0. secs (0.u,0.s)
+Chars 3996 - 4000 [Qed.] 0. secs (0.u,0.s)
+cm_call_param_geometry
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (st : cm_src_state) (j : BinNums.Z),
+       cm_function_wf (cm_source_function_policy sp) p
+         (cm_source_function_at sp fid p) ->
+       cm_frame_segment (cm_source_function_policy sp) p fid
+         (BinInt.Z.sub (cm_state_fp st)
+            (cm_frame_size (cm_program_structs p)
+               (cm_source_function_at sp fid p))) 
+         (cm_state_fp st) ->
+       BinInt.Z.le BinNums.Z0 j /\
+       BinInt.Z.lt j
+         (Zcomplements.Zlength
+            (cm_function_params (cm_source_function_at sp fid p))) ->
+       cm_value_number (cm_call_base_state sp p fid st)
+         (cm_state_env (cm_call_base_state sp p fid st)
+            (BinNums.Zpos (BinNums.xO BinNums.xH)) j) =
+       cm_param_base sp p fid j
+         (BinInt.Z.sub (cm_state_fp st)
+            (cm_frame_size (cm_program_structs p)
+               (cm_source_function_at sp fid p))) /\
+       BinInt.Z.add
+         (cm_param_base sp p fid j
+            (BinInt.Z.sub (cm_state_fp st)
+               (cm_frame_size (cm_program_structs p)
+                  (cm_source_function_at sp fid p))))
+         (cm_store_width
+            (cm_slot_ty
+               (cm_source_slot_at sp j
+                  (cm_function_params (cm_source_function_at sp fid p))))) =
+       cm_param_base sp p fid (BinInt.Z.add j (BinNums.Zpos BinNums.xH))
+         (BinInt.Z.sub (cm_state_fp st)
+            (cm_frame_size (cm_program_structs p)
+               (cm_source_function_at sp fid p))) /\
+       (cm_is_pointerb
+          (cm_slot_ty
+             (cm_source_slot_at sp j
+                (cm_function_params (cm_source_function_at sp fid p)))) =
+        true ->
+        cm_live_span (cm_call_base_state sp p fid st)
+          (cm_param_base sp p fid j
+             (BinInt.Z.sub (cm_state_fp st)
+                (cm_frame_size (cm_program_structs p)
+                   (cm_source_function_at sp fid p))))
+          (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+Chars 4001 - 4070 [Check~cmc_tagged_param_geometr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4071 - 4152 [Print~Assumptions~cmc_tagged_p...] 0.093 secs (0.092u,0.s)
+Chars 4153 - 4236 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 4237 - 4247 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_iteration_migration_lib.cm_store_params_tagged_except
+Chars 4248 - 4333 [idtac~~"AUDIT~cmc_tagged_param...] 0. secs (0.u,0.s)
+Chars 4334 - 4342 [exact~I.] 0. secs (0.u,0.s)
+Chars 4343 - 4347 [Qed.] 0. secs (0.u,0.s)
+cm_store_params_tagged_except
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (index : BinNums.Z) (st : cm_src_state)
+         (address : BinNums.Z -> BinNums.Z) (finish : BinNums.Z),
+       (forall j : BinNums.Z,
+        BinInt.Z.le index j /\
+        BinInt.Z.lt j (BinInt.Z.add index (Zcomplements.Zlength values)) ->
+        cm_value_number st
+          (cm_state_env st (BinNums.Zpos (BinNums.xO BinNums.xH)) j) =
+        address j /\
+        BinInt.Z.add (address j)
+          (cm_store_width
+             (cm_slot_ty
+                (cm_source_slot_at sp j
+                   (cm_function_params (cm_source_function_at sp fid p))))) =
+        address (BinInt.Z.add j (BinNums.Zpos BinNums.xH)) /\
+        (cm_is_pointerb
+           (cm_slot_ty
+              (cm_source_slot_at sp j
+                 (cm_function_params (cm_source_function_at sp fid p)))) =
+         true ->
+         cm_live_span st (address j)
+           (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))) ->
+       cm_tagged_span_except st (address index) finish ->
+       cm_tagged_span_except (cm_store_params sp p fid values index st)
+         (address (BinInt.Z.add index (Zcomplements.Zlength values))) finish
+Chars 4348 - 4425 [Check~cmc_tagged_param_iterati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4426 - 4515 [Print~Assumptions~cmc_tagged_p...] 0.087 secs (0.087u,0.s)
+Chars 4516 - 4526 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor_nat
+Chars 4527 - 4612 [idtac~~"AUDIT~cmc_tagged_param...] 0. secs (0.u,0.s)
+Chars 4613 - 4621 [exact~I.] 0. secs (0.u,0.s)
+Chars 4622 - 4626 [Qed.] 0. secs (0.u,0.s)
+cm_slots_prefix_successor_nat
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d) (i : nat),
+       i < length slots ->
+       cm_slots_prefix structs slots (BinInt.Z.of_nat (S i)) =
+       BinInt.Z.add (cm_slots_prefix structs slots (BinInt.Z.of_nat i))
+         (cm_slot_size structs (List.nth i slots cm_default_slot))
+Chars 4627 - 4704 [Check~cmc_tagged_param_iterati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4705 - 4794 [Print~Assumptions~cmc_tagged_p...] 0.089 secs (0.089u,0.s)
+Chars 4795 - 4805 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor
+Chars 4806 - 4887 [idtac~~"AUDIT~cmc_tagged_param...] 0. secs (0.u,0.s)
+Chars 4888 - 4896 [exact~I.] 0. secs (0.u,0.s)
+Chars 4897 - 4901 [Qed.] 0. secs (0.u,0.s)
+cm_slots_prefix_successor
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d)
+         (i : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 i /\ BinInt.Z.lt i (Zcomplements.Zlength slots) ->
+       cm_slots_prefix structs slots
+         (BinInt.Z.add i (BinNums.Zpos BinNums.xH)) =
+       BinInt.Z.add (cm_slots_prefix structs slots i)
+         (cm_slot_size structs (cm_slot_at i slots))
+Chars 4902 - 4975 [Check~cmc_tagged_param_iterati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4976 - 5061 [Print~Assumptions~cmc_tagged_p...] 0.089 secs (0.089u,0.s)
+Chars 5062 - 5072 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_length
+Chars 5073 - 5151 [idtac~"AUDIT~cmc_tagged_param_...] 0. secs (0.u,0.s)
+Chars 5152 - 5160 [exact~I.] 0. secs (0.u,0.s)
+Chars 5161 - 5165 [Qed.] 0. secs (0.u,0.s)
+cm_slots_prefix_length
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d),
+       cm_slots_prefix structs slots (Zcomplements.Zlength slots) =
+       cm_slots_size structs slots
+Chars 5166 - 5236 [Check~cmc_tagged_param_iterati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5237 - 5319 [Print~Assumptions~cmc_tagged_p...] 0.088 secs (0.088u,0.s)
+Chars 5320 - 5402 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 5403 - 5413 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_empty
+Chars 5414 - 5496 [idtac~~"AUDIT~cmc_tagged_parti...] 0. secs (0.u,0.s)
+Chars 5497 - 5505 [exact~I.] 0. secs (0.u,0.s)
+Chars 5506 - 5510 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_except_empty
+     : forall (st : cm_src_state) (edge : BinNums.Z),
+       cm_tagged_span_except st edge edge -> cm_tagged_span_valid st
+Chars 5511 - 5585 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5586 - 5672 [Print~Assumptions~cmc_tagged_p...] 0.091 secs (0.09u,0.s)
+Chars 5673 - 5683 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_full
+Chars 5684 - 5765 [idtac~~"AUDIT~cmc_tagged_parti...] 0. secs (0.u,0.s)
+Chars 5766 - 5774 [exact~I.] 0. secs (0.u,0.s)
+Chars 5775 - 5779 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_except_full
+     : forall (st : cm_src_state) (start finish : BinNums.Z),
+       cm_tagged_span_valid st -> cm_tagged_span_except st start finish
+Chars 5780 - 5853 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5854 - 5939 [Print~Assumptions~cmc_tagged_p...] 0. secs (0.u,0.s)
+Chars 5940 - 5950 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_extension
+Chars 5951 - 6037 [idtac~~"AUDIT~cmc_tagged_parti...] 0. secs (0.u,0.s)
+Chars 6038 - 6046 [exact~I.] 0. secs (0.u,0.s)
+Chars 6047 - 6051 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_except_extension
+     : forall (left right : cm_src_state) (start finish : BinNums.Z),
+       (forall a : BinNums.Z,
+        cm_state_tagged right a = cm_state_tagged left a) ->
+       (forall a : BinNums.Z,
+        cm_live_address right a ->
+        cm_live_address left a \/ BinInt.Z.le start a /\ BinInt.Z.lt a finish) ->
+       (forall a : BinNums.Z,
+        cm_live_address left a -> cm_live_address right a) ->
+       cm_tagged_span_valid left -> cm_tagged_span_except right start finish
+Chars 6052 - 6130 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6131 - 6221 [Print~Assumptions~cmc_tagged_p...] 0.089 secs (0.089u,0.s)
+Chars 6222 - 6232 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_store
+Chars 6233 - 6315 [idtac~~"AUDIT~cmc_tagged_parti...] 0. secs (0.u,0.s)
+Chars 6316 - 6324 [exact~I.] 0. secs (0.u,0.s)
+Chars 6325 - 6329 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_except_store
+     : forall (st : cm_src_state) (ty : cm_type) (ptr v : cm_value)
+         (finish : BinNums.Z),
+       (cm_is_pointerb ty = true ->
+        cm_live_span st (cm_value_number st ptr)
+          (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))) ->
+       cm_tagged_span_except st (cm_value_number st ptr) finish ->
+       cm_tagged_span_except (cm_state_store ty ptr v st)
+         (BinInt.Z.add (cm_value_number st ptr) (cm_store_width ty)) finish
+Chars 6330 - 6404 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6405 - 6491 [Print~Assumptions~cmc_tagged_p...] 0.09 secs (0.089u,0.s)
+Chars 6492 - 6502 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_call_base_live_old
+Chars 6503 - 6579 [idtac~"AUDIT~cmc_tagged_partia...] 0. secs (0.u,0.s)
+Chars 6580 - 6588 [exact~I.] 0. secs (0.u,0.s)
+Chars 6589 - 6593 [Qed.] 0. secs (0.u,0.s)
+cm_call_base_live_old
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (st : cm_src_state) (a : BinNums.Z),
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_live_address st a ->
+       cm_live_address (cm_call_base_state sp p fid st) a
+Chars 6594 - 6662 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6663 - 6743 [Print~Assumptions~cmc_tagged_p...] 0.088 secs (0.087u,0.s)
+Chars 6744 - 6754 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_call_base_live_old_or_param
+Chars 6755 - 6840 [idtac~~"AUDIT~cmc_tagged_parti...] 0. secs (0.u,0.s)
+Chars 6841 - 6849 [exact~I.] 0. secs (0.u,0.s)
+Chars 6850 - 6854 [Qed.] 0. secs (0.u,0.s)
+cm_call_base_live_old_or_param
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (st : cm_src_state) (a : BinNums.Z),
+       cm_function_wf (cm_source_function_policy sp) p
+         (cm_source_function_at sp fid p) ->
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_live_address (cm_call_base_state sp p fid st) a ->
+       cm_live_address st a \/
+       BinInt.Z.le
+         (BinInt.Z.add
+            (BinInt.Z.sub (cm_state_fp st)
+               (cm_frame_size (cm_program_structs p)
+                  (cm_source_function_at sp fid p)))
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+         a /\
+       BinInt.Z.lt a
+         (BinInt.Z.add
+            (BinInt.Z.add
+               (BinInt.Z.sub (cm_state_fp st)
+                  (cm_frame_size (cm_program_structs p)
+                     (cm_source_function_at sp fid p)))
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_slots_size (cm_program_structs p)
+               (cm_function_params (cm_source_function_at sp fid p))))
+Chars 6855 - 6932 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6933 - 7022 [Print~Assumptions~cmc_tagged_p...] 0.086 secs (0.086u,0.s)
+Chars 7023 - 7033 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_call_base_except
+Chars 7034 - 7120 [idtac~~"AUDIT~cmc_tagged_parti...] 0. secs (0.u,0.s)
+Chars 7121 - 7129 [exact~I.] 0. secs (0.u,0.s)
+Chars 7130 - 7134 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_call_base_except
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (st : cm_src_state),
+       cm_function_wf (cm_source_function_policy sp) p
+         (cm_source_function_at sp fid p) ->
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_tagged_span_valid st ->
+       cm_tagged_span_except (cm_call_base_state sp p fid st)
+         (BinInt.Z.add
+            (BinInt.Z.sub (cm_state_fp st)
+               (cm_frame_size (cm_program_structs p)
+                  (cm_source_function_at sp fid p)))
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+         (BinInt.Z.add
+            (BinInt.Z.add
+               (BinInt.Z.sub (cm_state_fp st)
+                  (cm_frame_size (cm_program_structs p)
+                     (cm_source_function_at sp fid p)))
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_slots_size (cm_program_structs p)
+               (cm_function_params (cm_source_function_at sp fid p))))
+Chars 7135 - 7213 [Check~cmc_tagged_partial_param...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7214 - 7304 [Print~Assumptions~cmc_tagged_p...] 0.089 secs (0.089u,0.s)
+Chars 7305 - 7380 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 7381 - 7391 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_restore_regions_old_incl
+Chars 7392 - 7467 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 7468 - 7476 [exact~I.] 0. secs (0.u,0.s)
+Chars 7477 - 7481 [Qed.] 0. secs (0.u,0.s)
+cm_restore_regions_old_incl
+     : forall current old : list cm_region,
+       List.incl old (cm_restore_regions current old)
+Chars 7482 - 7549 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7550 - 7629 [Print~Assumptions~cmc_tagged_r...] 0. secs (0.u,0.s)
+Chars 7630 - 7640 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_restore_regions_live_old
+Chars 7641 - 7716 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 7717 - 7725 [exact~I.] 0. secs (0.u,0.s)
+Chars 7726 - 7730 [Qed.] 0. secs (0.u,0.s)
+cm_restore_regions_live_old
+     : forall (current old : list cm_region) (r : cm_region),
+       List.In r (cm_restore_regions current old) ->
+       cm_region_live r = true -> List.In r old
+Chars 7731 - 7798 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7799 - 7878 [Print~Assumptions~cmc_tagged_r...] 0. secs (0.u,0.s)
+Chars 7879 - 7889 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_restore_tagged_old
+Chars 7890 - 7959 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 7960 - 7968 [exact~I.] 0. secs (0.u,0.s)
+Chars 7969 - 7973 [Qed.] 0. secs (0.u,0.s)
+cm_restore_tagged_old
+     : forall (all current old : list cm_region) (tagged : BinNums.Z -> bool)
+         (a : BinNums.Z),
+       cm_restore_tagged all current old tagged a = true -> tagged a = true
+Chars 7974 - 8035 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8036 - 8109 [Print~Assumptions~cmc_tagged_r...] 0. secs (0.u,0.s)
+Chars 8110 - 8120 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_restore_tagged_live_member
+Chars 8121 - 8198 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 8199 - 8207 [exact~I.] 0. secs (0.u,0.s)
+Chars 8208 - 8212 [Qed.] 0. secs (0.u,0.s)
+cm_restore_tagged_live_member
+     : forall (all current old : list cm_region) (tagged : BinNums.Z -> bool)
+         (a b : BinNums.Z) (r : cm_region),
+       cm_restore_tagged all current old tagged a = true ->
+       BinInt.Z.le a b /\
+       BinInt.Z.lt b
+         (BinInt.Z.add a
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))) ->
+       List.In r current ->
+       cm_region_live r = true ->
+       BinInt.Z.le
+         (BinInt.Z.add (cm_region_base all (cm_region_gen r))
+            (cm_region_lo r)) b /\
+       BinInt.Z.lt b
+         (BinInt.Z.add (cm_region_base all (cm_region_gen r))
+            (cm_region_hi r)) -> List.In r old
+Chars 8213 - 8282 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8283 - 8364 [Print~Assumptions~cmc_tagged_r...] 0.088 secs (0.087u,0.s)
+Chars 8365 - 8375 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_restore_call_live_old
+Chars 8376 - 8448 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 8449 - 8457 [exact~I.] 0. secs (0.u,0.s)
+Chars 8458 - 8462 [Qed.] 0. secs (0.u,0.s)
+cm_restore_call_live_old
+     : forall (st : cm_src_state) (env : BinNums.Z -> BinNums.Z -> cm_value)
+         (fp : BinNums.Z) (old : list cm_region) (a : BinNums.Z),
+       List.incl old (cm_state_regions st) ->
+       cm_live_address (cm_restore_call st env fp old) a ->
+       cm_live_address st a
+Chars 8463 - 8527 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8528 - 8604 [Print~Assumptions~cmc_tagged_r...] 0. secs (0.u,0.s)
+Chars 8605 - 8615 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_tagged_span_restore_call
+Chars 8616 - 8691 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 8692 - 8700 [exact~I.] 0. secs (0.u,0.s)
+Chars 8701 - 8705 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_restore_call
+     : forall (st : cm_src_state) (env : BinNums.Z -> BinNums.Z -> cm_value)
+         (fp : BinNums.Z) (old : list cm_region),
+       List.incl old (cm_state_regions st) ->
+       cm_tagged_span_valid st ->
+       cm_tagged_span_valid (cm_restore_call st env fp old)
+Chars 8706 - 8773 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8774 - 8853 [Print~Assumptions~cmc_tagged_r...] 0.092 secs (0.089u,0.002s)
+Chars 8854 - 8864 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_restore_migration_lib.cm_tagged_span_restore_scope
+Chars 8865 - 8941 [idtac~"AUDIT~cmc_tagged_restor...] 0. secs (0.u,0.s)
+Chars 8942 - 8950 [exact~I.] 0. secs (0.u,0.s)
+Chars 8951 - 8955 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_restore_scope
+     : forall (st : cm_src_state) (env : BinNums.Z -> BinNums.Z -> cm_value)
+         (old : list cm_region),
+       List.incl old (cm_state_regions st) ->
+       cm_tagged_span_valid st ->
+       cm_tagged_span_valid (cm_restore_scope st env old)
+Chars 8956 - 9024 [Check~cmc_tagged_restore_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9025 - 9105 [Print~Assumptions~cmc_tagged_r...] 0.089 secs (0.088u,0.s)
+Chars 9106 - 9178 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 9179 - 9189 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_runtime_core_scope_incl
+Chars 9190 - 9261 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 9262 - 9270 [exact~I.] 0. secs (0.u,0.s)
+Chars 9271 - 9275 [Qed.] 0. secs (0.u,0.s)
+cm_runtime_core_scope_incl
+     : forall (policy : cm_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (st : cm_src_state)
+         (ann : cm_annotation) (phase : cm_aphase) 
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor),
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_phase_is_call phase = false ->
+       cm_phase_is_scope phase = true ->
+       cm_runtime_core policy ap p fid st ann ->
+       List.incl (cm_phase_oldregions phase) (cm_state_regions st)
+Chars 9276 - 9339 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9340 - 9415 [Print~Assumptions~cmc_tagged_s...] 0.002 secs (0.002u,0.s)
+Chars 9416 - 9426 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_runtime_core_call_incl
+Chars 9427 - 9497 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 9498 - 9506 [exact~I.] 0. secs (0.u,0.s)
+Chars 9507 - 9511 [Qed.] 0. secs (0.u,0.s)
+cm_runtime_core_call_incl
+     : forall (policy : cm_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (st : cm_src_state)
+         (ann : cm_annotation) (phase : cm_aphase) 
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor),
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_phase_is_call phase = true ->
+       cm_runtime_core policy ap p fid st ann ->
+       List.incl (cm_phase_oldregions phase) (cm_state_regions st)
+Chars 9512 - 9574 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9575 - 9649 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 9650 - 9660 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_r_tagged_step
+Chars 9661 - 9722 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 9723 - 9731 [exact~I.] 0. secs (0.u,0.s)
+Chars 9732 - 9736 [Qed.] 0. secs (0.u,0.s)
+cm_r_tagged_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (expr : cm_expr) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_tagged_span_valid st ->
+       cm_task_tagged_valid (cm_rstart sp p fid expr st ks)
+Chars 9737 - 9790 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9791 - 9856 [Print~Assumptions~cmc_tagged_s...] 0.094 secs (0.094u,0.s)
+Chars 9857 - 9867 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_l_tagged_step
+Chars 9868 - 9929 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 9930 - 9938 [exact~I.] 0. secs (0.u,0.s)
+Chars 9939 - 9943 [Qed.] 0. secs (0.u,0.s)
+cm_l_tagged_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (expr : cm_expr) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_tagged_span_valid st ->
+       cm_task_tagged_valid (cm_lstart sp p fid expr st ks)
+Chars 9944 - 9997 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9998 - 10063 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 10064 - 10074 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_s_tagged_step
+Chars 10075 - 10136 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 10137 - 10145 [exact~I.] 0. secs (0.u,0.s)
+Chars 10146 - 10150 [Qed.] 0. secs (0.u,0.s)
+cm_s_tagged_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (stmt : cm_stmt) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_tagged_span_valid st ->
+       cm_task_tagged_valid (cm_sstart sp p fid stmt st ks)
+Chars 10151 - 10204 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10205 - 10270 [Print~Assumptions~cmc_tagged_s...] 0.087 secs (0.087u,0.s)
+Chars 10271 - 10281 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_v_tagged_step
+Chars 10282 - 10343 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 10344 - 10352 [exact~I.] 0. secs (0.u,0.s)
+Chars 10353 - 10357 [Qed.] 0. secs (0.u,0.s)
+cm_v_tagged_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (phase : cm_aphase)
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor) 
+         (v : cm_value) (st : cm_src_state) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       cm_tagged_span_valid st ->
+       cm_task_tagged_valid
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest))
+Chars 10358 - 10411 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10412 - 10477 [Print~Assumptions~cmc_tagged_s...] 0.103 secs (0.102u,0.s)
+Chars 10478 - 10488 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_step_migration_lib.cm_c_tagged_step
+Chars 10489 - 10550 [idtac~"AUDIT~cmc_tagged_step_m...] 0. secs (0.u,0.s)
+Chars 10551 - 10559 [exact~I.] 0. secs (0.u,0.s)
+Chars 10560 - 10564 [Qed.] 0. secs (0.u,0.s)
+cm_c_tagged_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (phase : cm_aphase)
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor)
+         (ctl : cm_control) (st : cm_src_state) (ann : cm_annotation),
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       cm_tagged_span_valid st ->
+       cm_task_tagged_valid
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames rest))
+Chars 10565 - 10618 [Check~cmc_tagged_step_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10619 - 10684 [Print~Assumptions~cmc_tagged_s...] 0.09 secs (0.09u,0.s)
+Chars 10685 - 10758 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 10759 - 10769 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_pointer_store_width
+Chars 10770 - 10838 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 10839 - 10847 [exact~I.] 0. secs (0.u,0.s)
+Chars 10848 - 10852 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_store_width
+     : forall ty : cm_type,
+       cm_is_pointerb ty = true ->
+       cm_store_width ty =
+       BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))
+Chars 10853 - 10913 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10914 - 10986 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 10987 - 10997 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_pointer_region_witness
+Chars 10998 - 11069 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 11070 - 11078 [exact~I.] 0. secs (0.u,0.s)
+Chars 11079 - 11083 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_region_witness
+     : forall (regions : list cm_region) (ptr : cm_value),
+       cm_pointer_region_ok regions ptr true = true ->
+       exists r : cm_region,
+         List.In r regions /\
+         cm_region_gen r = cm_ptr_gen ptr /\
+         cm_region_live r = true /\
+         cm_region_writable r = true /\
+         BinInt.Z.le (cm_region_lo r) (cm_ptr_lo ptr) /\
+         BinInt.Z.le (cm_ptr_hi ptr) (cm_region_hi r)
+Chars 11084 - 11147 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11148 - 11223 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 11224 - 11234 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_runtime_store_live_span
+Chars 11235 - 11307 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 11308 - 11316 [exact~I.] 0. secs (0.u,0.s)
+Chars 11317 - 11321 [Qed.] 0. secs (0.u,0.s)
+cm_runtime_store_live_span
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (calls : list cm_call_sim_frame)
+         (frames : list cm_spill_frame) (ty : cm_type) 
+         (ptr : cm_value),
+       cm_runtime_memory_layout policy p st calls frames ->
+       cm_store_ok ty ptr st = true ->
+       cm_is_pointerb ty = true ->
+       cm_live_span st (cm_value_number st ptr)
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+Chars 11322 - 11386 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11387 - 11463 [Print~Assumptions~cmc_tagged_s...] 0.089 secs (0.089u,0.s)
+Chars 11464 - 11474 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_store
+Chars 11475 - 11541 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 11542 - 11550 [exact~I.] 0. secs (0.u,0.s)
+Chars 11551 - 11555 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_store
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (calls : list cm_call_sim_frame)
+         (frames : list cm_spill_frame) (ty : cm_type) 
+         (ptr v : cm_value),
+       cm_runtime_memory_layout policy p st calls frames ->
+       cm_store_ok ty ptr st = true ->
+       cm_tagged_span_valid st ->
+       cm_tagged_span_valid (cm_state_store ty ptr v st)
+Chars 11556 - 11614 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11615 - 11685 [Print~Assumptions~cmc_tagged_s...] 0.089 secs (0.088u,0.s)
+Chars 11686 - 11696 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_initial
+Chars 11697 - 11765 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 11766 - 11774 [exact~I.] 0. secs (0.u,0.s)
+Chars 11775 - 11779 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_initial
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z),
+       cm_tagged_span_valid (cm_initial_state sp p input)
+Chars 11780 - 11840 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11841 - 11913 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 11914 - 11924 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_io
+Chars 11925 - 11988 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 11989 - 11997 [exact~I.] 0. secs (0.u,0.s)
+Chars 11998 - 12002 [Qed.] 0.003 secs (0.003u,0.s)
+cm_tagged_span_io
+     : forall (st : cm_src_state) (input output : list BinNums.Z),
+       cm_tagged_span_valid st ->
+       cm_tagged_span_valid (cm_state_io st input output)
+Chars 12003 - 12058 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12059 - 12126 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 12127 - 12137 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_live_span_forward
+Chars 12138 - 12204 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 12205 - 12213 [exact~I.] 0. secs (0.u,0.s)
+Chars 12214 - 12218 [Qed.] 0. secs (0.u,0.s)
+cm_live_span_forward
+     : forall (left right : cm_src_state) (base width : BinNums.Z),
+       (forall a : BinNums.Z,
+        cm_live_address left a -> cm_live_address right a) ->
+       cm_live_span left base width -> cm_live_span right base width
+Chars 12219 - 12277 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12278 - 12348 [Print~Assumptions~cmc_tagged_s...] 0. secs (0.u,0.s)
+Chars 12349 - 12359 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_clear_extension
+Chars 12360 - 12436 [idtac~"AUDIT~cmc_tagged_store_...] 0. secs (0.u,0.s)
+Chars 12437 - 12445 [exact~I.] 0. secs (0.u,0.s)
+Chars 12446 - 12450 [Qed.] 0. secs (0.u,0.s)
+cm_tagged_span_clear_extension
+     : forall (left right : cm_src_state) (base width : BinNums.Z),
+       (forall a : BinNums.Z,
+        cm_state_tagged right a =
+        cm_clear_tagged (cm_state_tagged left) base width a) ->
+       (forall a : BinNums.Z,
+        cm_live_address right a ->
+        cm_live_address left a \/
+        BinInt.Z.le base a /\ BinInt.Z.lt a (BinInt.Z.add base width)) ->
+       (forall a : BinNums.Z,
+        cm_live_address left a -> cm_live_address right a) ->
+       cm_tagged_span_valid left -> cm_tagged_span_valid right
+Chars 12451 - 12519 [Check~cmc_tagged_store_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12520 - 12600 [Print~Assumptions~cmc_tagged_s...] 0.085 secs (0.085u,0.s)

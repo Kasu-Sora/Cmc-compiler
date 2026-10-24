@@ -1,0 +1,2 @@
+Require Export SimpleC.EE.QCP_demos_human.cmc_emit_globals_migration_lib.
+Require Export SimpleC.EE.QCP_demos_human.cmc_emit_strings_migration_lib.

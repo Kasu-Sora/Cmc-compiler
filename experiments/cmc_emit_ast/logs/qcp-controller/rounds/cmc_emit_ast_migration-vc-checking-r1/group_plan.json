@@ -1,0 +1,89 @@
+{
+  "groups": [
+    {
+      "id": "return_contexts",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binding_address_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_return_wit_1_split_goal_spatial": "Use the scope_pre = 0 and retval = cm_rep_global_address hypotheses. Extract the global well-formedness conjunct from cm_wf_program via cm_codegen_admissible and cm_typed_program; apply existing cm_rep_globals_prefix_matches to identify the represented address with cm_global_address. Unfold cm_binding_address_code and cm_push_code to rewrite the emitted singleton to the required fragment. Unfold both context predicates on the right, discharge program_pre/fn_pre nonzero from the premises, instantiate their pointers with sp,gp,tp and zp,zl, and cancel the field/list resources and the rewritten resolved-emitter resource. Keep the resolved-emitter internals opaque."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binding_address_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_return_wit_2_split_goal_spatial": "Use scope_pre = 1, f = cm_function_at policy fid (cm_program_functions p), and structs = cm_program_structs p. Apply existing cm_slots_size_matches__temp_context to parameters and cm_rep_member_prefix_matches to locals, using the two cm_slots_wf premises, so the retval equality becomes retval = cm_local_offset policy p fid slot_pre. Reduce the two scope tests in cm_binding_address_code and rewrite the emitted fp-relative fragment. Fold program and function contexts with sp,gp,tp,zp,zl and the explicit nonzero premises, then cancel all fields, lists, and the unchanged resolved-emitter resource."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binding_address_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_return_wit_3_split_goal_spatial": "Turn scope_pre <> 0 and scope_pre <> 1 into the two false Z.eqb tests. Substitute the f/structs equalities and apply existing cm_rep_member_prefix_matches to parameters under the cm_slots_wf premise, making the retval equality identify cm_param_offset policy p fid slot_pre. Rewrite the fp-relative fragment to cm_binding_address_code. Fold both contexts with sp,gp,tp,zp,zl and explicit nonzero premises, then cancel the reorganized fields/lists and resolved-emitter resource."
+          }
+        }
+      ]
+    },
+    {
+      "id": "call_capacity",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure_split_goal_1": "Introduce the split context and prove the pure conclusion by reducing tvm_opcode_code TVMPushOp to 0. No heap transformation or existential is needed; the antecedent is discarded only for this pure entailment.",
+            "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure_split_goal_2": "Introduce the split context and reduce tvm_opcode_code TVMPushOp to 0; integer discrimination proves 0 <> 22. The heap is irrelevant to the pure conclusion.",
+            "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure_split_goal_3": "Use scope_pre = 0 to reduce cm_binding_address_code to cm_push_code; its singleton length is 1. Rewrite this length in the provided fragment-capacity premise and lift that exact inequality to the pure entailment, without opening heap predicates."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure_split_goal_1": "Use scope_pre = 1 to reduce cm_binding_address_code to a local fp-relative fragment. Unfold cm_fp_relative_address_code: its length is 4 for every offset, including retval. Simplify Zlength in the given capacity premise and conclusion and finish the pure inequality; no offset equality or heap unfolding is needed.",
+            "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure_split_goal_2": "The generated conclusion is the same retval-based capacity inequality as split 1. Reduce the local branch and both fp-relative fragment lengths to 4, then use the existing capacity premise; the entire heap remains irrelevant to this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure_split_goal_1": "Use scope_pre <> 0 and scope_pre <> 1 to reduce both Z.eqb guards in cm_binding_address_code to the parameter branch. Every cm_fp_relative_address_code has length 4, independent of offset. Simplify the given capacity premise and the retval-based conclusion and lift the resulting inequality to the pure entailment.",
+            "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure_split_goal_2": "The generated conclusion is identical to split 1. Resolve the two false scope tests, reduce the fp-relative lengths to 4, and use the supplied capacity inequality without unfolding spatial resources."
+          }
+        }
+      ]
+    },
+    {
+      "id": "context_plan",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binding_address_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the first disjunct of the whole VC and introduce its parameters and pure hypotheses. Unfold cm_program_context_rep and cm_function_context_rep only on the left, extracting program_pre/fn_pre nonzero and their existential field pointers. From cm_binding_valid, split its three scope cases to obtain 0 <= slot_pre. Instantiate the consequent existentials zl,zp,tp,gp,sp with the extracted locals,params,strings,globals,structs pointers. Reintroduce the unchanged pure hypotheses and cancel the exact program/function fields, list representations, and framed cm_resolved_emitter_rep. All current parameters already coincide with their pre values in this VC."
+        },
+        {
+          "name": "proof_of_cm_emit_binding_address_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_1": "Unfold cm_resolved_emitter_plan_rep in the framed antecedent and extract its bound Zlength done + Zlength (fragment ++ tail) <= capacity, where fragment is cm_binding_address_code. Apply the first conjunct of existing cm_plan_fragment_capacity (or Zlength_app and Zlength_nonneg tail) to obtain the pure capacity conclusion. Do not open the program/function/resolved-emitter predicates.",
+            "proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_2": "Extract the same plan bound and use the second conjunct of cm_plan_fragment_capacity, equivalently two Zlength_app rewrites, to obtain Zlength (done ++ fragment) + Zlength tail <= capacity. No existential or heap rewrite is needed.",
+            "proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_spatial": "Unfold cm_resolved_emitter_plan_rep in the antecedent, remove its pure capacity conjunct, and retain cm_resolved_emitter_rep with the identical done prefix. Frame and cancel the unchanged program and function context resources."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binding_address_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binding_address_plan_return_wit_1_split_goal_spatial": "Unfold cm_resolved_emitter_plan_rep on the right for the new prefix done ++ cm_binding_address_code and todo = tail. Supply its capacity conjunct directly from PreH11, and cancel the identical resolved-emitter resource and program/function context frame. There are no new existential witnesses or code-sequence equalities."
+          }
+        }
+      ]
+    }
+  ]
+}

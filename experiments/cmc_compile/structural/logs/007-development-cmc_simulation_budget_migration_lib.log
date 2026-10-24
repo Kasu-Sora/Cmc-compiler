@@ -1,0 +1,1030 @@
+16 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  expr1, expr2 : cm_expr
+  ty : cm_type
+  st : cm_src_state
+  ann : cm_annotation
+  H : 0 <= match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end
+  H0 :
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end +
+    Z.max (cm_tleft (cm_expr_tpair expr1))
+      (1 + cm_tright (cm_expr_tpair expr2)) <=
+    cm_temp_slots
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))
+  H1 :
+    (fix cm_cursors_budget
+       (policy : cm_lookup_policy) (p : cm_program) 
+       (fid : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CABinLP op _ rhs _ =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end +
+               (if if op =? 0 then true else op =? 1
+                then cm_rtemps rhs
+                else 1 + cm_rtemps rhs) <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAAssignLP src _ | CAIndexLP src _ =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + 1 + cm_rtemps src <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CASeqP second =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps second <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAIfP yes no =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps yes <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p)) /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps no <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAWhileGuardP guard body _ _ |
+             CAWhileBodyP guard body _ _ _ _ =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_rtemps guard <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p)) /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps body <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAArgP _ rest0 _ _ _ base current scratch =>
+               0 <= base /\
+               0 <= current /\
+               0 <= scratch /\
+               current <
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p)) /\
+               current + 1 + Zlength rest0 = scratch /\
+               scratch + cm_adepth (cm_args_apair rest0) <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | _ => True
+           end /\
+           cm_cursors_budget policy p
+             match
+               match
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+               with
+               | CAHaltP => CMHaltK
+               | CALoadP ty => CMLoadK ty
+               | CAAssignLP e ty => CMAssignLK e ty
+               | CAAssignRP v ty => CMAssignRK v ty
+               | CABinLP op _ rhs ty => CMBinLK op rhs ty
+               | CABinRP op _ _ v ty => CMBinRK op v ty
+               | CAUnaryP op => CMUnaryK op
+               | CAIndexLP e ty => CMIndexLK e ty
+               | CAIndexRP v ty => CMIndexRK v ty
+               | CAMemberP mid _ => CMMemberK mid
+               | CAPutcP => CMPutcK
+               | CAPutiP => CMPutiK
+               | CAExitP => CMExitK
+               | CAExprStmtP => CMExprStmtK
+               | CAInitP slot => CMInitK slot
+               | CABlockP env regions _ _ => CMBlockK env regions
+               | CASeqP s => CMSeqK s
+               | CAIfP yes no => CMIfK yes no
+               | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+               | CAWhileBodyP guard body env regions _ _ =>
+                   CMWhileBodyK guard body env regions
+               | CAReturnP => CMReturnK
+               | CAArgP callee rest0 values ret _ _ _ _ =>
+                   CMArgK callee rest0 values ret
+               | CACallP caller env fp regions ret =>
+                   CMCallK caller env fp regions ret
+               end
+             with
+             | CMCallK caller _ _ _ _ => caller
+             | _ => fid
+             end rest
+       end) (cm_source_function_policy sp) p fid
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end
+  ============================
+  match ann with
+  | CMAnnotation _ temp _ _ _ _ _ _ => temp
+  end + cm_ltemps expr1 <=
+  cm_temp_slots
+    (cm_function_at (cm_source_function_policy sp) fid
+       (cm_program_functions p))
+
+goal 2 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + 1 + cm_rtemps expr2 <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 3 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_rtemps expr1 <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 4 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_rtemps expr2 <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 5 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_rtemps expr1 <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 6 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + (1 + cm_rtemps expr2) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 7 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_rtemps expr <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 8 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_ltemps expr <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 9 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_rtemps expr <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 10 is:
+ 0 <=
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength (c :: args)
+goal 11 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength (c :: args) + cm_rtemps c <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 12 is:
+ 0 <=
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength (c :: args)
+goal 13 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end <
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 14 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + 1 + Zlength args =
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength (c :: args)
+goal 15 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength (c :: args) + cm_adepth (cm_args_apair args) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 16 is:
+ match
+   match cm_state_input st with
+   | [] =>
+       CMVTask p fid (CMIntV (-1)) st
+         ((fix map (l : list cm_acursor) : list cm_frame :=
+             match l with
+             | [] => []
+             | a :: t =>
+                 match match a with
+                       | CMACursor phase _ _ _ => phase
+                       end with
+                 | CAHaltP => CMHaltK
+                 | CALoadP ty0 => CMLoadK ty0
+                 | CAAssignLP e ty0 => CMAssignLK e ty0
+                 | CAAssignRP v ty0 => CMAssignRK v ty0
+                 | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                 | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                 | CAUnaryP op => CMUnaryK op
+                 | CAIndexLP e ty0 => CMIndexLK e ty0
+                 | CAIndexRP v ty0 => CMIndexRK v ty0
+                 | CAMemberP mid _ => CMMemberK mid
+                 | CAPutcP => CMPutcK
+                 | CAPutiP => CMPutiK
+                 | CAExitP => CMExitK
+                 | CAExprStmtP => CMExprStmtK
+                 | CAInitP slot => CMInitK slot
+                 | CABlockP env regions _ _ => CMBlockK env regions
+                 | CASeqP s => CMSeqK s
+                 | CAIfP yes no => CMIfK yes no
+                 | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                 | CAWhileBodyP guard body env regions _ _ =>
+                     CMWhileBodyK guard body env regions
+                 | CAReturnP => CMReturnK
+                 | CAArgP callee rest values ret _ _ _ _ =>
+                     CMArgK callee rest values ret
+                 | CACallP caller env fp regions ret =>
+                     CMCallK caller env fp regions ret
+                 end :: map t
+             end) match ann with
+                  | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                  end)
+   | byte :: rest =>
+       if tower_byte_valueb byte
+       then
+        CMVTask p fid (CMIntV byte)
+          (cm_state_io st rest (cm_state_output st))
+          ((fix map (l : list cm_acursor) : list cm_frame :=
+              match l with
+              | [] => []
+              | a :: t =>
+                  match
+                    match a with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CAHaltP => CMHaltK
+                  | CALoadP ty0 => CMLoadK ty0
+                  | CAAssignLP e ty0 => CMAssignLK e ty0
+                  | CAAssignRP v ty0 => CMAssignRK v ty0
+                  | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                  | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                  | CAUnaryP op => CMUnaryK op
+                  | CAIndexLP e ty0 => CMIndexLK e ty0
+                  | CAIndexRP v ty0 => CMIndexRK v ty0
+                  | CAMemberP mid _ => CMMemberK mid
+                  | CAPutcP => CMPutcK
+                  | CAPutiP => CMPutiK
+                  | CAExitP => CMExitK
+                  | CAExprStmtP => CMExprStmtK
+                  | CAInitP slot => CMInitK slot
+                  | CABlockP env regions _ _ => CMBlockK env regions
+                  | CASeqP s => CMSeqK s
+                  | CAIfP yes no => CMIfK yes no
+                  | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                  | CAWhileBodyP guard body env regions _ _ =>
+                      CMWhileBodyK guard body env regions
+                  | CAReturnP => CMReturnK
+                  | CAArgP callee rest0 values ret _ _ _ _ =>
+                      CMArgK callee rest0 values ret
+                  | CACallP caller env fp regions ret =>
+                      CMCallK caller env fp regions ret
+                  end :: map t
+              end) match ann with
+                   | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                   end)
+       else
+        CMCTask p fid (CMError 1) st
+          ((fix map (l : list cm_acursor) : list cm_frame :=
+              match l with
+              | [] => []
+              | a :: t =>
+                  match
+                    match a with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CAHaltP => CMHaltK
+                  | CALoadP ty0 => CMLoadK ty0
+                  | CAAssignLP e ty0 => CMAssignLK e ty0
+                  | CAAssignRP v ty0 => CMAssignRK v ty0
+                  | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                  | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                  | CAUnaryP op => CMUnaryK op
+                  | CAIndexLP e ty0 => CMIndexLK e ty0
+                  | CAIndexRP v ty0 => CMIndexRK v ty0
+                  | CAMemberP mid _ => CMMemberK mid
+                  | CAPutcP => CMPutcK
+                  | CAPutiP => CMPutiK
+                  | CAExitP => CMExitK
+                  | CAExprStmtP => CMExprStmtK
+                  | CAInitP slot => CMInitK slot
+                  | CABlockP env regions _ _ => CMBlockK env regions
+                  | CASeqP s => CMSeqK s
+                  | CAIfP yes no => CMIfK yes no
+                  | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                  | CAWhileBodyP guard body env regions _ _ =>
+                      CMWhileBodyK guard body env regions
+                  | CAReturnP => CMReturnK
+                  | CAArgP callee rest0 values ret _ _ _ _ =>
+                      CMArgK callee rest0 values ret
+                  | CACallP caller env fp regions ret =>
+                      CMCallK caller env fp regions ret
+                  end :: map t
+              end) match ann with
+                   | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                   end)
+   end
+ with
+ | CMStartTask _ _ =>
+     (fix cm_cursors_budget
+        (policy : cm_lookup_policy) (p1 : cm_program) 
+        (fid0 : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+        match cursors with
+        | [] => True
+        | cursor :: rest =>
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABinLP op _ rhs _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end +
+                (if if op =? 0 then true else op =? 1
+                 then cm_rtemps rhs
+                 else 1 + cm_rtemps rhs) <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1))
+            | CAAssignLP src _ | CAIndexLP src _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + 1 + cm_rtemps src <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1))
+            | CASeqP second =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps second <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1))
+            | CAIfP yes no =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps yes <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps no <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1))
+            | CAWhileGuardP guard body _ _ |
+              CAWhileBodyP guard body _ _ _ _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_rtemps guard <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps body <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1))
+            | CAArgP _ rest0 _ _ _ base current scratch =>
+                0 <= base /\
+                0 <= current /\
+                0 <= scratch /\
+                current <
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1)) /\
+                current + 1 + Zlength rest0 = scratch /\
+                scratch + cm_adepth (cm_args_apair rest0) <=
+                cm_temp_slots
+                  (cm_function_at policy fid0 (cm_program_functions p1))
+            | _ => True
+            end /\
+            cm_cursors_budget policy p1
+              match
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CAHaltP => CMHaltK
+                | CALoadP ty0 => CMLoadK ty0
+                | CAAssignLP e ty0 => CMAssignLK e ty0
+                | CAAssignRP v ty0 => CMAssignRK v ty0
+                | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                | CAUnaryP op => CMUnaryK op
+                | CAIndexLP e ty0 => CMIndexLK e ty0
+                | CAIndexRP v ty0 => CMIndexRK v ty0
+                | CAMemberP mid _ => CMMemberK mid
+                | CAPutcP => CMPutcK
+                | CAPutiP => CMPutiK
+                | CAExitP => CMExitK
+                | CAExprStmtP => CMExprStmtK
+                | CAInitP slot => CMInitK slot
+                | CABlockP env regions _ _ => CMBlockK env regions
+                | CASeqP s => CMSeqK s
+                | CAIfP yes no => CMIfK yes no
+                | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                | CAWhileBodyP guard body env regions _ _ =>
+                    CMWhileBodyK guard body env regions
+                | CAReturnP => CMReturnK
+                | CAArgP callee rest0 values ret _ _ _ _ =>
+                    CMArgK callee rest0 values ret
+                | CACallP caller env fp regions ret =>
+                    CMCallK caller env fp regions ret
+                end
+              with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid0
+              end rest
+        end) (cm_source_function_policy sp) p (-1)
+       match ann with
+       | CMAnnotation _ _ _ _ cs _ _ _ => cs
+       end
+ | CMRTask _ fid0 e _ _ =>
+     0 <= match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end /\
+     match ann with
+     | CMAnnotation _ temp _ _ _ _ _ _ => temp
+     end + cm_rtemps e <=
+     cm_temp_slots
+       (cm_function_at (cm_source_function_policy sp) fid0
+          (cm_program_functions p)) /\
+     (fix cm_cursors_budget
+        (policy : cm_lookup_policy) (p1 : cm_program) 
+        (fid1 : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+        match cursors with
+        | [] => True
+        | cursor :: rest =>
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABinLP op _ rhs _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end +
+                (if if op =? 0 then true else op =? 1
+                 then cm_rtemps rhs
+                 else 1 + cm_rtemps rhs) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAAssignLP src _ | CAIndexLP src _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + 1 + cm_rtemps src <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CASeqP second =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps second <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAIfP yes no =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps yes <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps no <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAWhileGuardP guard body _ _ |
+              CAWhileBodyP guard body _ _ _ _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_rtemps guard <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps body <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAArgP _ rest0 _ _ _ base current scratch =>
+                0 <= base /\
+                0 <= current /\
+                0 <= scratch /\
+                current <
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                current + 1 + Zlength rest0 = scratch /\
+                scratch + cm_adepth (cm_args_apair rest0) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | _ => True
+            end /\
+            cm_cursors_budget policy p1
+              match
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CAHaltP => CMHaltK
+                | CALoadP ty0 => CMLoadK ty0
+                | CAAssignLP e0 ty0 => CMAssignLK e0 ty0
+                | CAAssignRP v ty0 => CMAssignRK v ty0
+                | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                | CAUnaryP op => CMUnaryK op
+                | CAIndexLP e0 ty0 => CMIndexLK e0 ty0
+                | CAIndexRP v ty0 => CMIndexRK v ty0
+                | CAMemberP mid _ => CMMemberK mid
+                | CAPutcP => CMPutcK
+                | CAPutiP => CMPutiK
+                | CAExitP => CMExitK
+                | CAExprStmtP => CMExprStmtK
+                | CAInitP slot => CMInitK slot
+                | CABlockP env regions _ _ => CMBlockK env regions
+                | CASeqP s => CMSeqK s
+                | CAIfP yes no => CMIfK yes no
+                | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                | CAWhileBodyP guard body env regions _ _ =>
+                    CMWhileBodyK guard body env regions
+                | CAReturnP => CMReturnK
+                | CAArgP callee rest0 values ret _ _ _ _ =>
+                    CMArgK callee rest0 values ret
+                | CACallP caller env fp regions ret =>
+                    CMCallK caller env fp regions ret
+                end
+              with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid1
+              end rest
+        end) (cm_source_function_policy sp) p fid0
+       match ann with
+       | CMAnnotation _ _ _ _ cs _ _ _ => cs
+       end
+ | CMLTask _ fid0 e _ _ =>
+     0 <= match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end /\
+     match ann with
+     | CMAnnotation _ temp _ _ _ _ _ _ => temp
+     end + cm_ltemps e <=
+     cm_temp_slots
+       (cm_function_at (cm_source_function_policy sp) fid0
+          (cm_program_functions p)) /\
+     (fix cm_cursors_budget
+        (policy : cm_lookup_policy) (p1 : cm_program) 
+        (fid1 : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+        match cursors with
+        | [] => True
+        | cursor :: rest =>
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABinLP op _ rhs _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end +
+                (if if op =? 0 then true else op =? 1
+                 then cm_rtemps rhs
+                 else 1 + cm_rtemps rhs) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAAssignLP src _ | CAIndexLP src _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + 1 + cm_rtemps src <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CASeqP second =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps second <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAIfP yes no =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps yes <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps no <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAWhileGuardP guard body _ _ |
+              CAWhileBodyP guard body _ _ _ _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_rtemps guard <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps body <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAArgP _ rest0 _ _ _ base current scratch =>
+                0 <= base /\
+                0 <= current /\
+                0 <= scratch /\
+                current <
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                current + 1 + Zlength rest0 = scratch /\
+                scratch + cm_adepth (cm_args_apair rest0) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | _ => True
+            end /\
+            cm_cursors_budget policy p1
+              match
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CAHaltP => CMHaltK
+                | CALoadP ty0 => CMLoadK ty0
+                | CAAssignLP e0 ty0 => CMAssignLK e0 ty0
+                | CAAssignRP v ty0 => CMAssignRK v ty0
+                | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                | CAUnaryP op => CMUnaryK op
+                | CAIndexLP e0 ty0 => CMIndexLK e0 ty0
+                | CAIndexRP v ty0 => CMIndexRK v ty0
+                | CAMemberP mid _ => CMMemberK mid
+                | CAPutcP => CMPutcK
+                | CAPutiP => CMPutiK
+                | CAExitP => CMExitK
+                | CAExprStmtP => CMExprStmtK
+                | CAInitP slot => CMInitK slot
+                | CABlockP env regions _ _ => CMBlockK env regions
+                | CASeqP s => CMSeqK s
+                | CAIfP yes no => CMIfK yes no
+                | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                | CAWhileBodyP guard body env regions _ _ =>
+                    CMWhileBodyK guard body env regions
+                | CAReturnP => CMReturnK
+                | CAArgP callee rest0 values ret _ _ _ _ =>
+                    CMArgK callee rest0 values ret
+                | CACallP caller env fp regions ret =>
+                    CMCallK caller env fp regions ret
+                end
+              with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid1
+              end rest
+        end) (cm_source_function_policy sp) p fid0
+       match ann with
+       | CMAnnotation _ _ _ _ cs _ _ _ => cs
+       end
+ | CMSTask _ fid0 s _ _ =>
+     0 <= match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end /\
+     match ann with
+     | CMAnnotation _ temp _ _ _ _ _ _ => temp
+     end + cm_stemps s <=
+     cm_temp_slots
+       (cm_function_at (cm_source_function_policy sp) fid0
+          (cm_program_functions p)) /\
+     (fix cm_cursors_budget
+        (policy : cm_lookup_policy) (p1 : cm_program) 
+        (fid1 : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+        match cursors with
+        | [] => True
+        | cursor :: rest =>
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABinLP op _ rhs _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end +
+                (if if op =? 0 then true else op =? 1
+                 then cm_rtemps rhs
+                 else 1 + cm_rtemps rhs) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAAssignLP src _ | CAIndexLP src _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + 1 + cm_rtemps src <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CASeqP second =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps second <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAIfP yes no =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps yes <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps no <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAWhileGuardP guard body _ _ |
+              CAWhileBodyP guard body _ _ _ _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_rtemps guard <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps body <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAArgP _ rest0 _ _ _ base current scratch =>
+                0 <= base /\
+                0 <= current /\
+                0 <= scratch /\
+                current <
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                current + 1 + Zlength rest0 = scratch /\
+                scratch + cm_adepth (cm_args_apair rest0) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | _ => True
+            end /\
+            cm_cursors_budget policy p1
+              match
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CAHaltP => CMHaltK
+                | CALoadP ty0 => CMLoadK ty0
+                | CAAssignLP e ty0 => CMAssignLK e ty0
+                | CAAssignRP v ty0 => CMAssignRK v ty0
+                | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                | CAUnaryP op => CMUnaryK op
+                | CAIndexLP e ty0 => CMIndexLK e ty0
+                | CAIndexRP v ty0 => CMIndexRK v ty0
+                | CAMemberP mid _ => CMMemberK mid
+                | CAPutcP => CMPutcK
+                | CAPutiP => CMPutiK
+                | CAExitP => CMExitK
+                | CAExprStmtP => CMExprStmtK
+                | CAInitP slot => CMInitK slot
+                | CABlockP env regions _ _ => CMBlockK env regions
+                | CASeqP s0 => CMSeqK s0
+                | CAIfP yes no => CMIfK yes no
+                | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                | CAWhileBodyP guard body env regions _ _ =>
+                    CMWhileBodyK guard body env regions
+                | CAReturnP => CMReturnK
+                | CAArgP callee rest0 values ret _ _ _ _ =>
+                    CMArgK callee rest0 values ret
+                | CACallP caller env fp regions ret =>
+                    CMCallK caller env fp regions ret
+                end
+              with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid1
+              end rest
+        end) (cm_source_function_policy sp) p fid0
+       match ann with
+       | CMAnnotation _ _ _ _ cs _ _ _ => cs
+       end
+ | CMVTask _ fid0 _ _ _ | CMCTask _ fid0 _ _ _ =>
+     (fix cm_cursors_budget
+        (policy : cm_lookup_policy) (p1 : cm_program) 
+        (fid1 : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+        match cursors with
+        | [] => True
+        | cursor :: rest =>
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABinLP op _ rhs _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end +
+                (if if op =? 0 then true else op =? 1
+                 then cm_rtemps rhs
+                 else 1 + cm_rtemps rhs) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAAssignLP src _ | CAIndexLP src _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + 1 + cm_rtemps src <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CASeqP second =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps second <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAIfP yes no =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps yes <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps no <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAWhileGuardP guard body _ _ |
+              CAWhileBodyP guard body _ _ _ _ =>
+                0 <= match cursor with
+                     | CMACursor _ temp _ _ => temp
+                     end /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_rtemps guard <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end + cm_stemps body <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | CAArgP _ rest0 _ _ _ base current scratch =>
+                0 <= base /\
+                0 <= current /\
+                0 <= scratch /\
+                current <
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1)) /\
+                current + 1 + Zlength rest0 = scratch /\
+                scratch + cm_adepth (cm_args_apair rest0) <=
+                cm_temp_slots
+                  (cm_function_at policy fid1 (cm_program_functions p1))
+            | _ => True
+            end /\
+            cm_cursors_budget policy p1
+              match
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CAHaltP => CMHaltK
+                | CALoadP ty0 => CMLoadK ty0
+                | CAAssignLP e ty0 => CMAssignLK e ty0
+                | CAAssignRP v ty0 => CMAssignRK v ty0
+                | CABinLP op _ rhs ty0 => CMBinLK op rhs ty0
+                | CABinRP op _ _ v ty0 => CMBinRK op v ty0
+                | CAUnaryP op => CMUnaryK op
+                | CAIndexLP e ty0 => CMIndexLK e ty0
+                | CAIndexRP v ty0 => CMIndexRK v ty0
+                | CAMemberP mid _ => CMMemberK mid
+                | CAPutcP => CMPutcK
+                | CAPutiP => CMPutiK
+                | CAExitP => CMExitK
+                | CAExprStmtP => CMExprStmtK
+                | CAInitP slot => CMInitK slot
+                | CABlockP env regions _ _ => CMBlockK env regions
+                | CASeqP s => CMSeqK s
+                | CAIfP yes no => CMIfK yes no
+                | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                | CAWhileBodyP guard body env regions _ _ =>
+                    CMWhileBodyK guard body env regions
+                | CAReturnP => CMReturnK
+                | CAArgP callee rest0 values ret _ _ _ _ =>
+                    CMArgK callee rest0 values ret
+                | CACallP caller env fp regions ret =>
+                    CMCallK caller env fp regions ret
+                end
+              with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid1
+              end rest
+        end) (cm_source_function_policy sp) p fid0
+       match ann with
+       | CMAnnotation _ _ _ _ cs _ _ _ => cs
+       end
+ | CMDoneTask _ _ _ => True
+ end
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_budget_migration_lib.v", line 50, characters 0-4:
+Error:  (in proof cm_r_budget_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

@@ -1,0 +1,494 @@
+3 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  v : cm_value
+  st : cm_src_state
+  guard : cm_expr
+  body : cm_stmt
+  start, finish, pc, temp, b, c, pt, pb, pk : Z
+  rest : list cm_acursor
+  spills : list cm_spill
+  saved : list cm_spill_frame
+  calls : list cm_call_sim_frame
+  WF : cm_typed_program (cm_source_function_policy sp) p
+  H :
+    (fix cm_cursors_context_ready (cursors : list cm_acursor) : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           cm_cursors_context_ready rest /\
+           (match cursor with
+            | CMACursor phase _ _ _ => phase
+            end = CAHaltP -> rest = []) /\
+           (match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CAExprStmtP | CAInitP _ | CABlockP _ _ _ _ | 
+              CASeqP _ | CAIfP _ _ | CAWhileGuardP _ _ _ _ |
+              CAWhileBodyP _ _ _ _ _ _ | CAReturnP => true
+            | _ => false
+            end = true ->
+            match rest with
+            | [] => false
+            | cursor0 :: _ =>
+                match
+                  match cursor0 with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CABlockP _ _ _ _ | CASeqP _ | CAWhileBodyP _ _ _ _ _ _ |
+                  CACallP _ _ _ _ _ => true
+                | _ => false
+                end
+            end = true) /\
+           (match cursor with
+            | CMACursor phase _ _ _ => phase
+            end = CAReturnP ->
+            (fix cm_cursors_call_ready (cursors0 : list cm_acursor) : bool :=
+               match cursors0 with
+               | [] => false
+               | cursor0 :: rest0 =>
+                   if
+                    match
+                      match cursor0 with
+                      | CMACursor phase _ _ _ => phase
+                      end
+                    with
+                    | CAHaltP => 3
+                    | CAWhileBodyP _ _ _ _ _ _ => 1
+                    | CACallP _ _ _ _ _ => 2
+                    | _ => 0
+                    end =? 2
+                   then true
+                   else
+                    if
+                     match
+                       match cursor0 with
+                       | CMACursor phase _ _ _ => phase
+                       end
+                     with
+                     | CAHaltP => 3
+                     | CAWhileBodyP _ _ _ _ _ _ => 1
+                     | CACallP _ _ _ _ _ => 2
+                     | _ => 0
+                     end =? 3
+                    then false
+                    else cm_cursors_call_ready rest0
+               end) rest = true)
+       end) rest
+  H3 : CAWhileGuardP guard body start finish = CAHaltP -> rest = []
+  H4 :
+    match rest with
+    | [] => false
+    | cursor :: _ =>
+        match match cursor with
+              | CMACursor phase _ _ _ => phase
+              end with
+        | CABlockP _ _ _ _ | CASeqP _ | CAWhileBodyP _ _ _ _ _ _ |
+          CACallP _ _ _ _ _ => true
+        | _ => false
+        end
+    end = true
+  H5 :
+    CAWhileGuardP guard body start finish = CAReturnP ->
+    (fix cm_cursors_call_ready (cursors : list cm_acursor) : bool :=
+       match cursors with
+       | [] => false
+       | cursor :: rest =>
+           if
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CAHaltP => 3
+            | CAWhileBodyP _ _ _ _ _ _ => 1
+            | CACallP _ _ _ _ _ => 2
+            | _ => 0
+            end =? 2
+           then true
+           else
+            if
+             match
+               match cursor with
+               | CMACursor phase _ _ _ => phase
+               end
+             with
+             | CAHaltP => 3
+             | CAWhileBodyP _ _ _ _ _ _ => 1
+             | CACallP _ _ _ _ _ => 2
+             | _ => 0
+             end =? 3
+            then false
+            else cm_cursors_call_ready rest
+       end) rest = true
+  H0 :
+    (fix cm_cursors_scope_ready (cursors : list cm_acursor) : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           cm_cursors_scope_ready rest /\
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CASeqP second =>
+               cm_stmt_scope_ready
+                 ((fix cm_cursors_loop_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 1
+                         then true
+                         else
+                          if
+                           if
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CAHaltP => 3
+                            | CAWhileBodyP _ _ _ _ _ _ => 1
+                            | CACallP _ _ _ _ _ => 2
+                            | _ => 0
+                            end =? 2
+                           then true
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CAHaltP => 3
+                            | CAWhileBodyP _ _ _ _ _ _ => 1
+                            | CACallP _ _ _ _ _ => 2
+                            | _ => 0
+                            end =? 3
+                          then false
+                          else cm_cursors_loop_ready rest0
+                     end) rest)
+                 ((fix cm_cursors_call_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 2
+                         then true
+                         else
+                          if
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CAHaltP => 3
+                           | CAWhileBodyP _ _ _ _ _ _ => 1
+                           | CACallP _ _ _ _ _ => 2
+                           | _ => 0
+                           end =? 3
+                          then false
+                          else cm_cursors_call_ready rest0
+                     end) rest) second
+           | CAIfP yes no =>
+               cm_stmt_scope_ready
+                 ((fix cm_cursors_loop_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 1
+                         then true
+                         else
+                          if
+                           if
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CAHaltP => 3
+                            | CAWhileBodyP _ _ _ _ _ _ => 1
+                            | CACallP _ _ _ _ _ => 2
+                            | _ => 0
+                            end =? 2
+                           then true
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CAHaltP => 3
+                            | CAWhileBodyP _ _ _ _ _ _ => 1
+                            | CACallP _ _ _ _ _ => 2
+                            | _ => 0
+                            end =? 3
+                          then false
+                          else cm_cursors_loop_ready rest0
+                     end) rest)
+                 ((fix cm_cursors_call_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 2
+                         then true
+                         else
+                          if
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CAHaltP => 3
+                           | CAWhileBodyP _ _ _ _ _ _ => 1
+                           | CACallP _ _ _ _ _ => 2
+                           | _ => 0
+                           end =? 3
+                          then false
+                          else cm_cursors_call_ready rest0
+                     end) rest) yes /\
+               cm_stmt_scope_ready
+                 ((fix cm_cursors_loop_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 1
+                         then true
+                         else
+                          if
+                           if
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CAHaltP => 3
+                            | CAWhileBodyP _ _ _ _ _ _ => 1
+                            | CACallP _ _ _ _ _ => 2
+                            | _ => 0
+                            end =? 2
+                           then true
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CAHaltP => 3
+                            | CAWhileBodyP _ _ _ _ _ _ => 1
+                            | CACallP _ _ _ _ _ => 2
+                            | _ => 0
+                            end =? 3
+                          then false
+                          else cm_cursors_loop_ready rest0
+                     end) rest)
+                 ((fix cm_cursors_call_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 2
+                         then true
+                         else
+                          if
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CAHaltP => 3
+                           | CAWhileBodyP _ _ _ _ _ _ => 1
+                           | CACallP _ _ _ _ _ => 2
+                           | _ => 0
+                           end =? 3
+                          then false
+                          else cm_cursors_call_ready rest0
+                     end) rest) no
+           | CAWhileGuardP _ body _ _ | CAWhileBodyP _ body _ _ _ _ =>
+               cm_stmt_scope_ready true
+                 ((fix cm_cursors_call_ready (cursors0 : list cm_acursor) :
+                       bool :=
+                     match cursors0 with
+                     | [] => false
+                     | cursor0 :: rest0 =>
+                         if
+                          match
+                            match cursor0 with
+                            | CMACursor phase _ _ _ => phase
+                            end
+                          with
+                          | CAHaltP => 3
+                          | CAWhileBodyP _ _ _ _ _ _ => 1
+                          | CACallP _ _ _ _ _ => 2
+                          | _ => 0
+                          end =? 2
+                         then true
+                         else
+                          if
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CAHaltP => 3
+                           | CAWhileBodyP _ _ _ _ _ _ => 1
+                           | CACallP _ _ _ _ _ => 2
+                           | _ => 0
+                           end =? 3
+                          then false
+                          else cm_cursors_call_ready rest0
+                     end) rest) body
+           | _ => True
+           end
+       end) rest
+  H2 :
+    cm_stmt_scope_ready true
+      ((fix cm_cursors_call_ready (cursors : list cm_acursor) : bool :=
+          match cursors with
+          | [] => false
+          | cursor :: rest =>
+              if
+               match
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+               with
+               | CAHaltP => 3
+               | CAWhileBodyP _ _ _ _ _ _ => 1
+               | CACallP _ _ _ _ _ => 2
+               | _ => 0
+               end =? 2
+              then true
+              else
+               if
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CAHaltP => 3
+                | CAWhileBodyP _ _ _ _ _ _ => 1
+                | CACallP _ _ _ _ _ => 2
+                | _ => 0
+                end =? 3
+               then false
+               else cm_cursors_call_ready rest
+          end) rest) body
+  H1 : True
+  Heqb0 : cm_truth st v = true
+  Heqb1 : (1 =? 1) = true
+  Heqb2 : (1 =? 2) = false
+  Heqb3 : (1 =? 3) = false
+  ============================
+  match body with
+  | CMBreakS | CMContinueS => true = true
+  | CMReturnS _ =>
+      (fix cm_cursors_call_ready (cursors : list cm_acursor) : bool :=
+         match cursors with
+         | [] => false
+         | cursor :: rest0 =>
+             if
+              match
+                match cursor with
+                | CMACursor phase _ _ _ => phase
+                end
+              with
+              | CAHaltP => 3
+              | CAWhileBodyP _ _ _ _ _ _ => 1
+              | CACallP _ _ _ _ _ => 2
+              | _ => 0
+              end =? 2
+             then true
+             else
+              if
+               match
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+               with
+               | CAHaltP => 3
+               | CAWhileBodyP _ _ _ _ _ _ => 1
+               | CACallP _ _ _ _ _ => 2
+               | _ => 0
+               end =? 3
+              then false
+              else cm_cursors_call_ready rest0
+         end) rest = true
+  | _ => True
+  end
+
+goal 2 is:
+ match cm_function_body (cm_source_function_at sp callee p) with
+ | CMBreakS | CMContinueS => false = true
+ | CMReturnS _ => true = true
+ | _ => True
+ end
+goal 3 is:
+ cm_stmt_scope_ready false true
+   (cm_function_body (cm_source_function_at sp callee p))
+Error:
+There are pending proofs in file /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/invariants/build/Rocq/examples/QCP_demos_human/cmc_simulation_context_step_migration_lib.v: cm_v_context_step.

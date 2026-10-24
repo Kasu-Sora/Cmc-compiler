@@ -1,0 +1,1179 @@
+[
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_type_ty",
+    "primary": "cm_type",
+    "span": [
+      11,
+      12
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_type_ty = new_datatype_definition(\n    \"cm_type = CMIntTy | CMCharTy | CMStructTy int | CMPtrTy cm_type\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_expr_ty",
+    "primary": "cm_expr",
+    "span": [
+      34,
+      43
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF indtype cm_expr_ty = new_datatype_definition(\n    \"cm_expr = CMConstE int cm_type | CMStringE int cm_type\"\n    \" | CMVarE int int cm_type | CMAssignE cm_expr cm_expr cm_type\"\n    \" | CMBinaryE int cm_expr cm_expr cm_type\"\n    \" | CMUnaryE int cm_expr cm_type | CMIndexE cm_expr cm_expr cm_type\"\n    \" | CMMemberE cm_expr int cm_type\"\n    \" | CMCallE int (cm_expr)list cm_type\"\n    \" | CMSizeofE cm_type cm_type | CMGetcE cm_type\"\n    \" | CMPutcE cm_expr cm_type | CMPutiE cm_expr cm_type\"\n    \" | CMExitE cm_expr cm_type\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_stmt_ty",
+    "primary": "cm_stmt",
+    "span": [
+      75,
+      79
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF indtype cm_stmt_ty = new_datatype_definition(\n    \"cm_stmt = CMSkipS | CMExprS cm_expr | CMDeclS int\"\n    \" | CMInitS int cm_expr | CMSeqS cm_stmt cm_stmt | CMBlockS cm_stmt\"\n    \" | CMIfS cm_expr cm_stmt cm_stmt | CMWhileS cm_expr cm_stmt\"\n    \" | CMBreakS | CMContinueS | CMReturnS cm_expr\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_slot_d_ty",
+    "primary": "cm_slot_d",
+    "span": [
+      103,
+      104
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_slot_d_ty = new_datatype_definition(\n    \"cm_slot_d = CMSlotD cm_type int\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_struct_d_ty",
+    "primary": "cm_struct_d",
+    "span": [
+      109,
+      110
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_struct_d_ty = new_datatype_definition(\n    \"cm_struct_d = CMStructD (cm_slot_d)list\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_global_d_ty",
+    "primary": "cm_global_d",
+    "span": [
+      115,
+      116
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_global_d_ty = new_datatype_definition(\n    \"cm_global_d = CMGlobalD cm_type int bool int\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_string_d_ty",
+    "primary": "cm_string_d",
+    "span": [
+      121,
+      122
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_string_d_ty = new_datatype_definition(\n    \"cm_string_d = CMStringD (int)list\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_function_d_ty",
+    "primary": "cm_function_d",
+    "span": [
+      127,
+      129
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF indtype cm_function_d_ty = new_datatype_definition(\n    \"cm_function_d = CMFunctionD cm_type (cm_slot_d)list\"\n    \" (cm_slot_d)list cm_stmt\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_program_ty",
+    "primary": "cm_program",
+    "span": [
+      135,
+      137
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF indtype cm_program_ty = new_datatype_definition(\n    \"cm_program = CMProgram (cm_struct_d)list (cm_global_d)list\"\n    \" (cm_string_d)list (cm_function_d)list int\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_slot_ty_def",
+    "primary": "cm_slot_ty",
+    "span": [
+      161,
+      162
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_slot_ty_def = new_rec_definition(cm_slot_d_ty.rec,\n    `cm_slot_ty (CMSlotD (ty:cm_type) (count:int)) = ty`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_slot_count_def",
+    "primary": "cm_slot_count",
+    "span": [
+      163,
+      164
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_slot_count_def = new_rec_definition(cm_slot_d_ty.rec,\n    `cm_slot_count (CMSlotD (ty:cm_type) (count:int)) = count`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_struct_members_def",
+    "primary": "cm_struct_members",
+    "span": [
+      168,
+      169
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_struct_members_def = new_rec_definition(cm_struct_d_ty.rec,\n    `cm_struct_members (CMStructD (members:(cm_slot_d)list)) = members`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_global_ty_def",
+    "primary": "cm_global_ty",
+    "span": [
+      172,
+      173
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_global_ty_def = new_rec_definition(cm_global_d_ty.rec,\n    `cm_global_ty (CMGlobalD (ty:cm_type) (count:int) (has_init:bool) (init:int)) = ty`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_global_count_def",
+    "primary": "cm_global_count",
+    "span": [
+      174,
+      175
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_global_count_def = new_rec_definition(cm_global_d_ty.rec,\n    `cm_global_count (CMGlobalD (ty:cm_type) (count:int) (has_init:bool) (init:int)) = count`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_global_has_init_def",
+    "primary": "cm_global_has_init",
+    "span": [
+      176,
+      177
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_global_has_init_def = new_rec_definition(cm_global_d_ty.rec,\n    `cm_global_has_init (CMGlobalD (ty:cm_type) (count:int) (has_init:bool) (init:int)) = has_init`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_global_init_def",
+    "primary": "cm_global_init",
+    "span": [
+      178,
+      179
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_global_init_def = new_rec_definition(cm_global_d_ty.rec,\n    `cm_global_init (CMGlobalD (ty:cm_type) (count:int) (has_init:bool) (init:int)) = init`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_string_bytes_def",
+    "primary": "cm_string_bytes",
+    "span": [
+      185,
+      186
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_string_bytes_def = new_rec_definition(cm_string_d_ty.rec,\n    `cm_string_bytes (CMStringD (bytes:(int)list)) = bytes`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_function_ret_def",
+    "primary": "cm_function_ret",
+    "span": [
+      189,
+      192
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_function_ret_def = new_rec_definition(cm_function_d_ty.rec,\n    `cm_function_ret\n       (CMFunctionD (ret:cm_type) (params:(cm_slot_d)list)\n          (locals:(cm_slot_d)list) (body:cm_stmt)) = ret`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_function_params_def",
+    "primary": "cm_function_params",
+    "span": [
+      193,
+      196
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_function_params_def = new_rec_definition(cm_function_d_ty.rec,\n    `cm_function_params\n       (CMFunctionD (ret:cm_type) (params:(cm_slot_d)list)\n          (locals:(cm_slot_d)list) (body:cm_stmt)) = params`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_function_locals_def",
+    "primary": "cm_function_locals",
+    "span": [
+      197,
+      200
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_function_locals_def = new_rec_definition(cm_function_d_ty.rec,\n    `cm_function_locals\n       (CMFunctionD (ret:cm_type) (params:(cm_slot_d)list)\n          (locals:(cm_slot_d)list) (body:cm_stmt)) = locals`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_function_body_def",
+    "primary": "cm_function_body",
+    "span": [
+      201,
+      204
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_function_body_def = new_rec_definition(cm_function_d_ty.rec,\n    `cm_function_body\n       (CMFunctionD (ret:cm_type) (params:(cm_slot_d)list)\n          (locals:(cm_slot_d)list) (body:cm_stmt)) = body`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_program_structs_def",
+    "primary": "cm_program_structs",
+    "span": [
+      210,
+      214
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_program_structs_def = new_rec_definition(cm_program_ty.rec,\n    `cm_program_structs\n       (CMProgram (structs:(cm_struct_d)list) (globals:(cm_global_d)list)\n          (strings:(cm_string_d)list) (functions:(cm_function_d)list)\n          (main_id:int)) = structs`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_program_globals_def",
+    "primary": "cm_program_globals",
+    "span": [
+      215,
+      219
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_program_globals_def = new_rec_definition(cm_program_ty.rec,\n    `cm_program_globals\n       (CMProgram (structs:(cm_struct_d)list) (globals:(cm_global_d)list)\n          (strings:(cm_string_d)list) (functions:(cm_function_d)list)\n          (main_id:int)) = globals`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_program_strings_def",
+    "primary": "cm_program_strings",
+    "span": [
+      220,
+      224
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_program_strings_def = new_rec_definition(cm_program_ty.rec,\n    `cm_program_strings\n       (CMProgram (structs:(cm_struct_d)list) (globals:(cm_global_d)list)\n          (strings:(cm_string_d)list) (functions:(cm_function_d)list)\n          (main_id:int)) = strings`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_program_functions_def",
+    "primary": "cm_program_functions",
+    "span": [
+      225,
+      229
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_program_functions_def = new_rec_definition(cm_program_ty.rec,\n    `cm_program_functions\n       (CMProgram (structs:(cm_struct_d)list) (globals:(cm_global_d)list)\n          (strings:(cm_string_d)list) (functions:(cm_function_d)list)\n          (main_id:int)) = functions`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_program_main_def",
+    "primary": "cm_program_main",
+    "span": [
+      230,
+      234
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_program_main_def = new_rec_definition(cm_program_ty.rec,\n    `cm_program_main\n       (CMProgram (structs:(cm_struct_d)list) (globals:(cm_global_d)list)\n          (strings:(cm_string_d)list) (functions:(cm_function_d)list)\n          (main_id:int)) = main_id`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_tpair_ty",
+    "primary": "cm_tpair",
+    "span": [
+      377,
+      378
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_tpair_ty =\n    new_datatype_definition(\"cm_tpair = CMTPair int int\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_apair_ty",
+    "primary": "cm_apair",
+    "span": [
+      383,
+      384
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF indtype cm_apair_ty =\n    new_datatype_definition(\"cm_apair = CMAPair int int\");"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_tleft_def",
+    "primary": "cm_tleft",
+    "span": [
+      389,
+      390
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_tleft_def = new_rec_definition(cm_tpair_ty.rec,\n    `cm_tleft (CMTPair (left:int) (right:int)) = left`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_tright_def",
+    "primary": "cm_tright",
+    "span": [
+      391,
+      392
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_tright_def = new_rec_definition(cm_tpair_ty.rec,\n    `cm_tright (CMTPair (left:int) (right:int)) = right`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_acount_def",
+    "primary": "cm_acount",
+    "span": [
+      393,
+      394
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_acount_def = new_rec_definition(cm_apair_ty.rec,\n    `cm_acount (CMAPair (count:int) (depth:int)) = count`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_adepth_def",
+    "primary": "cm_adepth",
+    "span": [
+      395,
+      396
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_adepth_def = new_rec_definition(cm_apair_ty.rec,\n    `cm_adepth (CMAPair (count:int) (depth:int)) = depth`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_imax_def",
+    "primary": "cm_imax",
+    "span": [
+      402,
+      403
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_imax_def = new_fun_definition(\n    `cm_imax (x:int) (y:int) : int = (if x <= y then y else x)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_expr_tpair_def",
+    "primary": "cm_expr_tpair",
+    "span": [
+      406,
+      474
+    ],
+    "nonblank_lines": 69,
+    "text": "PROOF thm cm_expr_tpair_def = new_rec_definition(cm_expr_RECURSION,\n    `(cm_expr_tpair (CMConstE (n:int) (ty:cm_type)) = CMTPair 0i 0i) &&\n     (cm_expr_tpair (CMStringE (sid:int) (ty:cm_type)) = CMTPair 0i 0i) &&\n     (cm_expr_tpair (CMVarE (scope:int) (slot:int) (ty:cm_type)) =\n        CMTPair 0i 0i) &&\n     (!dst src ty.\n        cm_expr_tpair\n          (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type)) =\n        CMTPair 0i\n          (cm_imax (cm_tleft (cm_expr_tpair dst))\n                   (1i + cm_tright (cm_expr_tpair src)))) &&\n     (!op left right ty.\n        cm_expr_tpair\n          (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n             (ty:cm_type)) =\n        CMTPair 0i\n          (if op == 0i || op == 1i\n           then cm_imax (cm_tright (cm_expr_tpair left))\n                        (cm_tright (cm_expr_tpair right))\n           else cm_imax (cm_tright (cm_expr_tpair left))\n                        (1i + cm_tright (cm_expr_tpair right)))) &&\n     (!op arg ty.\n        cm_expr_tpair\n          (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) =\n        (if op == 2i\n         then CMTPair (cm_tright (cm_expr_tpair arg))\n                      (cm_tright (cm_expr_tpair arg))\n         else if op == 3i\n              then CMTPair 0i (cm_tleft (cm_expr_tpair arg))\n              else CMTPair 0i (cm_tright (cm_expr_tpair arg)))) &&\n     (!base index ty.\n        cm_expr_tpair\n          (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type)) =\n        CMTPair\n          (cm_imax (cm_tright (cm_expr_tpair base))\n                   (1i + cm_tright (cm_expr_tpair index)))\n          (cm_imax (cm_tright (cm_expr_tpair base))\n                   (1i + cm_tright (cm_expr_tpair index)))) &&\n     (!base mid ty.\n        cm_expr_tpair\n          (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type)) =\n        CMTPair (cm_tright (cm_expr_tpair base))\n                (cm_tright (cm_expr_tpair base))) &&\n     (!fid args ty.\n        cm_expr_tpair\n          (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type)) =\n        CMTPair 0i\n          (cm_acount (cm_args_apair args) +\n           cm_adepth (cm_args_apair args))) &&\n     (!asked ty.\n        cm_expr_tpair\n          (CMSizeofE (asked:cm_type) (ty:cm_type)) = CMTPair 0i 0i) &&\n     (!ty. cm_expr_tpair (CMGetcE (ty:cm_type)) = CMTPair 0i 0i) &&\n     (!arg ty.\n        cm_expr_tpair (CMPutcE (arg:cm_expr) (ty:cm_type)) =\n        CMTPair 0i (cm_tright (cm_expr_tpair arg))) &&\n     (!arg ty.\n        cm_expr_tpair (CMPutiE (arg:cm_expr) (ty:cm_type)) =\n        CMTPair 0i (cm_tright (cm_expr_tpair arg))) &&\n     (!arg ty.\n        cm_expr_tpair (CMExitE (arg:cm_expr) (ty:cm_type)) =\n        CMTPair 0i (cm_tright (cm_expr_tpair arg))) &&\n     (cm_args_apair ([]:(cm_expr)list) = CMAPair 0i 0i) &&\n     (!arg args.\n        cm_args_apair\n          ((arg:cm_expr) :: (args:(cm_expr)list)) =\n        CMAPair (1i + cm_acount (cm_args_apair args))\n          (cm_imax (cm_tright (cm_expr_tpair arg))\n                   (cm_adepth (cm_args_apair args))))`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_ltemps_def",
+    "primary": "cm_ltemps",
+    "span": [
+      478,
+      480
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_ltemps_def = new_fun_definition(\n    `cm_ltemps (expr:cm_expr) : int =\n       cm_tleft (cm_expr_tpair expr)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_rtemps_def",
+    "primary": "cm_rtemps",
+    "span": [
+      481,
+      483
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_rtemps_def = new_fun_definition(\n    `cm_rtemps (expr:cm_expr) : int =\n       cm_tright (cm_expr_tpair expr)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_args_temps_def",
+    "primary": "cm_args_temps",
+    "span": [
+      484,
+      487
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_args_temps_def = new_fun_definition(\n    `cm_args_temps (args:(cm_expr)list) : int =\n       cm_acount (cm_args_apair args) +\n       cm_adepth (cm_args_apair args)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_stemps_def",
+    "primary": "cm_stemps",
+    "span": [
+      492,
+      513
+    ],
+    "nonblank_lines": 22,
+    "text": "PROOF thm cm_stemps_def = new_rec_definition(cm_stmt_RECURSION,\n    `(cm_stemps CMSkipS = 0i) &&\n     (!expr. cm_stemps (CMExprS (expr:cm_expr)) = cm_rtemps expr) &&\n     (!slot. cm_stemps (CMDeclS (slot:int)) = 0i) &&\n     (!slot expr.\n        cm_stemps (CMInitS (slot:int) (expr:cm_expr)) =\n        cm_rtemps expr) &&\n     (!first second.\n        cm_stemps (CMSeqS (first:cm_stmt) (second:cm_stmt)) =\n        cm_imax (cm_stemps first) (cm_stemps second)) &&\n     (!body. cm_stemps (CMBlockS (body:cm_stmt)) = cm_stemps body) &&\n     (!guard yes no.\n        cm_stemps\n          (CMIfS (guard:cm_expr) (yes:cm_stmt) (no:cm_stmt)) =\n        cm_imax (cm_rtemps guard)\n          (cm_imax (cm_stemps yes) (cm_stemps no))) &&\n     (!guard body.\n        cm_stemps (CMWhileS (guard:cm_expr) (body:cm_stmt)) =\n        cm_imax (cm_rtemps guard) (cm_stemps body)) &&\n     (cm_stemps CMBreakS = 0i) &&\n     (cm_stemps CMContinueS = 0i) &&\n     (!expr. cm_stemps (CMReturnS (expr:cm_expr)) = cm_rtemps expr)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_type_depth_def",
+    "primary": "cm_type_depth",
+    "span": [
+      546,
+      551
+    ],
+    "nonblank_lines": 6,
+    "text": "PROOF thm cm_type_depth_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_type_depth CMIntTy = 0i) &&\n     (cm_type_depth CMCharTy = 0i) &&\n     (!sid. cm_type_depth (CMStructTy (sid:int)) = 0i) &&\n     (!ty. cm_type_depth (CMPtrTy (ty:cm_type)) =\n        1i + cm_type_depth ty)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_type_base_code_def",
+    "primary": "cm_type_base_code",
+    "span": [
+      562,
+      567
+    ],
+    "nonblank_lines": 6,
+    "text": "PROOF thm cm_type_base_code_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_type_base_code CMIntTy = 0i) &&\n     (cm_type_base_code CMCharTy = 1i) &&\n     (!sid. cm_type_base_code (CMStructTy (sid:int)) = sid + 2i) &&\n     (!ty. cm_type_base_code (CMPtrTy (ty:cm_type)) =\n        cm_type_base_code ty)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_type_code_wf_def",
+    "primary": "cm_type_code_wf",
+    "span": [
+      571,
+      577
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_type_code_wf_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_type_code_wf CMIntTy = T) &&\n     (cm_type_code_wf CMCharTy = T) &&\n     (!sid. cm_type_code_wf (CMStructTy (sid:int)) <=>\n        0i <= sid && sid < 1022i) &&\n     (!ty. cm_type_code_wf (CMPtrTy (ty:cm_type)) <=>\n        cm_type_code_wf ty)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_type_encode_def",
+    "primary": "cm_type_encode",
+    "span": [
+      597,
+      599
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_type_encode_def = new_fun_definition(\n    `cm_type_encode (ty:cm_type) : int =\n       1024i * cm_type_depth ty + cm_type_base_code ty`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_is_pointer_def",
+    "primary": "cm_is_pointer",
+    "span": [
+      849,
+      853
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_is_pointer_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_is_pointer CMIntTy = F) &&\n     (cm_is_pointer CMCharTy = F) &&\n     (!sid. cm_is_pointer (CMStructTy (sid:int)) = F) &&\n     (!ty. cm_is_pointer (CMPtrTy (ty:cm_type)) = T)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_is_struct_def",
+    "primary": "cm_is_struct",
+    "span": [
+      854,
+      858
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_is_struct_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_is_struct CMIntTy = F) &&\n     (cm_is_struct CMCharTy = F) &&\n     (!sid. cm_is_struct (CMStructTy (sid:int)) = T) &&\n     (!ty. cm_is_struct (CMPtrTy (ty:cm_type)) = F)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_pointee_def",
+    "primary": "cm_pointee",
+    "span": [
+      859,
+      863
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_pointee_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_pointee CMIntTy = CMIntTy) &&\n     (cm_pointee CMCharTy = CMCharTy) &&\n     (!sid. cm_pointee (CMStructTy (sid:int)) = CMStructTy sid) &&\n     (!ty. cm_pointee (CMPtrTy (ty:cm_type)) = ty)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_struct_id_def",
+    "primary": "cm_struct_id",
+    "span": [
+      864,
+      869
+    ],
+    "nonblank_lines": 6,
+    "text": "PROOF thm cm_struct_id_def = new_rec_definition(cm_type_RECURSION,\n    `(cm_struct_id CMIntTy = --1i) &&\n     (cm_struct_id CMCharTy = --1i) &&\n     (!sid. cm_struct_id (CMStructTy (sid:int)) = sid) &&\n     (!ty. cm_struct_id (CMPtrTy (ty:cm_type)) =\n        cm_struct_id ty)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_expr_type_def",
+    "primary": "cm_expr_type",
+    "span": [
+      907,
+      942
+    ],
+    "nonblank_lines": 36,
+    "text": "PROOF thm cm_expr_type_def = new_rec_definition(cm_expr_RECURSION,\n    `(cm_expr_type (CMConstE (n:int) (ty:cm_type)) = ty) &&\n     (cm_expr_type (CMStringE (sid:int) (ty:cm_type)) = ty) &&\n     (cm_expr_type\n        (CMVarE (scope:int) (slot:int) (ty:cm_type)) = ty) &&\n     (!dst src ty.\n        cm_expr_type\n          (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type)) = ty) &&\n     (!op left right ty.\n        cm_expr_type\n          (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n             (ty:cm_type)) = ty) &&\n     (!op arg ty.\n        cm_expr_type\n          (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) = ty) &&\n     (!base index ty.\n        cm_expr_type\n          (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type)) = ty) &&\n     (!base mid ty.\n        cm_expr_type\n          (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type)) = ty) &&\n     (!fid args ty.\n        cm_expr_type\n          (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type)) = ty) &&\n     (!asked ty.\n        cm_expr_type\n          (CMSizeofE (asked:cm_type) (ty:cm_type)) = ty) &&\n     (!ty. cm_expr_type (CMGetcE (ty:cm_type)) = ty) &&\n     (!arg ty. cm_expr_type (CMPutcE (arg:cm_expr) (ty:cm_type)) = ty) &&\n     (!arg ty. cm_expr_type (CMPutiE (arg:cm_expr) (ty:cm_type)) = ty) &&\n     (!arg ty. cm_expr_type (CMExitE (arg:cm_expr) (ty:cm_type)) = ty) &&\n     (cm_expr_list_type ([]:(cm_expr)list) = CMIntTy) &&\n     (!arg args.\n        cm_expr_list_type\n          ((arg:cm_expr) :: (args:(cm_expr)list)) =\n        cm_expr_type arg)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_binding_valid_def",
+    "primary": "cm_binding_valid",
+    "span": [
+      1018,
+      1026
+    ],
+    "nonblank_lines": 9,
+    "text": "PROOF thm cm_binding_valid_def = new_fun_definition(\n    `cm_binding_valid (p:cm_program) (f:cm_function_d)\n       (scope:int) (slot:int) : bool =\n       ((scope == 0i && 0i <= slot &&\n         slot < ilength (cm_program_globals p)) ||\n        (scope == 1i && 0i <= slot &&\n         slot < ilength (cm_function_locals f)) ||\n        (scope == 2i && 0i <= slot &&\n         slot < ilength (cm_function_params f)))`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_member_valid_def",
+    "primary": "cm_member_valid",
+    "span": [
+      1079,
+      1089
+    ],
+    "nonblank_lines": 11,
+    "text": "PROOF thm cm_member_valid_def = new_fun_definition(\n    `cm_member_valid (p:cm_program) (base:cm_type) (mid:int) : bool =\n       (cm_is_pointer base &&\n        cm_is_struct (cm_pointee base) &&\n        0i <= cm_struct_id (cm_pointee base) &&\n        cm_struct_id (cm_pointee base) <\n          ilength (cm_program_structs p) &&\n        0i <= mid &&\n        mid < ilength (cm_struct_members\n          (inth (cm_struct_id (cm_pointee base))\n            (cm_program_structs p))))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_expr_kind_def",
+    "primary": "cm_rep_expr_kind",
+    "span": [
+      63,
+      93
+    ],
+    "nonblank_lines": 31,
+    "text": "PROOF thm cm_rep_expr_kind_def = new_rec_definition(\n    get_cm_expr_recursion(),\n    `(cm_rep_expr_kind (CMConstE (n:int) (ty:cm_type)) = 0i) &&\n     (cm_rep_expr_kind (CMStringE (sid:int) (ty:cm_type)) = 1i) &&\n     (cm_rep_expr_kind (CMVarE (scope:int) (slot:int) (ty:cm_type)) = 2i) &&\n     (!dst src ty. cm_rep_expr_kind\n        (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type)) = 3i) &&\n     (!op left right ty. cm_rep_expr_kind\n        (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n          (ty:cm_type)) = 4i) &&\n     (!op arg ty. cm_rep_expr_kind\n        (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) = 5i) &&\n     (!base index ty. cm_rep_expr_kind\n        (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type)) = 6i) &&\n     (!base mid ty. cm_rep_expr_kind\n        (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type)) = 7i) &&\n     (!fid args ty. cm_rep_expr_kind\n        (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type)) = 8i) &&\n     (!asked ty. cm_rep_expr_kind\n        (CMSizeofE (asked:cm_type) (ty:cm_type)) = 9i) &&\n     (!ty. cm_rep_expr_kind (CMGetcE (ty:cm_type)) = 10i) &&\n     (!arg ty. cm_rep_expr_kind\n        (CMPutcE (arg:cm_expr) (ty:cm_type)) = 11i) &&\n     (!arg ty. cm_rep_expr_kind\n        (CMPutiE (arg:cm_expr) (ty:cm_type)) = 12i) &&\n     (!arg ty. cm_rep_expr_kind\n        (CMExitE (arg:cm_expr) (ty:cm_type)) = 13i) &&\n     (cm_rep_expr_kinds ([]:(cm_expr)list) = ([]:(int)list)) &&\n     (!arg args. cm_rep_expr_kinds\n        ((arg:cm_expr)::(args:(cm_expr)list)) =\n        cm_rep_expr_kind arg :: cm_rep_expr_kinds args)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_expr_op_def",
+    "primary": "cm_rep_expr_op",
+    "span": [
+      413,
+      443
+    ],
+    "nonblank_lines": 31,
+    "text": "PROOF thm cm_rep_expr_op_def = new_rec_definition(\n    get_cm_expr_recursion(),\n    `(cm_rep_expr_op (CMConstE (n:int) (ty:cm_type)) = 0i) &&\n     (cm_rep_expr_op (CMStringE (sid:int) (ty:cm_type)) = 0i) &&\n     (cm_rep_expr_op (CMVarE (scope:int) (slot:int) (ty:cm_type)) = scope) &&\n     (!dst src ty. cm_rep_expr_op\n        (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type)) = 0i) &&\n     (!op left right ty. cm_rep_expr_op\n        (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n          (ty:cm_type)) = op) &&\n     (!op arg ty. cm_rep_expr_op\n        (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) = op) &&\n     (!base index ty. cm_rep_expr_op\n        (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type)) = 0i) &&\n     (!base mid ty. cm_rep_expr_op\n        (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type)) = 0i) &&\n     (!fid args ty. cm_rep_expr_op\n        (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type)) = 0i) &&\n     (!asked ty. cm_rep_expr_op\n        (CMSizeofE (asked:cm_type) (ty:cm_type)) = 0i) &&\n     (!ty. cm_rep_expr_op (CMGetcE (ty:cm_type)) = 0i) &&\n     (!arg ty. cm_rep_expr_op\n        (CMPutcE (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (!arg ty. cm_rep_expr_op\n        (CMPutiE (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (!arg ty. cm_rep_expr_op\n        (CMExitE (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (cm_rep_expr_ops ([]:(cm_expr)list) = ([]:(int)list)) &&\n     (!arg args. cm_rep_expr_ops\n        ((arg:cm_expr)::(args:(cm_expr)list)) =\n        cm_rep_expr_op arg :: cm_rep_expr_ops args)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_expr_value_def",
+    "primary": "cm_rep_expr_value",
+    "span": [
+      445,
+      477
+    ],
+    "nonblank_lines": 33,
+    "text": "PROOF thm cm_rep_expr_value_def = new_rec_definition(\n    get_cm_expr_recursion(),\n    `(cm_rep_expr_value (CMConstE (n:int) (ty:cm_type)) = n) &&\n     (cm_rep_expr_value (CMStringE (sid:int) (ty:cm_type)) = sid) &&\n     (cm_rep_expr_value\n        (CMVarE (scope:int) (slot:int) (ty:cm_type)) = slot) &&\n     (!dst src ty. cm_rep_expr_value\n        (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type)) = 0i) &&\n     (!op left right ty. cm_rep_expr_value\n        (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n          (ty:cm_type)) = 0i) &&\n     (!op arg ty. cm_rep_expr_value\n        (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (!base index ty. cm_rep_expr_value\n        (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type)) = 0i) &&\n     (!base mid ty. cm_rep_expr_value\n        (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type)) = mid) &&\n     (!fid args ty. cm_rep_expr_value\n        (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type)) = fid) &&\n     (!asked ty. cm_rep_expr_value\n        (CMSizeofE (asked:cm_type) (ty:cm_type)) =\n        cm_type_encode asked) &&\n     (!ty. cm_rep_expr_value (CMGetcE (ty:cm_type)) = 0i) &&\n     (!arg ty. cm_rep_expr_value\n        (CMPutcE (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (!arg ty. cm_rep_expr_value\n        (CMPutiE (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (!arg ty. cm_rep_expr_value\n        (CMExitE (arg:cm_expr) (ty:cm_type)) = 0i) &&\n     (cm_rep_expr_values ([]:(cm_expr)list) = ([]:(int)list)) &&\n     (!arg args. cm_rep_expr_values\n        ((arg:cm_expr)::(args:(cm_expr)list)) =\n        cm_rep_expr_value arg :: cm_rep_expr_values args)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_expr_node_def",
+    "primary": "cm_expr_node",
+    "span": [
+      479,
+      495
+    ],
+    "nonblank_lines": 17,
+    "text": "PROOF thm cm_expr_node_def = new_fun_definition(\n    `cm_expr_node (p:int) (e:cm_expr)\n       (payload:int->int->int->hprop) : hprop =\n       (exists za zb zargs.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_expr Fkind) Tint\n            (cm_rep_expr_kind e) **\n          data_at (field_addr p Tcm_expr Fop) Tint\n            (cm_rep_expr_op e) **\n          data_at (field_addr p Tcm_expr Fty) Tint\n            (cm_type_encode (cm_expr_type e)) **\n          data_at (field_addr p Tcm_expr Fvalue) Tint64\n            (cm_rep_expr_value e) **\n          data_at (field_addr p Tcm_expr Fa) Tptr za **\n          data_at (field_addr p Tcm_expr Fb) Tptr zb **\n          data_at (field_addr p Tcm_expr Fargs) Tptr zargs **\n          payload za zb zargs)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_expr_payload_def",
+    "primary": "cm_expr_payload",
+    "span": [
+      497,
+      565
+    ],
+    "nonblank_lines": 69,
+    "text": "PROOF thm cm_expr_payload_def = new_rec_definition(\n    get_cm_expr_recursion(),\n    `(!za zb zargs n ty. cm_expr_payload\n        (CMConstE (n:int) (ty:cm_type)) za zb zargs =\n        (fact(za == 0i && zb == 0i && zargs == 0i))) &&\n     (!za zb zargs sid ty. cm_expr_payload\n        (CMStringE (sid:int) (ty:cm_type)) za zb zargs =\n        (fact(za == 0i && zb == 0i && zargs == 0i))) &&\n     (!za zb zargs scope slot ty. cm_expr_payload\n        (CMVarE (scope:int) (slot:int) (ty:cm_type)) za zb zargs =\n        (fact(za == 0i && zb == 0i && zargs == 0i))) &&\n     (!za zb zargs dst src ty. cm_expr_payload\n        (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type))\n          za zb zargs =\n        (fact(zargs == 0i) **\n         cm_expr_node za dst (cm_expr_payload dst) **\n         cm_expr_node zb src (cm_expr_payload src))) &&\n     (!za zb zargs op left right ty. cm_expr_payload\n        (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n          (ty:cm_type)) za zb zargs =\n        (fact(zargs == 0i) **\n         cm_expr_node za left (cm_expr_payload left) **\n         cm_expr_node zb right (cm_expr_payload right))) &&\n     (!za zb zargs op arg ty. cm_expr_payload\n        (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) za zb zargs =\n        (fact(~(za == 0i) && zb == 0i && zargs == 0i) **\n         cm_expr_node za arg (cm_expr_payload arg))) &&\n     (!za zb zargs base index ty. cm_expr_payload\n        (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type))\n          za zb zargs =\n        (fact(zargs == 0i) **\n         cm_expr_node za base (cm_expr_payload base) **\n         cm_expr_node zb index (cm_expr_payload index))) &&\n     (!za zb zargs base mid ty. cm_expr_payload\n        (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type))\n          za zb zargs =\n        (fact(~(za == 0i) && zb == 0i && zargs == 0i) **\n         cm_expr_node za base (cm_expr_payload base))) &&\n     (!za zb zargs fid args ty. cm_expr_payload\n        (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type))\n          za zb zargs =\n        (fact(za == 0i && zb == 0i) ** cm_arg_tree args zargs)) &&\n     (!za zb zargs asked ty. cm_expr_payload\n        (CMSizeofE (asked:cm_type) (ty:cm_type)) za zb zargs =\n        (fact(za == 0i && zb == 0i && zargs == 0i))) &&\n     (!za zb zargs ty. cm_expr_payload\n        (CMGetcE (ty:cm_type)) za zb zargs =\n        (fact(za == 0i && zb == 0i && zargs == 0i))) &&\n     (!za zb zargs arg ty. cm_expr_payload\n        (CMPutcE (arg:cm_expr) (ty:cm_type)) za zb zargs =\n        (fact(~(za == 0i) && zb == 0i && zargs == 0i) **\n         cm_expr_node za arg (cm_expr_payload arg))) &&\n     (!za zb zargs arg ty. cm_expr_payload\n        (CMPutiE (arg:cm_expr) (ty:cm_type)) za zb zargs =\n        (fact(~(za == 0i) && zb == 0i && zargs == 0i) **\n         cm_expr_node za arg (cm_expr_payload arg))) &&\n     (!za zb zargs arg ty. cm_expr_payload\n        (CMExitE (arg:cm_expr) (ty:cm_type)) za zb zargs =\n        (fact(~(za == 0i) && zb == 0i && zargs == 0i) **\n         cm_expr_node za arg (cm_expr_payload arg))) &&\n     (!p. cm_arg_tree ([]:(cm_expr)list) (p:int) = fact(p == 0i)) &&\n     (!arg args p. cm_arg_tree\n        ((arg:cm_expr)::(args:(cm_expr)list)) (p:int) =\n        (exists ze zn.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_arg Fexpr) Tptr ze **\n          data_at (field_addr p Tcm_arg Fnext) Tptr zn **\n          cm_expr_node ze arg (cm_expr_payload arg) **\n          cm_arg_tree args zn))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_expr_rep_def",
+    "primary": "cm_expr_rep",
+    "span": [
+      567,
+      569
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_expr_rep_def = new_fun_definition(\n    `cm_expr_rep (p:int) (e:cm_expr) : hprop =\n       cm_expr_node p e (cm_expr_payload e)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_arg_list_rep_def",
+    "primary": "cm_arg_list_rep",
+    "span": [
+      570,
+      572
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_arg_list_rep_def = new_fun_definition(\n    `cm_arg_list_rep (p:int) (args:(cm_expr)list) : hprop =\n       cm_arg_tree args p`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_stmt_kind_def",
+    "primary": "cm_rep_stmt_kind",
+    "span": [
+      574,
+      590
+    ],
+    "nonblank_lines": 17,
+    "text": "PROOF thm cm_rep_stmt_kind_def = new_rec_definition(\n    get_cm_stmt_recursion(),\n    `(cm_rep_stmt_kind CMSkipS = 0i) &&\n     (!e. cm_rep_stmt_kind (CMExprS (e:cm_expr)) = 1i) &&\n     (!slot. cm_rep_stmt_kind (CMDeclS (slot:int)) = 2i) &&\n     (!slot e. cm_rep_stmt_kind\n        (CMInitS (slot:int) (e:cm_expr)) = 3i) &&\n     (!a b. cm_rep_stmt_kind\n        (CMSeqS (a:cm_stmt) (b:cm_stmt)) = 4i) &&\n     (!a. cm_rep_stmt_kind (CMBlockS (a:cm_stmt)) = 5i) &&\n     (!e a b. cm_rep_stmt_kind\n        (CMIfS (e:cm_expr) (a:cm_stmt) (b:cm_stmt)) = 6i) &&\n     (!e a. cm_rep_stmt_kind\n        (CMWhileS (e:cm_expr) (a:cm_stmt)) = 7i) &&\n     (cm_rep_stmt_kind CMBreakS = 8i) &&\n     (cm_rep_stmt_kind CMContinueS = 9i) &&\n     (!e. cm_rep_stmt_kind (CMReturnS (e:cm_expr)) = 10i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_stmt_slot_def",
+    "primary": "cm_rep_stmt_slot",
+    "span": [
+      592,
+      608
+    ],
+    "nonblank_lines": 17,
+    "text": "PROOF thm cm_rep_stmt_slot_def = new_rec_definition(\n    get_cm_stmt_recursion(),\n    `(cm_rep_stmt_slot CMSkipS = 0i) &&\n     (!e. cm_rep_stmt_slot (CMExprS (e:cm_expr)) = 0i) &&\n     (!slot. cm_rep_stmt_slot (CMDeclS (slot:int)) = slot) &&\n     (!slot e. cm_rep_stmt_slot\n        (CMInitS (slot:int) (e:cm_expr)) = slot) &&\n     (!a b. cm_rep_stmt_slot\n        (CMSeqS (a:cm_stmt) (b:cm_stmt)) = 0i) &&\n     (!a. cm_rep_stmt_slot (CMBlockS (a:cm_stmt)) = 0i) &&\n     (!e a b. cm_rep_stmt_slot\n        (CMIfS (e:cm_expr) (a:cm_stmt) (b:cm_stmt)) = 0i) &&\n     (!e a. cm_rep_stmt_slot\n        (CMWhileS (e:cm_expr) (a:cm_stmt)) = 0i) &&\n     (cm_rep_stmt_slot CMBreakS = 0i) &&\n     (cm_rep_stmt_slot CMContinueS = 0i) &&\n     (!e. cm_rep_stmt_slot (CMReturnS (e:cm_expr)) = 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_stmt_node_def",
+    "primary": "cm_stmt_node",
+    "span": [
+      610,
+      622
+    ],
+    "nonblank_lines": 13,
+    "text": "PROOF thm cm_stmt_node_def = new_fun_definition(\n    `cm_stmt_node (p:int) (s:cm_stmt)\n       (payload:int->int->int->hprop) : hprop =\n       (exists ze za zb.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_stmt Fkind) Tint\n            (cm_rep_stmt_kind s) **\n          data_at (field_addr p Tcm_stmt Fslot) Tint\n            (cm_rep_stmt_slot s) **\n          data_at (field_addr p Tcm_stmt Fexpr) Tptr ze **\n          data_at (field_addr p Tcm_stmt Fa) Tptr za **\n          data_at (field_addr p Tcm_stmt Fb) Tptr zb **\n          payload ze za zb)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_stmt_payload_def",
+    "primary": "cm_stmt_payload",
+    "span": [
+      624,
+      663
+    ],
+    "nonblank_lines": 40,
+    "text": "PROOF thm cm_stmt_payload_def = new_rec_definition(\n    get_cm_stmt_recursion(),\n    `(!ze za zb. cm_stmt_payload CMSkipS ze za zb =\n        fact(ze == 0i && za == 0i && zb == 0i)) &&\n     (!ze za zb e. cm_stmt_payload (CMExprS (e:cm_expr)) ze za zb =\n        (fact(~(ze == 0i) && za == 0i && zb == 0i) **\n         cm_expr_rep ze e)) &&\n     (!ze za zb slot. cm_stmt_payload\n        (CMDeclS (slot:int)) ze za zb =\n        fact(ze == 0i && za == 0i && zb == 0i)) &&\n     (!ze za zb slot e. cm_stmt_payload\n        (CMInitS (slot:int) (e:cm_expr)) ze za zb =\n        (fact(~(ze == 0i) && za == 0i && zb == 0i) **\n         cm_expr_rep ze e)) &&\n     (!ze za zb a b. cm_stmt_payload\n        (CMSeqS (a:cm_stmt) (b:cm_stmt)) ze za zb =\n        (fact(ze == 0i) **\n         cm_stmt_node za a (cm_stmt_payload a) **\n         cm_stmt_node zb b (cm_stmt_payload b))) &&\n     (!ze za zb a. cm_stmt_payload\n        (CMBlockS (a:cm_stmt)) ze za zb =\n        (fact(ze == 0i && ~(za == 0i) && zb == 0i) **\n         cm_stmt_node za a (cm_stmt_payload a))) &&\n     (!ze za zb e a b. cm_stmt_payload\n        (CMIfS (e:cm_expr) (a:cm_stmt) (b:cm_stmt)) ze za zb =\n        (cm_expr_rep ze e **\n         cm_stmt_node za a (cm_stmt_payload a) **\n         cm_stmt_node zb b (cm_stmt_payload b))) &&\n     (!ze za zb e a. cm_stmt_payload\n        (CMWhileS (e:cm_expr) (a:cm_stmt)) ze za zb =\n        (fact(~(ze == 0i) && ~(za == 0i) && zb == 0i) **\n         cm_expr_rep ze e **\n         cm_stmt_node za a (cm_stmt_payload a))) &&\n     (!ze za zb. cm_stmt_payload CMBreakS ze za zb =\n        fact(ze == 0i && za == 0i && zb == 0i)) &&\n     (!ze za zb. cm_stmt_payload CMContinueS ze za zb =\n        fact(ze == 0i && za == 0i && zb == 0i)) &&\n     (!ze za zb e. cm_stmt_payload (CMReturnS (e:cm_expr)) ze za zb =\n        (fact(~(ze == 0i) && za == 0i && zb == 0i) **\n         cm_expr_rep ze e))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_stmt_rep_def",
+    "primary": "cm_stmt_rep",
+    "span": [
+      665,
+      667
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_stmt_rep_def = new_fun_definition(\n    `cm_stmt_rep (p:int) (s:cm_stmt) : hprop =\n       cm_stmt_node p s (cm_stmt_payload s)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_slot_list_rep_def",
+    "primary": "cm_slot_list_rep",
+    "span": [
+      900,
+      912
+    ],
+    "nonblank_lines": 13,
+    "text": "PROOF thm cm_slot_list_rep_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(!p. cm_slot_list_rep (p:int) ([]:(cm_slot_d)list) = fact(p == 0i)) &&\n     (!p slot rest. cm_slot_list_rep (p:int)\n        ((slot:cm_slot_d) :: (rest:(cm_slot_d)list)) =\n        (exists zn.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_slot Fty) Tint\n            (cm_type_encode (cm_slot_ty slot)) **\n          data_at (field_addr p Tcm_slot Fcount) Tint\n            (cm_slot_count slot) **\n          data_at (field_addr p Tcm_slot Fnext) Tptr zn **\n          cm_slot_list_rep zn rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_member_list_rep_def",
+    "primary": "cm_member_list_rep",
+    "span": [
+      914,
+      926
+    ],
+    "nonblank_lines": 13,
+    "text": "PROOF thm cm_member_list_rep_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(!p. cm_member_list_rep (p:int) ([]:(cm_slot_d)list) = fact(p == 0i)) &&\n     (!p slot rest. cm_member_list_rep (p:int)\n        ((slot:cm_slot_d) :: (rest:(cm_slot_d)list)) =\n        (exists zn.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_member Fty) Tint\n            (cm_type_encode (cm_slot_ty slot)) **\n          data_at (field_addr p Tcm_member Fcount) Tint\n            (cm_slot_count slot) **\n          data_at (field_addr p Tcm_member Fnext) Tptr zn **\n          cm_member_list_rep zn rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_struct_list_rep_def",
+    "primary": "cm_struct_list_rep",
+    "span": [
+      928,
+      938
+    ],
+    "nonblank_lines": 11,
+    "text": "PROOF thm cm_struct_list_rep_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(!p. cm_struct_list_rep (p:int) ([]:(cm_struct_d)list) = fact(p == 0i)) &&\n     (!p strct rest. cm_struct_list_rep (p:int)\n        ((strct:cm_struct_d) :: (rest:(cm_struct_d)list)) =\n        (exists zm zn.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_struct Fmembers) Tptr zm **\n          data_at (field_addr p Tcm_struct Fnext) Tptr zn **\n          cm_member_list_rep zm (cm_struct_members strct) **\n          cm_struct_list_rep zn rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_bool_def",
+    "primary": "cm_rep_bool",
+    "span": [
+      940,
+      941
+    ],
+    "nonblank_lines": 2,
+    "text": "PROOF thm cm_rep_bool_def = new_fun_definition(\n    `cm_rep_bool (b:bool) : int = (if b then 1i else 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_global_list_rep_def",
+    "primary": "cm_global_list_rep",
+    "span": [
+      943,
+      959
+    ],
+    "nonblank_lines": 17,
+    "text": "PROOF thm cm_global_list_rep_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(!p. cm_global_list_rep (p:int) ([]:(cm_global_d)list) = fact(p == 0i)) &&\n     (!p g rest. cm_global_list_rep (p:int)\n        ((g:cm_global_d) :: (rest:(cm_global_d)list)) =\n        (exists zn.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_global Fty) Tint\n            (cm_type_encode (cm_global_ty g)) **\n          data_at (field_addr p Tcm_global Fcount) Tint\n            (cm_global_count g) **\n          data_at (field_addr p Tcm_global Fhas_init) Tint\n            (cm_rep_bool (cm_global_has_init g)) **\n          data_at (field_addr p Tcm_global Finit) Tint64\n            (cm_global_init g) **\n          data_at (field_addr p Tcm_global Fnext) Tptr zn **\n          cm_global_list_rep zn rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_uint8_buffer_def",
+    "primary": "cm_uint8_buffer",
+    "span": [
+      961,
+      965
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_uint8_buffer_def = new_fun_definition(\n    `cm_uint8_buffer (p:int) (bytes:(int)list) : hprop =\n       (if bytes == [] then emp\n        else fact(~(p == 0i)) **\n             store_uint8_array p (ilength bytes) bytes)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_string_length_def",
+    "primary": "cm_rep_string_length",
+    "span": [
+      967,
+      969
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_rep_string_length_def = new_fun_definition(\n    `cm_rep_string_length (string:cm_string_d) : int =\n       ilength (cm_string_bytes string)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_string_size_def",
+    "primary": "cm_rep_string_size",
+    "span": [
+      970,
+      972
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_rep_string_size_def = new_fun_definition(\n    `cm_rep_string_size (string:cm_string_d) : int =\n       cm_rep_string_length string + 1i`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_strings_size_def",
+    "primary": "cm_rep_strings_size",
+    "span": [
+      973,
+      979
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_rep_strings_size_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_strings_size ([]:(cm_string_d)list) = 0i) &&\n     (!string rest.\n        cm_rep_strings_size\n          ((string:cm_string_d) :: (rest:(cm_string_d)list)) =\n        cm_rep_string_size string + cm_rep_strings_size rest)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_strings_prefix_def",
+    "primary": "cm_rep_strings_prefix",
+    "span": [
+      980,
+      990
+    ],
+    "nonblank_lines": 11,
+    "text": "PROOF thm cm_rep_strings_prefix_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_strings_prefix ([]:(cm_string_d)list)\n        (index:int) = 0i) &&\n     (!string rest index.\n        cm_rep_strings_prefix\n          ((string:cm_string_d) :: (rest:(cm_string_d)list))\n          (index:int) =\n        (if index == 0i then 0i\n         else cm_rep_string_size string +\n              cm_rep_strings_prefix rest (index - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_string_list_rep_def",
+    "primary": "cm_string_list_rep",
+    "span": [
+      991,
+      1003
+    ],
+    "nonblank_lines": 13,
+    "text": "PROOF thm cm_string_list_rep_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(!p. cm_string_list_rep (p:int) ([]:(cm_string_d)list) = fact(p == 0i)) &&\n     (!p s rest. cm_string_list_rep (p:int)\n        ((s:cm_string_d) :: (rest:(cm_string_d)list)) =\n        (exists zb zn.\n          fact(~(p == 0i)) **\n          data_at (field_addr p Tcm_string Fbytes) Tptr zb **\n          data_at (field_addr p Tcm_string Flength) Tint\n            (cm_rep_string_length s) **\n          data_at (field_addr p Tcm_string Fnext) Tptr zn **\n          cm_uint8_buffer zb (cm_string_bytes s) **\n          cm_string_list_rep zn rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_slot_type_def",
+    "primary": "cm_rep_slot_type",
+    "span": [
+      1044,
+      1053
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF thm cm_rep_slot_type_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_slot_type ([]:(cm_slot_d)list) (index:int) = 0i) &&\n     (!slot rest index.\n        cm_rep_slot_type\n          ((slot:cm_slot_d) :: (rest:(cm_slot_d)list))\n          (index:int) =\n        (if index == 0i\n         then cm_type_encode (cm_slot_ty slot)\n         else cm_rep_slot_type rest (index - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_is_pointer_code_def",
+    "primary": "cm_rep_is_pointer_code",
+    "span": [
+      1054,
+      1056
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_rep_is_pointer_code_def = new_fun_definition(\n    `cm_rep_is_pointer_code (code:int) : int =\n       (if 1024i <= code then 1i else 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_leaf_size_def",
+    "primary": "cm_rep_leaf_size",
+    "span": [
+      1057,
+      1062
+    ],
+    "nonblank_lines": 6,
+    "text": "PROOF thm cm_rep_leaf_size_def = new_fun_definition(\n    `cm_rep_leaf_size (code:int) : int =\n       (if 1024i <= code then 8i\n        else if code == 0i then 8i\n        else if code == 1i then 1i\n        else 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_code_slot_size_def",
+    "primary": "cm_rep_code_slot_size",
+    "span": [
+      1063,
+      1067
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_rep_code_slot_size_def = new_fun_definition(\n    `cm_rep_code_slot_size (code:int) (count:int) : int =\n       (if count == 0i\n        then cm_rep_leaf_size code\n        else count * cm_rep_leaf_size code)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_member_size_def",
+    "primary": "cm_rep_member_size",
+    "span": [
+      1068,
+      1071
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_rep_member_size_def = new_fun_definition(\n    `cm_rep_member_size (member:cm_slot_d) : int =\n       cm_rep_code_slot_size\n         (cm_type_encode (cm_slot_ty member)) (cm_slot_count member)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_members_size_def",
+    "primary": "cm_rep_members_size",
+    "span": [
+      1072,
+      1078
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_rep_members_size_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_members_size ([]:(cm_slot_d)list) = 0i) &&\n     (!member rest.\n        cm_rep_members_size\n          ((member:cm_slot_d) :: (rest:(cm_slot_d)list)) =\n        cm_rep_member_size member + cm_rep_members_size rest)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_members_safe_def",
+    "primary": "cm_rep_members_safe",
+    "span": [
+      1079,
+      1088
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF thm cm_rep_members_safe_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_members_safe ([]:(cm_slot_d)list) = T) &&\n     (!member rest.\n        (cm_rep_members_safe\n          ((member:cm_slot_d) :: (rest:(cm_slot_d)list)) <=>\n         0i <= cm_rep_member_size member &&\n         0i <= cm_rep_members_size rest &&\n         cm_rep_members_size (member :: rest) <= 1048576i &&\n         cm_rep_members_safe rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_member_prefix_def",
+    "primary": "cm_rep_member_prefix",
+    "span": [
+      1089,
+      1097
+    ],
+    "nonblank_lines": 9,
+    "text": "PROOF thm cm_rep_member_prefix_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_member_prefix ([]:(cm_slot_d)list) (index:int) = 0i) &&\n     (!member rest index.\n        cm_rep_member_prefix\n          ((member:cm_slot_d) :: (rest:(cm_slot_d)list)) (index:int) =\n        (if index == 0i then 0i\n         else cm_rep_member_size member +\n              cm_rep_member_prefix rest (index - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_member_array_def",
+    "primary": "cm_rep_member_array",
+    "span": [
+      1098,
+      1106
+    ],
+    "nonblank_lines": 9,
+    "text": "PROOF thm cm_rep_member_array_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_member_array ([]:(cm_slot_d)list) (index:int) = 0i) &&\n     (!member rest index.\n        cm_rep_member_array\n          ((member:cm_slot_d) :: (rest:(cm_slot_d)list)) (index:int) =\n        (if index == 0i\n         then (if cm_slot_count member == 0i then 0i else 1i)\n         else cm_rep_member_array rest (index - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_nonzero_def",
+    "primary": "cm_rep_nonzero",
+    "span": [
+      1107,
+      1109
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_rep_nonzero_def = new_fun_definition(\n    `cm_rep_nonzero (n:int) : int =\n       (if n == 0i then 0i else 1i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_global_array_def",
+    "primary": "cm_rep_global_array",
+    "span": [
+      1110,
+      1119
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF thm cm_rep_global_array_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_global_array ([]:(cm_global_d)list) (index:int) = 0i) &&\n     (!global rest index.\n        cm_rep_global_array\n          ((global:cm_global_d) :: (rest:(cm_global_d)list))\n          (index:int) =\n        (if index == 0i\n         then (if cm_global_count global == 0i then 0i else 1i)\n         else cm_rep_global_array rest (index - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_global_size_def",
+    "primary": "cm_rep_global_size",
+    "span": [
+      1349,
+      1353
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_rep_global_size_def = new_fun_definition(\n    `cm_rep_global_size (global:cm_global_d) : int =\n       cm_rep_code_slot_size\n         (cm_type_encode (cm_global_ty global))\n         (cm_global_count global)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_globals_size_def",
+    "primary": "cm_rep_globals_size",
+    "span": [
+      1354,
+      1360
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_rep_globals_size_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_globals_size ([]:(cm_global_d)list) = 0i) &&\n     (!global rest.\n        cm_rep_globals_size\n          ((global:cm_global_d) :: (rest:(cm_global_d)list)) =\n        cm_rep_global_size global + cm_rep_globals_size rest)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_globals_safe_def",
+    "primary": "cm_rep_globals_safe",
+    "span": [
+      1361,
+      1370
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF thm cm_rep_globals_safe_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_globals_safe ([]:(cm_global_d)list) = T) &&\n     (!global rest.\n        (cm_rep_globals_safe\n          ((global:cm_global_d) :: (rest:(cm_global_d)list)) <=>\n         0i <= cm_rep_global_size global &&\n         0i <= cm_rep_globals_size rest &&\n         cm_rep_globals_size (global :: rest) <= 1048560i &&\n         cm_rep_globals_safe rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_globals_prefix_def",
+    "primary": "cm_rep_globals_prefix",
+    "span": [
+      1371,
+      1381
+    ],
+    "nonblank_lines": 11,
+    "text": "PROOF thm cm_rep_globals_prefix_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_globals_prefix ([]:(cm_global_d)list)\n        (index:int) = 0i) &&\n     (!global rest index.\n        cm_rep_globals_prefix\n          ((global:cm_global_d) :: (rest:(cm_global_d)list))\n          (index:int) =\n        (if index == 0i then 0i\n         else cm_rep_global_size global +\n              cm_rep_globals_prefix rest (index - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_global_address_def",
+    "primary": "cm_rep_global_address",
+    "span": [
+      1382,
+      1385
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_rep_global_address_def = new_fun_definition(\n    `cm_rep_global_address (globals:(cm_global_d)list)\n       (index:int) : int =\n       16i + cm_rep_globals_prefix globals index`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_string_address_def",
+    "primary": "cm_rep_string_address",
+    "span": [
+      1386,
+      1390
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_rep_string_address_def = new_fun_definition(\n    `cm_rep_string_address (globals:(cm_global_d)list)\n       (strings:(cm_string_d)list) (index:int) : int =\n       16i + cm_rep_globals_size globals +\n       cm_rep_strings_prefix strings index`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_args_length_def",
+    "primary": "cm_rep_args_length",
+    "span": [
+      1391,
+      1397
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_rep_args_length_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_args_length ([]:(cm_expr)list) = 0i) &&\n     (!arg rest.\n        cm_rep_args_length\n          ((arg:cm_expr) :: (rest:(cm_expr)list)) =\n        1i + cm_rep_args_length rest)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_args_safe_def",
+    "primary": "cm_rep_args_safe",
+    "span": [
+      1398,
+      1406
+    ],
+    "nonblank_lines": 9,
+    "text": "PROOF thm cm_rep_args_safe_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_args_safe ([]:(cm_expr)list) = T) &&\n     (!arg rest.\n        (cm_rep_args_safe\n          ((arg:cm_expr) :: (rest:(cm_expr)list)) <=>\n         0i <= cm_rep_args_length rest &&\n         cm_rep_args_length rest < 2147483647i &&\n         cm_rep_args_safe rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_tpair_safe_def",
+    "primary": "cm_rep_tpair_safe",
+    "span": [
+      1407,
+      1412
+    ],
+    "nonblank_lines": 6,
+    "text": "PROOF thm cm_rep_tpair_safe_def = new_fun_definition(\n    `cm_rep_tpair_safe (pair:cm_tpair) : bool =\n       (0i <= cm_tleft pair &&\n        cm_tleft pair <= 2147483647i &&\n        0i <= cm_tright pair &&\n        cm_tright pair <= 2147483647i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_apair_safe_def",
+    "primary": "cm_rep_apair_safe",
+    "span": [
+      1413,
+      1419
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_rep_apair_safe_def = new_fun_definition(\n    `cm_rep_apair_safe (pair:cm_apair) : bool =\n       (0i <= cm_acount pair &&\n        cm_acount pair <= 2147483647i &&\n        0i <= cm_adepth pair &&\n        cm_adepth pair <= 2147483647i &&\n        cm_acount pair + cm_adepth pair <= 2147483647i)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_expr_temps_safe_def",
+    "primary": "cm_rep_expr_temps_safe",
+    "span": [
+      1420,
+      1499
+    ],
+    "nonblank_lines": 80,
+    "text": "PROOF thm cm_rep_expr_temps_safe_def =\n  new_rec_definition(get_cm_expr_recursion(),\n    `(cm_rep_expr_temps_safe\n        (CMConstE (n:int) (ty:cm_type)) <=>\n        cm_rep_tpair_safe (cm_expr_tpair (CMConstE n ty))) &&\n     (cm_rep_expr_temps_safe\n        (CMStringE (sid:int) (ty:cm_type)) <=>\n        cm_rep_tpair_safe (cm_expr_tpair (CMStringE sid ty))) &&\n     (cm_rep_expr_temps_safe\n        (CMVarE (scope:int) (slot:int) (ty:cm_type)) <=>\n        cm_rep_tpair_safe (cm_expr_tpair (CMVarE scope slot ty))) &&\n     (!dst src ty.\n        (cm_rep_expr_temps_safe\n          (CMAssignE (dst:cm_expr) (src:cm_expr) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMAssignE dst src ty)) &&\n         cm_tright (cm_expr_tpair src) < 2147483647i &&\n         cm_rep_expr_temps_safe dst &&\n         cm_rep_expr_temps_safe src)) &&\n     (!op left right ty.\n        (cm_rep_expr_temps_safe\n          (CMBinaryE (op:int) (left:cm_expr) (right:cm_expr)\n            (ty:cm_type)) <=>\n         cm_rep_tpair_safe\n           (cm_expr_tpair (CMBinaryE op left right ty)) &&\n         cm_tright (cm_expr_tpair right) < 2147483647i &&\n         cm_rep_expr_temps_safe left &&\n         cm_rep_expr_temps_safe right)) &&\n     (!op arg ty.\n        (cm_rep_expr_temps_safe\n          (CMUnaryE (op:int) (arg:cm_expr) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMUnaryE op arg ty)) &&\n         cm_rep_expr_temps_safe arg)) &&\n     (!base index ty.\n        (cm_rep_expr_temps_safe\n          (CMIndexE (base:cm_expr) (index:cm_expr) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMIndexE base index ty)) &&\n         cm_tright (cm_expr_tpair index) < 2147483647i &&\n         cm_rep_expr_temps_safe base &&\n         cm_rep_expr_temps_safe index)) &&\n     (!base mid ty.\n        (cm_rep_expr_temps_safe\n          (CMMemberE (base:cm_expr) (mid:int) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMMemberE base mid ty)) &&\n         cm_rep_expr_temps_safe base)) &&\n     (!fid args ty.\n        (cm_rep_expr_temps_safe\n          (CMCallE (fid:int) (args:(cm_expr)list) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMCallE fid args ty)) &&\n         cm_rep_args_temps_safe args)) &&\n     (!asked ty.\n        (cm_rep_expr_temps_safe\n          (CMSizeofE (asked:cm_type) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMSizeofE asked ty)))) &&\n     (!ty.\n        (cm_rep_expr_temps_safe (CMGetcE (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMGetcE ty)))) &&\n     (!arg ty.\n        (cm_rep_expr_temps_safe\n          (CMPutcE (arg:cm_expr) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMPutcE arg ty)) &&\n         cm_rep_expr_temps_safe arg)) &&\n     (!arg ty.\n        (cm_rep_expr_temps_safe\n          (CMPutiE (arg:cm_expr) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMPutiE arg ty)) &&\n         cm_rep_expr_temps_safe arg)) &&\n     (!arg ty.\n        (cm_rep_expr_temps_safe\n          (CMExitE (arg:cm_expr) (ty:cm_type)) <=>\n         cm_rep_tpair_safe (cm_expr_tpair (CMExitE arg ty)) &&\n         cm_rep_expr_temps_safe arg)) &&\n     (cm_rep_args_temps_safe ([]:(cm_expr)list) <=>\n        cm_rep_apair_safe (cm_args_apair [])) &&\n     (!arg args.\n        (cm_rep_args_temps_safe\n          ((arg:cm_expr) :: (args:(cm_expr)list)) <=>\n         cm_rep_apair_safe (cm_args_apair (arg :: args)) &&\n         cm_acount (cm_args_apair args) < 2147483647i &&\n         cm_rep_expr_temps_safe arg &&\n         cm_rep_args_temps_safe args))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_stmt_children_safe_def",
+    "primary": "cm_rep_stmt_children_safe",
+    "span": [
+      1532,
+      1579
+    ],
+    "nonblank_lines": 48,
+    "text": "PROOF thm cm_rep_stmt_children_safe_def =\n  new_rec_definition(get_cm_stmt_recursion(),\n    `(cm_rep_stmt_children_safe CMSkipS <=> T) &&\n     (!expr.\n        (cm_rep_stmt_children_safe (CMExprS (expr:cm_expr)) <=>\n         cm_rep_expr_temps_safe expr)) &&\n     (!slot.\n        (cm_rep_stmt_children_safe (CMDeclS (slot:int)) <=> T)) &&\n     (!slot expr.\n        (cm_rep_stmt_children_safe\n          (CMInitS (slot:int) (expr:cm_expr)) <=>\n         cm_rep_expr_temps_safe expr)) &&\n     (!first second.\n        (cm_rep_stmt_children_safe\n          (CMSeqS (first:cm_stmt) (second:cm_stmt)) <=>\n         0i <= cm_stemps first &&\n         cm_stemps first <= 2147483647i &&\n         cm_rep_stmt_children_safe first &&\n         0i <= cm_stemps second &&\n         cm_stemps second <= 2147483647i &&\n         cm_rep_stmt_children_safe second)) &&\n     (!body.\n        (cm_rep_stmt_children_safe (CMBlockS (body:cm_stmt)) <=>\n         0i <= cm_stemps body &&\n         cm_stemps body <= 2147483647i &&\n         cm_rep_stmt_children_safe body)) &&\n     (!guard yes no.\n        (cm_rep_stmt_children_safe\n          (CMIfS (guard:cm_expr) (yes:cm_stmt) (no:cm_stmt)) <=>\n         cm_rep_expr_temps_safe guard &&\n         0i <= cm_stemps yes &&\n         cm_stemps yes <= 2147483647i &&\n         cm_rep_stmt_children_safe yes &&\n         0i <= cm_stemps no &&\n         cm_stemps no <= 2147483647i &&\n         cm_rep_stmt_children_safe no)) &&\n     (!guard body.\n        (cm_rep_stmt_children_safe\n          (CMWhileS (guard:cm_expr) (body:cm_stmt)) <=>\n         cm_rep_expr_temps_safe guard &&\n         0i <= cm_stemps body &&\n         cm_stemps body <= 2147483647i &&\n         cm_rep_stmt_children_safe body)) &&\n     (cm_rep_stmt_children_safe CMBreakS <=> T) &&\n     (cm_rep_stmt_children_safe CMContinueS <=> T) &&\n     (!expr.\n        (cm_rep_stmt_children_safe (CMReturnS (expr:cm_expr)) <=>\n         cm_rep_expr_temps_safe expr))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_stmt_temps_safe_def",
+    "primary": "cm_rep_stmt_temps_safe",
+    "span": [
+      1580,
+      1584
+    ],
+    "nonblank_lines": 5,
+    "text": "PROOF thm cm_rep_stmt_temps_safe_def = new_fun_definition(\n    `cm_rep_stmt_temps_safe (s:cm_stmt) : bool =\n       (0i <= cm_stemps s &&\n        cm_stemps s <= 2147483647i &&\n        cm_rep_stmt_children_safe s)`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_struct_size_def",
+    "primary": "cm_rep_struct_size",
+    "span": [
+      1727,
+      1735
+    ],
+    "nonblank_lines": 9,
+    "text": "PROOF thm cm_rep_struct_size_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_struct_size ([]:(cm_struct_d)list) (sid:int) = 0i) &&\n     (!strct rest sid.\n        cm_rep_struct_size\n          ((strct:cm_struct_d) :: (rest:(cm_struct_d)list)) (sid:int) =\n        (if sid == 0i\n         then cm_rep_members_size (cm_struct_members strct)\n         else cm_rep_struct_size rest (sid - 1i)))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_struct_member_prefix_def",
+    "primary": "cm_rep_struct_member_prefix",
+    "span": [
+      1736,
+      1746
+    ],
+    "nonblank_lines": 11,
+    "text": "PROOF thm cm_rep_struct_member_prefix_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_struct_member_prefix ([]:(cm_struct_d)list)\n        (sid:int) (index:int) = 0i) &&\n     (!strct rest sid index.\n        cm_rep_struct_member_prefix\n          ((strct:cm_struct_d) :: (rest:(cm_struct_d)list))\n          (sid:int) (index:int) =\n        (if sid == 0i\n         then cm_rep_member_prefix (cm_struct_members strct) index\n         else cm_rep_struct_member_prefix rest (sid - 1i) index))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_struct_member_array_def",
+    "primary": "cm_rep_struct_member_array",
+    "span": [
+      1747,
+      1757
+    ],
+    "nonblank_lines": 11,
+    "text": "PROOF thm cm_rep_struct_member_array_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_struct_member_array ([]:(cm_struct_d)list)\n        (sid:int) (index:int) = 0i) &&\n     (!strct rest sid index.\n        cm_rep_struct_member_array\n          ((strct:cm_struct_d) :: (rest:(cm_struct_d)list))\n          (sid:int) (index:int) =\n        (if sid == 0i\n         then cm_rep_member_array (cm_struct_members strct) index\n         else cm_rep_struct_member_array rest (sid - 1i) index))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_type_size_def",
+    "primary": "cm_rep_type_size",
+    "span": [
+      1869,
+      1875
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_rep_type_size_def = new_fun_definition(\n    `cm_rep_type_size (structs:(cm_struct_d)list)\n       (code:int) : int =\n       (if 1024i <= code then 8i\n        else if code == 0i then 8i\n        else if code == 1i then 1i\n        else cm_rep_struct_size structs (code - 2i))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_structs_safe_def",
+    "primary": "cm_rep_structs_safe",
+    "span": [
+      1876,
+      1883
+    ],
+    "nonblank_lines": 8,
+    "text": "PROOF thm cm_rep_structs_safe_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_structs_safe ([]:(cm_struct_d)list) = T) &&\n     (!strct rest.\n        (cm_rep_structs_safe\n          ((strct:cm_struct_d) :: (rest:(cm_struct_d)list)) <=>\n         cm_rep_members_safe (cm_struct_members strct) &&\n         cm_rep_structs_safe rest))`);"
+  },
+  {
+    "file": "baseline/cmc_rep.c",
+    "declaration": "cm_rep_strings_safe_def",
+    "primary": "cm_rep_strings_safe",
+    "span": [
+      1884,
+      1893
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF thm cm_rep_strings_safe_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_rep_strings_safe ([]:(cm_string_d)list) = T) &&\n     (!string rest.\n        (cm_rep_strings_safe\n          ((string:cm_string_d) :: (rest:(cm_string_d)list)) <=>\n         0i <= cm_rep_string_size string &&\n         0i <= cm_rep_strings_size rest &&\n         cm_rep_strings_size (string :: rest) <= 1048560i &&\n         cm_rep_strings_safe rest))`);"
+  },
+  {
+    "file": "baseline/cmc_concrete_defs.c",
+    "declaration": "cm_normalize_code_value_def",
+    "primary": "cm_normalize_code_value",
+    "span": [
+      2325,
+      2327
+    ],
+    "nonblank_lines": 3,
+    "text": "PROOF thm cm_normalize_code_value_def = new_fun_definition(\n    `cm_normalize_code_value (code:int) : int =\n       (if code == 1i then 6i else 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_concrete_defs.c",
+    "declaration": "cm_binding_array_code_def",
+    "primary": "cm_binding_array_code",
+    "span": [
+      3185,
+      3188
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_binding_array_code_def = new_fun_definition(\n    `cm_binding_array_code (p:cm_program) (fid:int)\n       (scope:int) (slot:int) : int =\n       (if cm_binding_array p fid scope slot then 1i else 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_concrete_defs.c",
+    "declaration": "cm_member_array_code_def",
+    "primary": "cm_member_array_code",
+    "span": [
+      3226,
+      3229
+    ],
+    "nonblank_lines": 4,
+    "text": "PROOF thm cm_member_array_code_def = new_fun_definition(\n    `cm_member_array_code (p:cm_program) (base:cm_type)\n       (mid:int) : int =\n       (if cm_member_array p base mid then 1i else 0i)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_binding_array_def",
+    "primary": "cm_binding_array",
+    "span": [
+      2884,
+      2893
+    ],
+    "nonblank_lines": 10,
+    "text": "PROOF thm cm_binding_array_def = new_fun_definition(\n    `cm_binding_array (p:cm_program) (fid:int)\n       (scope:int) (slot:int) : bool =\n       (if scope == 0i\n        then ~(cm_global_count (inth slot (cm_program_globals p)) == 0i)\n        else if scope == 1i\n             then ~(cm_slot_count\n               (inth slot (cm_function_locals\n                 (inth fid (cm_program_functions p)))) == 0i)\n             else F)`);"
+  },
+  {
+    "file": "baseline/cmc_lang.c",
+    "declaration": "cm_member_array_def",
+    "primary": "cm_member_array",
+    "span": [
+      2903,
+      2909
+    ],
+    "nonblank_lines": 7,
+    "text": "PROOF thm cm_member_array_def = new_fun_definition(\n    `cm_member_array (p:cm_program) (base:cm_type)\n       (mid:int) : bool =\n       ~(cm_slot_count\n         (inth mid (cm_struct_members\n           (inth (cm_struct_id (cm_pointee base))\n             (cm_program_structs p)))) == 0i)`);"
+  }
+]

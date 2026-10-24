@@ -1,0 +1,139 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "cm_emit_plan-call",
+      "location": "cm_emit_plan: immediately before cm_emit_resolved",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "op equals op@pre",
+        "immediate equals immediate@pre",
+        "Zlength(done) + 1 <= capacity",
+        "opcode encoding equality and non-CALL restriction"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done"
+      ],
+      "mathematical_state": "The logical fragment cons(TVMInst(opcode, immediate), nil) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_call_plan-call",
+      "location": "cm_emit_call_plan: immediately before cm_emit_resolved_call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "function_id equals function_id@pre",
+        "Zlength(done) + 1 <= capacity"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done"
+      ],
+      "mathematical_state": "The logical fragment cons(TVMInst(TVMCallOp, cm_function_pc(policy, p, function_id)), nil) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_normalize_plan-call",
+      "location": "cm_emit_normalize_plan: immediately before cm_emit_resolved_normalize",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "ty equals ty@pre",
+        "Zlength(done) + Zlength(cm_char_normalize_code(model_ty)) <= capacity",
+        "type encoding equality and type-code-wf"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done"
+      ],
+      "mathematical_state": "The logical fragment cm_char_normalize_code(model_ty) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_load_plan-call",
+      "location": "cm_emit_load_plan: immediately before cm_emit_resolved_load",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "ty equals ty@pre",
+        "Zlength(done) + Zlength(cm_load_code(model_ty)) <= capacity",
+        "type encoding equality and type-code-wf"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done"
+      ],
+      "mathematical_state": "The logical fragment cm_load_code(model_ty) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_store_plan-call",
+      "location": "cm_emit_store_plan: immediately before cm_emit_resolved_store",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "ty equals ty@pre",
+        "Zlength(done) + Zlength(cm_store_code(model_ty)) <= capacity",
+        "type encoding equality and type-code-wf"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done"
+      ],
+      "mathematical_state": "The logical fragment cm_store_code(model_ty) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_fp_address_plan-call",
+      "location": "cm_emit_fp_address_plan: immediately before cm_emit_resolved_fp_address",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "offset equals offset@pre",
+        "Zlength(done) + Zlength(cm_fp_relative_address_code(offset)) <= capacity"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done"
+      ],
+      "mathematical_state": "The logical fragment cm_fp_relative_address_code(offset) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_temp_store_plan-call",
+      "location": "cm_emit_temp_store_plan: immediately before cm_emit_resolved_temp_store",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "fn equals fn@pre",
+        "temp equals temp@pre",
+        "Zlength(done) + Zlength(cm_temp_store_code(policy, p, fid, temp)) <= capacity",
+        "all eight source temporary-emission facts"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done",
+        "complete cm_function_context_rep(fn, f, body, next)"
+      ],
+      "mathematical_state": "The logical fragment cm_temp_store_code(policy, p, fid, temp) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_temp_load_plan-call",
+      "location": "cm_emit_temp_load_plan: immediately before cm_emit_resolved_temp_load",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter equals emitter@pre",
+        "fn equals fn@pre",
+        "temp equals temp@pre",
+        "Zlength(done) + Zlength(cm_temp_load_code(policy, p, fid, temp)) <= capacity",
+        "all eight source temporary-emission facts"
+      ],
+      "resources": [
+        "cm_resolved_emitter_rep owns emitter, output and raw buffers for done",
+        "complete cm_function_context_rep(fn, f, body, next)"
+      ],
+      "mathematical_state": "The logical fragment cm_temp_load_code(policy, p, fid, temp) fits after done; app(done, fragment) leaves capacity for unchanged tail. Neither list is constrained by reachability or a fixed program.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

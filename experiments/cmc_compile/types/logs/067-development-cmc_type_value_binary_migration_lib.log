@@ -1,0 +1,31 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.302 secs (1.213u,0.068s)
+Chars 78 - 150 [Require~Export~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 151 - 196 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 197 - 218 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 219 - 244 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 245 - 344 [Lemma~cm_binary_short_result~o...] 0. secs (0.u,0.s)
+Chars 345 - 351 [Proof.] 0. secs (0.u,0.s)
+Chars 352 - 428 [(intros~[_~B]~[->|~->];~cbv~be...] 0.001 secs (0.u,0.s)
+Chars 429 - 433 [Qed.] 0. secs (0.u,0.s)
+Chars 434 - 1024 [Lemma~cm_v_binleft_type_ready_...] 0. secs (0.u,0.s)
+Chars 1025 - 1031 [Proof.] 0. secs (0.u,0.s)
+Chars 1033 - 1082 [(intros~CUR~FID~TYPES~VALUE;~r...] 0. secs (0.u,0.s)
+Chars 1084 - 1146 [(pose~proof~(proj1~TYPES)~as~E...] 0. secs (0.u,0.s)
+Chars 1148 - 1209 [(pose~proof~(cm_binary_operand...] 0. secs (0.u,0.s)
+Chars 1211 - 1327 [(destruct~ann~as~[pc~temp~brea...] 0. secs (0.u,0.s)
+Chars 1329 - 1527 [(cm_ty_value_reduce;~~~repeat~...] 0.584 secs (0.575u,0.007s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_value_binary_migration_lib.v", line 19, characters 1-28:
+Warning:
+"auto with *" was used through the default "intuition_solver" tactic.
+This will be replaced by just "auto" in the future.
+[intuition-auto-with-star,deprecated-since-8.17,deprecated,default]
+Chars 1529 - 1556 [all:~(try~(solve~[~intuition~])).] 0.71 secs (0.703u,0.004s)
+Chars 1558 - 1721 [all:~~(try~(solve~~~~[~apply~c...] 0. secs (0.u,0.s)
+Chars 1723 - 1779 [all:~(repeat~match~goal~with~~...] 0.003 secs (0.003u,0.s)
+Chars 1781 - 1890 [all:~~(match~goal~with~~~|~H:f...] 0. secs (0.u,0.s)
+Chars 1892 - 2000 [all:~~(assert~(T~:~ty~=~CMIntT...] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_value_binary_migration_lib.v", line 23, characters 14-15:
+Error: Unable to apply lemma of type
+ "forall n m : Z, (n =? m) = true <-> n = m" on hypothesis of type
+ "(op =? 0) = false".
+

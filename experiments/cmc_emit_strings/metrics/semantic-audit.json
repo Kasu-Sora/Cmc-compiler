@@ -1,0 +1,38 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cmc_emit_strings",
+      "source_contract_sha256": "14508348d96f436cb4d98899ef78eb01d48028a0f4a48e9a34fb38f9866ade5c",
+      "target_contract_sha256": "fe1d1389f2e11ba153a677844b000c33fecb75abec10a8499857d3f331077a84",
+      "checks": [
+        "Original strings safety retained and restored",
+        "Same nonnegative cursor, capacity bound and total output-space requirement",
+        "String-list ownership including every source byte buffer preserved",
+        "Original initialized prefix followed by exact cm_strings_bytes, with same undefined remainder",
+        "Exact returned cursor+representation size",
+        "No added nonnull data, nonempty string or string-wf precondition; empty list and empty strings remain valid"
+      ],
+      "adaptation": "Existing UCharArray segment predicates represent source initialized and undefined byte regions; same verified string models and ABI reused."
+    }
+  ],
+  "annotation_stage_model_declarations": [],
+  "inherited_model_boundary": "Immutable verified counts/layout/copy-bytes models; this case uses only concrete string bytes, sizes, safety and representation, and introduces no codegen or TVM assumptions.",
+  "review_method": "Manual comparison of source/target pre/post resources and definition conjuncts; hashes are drift checks, not an automatic equivalence proof.",
+  "buffer_bridge_review": "Existing string representation retains the source conditional buffer ownership (emp for empty bytes); conversion to copy helper full-buffer plus conditional nonnullness must be proved for empty and nonempty bytes. No new source nonnull premise.",
+  "final_verification": {
+    "run_id": "cmc_emit_strings_migration-20261016130735",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 1
+  },
+  "proof_audit": {
+    "manual_top_level": 3,
+    "proved_splits": 4,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 12,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

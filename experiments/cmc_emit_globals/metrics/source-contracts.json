@@ -1,0 +1,6 @@
+[
+  {
+    "function": "cmc_emit_globals",
+    "contract": "    [[cst::param(`structs:(cm_struct_d)list`,\n                 `globals:(cm_global_d)list`, `prefix:(int)list`)]]\n    [[cst::require(\n      `fact(cm_rep_globals_safe globals <=> true) **\n       fact(cm_data_globals_wf structs globals <=> true) **\n       fact(0i <= cursor) **\n       fact(cursor + cm_rep_globals_size globals <= capacity) **\n       fact(capacity <= 2147483647i) **\n       cm_global_list_rep node globals **\n       store_uint8_array data cursor prefix **\n       store_undef_uint8_array\n         (data + cursor * sizeof Tuchar) (capacity - cursor)`)]]\n    [[cst::ensure(\n      `fact(cm_rep_globals_safe globals <=> true) **\n       fact(cm_data_globals_wf structs globals <=> true) **\n       cm_global_list_rep node globals **\n       store_uint8_array data\n         (cursor + cm_rep_globals_size globals)\n         (prefix ++ cm_globals_bytes structs globals) **\n       store_undef_uint8_array\n         (data + (cursor + cm_rep_globals_size globals) * sizeof Tuchar)\n         (capacity - (cursor + cm_rep_globals_size globals)) **\n       fact((__return:int) ==\n         cursor + cm_rep_globals_size globals)`)]]"
+  }
+]

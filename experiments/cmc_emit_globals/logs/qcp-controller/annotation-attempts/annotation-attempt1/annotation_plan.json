@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-global",
+      "location": "cmc_emit_globals: after null return before descriptor reads and cmc_code_slot_size call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "All unchanged parameters retain their @pre values; node is nonnull and globals = head :: tail.",
+        "Head representation size lies in [0,1048560]; tail size is nonnegative.",
+        "cursor >= 0; cursor + head size + tail size <= capacity <= INT_MAX."
+      ],
+      "resources": [
+        "All five head descriptor fields, including long long init and next pointer.",
+        "cm_global_list_rep next tail.",
+        "UCharArray initialized prefix and undefined remaining suffix; all live locals are preserved."
+      ],
+      "mathematical_state": "The global list decomposes into one well-formed scalar-or-array descriptor and a well-formed safe tail, with sufficient remaining output capacity. The input byte prefix is still unchanged.",
+      "internal_predicates": []
+    },
+    {
+      "id": "head-emitted",
+      "location": "cmc_emit_globals: after all three write paths, before recursive call",
+      "purpose": "path-join",
+      "c_facts": [
+        "All unchanged parameters retain their @pre values; node is nonnull and globals = head :: tail.",
+        "Head representation size lies in [0,1048560]; tail size is nonnegative.",
+        "cursor >= 0; cursor + head size + tail size <= capacity <= INT_MAX.",
+        "All read locals equal the head descriptor projections; size64 and size equal head representation size."
+      ],
+      "resources": [
+        "All five head descriptor fields, including long long init and next pointer.",
+        "cm_global_list_rep next tail.",
+        "UCharArray initialized prefix and undefined remaining suffix; all live locals are preserved."
+      ],
+      "mathematical_state": "Every write path has appended precisely cm_global_bytes structs head to the original prefix; the remaining bytes are undefined and the entire tail remains owned for recursive emission.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

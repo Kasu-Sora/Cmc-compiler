@@ -1,0 +1,154 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "reload-open",
+      "location": "cm_emit_args_reload_plan: non-null argument decomposition and load-plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "arg != 0 yields args = head :: tail",
+        "0 <= slot; slot + Zlength args <= temp_limit <= INT_MAX",
+        "0 <= slot+1 <= INT_MAX; slot+1+Zlength tail <= temp_limit; temp_offset slot <= INT_MAX"
+      ],
+      "resources": [
+        "function context",
+        "arg expr/next fields, full head expression, full tail argument list",
+        "emitter plan for load(slot) ++ reload(slot+1,tail) ++ arbitrary tail"
+      ],
+      "mathematical_state": "The first argument corresponds to temporary slot; exact remaining reload code starts at slot+1.",
+      "internal_predicates": []
+    },
+    {
+      "id": "reload-close",
+      "location": "cm_emit_args_reload_plan: recursive suffix return and argument-list reassembly",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "arg pointer and slot/temp_limit retain entry values",
+        "args = head :: tail"
+      ],
+      "resources": [
+        "arg fields and complete child resources",
+        "emitter plan with done ++ load(slot) ++ reload(slot+1,tail)"
+      ],
+      "mathematical_state": "Fold the original argument list and associate the appended reload prefix.",
+      "internal_predicates": []
+    },
+    {
+      "id": "store-open",
+      "location": "cm_emit_args_store_plan: non-null argument decomposition and count-context call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "arg != 0 yields nonempty args",
+        "args_wf and args_counts_representable yield head wf/count and tail wf/count for slots tail"
+      ],
+      "resources": [
+        "program/function context",
+        "arg fields, full head expression and tail arguments",
+        "unchanged parent emitter plan"
+      ],
+      "mathematical_state": "The head expression is a valid arbitrary source expression whose exact count is returned by count-context.",
+      "internal_predicates": []
+    },
+    {
+      "id": "store-code",
+      "location": "cm_emit_args_store_plan: head expression, temporary store and recursive suffix calls",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "head_count = rvalue_code_count head",
+        "slot + Zlength args = scratch",
+        "scratch + args depth <= temp_limit <= INT_MAX",
+        "0 <= slot+1 <= INT_MAX and exact tail scratch equation",
+        "pc, pc+head_count, pc+head_count+5, head end and tail end satisfy int32 bounds"
+      ],
+      "resources": [
+        "program/function context",
+        "head/tail AST ownership and arg fields",
+        "plan split into head expression code, store(slot), and recursive tail code"
+      ],
+      "mathematical_state": "The exact code concatenation and its lengths justify each bounded recursive call and preserve the fixed scratch region.",
+      "internal_predicates": []
+    },
+    {
+      "id": "store-close",
+      "location": "cm_emit_args_store_plan: restore full argument-list resource",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "args = head :: tail; input pc/slot/scratch values unchanged"
+      ],
+      "resources": [
+        "complete arg-node fields and children",
+        "emitter plan with exact three consumed fragments"
+      ],
+      "mathematical_state": "Reassemble argument ownership and join the precise emitted prefix into the public store-code postcondition.",
+      "internal_predicates": []
+    },
+    {
+      "id": "call-open",
+      "location": "cm_emit_call_expr: call AST shape and expression field opening",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "lvalue = 0 on emitting branch",
+        "kind(e)=8 gives the exact call constructor with call_args e, rep_expr_value e, expr_type e",
+        "callee value is in int32 range from existing expression count facts"
+      ],
+      "resources": [
+        "all expression fields, null a/b pointers and full argument list",
+        "program/function and emitter resources"
+      ],
+      "mathematical_state": "Expose call payload without restricting the shape of any argument expression.",
+      "internal_predicates": []
+    },
+    {
+      "id": "call-store",
+      "location": "cm_emit_call_expr: rvalue branch argument resources, scratch allocation and store call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "temp+args length = scratch; 0 <= scratch <= temp_limit <= INT_MAX",
+        "scratch+args depth <= temp_limit",
+        "args wf uses the looked-up callee parameter list; argument counts and list length are safe",
+        "pc+store length is int32 from total code endpoint"
+      ],
+      "resources": [
+        "all expression fields and argument list",
+        "program/function contexts",
+        "plan for store ++ reload ++ singleton call ++ tail"
+      ],
+      "mathematical_state": "The call rvalue code begins with argument evaluation/storage while retaining the exact remaining reload/call suffix.",
+      "internal_predicates": []
+    },
+    {
+      "id": "call-reload",
+      "location": "cm_emit_call_expr: reload stored arguments and emit final call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "count = Zlength(call_args e)",
+        "original temp/temp_limit bounds retained",
+        "callee int64 value fits int32 for original implicit C conversion"
+      ],
+      "resources": [
+        "function context and unchanged full args",
+        "emitter plan for reload then singleton call"
+      ],
+      "mathematical_state": "Reload arguments in order, then append the call instruction with the existing total function-pc model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "call-close",
+      "location": "cm_emit_call_expr: both branches restore full expression resource",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "kind(e)=8 retained",
+        "rvalue branch emitted full call code; lvalue branch emitted empty code"
+      ],
+      "resources": [
+        "full expression resource folded on emitting path and unchanged on lvalue path",
+        "full program/function contexts and emitter with arbitrary tail"
+      ],
+      "mathematical_state": "Both branches satisfy the exact source cm_expr_code_for contract and return every original resource.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

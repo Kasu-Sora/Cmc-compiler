@@ -1,0 +1,75 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_assign_code_migration_lib.
+Goal True. idtac "AUDIT cmc_target_assign_code_migration_lib.cm_code_steps_append". exact I. Qed.
+Check cmc_target_assign_code_migration_lib.cm_code_steps_append.
+Print Assumptions cmc_target_assign_code_migration_lib.cm_code_steps_append.
+Goal True. idtac "AUDIT cmc_target_assign_code_migration_lib.cm_tvm_fp_load_empty". exact I. Qed.
+Check cmc_target_assign_code_migration_lib.cm_tvm_fp_load_empty.
+Print Assumptions cmc_target_assign_code_migration_lib.cm_tvm_fp_load_empty.
+Goal True. idtac "AUDIT cmc_target_assign_code_migration_lib.cm_store_reload_number". exact I. Qed.
+Check cmc_target_assign_code_migration_lib.cm_store_reload_number.
+Print Assumptions cmc_target_assign_code_migration_lib.cm_store_reload_number.
+Goal True. idtac "AUDIT cmc_target_assign_code_migration_lib.cm_tvm_assign_tail". exact I. Qed.
+Check cmc_target_assign_code_migration_lib.cm_tvm_assign_tail.
+Print Assumptions cmc_target_assign_code_migration_lib.cm_tvm_assign_tail.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_assign_migration_lib.
+Goal True. idtac "AUDIT cmc_target_assign_migration_lib.cm_spill_holds_range". exact I. Qed.
+Check cmc_target_assign_migration_lib.cm_spill_holds_range.
+Print Assumptions cmc_target_assign_migration_lib.cm_spill_holds_range.
+Goal True. idtac "AUDIT cmc_target_assign_migration_lib.cm_target_v_assign_right_step". exact I. Qed.
+Check cmc_target_assign_migration_lib.cm_target_v_assign_right_step.
+Print Assumptions cmc_target_assign_migration_lib.cm_target_v_assign_right_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_init_migration_lib.
+Goal True. idtac "AUDIT cmc_target_init_migration_lib.cm_store_address_valid". exact I. Qed.
+Check cmc_target_init_migration_lib.cm_store_address_valid.
+Print Assumptions cmc_target_init_migration_lib.cm_store_address_valid.
+Goal True. idtac "AUDIT cmc_target_init_migration_lib.cm_binding_local_number". exact I. Qed.
+Check cmc_target_init_migration_lib.cm_binding_local_number.
+Print Assumptions cmc_target_init_migration_lib.cm_binding_local_number.
+Goal True. idtac "AUDIT cmc_target_init_migration_lib.cm_target_v_init_step". exact I. Qed.
+Check cmc_target_init_migration_lib.cm_target_v_init_step.
+Print Assumptions cmc_target_init_migration_lib.cm_target_v_init_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_store_code_migration_lib.
+Goal True. idtac "AUDIT cmc_target_store_code_migration_lib.cm_tvm_convert". exact I. Qed.
+Check cmc_target_store_code_migration_lib.cm_tvm_convert.
+Print Assumptions cmc_target_store_code_migration_lib.cm_tvm_convert.
+Goal True. idtac "AUDIT cmc_target_store_code_migration_lib.cm_tvm_typed_store". exact I. Qed.
+Check cmc_target_store_code_migration_lib.cm_tvm_typed_store.
+Print Assumptions cmc_target_store_code_migration_lib.cm_tvm_typed_store.
+Goal True. idtac "AUDIT cmc_target_store_code_migration_lib.cm_tvm_address_store". exact I. Qed.
+Check cmc_target_store_code_migration_lib.cm_tvm_address_store.
+Print Assumptions cmc_target_store_code_migration_lib.cm_tvm_address_store.
+Goal True. idtac "AUDIT cmc_target_store_code_migration_lib.cm_tvm_init_code". exact I. Qed.
+Check cmc_target_store_code_migration_lib.cm_tvm_init_code.
+Print Assumptions cmc_target_store_code_migration_lib.cm_tvm_init_code.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_store_memory_migration_lib.
+Goal True. idtac "AUDIT cmc_target_store_memory_migration_lib.cm_call_frames_sim_store". exact I. Qed.
+Check cmc_target_store_memory_migration_lib.cm_call_frames_sim_store.
+Print Assumptions cmc_target_store_memory_migration_lib.cm_call_frames_sim_store.
+Goal True. idtac "AUDIT cmc_target_store_memory_migration_lib.cm_spill_list_sim_source_store". exact I. Qed.
+Check cmc_target_store_memory_migration_lib.cm_spill_list_sim_source_store.
+Print Assumptions cmc_target_store_memory_migration_lib.cm_spill_list_sim_source_store.
+Goal True. idtac "AUDIT cmc_target_store_memory_migration_lib.cm_spill_frames_sim_source_store". exact I. Qed.
+Check cmc_target_store_memory_migration_lib.cm_spill_frames_sim_source_store.
+Print Assumptions cmc_target_store_memory_migration_lib.cm_spill_frames_sim_source_store.
+Goal True. idtac "AUDIT cmc_target_store_memory_migration_lib.cm_machine_source_store". exact I. Qed.
+Check cmc_target_store_memory_migration_lib.cm_machine_source_store.
+Print Assumptions cmc_target_store_memory_migration_lib.cm_machine_source_store.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_store_runtime_migration_lib.
+Goal True. idtac "AUDIT cmc_target_store_runtime_migration_lib.cm_range_disjoint_subrange". exact I. Qed.
+Check cmc_target_store_runtime_migration_lib.cm_range_disjoint_subrange.
+Print Assumptions cmc_target_store_runtime_migration_lib.cm_range_disjoint_subrange.
+Goal True. idtac "AUDIT cmc_target_store_runtime_migration_lib.cm_call_range_subrange". exact I. Qed.
+Check cmc_target_store_runtime_migration_lib.cm_call_range_subrange.
+Print Assumptions cmc_target_store_runtime_migration_lib.cm_call_range_subrange.
+Goal True. idtac "AUDIT cmc_target_store_runtime_migration_lib.cm_spill_range_subrange". exact I. Qed.
+Check cmc_target_store_runtime_migration_lib.cm_spill_range_subrange.
+Print Assumptions cmc_target_store_runtime_migration_lib.cm_spill_range_subrange.
+Goal True. idtac "AUDIT cmc_target_store_runtime_migration_lib.cm_frames_range_subrange". exact I. Qed.
+Check cmc_target_store_runtime_migration_lib.cm_frames_range_subrange.
+Print Assumptions cmc_target_store_runtime_migration_lib.cm_frames_range_subrange.
+Goal True. idtac "AUDIT cmc_target_store_runtime_migration_lib.cm_machine_range_subrange". exact I. Qed.
+Check cmc_target_store_runtime_migration_lib.cm_machine_range_subrange.
+Print Assumptions cmc_target_store_runtime_migration_lib.cm_machine_range_subrange.
+Goal True. idtac "AUDIT cmc_target_store_runtime_migration_lib.cm_runtime_store_machine_safe". exact I. Qed.
+Check cmc_target_store_runtime_migration_lib.cm_runtime_store_machine_safe.
+Print Assumptions cmc_target_store_runtime_migration_lib.cm_runtime_store_machine_safe.

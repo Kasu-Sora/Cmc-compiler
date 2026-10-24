@@ -1,0 +1,35 @@
+{
+  "status": "kernel_checked_and_canonically_published",
+  "complete_original_invariants": 17,
+  "total_original_invariants": 18,
+  "top_level_verified": false,
+  "new_actual_steps": [
+    "V: unary",
+    "V: expression statement",
+    "V: putc/puti",
+    "V: if/while guard",
+    "V: typed load",
+    "V: halt/exit",
+    "C: block restoration and optional jump",
+    "C: loop body restoration and normal/break/continue jump"
+  ],
+  "new_support": [
+    "stack replacement",
+    "jump target validity",
+    "typed-load live span",
+    "byte normalization and status tail",
+    "scope restore memory/provenance/values/spills"
+  ],
+  "local_premises": "Local branch lemmas use projections of existing original invariants; these must still be discharged by full target-step dispatch. No C Require has changed.",
+  "remaining": [
+    "Start/prelude and call entry",
+    "S declaration/initialization activation",
+    "temporary stores and reloads",
+    "binary/index/member and assignment/initialization",
+    "C call return/fallthrough",
+    "full target simulation induction",
+    "original preservation and successful compile bridge",
+    "top-level QCP validation",
+    "skill update after top-level validation"
+  ]
+}

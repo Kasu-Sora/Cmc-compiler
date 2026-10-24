@@ -1,0 +1,38 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cmc_emit_data",
+      "source_contract_sha256": "9a3a423bb120e3ac7b3b50ab6837b88501dc05216ada085e3e91297e7858905b",
+      "target_contract_sha256": "52a614b391dd3caa83f65ceca2b6723fd787ff001bb5a8181ead8dcce5b5bf2a",
+      "checks": [
+        "All seven original pure preconditions also explicitly retained in Ensure: globals-safe, data-globals-wf, strings-safe, both size lower bounds, combined capacity and INT_MAX bound",
+        "Both global-list and string-list ownership restored, including source string byte arrays",
+        "Require empty initialized prefix and entire undefined destination",
+        "Ensure exact ((zeros 8 ++ cm_globals_bytes structs globals) ++ cm_strings_bytes strings)",
+        "Exact return and buffer boundary (8+globals_size)+strings_size; undefined remainder preserved",
+        "No added nonnull data or extra program/global/string validity conditions"
+      ],
+      "adaptation": "Existing UCharArray segment predicates express original destination regions. Builtin zeros 8 is repeat 0 (Z.to_nat 8), matching source ireplicate 8 0; prior global/string models and ABI are unchanged."
+    }
+  ],
+  "annotation_stage_model_declarations": [],
+  "inherited_model_boundary": "Immutable verified globals/strings/counts/layout/copy/word models; no new model, codegen obligation or TVM assumption introduced.",
+  "review_method": "Manual comparison of source/target conditions, resource ownership, arithmetic grouping and byte order; hashes detect drift and do not prove semantic equivalence.",
+  "composition_review": "Eight zeros followed by globals followed by strings, preserving original left-associated concatenation and original three helper contracts.",
+  "final_verification": {
+    "run_id": "cmc_emit_data_migration-20261016132808",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 1
+  },
+  "proof_audit": {
+    "manual_top_level": 4,
+    "proved_splits": 5,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 7,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

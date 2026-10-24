@@ -1,0 +1,143 @@
+{
+  "generation": 7,
+  "run_id": "cmc_compile_migration-20261019230022",
+  "case": "cmc_compile_migration",
+  "phase": "annotation",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_compile_migration-20261019230022",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_compile_migration-20261019230022",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_compile_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_compile_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_compile_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_compile_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_compile_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_compile_migration_goal_check.v",
+    "case_name": "cmc_compile_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_compile_migration-20261019230022/public_helper_lemma_lib.v",
+    "sha256": "d1dd6612ab2c2ca4fcb706e953f0d05ed1e858e7308c8a5d8dce3d87c228be6d",
+    "declaration_count": 0,
+    "helper_count": 0
+  },
+  "problem_context": {
+    "problem_statement": "Migrate top-level cmc_compile from /Users/nizitong/cmc/cmc.c to QCP, including necessary proof support. Original snapshot /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/baseline/cstar_project is authoritative; cmc.h contract, cmc_rep.c predicates, cmc.c proof bridge and cmc_correct.c preservation must retain exact meaning. Preserve all runtime tokens, helper bodies remain existing independently verified modules, ABI unchanged. Reuse all verified cmc_*migration_lib and group support libraries, particularly compile_ready, program_ready, emit_code, patch_calls, emit_data, counts. Do not import previous proof_auto/proof_manual as axiom bases.\nRequire original cm_program_rep and cm_output_pre. Ensure exact original disjunction: return 0 with unchanged program rep and cm_output_ok OR return 1 with unchanged program rep and cm_output_capacity. Preserve full ownership including unused buffer tails and capacity failure writes (both required lengths assigned and entry -1), success entry 0. Preserve original capacity and integer bounds; no added caller assumptions or hidden trusted helper.\nCRITICAL: cm_output_ok contains semantic preservation for arbitrary decoded object and source terminating I/O/status; it is not just exact emitted arrays. cmc_compile_success_bridge uses cm_model_output_decodes, cm_output_decode_unique, and cmc_preservation. These mathematical dependencies may not yet exist in Rocq. Must inspect and migrate required actual source and TVM semantic definitions/theorems, retaining exact meaning. Do not replace preservation with Axiom/Admitted/Parameter, opaque arbitrary semantics, tautology, codegen obligation field, assumption in precondition, or weaker postcondition. Existing policy/cg parameterization needs a faithful concrete semantic instantiation where necessary. If an actual dependency cannot be supplied within annotation/proof topology, report exact controller blocker and paths, not success.\nKeep count of new public definitions/lemmas separately from module annotation/proof and list reused supports; retain all failures/repairs. Follow complete controller workflow until done or explicit blocker. Main will audit original source replay and effort and update skill only after successful full verification."
+  },
+  "formal_case_lib_policy": "create",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-19T15:00:22.242923Z"
+  },
+  "symexec_profile": {
+    "name": "standard",
+    "timeout_seconds": 3600,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 12,
+  "max_parallel_group_workers": 3,
+  "dune_preparation": null,
+  "rounds": {
+    "cmc_compile_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_compile_migration-annotation-r1-attempt-1"
+    }
+  },
+  "attempts": {
+    "cmc_compile_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_compile_migration-annotation-r1-attempt-1",
+      "round": "cmc_compile_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "blocked",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_compile_migration-20261019230022/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_compile_migration-20261019230022/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_compile_migration-20261019230022/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_compile_migration-20261019230022/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_compile_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_compile_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_compile_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_compile_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_compile_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_compile_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-19T15:00:39.740573Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_compile_migration-20261019230022/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_compile_migration-20261019230022/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "ea13cd974446a16a3a259b121b3a27976706531c1dbf1a359fbc26d6c96917b5",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "input_sha256": "3170d97669e6e96e955f27005dd5e8ebe0df422e992ecdb4a826dd93825fe18f",
+      "owner": "annotation/cmc_compile_migration-20261019230022",
+      "started_at": "2026-10-19T15:00:49.765426Z",
+      "delivery": {
+        "action_id": "spawn-cmc_compile_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_compile_migration-20261019230022",
+        "claimed_at": "2026-10-19T15:00:49.765426Z",
+        "finalized_at": "2026-10-19T15:05:02.820308Z"
+      },
+      "returned_at": "2026-10-19T15:05:02.820308Z",
+      "artifact_sha256": {
+        "report": "6886e4bdcc4bbd1a5c7109638d275a202326f5bcef1a01c19cfdbb5a9a171fa7",
+        "plan": "baa791371a518049f10fd6a7c1bd382375629596e3909e70b4030829b2b928a3",
+        "output": "b650a3959569db15ee9ae89e3b146d6d80ffe995853a533b6f9072fd58b03a8e"
+      },
+      "after_snapshot": {
+        "digest": "ea13cd974446a16a3a259b121b3a27976706531c1dbf1a359fbc26d6c96917b5",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "changed_files": [],
+      "annotation_activity": "validation-only",
+      "finished_at": "2026-10-19T15:05:02.868106Z",
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-19T15:05:02.801623Z",
+            "finished_at": "2026-10-19T15:05:02.868106Z",
+            "elapsed_seconds": 0.061303
+          }
+        ]
+      }
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_compile_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_compile_migration-annotation-r1-attempt-1",
+    "iteration_count": 1,
+    "owner": "annotation/cmc_compile_migration-20261019230022"
+  },
+  "accepted_rounds": {},
+  "next_actions": [
+    {
+      "id": "annotation-feedback-cmc_compile_migration-annotation-r1-attempt-1",
+      "kind": "main-owned-action",
+      "action": "retry-round",
+      "phase": "annotation",
+      "reason": "annotation-blocked",
+      "previous_attempt": "cmc_compile_migration-annotation-r1-attempt-1"
+    }
+  ],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": null,
+  "final_apply": null,
+  "final_check": null,
+  "created_at": "2026-10-19T15:00:22.242927Z",
+  "updated_at": "2026-10-19T15:05:15.137519Z"
+}

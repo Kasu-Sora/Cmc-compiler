@@ -1,0 +1,942 @@
+Chars 0 - 79 [Require~Import~~~SimpleC.EE.QC...] 1.292 secs (1.209u,0.069s)
+Chars 80 - 90 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_control_basic_migration_lib.cm_c_block_layout_step
+Chars 91 - 165 [idtac~"AUDIT~cmc_code_control_...] 0. secs (0.u,0.s)
+Chars 166 - 174 [exact~I.] 0. secs (0.u,0.s)
+Chars 175 - 179 [Qed.] 0. secs (0.u,0.s)
+cm_c_block_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (env : BinNums.Z -> BinNums.Z -> cm_value)
+         (regions : list cm_region) (jump : bool)
+         (target pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CABlockP env regions jump target) owner ob oc :: tail)
+           spills saved calls in
+       cm_control_kind ctl <>
+       BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH)) ->
+       cm_c_regular_ready ap ctl ann ->
+       cm_task_layout sp ap p
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_capply sp p fid (CMBlockK env regions) ctl st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_c sp ap p fid ctl st ann
+               (CABlockP env regions jump target)))
+Chars 180 - 246 [Check~cmc_code_control_basic_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 247 - 325 [Print~Assumptions~cmc_code_con...] 0.005 secs (0.005u,0.s)
+Chars 326 - 336 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_control_basic_migration_lib.cm_c_seq_layout_step
+Chars 337 - 409 [idtac~"AUDIT~cmc_code_control_...] 0. secs (0.u,0.s)
+Chars 410 - 418 [exact~I.] 0. secs (0.u,0.s)
+Chars 419 - 423 [Qed.] 0. secs (0.u,0.s)
+cm_c_seq_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (second : cm_stmt)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CASeqP second) owner ob oc :: tail) spills saved calls
+         in
+       cm_control_kind ctl <>
+       BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH)) ->
+       cm_c_regular_ready ap ctl ann ->
+       cm_task_layout sp ap p
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_capply sp p fid (CMSeqK second) ctl st (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_c sp ap p fid ctl st ann (CASeqP second)))
+Chars 424 - 488 [Check~cmc_code_control_basic_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 489 - 565 [Print~Assumptions~cmc_code_con...] 0.115 secs (0.106u,0.007s)
+Chars 566 - 644 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 645 - 655 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_control_loop_migration_lib.cm_c_while_layout_step
+Chars 656 - 729 [idtac~"AUDIT~cmc_code_control_...] 0. secs (0.u,0.s)
+Chars 730 - 738 [exact~I.] 0. secs (0.u,0.s)
+Chars 739 - 743 [Qed.] 0. secs (0.u,0.s)
+cm_c_while_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (guard : cm_expr) (body : cm_stmt)
+         (env : BinNums.Z -> BinNums.Z -> cm_value)
+         (regions : list cm_region)
+         (loop_start loop_end pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let phase := CAWhileBodyP guard body env regions loop_start loop_end
+         in
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_control_kind ctl <>
+       BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH)) ->
+       cm_control_kind ctl <>
+       BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH)) ->
+       loop_end =
+       BinInt.Z.add
+         (BinInt.Z.add
+            (BinInt.Z.add
+               (BinInt.Z.add loop_start
+                  (cm_rvalue_code_count (cm_source_function_policy sp) p fid
+                     guard)) (BinNums.Zpos BinNums.xH))
+            (cm_stmt_code_count (cm_source_function_policy sp) p fid body))
+         (BinNums.Zpos BinNums.xH) ->
+       cm_task_layout sp ap p
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Chars 744 - 809 [Check~cmc_code_control_loop_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 810 - 887 [Print~Assumptions~cmc_code_con...] 0.125 secs (0.122u,0.003s)
+Chars 888 - 898 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_control_loop_migration_lib.cm_c_call_layout_step
+Chars 899 - 971 [idtac~"AUDIT~cmc_code_control_...] 0. secs (0.u,0.s)
+Chars 972 - 980 [exact~I.] 0. secs (0.u,0.s)
+Chars 981 - 985 [Qed.] 0. secs (0.u,0.s)
+cm_c_call_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (caller : BinNums.Z)
+         (env : BinNums.Z -> BinNums.Z -> cm_value) 
+         (fp : BinNums.Z) (regions : list cm_region) 
+         (ret : cm_type) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let phase := CACallP caller env fp regions ret in
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_control_kind ctl = BinNums.Z0 \/
+       cm_control_kind ctl = BinNums.Zpos (BinNums.xI BinNums.xH) ->
+       cm_task_layout sp ap p
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Chars 986 - 1050 [Check~cmc_code_control_loop_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1051 - 1127 [Print~Assumptions~cmc_code_con...] 0.093 secs (0.092u,0.s)
+Chars 1128 - 1207 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 1208 - 1218 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_control_total_migration_lib.cm_c_phase_layout_step
+Chars 1219 - 1293 [idtac~"AUDIT~cmc_code_control_...] 0. secs (0.u,0.s)
+Chars 1294 - 1302 [exact~I.] 0. secs (0.u,0.s)
+Chars 1303 - 1307 [Qed.] 0. secs (0.u,0.s)
+cm_c_phase_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_control_kind ctl <>
+       BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH)) ->
+       cm_c_phase_ready ap ctl ann phase ->
+       cm_c_code_ready (cm_source_function_policy sp) p fid ann phase ->
+       cm_task_layout sp ap p
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Chars 1308 - 1374 [Check~cmc_code_control_total_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1375 - 1453 [Print~Assumptions~cmc_code_con...] 0.329 secs (0.323u,0.006s)
+Chars 1454 - 1464 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_control_total_migration_lib.cm_c_task_layout_step
+Chars 1465 - 1538 [idtac~"AUDIT~cmc_code_control_...] 0. secs (0.u,0.s)
+Chars 1539 - 1547 [exact~I.] 0. secs (0.u,0.s)
+Chars 1548 - 1552 [Qed.] 0. secs (0.u,0.s)
+cm_c_task_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_annotation_erases (CMCTask p fid ctl st ks) ann ->
+       cm_c_layout_ready (cm_source_function_policy sp) ap p fid ctl ann ->
+       cm_task_layout sp ap p (CMCTask p fid ctl st ks) ann ->
+       cm_task_layout sp ap p (cm_step sp (CMCTask p fid ctl st ks))
+         (cm_update_annotation
+            (cm_annotation_step sp ap (CMCTask p fid ctl st ks) ann))
+Chars 1553 - 1618 [Check~cmc_code_control_total_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1619 - 1696 [Print~Assumptions~cmc_code_con...] 0.158 secs (0.156u,0.001s)
+Chars 1697 - 1779 [Require~Import~~~SimpleC.EE.QC...] 0.003 secs (0.001u,0.s)
+Chars 1780 - 1790 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_invariant_migration_lib.cm_task_layout_step_support
+Chars 1791 - 1873 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 1874 - 1882 [exact~I.] 0. secs (0.u,0.s)
+Chars 1883 - 1887 [Qed.] 0. secs (0.u,0.s)
+cm_task_layout_step_support
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (task : cm_task)
+         (ann : cm_annotation),
+       cm_task_succeeds sp task ->
+       cm_annotation_erases task ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p task ann ->
+       cm_task_layout_ready sp ap p task ann ->
+       cm_task_layout sp ap p task ann ->
+       cm_task_layout sp ap p (cm_step sp task)
+         (cm_update_annotation (cm_annotation_step sp ap task ann))
+Chars 1888 - 1962 [Check~cmc_code_layout_invarian...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1963 - 2049 [Print~Assumptions~cmc_code_lay...] 0.887 secs (0.876u,0.005s)
+Chars 2050 - 2060 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_invariant_migration_lib.cm_code_support_initial
+Chars 2061 - 2139 [idtac~"AUDIT~cmc_code_layout_i...] 0. secs (0.u,0.s)
+Chars 2140 - 2148 [exact~I.] 0. secs (0.u,0.s)
+Chars 2149 - 2153 [Qed.] 0. secs (0.u,0.s)
+cm_code_support_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_code_support_invariants sp ap nilslot p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Chars 2154 - 2224 [Check~cmc_code_layout_invarian...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2225 - 2307 [Print~Assumptions~cmc_code_lay...] 0.033 secs (0.031u,0.s)
+Chars 2308 - 2318 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_invariant_migration_lib.cm_code_support_step
+Chars 2319 - 2394 [idtac~"AUDIT~cmc_code_layout_i...] 0. secs (0.u,0.s)
+Chars 2395 - 2403 [exact~I.] 0. secs (0.u,0.s)
+Chars 2404 - 2408 [Qed.] 0. secs (0.u,0.s)
+cm_code_support_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_code_support_invariants sp ap nilslot p ast ->
+       cm_code_support_invariants sp ap nilslot p
+         (cm_annotated_step sp ap ast)
+Chars 2409 - 2476 [Check~cmc_code_layout_invarian...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2477 - 2556 [Print~Assumptions~cmc_code_lay...] 7.06 secs (7.026u,0.025s)
+Chars 2557 - 2567 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_invariant_migration_lib.cm_code_support_iter
+Chars 2568 - 2643 [idtac~"AUDIT~cmc_code_layout_i...] 0. secs (0.u,0.s)
+Chars 2644 - 2652 [exact~I.] 0. secs (0.u,0.s)
+Chars 2653 - 2657 [Qed.] 0. secs (0.u,0.s)
+cm_code_support_iter
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (n : nat) 
+         (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_code_support_invariants sp ap nilslot p ast ->
+       cm_code_support_invariants sp ap nilslot p
+         (cm_annotated_iter sp ap n ast)
+Chars 2658 - 2725 [Check~cmc_code_layout_invarian...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2726 - 2805 [Print~Assumptions~cmc_code_lay...] 6.969 secs (6.944u,0.023s)
+Chars 2806 - 2816 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_invariant_migration_lib.cm_source_termination_code_invariants
+Chars 2817 - 2909 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 2910 - 2918 [exact~I.] 0. secs (0.u,0.s)
+Chars 2919 - 2923 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_code_invariants
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program)
+         (input output : list BinNums.Z) (status : BinNums.Z) 
+         (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_code_support_invariants sp ap nilslot p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Chars 2924 - 3008 [Check~~~cmc_code_layout_invari...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3009 - 3105 [Print~Assumptions~cmc_code_lay...] 7.559 secs (7.215u,0.136s)
+Chars 3106 - 3116 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_invariant_migration_lib.cm_source_termination_code_layout
+Chars 3117 - 3205 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 3206 - 3214 [exact~I.] 0. secs (0.u,0.s)
+Chars 3215 - 3219 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_code_layout
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy),
+       cm_slot_d ->
+       forall (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_task_layout sp ap p
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+         (cm_astate_annotation
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Chars 3220 - 3300 [Check~~~cmc_code_layout_invari...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3301 - 3393 [Print~Assumptions~cmc_code_lay...] 7.003 secs (6.978u,0.021s)
+Chars 3394 - 3472 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 3473 - 3483 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_binary_migration_lib.cm_v_binary_r_layout_step
+Chars 3484 - 3560 [idtac~"AUDIT~cmc_code_value_bi...] 0. secs (0.u,0.s)
+Chars 3561 - 3569 [exact~I.] 0. secs (0.u,0.s)
+Chars 3570 - 3574 [Qed.] 0. secs (0.u,0.s)
+cm_v_binary_r_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (op : BinNums.Z) (lhs rhs : cm_expr)
+         (left : cm_value) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CABinRP op lhs rhs left ty) owner ob oc :: tail)
+           spills saved calls in
+       cm_binary_ok p op left v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMBinRK op left ty) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CABinRP op lhs rhs left ty)))
+Chars 3575 - 3643 [Check~cmc_code_value_binary_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3644 - 3724 [Print~Assumptions~cmc_code_val...] 0.007 secs (0.007u,0.s)
+Chars 3725 - 3735 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_binary_migration_lib.cm_v_binary_l_layout_step
+Chars 3736 - 3812 [idtac~"AUDIT~cmc_code_value_bi...] 0. secs (0.u,0.s)
+Chars 3813 - 3821 [exact~I.] 0. secs (0.u,0.s)
+Chars 3822 - 3826 [Qed.] 0. secs (0.u,0.s)
+cm_v_binary_l_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (op : BinNums.Z) (lhs rhs : cm_expr)
+         (ty : cm_type) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CABinLP op lhs rhs ty) owner ob oc :: tail) spills
+           saved calls in
+       temp = owner ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMBinLK op rhs ty) v st (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CABinLP op lhs rhs ty)))
+Chars 3827 - 3895 [Check~cmc_code_value_binary_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3896 - 3976 [Print~Assumptions~cmc_code_val...] 0.133 secs (0.133u,0.s)
+Chars 3977 - 4055 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 4056 - 4066 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_branch_migration_lib.cm_v_while_guard_layout_step
+Chars 4067 - 4146 [idtac~~"AUDIT~cmc_code_value_b...] 0. secs (0.u,0.s)
+Chars 4147 - 4155 [exact~I.] 0. secs (0.u,0.s)
+Chars 4156 - 4160 [Qed.] 0. secs (0.u,0.s)
+cm_v_while_guard_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (guard : cm_expr) (body : cm_stmt)
+         (loop_start loop_end pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAWhileGuardP guard body loop_start loop_end) owner ob
+              oc :: tail) spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMWhileGuardK guard body) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann
+               (CAWhileGuardP guard body loop_start loop_end)))
+Chars 4161 - 4232 [Check~cmc_code_value_branch_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4233 - 4316 [Print~Assumptions~cmc_code_val...] 0.102 secs (0.101u,0.s)
+Chars 4317 - 4327 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_branch_migration_lib.cm_v_if_layout_step
+Chars 4328 - 4398 [idtac~"AUDIT~cmc_code_value_br...] 0. secs (0.u,0.s)
+Chars 4399 - 4407 [exact~I.] 0. secs (0.u,0.s)
+Chars 4408 - 4412 [Qed.] 0. secs (0.u,0.s)
+cm_v_if_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (yes no : cm_stmt)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls
+         in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMIfK yes no) v st (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAIfP yes no)))
+Chars 4413 - 4475 [Check~cmc_code_value_branch_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4476 - 4550 [Print~Assumptions~cmc_code_val...] 0.098 secs (0.097u,0.s)
+Chars 4551 - 4627 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 4628 - 4638 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_call_migration_lib.cm_v_arg_cons_layout_step
+Chars 4639 - 4713 [idtac~"AUDIT~cmc_code_value_ca...] 0. secs (0.u,0.s)
+Chars 4714 - 4722 [exact~I.] 0. secs (0.u,0.s)
+Chars 4723 - 4727 [Qed.] 0. secs (0.u,0.s)
+cm_v_arg_cons_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (callee : BinNums.Z) 
+         (arg : cm_expr) (args : list cm_expr) (values : list cm_value)
+         (ret : cm_type) (all_args : list cm_expr)
+         (base current scratch pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let phase :=
+         CAArgP callee (arg :: args) values ret all_args base current scratch
+         in
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Chars 4728 - 4794 [Check~cmc_code_value_call_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4795 - 4873 [Print~Assumptions~cmc_code_val...] 0.097 secs (0.096u,0.s)
+Chars 4874 - 4884 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_call_migration_lib.cm_v_arg_nil_layout_step
+Chars 4885 - 4958 [idtac~"AUDIT~cmc_code_value_ca...] 0. secs (0.u,0.s)
+Chars 4959 - 4967 [exact~I.] 0. secs (0.u,0.s)
+Chars 4968 - 4972 [Qed.] 0. secs (0.u,0.s)
+cm_v_arg_nil_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (callee : BinNums.Z) 
+         (values : list cm_value) (ret : cm_type) 
+         (all_args : list cm_expr)
+         (base current scratch pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let phase :=
+         CAArgP callee nil values ret all_args base current scratch in
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_call_ok sp p callee (List.rev (v :: values)) st = true ->
+       BinInt.Z.lt (cm_call_depth (cm_cursor_frames tail))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Chars 4973 - 5038 [Check~cmc_code_value_call_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5039 - 5116 [Print~Assumptions~cmc_code_val...] 0.099 secs (0.099u,0.s)
+Chars 5117 - 5193 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 5194 - 5204 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_flow_migration_lib.cm_v_assign_l_layout_step
+Chars 5205 - 5279 [idtac~"AUDIT~cmc_code_value_fl...] 0. secs (0.u,0.s)
+Chars 5280 - 5288 [exact~I.] 0. secs (0.u,0.s)
+Chars 5289 - 5293 [Qed.] 0. secs (0.u,0.s)
+cm_v_assign_l_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (src : cm_expr) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAAssignLP src ty) owner ob oc :: tail) spills saved
+           calls in
+       temp = owner ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMAssignLK src ty) v st (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAAssignLP src ty)))
+Chars 5294 - 5360 [Check~cmc_code_value_flow_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5361 - 5439 [Print~Assumptions~cmc_code_val...] 0.097 secs (0.096u,0.s)
+Chars 5440 - 5450 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_flow_migration_lib.cm_v_index_l_layout_step
+Chars 5451 - 5524 [idtac~"AUDIT~cmc_code_value_fl...] 0. secs (0.u,0.s)
+Chars 5525 - 5533 [exact~I.] 0. secs (0.u,0.s)
+Chars 5534 - 5538 [Qed.] 0. secs (0.u,0.s)
+cm_v_index_l_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (index : cm_expr) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAIndexLP index ty) owner ob oc :: tail) spills saved
+           calls in
+       temp = owner ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMIndexLK index ty) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAIndexLP index ty)))
+Chars 5539 - 5604 [Check~cmc_code_value_flow_migr...] 0.004 secs (0.004u,0.s)
+Closed under the global context
+Chars 5605 - 5682 [Print~Assumptions~cmc_code_val...] 0.094 secs (0.094u,0.s)
+Chars 5683 - 5693 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_flow_migration_lib.cm_v_init_layout_step
+Chars 5694 - 5764 [idtac~"AUDIT~cmc_code_value_fl...] 0. secs (0.u,0.s)
+Chars 5765 - 5773 [exact~I.] 0. secs (0.u,0.s)
+Chars 5774 - 5778 [Qed.] 0. secs (0.u,0.s)
+cm_v_init_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (slot pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls
+         in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (CMInitK slot) v st (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAInitP slot)))
+Chars 5779 - 5841 [Check~cmc_code_value_flow_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5842 - 5916 [Print~Assumptions~cmc_code_val...] 0.006 secs (0.005u,0.s)
+Chars 5917 - 5927 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_flow_migration_lib.cm_v_return_layout_step
+Chars 5928 - 6000 [idtac~"AUDIT~cmc_code_value_fl...] 0. secs (0.u,0.s)
+Chars 6001 - 6009 [exact~I.] 0. secs (0.u,0.s)
+Chars 6010 - 6014 [Qed.] 0. secs (0.u,0.s)
+cm_v_return_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor CAReturnP owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid CMReturnK v st (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann CAReturnP))
+Chars 6015 - 6079 [Check~cmc_code_value_flow_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6080 - 6156 [Print~Assumptions~cmc_code_val...] 0.002 secs (0.002u,0.s)
+Chars 6157 - 6167 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_flow_migration_lib.cm_v_halt_layout_step
+Chars 6168 - 6238 [idtac~"AUDIT~cmc_code_value_fl...] 0. secs (0.u,0.s)
+Chars 6239 - 6247 [exact~I.] 0. secs (0.u,0.s)
+Chars 6248 - 6252 [Qed.] 0. secs (0.u,0.s)
+cm_v_halt_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid CMHaltK v st (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann CAHaltP))
+Chars 6253 - 6315 [Check~cmc_code_value_flow_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6316 - 6390 [Print~Assumptions~cmc_code_val...] 0. secs (0.u,0.s)
+Chars 6391 - 6401 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_flow_migration_lib.cm_v_exit_layout_step
+Chars 6402 - 6472 [idtac~"AUDIT~cmc_code_value_fl...] 0. secs (0.u,0.s)
+Chars 6473 - 6481 [exact~I.] 0. secs (0.u,0.s)
+Chars 6482 - 6486 [Qed.] 0. secs (0.u,0.s)
+cm_v_exit_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor CAExitP owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid CMExitK v st (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann CAExitP))
+Chars 6487 - 6549 [Check~cmc_code_value_flow_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6550 - 6624 [Print~Assumptions~cmc_code_val...] 0.09 secs (0.09u,0.s)
+Chars 6625 - 6704 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 6705 - 6715 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_helpers_migration_lib.cm_value_layout_tail
+Chars 6716 - 6788 [idtac~"AUDIT~cmc_code_value_he...] 0. secs (0.u,0.s)
+Chars 6789 - 6797 [exact~I.] 0. secs (0.u,0.s)
+Chars 6798 - 6802 [Qed.] 0. secs (0.u,0.s)
+cm_value_layout_tail
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (pc temp b c : BinNums.Z) (phase : cm_aphase)
+         (owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       cm_phase_stops phase = false ->
+       cm_phase_is_call phase = false ->
+       cm_task_layout sp ap p (CMVTask p fid v st ks)
+         (CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+            spills saved calls) ->
+       cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+         (BinInt.Z.add pc
+            (Zcomplements.Zlength
+               (cm_value_phase_code sp p fid pc temp owner ob oc phase)))
+         (cm_cursor_code sp p fid
+            (BinInt.Z.add pc
+               (Zcomplements.Zlength
+                  (cm_value_phase_code sp p fid pc temp owner ob oc phase)))
+            owner (cm_phase_yields_normal phase) tail) /\
+       cm_saved_layout sp ap p
+         (cm_model_code (cm_source_function_policy sp) p) fid tail calls
+Chars 6803 - 6867 [Check~cmc_code_value_helpers_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6868 - 6944 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.004u,0.s)
+Chars 6945 - 6955 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_helpers_migration_lib.cm_code_at_empty
+Chars 6956 - 7024 [idtac~"AUDIT~cmc_code_value_he...] 0. secs (0.u,0.s)
+Chars 7025 - 7033 [exact~I.] 0. secs (0.u,0.s)
+Chars 7034 - 7038 [Qed.] 0. secs (0.u,0.s)
+cm_code_at_empty
+     : forall (code : list ?A) (pc : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 pc /\
+       BinInt.Z.le pc (Zcomplements.Zlength code) -> 
+       cm_code_at code pc nil
+where
+?A : [ |- Type]
+Chars 7039 - 7099 [Check~cmc_code_value_helpers_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7100 - 7172 [Print~Assumptions~cmc_code_val...] 0.093 secs (0.091u,0.s)
+Chars 7173 - 7183 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_helpers_migration_lib.cm_error_control_code
+Chars 7184 - 7257 [idtac~"AUDIT~cmc_code_value_he...] 0. secs (0.u,0.s)
+Chars 7258 - 7266 [exact~I.] 0. secs (0.u,0.s)
+Chars 7267 - 7271 [Qed.] 0. secs (0.u,0.s)
+cm_error_control_code
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid pc temp b c status : BinNums.Z) (cursors : list cm_acursor),
+       cm_control_phase_code sp p fid pc temp b c (CMError status) cursors =
+       cm_normal_cont_code sp p fid pc temp cursors
+Chars 7272 - 7337 [Check~cmc_code_value_helpers_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7338 - 7415 [Print~Assumptions~cmc_code_val...] 0. secs (0.u,0.s)
+Chars 7416 - 7426 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_helpers_migration_lib.cm_layout_exit_empty
+Chars 7427 - 7499 [idtac~"AUDIT~cmc_code_value_he...] 0. secs (0.u,0.s)
+Chars 7500 - 7508 [exact~I.] 0. secs (0.u,0.s)
+Chars 7509 - 7513 [Qed.] 0. secs (0.u,0.s)
+cm_layout_exit_empty
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid status : BinNums.Z) 
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_saved_layout sp ap p
+         (cm_model_code (cm_source_function_policy sp) p) fid
+         (cm_ann_cursors ann) (cm_ann_calls ann) ->
+       BinInt.Z.le BinNums.Z0 (cm_ann_pc ann) /\
+       BinInt.Z.le (cm_ann_pc ann)
+         (Zcomplements.Zlength
+            (cm_model_code (cm_source_function_policy sp) p)) ->
+       cm_task_layout sp ap p (CMCTask p fid (CMExit status) st ks) ann
+Chars 7514 - 7578 [Check~cmc_code_value_helpers_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7579 - 7655 [Print~Assumptions~cmc_code_val...] 0.091 secs (0.09u,0.s)
+Chars 7656 - 7734 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 7735 - 7745 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_load_layout_step
+Chars 7746 - 7818 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 7819 - 7827 [exact~I.] 0. secs (0.u,0.s)
+Chars 7828 - 7832 [Qed.] 0. secs (0.u,0.s)
+cm_v_load_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CALoadP ty) owner ob oc :: tail) spills saved calls in
+       cm_load_ok ty v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame (CALoadP ty)) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CALoadP ty)))
+Chars 7833 - 7897 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7898 - 7974 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 7975 - 7985 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_assign_r_layout_step
+Chars 7986 - 8062 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 8063 - 8071 [exact~I.] 0. secs (0.u,0.s)
+Chars 8072 - 8076 [Qed.] 0. secs (0.u,0.s)
+cm_v_assign_r_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (ptr : cm_value) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+           calls in
+       cm_store_ok ty ptr st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame (CAAssignRP ptr ty)) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAAssignRP ptr ty)))
+Chars 8077 - 8145 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8146 - 8226 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 8227 - 8237 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_unary_layout_step
+Chars 8238 - 8311 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 8312 - 8320 [exact~I.] 0. secs (0.u,0.s)
+Chars 8321 - 8325 [Qed.] 0. secs (0.u,0.s)
+cm_v_unary_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (op pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAUnaryP op) owner ob oc :: tail) spills saved calls
+         in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame (CAUnaryP op)) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAUnaryP op)))
+Chars 8326 - 8391 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8392 - 8469 [Print~Assumptions~cmc_code_val...] 0.007 secs (0.007u,0.s)
+Chars 8470 - 8480 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_index_r_layout_step
+Chars 8481 - 8556 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 8557 - 8565 [exact~I.] 0. secs (0.u,0.s)
+Chars 8566 - 8570 [Qed.] 0. secs (0.u,0.s)
+cm_v_index_r_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (base : cm_value) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAIndexRP base ty) owner ob oc :: tail) spills saved
+           calls in
+       cm_ptr_shift_ok (cm_program_structs p) base (cm_value_number st v) st =
+       true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame (CAIndexRP base ty)) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAIndexRP base ty)))
+Chars 8571 - 8638 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8639 - 8718 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 8719 - 8729 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_member_layout_step
+Chars 8730 - 8804 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 8805 - 8813 [exact~I.] 0. secs (0.u,0.s)
+Chars 8814 - 8818 [Qed.] 0. secs (0.u,0.s)
+cm_v_member_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (mid : BinNums.Z) (base_ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CAMemberP mid base_ty) owner ob oc :: tail) spills
+           saved calls in
+       cm_ptr_member_ok sp p v mid st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame (CAMemberP mid base_ty)) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CAMemberP mid base_ty)))
+Chars 8819 - 8885 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8886 - 8964 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 8965 - 8975 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_putc_layout_step
+Chars 8976 - 9048 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 9049 - 9057 [exact~I.] 0. secs (0.u,0.s)
+Chars 9058 - 9062 [Qed.] 0. secs (0.u,0.s)
+cm_v_putc_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor CAPutcP owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame CAPutcP) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann CAPutcP))
+Chars 9063 - 9127 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9128 - 9204 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 9205 - 9215 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_puti_layout_step
+Chars 9216 - 9288 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 9289 - 9297 [exact~I.] 0. secs (0.u,0.s)
+Chars 9298 - 9302 [Qed.] 0. secs (0.u,0.s)
+cm_v_puti_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor CAPutiP owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame CAPutiP) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann CAPutiP))
+Chars 9303 - 9367 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9368 - 9444 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 9445 - 9455 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_linear_migration_lib.cm_v_expr_stmt_layout_step
+Chars 9456 - 9533 [idtac~"AUDIT~cmc_code_value_li...] 0. secs (0.u,0.s)
+Chars 9534 - 9542 [exact~I.] 0. secs (0.u,0.s)
+Chars 9543 - 9547 [Qed.] 0. secs (0.u,0.s)
+cm_v_expr_stmt_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor CAExprStmtP owner ob oc :: tail)
+           spills saved calls in
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame CAExprStmtP) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann CAExprStmtP))
+Chars 9548 - 9617 [Check~cmc_code_value_linear_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9618 - 9699 [Print~Assumptions~cmc_code_val...] 0.005 secs (0.005u,0.s)
+Chars 9700 - 9777 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 9778 - 9788 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_total_migration_lib.cm_v_phase_layout_step
+Chars 9789 - 9861 [idtac~"AUDIT~cmc_code_value_to...] 0. secs (0.u,0.s)
+Chars 9862 - 9870 [exact~I.] 0. secs (0.u,0.s)
+Chars 9871 - 9875 [Qed.] 0. secs (0.u,0.s)
+cm_v_phase_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_v_temp_ready ap ann phase ->
+       cm_v_phase_ready sp p v st ann phase ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames tail))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Chars 9876 - 9940 [Check~cmc_code_value_total_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9941 - 10017 [Print~Assumptions~cmc_code_val...] 0.153 secs (0.152u,0.001s)
+Chars 10018 - 10028 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_value_total_migration_lib.cm_v_task_layout_step
+Chars 10029 - 10100 [idtac~"AUDIT~cmc_code_value_to...] 0. secs (0.u,0.s)
+Chars 10101 - 10109 [exact~I.] 0. secs (0.u,0.s)
+Chars 10110 - 10114 [Qed.] 0. secs (0.u,0.s)
+cm_v_task_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_annotation_erases (CMVTask p fid v st ks) ann ->
+       cm_v_layout_ready sp ap p v st ann ->
+       cm_task_layout sp ap p (CMVTask p fid v st ks) ann ->
+       cm_task_layout sp ap p (cm_step sp (CMVTask p fid v st ks))
+         (cm_update_annotation
+            (cm_annotation_step sp ap (CMVTask p fid v st ks) ann))
+Chars 10115 - 10178 [Check~cmc_code_value_total_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10179 - 10254 [Print~Assumptions~cmc_code_val...] 0.15 secs (0.149u,0.s)

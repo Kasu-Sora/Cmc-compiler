@@ -1,0 +1,97 @@
+[
+  {
+    "name": "cmc_emit_globals",
+    "prototype": false,
+    "source_span": [
+      146,
+      629
+    ],
+    "specification": [
+      [
+        148,
+        149
+      ],
+      [
+        150,
+        159
+      ],
+      [
+        160,
+        171
+      ]
+    ],
+    "annotation": [
+      [
+        415,
+        415
+      ],
+      [
+        493,
+        493
+      ],
+      [
+        543,
+        543
+      ],
+      [
+        571,
+        571
+      ],
+      [
+        572,
+        572
+      ],
+      [
+        573,
+        576
+      ]
+    ],
+    "inline_proof": [
+      [
+        174,
+        211
+      ],
+      [
+        215,
+        319
+      ],
+      [
+        328,
+        356
+      ],
+      [
+        360,
+        381
+      ],
+      [
+        384,
+        414
+      ],
+      [
+        417,
+        451
+      ],
+      [
+        453,
+        492
+      ],
+      [
+        495,
+        531
+      ],
+      [
+        534,
+        542
+      ],
+      [
+        545,
+        568
+      ],
+      [
+        580,
+        627
+      ]
+    ],
+    "runtime": "int cmc_emit_globals(struct cm_global *node,\n                      unsigned char *data, int capacity, int cursor)\n{\n  if (node == 0) {\n    return cursor;\n  };\n  int type_code = node->ty;\n  int count = node->count;\n  int has_init = node->has_init;\n  long long init_value = node->init;\n  struct cm_global *next = node->next;\n  long long size64 = cmc_code_slot_size(type_code, count);\n  int size = (int)size64;\n  if (has_init) {\n    if (type_code == CMC_TYPE_CHAR) {\n      cmc_write_char(data, capacity, cursor, init_value);\n    } else {\n      cmc_write_word(data, capacity, cursor, init_value);\n    }\n  } else {\n    cmc_write_zeroes(data, capacity, cursor, size);\n  }\n  int final_cursor =\n      cmc_emit_globals(next, data, capacity, cursor + size);\n  return final_cursor;\n}\n"
+  }
+]

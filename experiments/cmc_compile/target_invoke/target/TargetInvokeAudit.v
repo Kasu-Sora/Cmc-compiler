@@ -1,0 +1,130 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_preservation_complete_migration_lib.
+Goal True. idtac "AUDIT cmc_preservation_complete_migration_lib.cm_full_support_original_invariant". exact I. Qed.
+Check cmc_preservation_complete_migration_lib.cm_full_support_original_invariant.
+Print Assumptions cmc_preservation_complete_migration_lib.cm_full_support_original_invariant.
+Goal True. idtac "AUDIT cmc_preservation_complete_migration_lib.cm_preservation_initial". exact I. Qed.
+Check cmc_preservation_complete_migration_lib.cm_preservation_initial.
+Print Assumptions cmc_preservation_complete_migration_lib.cm_preservation_initial.
+Goal True. idtac "AUDIT cmc_preservation_complete_migration_lib.cm_preservation_reachable". exact I. Qed.
+Check cmc_preservation_complete_migration_lib.cm_preservation_reachable.
+Print Assumptions cmc_preservation_complete_migration_lib.cm_preservation_reachable.
+Goal True. idtac "AUDIT cmc_preservation_complete_migration_lib.cmc_preservation". exact I. Qed.
+Check cmc_preservation_complete_migration_lib.cmc_preservation.
+Print Assumptions cmc_preservation_complete_migration_lib.cmc_preservation.
+Goal True. idtac "AUDIT cmc_preservation_complete_migration_lib.cmc_compile_success_bridge". exact I. Qed.
+Check cmc_preservation_complete_migration_lib.cmc_compile_success_bridge.
+Print Assumptions cmc_preservation_complete_migration_lib.cmc_compile_success_bridge.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_arg_call_migration_lib.
+Goal True. idtac "AUDIT cmc_target_arg_call_migration_lib.cm_target_v_arg_nil_step". exact I. Qed.
+Check cmc_target_arg_call_migration_lib.cm_target_v_arg_nil_step.
+Print Assumptions cmc_target_arg_call_migration_lib.cm_target_v_arg_nil_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_args_reload_migration_lib.
+Goal True. idtac "AUDIT cmc_target_args_reload_migration_lib.cm_tvm_fp_load_stack". exact I. Qed.
+Check cmc_target_args_reload_migration_lib.cm_tvm_fp_load_stack.
+Print Assumptions cmc_target_args_reload_migration_lib.cm_tvm_fp_load_stack.
+Goal True. idtac "AUDIT cmc_target_args_reload_migration_lib.cm_args_reload_app". exact I. Qed.
+Check cmc_target_args_reload_migration_lib.cm_args_reload_app.
+Print Assumptions cmc_target_args_reload_migration_lib.cm_args_reload_app.
+Goal True. idtac "AUDIT cmc_target_args_reload_migration_lib.cm_args_reload_snoc". exact I. Qed.
+Check cmc_target_args_reload_migration_lib.cm_args_reload_snoc.
+Print Assumptions cmc_target_args_reload_migration_lib.cm_args_reload_snoc.
+Goal True. idtac "AUDIT cmc_target_args_reload_migration_lib.cm_tvm_reload_staged". exact I. Qed.
+Check cmc_target_args_reload_migration_lib.cm_tvm_reload_staged.
+Print Assumptions cmc_target_args_reload_migration_lib.cm_tvm_reload_staged.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_args_stack_migration_lib.
+Goal True. idtac "AUDIT cmc_target_args_stack_migration_lib.cm_target_reload_staged". exact I. Qed.
+Check cmc_target_args_stack_migration_lib.cm_target_reload_staged.
+Print Assumptions cmc_target_args_stack_migration_lib.cm_target_reload_staged.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_boot_migration_lib.
+Goal True. idtac "AUDIT cmc_target_boot_migration_lib.cm_model_prelude_at". exact I. Qed.
+Check cmc_target_boot_migration_lib.cm_model_prelude_at.
+Print Assumptions cmc_target_boot_migration_lib.cm_model_prelude_at.
+Goal True. idtac "AUDIT cmc_target_boot_migration_lib.cm_tvm_prelude_prefix". exact I. Qed.
+Check cmc_target_boot_migration_lib.cm_tvm_prelude_prefix.
+Print Assumptions cmc_target_boot_migration_lib.cm_tvm_prelude_prefix.
+Goal True. idtac "AUDIT cmc_target_boot_migration_lib.cm_initial_machine_sim". exact I. Qed.
+Check cmc_target_boot_migration_lib.cm_initial_machine_sim.
+Print Assumptions cmc_target_boot_migration_lib.cm_initial_machine_sim.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_call_depth_migration_lib.
+Goal True. idtac "AUDIT cmc_target_call_depth_migration_lib.cm_call_sim_length". exact I. Qed.
+Check cmc_target_call_depth_migration_lib.cm_call_sim_length.
+Print Assumptions cmc_target_call_depth_migration_lib.cm_call_sim_length.
+Goal True. idtac "AUDIT cmc_target_call_depth_migration_lib.cm_saved_layout_call_depth". exact I. Qed.
+Check cmc_target_call_depth_migration_lib.cm_saved_layout_call_depth.
+Print Assumptions cmc_target_call_depth_migration_lib.cm_saved_layout_call_depth.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_call_execution_migration_lib.
+Goal True. idtac "AUDIT cmc_target_call_execution_migration_lib.cm_tvm_call_step". exact I. Qed.
+Check cmc_target_call_execution_migration_lib.cm_tvm_call_step.
+Print Assumptions cmc_target_call_execution_migration_lib.cm_tvm_call_step.
+Goal True. idtac "AUDIT cmc_target_call_execution_migration_lib.cm_call_ok_arity". exact I. Qed.
+Check cmc_target_call_execution_migration_lib.cm_call_ok_arity.
+Print Assumptions cmc_target_call_execution_migration_lib.cm_call_ok_arity.
+Goal True. idtac "AUDIT cmc_target_call_execution_migration_lib.cm_prologue_target_valid". exact I. Qed.
+Check cmc_target_call_execution_migration_lib.cm_prologue_target_valid.
+Print Assumptions cmc_target_call_execution_migration_lib.cm_prologue_target_valid.
+Goal True. idtac "AUDIT cmc_target_call_execution_migration_lib.cm_tvm_invoke_function". exact I. Qed.
+Check cmc_target_call_execution_migration_lib.cm_tvm_invoke_function.
+Print Assumptions cmc_target_call_execution_migration_lib.cm_tvm_invoke_function.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_call_frame_migration_lib.
+Goal True. idtac "AUDIT cmc_target_call_frame_migration_lib.cm_machine_save_call_frame". exact I. Qed.
+Check cmc_target_call_frame_migration_lib.cm_machine_save_call_frame.
+Print Assumptions cmc_target_call_frame_migration_lib.cm_machine_save_call_frame.
+Goal True. idtac "AUDIT cmc_target_call_frame_migration_lib.cm_machine_prologue_pending". exact I. Qed.
+Check cmc_target_call_frame_migration_lib.cm_machine_prologue_pending.
+Print Assumptions cmc_target_call_frame_migration_lib.cm_machine_prologue_pending.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_call_runtime_migration_lib.
+Goal True. idtac "AUDIT cmc_target_call_runtime_migration_lib.cm_runtime_new_frame_range". exact I. Qed.
+Check cmc_target_call_runtime_migration_lib.cm_runtime_new_frame_range.
+Print Assumptions cmc_target_call_runtime_migration_lib.cm_runtime_new_frame_range.
+Goal True. idtac "AUDIT cmc_target_call_runtime_migration_lib.cm_call_pending_runtime". exact I. Qed.
+Check cmc_target_call_runtime_migration_lib.cm_call_pending_runtime.
+Print Assumptions cmc_target_call_runtime_migration_lib.cm_call_pending_runtime.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_empty_call_migration_lib.
+Goal True. idtac "AUDIT cmc_target_empty_call_migration_lib.cm_target_r_empty_call_step". exact I. Qed.
+Check cmc_target_empty_call_migration_lib.cm_target_r_empty_call_step.
+Print Assumptions cmc_target_empty_call_migration_lib.cm_target_r_empty_call_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_r_total_migration_lib.
+Goal True. idtac "AUDIT cmc_target_r_total_migration_lib.cm_target_r_task_step". exact I. Qed.
+Check cmc_target_r_total_migration_lib.cm_target_r_task_step.
+Print Assumptions cmc_target_r_total_migration_lib.cm_target_r_task_step.
+Goal True. idtac "AUDIT cmc_target_r_total_migration_lib.cm_code_support_r_target_step". exact I. Qed.
+Check cmc_target_r_total_migration_lib.cm_code_support_r_target_step.
+Print Assumptions cmc_target_r_total_migration_lib.cm_code_support_r_target_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_start_migration_lib.
+Goal True. idtac "AUDIT cmc_target_start_migration_lib.cm_target_start_step". exact I. Qed.
+Check cmc_target_start_migration_lib.cm_target_start_step.
+Print Assumptions cmc_target_start_migration_lib.cm_target_start_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_total_migration_lib.
+Goal True. idtac "AUDIT cmc_target_total_migration_lib.cm_code_support_target_step". exact I. Qed.
+Check cmc_target_total_migration_lib.cm_code_support_target_step.
+Print Assumptions cmc_target_total_migration_lib.cm_code_support_target_step.
+Goal True. idtac "AUDIT cmc_target_total_migration_lib.cm_full_support_initial". exact I. Qed.
+Check cmc_target_total_migration_lib.cm_full_support_initial.
+Print Assumptions cmc_target_total_migration_lib.cm_full_support_initial.
+Goal True. idtac "AUDIT cmc_target_total_migration_lib.cm_full_support_step". exact I. Qed.
+Check cmc_target_total_migration_lib.cm_full_support_step.
+Print Assumptions cmc_target_total_migration_lib.cm_full_support_step.
+Goal True. idtac "AUDIT cmc_target_total_migration_lib.cm_full_support_iter". exact I. Qed.
+Check cmc_target_total_migration_lib.cm_full_support_iter.
+Print Assumptions cmc_target_total_migration_lib.cm_full_support_iter.
+Goal True. idtac "AUDIT cmc_target_total_migration_lib.cm_source_termination_target_invariant". exact I. Qed.
+Check cmc_target_total_migration_lib.cm_source_termination_target_invariant.
+Print Assumptions cmc_target_total_migration_lib.cm_source_termination_target_invariant.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_v_phase_migration_lib.
+Goal True. idtac "AUDIT cmc_target_v_phase_migration_lib.cm_target_v_phase_step". exact I. Qed.
+Check cmc_target_v_phase_migration_lib.cm_target_v_phase_step.
+Print Assumptions cmc_target_v_phase_migration_lib.cm_target_v_phase_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_v_total_migration_lib.
+Goal True. idtac "AUDIT cmc_target_v_total_migration_lib.cm_code_support_v_target_step". exact I. Qed.
+Check cmc_target_v_total_migration_lib.cm_code_support_v_target_step.
+Print Assumptions cmc_target_v_total_migration_lib.cm_code_support_v_target_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_value_support_migration_lib.
+Goal True. idtac "AUDIT cmc_target_value_support_migration_lib.cm_spill_within_holds_bounds". exact I. Qed.
+Check cmc_target_value_support_migration_lib.cm_spill_within_holds_bounds.
+Print Assumptions cmc_target_value_support_migration_lib.cm_spill_within_holds_bounds.
+Goal True. idtac "AUDIT cmc_target_value_support_migration_lib.cm_runtime_held_slot_bounds". exact I. Qed.
+Check cmc_target_value_support_migration_lib.cm_runtime_held_slot_bounds.
+Print Assumptions cmc_target_value_support_migration_lib.cm_runtime_held_slot_bounds.
+Goal True. idtac "AUDIT cmc_target_value_support_migration_lib.cm_init_succeeds_ready". exact I. Qed.
+Check cmc_target_value_support_migration_lib.cm_init_succeeds_ready.
+Print Assumptions cmc_target_value_support_migration_lib.cm_init_succeeds_ready.

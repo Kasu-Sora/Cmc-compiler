@@ -1,0 +1,369 @@
+{
+  "groups": [
+    {
+      "id": "pointer-scale",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_pointer_scale_value_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_pointer_scale_value_return_wit_1_split_goal_1": "Scale: unfold cm_pointer_scale; the required return equality is exactly PreH6. This is a pure equality with no spatial or existential obligation."
+          }
+        },
+        {
+          "name": "proof_of_cm_pointer_scale_value_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_pointer_scale_value_partial_solve_wit_2_pure_split_goal_1": "Type: destruct cm_expr_type e using cm_is_pointer to retain CMPtrTy u. Obtain nonnegative depth/base from cm_type_encoding_bounds__expression_add_safety and cm_type_code_wf; expand cm_type_encode for the pointer and use lia to prove 1024 <= encoding. Introduce the pure assertion independently of the unchanged stack/program/expression resources; no existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_pointer_scale_value_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_pointer_scale_value_partial_solve_wit_3_pure_split_goal_1": "Type; pointee encoding equality: destruct the type using cm_is_pointer, reduce cm_pointee and cm_type_encode, combine retval = encoding - 1024 with lia. Establish the pure conclusion while retaining all antecedent spatial resources; no existential or representation unfolding.",
+            "proof_of_cm_pointer_scale_value_partial_solve_wit_3_pure_split_goal_2": "Type; pointee well-formedness: destruct the type using cm_is_pointer and reduce cm_pointee/cm_type_code_wf; the existing type well-formedness premise becomes the conclusion. Establish the pure conclusion while retaining all antecedent spatial resources; no existential or representation unfolding.",
+            "proof_of_cm_pointer_scale_value_partial_solve_wit_3_pure_split_goal_3": "Type; pointee reference validity: destruct the type using cm_is_pointer and reduce cm_pointee/cm_type_refs; the existing reference-validity premise becomes the conclusion. Establish the pure conclusion while retaining all antecedent spatial resources; no existential or representation unfolding."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pointer-classification",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_5_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_5_pure_split_goal_1": "Classify: use cm_pointer_encode__expression_add_safety for cm_expr_type right_e with its current cm_type_code_wf premise. Its code test is nonzero in the branch premises, forcing cm_pointerb true; destruct the type to establish cm_is_pointer. Introduce the pure assertion independently of the entire unchanged stack/program/function/expression/emitter frame. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_12_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_12_pure_split_goal_1": "Classify: use cm_pointer_encode__expression_add_safety for cm_expr_type left_e with its current cm_type_code_wf premise. Its code test is nonzero in the branch premises, forcing cm_pointerb true; destruct the type to establish cm_is_pointer. Introduce the pure assertion independently of the entire unchanged stack/program/function/expression/emitter frame. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_19_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_19_pure_split_goal_1": "Classify: use cm_pointer_encode__expression_add_safety for cm_expr_type left_e with its current cm_type_code_wf premise. Its code test is nonzero in the branch premises, forcing cm_pointerb true; destruct the type to establish cm_is_pointer. Introduce the pure assertion independently of the entire unchanged stack/program/function/expression/emitter frame. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_26_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_26_pure_split_goal_1": "Classify: use cm_pointer_encode__expression_add_safety for cm_expr_type left_e with its current cm_type_code_wf premise. Its code test is nonzero in the branch premises, forcing cm_pointerb true; destruct the type to establish cm_is_pointer. Introduce the pure assertion independently of the entire unchanged stack/program/function/expression/emitter frame. No existential."
+          }
+        }
+      ]
+    },
+    {
+      "id": "generic-fragment",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_generic_fragment_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_generic_fragment_return_wit_1_split_goal_spatial": "Append: normalize the emitted prefix ((done ++ load) ++ [SWAP]) ++ [binary opcode] to done ++ (load ++ [SWAP; binary opcode]) using app_assoc and list reduction. Cancel the unchanged emitter-plan assertion and function-context resource after reordering; no existential or new pure premise."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_generic_fragment_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_generic_fragment_partial_solve_wit_3_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_generic_fragment_partial_solve_wit_3_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_generic_fragment_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_generic_fragment_which_implies_wit_1_split_goal_spatial": "Append: reduce [SWAP; binary opcode] ++ tail to its two cons cells under load ++. Both emitter-plan assertions become identical; prove entailment reflexivity without unfolding representation. No pure premise or existential."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pointer-results",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_1_split_goal_spatial": "Return: op = 8 and right pointer; load then PUSH(right scale), MUL, SWAP, ADD. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_2_split_goal_spatial": "Return: op = 8, left pointer and right nonpointer; load then SWAP, PUSH(left scale), MUL, ADD. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_3_split_goal_spatial": "Return: op = 9 and both pointers; load then SWAP, SUB, PUSH(left scale), DIV. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_4_split_goal_spatial": "Return: op = 9, left pointer and right nonpointer; load then SWAP, PUSH(left scale), MUL, SUB. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "generic-results",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_5_split_goal_spatial": "Return: op = 8 and both nonpointers; load then SWAP and binary opcode. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_6_split_goal_spatial": "Return: op = 9 and left nonpointer, with right type unrestricted; load then SWAP and binary opcode. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_return_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_return_wit_7_split_goal_spatial": "Return: op differs from 8 and 9, with both types unrestricted; load then SWAP and binary opcode. Use cm_pointer_encode__expression_add_safety with the existing type-code-wf premises to convert each needed code test to cm_pointerb; derive op equality from its bounds (or use the supplied disequalities). Unfold only cm_binary_finish_code and reduce its Boolean guards. Normalize appended singleton prefixes with app_assoc/list reduction, then cancel the unchanged program, function, two expression and emitter-plan resources after reordering. No existential or heap mutation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pointer-transitions",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_1_split_goal_spatial": "Transition: op = 8 and right pointer; load then PUSH(right scale), MUL, SWAP, ADD. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_2_split_goal_spatial": "Transition: op = 8, left pointer and right nonpointer; load then SWAP, PUSH(left scale), MUL, ADD. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_3_split_goal_spatial": "Transition: op = 9 and both pointers; load then SWAP, SUB, PUSH(left scale), DIV. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_4_split_goal_spatial": "Transition: op = 9, left pointer and right nonpointer; load then SWAP, PUSH(left scale), MUL, SUB. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        }
+      ]
+    },
+    {
+      "id": "generic-transitions",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_5_split_goal_spatial": "Transition: op = 8 and both nonpointers; load then SWAP and binary opcode. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_6_split_goal_spatial": "Transition: op = 9 and left nonpointer, with right type unrestricted; load then SWAP and binary opcode. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_which_implies_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_which_implies_wit_7_split_goal_spatial": "Transition: op differs from 8 and 9, with both types unrestricted; load then SWAP and binary opcode. From the supplied type-code-wf premises, use cm_pointer_encode__expression_add_safety to interpret the required zero/nonzero tests as cm_pointerb values; derive op equality with lia or use the supplied disequalities. Unfold cm_binary_finish_code, reduce guards, substitute the supplied scale equality when present, and reassociate append to expose the required concrete suffix followed by tail. The emitter-plan address, done prefix and all other parameters are identical; close by entailment reflexivity without unfolding representation. No existential."
+          }
+        }
+      ]
+    },
+    {
+      "id": "right-add-opcodes",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_8_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_8_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_8_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_9_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_9_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMMulOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_9_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMMulOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_10_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_10_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_10_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_11_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_11_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMAddOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_11_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMAddOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "left-add-opcodes",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_15_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_15_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_15_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_16_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_16_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_16_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_17_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_17_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMMulOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_17_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMMulOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_18_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_18_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMAddOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_18_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMAddOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pointer-difference-opcodes",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_22_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_22_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_22_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_23_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_23_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSubOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_23_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSubOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_24_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_24_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_24_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_25_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_25_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMDivOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_25_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMDivOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pointer-offset-opcodes",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_29_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_29_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_29_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSwapOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_30_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_30_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_30_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMPushOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_31_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_31_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMMulOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_31_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMMulOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_32_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_32_pure_split_goal_1": "Opcode: reduce tvm_opcode_code TVMSubOp and prove its concrete opcode equality by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required.",
+            "proof_of_cm_emit_binary_finish_plan_partial_solve_wit_32_pure_split_goal_2": "Opcode: reduce tvm_opcode_code TVMSubOp and prove its code is unequal to 22 by reflexivity/discrimination or lia. Lift the closed fact to the pure assertion under the arbitrary unchanged spatial frame; no existential or input bound is required."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+Chars 0 - 82 [Require~Export~~~SimpleC.EE.QC...] 1.239 secs (1.175u,0.063s)
+Chars 83 - 128 [From~Coq~Require~Import~ZArith...] 0.01 secs (0.01u,0.s)
+Chars 129 - 150 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 151 - 176 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 177 - 923 [Lemma~cm_v_runtime_step~sp~ap~...] 0. secs (0.u,0.s)
+Chars 924 - 930 [Proof.] 0. secs (0.u,0.s)
+Chars 932 - 992 [(intros~WF~CUR~F~B~COORD~S~R;~...] 0. secs (0.u,0.s)
+Chars 994 - 1094 [(rewrite~CUR~in~B;~cbn[cm_curs...] 0. secs (0.u,0.s)
+Chars 1096 - 1261 [(unfold~cm_annotation_child_re...] 0. secs (0.u,0.s)
+Chars 1263 - 1464 [(destruct~phase;~~~cbn[cm_fram...] 0.094 secs (0.09u,0.002s)
+Chars 1466 - 1496 [all:~(try~(solve~[~exact~BEFOR...] 0. secs (0.u,0.s)
+Chars 1498 - 1499 [-] 0. secs (0.u,0.s)
+Chars 1500 - 1582 [(eapply~cm_runtime_core_enter_...] 0. secs (0.u,0.s)
+Chars 1584 - 1588 [Qed.] 0.022 secs (0.022u,0.s)
+Chars 1590 - 2042 [Lemma~cm_c_runtime_step~sp~ap~...] 0. secs (0.u,0.s)
+Chars 2043 - 2049 [Proof.] 0. secs (0.u,0.s)
+Chars 2051 - 2098 [(intros~CUR~F~R;~pose~proof~(p...] 0. secs (0.u,0.s)
+Chars 2100 - 2244 [(destruct~phase;~cbn[cm_frame_...] 0.047 secs (0.044u,0.002s)
+Chars 2246 - 2276 [all:~(try~(solve~[~exact~BEFOR...] 0. secs (0.u,0.s)
+3 focused goals (shelved: 3)
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, caller : Z
+  env : Z -> Z -> cm_value
+  fp : Z
+  regions : list cm_region
+  ret : cm_type
+  owner, ob, oc : Z
+  rest : list cm_acursor
+  ctl : cm_control
+  st : cm_src_state
+  ann : cm_annotation
+  CUR :
+    cm_ann_cursors ann =
+    CMACursor (CACallP caller env fp regions ret) owner ob oc :: rest
+  bound : 0 <= fid
+  bound0 : fid < Zlength (cm_program_functions p)
+  R : cm_runtime_core (cm_source_function_policy sp) ap p fid st ann
+  BEFORE : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+  Heqb :
+    (match ctl with
+     | CMNormal => 0
+     | CMBreak => 1
+     | CMContinue => 2
+     | CMReturn _ => 3
+     | CMExit _ => 4
+     | CMError _ => 5
+     end =? 3) = true
+  ============================
+  cm_runtime_core (cm_source_function_policy sp) ap p ?fid st ann
+
+goal 2 is:
+ cm_runtime_core (cm_source_function_policy sp) ap p ?fid0 st ann
+goal 3 is:
+ cm_runtime_core (cm_source_function_policy sp) ap p ?fid1 st ann
+Chars 2278 - 2283 [Show.] 0. secs (0.u,0.s)
+Chars 2284 - 2288 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/build/Rocq/examples/QCP_demos_human/cmc_runtime_apply_step_migration_lib.v", line 34, characters 0-4:
+Error:  (in proof cm_c_runtime_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

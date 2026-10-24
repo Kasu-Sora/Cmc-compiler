@@ -1,0 +1,41 @@
+{
+  "status": "blocked",
+  "blocker": {
+    "failure_class": "annotation-gap",
+    "kind": "missing-stack-resources-in-which-implies",
+    "vcs": [
+      {
+        "name": "proof_of_cmc_emit_stmt_which_implies_wit_10",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_stmt_migration.c:433: CMExprS final emitter-plan folding which-implies"
+      },
+      {
+        "name": "proof_of_cmc_emit_stmt_which_implies_wit_21",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_stmt_migration.c:506: CMInitS final emitter-plan folding which-implies"
+      },
+      {
+        "name": "proof_of_cmc_emit_stmt_which_implies_wit_43",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_stmt_migration.c:637: CMWhileS final emitter-plan folding which-implies"
+      },
+      {
+        "name": "proof_of_cmc_emit_stmt_which_implies_wit_48",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_stmt_migration.c:668: CMBreakS final emitter-plan folding which-implies"
+      },
+      {
+        "name": "proof_of_cmc_emit_stmt_which_implies_wit_53",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_stmt_migration.c:699: CMContinueS final emitter-plan folding which-implies"
+      },
+      {
+        "name": "proof_of_cmc_emit_stmt_which_implies_wit_60",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_stmt_migration.c:741: CMReturnS final emitter-plan folding which-implies"
+      }
+    ],
+    "message": "Six no-split whole-goal entailments introduce C stack data_at resources only in their consequent. Witnesses 10, 21, 43 and 60 require &break_pc and &continue_pc cells; witness 48 additionally requires &fid, &pc, &temp and &continue_pc; witness 53 requires &fid, &pc, &temp and &break_pc. Their antecedents contain only a resolved emitter-plan resource and pure facts. The duplicated disjuncts have the same defect. A heap holding only the emitter/output representation, with these stack addresses unallocated, satisfies the antecedent and cannot satisfy the consequent. These are false whole goals, not failed aggressive splits.",
+    "repair_boundary": "Repair internal which-implies annotations: retain/read all C locals used only on the right also on the left, with their unchanged values (e.g. explicit data_at cells or suitable left-hand scalar facts that cause QCP to retain those cells). Preserve all function contracts, runtime and model meanings. Regenerate VCs and verify the bridge/resources are present in both sides. No public axiom or weakened postcondition can repair this structural omission."
+  }
+}

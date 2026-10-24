@@ -1,0 +1,128 @@
+Chars 0 - 73 [Require~Export~SimpleC.EE.QCP_...] 1.5 secs (1.311u,0.135s)
+Chars 74 - 119 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 120 - 141 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 142 - 167 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 168 - 907 [Lemma~cm_target_c_while_step~s...] 0. secs (0.u,0.s)
+Chars 908 - 914 [Proof.] 0. secs (0.u,0.s)
+Chars 916 - 1018 [(cbn~zeta;~intros~WF~NE~INC~[C...] 0.001 secs (0.001u,0.s)
+Chars 1020 - 1103 [4,~5:~~(split;~~~~[~reflexivit...] 0. secs (0.u,0.s)
+Chars 1105 - 1230 [all:~~(destruct~SIM~as~[vm~[->...] 0.001 secs (0.001u,0.s)
+Chars 1232 - 1321 [all:~~(assert~(STACK~:~stack~=...] 0.028 secs (0.027u,0.001s)
+Chars 1323 - 1589 [all:~~(cbn[cm_task_code~cm_con...] 0. secs (0.u,0.s)
+3 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  st : cm_src_state
+  guard : cm_expr
+  body : cm_stmt
+  env : Z -> Z -> cm_value
+  regions : list cm_region
+  loop_start, loop_end, pc, temp, owner, ob, oc : Z
+  tail : list cm_acursor
+  spills : list cm_spill
+  saved : list cm_spill_frame
+  calls : list cm_call_sim_frame
+  WF : cm_semantic_wf_program (cm_source_function_policy sp) p
+  NE : 0 <> 4
+  INC : incl regions (cm_state_regions st)
+  CODE :
+    cm_code_at (cm_model_code (cm_source_function_policy sp) p) pc
+      (cm_control_phase_code sp p fid pc
+         (cm_ann_temp
+            (CMAnnotation pc temp loop_end loop_start
+               (CMACursor
+                  (CAWhileBodyP guard body env regions loop_start loop_end)
+                  owner ob oc :: tail) spills saved calls)) loop_end
+         loop_start CMNormal
+         (CMACursor (CAWhileBodyP guard body env regions loop_start loop_end)
+            owner ob oc :: tail))
+  SAVED :
+    cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+      (cm_task_fid
+         (CMCTask p fid CMNormal st
+            (cm_cursor_frames
+               (cm_ann_cursors
+                  (CMAnnotation pc temp loop_end loop_start
+                     (CMACursor
+                        (CAWhileBodyP guard body env regions loop_start
+                           loop_end) owner ob oc :: tail) spills saved calls)))))
+      (cm_ann_cursors
+         (CMAnnotation pc temp loop_end loop_start
+            (CMACursor
+               (CAWhileBodyP guard body env regions loop_start loop_end)
+               owner ob oc :: tail) spills saved calls))
+      (cm_ann_calls
+         (CMAnnotation pc temp loop_end loop_start
+            (CMACursor
+               (CAWhileBodyP guard body env regions loop_start loop_end)
+               owner ob oc :: tail) spills saved calls))
+  vcalls : list Z
+  mem : Z -> Z
+  input, output : list Z
+  OLD :
+    cm_machine_state_sim (cm_source_function_policy sp) p st
+      (TVMState pc [] vcalls mem input output)
+      (cm_ann_calls
+         (CMAnnotation pc temp loop_end loop_start
+            (CMACursor
+               (CAWhileBodyP guard body env regions loop_start loop_end)
+               owner ob oc :: tail) spills saved calls))
+      (cm_active_spill_frames fid st
+         (CMAnnotation pc temp loop_end loop_start
+            (CMACursor
+               (CAWhileBodyP guard body env regions loop_start loop_end)
+               owner ob oc :: tail) spills saved calls))
+      (if cm_control_kind CMNormal =? 3
+       then [cm_control_value CMNormal]
+       else []) []
+  ============================
+  cm_target_step_result sp ap p
+    (CMCTask p fid CMNormal st
+       (cm_cursor_frames
+          (cm_ann_cursors
+             (CMAnnotation pc temp loop_end loop_start
+                (CMACursor
+                   (CAWhileBodyP guard body env regions loop_start loop_end)
+                   owner ob oc :: tail) spills saved calls))))
+    (TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+       (TVMState pc [] vcalls mem input output))
+    (CMAnnotation pc temp loop_end loop_start
+       (CMACursor (CAWhileBodyP guard body env regions loop_start loop_end)
+          owner ob oc :: tail) spills saved calls)
+
+goal 2 is:
+ cm_target_step_result sp ap p
+   (CMCTask p fid CMBreak st
+      (cm_cursor_frames
+         (cm_ann_cursors
+            (CMAnnotation pc temp loop_end loop_start
+               (CMACursor
+                  (CAWhileBodyP guard body env regions loop_start loop_end)
+                  owner ob oc :: tail) spills saved calls))))
+   (TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+      (TVMState pc [] vcalls mem input output))
+   (CMAnnotation pc temp loop_end loop_start
+      (CMACursor (CAWhileBodyP guard body env regions loop_start loop_end)
+         owner ob oc :: tail) spills saved calls)
+goal 3 is:
+ cm_target_step_result sp ap p
+   (CMCTask p fid CMContinue st
+      (cm_cursor_frames
+         (cm_ann_cursors
+            (CMAnnotation pc temp loop_end loop_start
+               (CMACursor
+                  (CAWhileBodyP guard body env regions loop_start loop_end)
+                  owner ob oc :: tail) spills saved calls))))
+   (TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+      (TVMState pc [] vcalls mem input output))
+   (CMAnnotation pc temp loop_end loop_start
+      (CMACursor (CAWhileBodyP guard body env regions loop_start loop_end)
+         owner ob oc :: tail) spills saved calls)
+Chars 1591 - 1596 [Show.] 0. secs (0.u,0.s)
+Chars 1598 - 1826 [all:~~(match~type~of~CODE~with...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_value/build/Rocq/examples/QCP_demos_human/cmc_target_loop_migration_lib.v", line 18, characters 1-229:
+Error: No matching clauses for match.
+

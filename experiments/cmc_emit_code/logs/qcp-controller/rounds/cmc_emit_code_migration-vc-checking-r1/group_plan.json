@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "id": "code_composition",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_code_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the first disjunct and introduce the parameters and existing well-formedness/readiness/safety facts. Unfold cm_program_context_rep on the left, expose its root nonzero fact and s/g/t witnesses, then instantiate the right existentials in their generated order tp, gp, sp with those values. Preserve all pure facts from the premises; cancel the five program fields, three descriptor-list resources, function-list resource and unchanged emitter-plan resource. No scalar or current-to-pre bridge is missing."
+        },
+        {
+          "name": "proof_of_cmc_emit_code_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_code_entail_wit_2_split_goal_1": "Introduce parameters and hypotheses. Prove cm_function_pc policy p 0 = 11 by unfolding cm_function_pc, then case-analyzing cm_program_functions p; cm_function_prefix at remaining=0 is zero in both nil and cons cases. Lift the resulting equality into the pure entailment; no heap facts or new helper are needed.",
+            "proof_of_cmc_emit_code_entail_wit_2_split_goal_spatial": "Unfold cm_model_code and normalize list append associativity so the pending code fragment is prelude ++ (functions ++ tail). Fold cm_program_context_rep using the existing program_pre <> 0 fact and witnesses sp/gp/tp; cancel all five program fields and the three descriptor-list resources. Frame the unchanged function-list and normalized emitter-plan resources. No new helper or strengthened premise is needed."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_code_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_code_return_wit_1_split_goal_spatial": "Unfold cm_model_code and rewrite append associativity to identify (done ++ prelude) ++ functions with done ++ (prelude ++ functions). The program-context, function-list, tail and all emitter parameters are unchanged; close by cancellation/reflexivity. No existential or additional arithmetic fact is needed."
+          }
+        }
+      ]
+    }
+  ]
+}

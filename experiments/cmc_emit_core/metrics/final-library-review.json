@@ -1,0 +1,29 @@
+{
+  "status": "Main declaration review completed; identical final library passed controller verification",
+  "candidate_sha256": "367c7727d55fc73470ca881062ef5ff80c067c337310a96e8c6c4f0fde8453bb",
+  "definitions": "All 16 declarations identical to manually audited annotation baseline",
+  "helpers": [
+    {
+      "name": "cm_slot_size_matches__temp_context",
+      "sha256": "9dcd6a00ea60ba84712e21df4b925bad21c446621b08b14ca07ca1b35e3e8355",
+      "review": "Slot wf supplies scalar premise; reuses already verified cm_scalar_rep_leaf_size, preserving array factor."
+    },
+    {
+      "name": "cm_slots_size_matches__temp_context",
+      "sha256": "1b43747e7e47dc260c6ab526d76ba4c79ebe80fc845e8af4cdf515dafc5ab271",
+      "review": "Induction with in-range nth head/tail wf; no total-lookup or fid range strengthening."
+    },
+    {
+      "name": "cm_temp_offset_matches__temp_context",
+      "sha256": "d6fa625e37dd06d798bae1a79ea90e89ab51c2e3bf9f92946afe8e22cd64ee5e",
+      "review": "Exact offset arithmetic under original function identity and both slots-wf premises; same lookup policy."
+    },
+    {
+      "name": "cm_type_encode_char_iff__typed_branches",
+      "sha256": "e7f5a08c147729432780d56343b8816a6f02143607ce6daae1fc8141fb7116cb",
+      "review": "Exact source char encode iff under cm_type_code_wf, covers all constructors including pointer and struct."
+    }
+  ],
+  "additional_assumptions": [],
+  "new_helpers_all_used_directly_or_transitively": true
+}

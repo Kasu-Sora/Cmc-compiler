@@ -1,0 +1,6 @@
+- 固定 prelude 的原契约只要求程序上下文和计划资源。迁移时保留任意可表示 main_id 和总 PC 查询；不要因为语义上会调用 main 就额外要求 wf/typed、readiness 或有效入口。
+- 源 #require 的构建闭包不等于运行时 helper 闭包。本例调用的只有 cm_emit_plan 和 cm_emit_call_plan，复用它们的已验证 BODY 契约及公共模型闭包即可，不需要导入 emit-functions 的生成证明。
+- 在 QCP 以完整 Assert 打开上下文时，需要同时保留活跃局部变量的资源：读取前的 main_id 尚未初始化，使用 undef_data_at 保留其存储；省略会导致符号执行找不到局部变量。
+- 命名指令片段可以在公开规格中保持抽象，在首个 helper 边界展开为具体 cons 序列并显式提供 opcode 事实。与每条指令对应的 where 前缀/后缀属于标注成本，不能因写成长行而忽略。
+- cm_emit_call_plan 返回的前缀含运行时 main_id。即使已有 main_id=cm_program_main(p)，QCP 资源匹配也未必在不透明 cm_function_pc 下自动改写；调用链可统一使用运行时表达式，在最终证明中利用等式恢复逻辑规范形式。
+- 公共新增成本与案例证明分开：11 条指令模型单列为新增公共定义，既有 context/plan 表示和总 PC 查询不重复计费。最终列出自动 witness 的信任边界，不把它们当作独立 Rocq 证书。

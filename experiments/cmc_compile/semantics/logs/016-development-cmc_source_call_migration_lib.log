@@ -1,0 +1,16 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/semantics/build/Rocq/examples/QCP_demos_human/cmc_source_call_migration_lib.v", line 90, characters 13-40:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid : Z
+values : list cm_value
+st : cm_src_state
+Unable to unify
+ "cm_state_input (cm_store_params ?M2528 ?M2529 ?M2530 ?M2531 ?M2532 ?M2533) =
+  cm_state_input ?M2533 /\
+  cm_state_output (cm_store_params ?M2528 ?M2529 ?M2530 ?M2531 ?M2532 ?M2533) =
+  cm_state_output ?M2533" with
+ "cm_state_input (cm_enter_call sp p fid values st) = cm_state_input st /\
+  cm_state_output (cm_enter_call sp p fid values st) = cm_state_output st".
+

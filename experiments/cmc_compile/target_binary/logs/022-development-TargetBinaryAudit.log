@@ -1,0 +1,778 @@
+Chars 0 - 79 [Require~Import~~~SimpleC.EE.QC...] 1.32 secs (1.223u,0.085s)
+Chars 80 - 90 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_code_migration_lib.cm_binary_finish_numeric
+Chars 91 - 167 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 168 - 176 [exact~I.] 0. secs (0.u,0.s)
+Chars 177 - 181 [Qed.] 0. secs (0.u,0.s)
+cm_binary_finish_numeric
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid op : BinNums.Z) (lhs rhs : cm_expr) 
+         (temp : BinNums.Z),
+       (op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+        op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+        cm_pointerb (cm_expr_type lhs) = false /\
+        cm_pointerb (cm_expr_type rhs) = false) ->
+       cm_binary_finish_code policy p fid op lhs rhs temp =
+       (cm_temp_load_code policy p fid temp ++
+        TVMInst TVMSwapOp BinNums.Z0
+        :: TVMInst (cm_binary_opcode op) BinNums.Z0 :: nil)%list
+Chars 182 - 250 [Check~cmc_target_binary_code_m...] 0.001 secs (0.u,0.s)
+Closed under the global context
+Chars 251 - 331 [Print~Assumptions~cmc_target_b...] 0.001 secs (0.001u,0.s)
+Chars 332 - 342 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_code_migration_lib.cm_tvm_swap_pair
+Chars 343 - 411 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 412 - 420 [exact~I.] 0. secs (0.u,0.s)
+Chars 421 - 425 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_swap_pair
+     : forall (obj : tvm_object) (pc a b : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) pc
+         (TVMInst TVMSwapOp BinNums.Z0 :: rest) ->
+       tvm_step
+         (TVMRunTask obj (TVMState pc (a :: b :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState (BinInt.Z.add pc (BinNums.Zpos BinNums.xH))
+            (b :: a :: nil) calls mem input output)
+Chars 426 - 486 [Check~cmc_target_binary_code_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 487 - 559 [Print~Assumptions~cmc_target_b...] 0.136 secs (0.128u,0.005s)
+Chars 560 - 570 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_code_migration_lib.cm_tvm_binary_numeric_tail
+Chars 571 - 649 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 650 - 658 [exact~I.] 0. secs (0.u,0.s)
+Chars 659 - 663 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_binary_numeric_tail
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid op : BinNums.Z) (lhs rhs : cm_expr) 
+         (slot : BinNums.Z) (obj : tvm_object) (pc right : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (rest : list tvm_inst),
+       (op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+        op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+        cm_pointerb (cm_expr_type lhs) = false /\
+        cm_pointerb (cm_expr_type rhs) = false) ->
+       BinInt.Z.le (BinNums.Zpos (BinNums.xO BinNums.xH)) op /\
+       BinInt.Z.le op
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))) ->
+       (op = BinNums.Zpos (BinNums.xI (BinNums.xI (BinNums.xO BinNums.xH))) \/
+        op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH))) ->
+        right <> BinNums.Z0) ->
+       tower_word_valid
+         (BinInt.Z.add
+            (tower_getw mem
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_temp_offset policy p fid slot)) ->
+       cm_code_at (tvm_object_code obj) pc
+         (cm_binary_finish_code policy p fid op lhs rhs slot ++ rest) ->
+       tvm_iter
+         (cm_code_steps (cm_binary_finish_code policy p fid op lhs rhs slot))
+         (TVMRunTask obj (TVMState pc (right :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos (BinNums.xI (BinNums.xI BinNums.xH))))
+            (cm_binary_number op
+               (tower_getw mem
+                  (BinInt.Z.add
+                     (tower_getw mem
+                        (BinNums.Zpos
+                           (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+                     (cm_temp_offset policy p fid slot))) right :: nil) calls
+            mem input output)
+Chars 664 - 734 [Check~cmc_target_binary_code_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 735 - 817 [Print~Assumptions~cmc_target_b...] 0.126 secs (0.119u,0.006s)
+Chars 818 - 901 [Require~Import~~~SimpleC.EE.QC...] 0.003 secs (0.001u,0.s)
+Chars 902 - 912 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_dispatch_migration_lib.cm_typed_type_size_signed
+Chars 913 - 994 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 995 - 1003 [exact~I.] 0. secs (0.u,0.s)
+Chars 1004 - 1008 [Qed.] 0. secs (0.u,0.s)
+cm_typed_type_size_signed
+     : forall (policy : cm_lookup_policy) (p : cm_program) (ty : cm_type),
+       cm_typed_program policy p ->
+       tower_signed64 (cm_type_size (cm_program_structs p) ty)
+Chars 1009 - 1082 [Check~cmc_target_binary_dispat...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1083 - 1168 [Print~Assumptions~cmc_target_b...] 0.088 secs (0.087u,0.s)
+Chars 1169 - 1179 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_dispatch_migration_lib.cm_integer_type_pointerb
+Chars 1180 - 1260 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 1261 - 1269 [exact~I.] 0. secs (0.u,0.s)
+Chars 1270 - 1274 [Qed.] 0. secs (0.u,0.s)
+cm_integer_type_pointerb
+     : forall ty : cm_type, cm_integer_type ty -> cm_pointerb ty = false
+Chars 1275 - 1347 [Check~cmc_target_binary_dispat...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1348 - 1432 [Print~Assumptions~cmc_target_b...] 0. secs (0.u,0.s)
+Chars 1433 - 1443 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_dispatch_migration_lib.cm_binary_difference_scale_nonzero
+Chars 1444 - 1534 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 1535 - 1543 [exact~I.] 0. secs (0.u,0.s)
+Chars 1544 - 1548 [Qed.] 0. secs (0.u,0.s)
+cm_binary_difference_scale_nonzero
+     : forall (p : cm_program) (st : cm_src_state) 
+         (left right : cm_value) (view : cm_type),
+       cm_value_type_compatible left (CMPtrTy view) ->
+       cm_is_pointerb (cm_value_type right) = true ->
+       cm_binary_ok p
+         (BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))))
+         left right st = true ->
+       cm_type_size (cm_program_structs p) view <> BinNums.Z0
+Chars 1549 - 1631 [Check~~~cmc_target_binary_disp...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1632 - 1726 [Print~Assumptions~cmc_target_b...] 0.256 secs (0.254u,0.001s)
+Chars 1727 - 1737 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_dispatch_migration_lib.cm_target_v_binary_ordinary_step
+Chars 1738 - 1826 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 1827 - 1835 [exact~I.] 0. secs (0.u,0.s)
+Chars 1836 - 1840 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_binary_ordinary_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (op : BinNums.Z) (lhs rhs : cm_expr)
+         (left : cm_value) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame) (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CABinRP op lhs rhs left ty) owner ob oc :: tail)
+           spills saved calls in
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 owner /\
+       BinInt.Z.lt owner (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       cm_spill_holds owner left spills ->
+       op <> BinNums.Z0 ->
+       op <> BinNums.Zpos BinNums.xH ->
+       cm_binary_types op (cm_expr_type lhs) (cm_expr_type rhs) ty ->
+       cm_value_type_compatible left (cm_expr_type lhs) ->
+       cm_value_type_compatible v (cm_expr_type rhs) ->
+       cm_binary_ok p op left v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 1841 - 1921 [Check~~~cmc_target_binary_disp...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1922 - 2014 [Print~Assumptions~cmc_target_b...] 0.229 secs (0.222u,0.006s)
+Chars 2015 - 2097 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 2098 - 2108 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_numeric_migration_lib.cm_compatible_pointerb
+Chars 2109 - 2186 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 2187 - 2195 [exact~I.] 0. secs (0.u,0.s)
+Chars 2196 - 2200 [Qed.] 0. secs (0.u,0.s)
+cm_compatible_pointerb
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v ty ->
+       cm_is_pointerb (cm_value_type v) = cm_pointerb ty
+Chars 2201 - 2270 [Check~cmc_target_binary_numeri...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2271 - 2352 [Print~Assumptions~cmc_target_b...] 0. secs (0.u,0.s)
+Chars 2353 - 2363 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_numeric_migration_lib.cm_target_v_binary_numeric_step
+Chars 2364 - 2450 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 2451 - 2459 [exact~I.] 0. secs (0.u,0.s)
+Chars 2460 - 2464 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_binary_numeric_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (op : BinNums.Z) (lhs rhs : cm_expr)
+         (left : cm_value) (ty : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame) (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CABinRP op lhs rhs left ty) owner ob oc :: tail)
+           spills saved calls in
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 owner /\
+       BinInt.Z.lt owner (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       cm_spill_holds owner left spills ->
+       BinInt.Z.le (BinNums.Zpos (BinNums.xO BinNums.xH)) op /\
+       BinInt.Z.le op
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))) ->
+       (op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+        op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+        cm_pointerb (cm_expr_type lhs) = false /\
+        cm_pointerb (cm_expr_type rhs) = false) ->
+       cm_value_type_compatible left (cm_expr_type lhs) ->
+       cm_value_type_compatible v (cm_expr_type rhs) ->
+       cm_binary_ok p op left v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 2465 - 2543 [Check~cmc_target_binary_numeri...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2544 - 2634 [Print~Assumptions~cmc_target_b...] 0.096 secs (0.095u,0.s)
+Chars 2635 - 2722 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 2723 - 2733 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_code_migration_lib.cm_tvm_mul_pair
+Chars 2734 - 2809 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 2810 - 2818 [exact~I.] 0. secs (0.u,0.s)
+Chars 2819 - 2823 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_mul_pair
+     : forall (obj : tvm_object) (pc value bottom : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (imm : BinNums.Z)
+         (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) pc
+         ((TVMInst TVMPushOp imm :: TVMInst TVMMulOp BinNums.Z0 :: nil) ++
+          rest) ->
+       tvm_iter 2
+         (TVMRunTask obj
+            (TVMState pc (value :: bottom :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState (BinInt.Z.add pc (BinNums.Zpos (BinNums.xO BinNums.xH)))
+            (tower_mul value imm :: bottom :: nil) calls mem input output)
+Chars 2824 - 2891 [Check~cmc_target_binary_pointe...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2892 - 2971 [Print~Assumptions~cmc_target_b...] 0.123 secs (0.121u,0.002s)
+Chars 2972 - 2982 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_code_migration_lib.cm_tvm_scale_left
+Chars 2983 - 3060 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 3061 - 3069 [exact~I.] 0. secs (0.u,0.s)
+Chars 3070 - 3074 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_scale_left
+     : forall (obj : tvm_object) (pc l r : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (size op : BinNums.Z)
+         (rest : list tvm_inst),
+       op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+       op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+       cm_code_at (tvm_object_code obj) pc
+         ((TVMInst TVMSwapOp BinNums.Z0
+           :: TVMInst TVMPushOp size
+              :: TVMInst TVMMulOp BinNums.Z0
+                 :: TVMInst (cm_binary_opcode op) BinNums.Z0 :: nil) ++ rest) ->
+       tvm_iter 4
+         (TVMRunTask obj (TVMState pc (l :: r :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH))))
+            (cm_binary_number op l (tower_mul r size) :: nil) calls mem input
+            output)
+Chars 3075 - 3144 [Check~cmc_target_binary_pointe...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3145 - 3226 [Print~Assumptions~cmc_target_b...] 0.116 secs (0.115u,0.s)
+Chars 3227 - 3237 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_code_migration_lib.cm_tvm_scale_right
+Chars 3238 - 3316 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 3317 - 3325 [exact~I.] 0. secs (0.u,0.s)
+Chars 3326 - 3330 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_scale_right
+     : forall (obj : tvm_object) (pc l r : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (size : BinNums.Z)
+         (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) pc
+         ((TVMInst TVMPushOp size
+           :: TVMInst TVMMulOp BinNums.Z0
+              :: TVMInst TVMSwapOp BinNums.Z0
+                 :: TVMInst TVMAddOp BinNums.Z0 :: nil) ++ rest) ->
+       tvm_iter 4
+         (TVMRunTask obj (TVMState pc (l :: r :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH))))
+            (tower_add r (tower_mul l size) :: nil) calls mem input output)
+Chars 3331 - 3401 [Check~cmc_target_binary_pointe...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3402 - 3484 [Print~Assumptions~cmc_target_b...] 0.266 secs (0.265u,0.001s)
+Chars 3485 - 3495 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_code_migration_lib.cm_tvm_ptr_difference
+Chars 3496 - 3577 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 3578 - 3586 [exact~I.] 0. secs (0.u,0.s)
+Chars 3587 - 3591 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_ptr_difference
+     : forall (obj : tvm_object) (pc l r : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (size : BinNums.Z)
+         (rest : list tvm_inst),
+       tower_signed64 size ->
+       size <> BinNums.Z0 ->
+       cm_code_at (tvm_object_code obj) pc
+         ((TVMInst TVMSwapOp BinNums.Z0
+           :: TVMInst TVMSubOp BinNums.Z0
+              :: TVMInst TVMPushOp size :: TVMInst TVMDivOp BinNums.Z0 :: nil) ++
+          rest) ->
+       tvm_iter 4
+         (TVMRunTask obj (TVMState pc (l :: r :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH))))
+            (tower_div (tower_sub l r) size :: nil) calls mem input output)
+Chars 3592 - 3665 [Check~cmc_target_binary_pointe...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3666 - 3751 [Print~Assumptions~cmc_target_b...] 0.167 secs (0.166u,0.001s)
+Chars 3752 - 3834 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 3835 - 3845 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_migration_lib.cm_target_v_binary_left_pointer_step
+Chars 3846 - 3937 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 3938 - 3946 [exact~I.] 0. secs (0.u,0.s)
+Chars 3947 - 3951 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_binary_left_pointer_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (op : BinNums.Z) (lhs rhs : cm_expr)
+         (left : cm_value) (ty view : cm_type)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame) (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor (CABinRP op lhs rhs left ty) owner ob oc :: tail)
+           spills saved calls in
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 owner /\
+       BinInt.Z.lt owner (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       cm_spill_holds owner left spills ->
+       op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+       op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+       cm_expr_type lhs = CMPtrTy view ->
+       cm_pointerb (cm_expr_type rhs) = false ->
+       cm_value_type_compatible left (cm_expr_type lhs) ->
+       cm_value_type_compatible v (cm_expr_type rhs) ->
+       cm_binary_ok p op left v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 3952 - 4035 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4036 - 4131 [Print~Assumptions~cmc_target_b...] 0.134 secs (0.134u,0.s)
+Chars 4132 - 4142 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_migration_lib.cm_target_v_binary_right_pointer_step
+Chars 4143 - 4235 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 4236 - 4244 [exact~I.] 0. secs (0.u,0.s)
+Chars 4245 - 4249 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_binary_right_pointer_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (lhs rhs : cm_expr) (left : cm_value)
+         (ty view : cm_type) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame)
+         (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor
+              (CABinRP
+                 (BinNums.Zpos
+                    (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) lhs
+                 rhs left ty) owner ob oc :: tail) spills saved calls in
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 owner /\
+       BinInt.Z.lt owner (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       cm_spill_holds owner left spills ->
+       cm_expr_type rhs = CMPtrTy view ->
+       cm_pointerb (cm_expr_type lhs) = false ->
+       cm_value_type_compatible left (cm_expr_type lhs) ->
+       cm_value_type_compatible v (cm_expr_type rhs) ->
+       cm_binary_ok p
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         left v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 4250 - 4334 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4335 - 4431 [Print~Assumptions~cmc_target_b...] 0.104 secs (0.104u,0.s)
+Chars 4432 - 4442 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_migration_lib.cm_target_v_binary_difference_pointer_step
+Chars 4443 - 4540 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 4541 - 4549 [exact~I.] 0. secs (0.u,0.s)
+Chars 4550 - 4554 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_binary_difference_pointer_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (lhs rhs : cm_expr) (left : cm_value)
+         (ty view : cm_type) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame)
+         (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor
+              (CABinRP
+                 (BinNums.Zpos
+                    (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH)))) lhs
+                 rhs left ty) owner ob oc :: tail) spills saved calls in
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 owner /\
+       BinInt.Z.lt owner (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       cm_spill_holds owner left spills ->
+       cm_expr_type lhs = CMPtrTy view ->
+       cm_pointerb (cm_expr_type rhs) = true ->
+       tower_signed64 (cm_pointer_scale p lhs) ->
+       cm_pointer_scale p lhs <> BinNums.Z0 ->
+       cm_value_type_compatible left (cm_expr_type lhs) ->
+       cm_value_type_compatible v (cm_expr_type rhs) ->
+       cm_binary_ok p
+         (BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))))
+         left v st = true ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 4555 - 4644 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4645 - 4746 [Print~Assumptions~cmc_target_b...] 0.159 secs (0.159u,0.s)
+Chars 4747 - 4836 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 4837 - 4847 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_number_migration_lib.tower_sub_wrap_both
+Chars 4848 - 4929 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 4930 - 4938 [exact~I.] 0. secs (0.u,0.s)
+Chars 4939 - 4943 [Qed.] 0. secs (0.u,0.s)
+tower_sub_wrap_both
+     : forall a b : BinNums.Z,
+       tower_sub (tower_wrap64 a) (tower_wrap64 b) = tower_sub a b
+Chars 4944 - 5017 [Check~cmc_target_binary_pointe...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5018 - 5103 [Print~Assumptions~cmc_target_b...] 0.09 secs (0.089u,0.s)
+Chars 5104 - 5114 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_number_migration_lib.tower_add_neg_mul
+Chars 5115 - 5194 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 5195 - 5203 [exact~I.] 0. secs (0.u,0.s)
+Chars 5204 - 5208 [Qed.] 0. secs (0.u,0.s)
+tower_add_neg_mul
+     : forall l r size : BinNums.Z,
+       tower_add l (tower_mul (tower_neg r) size) =
+       tower_sub l (tower_mul r size)
+Chars 5209 - 5280 [Check~cmc_target_binary_pointe...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5281 - 5364 [Print~Assumptions~cmc_target_b...] 0.249 secs (0.248u,0.001s)
+Chars 5365 - 5375 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_number_migration_lib.cm_binary_left_pointer_number
+Chars 5376 - 5467 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 5468 - 5476 [exact~I.] 0. secs (0.u,0.s)
+Chars 5477 - 5481 [Qed.] 0. secs (0.u,0.s)
+cm_binary_left_pointer_number
+     : forall (p : cm_program) (st : cm_src_state) 
+         (op : BinNums.Z) (left right : cm_value) 
+         (ty view : cm_type),
+       op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+       op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+       cm_value_type_compatible left (CMPtrTy view) ->
+       cm_is_pointerb (cm_value_type right) = false ->
+       cm_binary_ok p op left right st = true ->
+       cm_value_number st (cm_binary_value p op left right ty st) =
+       cm_binary_number op (cm_value_number st left)
+         (tower_mul (cm_value_number st right)
+            (cm_type_size (cm_program_structs p) view))
+Chars 5482 - 5565 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5566 - 5661 [Print~Assumptions~cmc_target_b...] 0.093 secs (0.093u,0.s)
+Chars 5662 - 5672 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_number_migration_lib.cm_binary_right_pointer_number
+Chars 5673 - 5765 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 5766 - 5774 [exact~I.] 0. secs (0.u,0.s)
+Chars 5775 - 5779 [Qed.] 0. secs (0.u,0.s)
+cm_binary_right_pointer_number
+     : forall (p : cm_program) (st : cm_src_state) 
+         (left right : cm_value) (ty view : cm_type),
+       cm_value_type_compatible right (CMPtrTy view) ->
+       cm_is_pointerb (cm_value_type left) = false ->
+       cm_binary_ok p
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         left right st = true ->
+       cm_value_number st
+         (cm_binary_value p
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+            left right ty st) =
+       tower_add (cm_value_number st right)
+         (tower_mul (cm_value_number st left)
+            (cm_type_size (cm_program_structs p) view))
+Chars 5780 - 5864 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5865 - 5961 [Print~Assumptions~cmc_target_b...] 0.097 secs (0.097u,0.s)
+Chars 5962 - 5972 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_number_migration_lib.cm_pointer_difference_number
+Chars 5973 - 6063 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 6064 - 6072 [exact~I.] 0. secs (0.u,0.s)
+Chars 6073 - 6077 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_difference_number
+     : forall (st : cm_src_state) (left right : cm_value),
+       cm_pointer_compatible st left right = true ->
+       tower_sub (cm_value_number st left) (cm_value_number st right) =
+       tower_sub (cm_ptr_offset left) (cm_ptr_offset right)
+Chars 6078 - 6160 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6161 - 6255 [Print~Assumptions~cmc_target_b...] 0.091 secs (0.091u,0.s)
+Chars 6256 - 6266 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_number_migration_lib.cm_binary_difference_number
+Chars 6267 - 6356 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 6357 - 6365 [exact~I.] 0. secs (0.u,0.s)
+Chars 6366 - 6370 [Qed.] 0. secs (0.u,0.s)
+cm_binary_difference_number
+     : forall (p : cm_program) (st : cm_src_state) 
+         (left right : cm_value) (ty view : cm_type),
+       cm_value_type_compatible left (CMPtrTy view) ->
+       cm_is_pointerb (cm_value_type right) = true ->
+       cm_binary_ok p
+         (BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))))
+         left right st = true ->
+       cm_value_number st
+         (cm_binary_value p
+            (BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))))
+            left right ty st) =
+       tower_div
+         (tower_sub (cm_value_number st left) (cm_value_number st right))
+         (cm_type_size (cm_program_structs p) view)
+Chars 6371 - 6452 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6453 - 6546 [Print~Assumptions~cmc_target_b...] 0.092 secs (0.092u,0.s)
+Chars 6547 - 6634 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 6635 - 6645 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_tail_migration_lib.cm_tvm_binary_left_pointer_tail
+Chars 6646 - 6737 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 6738 - 6746 [exact~I.] 0. secs (0.u,0.s)
+Chars 6747 - 6751 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_binary_left_pointer_tail
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid op : BinNums.Z) (lhs rhs : cm_expr) 
+         (slot : BinNums.Z) (obj : tvm_object) (pc right : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (rest : list tvm_inst),
+       op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+       op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+       cm_pointerb (cm_expr_type lhs) = true ->
+       cm_pointerb (cm_expr_type rhs) = false ->
+       tower_word_valid
+         (BinInt.Z.add
+            (tower_getw mem
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_temp_offset policy p fid slot)) ->
+       cm_code_at (tvm_object_code obj) pc
+         (cm_binary_finish_code policy p fid op lhs rhs slot ++ rest) ->
+       tvm_iter
+         (cm_code_steps (cm_binary_finish_code policy p fid op lhs rhs slot))
+         (TVMRunTask obj (TVMState pc (right :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos
+                  (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_binary_number op
+               (tower_getw mem
+                  (BinInt.Z.add
+                     (tower_getw mem
+                        (BinNums.Zpos
+                           (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+                     (cm_temp_offset policy p fid slot)))
+               (tower_mul right (cm_pointer_scale p lhs)) :: nil) calls mem
+            input output)
+Chars 6752 - 6835 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6836 - 6931 [Print~Assumptions~cmc_target_b...] 0.098 secs (0.098u,0.s)
+Chars 6932 - 6942 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_tail_migration_lib.cm_tvm_binary_right_pointer_tail
+Chars 6943 - 7035 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 7036 - 7044 [exact~I.] 0. secs (0.u,0.s)
+Chars 7045 - 7049 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_binary_right_pointer_tail
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (lhs rhs : cm_expr) (slot : BinNums.Z)
+         (obj : tvm_object) (pc right : BinNums.Z) 
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (rest : list tvm_inst),
+       cm_pointerb (cm_expr_type rhs) = true ->
+       tower_word_valid
+         (BinInt.Z.add
+            (tower_getw mem
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_temp_offset policy p fid slot)) ->
+       cm_code_at (tvm_object_code obj) pc
+         (cm_binary_finish_code policy p fid
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+            lhs rhs slot ++ rest) ->
+       tvm_iter
+         (cm_code_steps
+            (cm_binary_finish_code policy p fid
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) lhs rhs
+               slot))
+         (TVMRunTask obj (TVMState pc (right :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos
+                  (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (tower_add right
+               (tower_mul
+                  (tower_getw mem
+                     (BinInt.Z.add
+                        (tower_getw mem
+                           (BinNums.Zpos
+                              (BinNums.xO
+                                 (BinNums.xO (BinNums.xO BinNums.xH)))))
+                        (cm_temp_offset policy p fid slot)))
+                  (cm_pointer_scale p rhs)) :: nil) calls mem input output)
+Chars 7050 - 7134 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7135 - 7231 [Print~Assumptions~cmc_target_b...] 0.096 secs (0.096u,0.s)
+Chars 7232 - 7242 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_pointer_tail_migration_lib.cm_tvm_binary_difference_pointer_tail
+Chars 7243 - 7340 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 7341 - 7349 [exact~I.] 0. secs (0.u,0.s)
+Chars 7350 - 7354 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_binary_difference_pointer_tail
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (lhs rhs : cm_expr) (slot : BinNums.Z)
+         (obj : tvm_object) (pc right : BinNums.Z) 
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (rest : list tvm_inst),
+       cm_pointerb (cm_expr_type lhs) = true ->
+       cm_pointerb (cm_expr_type rhs) = true ->
+       tower_signed64 (cm_pointer_scale p lhs) ->
+       cm_pointer_scale p lhs <> BinNums.Z0 ->
+       tower_word_valid
+         (BinInt.Z.add
+            (tower_getw mem
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (cm_temp_offset policy p fid slot)) ->
+       cm_code_at (tvm_object_code obj) pc
+         (cm_binary_finish_code policy p fid
+            (BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))))
+            lhs rhs slot ++ rest) ->
+       tvm_iter
+         (cm_code_steps
+            (cm_binary_finish_code policy p fid
+               (BinNums.Zpos
+                  (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH)))) lhs rhs
+               slot))
+         (TVMRunTask obj (TVMState pc (right :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos
+                  (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH)))))
+            (tower_div
+               (tower_sub
+                  (tower_getw mem
+                     (BinInt.Z.add
+                        (tower_getw mem
+                           (BinNums.Zpos
+                              (BinNums.xO
+                                 (BinNums.xO (BinNums.xO BinNums.xH)))))
+                        (cm_temp_offset policy p fid slot))) right)
+               (cm_pointer_scale p lhs) :: nil) calls mem input output)
+Chars 7355 - 7444 [Check~~~cmc_target_binary_poin...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7445 - 7546 [Print~Assumptions~cmc_target_b...] 0.096 secs (0.095u,0.s)
+Chars 7547 - 7628 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 7629 - 7639 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_scalar_migration_lib.cm_binary_number_wrap
+Chars 7640 - 7715 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 7716 - 7724 [exact~I.] 0. secs (0.u,0.s)
+Chars 7725 - 7729 [Qed.] 0. secs (0.u,0.s)
+cm_binary_number_wrap
+     : forall op l r : BinNums.Z,
+       tower_wrap64 (cm_binary_number op l r) = cm_binary_number op l r
+Chars 7730 - 7797 [Check~cmc_target_binary_scalar...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7798 - 7877 [Print~Assumptions~cmc_target_b...] 0.092 secs (0.091u,0.s)
+Chars 7878 - 7888 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_scalar_migration_lib.cm_tvm_binary_number_total
+Chars 7889 - 7969 [idtac~~"AUDIT~cmc_target_binar...] 0. secs (0.u,0.s)
+Chars 7970 - 7978 [exact~I.] 0. secs (0.u,0.s)
+Chars 7979 - 7983 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_binary_number_total
+     : forall (obj : tvm_object) (pc l r : BinNums.Z)
+         (calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (op : BinNums.Z)
+         (rest : list tvm_inst),
+       (op = BinNums.Zpos (BinNums.xI (BinNums.xI (BinNums.xO BinNums.xH))) \/
+        op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH))) ->
+        r <> BinNums.Z0) ->
+       BinInt.Z.le (BinNums.Zpos (BinNums.xO BinNums.xH)) op /\
+       BinInt.Z.le op
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))) ->
+       cm_code_at (tvm_object_code obj) pc
+         (TVMInst (cm_binary_opcode op) BinNums.Z0 :: rest) ->
+       tvm_step
+         (TVMRunTask obj (TVMState pc (r :: l :: nil) calls mem input output)) =
+       TVMRunTask obj
+         (TVMState (BinInt.Z.add pc (BinNums.Zpos BinNums.xH))
+            (cm_binary_number op l r :: nil) calls mem input output)
+Chars 7984 - 8056 [Check~cmc_target_binary_scalar...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8057 - 8141 [Print~Assumptions~cmc_target_b...] 0.095 secs (0.095u,0.s)
+Chars 8142 - 8152 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_scalar_migration_lib.cm_binary_scalar_number
+Chars 8153 - 8230 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 8231 - 8239 [exact~I.] 0. secs (0.u,0.s)
+Chars 8240 - 8244 [Qed.] 0. secs (0.u,0.s)
+cm_binary_scalar_number
+     : forall (p : cm_program) (st : cm_src_state) 
+         (op : BinNums.Z) (left right : cm_value) 
+         (ty : cm_type),
+       BinInt.Z.le (BinNums.Zpos (BinNums.xO BinNums.xH)) op /\
+       BinInt.Z.le op
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))) ->
+       (op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))) \/
+        op = BinNums.Zpos (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH))) ->
+        cm_is_pointerb (cm_value_type left) = false /\
+        cm_is_pointerb (cm_value_type right) = false) ->
+       cm_value_number st (cm_binary_value p op left right ty st) =
+       cm_binary_number op (cm_value_number st left)
+         (cm_value_number st right)
+Chars 8245 - 8314 [Check~cmc_target_binary_scalar...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8315 - 8396 [Print~Assumptions~cmc_target_b...] 0.09 secs (0.09u,0.s)
+Chars 8397 - 8407 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_binary_scalar_migration_lib.cm_binary_divisor
+Chars 8408 - 8479 [idtac~"AUDIT~cmc_target_binary...] 0. secs (0.u,0.s)
+Chars 8480 - 8488 [exact~I.] 0. secs (0.u,0.s)
+Chars 8489 - 8493 [Qed.] 0. secs (0.u,0.s)
+cm_binary_divisor
+     : forall (p : cm_program) (st : cm_src_state) 
+         (op : BinNums.Z) (left right : cm_value),
+       BinInt.Z.le (BinNums.Zpos (BinNums.xO BinNums.xH)) op /\
+       BinInt.Z.le op
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))) ->
+       cm_binary_ok p op left right st = true ->
+       op = BinNums.Zpos (BinNums.xI (BinNums.xI (BinNums.xO BinNums.xH))) \/
+       op = BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH))) ->
+       cm_value_number st right <> BinNums.Z0
+Chars 8494 - 8557 [Check~cmc_target_binary_scalar...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8558 - 8633 [Print~Assumptions~cmc_target_b...] 0. secs (0.u,0.s)

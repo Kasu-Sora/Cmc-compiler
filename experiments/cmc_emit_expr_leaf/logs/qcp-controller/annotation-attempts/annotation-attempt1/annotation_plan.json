@@ -1,0 +1,181 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "const-open",
+      "location": "cm_emit_const_expr: entry before expression fields",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program == program@pre && fid == fid@pre && fn == fn@pre && pc == pc@pre && temp == temp@pre && expr == expr@pre && lvalue == lvalue@pre && emitter == emitter@pre",
+        "0 <= lvalue && lvalue <= 1 && f == cm_function_at(policy, fid, cm_program_functions(p)) && e == CMConstE(n, ty) && cm_type_code_wf(ty)",
+        "expr is nonzero"
+      ],
+      "resources": [
+        "full expression node fields",
+        "program and function context",
+        "resolved emitter plan"
+      ],
+      "mathematical_state": "The source constructor determines the stored value/type and the pending leaf fragment.",
+      "internal_predicates": []
+    },
+    {
+      "id": "string-open",
+      "location": "cm_emit_string_expr: entry before expression fields",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program == program@pre && fid == fid@pre && fn == fn@pre && pc == pc@pre && temp == temp@pre && expr == expr@pre && lvalue == lvalue@pre && emitter == emitter@pre",
+        "0 <= lvalue && lvalue <= 1 && f == cm_function_at(policy, fid, cm_program_functions(p)) && e == CMStringE(sid, ty) && 0 <= sid && sid <= 2147483647 && cm_typed_program(policy, p) && cm_rep_globals_safe(cm_program_globals(p)) && cm_rep_strings_safe(cm_program_strings(p)) && cm_rep_globals_size(cm_program_globals(p)) + cm_rep_strings_size(cm_program_strings(p)) <= 1048560",
+        "expr is nonzero"
+      ],
+      "resources": [
+        "full expression node fields",
+        "program and function context",
+        "resolved emitter plan"
+      ],
+      "mathematical_state": "The source constructor determines the stored value/type and the pending leaf fragment.",
+      "internal_predicates": []
+    },
+    {
+      "id": "sizeof-open",
+      "location": "cm_emit_sizeof_expr: entry before expression fields",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program == program@pre && fid == fid@pre && fn == fn@pre && pc == pc@pre && temp == temp@pre && expr == expr@pre && lvalue == lvalue@pre && emitter == emitter@pre",
+        "0 <= lvalue && lvalue <= 1 && f == cm_function_at(policy, fid, cm_program_functions(p)) && e == CMSizeofE(asked, ty) && cm_typed_program(policy, p) && cm_type_code_wf(asked) && cm_type_refs(cm_program_structs(p), asked) && cm_rep_structs_safe(cm_program_structs(p))",
+        "expr is nonzero"
+      ],
+      "resources": [
+        "full expression node fields",
+        "program and function context",
+        "resolved emitter plan"
+      ],
+      "mathematical_state": "The source constructor determines the stored value/type and the pending leaf fragment.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_member_array_value_context-open",
+      "location": "cm_member_array_value_context: entry",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "base_ty == cm_type_encode(base) && cm_i32_code_count(base_ty) && cm_typed_program(policy, p) && cm_type_code_wf(base) && cm_member_valid(p, base, mid) && cm_rep_structs_safe(cm_program_structs(p))",
+        "1024 <= base_ty <= INT_MAX",
+        "0 <= (base_ty-1024) rem 1024 - 2",
+        "0 <= mid"
+      ],
+      "resources": [
+        "all program fields and struct/global/string lists"
+      ],
+      "mathematical_state": "Membership implies a pointer to a valid struct and a nonnegative member index; context opens to the verified layout helper resource.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_member_offset_value_context-open",
+      "location": "cm_member_offset_value_context: entry",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "base_ty == cm_type_encode(base) && cm_i32_code_count(base_ty) && cm_typed_program(policy, p) && cm_type_code_wf(base) && cm_member_valid(p, base, mid) && cm_rep_structs_safe(cm_program_structs(p))",
+        "1024 <= base_ty <= INT_MAX",
+        "0 <= (base_ty-1024) rem 1024 - 2",
+        "0 <= mid"
+      ],
+      "resources": [
+        "all program fields and struct/global/string lists"
+      ],
+      "mathematical_state": "Membership implies a pointer to a valid struct and a nonnegative member index; context opens to the verified layout helper resource.",
+      "internal_predicates": []
+    },
+    {
+      "id": "const-emit",
+      "location": "cm_emit_const_expr: cm_emit_plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "lvalue = 0",
+        "source constructor identity and original precondition facts"
+      ],
+      "resources": [
+        "resolved emitter plan",
+        "unchanged program/function/expression resources"
+      ],
+      "mathematical_state": "For lvalue zero, the exact singleton source fragment is the head of todo and is appended to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "string-emit",
+      "location": "cm_emit_string_expr: cm_emit_plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "lvalue = 0",
+        "source constructor identity and original precondition facts"
+      ],
+      "resources": [
+        "resolved emitter plan",
+        "unchanged program/function/expression resources"
+      ],
+      "mathematical_state": "For lvalue zero, the exact singleton source fragment is the head of todo and is appended to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "getc-emit",
+      "location": "cm_emit_getc_expr: cm_emit_plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "lvalue = 0",
+        "source constructor identity and original precondition facts"
+      ],
+      "resources": [
+        "resolved emitter plan",
+        "unchanged program/function/expression resources"
+      ],
+      "mathematical_state": "For lvalue zero, the exact singleton source fragment is the head of todo and is appended to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "sizeof-emit",
+      "location": "cm_emit_sizeof_expr: cm_emit_plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "lvalue = 0",
+        "source constructor identity and original precondition facts"
+      ],
+      "resources": [
+        "resolved emitter plan",
+        "unchanged program/function/expression resources"
+      ],
+      "mathematical_state": "For lvalue zero, the exact singleton source fragment is the head of todo and is appended to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "sizeof-layout",
+      "location": "cm_sizeof_value: cmc_type_size_at call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= code < 1024",
+        "code = cm_type_encode asked",
+        "cm_typed_program(policy, p) && cm_type_code_wf(asked) && cm_type_refs(cm_program_structs(p), asked) && cm_rep_structs_safe(cm_program_structs(p))"
+      ],
+      "resources": [
+        "all program fields and struct/global/string lists"
+      ],
+      "mathematical_state": "For a nonpointer code the exact type encoding is safely narrowed and its representation size equals the semantic type size.",
+      "internal_predicates": []
+    },
+    {
+      "id": "string-layout",
+      "location": "cm_emit_string_expr: cmc_string_address call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= sid && sid <= 2147483647 && cm_typed_program(policy, p) && cm_rep_globals_safe(cm_program_globals(p)) && cm_rep_strings_safe(cm_program_strings(p)) && cm_rep_globals_size(cm_program_globals(p)) + cm_rep_strings_size(cm_program_strings(p)) <= 1048560",
+        "string_id = sid"
+      ],
+      "resources": [
+        "all program fields and struct/global/string lists",
+        "expression/function/emitter frame"
+      ],
+      "mathematical_state": "The arbitrary-index representation prefix equals the semantic string address under typed globals.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

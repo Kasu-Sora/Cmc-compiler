@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open",
+      "location": "cmc_emit_functions: non-null branch before count call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "unchanged parameter @pre bridges",
+        "non-null fn for field accesses",
+        "fid+1 and next PC safety supplied by readiness"
+      ],
+      "resources": [
+        "program context",
+        "opened head context and body",
+        "tail function list",
+        "complete emitter plan"
+      ],
+      "mathematical_state": "Readiness supplies current function identity, all helper premises, successor PC equality and successor readiness.",
+      "internal_predicates": []
+    },
+    {
+      "id": "head-emission",
+      "location": "cmc_emit_functions: before cmc_emit_function",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "unchanged parameter @pre bridges",
+        "non-null fn for field accesses",
+        "fid+1 and next PC safety supplied by readiness"
+      ],
+      "resources": [
+        "head context and body",
+        "remaining tail list",
+        "emitter head plan"
+      ],
+      "mathematical_state": "The complete code is the head function code followed by the tail code.",
+      "internal_predicates": []
+    },
+    {
+      "id": "next-read",
+      "location": "cmc_emit_functions: around fn->next read",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "unchanged parameter @pre bridges",
+        "non-null fn for field accesses",
+        "fid+1 and next PC safety supplied by readiness"
+      ],
+      "resources": [
+        "head field stores restored to context",
+        "head body",
+        "tail list"
+      ],
+      "mathematical_state": "The successor pointer belongs to the tail list; head resources are preserved.",
+      "internal_predicates": []
+    },
+    {
+      "id": "recurse",
+      "location": "cmc_emit_functions: before recursive cmc_emit_functions call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "unchanged parameter @pre bridges",
+        "non-null fn for field accesses",
+        "fid+1 and next PC safety supplied by readiness"
+      ],
+      "resources": [
+        "framed head context/body",
+        "successor list",
+        "emitter suffix"
+      ],
+      "mathematical_state": "Successor fid and PC are in int bounds; the emitted head is appended to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "close",
+      "location": "cmc_emit_functions: after recursive call",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "unchanged parameter @pre bridges",
+        "non-null fn for field accesses",
+        "fid+1 and next PC safety supplied by readiness"
+      ],
+      "resources": [
+        "whole function list",
+        "program context",
+        "completed emitter plan"
+      ],
+      "mathematical_state": "Head and tail resources restore the original list; append associativity restores the full emission result.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

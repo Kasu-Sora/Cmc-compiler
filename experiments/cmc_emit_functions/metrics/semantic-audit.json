@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cmc_emit_functions",
+      "target_contract_sha256": "8652c7bffafd0c3124322aece9100257e0b236869039cf45cdec0e311552bd43",
+      "source_contract_sha256": "a576fc6c727c73ece880c1c6356bb7c80082342fb1ea18813ff897723256d7b1",
+      "status": "reviewed",
+      "review": "All original wf/typed/readiness/PC/representation/size facts and program/function-list resources retained in pre/post; exact code output, arbitrary fid including empty-list domain, done/tail and existing policy/cg boundary preserved."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_emit_functions",
+      "kind": "Fixpoint",
+      "span": [
+        7,
+        11
+      ],
+      "sha256": "e936b557bebd81c355bd4d1538d5538cd93a15816f5a57d4e7aa36d12c492738",
+      "nonblank_lines": 5
+    },
+    {
+      "name": "cm_emit_functions_tail",
+      "kind": "Definition",
+      "span": [
+        14,
+        14
+      ],
+      "sha256": "b05d9f700c87af2ebb7efcd9d74e6d5ba968aa85acb8d8cf4167fcccc5f10114",
+      "nonblank_lines": 1
+    }
+  ],
+  "annotation_stage_model_review": {
+    "cm_emit_functions": "Exact source nil/cons equations; head function at current fid, then tail at fid+1. The list element is intentionally unused in the code equation exactly as in the source; readiness ties it to lookup. No added input restriction.",
+    "cm_emit_functions_tail": "Transparent total list tail; used only under nonempty list shape during recursion. No heap or operational assumption."
+  },
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "source_model": "baseline/cmc_codegen.c:1023",
+  "model_review": "Exact recursive emission equation independently compared with source; transparent tail used through constructor facts. Reused readiness normalization uses existing statement length equality. Final merged declarations and proofs require separate review.",
+  "final_library_review": "final-library-review.json",
+  "final_model_hashes_unchanged": true,
+  "new_assumptions": false
+}

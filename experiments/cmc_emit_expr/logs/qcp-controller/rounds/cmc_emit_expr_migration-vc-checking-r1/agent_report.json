@@ -1,0 +1,36 @@
+{
+  "status": "blocked",
+  "blocker": {
+    "failure_class": "annotation-gap",
+    "kind": "missing-current-to-pre-equalities",
+    "vcs": [
+      {
+        "name": "proof_of_cm_emit_expr_which_implies_wit_2",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1625-1626, cm_emit_expr CONST branch emitter-plan conversion"
+      },
+      {
+        "name": "proof_of_cm_emit_expr_which_implies_wit_4",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1634-1635, cm_emit_expr STRING branch emitter-plan conversion"
+      },
+      {
+        "name": "proof_of_cm_emit_expr_which_implies_wit_6",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1643-1644, cm_emit_expr VAR branch emitter-plan conversion"
+      },
+      {
+        "name": "proof_of_cm_emit_expr_which_implies_wit_19",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1703-1704, cm_emit_expr SIZEOF branch emitter-plan conversion"
+      },
+      {
+        "name": "proof_of_cm_emit_expr_which_implies_wit_21",
+        "parent": null,
+        "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1712-1713, cm_emit_expr GETC branch emitter-plan conversion"
+      }
+    ],
+    "message": "Both alternatives of each listed whole VC require pc = pc_pre and temp = temp_pre, but neither entry-state variable occurs in any antecedent premise or spatial resource. The entry-state scalars are independently universally quantified. For example, CONST with e = CMConstE 0 CMIntTy, lvalue = pc = temp = 0, pc_pre = temp_pre = 1, empty done/tail and a capacity-1 empty emitter satisfies the antecedent while both required equalities are false for every existential simple. The same missing scalar bridge affects STRING, VAR, SIZEOF and GETC.",
+    "repair_boundary": "Repair only the internal dispatcher which-implies annotations by carrying the current-to-@pre equalities in the premises from the surrounding unchanged-variable context, with generated establishing VCs, or reformulate the conversion without introducing unestablished entry equalities. Preserve the existing BODY and imported helper contracts, implementation, and code model; no arbitrary-equality axiom or lemma can repair this."
+  }
+}

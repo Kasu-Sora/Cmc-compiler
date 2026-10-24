@@ -1,0 +1,88 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.203 secs (1.101u,0.1s)
+Chars 79 - 114 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 115 - 160 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 161 - 182 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 183 - 208 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 209 - 1491 [Lemma~cm_target_v_arg_nil_step...] 0.001 secs (0.001u,0.s)
+Chars 1492 - 1498 [Proof.] 0. secs (0.u,0.s)
+Chars 1500 - 1596 [(cbn~zeta;~~~intros~WF~RT~TAG~...] 0. secs (0.u,0.s)
+Chars 1598 - 1739 [(set~~~(ann~:=~~~~CMAnnotation...] 0. secs (0.u,0.s)
+Chars 1741 - 2013 [(cbn[cm_task_code~cm_cont_code...] 0. secs (0.u,0.s)
+Chars 2015 - 2123 [(pose~proof~~~(cm_target_temp_...] 0. secs (0.u,0.s)
+Chars 2125 - 2246 [(set~~~(a1~:=~~~~cm_ann_put_sp...] 0. secs (0.u,0.s)
+Chars 2248 - 2320 [(assert~(RT1~:~cm_runtime_core...] 0. secs (0.u,0.s)
+Chars 2322 - 2323 [{] 0. secs (0.u,0.s)
+Chars 2324 - 2402 [(apply~cm_runtime_core_spill_p...] 0.004 secs (0.003u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/build/Rocq/examples/QCP_demos_human/cmc_target_arg_call_migration_lib.v", line 26, characters 49-71:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid, callee : Z
+values : list cm_value
+ty : cm_type
+all_args : list cm_expr
+base, current, scratch : Z
+v : cm_value
+st : cm_src_state
+pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+target : tvm_task
+WF : cm_semantic_wf_program (cm_source_function_policy sp) p
+ann :=
+  CMAnnotation pc temp b c
+    (CMACursor (CAArgP callee [] values ty all_args base current scratch)
+       owner ob oc :: tail) spills saved calls : cm_annotation
+RT : cm_runtime_core (cm_source_function_policy sp) ap p fid st ann
+TAG : cm_tagged_span_valid st
+GEN : 0 <= cm_state_nextgen st
+TG : cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+FG :
+  cm_spill_frames_generation_below (cm_state_nextgen st)
+    (cm_active_spill_frames fid st ann)
+VG : cm_values_generation_below (cm_state_nextgen st) (v :: values)
+FID : 0 <= fid
+BASE : 0 <= base
+CUR : current = base + Zlength values
+SLOT : 0 <= current < cm_temp_slots (cm_source_function_at sp fid p)
+LEN : Zlength all_args = Zlength (v :: values)
+STAGED : cm_staged_spills base values spills
+OK : cm_call_ok sp p callee (rev (v :: values)) st = true
+DEPTH : cm_call_depth (cm_cursor_frames tail) < 65536
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+    (cm_ann_pc ann)
+    (cm_cont_code sp p fid (cm_ann_pc ann) (cm_ann_temp ann)
+       (cm_ann_cursors ann))
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    (cm_task_fid (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))))
+    (cm_ann_cursors ann) (cm_ann_calls ann)
+SIM :
+  cm_running_target_sim (cm_source_function_policy sp) p fid st [v] ann
+    target
+a1 :=
+  cm_ann_put_spill current v
+    (cm_ann_linear
+       (cm_temp_store_code (cm_source_function_policy sp) p fid current) ann)
+  : cm_annotation
+FIRST :
+  cm_running_target_sim (cm_source_function_policy sp) p fid st [] a1
+    (tvm_iter 5 target)
+Unable to unify
+ "cm_regions_before (cm_state_regions ?M2556) (cm_state_nextgen ?M2556) /\
+  cm_runtime_stack ?M2552 ?M2553 ?M2554 (cm_state_regions ?M2556) 
+    ?M2555 (cm_state_fp ?M2556) (cm_state_regions ?M2556)
+    (cm_ann_cursors (cm_ann_linear ?M2558 ?M2557))
+    (cm_ann_spills (cm_ann_linear ?M2558 ?M2557))
+    (cm_ann_saved (cm_ann_linear ?M2558 ?M2557))
+    (cm_ann_calls (cm_ann_linear ?M2558 ?M2557))" with
+ "(current
+   ?= cm_temp_slots
+        (cm_function_at (cm_source_function_policy sp) fid
+           (cm_program_functions p))) = Lt".
+

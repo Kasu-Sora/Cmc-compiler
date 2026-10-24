@@ -1,0 +1,125 @@
+Chars 0 - 76 [Require~Export~SimpleC.EE.QCP_...] 1.313 secs (1.21u,0.081s)
+Chars 77 - 122 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 123 - 158 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 159 - 180 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 181 - 206 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 207 - 525 [Lemma~cm_s_init_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 526 - 532 [Proof.] 0. secs (0.u,0.s)
+Chars 534 - 717 [(intros~OK~[CODE~SAVED];~pose~...] 0.003 secs (0.003u,0.s)
+Chars 719 - 820 [(cbn[cm_sstart~cm_update_s];~r...] 0. secs (0.u,0.s)
+Chars 822 - 954 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 956 - 1089 [(cbn[cm_emit_stmt~cm_stmt_code...] 0. secs (0.u,0.s)
+Chars 1091 - 1182 [(repeat~rewrite~Zlength_app;~~...] 0.002 secs (0.002u,0.s)
+Chars 1184 - 1297 [(change~~~~(Zlength~~~~~~~(cm_...] 0. secs (0.u,0.s)
+Chars 1299 - 1367 [(repeat~rewrite~<-~app_assoc;~...] 0.004 secs (0.004u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_expr/build/Rocq/examples/QCP_demos_human/cmc_code_stmt_flow_migration_lib.v", line 14, characters 57-68:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid, slot : Z
+expr : cm_expr
+st : cm_src_state
+ks : list cm_frame
+ann : cm_annotation
+OK : cm_local_slot_ok sp p fid slot = true
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_stmt (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end match ann with
+               | CMAnnotation _ _ b _ _ _ _ _ => b
+               end match ann with
+                   | CMAnnotation _ _ _ c _ _ _ _ => c
+                   end (CMInitS slot expr) ++
+     cm_normal_cont_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_stmt_code_count (cm_source_function_policy sp) p fid
+          (CMInitS slot expr))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end match ann with
+           | CMAnnotation _ _ _ _ cs _ _ _ => cs
+           end)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end
+LO : 0 <= slot
+HI : slot < Zlength (cm_function_locals (cm_source_function_at sp fid p))
+Unable to unify
+ "cm_expr_code_for (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end expr 0 ++
+  cm_char_normalize_code
+    (cm_slot_ty
+       (cm_slot_at slot (cm_function_locals (cm_source_function_at sp fid p)))) ++
+  cm_fp_relative_address_code
+    (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+  cm_store_code
+    (cm_slot_ty
+       (cm_slot_at slot (cm_function_locals (cm_source_function_at sp fid p)))) ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end + cm_rvalue_code_count (cm_source_function_policy sp) p fid expr +
+     cm_char_normalize_count
+       (cm_slot_ty
+          (cm_slot_at slot
+             (cm_function_locals (cm_source_function_at sp fid p)))) + 4 + 1)
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end true match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end" with
+ "cm_expr_code_for (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end expr 0 ++
+  cm_char_normalize_code
+    (cm_slot_ty
+       (cm_slot_at slot
+          (cm_function_locals
+             (cm_function_at (cm_source_function_policy sp) fid
+                (cm_program_functions p))))) ++
+  cm_fp_relative_address_code
+    (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+  cm_store_code
+    (cm_slot_ty
+       (cm_slot_at slot
+          (cm_function_locals
+             (cm_function_at (cm_source_function_policy sp) fid
+                (cm_program_functions p))))) ++
+  cm_normal_cont_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end + cm_rvalue_code_count (cm_source_function_policy sp) p fid expr +
+     cm_char_normalize_count
+       (cm_slot_ty
+          (cm_slot_at slot
+             (cm_function_locals
+                (cm_function_at (cm_source_function_policy sp) fid
+                   (cm_program_functions p))))) + 5)
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end".
+

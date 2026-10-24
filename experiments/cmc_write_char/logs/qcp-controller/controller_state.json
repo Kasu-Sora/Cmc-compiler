@@ -1,0 +1,526 @@
+{
+  "generation": 42,
+  "run_id": "cmc_write_char_migration-20261015193338",
+  "case": "cmc_write_char_migration",
+  "phase": "done",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_write_char_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal_check.v",
+    "case_name": "cmc_write_char_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338/public_helper_lemma_lib.v",
+    "sha256": "d1dd6612ab2c2ca4fcb706e953f0d05ed1e858e7308c8a5d8dce3d87c228be6d",
+    "declaration_count": 0,
+    "helper_count": 0
+  },
+  "problem_context": {
+    "problem_statement": "Migrate cmc_write_char from C*/HOL to QCP/Rocq preserving its original contract and runtime C token sequence. Source /Users/nizitong/cmc/cmc_concrete_emit_char.c and .h. Baselines /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_write_char/baseline/.\n\nRequire 0<=cursor, cursor+1<=capacity, capacity<=2147483647; own initialized prefix and separating uninitialized remainder. Ensure initialized prefix ++ [tower_u8 char_value] through cursor+1 and uninitialized suffix thereafter. All signed long long inputs, including negative and >255, are allowed. No extra nonnegative/byte-range premise may be imposed. tower_u8 z is Euclidean z mod256, not signed C remainder. Runtime must remain cast to unsigned long long, byte=(unsigned char)(bits%256ULL), then exactly one cmc_write_byte call. This is low-byte emission, not Unicode encoding.\n\nReuse already verified QCP definitions and lemmas in Rocq/examples/QCP_demos_human/cmc_write_word_migration_lib.v, particularly tower_u8 and tower_machine_rem_byte__byte_encoding at k=0 (and its dependency chain). Prior run cmc_write_word_migration-20261015190516 is done, report /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_write_word/REPORT.md. That pure library has official imports only, three definitions and three proved lemmas; do not copy/reprove/rename those just to avoid dependency setup. Import the existing library through legal C Import Coq wiring so goals/manual and selected dependency snapshot include it. Current char case policy is absent: no new canonical char lib expected, as k=0 proof should be direct existing-lemma instantiation. If a genuine dependency blocker arises, report the precise diagnostic rather than weakening the spec or editing shared accepted source.\n\nReuse exact cmc_write_byte declaration contract from QCP_examples/QCP_demos_human/cmc_write_byte_migration.c, verified in cmc_write_byte_migration-20261015151544. Keep actual helper call; don't replace by direct store. Record this modular helper dependency (including existing two trusted automatic results); don't double count its earlier implementation proof as new migration work. Source char uses existing cmc_unsigned_byte0_bridge and tower_u8_range, so source common cost here is also reused, not newly authored.\n\nAuthor equivalent QCP syntax; no user-supplied QCP freeze. Semantic requirements above remain fixed. Preserve unsigned cast/modulo semantics for negative words. No manual Admitted/Axiom, no changes to generated auto or earlier accepted word/byte files. Record annotation candidates, failed checks, actually used imported helpers, and any new imports separately. Parent audits and measures only after full controller validation.",
+    "target_function": "cmc_write_char"
+  },
+  "formal_case_lib_policy": "absent",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-15T11:33:38.806743Z"
+  },
+  "symexec_profile": {
+    "name": "standard",
+    "timeout_seconds": 3600,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 12,
+  "max_parallel_group_workers": 2,
+  "dune_preparation": {
+    "status": "passed",
+    "build_mode": "makefile",
+    "target": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal_check.vo",
+    "build_root": ".",
+    "make_executable": "/usr/bin/make",
+    "coqc_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqc",
+    "coqdep_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqdep",
+    "run_makefile": "verification_runs/cmc_write_char_migration-20261015193338/Makefile",
+    "run_makefile_sha256": "719773d138323c3460288c2fcf58ed5ba9ec78ca01ae04a998bda6f26760714a",
+    "snapshot": "verification_runs/cmc_write_char_migration-20261015193338/makefile_dependency_snapshot.json",
+    "snapshot_sha256": "5f862e06f65d3953c05a0577030577509208d2ff28a9775d4933e8a063671170",
+    "dependency_digest": "0bad296326abbd9b56d19a122eec43751383379c44cd7aee47cfacd52275c6d4",
+    "source_digest": "06d6f9696e827eb80a2db69cf4d8200aff8e53c3a490639e060f30458e11775d",
+    "artifact_digest": "c8b60cca4c023b5faefe8775cfff97500a90f504a48afaae92b193dfac0e61e0",
+    "configuration_digest": "83db48906dfbb7805fb46e0b33b5cfb55e4c16ae9c74fd38557d6ef3f04e0d98",
+    "base_artifact_count": 144,
+    "current_source_count": 4,
+    "rebuilt_count": 1,
+    "dependency_metrics": {
+      "status": "resolved",
+      "strategy": "breadth-batched-coqdep",
+      "batch_count": 6,
+      "coqdep_process_count": 6,
+      "node_count": 148,
+      "source_count": 148,
+      "elapsed_seconds": 7.295326
+    },
+    "current_cleanup": {
+      "status": "passed",
+      "removed_count": 0,
+      "first_removed": null
+    },
+    "make_seconds": 0.541866,
+    "returncode": 0,
+    "elapsed_seconds": 8.056874
+  },
+  "rounds": {
+    "cmc_write_char_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_write_char_migration-annotation-r1-attempt-1"
+    },
+    "cmc_write_char_migration-vc-checking-r1": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_write_char_migration-vc-checking-r1-attempt-1"
+    },
+    "cmc_write_char_migration-vc-proving-r1": {
+      "phase": "vc-proving-preparing",
+      "current_attempt": "cmc_write_char_migration-vc-proving-r1"
+    }
+  },
+  "attempts": {
+    "cmc_write_char_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_write_char_migration-annotation-r1-attempt-1",
+      "round": "cmc_write_char_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_write_char_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-15T11:33:45.374303Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "fa5405cd1ca79cd96331b43ed05568706160e1044e4c2b900961529c9e0de1a4",
+        "file_count": 1,
+        "missing_count": 5
+      },
+      "input_sha256": "0995fbf5f54ed345b57abc1938ef38c60fff97ab7654501cd5f8ca1f89ac6703",
+      "owner": "annotation/cmc_write_char_migration-20261015193338",
+      "started_at": "2026-10-15T11:33:51.100416Z",
+      "delivery": {
+        "action_id": "spawn-cmc_write_char_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_write_char_migration-20261015193338",
+        "claimed_at": "2026-10-15T11:33:51.100416Z",
+        "finalized_at": "2026-10-15T11:36:45.938293Z"
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-15T11:35:36.773537Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "757ac656849261bf62fc3b7752739140e17e9a6a388bf07be0afac875a61db70",
+          "elapsed_seconds": 0.036,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_write_char_migration-annotation-r1-attempt-1",
+        "round": "cmc_write_char_migration-annotation-r1",
+        "formal_input_digest": "757ac656849261bf62fc3b7752739140e17e9a6a388bf07be0afac875a61db70",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_write_char_migration.c": "0bdf0b0245a7b197b5e0e283123f34889d2a4f9fb1b35078b99080aec37fc5ce",
+          "Rocq/examples/QCP_demos_human/cmc_write_char_migration_lib.v": null,
+          "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal.v": "5dd1f58b37b8350b36f125eff8117c6f3a8ffbd2e6390bd9d2dfd56074ce53a4",
+          "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_auto.v": "a60bb83355439502cdba0578a903a2477113fd963ee27039f728dbd41e2f9de4",
+          "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v": "7485259e9e3277ac55d378a108cc6b9325d19c921bac0a9f6cf01e231ed889ae",
+          "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal_check.v": "6855a4bcef98dcf88c9d56fdbf92170d9e8a7ae3921edf09f8b5c834c83faa82"
+        },
+        "performance_profile": "standard",
+        "timeout_seconds": 3600.0,
+        "elapsed_seconds": 0.036,
+        "recorded_at": "2026-10-15T11:35:36.774407Z"
+      },
+      "timing": {
+        "owner-generation": [
+          {
+            "started_at": "2026-10-15T11:35:36.738411Z",
+            "finished_at": "2026-10-15T11:35:36.774411Z",
+            "elapsed_seconds": 0.036
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-15T11:36:45.918049Z",
+            "finished_at": "2026-10-15T11:36:45.983228Z",
+            "elapsed_seconds": 0.060692
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-15T11:37:00.191182Z",
+            "finished_at": "2026-10-15T11:37:00.231182Z",
+            "elapsed_seconds": 0.04
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-15T11:37:00.156414Z",
+            "finished_at": "2026-10-15T11:37:00.243555Z",
+            "elapsed_seconds": 0.081524
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-15T11:37:14.855373Z",
+            "finished_at": "2026-10-15T11:37:22.967732Z",
+            "elapsed_seconds": 8.10688
+          }
+        ]
+      },
+      "returned_at": "2026-10-15T11:36:45.938293Z",
+      "artifact_sha256": {
+        "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+        "plan": "abc0879e4d5ab5663334f92c16fb0706f415b2ff357db45b78a76441cbbf0de5",
+        "output": "288012048ea723bd149b6002181492c371755bb48d5b1c510076d38428548699"
+      },
+      "after_snapshot": {
+        "digest": "b992c5c598bd4b9fb1bfc3174fa020fa352dbb87aa2505d1da8ccad0d15242e9",
+        "file_count": 5,
+        "missing_count": 1
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_write_char_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_goal_check.v"
+      ],
+      "annotation_activity": "spec-and-annotation",
+      "finished_at": "2026-10-15T11:37:22.967732Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 0,
+          "provable_count": 0,
+          "statements": []
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "skipped": true,
+          "reason": "formal_case_lib policy is absent"
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-15T11:35:36.774407Z",
+            "performance_profile": "standard",
+            "timeout_seconds": 3600.0,
+            "elapsed_seconds": 0.036
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": true,
+          "reason": "optional formal_case_lib candidate is absent"
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "skipped": true,
+          "reason": "optional formal_case_lib candidate is absent"
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      }
+    },
+    "cmc_write_char_migration-vc-checking-r1-attempt-1": {
+      "attempt_id": "cmc_write_char_migration-vc-checking-r1-attempt-1",
+      "round": "cmc_write_char_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-checking-r1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-checking-r1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-checking-r1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-checking-r1/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-15T11:37:40.318078Z",
+      "owner": "vc-checking/cmc_write_char_migration-vc-checking-r1-attempt-1",
+      "started_at": "2026-10-15T11:37:47.116447Z",
+      "delivery": {
+        "action_id": "spawn-cmc_write_char_migration-vc-checking-r1-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_write_char_migration-vc-checking-r1-attempt-1",
+        "claimed_at": "2026-10-15T11:37:47.116447Z",
+        "finalized_at": "2026-10-15T11:40:36.618948Z"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-15T11:40:02.176566Z",
+            "finished_at": "2026-10-15T11:40:02.221745Z",
+            "elapsed_seconds": 0.038339
+          },
+          {
+            "started_at": "2026-10-15T11:40:36.591667Z",
+            "finished_at": "2026-10-15T11:40:36.656245Z",
+            "elapsed_seconds": 0.058051
+          }
+        ],
+        "post-vc-checking-symexec": [
+          {
+            "started_at": "2026-10-15T11:40:50.869269Z",
+            "finished_at": "2026-10-15T11:40:50.904269Z",
+            "elapsed_seconds": 0.035
+          }
+        ],
+        "controller-plan-check": [
+          {
+            "started_at": "2026-10-15T11:40:50.839829Z",
+            "finished_at": "2026-10-15T11:40:50.926813Z",
+            "elapsed_seconds": 0.080131
+          }
+        ]
+      },
+      "returned_at": "2026-10-15T11:40:36.618948Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "output": "a3d25ce2b26c18324edd60f4b2c906306a315e9b891553a4fedfcd504975dbbd"
+      },
+      "agent_output_metrics": {
+        "bytes": 4254,
+        "lines": 50,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 1,
+        "structural_no_split_checked_first": 0,
+        "structural_definite_blockers": 0
+      },
+      "finished_at": "2026-10-15T11:40:50.926813Z",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "61711dea6eaac13461e7c8988cd8bcaa136aaeeb9808066ad5aeb95496748418",
+      "main_check": {
+        "manual_refresh": {
+          "status": "passed",
+          "returncode": 0,
+          "timeout_seconds": 3600.0,
+          "elapsed_seconds": 0.035,
+          "performance_profile": "standard"
+        }
+      }
+    },
+    "cmc_write_char_migration-vc-proving-r1": {
+      "attempt_id": "cmc_write_char_migration-vc-proving-r1",
+      "round": "cmc_write_char_migration-vc-proving-r1",
+      "phase": "vc-proving-preparing",
+      "status": "verified",
+      "directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338/cmc_write_char_migration-vc-proving-r1",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-proving-r1",
+      "base_manifest": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338/cmc_write_char_migration-vc-proving-r1/base_manifest.json",
+      "group_workers_manifest": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-proving-r1/group_workers_manifest.json",
+      "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-proving-r1/proving_merged_result.json",
+      "groups": {
+        "char-byte-conversion": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_write_char_migration-vc-proving-r1/char-byte-conversion",
+          "started_at": "2026-10-15T11:41:20.224448Z",
+          "delivery": {
+            "action_id": "spawn-cmc_write_char_migration-vc-proving-r1-char-byte-conversion",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_write_char_migration-vc-proving-r1/char-byte-conversion",
+            "claimed_at": "2026-10-15T11:41:20.224448Z",
+            "finalized_at": "2026-10-15T11:43:14.643437Z"
+          },
+          "timing_interval_index": 0,
+          "returned_at": "2026-10-15T11:43:14.643437Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d90a9a32be127a45bb0e72977912ef304381d25e6e60adbe6f01543df35bd5b3",
+            "output": "3fc7deb679eb8c060b8cb2593e720ae055ce627603bcc86153ff0fa3626ee9ee"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d90a9a32be127a45bb0e72977912ef304381d25e6e60adbe6f01543df35bd5b3"
+          },
+          "accepted_at": "2026-10-15T11:43:16.357143Z"
+        }
+      },
+      "priority_group_ids": [],
+      "previous_proving_round": null,
+      "max_parallel_group_workers": 2,
+      "created_at": "2026-10-15T11:41:02.523452Z",
+      "base_manifest_sha256": "bc7312095aa1e4758528e28f32590d88cfff22063dc0db11e51f1ec107abb620",
+      "group_workers_manifest_sha256": "4db45ac7b38e13dbefd0755884e664a9a309077971c887f05322437cf5ccccb1",
+      "timing": {
+        "preparing": [
+          {
+            "started_at": "2026-10-15T11:41:09.084306Z",
+            "finished_at": "2026-10-15T11:41:09.146268Z",
+            "elapsed_seconds": 0.054719
+          }
+        ],
+        "group-work": [
+          {
+            "started_at": "2026-10-15T11:41:20.224448Z",
+            "finished_at": "2026-10-15T11:43:14.643437Z",
+            "elapsed_seconds": 114.418989
+          }
+        ],
+        "group-development-check": [
+          {
+            "started_at": "2026-10-15T11:42:30.606848Z",
+            "finished_at": "2026-10-15T11:42:37.306371Z",
+            "elapsed_seconds": 6.699523
+          }
+        ],
+        "group-coq-check": [
+          {
+            "started_at": "2026-10-15T11:42:43.172954Z",
+            "finished_at": "2026-10-15T11:42:46.088158Z",
+            "elapsed_seconds": 2.915204
+          }
+        ],
+        "group-validation": [
+          {
+            "started_at": "2026-10-15T11:43:14.621118Z",
+            "finished_at": "2026-10-15T11:43:16.379097Z",
+            "elapsed_seconds": 1.750217
+          }
+        ],
+        "parent-verify": [
+          {
+            "started_at": "2026-10-15T11:43:35.552262Z",
+            "finished_at": "2026-10-15T11:43:35.711906Z",
+            "elapsed_seconds": 0.151458
+          }
+        ]
+      },
+      "finished_at": "2026-10-15T11:43:35.711906Z",
+      "verified_result_sha256": "5ad806b1e2bbc4f70b9ee716098ac6e4c2b5b36299a31344923d3e8d5cf78beb"
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_write_char_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_write_char_migration-annotation-r1-attempt-1",
+    "iteration_count": 1,
+    "owner": "annotation/cmc_write_char_migration-20261015193338"
+  },
+  "accepted_rounds": {
+    "annotation": {
+      "round": "cmc_write_char_migration-annotation-r1",
+      "attempt_id": "cmc_write_char_migration-annotation-r1-attempt-1",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338/annotation_history/annotation-attempt1"
+    },
+    "vc-checking": {
+      "round": "cmc_write_char_migration-vc-checking-r1",
+      "attempt_id": "cmc_write_char_migration-vc-checking-r1-attempt-1",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "61711dea6eaac13461e7c8988cd8bcaa136aaeeb9808066ad5aeb95496748418",
+      "proof_manual_sha256": "7485259e9e3277ac55d378a108cc6b9325d19c921bac0a9f6cf01e231ed889ae",
+      "agent_output_metrics": {
+        "bytes": 4254,
+        "lines": 50,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 1,
+        "structural_no_split_checked_first": 0,
+        "structural_definite_blockers": 0
+      }
+    },
+    "vc-proving-preparing": {
+      "round": "cmc_write_char_migration-vc-proving-r1",
+      "attempt_id": "cmc_write_char_migration-vc-proving-r1",
+      "result_sha256": "5ad806b1e2bbc4f70b9ee716098ac6e4c2b5b36299a31344923d3e8d5cf78beb"
+    }
+  },
+  "next_actions": [],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": {
+    "round": "cmc_write_char_migration-vc-proving-r1",
+    "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/rounds/cmc_write_char_migration-vc-proving-r1/proving_merged_result.json",
+    "result_sha256": "5ad806b1e2bbc4f70b9ee716098ac6e4c2b5b36299a31344923d3e8d5cf78beb",
+    "proof_manual_sha256": "d90a9a32be127a45bb0e72977912ef304381d25e6e60adbe6f01543df35bd5b3",
+    "proving_merged_lib_sha256": null
+  },
+  "final_apply": {
+    "status": "passed",
+    "transaction_id": "3da67b65797d46fcaf765905a8b7590b",
+    "applied_at": "2026-10-15T11:43:51.639432Z"
+  },
+  "final_check": {
+    "status": "passed",
+    "checked_at": "2026-10-15T11:44:04.528719Z",
+    "cleanup_removed_count": 0
+  },
+  "created_at": "2026-10-15T11:33:38.806748Z",
+  "updated_at": "2026-10-15T11:44:04.535636Z",
+  "final_apply_transaction": {
+    "transaction_id": "3da67b65797d46fcaf765905a8b7590b",
+    "status": "completed",
+    "records": [
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_char_migration-20261015193338/cmc_write_char_migration-vc-proving-r1/proving_merged/cmc_write_char_migration_proof_manual.v",
+        "source_sha256": "d90a9a32be127a45bb0e72977912ef304381d25e6e60adbe6f01543df35bd5b3",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v",
+        "existed": true,
+        "before_sha256": "7485259e9e3277ac55d378a108cc6b9325d19c921bac0a9f6cf01e231ed889ae",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_char_migration-20261015193338/final-check/backup/3da67b65797d46fcaf765905a8b7590b/Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v"
+      }
+    ],
+    "prepared_at": "2026-10-15T11:43:51.619309Z",
+    "backed_up_at": "2026-10-15T11:43:51.630480Z",
+    "completed_at": "2026-10-15T11:43:51.639429Z"
+  },
+  "finished_at": "2026-10-15T11:44:04.528719Z"
+}

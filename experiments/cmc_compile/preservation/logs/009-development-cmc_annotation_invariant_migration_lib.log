@@ -1,0 +1,17 @@
+(cm_annotation_erases
+   (cm_begin_call sp p fid fid0 [] st ty
+      (cm_cursor_frames (cm_ann_cursors ann)))
+   (cm_ann_enter_call sp p fid fid0 st ty (cm_ann_pc ann + 1)
+      (cm_ann_temp ann) (cm_ann_break ann) (cm_ann_continue ann)
+      (cm_ann_cursors ann) (cm_ann_spills ann) (cm_ann_saved ann)
+      (cm_ann_calls ann)))
+(cm_annotation_erases
+   (cm_begin_call sp p fid fid0 [] st ty
+      (cm_cursor_frames (cm_ann_cursors ann))) ann)
+(cm_annotation_erases
+   (cm_begin_call sp p fid fid0 [] st ty
+      (cm_cursor_frames (cm_ann_cursors ann))) ann)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/build/Rocq/examples/QCP_demos_human/cmc_annotation_invariant_migration_lib.v", line 36, characters 0-4:
+Error:  (in proof cm_update_r_erases): Attempt to save an incomplete proof
+(there are remaining open goals).
+

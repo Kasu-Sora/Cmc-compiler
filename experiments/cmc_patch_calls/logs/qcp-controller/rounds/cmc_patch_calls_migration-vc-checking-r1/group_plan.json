@@ -1,0 +1,74 @@
+{
+  "groups": [
+    {
+      "id": "array_open",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_patch_code_arrays_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunction branch, introduce variables and facts, and destruct raw. The nil case contradicts length<>0 and length=Zlength raw. For TVMInst opcode immediate :: rest, choose those existential witnesses and simplify cm_patch_tail. Derive length>=1 and length-1=Zlength rest from Zlength_cons. Unfold cm_patch_arrays_rep and both mapped projections, expose the first Int and Int64 cells of their full arrays, and shift the remaining full arrays to ops+sizeof(INT) and imms+sizeof(INT64). Repackage their separating conjunction as the tail predicate, preserve program context/function-list resources by framing, and discharge copied pure facts. The planned opening helper encapsulates only paired-array decomposition."
+        },
+        {
+          "name": "proof_of_cmc_patch_code_arrays_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_patch_code_arrays_return_wit_1_split_goal_spatial": "From length=0 and length=Zlength raw derive raw=nil by list case analysis. The patch model maps nil to nil. Rewrite the result predicate to the identical incoming array predicate and cancel the unchanged program/function-list frame."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_patch_arrays_open__array_open",
+          "visibility": "public",
+          "strategy": "For all ops imms opcode immediate rest, prove cm_patch_arrays_rep ops imms (1+Zlength rest) (TVMInst opcode immediate :: rest) entails the opcode Int cell at ops, immediate Int64 cell at imms, and cm_patch_arrays_rep (ops+sizeof(INT)) (imms+sizeof(INT64)) (Zlength rest) rest. Unfold paired full arrays and map projections, use standard full/segment head splitting and index rebasing at zero, then reassociate separation. No program validity or extra pointer assumptions are required beyond array ownership."
+        }
+      ]
+    },
+    {
+      "id": "array_close",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_patch_code_arrays_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_patch_code_arrays_return_wit_2_split_goal_spatial": "Use the raw cons equation to unfold cm_patch_code only at its head. tvm_opcode_code opcode=22 selects the CALL arm of cm_patch_inst; retval=cm_function_pc policy p model_imm identifies the updated Int64 head. Keep the patched tail from the recursive postcondition; cm_patch_code_length gives its length=length-1. Apply the paired-array cons reconstruction helper to the head cells and shifted patched tail, normalizing sizeof/address arithmetic, and frame the unchanged program context and function list."
+          }
+        },
+        {
+          "name": "proof_of_cmc_patch_code_arrays_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_patch_code_arrays_return_wit_3_split_goal_spatial": "Use the raw cons equation and opcode code<>22 to simplify the head of cm_patch_code to the unchanged TVMInst opcode model_imm. The recursively patched tail has length length-1 by cm_patch_code_length and the tail-length premise. Combine the existing opcode/immediate head cells with the shifted tail through the same paired-array reconstruction helper; frame program context and function-list ownership."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_patch_arrays_cons__array_close",
+          "visibility": "public",
+          "strategy": "For all ops imms opcode immediate rest, prove opcode Int cell at ops ** immediate Int64 cell at imms ** cm_patch_arrays_rep (ops+sizeof(INT)) (imms+sizeof(INT64)) (Zlength rest) rest entails cm_patch_arrays_rep ops imms (1+Zlength rest) (TVMInst opcode immediate :: rest). Unfold paired full arrays and the two mapped projections, rebase tail segments to index one at each original base, prepend the head cells using standard array head/segment composition, then fold the predicate. All bounds needed are carried by owned cells/arrays; no new mathematical axiom or program premise."
+        }
+      ]
+    },
+    {
+      "id": "emitter",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_patch_resolved_calls_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose a disjunct and unfold cm_resolved_emitter_rep then cm_emitter_rep under the unchanged program/function-list frame. Extract raw_prefix, ops_ptr, imms_ptr and the resolution equation; choose the matching RHS existentials. Map-length identities for cm_rep_ops/cm_rep_imms turn emitter pc and prefix segment bounds into Zlength raw_prefix. Obtain capacity<=INT_MAX from the owned code_capacity Int field, retaining that field. Convert the two prefix segments beginning at zero to full arrays and fold cm_patch_arrays_rep. Preserve both undef suffixes and all emitter/output fields, and derive the requested nonnull/bounds facts from the emitter pure facts."
+        },
+        {
+          "name": "proof_of_cmc_patch_resolved_calls_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_patch_resolved_calls_return_wit_1_split_goal_spatial": "Unfold cm_patch_arrays_rep and rebuild cm_emitter_rep with the existing ops_ptr/imms_ptr witnesses. The resolution equation rewrites patched raw_prefix to resolved; cm_patch_code_length and projection map lengths show Zlength resolved=Zlength raw_prefix, matching unchanged pc and suffix boundaries. Convert full patched arrays to zero-start segments, retain undef suffixes and all five fields, and discharge emitter nonnull/equal-length/capacity facts from the premises. Cancel program context/function-list frame."
+          }
+        }
+      ]
+    }
+  ]
+}

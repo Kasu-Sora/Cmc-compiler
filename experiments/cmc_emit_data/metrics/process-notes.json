@@ -1,0 +1,151 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "source_verification": "isolated unchanged C* replay passed",
+  "annotation_development": {
+    "design_checks": 3,
+    "design_checks_passed": 3,
+    "symexec_checks": 3,
+    "symexec_failed": 2,
+    "post_symexec_library_checks": 1,
+    "post_symexec_library_checks_passed": 1,
+    "ordinary_asserts": 1,
+    "where_blocks": 3,
+    "public_definitions_at_annotation": 0,
+    "public_lemmas_at_annotation": 0,
+    "repairs": [
+      "Initial explicit zero prefix failed helper resource matching",
+      "Removing explicit prefix alone did not resolve matching",
+      "Added proven boundary assertion normalizing zero prefix and end cursor"
+    ],
+    "owner_report": "annotation-attempts/annotation-attempt1/agent_output.md"
+  },
+  "proof_development": {
+    "group_development_checks": {
+      "helper-call-pure": {
+        "checks": 2,
+        "failed": 1,
+        "passed": 1,
+        "repairs": [
+          "Remove redundant finishing tactic after preprocessing already closed pure goal"
+        ],
+        "controller_final_group_check": "accepted"
+      },
+      "buffer-composition": {
+        "checks": 3,
+        "failed": 3,
+        "passed": 0,
+        "coq_debug_calls": 1,
+        "owner_exact_group_checks": 1,
+        "owner_exact_group_checks_passed": 1,
+        "repairs": [
+          "Remove redundant tactics after preprocessing closed initial spatial split",
+          "Restore explicit return endpoint rewrite and resource cancellation",
+          "Order spatial Goal_apply before pure split at parent"
+        ],
+        "controller_final_group_check": "accepted"
+      }
+    },
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 2,
+    "accepted_group_attempts": {
+      "buffer-composition": 1,
+      "helper-call-pure": 1
+    }
+  },
+  "annotation_acceptance": {
+    "status": "accepted",
+    "checks": {
+      "vc_comparisons": {
+        "status": "passed",
+        "comparison_count": 0,
+        "provable_count": 0,
+        "statements": []
+      },
+      "pre_symexec_formal_case_lib_coqc": {
+        "status": "passed",
+        "returncode": 0
+      },
+      "symexec": {
+        "status": "passed",
+        "returncode": 0,
+        "reused_owner_generation": true,
+        "owner_generation_receipt": {
+          "recorded_at": "2026-10-16T05:31:23.469851Z",
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "elapsed_seconds": 0.081
+        }
+      },
+      "formal_case_lib_contract": {
+        "status": "passed",
+        "skipped": false,
+        "errors": []
+      },
+      "formal_case_lib_dune": {
+        "status": "passed",
+        "build_mode": "makefile",
+        "target": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.vo",
+        "returncode": 0,
+        "base_artifact_count": 149,
+        "current_source_count": 1,
+        "rebuilt_count": 0,
+        "dependency_metrics": {
+          "status": "resolved",
+          "strategy": "breadth-batched-coqdep",
+          "batch_count": 7,
+          "coqdep_process_count": 7,
+          "node_count": 150,
+          "source_count": 150,
+          "elapsed_seconds": 8.1732
+        },
+        "current_cleanup": {
+          "status": "passed",
+          "removed_count": 0,
+          "first_removed": null
+        },
+        "make_seconds": 0.009288,
+        "elapsed_seconds": 8.35671
+      },
+      "formal_case_lib_coqc": {
+        "status": "passed",
+        "returncode": 0
+      },
+      "clean_output_freshness": {
+        "status": "passed",
+        "interrupted_output_recovery": {
+          "status": "not-needed",
+          "removed_entry_count": 0,
+          "removed_zero_byte_temp_count": 0
+        }
+      }
+    }
+  },
+  "vc_checking": {
+    "top_level_vcs": 4,
+    "no_split_vcs": 0,
+    "generated_splits": 5,
+    "groups": 2,
+    "all_parents_aggressive": true,
+    "structural_blockers": 0,
+    "report_format_repairs": 1,
+    "repair": "Structural Blocker Scan status text normalized to passed; no formal or plan change",
+    "planned_additional_public_lemmas": 0
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 2,
+    "planned_groups": 2,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-16T05:45:07.797607Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-16T05:45:07.804602Z"
+  }
+}

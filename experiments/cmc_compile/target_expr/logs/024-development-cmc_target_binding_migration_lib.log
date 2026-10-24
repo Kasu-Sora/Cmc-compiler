@@ -1,0 +1,60 @@
+Chars 0 - 75 [Require~Export~SimpleC.EE.QCP_...] 1.27 secs (1.205u,0.064s)
+Chars 76 - 121 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 122 - 157 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 158 - 179 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 180 - 205 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 206 - 684 [Lemma~cm_target_fp_address_sim...] 0. secs (0.u,0.s)
+Chars 685 - 691 [Proof.] 0. secs (0.u,0.s)
+Chars 693 - 761 [(intros~[[pc~stack~calls~mem~i...] 0. secs (0.u,0.s)
+Chars 763 - 836 [(destruct~SIM~as~[MEM~[PROV~[F...] 0. secs (0.u,0.s)
+Chars 838 - 905 [(change~(stack~=~[])~in~STACK;...] 0. secs (0.u,0.s)
+Chars 907 - 955 [(rewrite~(cm_tvm_fp_address~_~...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_expr/build/Rocq/examples/QCP_demos_human/cmc_target_binding_migration_lib.v", line 15, characters 43-47:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+ann : cm_annotation
+offset : Z
+v : cm_value
+rest : list tvm_inst
+calls : list Z
+mem : Z -> Z
+input, output : list Z
+MEM :
+  cm_initialized_bytes_sim st
+    (tvm_mem (TVMState (cm_ann_pc ann) [] calls mem input output))
+PROV :
+  cm_stored_provenance_sim st
+    (tvm_mem (TVMState (cm_ann_pc ann) [] calls mem input output))
+FP :
+  tower_getw (tvm_mem (TVMState (cm_ann_pc ann) [] calls mem input output)) 8 =
+  cm_state_fp st
+CALL :
+  cm_call_frames_sim
+    (tvm_mem (TVMState (cm_ann_pc ann) [] calls mem input output))
+    (cm_ann_calls ann)
+    (tvm_calls (TVMState (cm_ann_pc ann) [] calls mem input output))
+SPILLS :
+  cm_spill_frames_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState (cm_ann_pc ann) [] calls mem input output))
+    (cm_active_spill_frames fid st ann)
+INPUT :
+  tvm_input (TVMState (cm_ann_pc ann) [] calls mem input output) =
+  cm_state_input st
+OUTPUT :
+  tvm_output (TVMState (cm_ann_pc ann) [] calls mem input output) =
+  cm_state_output st
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+    (cm_ann_pc ann) (cm_fp_relative_address_code offset ++ rest)
+VALUE : cm_value_number st v = tower_wrap64 (cm_state_fp st + offset)
+The term "CODE" has type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+    (cm_ann_pc ann) (cm_fp_relative_address_code offset ++ rest)"
+while it is expected to have type
+ "cm_code_at (tvm_object_code ?obj) ?pc
+    (cm_fp_relative_address_code ?offset ++ ?rest)".
+

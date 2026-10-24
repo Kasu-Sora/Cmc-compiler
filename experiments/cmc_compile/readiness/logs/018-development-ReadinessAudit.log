@@ -1,0 +1,422 @@
+Chars 0 - 85 [Require~Import~~~SimpleC.EE.QC...] 1.299 secs (1.231u,0.066s)
+Chars 86 - 96 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_control_migration_lib.cm_succeeds_control_not_error
+Chars 97 - 184 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 185 - 193 [exact~I.] 0. secs (0.u,0.s)
+Chars 194 - 198 [Qed.] 0. secs (0.u,0.s)
+cm_succeeds_control_not_error
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (ctl : cm_control) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_task_succeeds sp (CMCTask p fid ctl st ks) ->
+       cm_control_kind ctl <>
+       BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH))
+Chars 199 - 278 [Check~~~cmc_layout_readiness_c...] 0.001 secs (0.u,0.s)
+Closed under the global context
+Chars 279 - 370 [Print~Assumptions~cmc_layout_r...] 0.134 secs (0.128u,0.004s)
+Chars 371 - 381 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_control_migration_lib.cm_c_code_ready_coordinate
+Chars 382 - 466 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 467 - 475 [exact~I.] 0. secs (0.u,0.s)
+Chars 476 - 480 [Qed.] 0. secs (0.u,0.s)
+cm_c_code_ready_coordinate
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (ann : cm_annotation) (phase : cm_aphase)
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor),
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_annotation_child_ready policy p fid ann ->
+       cm_c_code_ready policy p fid ann phase
+Chars 481 - 557 [Check~cmc_layout_readiness_con...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 558 - 646 [Print~Assumptions~cmc_layout_r...] 0. secs (0.u,0.s)
+Chars 647 - 657 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_control_migration_lib.cm_c_phase_ready_support
+Chars 658 - 740 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 741 - 749 [exact~I.] 0. secs (0.u,0.s)
+Chars 750 - 754 [Qed.] 0. secs (0.u,0.s)
+cm_c_phase_ready_support
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (phase : cm_aphase) (owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (ann : cm_annotation),
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_task_succeeds sp
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ->
+       cm_annotation_rooted ann ->
+       cm_annotation_child_ready (cm_source_function_policy sp) p fid ann ->
+       cm_task_context_ready
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_statement_control
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_c_phase_ready ap ctl ann phase
+Chars 755 - 829 [Check~cmc_layout_readiness_con...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 830 - 916 [Print~Assumptions~cmc_layout_r...] 0.897 secs (0.886u,0.009s)
+Chars 917 - 999 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 1000 - 1087 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.u,0.s)
+Chars 1088 - 1098 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_task_layout_ready_support
+Chars 1099 - 1187 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 1188 - 1196 [exact~I.] 0. secs (0.u,0.s)
+Chars 1197 - 1201 [Qed.] 0. secs (0.u,0.s)
+cm_task_layout_ready_support
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (task : cm_task) (ann : cm_annotation),
+       cm_task_succeeds sp task ->
+       cm_annotation_erases task ann ->
+       cm_annotation_rooted ann ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p task ann ->
+       cm_task_context_ready task ann ->
+       cm_task_statement_control task ann ->
+       cm_task_layout_ready sp ap p task ann
+Chars 1202 - 1282 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1283 - 1375 [Print~Assumptions~cmc_layout_r...] 0.895 secs (0.891u,0.002s)
+Chars 1376 - 1386 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_readiness_support_initial
+Chars 1387 - 1475 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 1476 - 1484 [exact~I.] 0. secs (0.u,0.s)
+Chars 1485 - 1489 [Qed.] 0. secs (0.u,0.s)
+cm_readiness_support_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_readiness_support_invariants sp ap p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Chars 1490 - 1570 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1571 - 1663 [Print~Assumptions~cmc_layout_r...] 0.003 secs (0.003u,0.s)
+Chars 1664 - 1674 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_readiness_support_step
+Chars 1675 - 1760 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 1761 - 1769 [exact~I.] 0. secs (0.u,0.s)
+Chars 1770 - 1774 [Qed.] 0. secs (0.u,0.s)
+cm_readiness_support_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_readiness_support_invariants sp ap p ast ->
+       cm_readiness_support_invariants sp ap p (cm_annotated_step sp ap ast)
+Chars 1775 - 1852 [Check~cmc_layout_readiness_inv...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1853 - 1942 [Print~Assumptions~cmc_layout_r...] 6.026 secs (5.953u,0.03s)
+Chars 1943 - 1953 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_readiness_support_iter
+Chars 1954 - 2039 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 2040 - 2048 [exact~I.] 0. secs (0.u,0.s)
+Chars 2049 - 2053 [Qed.] 0. secs (0.u,0.s)
+cm_readiness_support_iter
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (n : nat) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_readiness_support_invariants sp ap p ast ->
+       cm_readiness_support_invariants sp ap p
+         (cm_annotated_iter sp ap n ast)
+Chars 2054 - 2131 [Check~cmc_layout_readiness_inv...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2132 - 2221 [Print~Assumptions~cmc_layout_r...] 5.785 secs (5.754u,0.02s)
+Chars 2222 - 2232 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_readiness_support_layout_ready
+Chars 2233 - 2326 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 2327 - 2335 [exact~I.] 0. secs (0.u,0.s)
+Chars 2336 - 2340 [Qed.] 0. secs (0.u,0.s)
+cm_readiness_support_layout_ready
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (ast : cm_astate),
+       cm_readiness_support_invariants sp ap p ast ->
+       cm_task_layout_ready sp ap p (cm_astate_task ast)
+         (cm_astate_annotation ast)
+Chars 2341 - 2426 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2427 - 2524 [Print~Assumptions~cmc_layout_r...] 0.518 secs (0.516u,0.001s)
+Chars 2525 - 2535 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_source_termination_readiness_invariants
+Chars 2536 - 2638 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 2639 - 2647 [exact~I.] 0. secs (0.u,0.s)
+Chars 2648 - 2652 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_readiness_invariants
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_readiness_support_invariants sp ap p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Chars 2653 - 2747 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2748 - 2854 [Print~Assumptions~cmc_layout_r...] 5.994 secs (5.861u,0.048s)
+Chars 2855 - 2865 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_source_termination_layout_ready
+Chars 2866 - 2960 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 2961 - 2969 [exact~I.] 0. secs (0.u,0.s)
+Chars 2970 - 2974 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_layout_ready
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_task_layout_ready sp ap p
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+         (cm_astate_annotation
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Chars 2975 - 3061 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3062 - 3160 [Print~Assumptions~cmc_layout_r...] 6.835 secs (6.494u,0.068s)
+Chars 3161 - 3171 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_task_layout_ready_initial
+Chars 3172 - 3260 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 3261 - 3269 [exact~I.] 0. secs (0.u,0.s)
+Chars 3270 - 3274 [Qed.] 0. secs (0.u,0.s)
+cm_task_layout_ready_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_task_layout_ready sp ap p (CMStartTask p input)
+         cm_initial_annotation
+Chars 3275 - 3355 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3356 - 3448 [Print~Assumptions~cmc_layout_r...] 0.093 secs (0.093u,0.s)
+Chars 3449 - 3459 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_invariant_migration_lib.cm_task_layout_ready_step_support
+Chars 3460 - 3553 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 3554 - 3562 [exact~I.] 0. secs (0.u,0.s)
+Chars 3563 - 3567 [Qed.] 0. secs (0.u,0.s)
+cm_task_layout_ready_step_support
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_readiness_support_invariants sp ap p ast ->
+       cm_task_layout_ready sp ap p
+         (cm_astate_task (cm_annotated_step sp ap ast))
+         (cm_astate_annotation (cm_annotated_step sp ap ast))
+Chars 3568 - 3653 [Check~~~cmc_layout_readiness_i...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3654 - 3751 [Print~Assumptions~cmc_layout_r...] 6.195 secs (6.168u,0.021s)
+Chars 3752 - 3834 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 3835 - 3845 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_leaf_migration_lib.cm_begin_call_succeeds_ready
+Chars 3846 - 3929 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 3930 - 3938 [exact~I.] 0. secs (0.u,0.s)
+Chars 3939 - 3943 [Qed.] 0. secs (0.u,0.s)
+cm_begin_call_succeeds_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (caller fid : BinNums.Z) (values : list cm_value)
+         (st : cm_src_state) (ret : cm_type) (ks : list cm_frame),
+       cm_task_succeeds sp (cm_begin_call sp p caller fid values st ret ks) ->
+       cm_call_ok sp p fid values st = true /\
+       BinInt.Z.lt (cm_call_depth ks)
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH)))))))))))))))))
+Chars 3944 - 4019 [Check~cmc_layout_readiness_lea...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4020 - 4107 [Print~Assumptions~cmc_layout_r...] 0.096 secs (0.095u,0.001s)
+Chars 4108 - 4118 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_leaf_migration_lib.cm_start_succeeds_ready
+Chars 4119 - 4197 [idtac~"AUDIT~cmc_layout_readin...] 0. secs (0.u,0.s)
+Chars 4198 - 4206 [exact~I.] 0. secs (0.u,0.s)
+Chars 4207 - 4211 [Qed.] 0. secs (0.u,0.s)
+cm_start_succeeds_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_call_ok sp p (cm_program_main p) nil (cm_initial_state sp p input) =
+       true
+Chars 4212 - 4282 [Check~cmc_layout_readiness_lea...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4283 - 4365 [Print~Assumptions~cmc_layout_r...] 0.099 secs (0.096u,0.s)
+Chars 4366 - 4376 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_leaf_migration_lib.cm_r_succeeds_ready
+Chars 4377 - 4451 [idtac~"AUDIT~cmc_layout_readin...] 0. secs (0.u,0.s)
+Chars 4452 - 4460 [exact~I.] 0. secs (0.u,0.s)
+Chars 4461 - 4465 [Qed.] 0. secs (0.u,0.s)
+cm_r_succeeds_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (expr : cm_expr) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_cursor_frames (cm_ann_cursors ann) = ks ->
+       cm_task_succeeds sp (cm_rstart sp p fid expr st ks) ->
+       cm_r_layout_ready sp p fid expr st ks ann
+Chars 4466 - 4532 [Check~cmc_layout_readiness_lea...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4533 - 4611 [Print~Assumptions~cmc_layout_r...] 0.095 secs (0.094u,0.001s)
+Chars 4612 - 4622 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_leaf_migration_lib.cm_l_succeeds_ready
+Chars 4623 - 4697 [idtac~"AUDIT~cmc_layout_readin...] 0. secs (0.u,0.s)
+Chars 4698 - 4706 [exact~I.] 0. secs (0.u,0.s)
+Chars 4707 - 4711 [Qed.] 0. secs (0.u,0.s)
+cm_l_succeeds_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (expr : cm_expr) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_task_succeeds sp (cm_lstart sp p fid expr st ks) ->
+       cm_l_layout_ready sp p fid expr st
+Chars 4712 - 4778 [Check~cmc_layout_readiness_lea...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4779 - 4857 [Print~Assumptions~cmc_layout_r...] 0.095 secs (0.094u,0.001s)
+Chars 4858 - 4868 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_leaf_migration_lib.cm_s_succeeds_ready
+Chars 4869 - 4943 [idtac~"AUDIT~cmc_layout_readin...] 0. secs (0.u,0.s)
+Chars 4944 - 4952 [exact~I.] 0. secs (0.u,0.s)
+Chars 4953 - 4957 [Qed.] 0. secs (0.u,0.s)
+cm_s_succeeds_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (stmt : cm_stmt) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_task_succeeds sp (cm_sstart sp p fid stmt st ks) ->
+       cm_stmt_start_safe sp p fid stmt = true
+Chars 4958 - 5024 [Check~cmc_layout_readiness_lea...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5025 - 5103 [Print~Assumptions~cmc_layout_r...] 0.1 secs (0.098u,0.002s)
+Chars 5104 - 5114 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_layout_readiness_leaf_migration_lib.cm_v_succeeds_phase_ready
+Chars 5115 - 5195 [idtac~~"AUDIT~cmc_layout_readi...] 0. secs (0.u,0.s)
+Chars 5196 - 5204 [exact~I.] 0. secs (0.u,0.s)
+Chars 5205 - 5209 [Qed.] 0. secs (0.u,0.s)
+cm_v_succeeds_phase_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (phase : cm_aphase) (owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (v : cm_value) (st : cm_src_state)
+         (ann : cm_annotation),
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_annotation_rooted ann ->
+       cm_task_succeeds sp
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest)) -> cm_v_phase_ready sp p v st ann phase
+Chars 5210 - 5282 [Check~cmc_layout_readiness_lea...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5283 - 5367 [Print~Assumptions~cmc_layout_r...] 0.094 secs (0.093u,0.001s)
+Chars 5368 - 5446 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 5447 - 5457 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_statement_control_migration_lib.cm_r_statement_control
+Chars 5458 - 5531 [idtac~"AUDIT~cmc_statement_con...] 0. secs (0.u,0.s)
+Chars 5532 - 5540 [exact~I.] 0. secs (0.u,0.s)
+Chars 5541 - 5545 [Qed.] 0. secs (0.u,0.s)
+cm_r_statement_control
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_task_statement_control
+         (cm_rstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_r sp ap p fid st ann expr))
+Chars 5546 - 5611 [Check~cmc_statement_control_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5612 - 5689 [Print~Assumptions~cmc_statemen...] 0.005 secs (0.005u,0.s)
+Chars 5690 - 5700 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_statement_control_migration_lib.cm_l_statement_control
+Chars 5701 - 5774 [idtac~"AUDIT~cmc_statement_con...] 0. secs (0.u,0.s)
+Chars 5775 - 5783 [exact~I.] 0. secs (0.u,0.s)
+Chars 5784 - 5788 [Qed.] 0. secs (0.u,0.s)
+cm_l_statement_control
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_task_statement_control
+         (cm_lstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_l sp ap p fid st ann expr))
+Chars 5789 - 5854 [Check~cmc_statement_control_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5855 - 5932 [Print~Assumptions~cmc_statemen...] 0.002 secs (0.002u,0.s)
+Chars 5933 - 5943 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_statement_control_migration_lib.cm_s_statement_control
+Chars 5944 - 6017 [idtac~"AUDIT~cmc_statement_con...] 0. secs (0.u,0.s)
+Chars 6018 - 6026 [exact~I.] 0. secs (0.u,0.s)
+Chars 6027 - 6031 [Qed.] 0. secs (0.u,0.s)
+cm_s_statement_control
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (stmt : cm_stmt)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_task_context_ready
+         (CMSTask p fid stmt st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_statement_control
+         (cm_sstart sp p fid stmt st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_s sp ap p fid st ann stmt))
+Chars 6032 - 6097 [Check~cmc_statement_control_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6098 - 6175 [Print~Assumptions~cmc_statemen...] 0.033 secs (0.033u,0.s)
+Chars 6176 - 6186 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_statement_control_migration_lib.cm_v_statement_control
+Chars 6187 - 6260 [idtac~"AUDIT~cmc_statement_con...] 0. secs (0.u,0.s)
+Chars 6261 - 6269 [exact~I.] 0. secs (0.u,0.s)
+Chars 6270 - 6274 [Qed.] 0. secs (0.u,0.s)
+cm_v_statement_control
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c pt pb pk : BinNums.Z) (rest : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase pt pb pk :: rest) spills
+           saved calls in
+       cm_task_context_ready
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_statement_control
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Chars 6275 - 6340 [Check~cmc_statement_control_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6341 - 6418 [Print~Assumptions~cmc_statemen...] 0.107 secs (0.106u,0.s)
+Chars 6419 - 6429 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_statement_control_migration_lib.cm_c_statement_control
+Chars 6430 - 6503 [idtac~"AUDIT~cmc_statement_con...] 0. secs (0.u,0.s)
+Chars 6504 - 6512 [exact~I.] 0. secs (0.u,0.s)
+Chars 6513 - 6517 [Qed.] 0. secs (0.u,0.s)
+cm_c_statement_control
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c pt pb pk : BinNums.Z) (rest : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase pt pb pk :: rest) spills
+           saved calls in
+       cm_task_context_ready
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_statement_control
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_statement_control
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Chars 6518 - 6583 [Check~cmc_statement_control_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6584 - 6661 [Print~Assumptions~cmc_statemen...] 0.565 secs (0.562u,0.002s)
+Chars 6662 - 6672 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_statement_control_migration_lib.cm_task_statement_control_step
+Chars 6673 - 6754 [idtac~~"AUDIT~cmc_statement_co...] 0. secs (0.u,0.s)
+Chars 6755 - 6763 [exact~I.] 0. secs (0.u,0.s)
+Chars 6764 - 6768 [Qed.] 0. secs (0.u,0.s)
+cm_task_statement_control_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (task : cm_task) (ann : cm_annotation),
+       cm_annotation_erases task ann ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p task ann ->
+       cm_task_context_ready task ann ->
+       cm_task_statement_control task ann ->
+       cm_task_statement_control (cm_step sp task)
+         (cm_update_annotation (cm_annotation_step sp ap task ann))
+Chars 6769 - 6842 [Check~cmc_statement_control_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6843 - 6928 [Print~Assumptions~cmc_statemen...] 0.715 secs (0.711u,0.002s)

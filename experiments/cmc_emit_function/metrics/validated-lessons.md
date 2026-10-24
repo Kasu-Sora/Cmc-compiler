@@ -1,0 +1,7 @@
+- 保留任意 `full = prefix ++ params`、slot/offset 等式和原边界，不能把参数递归 helper 限制为 prefix 为空。递归调用处理尾部，当前参数地址仍对应原 prefix；用无 wf 前提的 prefix-size 和 snoc-size 引理完成桥接。
+- 优先复用 `cm_slot_size_matches__temp_context`、`cm_slots_size_matches__temp_context`、`cm_slots_size_nonnegative__call_bounds`。本次仅新增 prefix-size、snoc-size 和参数长度不超过存储指令数三个引理；已验证旧库新增成本为零。
+- 参数 head/tail 使用透明总定义，并在实际使用处保留非空 cons 形状。空参数分支可从 null 指针与 slot-list 资源推出 nil；不要插入要求 symexec 额外证明的冗余部分标注。
+- QCP 的空列表实例化需要确定元素类型；本次使用 `sublist(0,0,cm_function_params(f))` 提供有类型的空前缀，三个相应纯 VC 已证明。
+- 展开／恢复 slot-list 与 function-context 时显式处理空间资源和纯条件。序言 14 条指令的 opcode 条件可化简；预处理已经关闭目标时，不再追加无目标的 tactic。代码序列通过透明 emission 方程和 append 结合律组合，保留任意 done/tail。
+- 本次 41 条顶层手工义务、84 个 split 全部通过完整终检；106 条自动 witness 仍按已有 QCP 自动层信任计。两次 VC 报告字段修复没有改变契约／标注。保留全部失败调用记录，不把成功检查次数当作总迁移成本。
+- 长行会显著影响行数比较：本次 source/target 函数体 annotation 为 78/64 行，但词法 token 为 1325/8532；目标另有 helper 接入 45 行／1650 token。报告行数时同时列 token、字符和精确区域。

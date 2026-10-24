@@ -1,0 +1,812 @@
+AUDIT cmc_preservation_observation_migration_lib.cm_done_target_observation
+cm_done_target_observation
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (ctl : cm_control) (status : BinNums.Z)
+         (target : tvm_task) (ann : cm_annotation),
+       cm_task_target_sim policy p (CMDoneTask st ctl status) target ann ->
+       exists vm : tvm_state,
+         target = TVMDoneTask vm status BinNums.Z0 /\
+         tvm_output vm = cm_state_output st
+Closed under the global context
+AUDIT cmc_preservation_observation_migration_lib.cm_succeeds_step_total
+cm_succeeds_step_total
+     : forall (sp : cm_source_lookup_policy) (task : cm_task),
+       cm_task_succeeds sp task -> cm_task_succeeds sp (cm_step sp task)
+Closed under the global context
+AUDIT cmc_preservation_observation_migration_lib.cm_succeeds_step_inv
+cm_succeeds_step_inv
+     : forall (sp : cm_source_lookup_policy) (task : cm_task),
+       cm_task_succeeds sp (cm_step sp task) -> cm_task_succeeds sp task
+Closed under the global context
+AUDIT cmc_preservation_observation_migration_lib.cm_done_target_exec
+cm_done_target_exec
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (ctl : cm_control) (status : BinNums.Z)
+         (target : tvm_task) (ann : cm_annotation),
+       cm_task_target_sim policy p (CMDoneTask st ctl status) target ann ->
+       exists vm : tvm_state,
+         tvm_exec target (TVMOutcome vm status BinNums.Z0) /\
+         tvm_output vm = cm_state_output st
+Closed under the global context
+AUDIT cmc_preservation_observation_migration_lib.cm_initial_target_sim
+cm_initial_target_sim
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z),
+       cm_astate_sim policy p (cm_annotated_start policy p input)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_value_encoding_refl
+cm_value_encoding_refl
+     : forall (st : cm_src_state) (v : cm_value),
+       cm_value_encoding st v (cm_value_number st v)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_machine_sim_io
+cm_machine_sim_io
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (target : tvm_state)
+         (frames : list cm_call_sim_frame)
+         (spill_frames : list cm_spill_frame) (values : list cm_value)
+         (suffix : list BinNums.Z),
+       cm_machine_state_sim policy p st target frames spill_frames values
+         suffix ->
+       tvm_input target = cm_state_input st /\
+       tvm_output target = cm_state_output st
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_machine_sim_memory
+cm_machine_sim_memory
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (target : tvm_state)
+         (frames : list cm_call_sim_frame)
+         (spill_frames : list cm_spill_frame) (values : list cm_value)
+         (suffix : list BinNums.Z),
+       cm_machine_state_sim policy p st target frames spill_frames values
+         suffix ->
+       cm_initialized_bytes_sim st (tvm_mem target) /\
+       cm_stored_provenance_sim st (tvm_mem target)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_value_number_signed
+cm_value_number_signed
+     : forall (st : cm_src_state) (v : cm_value),
+       tower_signed64 (cm_value_number st v)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_pointer_retype_number
+cm_pointer_retype_number
+     : forall (st : cm_src_state) (ty : cm_type) (v : cm_value),
+       cm_value_number st (cm_pointer_retype ty v) = cm_value_number st v
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_value_number_wrap
+cm_value_number_wrap
+     : forall (st : cm_src_state) (v : cm_value),
+       tower_wrap64 (cm_value_number st v) = cm_value_number st v
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_convert_number
+cm_convert_number
+     : forall (st : cm_src_state) (ty : cm_type) (v : cm_value),
+       cm_value_number st (cm_convert_value st ty v) =
+       (if cm_type_eqb ty CMCharTy
+        then tower_u8 (cm_value_number st v)
+        else cm_value_number st v)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.tower_getw_ext
+tower_getw_ext
+     : forall (m1 m2 : BinNums.Z -> BinNums.Z) (a : BinNums.Z),
+       (forall i : BinNums.Z,
+        BinInt.Z.le BinNums.Z0 i /\
+        BinInt.Z.lt i
+          (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) ->
+        tower_getb m1 (BinInt.Z.add a i) = tower_getb m2 (BinInt.Z.add a i)) ->
+       tower_getw m1 a = tower_getw m2 a
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_initialized_word_bytes
+cm_initialized_word_bytes
+     : forall (init : BinNums.Z -> bool) (base : BinNums.Z),
+       cm_bytes_initialized init base
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) =
+       true ->
+       forall i : BinNums.Z,
+       BinInt.Z.le BinNums.Z0 i /\
+       BinInt.Z.lt i
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) ->
+       init (BinInt.Z.add base i) = true
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_initialized_word_sim
+cm_initialized_word_sim
+     : forall (st : cm_src_state) (vmem : BinNums.Z -> BinNums.Z)
+         (base : BinNums.Z),
+       cm_initialized_bytes_sim st vmem ->
+       cm_bytes_initialized (cm_state_init st) base
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) =
+       true ->
+       cm_live_span st base
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) ->
+       tower_getw vmem base = tower_getw (cm_state_mem st) base
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_load_char_sim
+cm_load_char_sim
+     : forall (st : cm_src_state) (vmem : BinNums.Z -> BinNums.Z)
+         (ptr : cm_value),
+       cm_initialized_bytes_sim st vmem ->
+       cm_load_ok CMCharTy ptr st = true ->
+       cm_live_span st (cm_value_number st ptr) (BinNums.Zpos BinNums.xH) ->
+       cm_value_number st (cm_load_value CMCharTy ptr st) =
+       tower_getb vmem (cm_value_number st ptr)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_load_int_sim
+cm_load_int_sim
+     : forall (st : cm_src_state) (vmem : BinNums.Z -> BinNums.Z)
+         (ptr : cm_value),
+       cm_initialized_bytes_sim st vmem ->
+       cm_load_ok CMIntTy ptr st = true ->
+       cm_live_span st (cm_value_number st ptr)
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) ->
+       cm_value_number st (cm_load_value CMIntTy ptr st) =
+       tower_getw vmem (cm_value_number st ptr)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_load_pointer_sim
+cm_load_pointer_sim
+     : forall (st : cm_src_state) (vmem : BinNums.Z -> BinNums.Z)
+         (ptr : cm_value) (ty : cm_type),
+       cm_initialized_bytes_sim st vmem ->
+       cm_stored_provenance_sim st vmem ->
+       cm_load_ok (CMPtrTy ty) ptr st = true ->
+       cm_live_span st (cm_value_number st ptr)
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) ->
+       cm_value_number st (cm_load_value (CMPtrTy ty) ptr st) =
+       tower_getw vmem (cm_value_number st ptr)
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_store_mem_inside
+cm_store_mem_inside
+     : forall (ty : cm_type) (base n : BinNums.Z)
+         (m1 m2 : BinNums.Z -> BinNums.Z) (a : BinNums.Z),
+       BinInt.Z.le base a /\
+       BinInt.Z.lt a (BinInt.Z.add base (cm_store_width ty)) ->
+       tower_getb (cm_store_mem ty base n m1) a =
+       tower_getb (cm_store_mem ty base n m2) a
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_store_mem_outside
+cm_store_mem_outside
+     : forall (ty : cm_type) (base n : BinNums.Z)
+         (mem : BinNums.Z -> BinNums.Z) (a : BinNums.Z),
+       BinInt.Z.lt a base \/
+       BinInt.Z.le (BinInt.Z.add base (cm_store_width ty)) a ->
+       tower_getb (cm_store_mem ty base n mem) a = tower_getb mem a
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_store_live_address
+cm_store_live_address
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (a : BinNums.Z),
+       cm_live_address (cm_state_store ty ptr v st) a <->
+       cm_live_address st a
+Closed under the global context
+AUDIT cmc_simulation_state_migration_lib.cm_store_initialized_sim
+cm_store_initialized_sim
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (vmem : BinNums.Z -> BinNums.Z),
+       cm_initialized_bytes_sim st vmem ->
+       cm_initialized_bytes_sim (cm_state_store ty ptr v st)
+         (cm_store_mem ty (cm_value_number st ptr)
+            (cm_value_number st (cm_convert_value st ty v)) vmem)
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_region_dec
+cm_region_dec
+     : forall x y : cm_region, {x = y} + {x <> y}
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_regions_eqb_spec
+cm_regions_eqb_spec
+     : forall xs ys : list cm_region, cm_regions_eqb xs ys = true <-> xs = ys
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_store_params_observation
+cm_store_params_observation
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (index : BinNums.Z) (st : cm_src_state),
+       cm_state_input (cm_store_params sp p fid values index st) =
+       cm_state_input st /\
+       cm_state_output (cm_store_params sp p fid values index st) =
+       cm_state_output st
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_enter_call_observation
+cm_enter_call_observation
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (st : cm_src_state),
+       cm_state_input (cm_enter_call sp p fid values st) = cm_state_input st /\
+       cm_state_output (cm_enter_call sp p fid values st) =
+       cm_state_output st
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_restore_call_observation
+cm_restore_call_observation
+     : forall (st : cm_src_state) (env : BinNums.Z -> BinNums.Z -> cm_value)
+         (fp : BinNums.Z) (regions : list cm_region),
+       cm_state_input (cm_restore_call st env fp regions) = cm_state_input st /\
+       cm_state_output (cm_restore_call st env fp regions) =
+       cm_state_output st /\
+       cm_state_mem (cm_restore_call st env fp regions) = cm_state_mem st
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_restore_regions_refl
+cm_restore_regions_refl
+     : forall old : list cm_region, cm_restore_regions old old = old
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_restore_init_refl
+cm_restore_init_refl
+     : forall (all old : list cm_region) (init : BinNums.Z -> bool),
+       cm_restore_init all old old init = init
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_restore_tagged_refl
+cm_restore_tagged_refl
+     : forall (all old : list cm_region) (tagged : BinNums.Z -> bool),
+       cm_restore_tagged all old old tagged = tagged
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_restore_scope_refl
+cm_restore_scope_refl
+     : forall st : cm_src_state,
+       cm_restore_scope st (cm_state_env st) (cm_state_regions st) = st
+Closed under the global context
+AUDIT cmc_source_call_migration_lib.cm_call_depth_nonnegative
+cm_call_depth_nonnegative
+     : forall ks : list cm_frame, BinInt.Z.le BinNums.Z0 (cm_call_depth ks)
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_exec_done
+cm_exec_done
+     : forall (sp : cm_source_lookup_policy) (st : cm_src_state)
+         (ctl : cm_control) (status : BinNums.Z),
+       cm_exec sp (CMDoneTask st ctl status) (CMOutcome st ctl status)
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_exec_rule
+cm_exec_rule
+     : forall (sp : cm_source_lookup_policy) (task : cm_task)
+         (out : cm_outcome),
+       cm_exec sp (cm_step sp task) out -> cm_exec sp task out
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_iter_done
+cm_iter_done
+     : forall (sp : cm_source_lookup_policy) (n : nat) 
+         (st : cm_src_state) (ctl : cm_control) (status : BinNums.Z),
+       cm_iter sp n (CMDoneTask st ctl status) = CMDoneTask st ctl status
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_iter_add
+cm_iter_add
+     : forall (sp : cm_source_lookup_policy) (m n : nat) (task : cm_task),
+       cm_iter sp (m + n) task = cm_iter sp n (cm_iter sp m task)
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_exec_prefix
+cm_exec_prefix
+     : forall (sp : cm_source_lookup_policy) (n : nat) 
+         (task : cm_task) (out : cm_outcome),
+       cm_exec sp (cm_iter sp n task) out -> cm_exec sp task out
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_exec_witness
+cm_exec_witness
+     : forall (sp : cm_source_lookup_policy) (task : cm_task)
+         (out : cm_outcome),
+       cm_exec sp task out <->
+       (exists
+          (n : nat) (st : cm_src_state) (ctl : cm_control) 
+        (status : BinNums.Z),
+          cm_iter sp n task = CMDoneTask st ctl status /\
+          out = CMOutcome st ctl status)
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_exec_deterministic
+cm_exec_deterministic
+     : forall (sp : cm_source_lookup_policy) (task : cm_task)
+         (out1 out2 : cm_outcome),
+       cm_exec sp task out1 -> cm_exec sp task out2 -> out1 = out2
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_exec_step_inv
+cm_exec_step_inv
+     : forall (sp : cm_source_lookup_policy) (task : cm_task)
+         (out : cm_outcome),
+       cm_exec sp task out -> cm_exec sp (cm_step sp task) out
+Closed under the global context
+AUDIT cmc_source_execution_migration_lib.cm_valid_input_bridge
+cm_valid_input_bridge
+     : forall input : list BinNums.Z,
+       cm_valid_input input -> tvm_valid_input input
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_total_nth_some
+cm_total_nth_some
+     : forall (choice : nat -> ?A) (n : nat) (xs : list ?A) (x : ?A),
+       List.nth_error xs n = Some x -> cm_total_nth choice n xs = x
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_source_at_valid
+cm_source_at_valid
+     : forall (sp : cm_source_lookup_policy) (choice : nat -> ?A)
+         (i : BinNums.Z) (xs : list ?A) (x : ?A),
+       BinInt.Z.le BinNums.Z0 i ->
+       List.nth_error xs (BinInt.Z.to_nat i) = Some x ->
+       cm_source_at sp choice i xs = x
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_total_nth_source
+cm_total_nth_source
+     : forall (lookup : nat -> list ?A -> ?A) (choice : nat -> ?A),
+       (forall n : nat, lookup n nil = choice n) ->
+       (forall (x : ?A) (xs : list ?A), lookup 0 (x :: xs)%list = x) ->
+       (forall (n : nat) (x : ?A) (xs : list ?A),
+        lookup (S n) (x :: xs)%list = lookup n xs) ->
+       forall (n : nat) (xs : list ?A),
+       lookup n xs = cm_total_nth choice n xs
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_static_global_init_matches
+cm_static_global_init_matches
+     : forall g : cm_global_d,
+       cm_static_global_init_bytes g = cm_global_init_bytes g
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_static_global_matches
+cm_static_global_matches
+     : forall (structs : list cm_struct_d) (g : cm_global_d),
+       cm_static_global_bytes structs g = cm_global_bytes structs g
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_static_globals_match
+cm_static_globals_match
+     : forall (structs : list cm_struct_d) (gs : list cm_global_d),
+       cm_static_globals_bytes structs gs = cm_globals_bytes structs gs
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_static_strings_match
+cm_static_strings_match
+     : forall ss : list cm_string_d,
+       cm_static_strings_bytes ss = cm_strings_bytes ss
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_static_data_matches
+cm_static_data_matches
+     : forall p : cm_program, cm_static_data_bytes p = cm_model_data_bytes p
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_write_bytes_patches
+cm_write_bytes_patches
+     : forall (bytes : list BinNums.Z) (base : BinNums.Z)
+         (mem : BinNums.Z -> BinNums.Z),
+       cm_write_bytes mem base bytes =
+       tvm_apply_patches (cm_bytes_patches bytes base) mem
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_initial_memory_matches
+cm_initial_memory_matches
+     : forall (policy : cm_lookup_policy) (sp : cm_source_lookup_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_state_mem (cm_initial_state sp p input) =
+       tvm_mem (tvm_initial_state (cm_compile_model policy p) input)
+Closed under the global context
+AUDIT cmc_source_initial_migration_lib.cm_initial_observation_matches
+cm_initial_observation_matches
+     : forall (policy : cm_lookup_policy) (sp : cm_source_lookup_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_state_input (cm_initial_state sp p input) =
+       tvm_input (tvm_initial_state (cm_compile_model policy p) input) /\
+       cm_state_output (cm_initial_state sp p input) =
+       tvm_output (tvm_initial_state (cm_compile_model policy p) input)
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_type_dec
+cm_type_dec
+     : forall x y : cm_type, {x = y} + {x <> y}
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_type_eqb_spec
+cm_type_eqb_spec
+     : forall x y : cm_type, cm_type_eqb x y = true <-> x = y
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_is_pointerb_spec
+cm_is_pointerb_spec
+     : forall ty : cm_type, cm_is_pointerb ty = true <-> cm_is_pointer ty
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_store_preserves_observation
+cm_store_preserves_observation
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state),
+       cm_state_input (cm_state_store ty ptr v st) = cm_state_input st /\
+       cm_state_output (cm_state_store ty ptr v st) = cm_state_output st
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_store_preserves_provenance
+cm_store_preserves_provenance
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state),
+       cm_state_regions (cm_state_store ty ptr v st) = cm_state_regions st /\
+       cm_state_env (cm_state_store ty ptr v st) = cm_state_env st /\
+       cm_state_fp (cm_state_store ty ptr v st) = cm_state_fp st /\
+       cm_state_nextgen (cm_state_store ty ptr v st) = cm_state_nextgen st
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_store_value_number
+cm_store_value_number
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (w : cm_value),
+       cm_value_number (cm_state_store ty ptr v st) w = cm_value_number st w
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_mark_init_inside
+cm_mark_init_inside
+     : forall (old : BinNums.Z -> bool) (base width a : BinNums.Z),
+       BinInt.Z.le base a /\ BinInt.Z.lt a (BinInt.Z.add base width) ->
+       cm_mark_init old base width a = true
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_clear_init_inside
+cm_clear_init_inside
+     : forall (old : BinNums.Z -> bool) (base width a : BinNums.Z),
+       BinInt.Z.le base a /\ BinInt.Z.lt a (BinInt.Z.add base width) ->
+       cm_clear_init old base width a = false
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_store_initializes
+cm_store_initializes
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (a : BinNums.Z),
+       BinInt.Z.le (cm_value_number st ptr) a /\
+       BinInt.Z.lt a
+         (BinInt.Z.add (cm_value_number st ptr) (cm_store_width ty)) ->
+       cm_state_init (cm_state_store ty ptr v st) a = true
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_store_tags_pointer
+cm_store_tags_pointer
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state),
+       cm_is_pointerb ty = true ->
+       cm_state_tags (cm_state_store ty ptr v st) (cm_value_number st ptr) =
+       cm_convert_value st ty v
+Closed under the global context
+AUDIT cmc_source_state_migration_lib.cm_load_requires_initialized
+cm_load_requires_initialized
+     : forall (ty : cm_type) (ptr : cm_value) (st : cm_src_state),
+       cm_load_ok ty ptr st = true ->
+       cm_bytes_initialized (cm_state_init st) (cm_value_number st ptr)
+         (cm_store_width ty) = true
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_u8_range
+tower_u8_range
+     : forall z : BinNums.Z, tower_byte_value (tower_u8 z)
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_wrap64_range
+tower_wrap64_range
+     : forall z : BinNums.Z, tower_signed64 (tower_wrap64 z)
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_u8_idempotent
+tower_u8_idempotent
+     : forall z : BinNums.Z, tower_u8 (tower_u8 z) = tower_u8 z
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_u8_fixed
+tower_u8_fixed
+     : forall z : BinNums.Z, tower_byte_value z -> tower_u8 z = z
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_wrap64_fixed
+tower_wrap64_fixed
+     : forall z : BinNums.Z, tower_signed64 z -> tower_wrap64 z = z
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_wrap64_idempotent
+tower_wrap64_idempotent
+     : forall z : BinNums.Z, tower_wrap64 (tower_wrap64 z) = tower_wrap64 z
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_status_range
+tower_status_range
+     : forall z : BinNums.Z, tower_byte_value (tower_status z)
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_bool_cases
+tower_bool_cases
+     : forall b : bool,
+       tower_bool b = BinNums.Z0 \/ tower_bool b = BinNums.Zpos BinNums.xH
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_getb_setb_same
+tower_getb_setb_same
+     : forall (m : BinNums.Z -> BinNums.Z) (a v : BinNums.Z),
+       tower_getb (tower_setb m a v) a = tower_u8 v
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_getb_setb_other
+tower_getb_setb_other
+     : forall (m : BinNums.Z -> BinNums.Z) (a b v : BinNums.Z),
+       b <> a -> tower_getb (tower_setb m a v) b = tower_getb m b
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_div_min_neg1
+tower_div_min_neg1
+     : tower_div
+         (BinNums.Zneg
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO (...)))))))))))))))))))))))
+         (BinNums.Zneg BinNums.xH) =
+       BinNums.Zneg
+         (BinNums.xO
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO (...)))))))))))))))))))))))
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_mod_min_neg1
+tower_mod_min_neg1
+     : tower_mod
+         (BinNums.Zneg
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO (...)))))))))))))))))))))))
+         (BinNums.Zneg BinNums.xH) = BinNums.Z0
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_decimal_zero
+tower_decimal_zero
+     : tower_decimal BinNums.Z0 =
+       (BinNums.Zpos
+          (BinNums.xO
+             (BinNums.xO (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))))
+        :: nil)%list
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_decimal_neg1
+tower_decimal_neg1
+     : tower_decimal (BinNums.Zneg BinNums.xH) =
+       (BinNums.Zpos
+          (BinNums.xI
+             (BinNums.xO (BinNums.xI (BinNums.xI (BinNums.xO BinNums.xH)))))
+        :: BinNums.Zpos
+             (BinNums.xI
+                (BinNums.xO (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))))
+           :: nil)%list
+Closed under the global context
+AUDIT cmc_tower_semantics_migration_lib.tower_decimal_255
+tower_decimal_255
+     : tower_decimal
+         (BinNums.Zpos
+            (BinNums.xI
+               (BinNums.xI
+                  (BinNums.xI
+                     (BinNums.xI
+                        (BinNums.xI (BinNums.xI (BinNums.xI BinNums.xH)))))))) =
+       (BinNums.Zpos
+          (BinNums.xO
+             (BinNums.xI (BinNums.xO (BinNums.xO (BinNums.xI BinNums.xH)))))
+        :: BinNums.Zpos
+             (BinNums.xI
+                (BinNums.xO (BinNums.xI (BinNums.xO (BinNums.xI BinNums.xH)))))
+           :: BinNums.Zpos
+                (BinNums.xI
+                   (BinNums.xO
+                      (BinNums.xI (BinNums.xO (BinNums.xI BinNums.xH)))))
+              :: nil)%list
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_step_deterministic
+tvm_step_deterministic
+     : forall task n1 n2 : tvm_task,
+       tvm_step task = n1 -> tvm_step task = n2 -> n1 = n2
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_boot_valid
+tvm_boot_valid
+     : forall (obj : tvm_object) (input : list BinNums.Z),
+       tvm_load_ok obj ->
+       tvm_step (TVMBoot obj input) =
+       TVMRunTask obj (tvm_initial_state obj input)
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_boot_malformed
+tvm_boot_malformed
+     : forall (obj : tvm_object) (input : list BinNums.Z),
+       ~ tvm_load_ok obj ->
+       tvm_step (TVMBoot obj input) =
+       TVMDoneTask (tvm_unloaded_state obj input)
+         (BinNums.Zpos (BinNums.xI BinNums.xH))
+         (BinNums.Zpos (BinNums.xO BinNums.xH))
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_pc_error
+tvm_pc_error
+     : forall (obj : tvm_object) (st : tvm_state),
+       ~ tvm_target_valid (tvm_object_code obj) (tvm_pc st) ->
+       tvm_step (TVMRunTask obj st) =
+       TVMDoneTask st (BinNums.Zpos (BinNums.xO BinNums.xH))
+         (BinNums.Zpos BinNums.xH)
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_iter_done
+tvm_iter_done
+     : forall (n : nat) (st : tvm_state) (status kind : BinNums.Z),
+       tvm_iter n (TVMDoneTask st status kind) = TVMDoneTask st status kind
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_iter_add
+tvm_iter_add
+     : forall (m n : nat) (task : tvm_task),
+       tvm_iter (m + n) task = tvm_iter n (tvm_iter m task)
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_exec_done
+tvm_exec_done
+     : forall (st : tvm_state) (status kind : BinNums.Z),
+       tvm_exec (TVMDoneTask st status kind) (TVMOutcome st status kind)
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_exec_step
+tvm_exec_step
+     : forall (task : tvm_task) (out : tvm_outcome),
+       tvm_exec (tvm_step task) out -> tvm_exec task out
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_exec_prefix
+tvm_exec_prefix
+     : forall (n : nat) (task : tvm_task) (out : tvm_outcome),
+       tvm_exec (tvm_iter n task) out -> tvm_exec task out
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_exec_deterministic
+tvm_exec_deterministic
+     : forall (task : tvm_task) (out1 out2 : tvm_outcome),
+       tvm_exec task out1 -> tvm_exec task out2 -> out1 = out2
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_normal_excludes_error
+tvm_normal_excludes_error
+     : forall (obj : tvm_object) (input output : list BinNums.Z)
+         (status : BinNums.Z),
+       tvm_terminates obj input output status ->
+       forall output2 : list BinNums.Z, ~ tvm_errors obj input output2
+Closed under the global context
+AUDIT cmc_tvm_execution_migration_lib.tvm_normal_excludes_malformed
+tvm_normal_excludes_malformed
+     : forall (obj : tvm_object) (input output : list BinNums.Z)
+         (status : BinNums.Z),
+       tvm_terminates obj input output status -> ~ tvm_malformed obj input
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tower_signed64b_spec
+tower_signed64b_spec
+     : forall z : BinNums.Z, tower_signed64b z = true <-> tower_signed64 z
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tower_byte_valueb_spec
+tower_byte_valueb_spec
+     : forall z : BinNums.Z,
+       tower_byte_valueb z = true <-> tower_byte_value z
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tower_addr_validb_spec
+tower_addr_validb_spec
+     : forall z : BinNums.Z,
+       tower_addr_validb z = true <-> tower_addr_valid z
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tower_word_validb_spec
+tower_word_validb_spec
+     : forall z : BinNums.Z,
+       tower_word_validb z = true <-> tower_word_valid z
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_opcode_roundtrip
+tvm_opcode_roundtrip
+     : forall op : tvm_opcode, tvm_opcode_decode (tvm_opcode_code op) = op
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_inst_shapeb_spec
+tvm_inst_shapeb_spec
+     : forall i : tvm_inst, tvm_inst_shapeb i = true <-> tvm_inst_shape i
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_patch_validb_spec
+tvm_patch_validb_spec
+     : forall p : tvm_patch, tvm_patch_validb p = true <-> tvm_patch_valid p
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_target_validb_spec
+tvm_target_validb_spec
+     : forall (c : list tvm_inst) (t : BinNums.Z),
+       tvm_target_validb c t = true <-> tvm_target_valid c t
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.forallb_Forall_bridge
+forallb_Forall_bridge
+     : forall (f : ?A -> bool) (P : ?A -> Prop) (xs : list ?A),
+       (forall x : ?A, f x = true <-> P x) ->
+       List.forallb f xs = true <-> List.Forall P xs
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_load_okb_spec
+tvm_load_okb_spec
+     : forall obj : tvm_object, tvm_load_okb obj = true <-> tvm_load_ok obj
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.Forall_index_Z
+Forall_index_Z
+     : forall (P : ?A -> Prop) (d : ?A) (xs : list ?A),
+       List.Forall P xs <->
+       (forall i : BinNums.Z,
+        BinInt.Z.le BinNums.Z0 i ->
+        BinInt.Z.lt i (Zcomplements.Zlength xs) ->
+        P (List.nth (BinInt.Z.to_nat i) xs d))
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_code_shape_source
+tvm_code_shape_source
+     : forall (code : list tvm_inst) (d : tvm_inst),
+       tvm_code_shape code <->
+       (forall i : BinNums.Z,
+        BinInt.Z.le BinNums.Z0 i ->
+        BinInt.Z.lt i (Zcomplements.Zlength code) ->
+        tvm_inst_shape (List.nth (BinInt.Z.to_nat i) code d))
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_patches_valid_source
+tvm_patches_valid_source
+     : forall (patches : list tvm_patch) (d : tvm_patch),
+       tvm_patches_valid patches <->
+       (forall i : BinNums.Z,
+        BinInt.Z.le BinNums.Z0 i ->
+        BinInt.Z.lt i (Zcomplements.Zlength patches) ->
+        tvm_patch_valid (List.nth (BinInt.Z.to_nat i) patches d))
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.tvm_targets_valid_source
+tvm_targets_valid_source
+     : forall (code : list tvm_inst) (d : tvm_inst),
+       tvm_targets_valid code <->
+       (forall i : BinNums.Z,
+        BinInt.Z.le BinNums.Z0 i ->
+        BinInt.Z.lt i (Zcomplements.Zlength code) ->
+        tvm_opcode_is_target
+          (tvm_inst_op (List.nth (BinInt.Z.to_nat i) code d)) = true ->
+        tvm_target_valid code
+          (tvm_inst_imm (List.nth (BinInt.Z.to_nat i) code d)))
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.cm_source_codegen_fields
+cm_source_codegen_fields
+     : forall (policy : cm_lookup_policy) (p : cm_program),
+       cm_codegen_fields_representable (cm_source_codegen_obligations policy)
+         p <->
+       tvm_code_shape (cm_model_code policy p) /\
+       tvm_targets_valid (cm_model_code policy p) /\
+       tvm_patches_valid (cm_model_patches p) /\
+       tvm_target_valid (cm_model_code policy p) BinNums.Z0
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.cm_decode_pairs_rep
+cm_decode_pairs_rep
+     : forall code : list tvm_inst,
+       cm_decode_pairs (cm_rep_ops code) (cm_rep_imms code) = code
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.cm_output_decode_unique
+cm_output_decode_unique
+     : forall (entry : BinNums.Z) (ops imms data : list BinNums.Z)
+         (obj1 obj2 : tvm_object),
+       cm_output_decodes entry ops imms data obj1 ->
+       cm_output_decodes entry ops imms data obj2 -> obj1 = obj2
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.cm_model_output_decodes
+cm_model_output_decodes
+     : forall (policy : cm_lookup_policy) (p : cm_program),
+       cm_semantic_wf_program policy p ->
+       cm_output_decodes BinNums.Z0 (cm_rep_ops (cm_model_code policy p))
+         (cm_rep_imms (cm_model_code policy p)) (cm_model_data_bytes p)
+         (cm_compile_model policy p)
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.cm_compile_model_wf
+cm_compile_model_wf
+     : forall (policy : cm_lookup_policy) (p : cm_program),
+       cm_semantic_wf_program policy p ->
+       tvm_object_wf (cm_compile_model policy p)
+Closed under the global context
+AUDIT cmc_tvm_object_migration_lib.cm_decoded_model_unique
+cm_decoded_model_unique
+     : forall (policy : cm_lookup_policy) (p : cm_program) (obj : tvm_object),
+       cm_semantic_wf_program policy p ->
+       cm_output_decodes BinNums.Z0 (cm_rep_ops (cm_model_code policy p))
+         (cm_rep_imms (cm_model_code policy p)) (cm_model_data_bytes p) obj ->
+       obj = cm_compile_model policy p
+Closed under the global context

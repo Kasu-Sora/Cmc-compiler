@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "manual_sha256": "d65f6cde25136ef7755f658473547f08f3dc0a7d5499a412e3d30cbb4cd145c6",
+  "lib_sha256": "af2b5bbf48517d248aa8305abdef9a904a686e904b9657a647331f2cbea1f7d2",
+  "new_library_declarations": [
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "From",
+      "name": "Coq",
+      "ending": null
+    },
+    {
+      "kind": "Import",
+      "name": "ListNotations",
+      "ending": null
+    },
+    {
+      "kind": "Open",
+      "name": "Scope",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_emit_prelude",
+      "ending": null
+    }
+  ],
+  "no_new_manual_or_library_admitted_axiom_parameter": true,
+  "reused_dependencies_unchanged": true,
+  "prior_helper_function_proofs_imported": false,
+  "new_helper_review": {},
+  "model_review": "Exact 11-instruction source sequence retains reviewed annotation bytes, including CALL at total cm_function_pc policy p (cm_program_main p). No extra validity assumptions.",
+  "manual_review": "Reviewed every final proof region: program-context opening/restoration, main_id equality, fixed plan expansion, per-call opcode facts and sequence routing, append associativity and final plan/context restoration. All end in Qed; controller checks exact statements/routes, imports, annotation seal and full goal-check.",
+  "proof_regions": 10,
+  "support_mapping": {
+    "context read": "Existing cm_program_context_rep definition; exact field ownership reopened and folded.",
+    "instruction sequence": "Transparent exact source model, opcode computation and existing plan predicates.",
+    "CALL": "Exact main_id equality and unrestricted cm_emit_call_plan contract; no entry-validity precondition.",
+    "final output": "Append associativity combines singleton emissions under arbitrary done/tail."
+  },
+  "scope": "One runtime BODY contract; existing lookup-policy boundary retained. No new main execution, termination, linking or compiler preservation theorem."
+}

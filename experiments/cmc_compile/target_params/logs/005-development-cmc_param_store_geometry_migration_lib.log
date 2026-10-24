@@ -1,0 +1,64 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.884 secs (1.282u,0.193s)
+Chars 79 - 124 [From~Coq~Require~Import~ZArith...] 0.014 secs (0.013u,0.s)
+Chars 125 - 146 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 147 - 172 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 173 - 320 [Lemma~cm_address_monotone_nat~...] 0.001 secs (0.u,0.s)
+Chars 321 - 327 [Proof.] 0. secs (0.u,0.s)
+Chars 329 - 387 [(induction~n~as~[|~n~IH];~intr...] 0.001 secs (0.u,0.s)
+Chars 389 - 469 [(assert~(A~:~address~lo~<=~add...] 0. secs (0.u,0.s)
+Chars 471 - 575 [(pose~proof~(STEP~(lo~+~Z.of_n...] 0.001 secs (0.001u,0.s)
+Chars 576 - 580 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 581 - 711 [Lemma~cm_address_monotone~(add...] 0. secs (0.u,0.s)
+Chars 712 - 718 [Proof.] 0. secs (0.u,0.s)
+Chars 720 - 803 [(intros~LE~STEP;~~~pose~proof~...] 0. secs (0.u,0.s)
+Chars 805 - 878 [(rewrite~Z2Nat.id~in~H~by~lia;...] 0. secs (0.u,0.s)
+Chars 879 - 883 [Qed.] 0. secs (0.u,0.s)
+Chars 884 - 1673 [Lemma~cm_call_parameter_disjoi...] 0. secs (0.u,0.s)
+Chars 1674 - 1680 [Proof.] 0. secs (0.u,0.s)
+Chars 1682 - 1778 [(intros~FW~SEG~IJ~J;~~~pose~pr...] 0. secs (0.u,0.s)
+Chars 1780 - 1854 [(pose~proof~(cm_call_param_geo...] 0. secs (0.u,0.s)
+Chars 1856 - 1933 [(unfold~cm_range_disjoint;~lef...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_params/build/Rocq/examples/QCP_demos_human/cmc_param_store_geometry_migration_lib.v", line 27, characters 51-70:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+i, j : Z
+FW :
+  cm_function_wf (cm_source_function_policy sp) p
+    (cm_source_function_at sp fid p)
+SEG :
+  cm_frame_segment (cm_source_function_policy sp) p fid
+    (cm_state_fp st -
+     cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p))
+    (cm_state_fp st)
+IJ : 0 <= i < j
+J : j < Zlength (cm_function_params (cm_source_function_at sp fid p))
+A :
+  cm_value_number (cm_call_base_state sp p fid st)
+    (cm_state_env (cm_call_base_state sp p fid st) 2 i) =
+  cm_param_base sp p fid i
+    (cm_state_fp st -
+     cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p))
+N :
+  cm_param_base sp p fid i
+    (cm_state_fp st -
+     cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p)) +
+  cm_store_width
+    (cm_slot_ty
+       (cm_source_slot_at sp i
+          (cm_function_params (cm_source_function_at sp fid p)))) =
+  cm_param_base sp p fid (i + 1)
+    (cm_state_fp st -
+     cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p))
+B :
+  cm_value_number (cm_call_base_state sp p fid st)
+    (cm_state_env (cm_call_base_state sp p fid st) 2 j) =
+  cm_param_base sp p fid j
+    (cm_state_fp st -
+     cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p))
+Unable to unify "cm_param_base sp p fid j" with
+ "cm_param_base sp p fid (i + 1)".
+

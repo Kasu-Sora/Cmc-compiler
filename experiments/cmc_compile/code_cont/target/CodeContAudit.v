@@ -1,0 +1,125 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_control_basic_migration_lib.
+Goal True. idtac "AUDIT cmc_code_control_basic_migration_lib.cm_c_block_layout_step". exact I. Qed.
+Check cmc_code_control_basic_migration_lib.cm_c_block_layout_step.
+Print Assumptions cmc_code_control_basic_migration_lib.cm_c_block_layout_step.
+Goal True. idtac "AUDIT cmc_code_control_basic_migration_lib.cm_c_seq_layout_step". exact I. Qed.
+Check cmc_code_control_basic_migration_lib.cm_c_seq_layout_step.
+Print Assumptions cmc_code_control_basic_migration_lib.cm_c_seq_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_control_loop_migration_lib.
+Goal True. idtac "AUDIT cmc_code_control_loop_migration_lib.cm_c_while_layout_step". exact I. Qed.
+Check cmc_code_control_loop_migration_lib.cm_c_while_layout_step.
+Print Assumptions cmc_code_control_loop_migration_lib.cm_c_while_layout_step.
+Goal True. idtac "AUDIT cmc_code_control_loop_migration_lib.cm_c_call_layout_step". exact I. Qed.
+Check cmc_code_control_loop_migration_lib.cm_c_call_layout_step.
+Print Assumptions cmc_code_control_loop_migration_lib.cm_c_call_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_control_total_migration_lib.
+Goal True. idtac "AUDIT cmc_code_control_total_migration_lib.cm_c_phase_layout_step". exact I. Qed.
+Check cmc_code_control_total_migration_lib.cm_c_phase_layout_step.
+Print Assumptions cmc_code_control_total_migration_lib.cm_c_phase_layout_step.
+Goal True. idtac "AUDIT cmc_code_control_total_migration_lib.cm_c_task_layout_step". exact I. Qed.
+Check cmc_code_control_total_migration_lib.cm_c_task_layout_step.
+Print Assumptions cmc_code_control_total_migration_lib.cm_c_task_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_layout_invariant_migration_lib.
+Goal True. idtac "AUDIT cmc_code_layout_invariant_migration_lib.cm_task_layout_step_support". exact I. Qed.
+Check cmc_code_layout_invariant_migration_lib.cm_task_layout_step_support.
+Print Assumptions cmc_code_layout_invariant_migration_lib.cm_task_layout_step_support.
+Goal True. idtac "AUDIT cmc_code_layout_invariant_migration_lib.cm_code_support_initial". exact I. Qed.
+Check cmc_code_layout_invariant_migration_lib.cm_code_support_initial.
+Print Assumptions cmc_code_layout_invariant_migration_lib.cm_code_support_initial.
+Goal True. idtac "AUDIT cmc_code_layout_invariant_migration_lib.cm_code_support_step". exact I. Qed.
+Check cmc_code_layout_invariant_migration_lib.cm_code_support_step.
+Print Assumptions cmc_code_layout_invariant_migration_lib.cm_code_support_step.
+Goal True. idtac "AUDIT cmc_code_layout_invariant_migration_lib.cm_code_support_iter". exact I. Qed.
+Check cmc_code_layout_invariant_migration_lib.cm_code_support_iter.
+Print Assumptions cmc_code_layout_invariant_migration_lib.cm_code_support_iter.
+Goal True. idtac "AUDIT cmc_code_layout_invariant_migration_lib.cm_source_termination_code_invariants". exact I. Qed.
+Check cmc_code_layout_invariant_migration_lib.cm_source_termination_code_invariants.
+Print Assumptions cmc_code_layout_invariant_migration_lib.cm_source_termination_code_invariants.
+Goal True. idtac "AUDIT cmc_code_layout_invariant_migration_lib.cm_source_termination_code_layout". exact I. Qed.
+Check cmc_code_layout_invariant_migration_lib.cm_source_termination_code_layout.
+Print Assumptions cmc_code_layout_invariant_migration_lib.cm_source_termination_code_layout.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_binary_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_binary_migration_lib.cm_v_binary_r_layout_step". exact I. Qed.
+Check cmc_code_value_binary_migration_lib.cm_v_binary_r_layout_step.
+Print Assumptions cmc_code_value_binary_migration_lib.cm_v_binary_r_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_binary_migration_lib.cm_v_binary_l_layout_step". exact I. Qed.
+Check cmc_code_value_binary_migration_lib.cm_v_binary_l_layout_step.
+Print Assumptions cmc_code_value_binary_migration_lib.cm_v_binary_l_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_branch_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_branch_migration_lib.cm_v_while_guard_layout_step". exact I. Qed.
+Check cmc_code_value_branch_migration_lib.cm_v_while_guard_layout_step.
+Print Assumptions cmc_code_value_branch_migration_lib.cm_v_while_guard_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_branch_migration_lib.cm_v_if_layout_step". exact I. Qed.
+Check cmc_code_value_branch_migration_lib.cm_v_if_layout_step.
+Print Assumptions cmc_code_value_branch_migration_lib.cm_v_if_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_call_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_call_migration_lib.cm_v_arg_cons_layout_step". exact I. Qed.
+Check cmc_code_value_call_migration_lib.cm_v_arg_cons_layout_step.
+Print Assumptions cmc_code_value_call_migration_lib.cm_v_arg_cons_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_call_migration_lib.cm_v_arg_nil_layout_step". exact I. Qed.
+Check cmc_code_value_call_migration_lib.cm_v_arg_nil_layout_step.
+Print Assumptions cmc_code_value_call_migration_lib.cm_v_arg_nil_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_flow_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_flow_migration_lib.cm_v_assign_l_layout_step". exact I. Qed.
+Check cmc_code_value_flow_migration_lib.cm_v_assign_l_layout_step.
+Print Assumptions cmc_code_value_flow_migration_lib.cm_v_assign_l_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_flow_migration_lib.cm_v_index_l_layout_step". exact I. Qed.
+Check cmc_code_value_flow_migration_lib.cm_v_index_l_layout_step.
+Print Assumptions cmc_code_value_flow_migration_lib.cm_v_index_l_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_flow_migration_lib.cm_v_init_layout_step". exact I. Qed.
+Check cmc_code_value_flow_migration_lib.cm_v_init_layout_step.
+Print Assumptions cmc_code_value_flow_migration_lib.cm_v_init_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_flow_migration_lib.cm_v_return_layout_step". exact I. Qed.
+Check cmc_code_value_flow_migration_lib.cm_v_return_layout_step.
+Print Assumptions cmc_code_value_flow_migration_lib.cm_v_return_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_flow_migration_lib.cm_v_halt_layout_step". exact I. Qed.
+Check cmc_code_value_flow_migration_lib.cm_v_halt_layout_step.
+Print Assumptions cmc_code_value_flow_migration_lib.cm_v_halt_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_flow_migration_lib.cm_v_exit_layout_step". exact I. Qed.
+Check cmc_code_value_flow_migration_lib.cm_v_exit_layout_step.
+Print Assumptions cmc_code_value_flow_migration_lib.cm_v_exit_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_helpers_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_helpers_migration_lib.cm_value_layout_tail". exact I. Qed.
+Check cmc_code_value_helpers_migration_lib.cm_value_layout_tail.
+Print Assumptions cmc_code_value_helpers_migration_lib.cm_value_layout_tail.
+Goal True. idtac "AUDIT cmc_code_value_helpers_migration_lib.cm_code_at_empty". exact I. Qed.
+Check cmc_code_value_helpers_migration_lib.cm_code_at_empty.
+Print Assumptions cmc_code_value_helpers_migration_lib.cm_code_at_empty.
+Goal True. idtac "AUDIT cmc_code_value_helpers_migration_lib.cm_error_control_code". exact I. Qed.
+Check cmc_code_value_helpers_migration_lib.cm_error_control_code.
+Print Assumptions cmc_code_value_helpers_migration_lib.cm_error_control_code.
+Goal True. idtac "AUDIT cmc_code_value_helpers_migration_lib.cm_layout_exit_empty". exact I. Qed.
+Check cmc_code_value_helpers_migration_lib.cm_layout_exit_empty.
+Print Assumptions cmc_code_value_helpers_migration_lib.cm_layout_exit_empty.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_linear_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_load_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_load_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_load_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_assign_r_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_assign_r_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_assign_r_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_unary_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_unary_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_unary_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_index_r_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_index_r_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_index_r_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_member_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_member_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_member_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_putc_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_putc_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_putc_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_puti_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_puti_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_puti_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_linear_migration_lib.cm_v_expr_stmt_layout_step". exact I. Qed.
+Check cmc_code_value_linear_migration_lib.cm_v_expr_stmt_layout_step.
+Print Assumptions cmc_code_value_linear_migration_lib.cm_v_expr_stmt_layout_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_code_value_total_migration_lib.
+Goal True. idtac "AUDIT cmc_code_value_total_migration_lib.cm_v_phase_layout_step". exact I. Qed.
+Check cmc_code_value_total_migration_lib.cm_v_phase_layout_step.
+Print Assumptions cmc_code_value_total_migration_lib.cm_v_phase_layout_step.
+Goal True. idtac "AUDIT cmc_code_value_total_migration_lib.cm_v_task_layout_step". exact I. Qed.
+Check cmc_code_value_total_migration_lib.cm_v_task_layout_step.
+Print Assumptions cmc_code_value_total_migration_lib.cm_v_task_layout_step.

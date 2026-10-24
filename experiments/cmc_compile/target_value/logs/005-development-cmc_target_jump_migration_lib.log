@@ -1,0 +1,32 @@
+Chars 0 - 73 [Require~Export~SimpleC.EE.QCP_...] 1.502 secs (1.342u,0.121s)
+Chars 74 - 119 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.012u,0.s)
+Chars 120 - 141 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 142 - 167 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 168 - 355 [Lemma~cm_code_at_target_valid~...] 0. secs (0.u,0.s)
+Chars 356 - 362 [Proof.] 0. secs (0.u,0.s)
+Chars 364 - 437 [(intros~VALID~OP~[before~[afte...] 0. secs (0.u,0.s)
+Chars 439 - 594 [(unfold~tvm_targets_valid~in~V...] 0.001 secs (0.u,0.s)
+Chars 595 - 599 [Qed.] 0. secs (0.u,0.s)
+Chars 600 - 716 [Lemma~cm_model_jump_targets~po...] 0. secs (0.u,0.s)
+Chars 717 - 723 [Proof.] 0. secs (0.u,0.s)
+Chars 724 - 787 [(intro~WF;~exact~(proj2~(proj2...] 0. secs (0.u,0.s)
+Chars 788 - 792 [Qed.] 0. secs (0.u,0.s)
+Chars 793 - 1120 [Lemma~cm_tvm_jz~obj~pc~value~c...] 0. secs (0.u,0.s)
+Chars 1121 - 1127 [Proof.] 0. secs (0.u,0.s)
+Chars 1129 - 1220 [(intros~VALID~CODE;~~~pose~pro...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_value/build/Rocq/examples/QCP_demos_human/cmc_target_jump_migration_lib.v", line 17, characters 71-78:
+Error:
+In environment
+obj : tvm_object
+pc, value : Z
+calls : list Z
+mem : Z -> Z
+input, output : list Z
+dest : Z
+rest : list tvm_inst
+VALID : tvm_targets_valid (tvm_object_code obj)
+CODE : cm_code_at (tvm_object_code obj) pc (TVMInst TVMJzOp dest :: rest)
+The term "eq_refl" has type
+ "tvm_opcode_is_target ?op = tvm_opcode_is_target ?op"
+while it is expected to have type "tvm_opcode_is_target ?op = true".
+

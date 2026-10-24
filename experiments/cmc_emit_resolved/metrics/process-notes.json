@@ -1,0 +1,115 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "public_reuse": "Frozen emit-core pure library plus its transitive verified libraries; seven helper contracts reused, implementations not re-proved",
+  "annotation_development": {
+    "attempts": 1,
+    "formal_case_lib_design_checks": 5,
+    "design_failures": 2,
+    "symexec_runs": 3,
+    "symexec_failures": 2,
+    "post_symexec_library_checks": 1,
+    "post_symexec_library_failures": 0,
+    "main_annotation_check_rounds": 1,
+    "main_annotation_status": "accepted",
+    "repairs": [
+      "Unavailable Zlength_map; direct nat map_length did not match library Zlength; use structural induction with Zlength_cons",
+      "Remove explicit done=raw_prefix binding: assertion existential unavailable in where scope; infer through exact plan resource",
+      "Remove explicit untyped tail=nil binding: infer typed nil from resource"
+    ],
+    "source": "reports/cmc_emit_resolved_migration-20261017131857/annotation-attempts/annotation-attempt1/agent_output.md"
+  },
+  "vc_checking": {
+    "attempts": 1,
+    "main_acceptance_checks": 1,
+    "status": "accepted",
+    "top_level_scanned": 16,
+    "no_split_checked_first": 8,
+    "definite_blockers": 0,
+    "worker_debug_or_validation_invocations": 0,
+    "worker_command_failures": 0,
+    "groups": {
+      "entry_unframed": 6,
+      "return_unframed": 6,
+      "entry_framed": 2,
+      "return_framed": 2
+    },
+    "source": "reports/cmc_emit_resolved_migration-20261017131857/rounds/cmc_emit_resolved_migration-vc-checking-r1/agent_output.md"
+  },
+  "proof_development": {
+    "group_worker_checks": {
+      "return_unframed": {
+        "dev": 1,
+        "exact": 0,
+        "debug": 0,
+        "failures": 0,
+        "repairs": 0,
+        "new_helpers": 0,
+        "status": "accepted"
+      },
+      "return_framed": {
+        "dev": 1,
+        "exact": 1,
+        "debug": 0,
+        "failures": 0,
+        "repairs": 0,
+        "new_helpers": 0,
+        "status": "accepted"
+      },
+      "entry_framed": {
+        "dev": 2,
+        "exact": 1,
+        "debug": 0,
+        "failures": 1,
+        "repairs": [
+          "Reuse patch equality already extracted by Intros"
+        ],
+        "new_helpers": 0,
+        "status": "accepted"
+      },
+      "entry_unframed": {
+        "dev": 3,
+        "exact": 1,
+        "debug": 1,
+        "failures": 2,
+        "repairs": [
+          "Reuse patch equality already extracted by Intros",
+          "Explicit singleton length normalization with Zlength_cons and Zlength_nil"
+        ],
+        "new_helpers": 0,
+        "status": "accepted"
+      }
+    },
+    "group_worker_check_totals": {
+      "dev": 7,
+      "exact": 3,
+      "debug": 1,
+      "failures": 3,
+      "new_helpers": 0
+    },
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 4,
+    "accepted_group_attempts": {
+      "entry_unframed": 1,
+      "return_unframed": 1,
+      "entry_framed": 1,
+      "return_framed": 1
+    }
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 4,
+    "planned_groups": 4,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T05:35:42.074806Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-17T05:35:42.081837Z"
+  }
+}

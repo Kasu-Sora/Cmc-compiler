@@ -1,0 +1,12 @@
+{
+  "status": "Main declaration review completed; identical final library passed controller verification",
+  "candidate_sha256": "d1ce410f2381e1aa565b400718ecd9d411110e307b74fc0fc1f132d6dbba8acd",
+  "definitions": [
+    "cm_resolved_emitter_plan_rep: exact pure length budget plus existing resolved emitter representation; no new raw model or tail ownership"
+  ],
+  "proof_review": [
+    "cm_plan_fragment_capacity: unfolds only list lengths using Zlength_app and Zlength_nonneg; derives both fragment-only and post-call-tail bounds without additional assumptions"
+  ],
+  "new_helpers_during_proving": 0,
+  "manual_review": "All 16 top-level and 32 split proofs read. Single/CALL capacities derive from Zlength_cons/nonnegative tail; six fragment routes use both projections of the common capacity lemma. Spatial entry proofs preserve resolved and function-context resources. Returns fold the original plan using retained final budget; temporary return facts and context are preserved. Top-level aggressive routes discharge spatial before pure subgoals. No new automation or assumptions."
+}

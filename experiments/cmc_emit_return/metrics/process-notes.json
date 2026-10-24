@@ -1,0 +1,95 @@
+{
+  "status": "done; both groups, merged parent, final apply and final check passed",
+  "source_replay": {
+    "calls": 1,
+    "failed": 0
+  },
+  "annotation_owner_checks": {
+    "design": {
+      "calls": 3,
+      "failed": 0
+    },
+    "symexec": {
+      "calls": 3,
+      "failed": 2
+    },
+    "post_library": {
+      "calls": 1,
+      "failed": 0
+    }
+  },
+  "observed_annotation_repairs": [
+    {
+      "issue": "Mixed type/value Extern Coq block rejected by symexec parser",
+      "repair": "Separate type and value declarations"
+    },
+    {
+      "issue": "Opaque epilogue list did not match first helper precondition",
+      "repair": "Entry call-boundary Assert exposes the same exact list and eight opcode encoding/non-call facts while retaining the emitter local cell; helper where clauses preserve exact intermediate prefixes"
+    }
+  ],
+  "controller_infrastructure_retries": [],
+  "orchestration_errors": [
+    {
+      "kind": "functions.exec JavaScript syntax error",
+      "count": 1,
+      "controller_launched": false,
+      "repair": "Corrected unused string quoting expression before rerun"
+    },
+    {
+      "kind": "VC scan Status value relayed as clear, corrected to passed before report delivery by checking preceding accepted report",
+      "controller_rejection": false
+    }
+  ],
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "dependency_preparation": {
+    "base_artifacts": 152,
+    "current_sources": 5,
+    "rebuilt": 0,
+    "coqdep_batches": 8,
+    "elapsed_seconds": 9.931281
+  },
+  "vc_checking": {
+    "top_level": 2,
+    "splits": 10,
+    "no_split": 0,
+    "groups": 2,
+    "debug_calls": 0,
+    "check_calls": 0,
+    "failures": 0
+  },
+  "completion_date_local": "2026-10-19",
+  "final_checks": {
+    "annotation_acceptance": {
+      "calls": 1,
+      "failed": 0
+    },
+    "vc_checking_acceptance": {
+      "calls": 1,
+      "failed": 0
+    },
+    "parent_verify": {
+      "calls": 1,
+      "failed": 0
+    },
+    "final_apply": {
+      "calls": 1,
+      "failed": 0
+    },
+    "final_check": {
+      "calls": 1,
+      "failed": 0
+    }
+  },
+  "proof_repairs": [
+    {
+      "group": "epilogue-open",
+      "issue": "Aggressive dispatch exposes spatial goal first, contrary to initial numbered-then-spatial assumption",
+      "repair": "Use actual debug goal order; all nine splits independently proved",
+      "validation": "exact group plus merged parent and final check passed"
+    }
+  ],
+  "all_group_effort": "group-effort.json"
+}

@@ -1,0 +1,124 @@
+{
+  "groups": [
+    {
+      "id": "entry_unframed",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_resolved_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is [TVMInst opcode immediate_pre]. Retain op_pre = tvm_opcode_code opcode and the non-CALL premise; singleton length is 1. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_call_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is [TVMInst TVMCallOp function_id_pre]. Prove 22 = tvm_opcode_code TVMCallOp by reflexivity; singleton length is 1. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_normalize_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is cm_char_normalize_code model_ty. Retain ty_pre = cm_type_encode model_ty and cm_type_code_wf model_ty; rewrite app_nil_r. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_load_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is cm_load_code model_ty. Retain ty_pre = cm_type_encode model_ty and cm_type_code_wf model_ty; rewrite app_nil_r. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_store_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is cm_store_code model_ty. Retain ty_pre = cm_type_encode model_ty and cm_type_code_wf model_ty; rewrite app_nil_r. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_fp_address_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is cm_fp_relative_address_code offset_pre. No extra scalar premises; rewrite app_nil_r. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        }
+      ]
+    },
+    {
+      "id": "return_unframed",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_resolved_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ ([TVMInst opcode immediate_pre]) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_noncall using PreH2, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_call_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_call_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ ([TVMInst TVMCallOp function_id_pre]) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_call, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_normalize_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_normalize_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ (cm_char_normalize_code model_ty) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_char_normalize, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_load_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_load_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ (cm_load_code model_ty) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_load, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_store_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_store_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ (cm_store_code model_ty) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_store, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_fp_address_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_fp_address_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ (cm_fp_relative_address_code offset_pre) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_fp_address, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "entry_framed",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_resolved_temp_store_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is cm_temp_store_code policy p fid temp_pre. Keep cm_function_context_rep fn_pre f body next as an opaque frame and retain PreH1 through PreH8; rewrite app_nil_r. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_temp_load_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Unfold the whole witness and choose the left disjunct. Introduce quantified parameters and premises. Unfold cm_resolved_emitter_rep, extract raw_prefix with its patch equality, and choose that same raw_prefix on the right. Unfold only cm_emitter_plan_rep, preserve the cm_emitter_rep heap, and prove its new bound from the input capacity premise by rewriting done backwards through cm_patch_code policy p raw_prefix = done and applying cm_patch_code_length. The pending code is cm_temp_load_code policy p fid temp_pre. Keep cm_function_context_rep fn_pre f body next as an opaque frame and retain PreH1 through PreH8; rewrite app_nil_r. Cancel the unchanged heap and discharge the pure conjuncts from the retained facts; no array decomposition or new helper is needed."
+        }
+      ]
+    },
+    {
+      "id": "return_framed",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_resolved_temp_store_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_temp_store_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ (cm_temp_store_code policy p fid temp_pre) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_temp_store, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap. Preserve cm_function_context_rep fn_pre f body next as an opaque frame; the split goal requires no reconstruction of the duplicated pure postconditions."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_resolved_temp_load_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_resolved_temp_load_return_wit_1_split_goal_spatial": "Introduce parameters and premises of this split goal only. Unfold cm_emitter_plan_rep and cm_resolved_emitter_rep, discard the empty-tail plan bound, and choose raw_prefix ++ (cm_temp_load_code policy p fid temp_pre) as the raw existential. Prove its patch equation using cm_patch_code_append, the existing cm_patch_temp_load, and the given cm_patch_code policy p raw_prefix = done. Cancel the identical cm_emitter_rep heap. Preserve cm_function_context_rep fn_pre f body next as an opaque frame; the split goal requires no reconstruction of the duplicated pure postconditions."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+{
+  "runtime_functions": 0,
+  "annotation": 0,
+  "specification": 0,
+  "source_top_level_proof_helpers": [
+    {
+      "name": "_cmc_temp_ready_axioms_before",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        4,
+        5
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static size_t _cmc_temp_ready_axioms_before =\n    vector_size(get_all_axioms());",
+      "sha256": "fd61803cc6478e71cbd33f33fa850da25161115f79fa69d691ba2b0632496623"
+    },
+    {
+      "name": "cm_prove_imax_upper",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        7,
+        31
+      ],
+      "nonblank_lines": 25,
+      "text": "PROOF static thm cm_prove_imax_upper(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(x:int) y z. cm_imax x y <= z <=> x <= z && y <= z`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = BOOL_CASES_TAC(leaf, `(x:int) <= (y:int)`, \"Hxy\");\n  {\n    thm le = assume_rule(`(x:int) <= (y:int)`);\n    thm maximum = mp_rule(specl_rule(TERM_LIST(\n        `x:int`, `y:int`), cmc_imax_le_case()), le);\n    thm facts = conj_rule(le, maximum);\n    ACCEPT_TAC(cases[0], mp_rule(int_arith_rule(\n        mk_imp(concl(facts), goal_ccl(cases[0]->g))), facts));\n  }\n  {\n    thm nle = assume_rule(`~((x:int) <= (y:int))`);\n    thm gt = mp_rule(int_arith_rule(\n        `~((x:int) <= (y:int)) ==> x > y`), nle);\n    thm maximum = mp_rule(specl_rule(TERM_LIST(\n        `x:int`, `y:int`), cmc_imax_gt_case()), gt);\n    thm facts = conj_rule(nle, maximum);\n    ACCEPT_TAC(cases[1], mp_rule(int_arith_rule(\n        mk_imp(concl(facts), goal_ccl(cases[1]->g))), facts));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "f8cb67039d620266e093fc6ee914df2177625fa3615350506d6fe7a4ef7409d1"
+    },
+    {
+      "name": "cm_temp_imax_upper",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        32,
+        32
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_temp_imax_upper = cm_prove_imax_upper();",
+      "sha256": "f1f517d0adee0800221a36ec9143f29e151f8d2d5c78c01f9c3fda3721c0a8c3"
+    },
+    {
+      "name": "cm_prove_imax_add_upper",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        34,
+        60
+      ],
+      "nonblank_lines": 27,
+      "text": "PROOF static thm cm_prove_imax_add_upper(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(base:int) x y z.\n         base + cm_imax x y <= z <=>\n         base + x <= z && base + y <= z`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = BOOL_CASES_TAC(leaf, `(x:int) <= (y:int)`, \"Hxy\");\n  {\n    thm le = assume_rule(`(x:int) <= (y:int)`);\n    thm maximum = mp_rule(specl_rule(TERM_LIST(\n        `x:int`, `y:int`), cmc_imax_le_case()), le);\n    thm facts = conj_rule(le, maximum);\n    ACCEPT_TAC(cases[0], mp_rule(int_arith_rule(\n        mk_imp(concl(facts), goal_ccl(cases[0]->g))), facts));\n  }\n  {\n    thm nle = assume_rule(`~((x:int) <= (y:int))`);\n    thm gt = mp_rule(int_arith_rule(\n        `~((x:int) <= (y:int)) ==> x > y`), nle);\n    thm maximum = mp_rule(specl_rule(TERM_LIST(\n        `x:int`, `y:int`), cmc_imax_gt_case()), gt);\n    thm facts = conj_rule(nle, maximum);\n    ACCEPT_TAC(cases[1], mp_rule(int_arith_rule(\n        mk_imp(concl(facts), goal_ccl(cases[1]->g))), facts));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "7be4fa4b2263fc22dd0fe50db5e0cbde313366565f9f097425e7bd1dc4341c06"
+    },
+    {
+      "name": "cm_temp_imax_add_upper",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        61,
+        62
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_temp_imax_add_upper =\n    cm_prove_imax_add_upper();",
+      "sha256": "84e745a04fa1526b9c980ba4f2c331230f4affedf687d28298b75e3b596fbc98"
+    },
+    {
+      "name": "cm_prove_binary_tail_positive",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        64,
+        99
+      ],
+      "nonblank_lines": 33,
+      "text": "PROOF static thm cm_prove_binary_tail_positive(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (op:int) (left:cm_expr) (right:cm_expr).\n         1i <= cm_binary_tail_count p op left right`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  term first_choice =\n      `(op:int) == 8i && cm_is_pointer (cm_expr_type (right:cm_expr))`;\n  gnode_list first = BOOL_CASES_TAC(leaf, first_choice, \"Htail_first\");\n  CONV_WITH_ASMP_TAC(first[0], reduce_rewrite_conv, THM_LIST(\n      get_cm_binary_tail_count_def()));\n\n  term second_choice =\n      `(op:int) == 8i && cm_is_pointer (cm_expr_type (left:cm_expr))`;\n  gnode_list second = BOOL_CASES_TAC(\n      first[1], second_choice, \"Htail_second\");\n  CONV_WITH_ASMP_TAC(second[0], reduce_rewrite_conv, THM_LIST(\n      get_cm_binary_tail_count_def()));\n\n  term third_choice =\n      `(op:int) == 9i && cm_is_pointer (cm_expr_type (left:cm_expr)) &&\n       cm_is_pointer (cm_expr_type (right:cm_expr))`;\n  gnode_list third = BOOL_CASES_TAC(\n      second[1], third_choice, \"Htail_third\");\n  CONV_WITH_ASMP_TAC(third[0], reduce_rewrite_conv, THM_LIST(\n      get_cm_binary_tail_count_def()));\n\n  term fourth_choice =\n      `(op:int) == 9i && cm_is_pointer (cm_expr_type (left:cm_expr))`;\n  gnode_list fourth = BOOL_CASES_TAC(\n      third[1], fourth_choice, \"Htail_fourth\");\n  for (size_t i = 0; i < 2; ++i) {\n    CONV_WITH_ASMP_TAC(fourth[i], reduce_rewrite_conv, THM_LIST(\n        get_cm_binary_tail_count_def()));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "40ac86369a519c802bae0378347c01960cd08794040804366a58c9872a22f62d"
+    },
+    {
+      "name": "cm_binary_tail_positive",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        100,
+        101
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_binary_tail_positive =\n    cm_prove_binary_tail_positive();",
+      "sha256": "68b7750ad15c79433c76905fc760ed5d310bdb804dd2118f3c816866e07b5cdc"
+    },
+    {
+      "name": "cm_prove_expr_count_node_from_tree",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        103,
+        132
+      ],
+      "nonblank_lines": 30,
+      "text": "PROOF static thm cm_prove_expr_count_node_from_tree(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(e:cm_expr) (p:cm_program) fid.\n         cm_expr_counts_representable p fid e ==>\n         cm_expr_count_node_representable p fid e`);\n  gnode introduced = AUTO_INTROS_TAC(root);\n  thm cases_th = ispec_rule(`e:cm_expr`, get_cm_expr_cases());\n  gnode_list cases = DISJ_CASES_TAC(introduced, cases_th, \"He\");\n  for (size_t i = 0; i < 14; ++i) {\n    while (true) {\n      labeled_term_list assumptions = goal_lasmps(cases[i]->g);\n      int index = labeled_term_list_index(assumptions, \"He\");\n      if (!is_exists(assumptions[index].tm)) break;\n      cases[i] = ASMP_EXISTS_TAC(cases[i], \"He\", NULL);\n    }\n    labeled_term_list assumptions = goal_lasmps(cases[i]->g);\n    int index = labeled_term_list_index(assumptions, \"He\");\n    thm shape = assume_rule(assumptions[index].tm);\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        shape, get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable\n          (p:cm_program) (fid:int) (e:cm_expr)`));\n    thm node = (i == 0 || i == 10)\n        ? opened : conjunct1_rule(opened);\n    thm generic = conv_rule(rewrite_conv(THM_LIST(\n        sym_rule(shape))), node);\n    ACCEPT_TAC(cases[i], generic);\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "a53351d676e6f43fed919fc5d491d0ee0b9bcd6e05d6dc3fb2be3e47f2d219e3"
+    },
+    {
+      "name": "cm_expr_count_node_from_tree",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        133,
+        134
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_expr_count_node_from_tree =\n    cm_prove_expr_count_node_from_tree();",
+      "sha256": "fb4bc435329abaf0035f0360782fc554f969f9934f9062f22a3a67353425a69f"
+    },
+    {
+      "name": "cm_prove_args_count_node_from_tree",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        136,
+        160
+      ],
+      "nonblank_lines": 25,
+      "text": "PROOF static thm cm_prove_args_count_node_from_tree(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(args:(cm_expr)list) (p:cm_program) fid.\n         cm_args_counts_representable p fid args ==>\n         cm_i32_code_count\n           (cm_args_code_count_of (cm_args_code_counts p fid args))`);\n  gnode_list cases = INDUCT_TAC(root, `args:(cm_expr)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_args_counts_representable\n          (p:cm_program) (fid:int) ([]:(cm_expr)list)`));\n    ACCEPT_TAC(leaf, opened);\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_args_counts_representable (p:cm_program) (fid:int)\n          ((a0:cm_expr) :: (a1:(cm_expr)list))`));\n    ACCEPT_TAC(leaf, conjunct1_rule(opened));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "52e0a39240b14bf7c67e80cc123aacb72145d8ce0bf9523d2864d550e473097c"
+    },
+    {
+      "name": "cm_args_count_node_from_tree",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        161,
+        162
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_args_count_node_from_tree =\n    cm_prove_args_count_node_from_tree();",
+      "sha256": "8937bc43cda95f70b0e1ca9797ae0b35e79b05681977814fee7a6ca5caf9cdc5"
+    },
+    {
+      "name": "cm_prove_args_temps_safe_pair",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        164,
+        186
+      ],
+      "nonblank_lines": 23,
+      "text": "PROOF static thm cm_prove_args_temps_safe_pair(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(args:(cm_expr)list).\n         cm_rep_args_temps_safe args ==>\n         cm_rep_apair_safe (cm_args_apair args)`);\n  gnode_list cases = INDUCT_TAC(root, `args:(cm_expr)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_rep_expr_temps_safe_def())), assume_rule(\n        `cm_rep_args_temps_safe ([]:(cm_expr)list)`));\n    ACCEPT_TAC(leaf, opened);\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_rep_expr_temps_safe_def())), assume_rule(\n        `cm_rep_args_temps_safe\n          ((a0:cm_expr) :: (a1:(cm_expr)list))`));\n    ACCEPT_TAC(leaf, conjunct1_rule(opened));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "07b6d136368fd560f0ed0833031feb041d10bfcef5a45d6bb78d54ce94abe892"
+    },
+    {
+      "name": "cm_args_temps_safe_pair",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        187,
+        188
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_args_temps_safe_pair =\n    cm_prove_args_temps_safe_pair();",
+      "sha256": "26166cc76818ddbaf4ec790db7ef416e801b83ade4ffdbc45ec26dc00160f5bd"
+    },
+    {
+      "name": "cm_add_ready_parts",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        191,
+        240
+      ],
+      "nonblank_lines": 50,
+      "text": "PROOF static gnode cm_add_ready_parts(gnode node, thm parts) {\n  node = ASSUME_TAC(node, parts, NULL);\n  if (!is_conj(concl(parts))) {\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_count_node_representable_def(),\n        get_cm_code_counts_representable_def(),\n        get_cm_i32_code_count_def(),\n        get_cm_expr_code_counts_def(),\n        get_cm_lvalue_code_count_def(),\n        get_cm_rvalue_code_count_def(),\n        get_cm_lcount_of_def(),\n        get_cm_rcount_of_def(),\n        get_cm_args_code_counts_def(),\n        get_cm_args_code_count_of_def(),\n        get_cm_rep_tpair_safe_def(),\n        get_cm_ltemps_def(),\n        get_cm_rtemps_def(),\n        get_cm_args_temps_def(),\n        get_cm_stmt_code_count_def(),\n        get_cm_stemps_def(),\n        get_cm_rep_stmt_temps_safe_def(),\n        get_cm_rep_stmt_children_safe_def(),\n        get_cm_rep_apair_safe_def())), parts);\n    if (alpha_compare(concl(opened), concl(parts)) != 0) {\n      return cm_add_ready_parts(node, opened);\n    }\n    return node;\n  }\n  thm first = conjunct1_rule(parts);\n  if (is_comb(concl(first))) {\n    dest_comb_results application = dest_comb(concl(first));\n    if (alpha_compare(application.tm1,\n          `cm_rep_expr_temps_safe:cm_expr->bool`) == 0) {\n      thm pair = mp_rule(spec_rule(application.tm2,\n          get_cm_rep_expr_temps_safe_pair()), first);\n      thm opened = conv_rule(rewrite_conv(THM_LIST(\n          get_cm_rep_tpair_safe_def())), pair);\n      node = cm_add_ready_parts(node, opened);\n    } else if (alpha_compare(application.tm1,\n          `cm_rep_args_temps_safe:(cm_expr)list->bool`) == 0) {\n      thm pair = mp_rule(spec_rule(application.tm2,\n          cm_args_temps_safe_pair), first);\n      thm opened = conv_rule(rewrite_conv(THM_LIST(\n          get_cm_rep_apair_safe_def())), pair);\n      node = cm_add_ready_parts(node, opened);\n    }\n  }\n  node = cm_add_ready_parts(node, first);\n  return cm_add_ready_parts(node, conjunct2_rule(parts));\n}",
+      "sha256": "0db51a9de6d5649954be13b85f9ac240f4c7d24a399edf6aa78aff2486ce4317"
+    },
+    {
+      "name": "cm_expr_ready_ih",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        242,
+        251
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cm_expr_ready_ih(\n    const term child, const thm induction_hypothesis,\n    const thm representable) {\n  thm ready = mp_rule(specl_rule(TERM_LIST(\n      `p:cm_program`, `fid:int`), induction_hypothesis), representable);\n  thm count_node = mp_rule(specl_rule(TERM_LIST(\n      child, `p:cm_program`, `fid:int`),\n      cm_expr_count_node_from_tree), representable);\n  return conj_rule(count_node, ready);\n}",
+      "sha256": "62a11852ef8701351ffb51bae453eb7b74d97217360d72f1dd07ad4615177dfa"
+    },
+    {
+      "name": "cm_prepare_expr_ready_case",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        253,
+        431
+      ],
+      "nonblank_lines": 179,
+      "text": "PROOF static gnode cm_prepare_expr_ready_case(\n    gnode node, size_t constructor_index) {\n  if (constructor_index == 3) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable (p:cm_program) (fid:int)\n          (CMAssignE (a0:cm_expr) (a1:cm_expr) (a2:cm_type))`));\n    node = cm_add_ready_parts(node, representable);\n    thm left_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm right_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a0:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a0:cm_expr) ==>\n             cm_rep_expr_temps_safe a0 &&\n             cm_ltemps a0 <= cm_lvalue_code_count p fid a0 &&\n             cm_rtemps a0 <= cm_rvalue_code_count p fid a0`),\n        left_rep));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a1:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a1:cm_expr) ==>\n             cm_rep_expr_temps_safe a1 &&\n             cm_ltemps a1 <= cm_lvalue_code_count p fid a1 &&\n             cm_rtemps a1 <= cm_rvalue_code_count p fid a1`),\n        right_rep));\n    node = ASSUME_TAC(node, spec_rule(`a2:cm_type`,\n        cm_char_normalize_nonnegative), NULL);\n  } else if (constructor_index == 4) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable (p:cm_program) (fid:int)\n          (CMBinaryE (a0:int) (a1:cm_expr) (a2:cm_expr)\n            (a3:cm_type))`));\n    node = cm_add_ready_parts(node, representable);\n    thm left_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm right_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a1:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a1:cm_expr) ==>\n             cm_rep_expr_temps_safe a1 &&\n             cm_ltemps a1 <= cm_lvalue_code_count p fid a1 &&\n             cm_rtemps a1 <= cm_rvalue_code_count p fid a1`),\n        left_rep));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a2:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a2:cm_expr) ==>\n             cm_rep_expr_temps_safe a2 &&\n             cm_ltemps a2 <= cm_lvalue_code_count p fid a2 &&\n             cm_rtemps a2 <= cm_rvalue_code_count p fid a2`),\n        right_rep));\n    node = ASSUME_TAC(node, ispecl_rule(TERM_LIST(\n        `p:cm_program`, `a0:int`, `a1:cm_expr`, `a2:cm_expr`),\n        cm_binary_tail_positive), NULL);\n  } else if (constructor_index == 5) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable (p:cm_program) (fid:int)\n          (CMUnaryE (a0:int) (a1:cm_expr) (a2:cm_type))`));\n    node = cm_add_ready_parts(node, representable);\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a1:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a1:cm_expr) ==>\n             cm_rep_expr_temps_safe a1 &&\n             cm_ltemps a1 <= cm_lvalue_code_count p fid a1 &&\n             cm_rtemps a1 <= cm_rvalue_code_count p fid a1`),\n        conjunct2_rule(representable)));\n  } else if (constructor_index == 6) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable (p:cm_program) (fid:int)\n          (CMIndexE (a0:cm_expr) (a1:cm_expr) (a2:cm_type))`));\n    node = cm_add_ready_parts(node, representable);\n    thm base_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm index_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a0:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a0:cm_expr) ==>\n             cm_rep_expr_temps_safe a0 &&\n             cm_ltemps a0 <= cm_lvalue_code_count p fid a0 &&\n             cm_rtemps a0 <= cm_rvalue_code_count p fid a0`),\n        base_rep));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a1:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a1:cm_expr) ==>\n             cm_rep_expr_temps_safe a1 &&\n             cm_ltemps a1 <= cm_lvalue_code_count p fid a1 &&\n             cm_rtemps a1 <= cm_rvalue_code_count p fid a1`),\n        index_rep));\n  } else if (constructor_index == 7) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable (p:cm_program) (fid:int)\n          (CMMemberE (a0:cm_expr) (a1:int) (a2:cm_type))`));\n    node = cm_add_ready_parts(node, representable);\n    thm base_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a0:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a0:cm_expr) ==>\n             cm_rep_expr_temps_safe a0 &&\n             cm_ltemps a0 <= cm_lvalue_code_count p fid a0 &&\n             cm_rtemps a0 <= cm_rvalue_code_count p fid a0`),\n        base_rep));\n  } else if (constructor_index == 8) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_expr_counts_representable (p:cm_program) (fid:int)\n          (CMCallE (a0:int) (a1:(cm_expr)list) (a2:cm_type))`));\n    node = cm_add_ready_parts(node, representable);\n    thm args_rep = conjunct2_rule(conjunct2_rule(representable));\n    thm args_ready = mp_rule(specl_rule(TERM_LIST(\n        `p:cm_program`, `fid:int`), assume_rule(\n          `!(p:cm_program) fid.\n             cm_args_counts_representable p fid (a1:(cm_expr)list) ==>\n             cm_rep_args_temps_safe a1 &&\n             cm_args_temps a1 <=\n               cm_args_code_count_of (cm_args_code_counts p fid a1)`)),\n        args_rep);\n    node = cm_add_ready_parts(node, args_ready);\n  } else if (constructor_index >= 11 && constructor_index <= 13) {\n    thm source = constructor_index == 11\n        ? assume_rule(\n            `cm_expr_counts_representable (p:cm_program) (fid:int)\n              (CMPutcE (a0:cm_expr) (a1:cm_type))`)\n        : constructor_index == 12\n          ? assume_rule(\n              `cm_expr_counts_representable (p:cm_program) (fid:int)\n                (CMPutiE (a0:cm_expr) (a1:cm_type))`)\n          : assume_rule(\n              `cm_expr_counts_representable (p:cm_program) (fid:int)\n                (CMExitE (a0:cm_expr) (a1:cm_type))`);\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), source);\n    node = cm_add_ready_parts(node, representable);\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a0:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a0:cm_expr) ==>\n             cm_rep_expr_temps_safe a0 &&\n             cm_ltemps a0 <= cm_lvalue_code_count p fid a0 &&\n             cm_rtemps a0 <= cm_rvalue_code_count p fid a0`),\n        conjunct2_rule(representable)));\n  } else if (constructor_index == 15) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_expr_counts_representable_def())), assume_rule(\n        `cm_args_counts_representable (p:cm_program) (fid:int)\n          ((a0:cm_expr) :: (a1:(cm_expr)list))`));\n    node = cm_add_ready_parts(node, representable);\n    thm expr_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm tail_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_ih(`a0:cm_expr`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_expr_counts_representable p fid (a0:cm_expr) ==>\n             cm_rep_expr_temps_safe a0 &&\n             cm_ltemps a0 <= cm_lvalue_code_count p fid a0 &&\n             cm_rtemps a0 <= cm_rvalue_code_count p fid a0`),\n        expr_rep));\n    thm tail_ready = mp_rule(specl_rule(TERM_LIST(\n        `p:cm_program`, `fid:int`), assume_rule(\n          `!(p:cm_program) fid.\n             cm_args_counts_representable p fid (a1:(cm_expr)list) ==>\n             cm_rep_args_temps_safe a1 &&\n             cm_args_temps a1 <=\n               cm_args_code_count_of (cm_args_code_counts p fid a1)`)),\n        tail_rep);\n    thm tail_count = mp_rule(specl_rule(TERM_LIST(\n        `a1:(cm_expr)list`, `p:cm_program`, `fid:int`),\n        cm_args_count_node_from_tree), tail_rep);\n    node = cm_add_ready_parts(node, conj_rule(tail_count, tail_ready));\n  }\n  return node;\n}",
+      "sha256": "0184f35432b280acb83178d99b034c97a4f99e99ac9dab58e17de2ce820cc964"
+    },
+    {
+      "name": "cm_close_ready_arithmetic",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        433,
+        467
+      ],
+      "nonblank_lines": 35,
+      "text": "PROOF static void cm_close_ready_arithmetic(gnode node) {\n  if (!IS_NULL(node->solved)) return;\n  if (is_conj(goal_ccl(node->g))) {\n    gnode_list parts = CONJ_TAC(node);\n    cm_close_ready_arithmetic(parts[0]);\n    cm_close_ready_arithmetic(parts[1]);\n    return;\n  }\n  term proposition_head = goal_ccl(node->g);\n  while (is_comb(proposition_head)) {\n    proposition_head = dest_comb(proposition_head).tm1;\n  }\n  if (alpha_compare(\n        proposition_head, `(<=):int->int->bool`) == 0) {\n    dest_binop_results comparison = dest_binop(\n        `(<=):int->int->bool`, goal_ccl(node->g));\n    term maximum_head = comparison.tm2;\n    while (is_comb(maximum_head)) {\n      maximum_head = dest_comb(maximum_head).tm1;\n    }\n    if (alpha_compare(maximum_head, `cm_imax:int->int->int`) == 0) {\n      dest_comb_results outer = dest_comb(comparison.tm2);\n      dest_comb_results inner = dest_comb(outer.tm1);\n      node = ASSUME_TAC(node, specl_rule(TERM_LIST(\n          inner.tm2, outer.tm2), cm_imax_left_bound), NULL);\n    }\n  }\n  labeled_term_list assumptions = goal_lasmps(node->g);\n  thm facts = assume_rule(assumptions[0].tm);\n  for (size_t i = 1; i < vector_size(assumptions); ++i) {\n    facts = conj_rule(facts, assume_rule(assumptions[i].tm));\n  }\n  ACCEPT_TAC(node, mp_rule(int_arith_rule(\n      mk_imp(concl(facts), goal_ccl(node->g))), facts));\n}",
+      "sha256": "50cc4f51dc8f8600159cf231a3d19deceb5acc43b871cde919e3f74186dfdb4d"
+    },
+    {
+      "name": "cm_reduce_expr_ready_branch",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        469,
+        495
+      ],
+      "nonblank_lines": 27,
+      "text": "PROOF static void cm_reduce_expr_ready_branch(gnode node) {\n  gnode_list frontier = LIST_GNODE(node);\n  for (size_t i = 0; i < vector_size(frontier); ++i) {\n    gnode reduced = CONV_WITH_ASMP_TAC(frontier[i],\n        reduce_rewrite_conv, THM_LIST(\n          get_cm_expr_counts_representable_def(),\n          get_cm_expr_count_node_representable_def(),\n          get_cm_code_counts_representable_def(),\n          get_cm_i32_code_count_def(),\n          get_cm_expr_code_counts_def(),\n          get_cm_lvalue_code_count_def(),\n          get_cm_rvalue_code_count_def(),\n          get_cm_binding_address_count_def(),\n          get_cm_lcount_of_def(), get_cm_rcount_of_def(),\n          get_cm_args_code_counts_def(),\n          get_cm_args_code_count_of_def(),\n          get_cm_rep_expr_temps_safe_def(),\n          get_cm_rep_tpair_safe_def(), get_cm_rep_apair_safe_def(),\n          get_cm_expr_tpair_def(), get_cm_ltemps_def(),\n          get_cm_rtemps_def(), get_cm_args_temps_def(),\n          get_cm_tleft_def(), get_cm_tright_def(),\n          get_cm_acount_def(), get_cm_adepth_def(),\n          cm_temp_imax_add_upper, cm_temp_imax_upper,\n          cm_expr_temps_nonnegative));\n    cm_close_ready_arithmetic(reduced);\n  }\n}",
+      "sha256": "2a170b1e10873ff6f215f247804013a58d10d91935587fe4aec77fc922e25e98"
+    },
+    {
+      "name": "cm_find_open_temp_leaf",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        497,
+        505
+      ],
+      "nonblank_lines": 9,
+      "text": "PROOF static gnode cm_find_open_temp_leaf(const gnode node) {\n  if (!IS_NULL(node->solved)) return NULL;\n  if (vector_size(node->children) == 0) return node;\n  for (size_t i = 0; i < vector_size(node->children); ++i) {\n    gnode open = cm_find_open_temp_leaf(node->children[i]);\n    if (open != NULL) return open;\n  }\n  return NULL;\n}",
+      "sha256": "35125ef0f7610c521b04d7c88c1f83e221e1b8ad644cd352a0df1ae39b099f54"
+    },
+    {
+      "name": "cm_prove_expr_and_args_temps_ready",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        507,
+        575
+      ],
+      "nonblank_lines": 69,
+      "text": "PROOF static thm cm_prove_expr_and_args_temps_ready(void) {\n  gnode root = gnode_new_with_ccl(\n      `((!(expr:cm_expr). !(p:cm_program) fid.\n           cm_expr_counts_representable p fid expr ==>\n           cm_rep_expr_temps_safe expr &&\n           cm_ltemps expr <= cm_lvalue_code_count p fid expr &&\n           cm_rtemps expr <= cm_rvalue_code_count p fid expr) &&\n        (!(args:(cm_expr)list). !(p:cm_program) fid.\n           cm_args_counts_representable p fid args ==>\n           cm_rep_args_temps_safe args &&\n           cm_args_temps args <=\n             cm_args_code_count_of (cm_args_code_counts p fid args)))`);\n  gnode matched = MATCH_MP_TAC(root, get_cm_expr_induction());\n  gnode cursor = CONV_TAC(matched, reduce_rewrite_conv(THM_LIST()));\n  gnode cases[16];\n  for (size_t i = 0; i < 15; ++i) {\n    gnode_list split = CONJ_TAC(cursor);\n    cases[i] = split[0];\n    cursor = split[1];\n  }\n  cases[15] = cursor;\n  for (size_t i = 0; i < 16; ++i) {\n    gnode leaf = AUTO_INTROS_TAC(cases[i]);\n    gnode_list introduced = AUTO_ASMP_DESTRUCT_TAC(leaf);\n    if (vector_size(introduced) == 0) {\n      introduced = LIST_GNODE(leaf);\n    }\n    for (size_t j = 0; j < vector_size(introduced); ++j) {\n      gnode current = cm_prepare_expr_ready_case(introduced[j], i);\n      if (i == 2) {\n        gnode_list branches = BOOL_CASES_TAC(\n            current, `(a0:int) == 0i`, \"Hbinding_scope\");\n        cm_reduce_expr_ready_branch(branches[0]);\n        cm_reduce_expr_ready_branch(branches[1]);\n      } else if (i == 4) {\n        gnode_list branches = BOOL_CASES_TAC(\n            current, `(a0:int) == 0i || a0 == 1i`, \"Hlogical_op\");\n        for (size_t k = 0; k < vector_size(branches); ++k) {\n          cm_reduce_expr_ready_branch(branches[k]);\n        }\n      } else if (i == 5) {\n        gnode_list deref = BOOL_CASES_TAC(\n            current, `(a0:int) == 2i`, \"Haddress_op\");\n        cm_reduce_expr_ready_branch(deref[0]);\n        gnode_list address = BOOL_CASES_TAC(\n            deref[1], `(a0:int) == 3i`, \"Hderef_op\");\n        cm_reduce_expr_ready_branch(address[0]);\n        cm_reduce_expr_ready_branch(address[1]);\n      } else if (i == 7) {\n        gnode_list branches = BOOL_CASES_TAC(current,\n            `cm_member_array (p:cm_program)\n               (cm_expr_type (a0:cm_expr)) (a1:int)`, \"Hmember_array\");\n        cm_reduce_expr_ready_branch(branches[0]);\n        cm_reduce_expr_ready_branch(branches[1]);\n      } else {\n        cm_reduce_expr_ready_branch(current);\n      }\n    }\n  }\n  for (size_t i = 0; i < 16; ++i) {\n    gnode open = cm_find_open_temp_leaf(cases[i]);\n    ENSURE_COND(open == NULL,\n        \"temporary readiness case %zu has an open leaf: %s\",\n        i, cstr_gnode(open));\n  }\n  return gnode_prove(root);\nerr:\n  return empty_theorem;\n}",
+      "sha256": "6c9719c880e85cb3c3e1c5db83bfee8ab7f8f357e1da9acddf474c188d8d37d3"
+    },
+    {
+      "name": "cm_expr_and_args_temps_ready",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        576,
+        577
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_expr_and_args_temps_ready =\n    cm_prove_expr_and_args_temps_ready();",
+      "sha256": "a1df1419c0a6afe61be62bb8e8f7d35bcba8ae8b8a44199018daad4acf97c707"
+    },
+    {
+      "name": "cm_expr_temps_ready_from_counts",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        578,
+        579
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cm_expr_temps_ready_from_counts =\n    conjunct1_rule(cm_expr_and_args_temps_ready);",
+      "sha256": "e00dec5122ef76029670aafe9e4bed458df371f0e2ca29832fc0edec1492f57d"
+    },
+    {
+      "name": "cm_args_temps_ready_from_counts",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        580,
+        581
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cm_args_temps_ready_from_counts =\n    conjunct2_rule(cm_expr_and_args_temps_ready);",
+      "sha256": "a12866612d83bc029c87cdd7218f9541fbcd9599ae07d5d46b1f8ddbcb1446bd"
+    },
+    {
+      "name": "cm_prove_stmt_count_node_from_tree",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        583,
+        612
+      ],
+      "nonblank_lines": 30,
+      "text": "PROOF static thm cm_prove_stmt_count_node_from_tree(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(s:cm_stmt) (p:cm_program) fid.\n         cm_stmt_counts_representable p fid s ==>\n         cm_i32_code_count (cm_stmt_code_count p fid s)`);\n  gnode introduced = AUTO_INTROS_TAC(root);\n  thm cases_th = ispec_rule(`s:cm_stmt`, get_cm_stmt_cases());\n  gnode_list cases = DISJ_CASES_TAC(introduced, cases_th, \"Hs\");\n  for (size_t i = 0; i < 11; ++i) {\n    while (true) {\n      labeled_term_list assumptions = goal_lasmps(cases[i]->g);\n      int index = labeled_term_list_index(assumptions, \"Hs\");\n      if (!is_exists(assumptions[index].tm)) break;\n      cases[i] = ASMP_EXISTS_TAC(cases[i], \"Hs\", NULL);\n    }\n    labeled_term_list assumptions = goal_lasmps(cases[i]->g);\n    int index = labeled_term_list_index(assumptions, \"Hs\");\n    thm shape = assume_rule(assumptions[index].tm);\n    thm opened = conv_rule(rewrite_conv(THM_LIST(\n        shape, get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable\n          (p:cm_program) (fid:int) (s:cm_stmt)`));\n    thm count = (i == 0 || i == 2 || i == 8 || i == 9)\n        ? opened : conjunct1_rule(opened);\n    thm generic = conv_rule(rewrite_conv(THM_LIST(\n        sym_rule(shape))), count);\n    ACCEPT_TAC(cases[i], generic);\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "f201f6e71c7cdd75e287dc8d4036d1256c78ac473e7eabb57bb732461206be66"
+    },
+    {
+      "name": "cm_stmt_count_node_from_tree",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        613,
+        614
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_stmt_count_node_from_tree =\n    cm_prove_stmt_count_node_from_tree();",
+      "sha256": "717b2fe937beab391b70dcbb287476aa6c6524ebb7e28bbdab51d00b317b8f11"
+    },
+    {
+      "name": "cm_expr_ready_from_counts",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        616,
+        625
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cm_expr_ready_from_counts(\n    const term expression, const thm representable) {\n  thm ready = mp_rule(specl_rule(TERM_LIST(\n      expression, `p:cm_program`, `fid:int`),\n      cm_expr_temps_ready_from_counts), representable);\n  thm count = mp_rule(specl_rule(TERM_LIST(\n      expression, `p:cm_program`, `fid:int`),\n      cm_expr_count_node_from_tree), representable);\n  return conj_rule(count, ready);\n}",
+      "sha256": "bb7603cfffa279907b7a578a28926df60a8af9a2ad2d39f28d99d86ec954295f"
+    },
+    {
+      "name": "cm_stmt_ready_ih",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        627,
+        636
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cm_stmt_ready_ih(\n    const term child, const thm induction_hypothesis,\n    const thm representable) {\n  thm ready = mp_rule(specl_rule(TERM_LIST(\n      `p:cm_program`, `fid:int`), induction_hypothesis), representable);\n  thm count = mp_rule(specl_rule(TERM_LIST(\n      child, `p:cm_program`, `fid:int`),\n      cm_stmt_count_node_from_tree), representable);\n  return conj_rule(count, ready);\n}",
+      "sha256": "4296e4a97de4fc193a95ebbab7c087f3162dd80122ba5a2953c1641fdd7563f9"
+    },
+    {
+      "name": "cm_prepare_stmt_ready_case",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        638,
+        759
+      ],
+      "nonblank_lines": 122,
+      "text": "PROOF static gnode cm_prepare_stmt_ready_case(\n    gnode node, size_t constructor_index) {\n  if (constructor_index == 1) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMExprS (a:cm_expr))`));\n    node = cm_add_ready_parts(node, representable);\n    node = cm_add_ready_parts(node, cm_expr_ready_from_counts(\n        `a:cm_expr`, conjunct2_rule(representable)));\n  } else if (constructor_index == 3) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMInitS (a0:int) (a1:cm_expr))`));\n    node = cm_add_ready_parts(node, representable);\n    thm expression_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_from_counts(\n        `a1:cm_expr`, expression_rep));\n    node = ASSUME_TAC(node, spec_rule(\n        `cm_slot_ty\n          (inth (a0:int)\n            (cm_function_locals\n              (inth (fid:int)\n                (cm_program_functions (p:cm_program)))))`,\n        cm_char_normalize_nonnegative), NULL);\n  } else if (constructor_index == 4) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMSeqS (a0:cm_stmt) (a1:cm_stmt))`));\n    node = cm_add_ready_parts(node, representable);\n    thm first_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm second_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_stmt_ready_ih(`a0:cm_stmt`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_stmt_counts_representable p fid (a0:cm_stmt) ==>\n             cm_rep_stmt_temps_safe a0 &&\n             cm_stemps a0 <= cm_stmt_code_count p fid a0`),\n        first_rep));\n    node = cm_add_ready_parts(node, cm_stmt_ready_ih(`a1:cm_stmt`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_stmt_counts_representable p fid (a1:cm_stmt) ==>\n             cm_rep_stmt_temps_safe a1 &&\n             cm_stemps a1 <= cm_stmt_code_count p fid a1`),\n        second_rep));\n  } else if (constructor_index == 5) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMBlockS (a:cm_stmt))`));\n    node = cm_add_ready_parts(node, representable);\n    thm child_rep = conjunct2_rule(representable);\n    node = cm_add_ready_parts(node, cm_stmt_ready_ih(`a:cm_stmt`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_stmt_counts_representable p fid (a:cm_stmt) ==>\n             cm_rep_stmt_temps_safe a &&\n             cm_stemps a <= cm_stmt_code_count p fid a`),\n        child_rep));\n  } else if (constructor_index == 6) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMIfS (a0:cm_expr) (a1:cm_stmt) (a2:cm_stmt))`));\n    node = cm_add_ready_parts(node, representable);\n    thm expression_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm yes_rep = conjunct1_rule(conjunct2_rule(\n        conjunct2_rule(representable)));\n    thm no_rep = conjunct2_rule(conjunct2_rule(\n        conjunct2_rule(representable)));\n    node = cm_add_ready_parts(node, cm_expr_ready_from_counts(\n        `a0:cm_expr`, expression_rep));\n    node = cm_add_ready_parts(node, cm_stmt_ready_ih(`a1:cm_stmt`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_stmt_counts_representable p fid (a1:cm_stmt) ==>\n             cm_rep_stmt_temps_safe a1 &&\n             cm_stemps a1 <= cm_stmt_code_count p fid a1`),\n        yes_rep));\n    node = cm_add_ready_parts(node, cm_stmt_ready_ih(`a2:cm_stmt`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_stmt_counts_representable p fid (a2:cm_stmt) ==>\n             cm_rep_stmt_temps_safe a2 &&\n             cm_stemps a2 <= cm_stmt_code_count p fid a2`),\n        no_rep));\n  } else if (constructor_index == 7) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMWhileS (a0:cm_expr) (a1:cm_stmt))`));\n    node = cm_add_ready_parts(node, representable);\n    thm expression_rep = conjunct1_rule(conjunct2_rule(representable));\n    thm body_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_from_counts(\n        `a0:cm_expr`, expression_rep));\n    node = cm_add_ready_parts(node, cm_stmt_ready_ih(`a1:cm_stmt`,\n        assume_rule(\n          `!(p:cm_program) fid.\n             cm_stmt_counts_representable p fid (a1:cm_stmt) ==>\n             cm_rep_stmt_temps_safe a1 &&\n             cm_stemps a1 <= cm_stmt_code_count p fid a1`),\n        body_rep));\n  } else if (constructor_index == 10) {\n    thm representable = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_stmt_counts_representable_def())), assume_rule(\n        `cm_stmt_counts_representable (p:cm_program) (fid:int)\n          (CMReturnS (a:cm_expr))`));\n    node = cm_add_ready_parts(node, representable);\n    thm expression_rep = conjunct2_rule(conjunct2_rule(representable));\n    node = cm_add_ready_parts(node, cm_expr_ready_from_counts(\n        `a:cm_expr`, expression_rep));\n    node = ASSUME_TAC(node, spec_rule(\n        `cm_function_ret\n          (inth (fid:int) (cm_program_functions (p:cm_program)))`,\n        cm_char_normalize_nonnegative), NULL);\n  }\n  return node;\n}",
+      "sha256": "5697f992449cbaac600cd730ef4963a601ded2cdc2a650ad0bc0b09e338f055d"
+    },
+    {
+      "name": "cm_prove_stmt_temps_ready",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        761,
+        797
+      ],
+      "nonblank_lines": 37,
+      "text": "PROOF static thm cm_prove_stmt_temps_ready(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(stmt:cm_stmt). !(p:cm_program) fid.\n         cm_stmt_counts_representable p fid stmt ==>\n         cm_rep_stmt_temps_safe stmt &&\n         cm_stemps stmt <= cm_stmt_code_count p fid stmt`);\n  gnode_list cases = INDUCT_TAC(root, `stmt:cm_stmt`);\n  for (size_t i = 0; i < vector_size(cases); ++i) {\n    gnode leaf = AUTO_INTROS_TAC(cases[i]);\n    gnode_list frontier = AUTO_ASMP_DESTRUCT_TAC(leaf);\n    if (vector_size(frontier) == 0) frontier = LIST_GNODE(leaf);\n    for (size_t j = 0; j < vector_size(frontier); ++j) {\n      gnode current = cm_prepare_stmt_ready_case(frontier[j], i);\n      gnode reduced = CONV_WITH_ASMP_TAC(current,\n          reduce_rewrite_conv, THM_LIST(\n            get_cm_stmt_counts_representable_def(),\n            get_cm_stmt_code_count_def(),\n            get_cm_i32_code_count_def(),\n            get_cm_rep_stmt_temps_safe_def(),\n            get_cm_rep_stmt_children_safe_def(),\n            get_cm_stemps_def(), cm_temp_imax_add_upper,\n            get_cm_rtemps_def(),\n            get_cm_rvalue_code_count_def(),\n            cm_temp_imax_upper));\n      cm_close_ready_arithmetic(reduced);\n    }\n  }\n  for (size_t i = 0; i < vector_size(cases); ++i) {\n    gnode open = cm_find_open_temp_leaf(cases[i]);\n    ENSURE_COND(open == NULL,\n        \"statement temporary readiness case %zu has an open leaf: %s\",\n        i, cstr_gnode(open));\n  }\n  return gnode_prove(root);\nerr:\n  return empty_theorem;\n}",
+      "sha256": "e7e880ca45dda5e18f0f3a6e4dd2549e1f0ab2aa06ac3e9eb1d507b35dc91bb7"
+    },
+    {
+      "name": "cm_stmt_temps_ready_with_bound",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        798,
+        799
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cm_stmt_temps_ready_with_bound =\n    cm_prove_stmt_temps_ready();",
+      "sha256": "7dad980ef8fbe79a5e2f3349ff237526261771b6a22a97f2629ceca63be7f7af"
+    },
+    {
+      "name": "cm_prove_stmt_temps_ready_from_counts",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        801,
+        814
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static thm cm_prove_stmt_temps_ready_from_counts(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(stmt:cm_stmt) (p:cm_program) fid.\n         cm_stmt_counts_representable p fid stmt ==>\n         cm_rep_stmt_temps_safe stmt`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm ready = mp_rule(specl_rule(TERM_LIST(\n      `stmt:cm_stmt`, `p:cm_program`, `fid:int`),\n      cm_stmt_temps_ready_with_bound), assume_rule(\n      `cm_stmt_counts_representable\n        (p:cm_program) (fid:int) (stmt:cm_stmt)`));\n  ACCEPT_TAC(leaf, conjunct1_rule(ready));\n  return gnode_prove(root);\n}",
+      "sha256": "8a731f7deba4895f8a972ea20cc92001bdafd4af42159f1d72fb3b07302df37c"
+    },
+    {
+      "name": "cm_stmt_temps_ready_from_counts",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "proof",
+      "span": [
+        815,
+        816
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cm_stmt_temps_ready_from_counts =\n    cm_prove_stmt_temps_ready_from_counts();",
+      "sha256": "b67b9ee7059f56f5c08598ef26f9e39f7f0556c2c9f46600ebb2557349905bbe"
+    },
+    {
+      "name": "_cmc_temp_ready_no_axioms",
+      "file": "baseline/cmc_concrete_temp_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        818,
+        820
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF static int _cmc_temp_ready_no_axioms =\n    vector_size(get_all_axioms()) == _cmc_temp_ready_axioms_before\n        ? 1 : (abort(), 0);",
+      "sha256": "45a0100908913bdbe45a73e762d3d6728d7b3b279404e151f6229d91441838c5"
+    }
+  ],
+  "totals": {
+    "definition": 0,
+    "proof": 788,
+    "getter": 0,
+    "framework_scaffolding": 5
+  }
+}

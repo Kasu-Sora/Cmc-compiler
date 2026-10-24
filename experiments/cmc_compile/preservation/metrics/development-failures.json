@@ -1,0 +1,77 @@
+[
+  {
+    "module": "cmc_annotation_helpers_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/001-development-cmc_annotation_helpers_migration_lib.log",
+    "diagnostic": "The following term contains unresolved implicit arguments:\n  (fun (code : list ?A) (ann : cm_annotation) =>\n   cm_ann_plain (cm_ann_pc ann + Zlength code) (cm_ann_temp ann)\n     (cm_ann_break ann) (cm_ann_continue ann) ann)\nMore precisely: \n- ?A: Cannot infer the implicit parameter A of Zlength whose type is \"Type\"."
+  },
+  {
+    "module": "cmc_annotation_helpers_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/002-development-cmc_annotation_helpers_migration_lib.log",
+    "diagnostic": "(in proof cm_spill_put_holds): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  },
+  {
+    "module": "cmc_annotation_invariant_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/006-development-cmc_annotation_invariant_migration_lib.log",
+    "diagnostic": "(in proof cm_update_r_erases): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  },
+  {
+    "module": "cmc_annotation_invariant_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/007-development-cmc_annotation_invariant_migration_lib.log",
+    "diagnostic": "(in proof cm_update_r_erases): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  },
+  {
+    "module": "cmc_annotation_invariant_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/008-development-cmc_annotation_invariant_migration_lib.log",
+    "diagnostic": "(in proof cm_update_r_erases): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  },
+  {
+    "module": "cmc_annotation_invariant_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/009-development-cmc_annotation_invariant_migration_lib.log",
+    "diagnostic": "(in proof cm_update_r_erases): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  },
+  {
+    "module": "cmc_simulation_memory_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/012-development-cmc_simulation_memory_migration_lib.log",
+    "diagnostic": "In environment\nz : Z\nq1 := z / 256 : Z\nq2 := q1 / 256 : Z\nq3 := q2 / 256 : Z\nq4 := q3 / 256 : Z\nq5 := q4 / 256 : Z\nq6 := q5 / 256 : Z\nq7 := q6 / 256 : Z\nq8 := q7 / 256 : Z\nE0 : z = 256 * q1 + z mod 256\nE1 : q1 = 256 * q2 + q1 mod 256\nE2 : q2 = 256 * q3 + q2 mod 256\nE3 : q3 = 256 * q4 + q3 mod 256\nE4 : q4 = 256 * q5 + q4 mod 256\nE5 : q5 = 256 * q6 + q5 mod 256\nE6 : q6 = 256 * q7 + q6 mod 256\nE7 : q7 = 256 * q8 + q7 mod 256\nUnable to unify\n \"tower_wrap64 (?M2572 + ?M2573 * 18446744073709551616) = tower_wrap64 ?M2572\"\nwith\n \"tower_wrap64\n    (z mod 256 +\n     256 *\n     ((if (1 =? 1)%positive\n   "
+  },
+  {
+    "module": "cmc_simulation_memory_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/013-development-cmc_simulation_memory_migration_lib.log",
+    "diagnostic": "Cannot infer this placeholder of type \"cm_value\" in\nenvironment:\nty : cm_type\nptr, v : cm_value\nst : cm_src_state\nvmem : Z -> Z\na : Z\nHsim : cm_stored_provenance_sim st vmem\nHtag :\n  cm_clear_tagged (cm_state_tagged st) (cm_value_number st ptr)\n    (cm_store_width ty) a = true\nHlive : cm_live_address st a"
+  },
+  {
+    "module": "cmc_simulation_code_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/015-development-cmc_simulation_code_migration_lib.log",
+    "diagnostic": "Tactic failure: Cannot solve this goal."
+  },
+  {
+    "module": "cmc_simulation_code_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/016-development-cmc_simulation_code_migration_lib.log",
+    "diagnostic": "The variable Zlength_app was not found in the current environment."
+  },
+  {
+    "module": "cmc_simulation_composition_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/018-development-cmc_simulation_composition_migration_lib.log",
+    "diagnostic": "In environment\nsp : cm_source_lookup_policy\nap : cm_annotation_policy\np : cm_program\ninput : list Z\nst : cm_src_state\nctl : cm_control\nstatus : Z\nInv : cm_astate -> Prop\nHinit : Inv (cm_annotated_start (cm_source_function_policy sp) p input)\nHstep : forall ast : cm_astate, Inv ast -> Inv (cm_annotated_step sp ap ast)\nHsim :\n  forall ast : cm_astate,\n  Inv ast -> cm_astate_sim (cm_source_function_policy sp) p ast\nHexec : cm_exec sp (CMStartTask p input) (CMOutcome st ctl status)\nn : nat\nHdone :\n  cm_astate_task\n    (cm_annotated_iter sp ap n\n       (cm_annotated_start (cm_source_function_policy"
+  },
+  {
+    "module": "cmc_simulation_coordinate_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/023-development-cmc_simulation_coordinate_migration_lib.log",
+    "diagnostic": "No matching clauses for match."
+  },
+  {
+    "module": "cmc_simulation_coordinate_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/024-development-cmc_simulation_coordinate_migration_lib.log",
+    "diagnostic": "No matching clauses for match."
+  },
+  {
+    "module": "cmc_simulation_coordinate_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/025-development-cmc_simulation_coordinate_migration_lib.log",
+    "diagnostic": "(in proof cm_v_coordinate_step): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  },
+  {
+    "module": "cmc_simulation_coordinate_migration_lib",
+    "log": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/logs/026-development-cmc_simulation_coordinate_migration_lib.log",
+    "diagnostic": "(in proof cm_c_coordinate_step): Attempt to save an incomplete proof\n(there are remaining open goals)."
+  }
+]

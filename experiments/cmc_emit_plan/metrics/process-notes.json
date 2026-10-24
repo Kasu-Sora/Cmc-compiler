@@ -1,0 +1,130 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "public_reuse": "Verified resolved public library and its transitive dependency closure; eight resolved helper contracts; no helper implementation re-proving",
+  "measurement_setup_repairs": [
+    "runpy measure_text initially lacked local script directory on sys.path; corrected before baseline target creation"
+  ],
+  "annotation_development": {
+    "attempts": 1,
+    "formal_case_lib_design_checks": 1,
+    "design_failures": 0,
+    "symexec_runs": 1,
+    "symexec_failures": 0,
+    "post_symexec_library_checks": 1,
+    "post_symexec_library_failures": 0,
+    "main_annotation_check_rounds": 1,
+    "main_annotation_status": "accepted",
+    "repairs": [],
+    "source": "reports/cmc_emit_plan_migration-20261017135154/annotation-attempts/annotation-attempt1/agent_output.md"
+  },
+  "vc_checking": {
+    "attempts": 1,
+    "main_acceptance_checks": 1,
+    "status": "accepted",
+    "top_level_scanned": 16,
+    "no_split_checked_first": 0,
+    "definite_blockers": 0,
+    "split_count": 32,
+    "worker_debug_or_validation_invocations": 0,
+    "worker_command_failures": 0,
+    "planned_group_count": 4,
+    "witnesses_per_group": 4,
+    "source": "reports/cmc_emit_plan_migration-20261017135154/rounds/cmc_emit_plan_migration-vc-checking-r1/agent_output.md"
+  },
+  "proof_development": {
+    "group_worker_checks": {
+      "temp_context": {
+        "dev": 2,
+        "exact": 1,
+        "debug": 1,
+        "failures": 1,
+        "repairs": [
+          "Reorder top-level applications to spatial-first"
+        ],
+        "new_helpers": 0,
+        "status": "accepted",
+        "dev_failures": 1,
+        "debug_failures": 0
+      },
+      "single_instruction": {
+        "dev": 4,
+        "dev_failures": 3,
+        "exact": 1,
+        "debug": 2,
+        "debug_failures": 1,
+        "failures": 4,
+        "repairs": [
+          "Remove tactics after automatic closure",
+          "Correct aggressive branch order",
+          "Replace targeted cancellation with ordinary cancellation"
+        ],
+        "debug_failure_reason": "Missing import in a debug invocation",
+        "new_helpers": 0,
+        "status": "accepted"
+      },
+      "general_fragments": {
+        "dev": 4,
+        "dev_failures": 3,
+        "exact": 1,
+        "debug": 1,
+        "debug_failures": 0,
+        "failures": 3,
+        "repairs": [
+          "Remove tactics after automatic spatial closure",
+          "Correct branch ordering with explicitly instantiated Goal_apply calls"
+        ],
+        "new_helpers": 0,
+        "status": "accepted"
+      },
+      "typed_memory": {
+        "dev": 3,
+        "dev_failures": 2,
+        "exact": 1,
+        "debug": 2,
+        "debug_failures": 1,
+        "failures": 3,
+        "repairs": [
+          "Remove tactics after automatic closure",
+          "Top-level spatial branch first",
+          "Correct debug scope import order"
+        ],
+        "new_helpers": 0,
+        "status": "accepted"
+      }
+    },
+    "group_worker_check_totals": {
+      "dev": 13,
+      "dev_failures": 9,
+      "exact": 4,
+      "debug": 6,
+      "debug_failures": 2,
+      "failures": 11,
+      "new_helpers": 0
+    },
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 4,
+    "accepted_group_attempts": {
+      "single_instruction": 1,
+      "general_fragments": 1,
+      "typed_memory": 1,
+      "temp_context": 1
+    }
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 4,
+    "planned_groups": 4,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T06:11:20.686974Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-17T06:11:20.694078Z"
+  }
+}

@@ -1,0 +1,94 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_param_address_migration_lib.
+Goal True. idtac "AUDIT cmc_target_param_address_migration_lib.cm_tvm_fp_address_stack". exact I. Qed.
+Check cmc_target_param_address_migration_lib.cm_tvm_fp_address_stack.
+Print Assumptions cmc_target_param_address_migration_lib.cm_tvm_fp_address_stack.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_param_normalize_migration_lib.
+Goal True. idtac "AUDIT cmc_target_param_normalize_migration_lib.cm_tvm_normalize_pair_stack". exact I. Qed.
+Check cmc_target_param_normalize_migration_lib.cm_tvm_normalize_pair_stack.
+Print Assumptions cmc_target_param_normalize_migration_lib.cm_tvm_normalize_pair_stack.
+Goal True. idtac "AUDIT cmc_target_param_normalize_migration_lib.cm_tvm_char_normalize_stack". exact I. Qed.
+Check cmc_target_param_normalize_migration_lib.cm_tvm_char_normalize_stack.
+Print Assumptions cmc_target_param_normalize_migration_lib.cm_tvm_char_normalize_stack.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_param_store_code_migration_lib.
+Goal True. idtac "AUDIT cmc_target_param_store_code_migration_lib.cm_tvm_convert_stack". exact I. Qed.
+Check cmc_target_param_store_code_migration_lib.cm_tvm_convert_stack.
+Print Assumptions cmc_target_param_store_code_migration_lib.cm_tvm_convert_stack.
+Goal True. idtac "AUDIT cmc_target_param_store_code_migration_lib.cm_tvm_typed_store_stack". exact I. Qed.
+Check cmc_target_param_store_code_migration_lib.cm_tvm_typed_store_stack.
+Print Assumptions cmc_target_param_store_code_migration_lib.cm_tvm_typed_store_stack.
+Goal True. idtac "AUDIT cmc_target_param_store_code_migration_lib.cm_tvm_address_store_stack". exact I. Qed.
+Check cmc_target_param_store_code_migration_lib.cm_tvm_address_store_stack.
+Print Assumptions cmc_target_param_store_code_migration_lib.cm_tvm_address_store_stack.
+Goal True. idtac "AUDIT cmc_target_param_store_code_migration_lib.cm_tvm_init_code_stack". exact I. Qed.
+Check cmc_target_param_store_code_migration_lib.cm_tvm_init_code_stack.
+Print Assumptions cmc_target_param_store_code_migration_lib.cm_tvm_init_code_stack.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_parameter_geometry_migration_lib.
+Goal True. idtac "AUDIT cmc_target_parameter_geometry_migration_lib.cm_pointer_region_member_ready". exact I. Qed.
+Check cmc_target_parameter_geometry_migration_lib.cm_pointer_region_member_ready.
+Print Assumptions cmc_target_parameter_geometry_migration_lib.cm_pointer_region_member_ready.
+Goal True. idtac "AUDIT cmc_target_parameter_geometry_migration_lib.cm_pending_parameter_ready". exact I. Qed.
+Check cmc_target_parameter_geometry_migration_lib.cm_pending_parameter_ready.
+Print Assumptions cmc_target_parameter_geometry_migration_lib.cm_pending_parameter_ready.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_parameter_ready_migration_lib.
+Goal True. idtac "AUDIT cmc_target_parameter_ready_migration_lib.cm_store_ok_regions". exact I. Qed.
+Check cmc_target_parameter_ready_migration_lib.cm_store_ok_regions.
+Print Assumptions cmc_target_parameter_ready_migration_lib.cm_store_ok_regions.
+Goal True. idtac "AUDIT cmc_target_parameter_ready_migration_lib.cm_parameter_ready_reverse". exact I. Qed.
+Check cmc_target_parameter_ready_migration_lib.cm_parameter_ready_reverse.
+Print Assumptions cmc_target_parameter_ready_migration_lib.cm_parameter_ready_reverse.
+Goal True. idtac "AUDIT cmc_target_parameter_ready_migration_lib.cm_parameters_ready_reverse". exact I. Qed.
+Check cmc_target_parameter_ready_migration_lib.cm_parameters_ready_reverse.
+Print Assumptions cmc_target_parameter_ready_migration_lib.cm_parameters_ready_reverse.
+Goal True. idtac "AUDIT cmc_target_parameter_ready_migration_lib.cm_runtime_reverse_params". exact I. Qed.
+Check cmc_target_parameter_ready_migration_lib.cm_runtime_reverse_params.
+Print Assumptions cmc_target_parameter_ready_migration_lib.cm_runtime_reverse_params.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_parameter_sequence_migration_lib.
+Goal True. idtac "AUDIT cmc_target_parameter_sequence_migration_lib.cm_tvm_parameter_sequence". exact I. Qed.
+Check cmc_target_parameter_sequence_migration_lib.cm_tvm_parameter_sequence.
+Print Assumptions cmc_target_parameter_sequence_migration_lib.cm_tvm_parameter_sequence.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_parameter_step_migration_lib.
+Goal True. idtac "AUDIT cmc_target_parameter_step_migration_lib.cm_store_encode_values". exact I. Qed.
+Check cmc_target_parameter_step_migration_lib.cm_store_encode_values.
+Print Assumptions cmc_target_parameter_step_migration_lib.cm_store_encode_values.
+Goal True. idtac "AUDIT cmc_target_parameter_step_migration_lib.cm_reverse_params_encode". exact I. Qed.
+Check cmc_target_parameter_step_migration_lib.cm_reverse_params_encode.
+Print Assumptions cmc_target_parameter_step_migration_lib.cm_reverse_params_encode.
+Goal True. idtac "AUDIT cmc_target_parameter_step_migration_lib.cm_parameter_store_runtime". exact I. Qed.
+Check cmc_target_parameter_step_migration_lib.cm_parameter_store_runtime.
+Print Assumptions cmc_target_parameter_step_migration_lib.cm_parameter_store_runtime.
+Goal True. idtac "AUDIT cmc_target_parameter_step_migration_lib.cm_parameter_store_step". exact I. Qed.
+Check cmc_target_parameter_step_migration_lib.cm_parameter_store_step.
+Print Assumptions cmc_target_parameter_step_migration_lib.cm_parameter_store_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_parameters_complete_migration_lib.
+Goal True. idtac "AUDIT cmc_target_parameters_complete_migration_lib.cm_slot_cons_successor". exact I. Qed.
+Check cmc_target_parameters_complete_migration_lib.cm_slot_cons_successor.
+Print Assumptions cmc_target_parameters_complete_migration_lib.cm_slot_cons_successor.
+Goal True. idtac "AUDIT cmc_target_parameters_complete_migration_lib.cm_parameters_ready_indexed". exact I. Qed.
+Check cmc_target_parameters_complete_migration_lib.cm_parameters_ready_indexed.
+Print Assumptions cmc_target_parameters_complete_migration_lib.cm_parameters_ready_indexed.
+Goal True. idtac "AUDIT cmc_target_parameters_complete_migration_lib.cm_pending_parameters_ready". exact I. Qed.
+Check cmc_target_parameters_complete_migration_lib.cm_pending_parameters_ready.
+Print Assumptions cmc_target_parameters_complete_migration_lib.cm_pending_parameters_ready.
+Goal True. idtac "AUDIT cmc_target_parameters_complete_migration_lib.cm_function_arity_bound_nat". exact I. Qed.
+Check cmc_target_parameters_complete_migration_lib.cm_function_arity_bound_nat.
+Print Assumptions cmc_target_parameters_complete_migration_lib.cm_function_arity_bound_nat.
+Goal True. idtac "AUDIT cmc_target_parameters_complete_migration_lib.cm_function_arity_stack_bound". exact I. Qed.
+Check cmc_target_parameters_complete_migration_lib.cm_function_arity_stack_bound.
+Print Assumptions cmc_target_parameters_complete_migration_lib.cm_function_arity_stack_bound.
+Goal True. idtac "AUDIT cmc_target_parameters_complete_migration_lib.cm_tvm_pending_parameters_complete". exact I. Qed.
+Check cmc_target_parameters_complete_migration_lib.cm_tvm_pending_parameters_complete.
+Print Assumptions cmc_target_parameters_complete_migration_lib.cm_tvm_pending_parameters_complete.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_prologue_code_migration_lib.
+Goal True. idtac "AUDIT cmc_target_prologue_code_migration_lib.cm_emit_prologue_prefix". exact I. Qed.
+Check cmc_target_prologue_code_migration_lib.cm_emit_prologue_prefix.
+Print Assumptions cmc_target_prologue_code_migration_lib.cm_emit_prologue_prefix.
+Goal True. idtac "AUDIT cmc_target_prologue_code_migration_lib.cm_tvm_prologue_prefix". exact I. Qed.
+Check cmc_target_prologue_code_migration_lib.cm_tvm_prologue_prefix.
+Print Assumptions cmc_target_prologue_code_migration_lib.cm_tvm_prologue_prefix.
+Require Import SimpleC.EE.QCP_demos_human.cmc_target_prologue_ops_migration_lib.
+Goal True. idtac "AUDIT cmc_target_prologue_ops_migration_lib.cm_tvm_dup_step". exact I. Qed.
+Check cmc_target_prologue_ops_migration_lib.cm_tvm_dup_step.
+Print Assumptions cmc_target_prologue_ops_migration_lib.cm_tvm_dup_step.
+Goal True. idtac "AUDIT cmc_target_prologue_ops_migration_lib.cm_tvm_sub_step". exact I. Qed.
+Check cmc_target_prologue_ops_migration_lib.cm_tvm_sub_step.
+Print Assumptions cmc_target_prologue_ops_migration_lib.cm_tvm_sub_step.

@@ -1,0 +1,41 @@
+{
+  "basis": "Controller reports and owner terminal messages in this conversation; individual failed coqc stdout was not separately persisted by the controller.",
+  "annotation_failures": [
+    {
+      "stage": "symexec",
+      "kind": "annotation-branch-control",
+      "reason": "Entry pure disjunction generated multiple unnamed precondition branches, so loop @pre references were ambiguous.",
+      "source_semantics_changed": false,
+      "repair": "Introduce pure cmc_uint8_buffer_nonnull(p,bytes) := bytes = [] or p != 0 and import the case lib during annotation; preserve original contract domain."
+    }
+  ],
+  "vc_report_format_repairs": 1,
+  "proving_development_contract_failures": 0,
+  "proving_development_coqc_failures": 2,
+  "historical_cstar_development_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "proof_group_records": [
+    {
+      "group": "copy-step",
+      "failures": 0,
+      "new_helpers": 0
+    },
+    {
+      "group": "copy-returns",
+      "failures": 1,
+      "kind": "coqc",
+      "reason": "Goal_apply branch order mismatch",
+      "repair": "Apply spatial branch first",
+      "new_helpers": 0
+    },
+    {
+      "group": "copy-entry",
+      "failures": 1,
+      "kind": "coqc",
+      "reason": "Top-level Goal_apply branch order mismatch",
+      "repair": "Swap the two Goal_apply steps",
+      "new_helpers": 0
+    }
+  ]
+}

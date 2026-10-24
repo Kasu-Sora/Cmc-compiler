@@ -1,0 +1,2836 @@
+{
+  "source_sha256": "4eb6230cdba3e2426fe844cba39e6e7918f829e52c8ac4c90bc7ed1a4b04dd41",
+  "function_counts": [
+    {
+      "function": "cmc_expr_type_code_value",
+      "source_span": [
+        13,
+        32
+      ],
+      "specification": 6,
+      "annotation": 0,
+      "inline_proof": 10
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "source_span": [
+        88,
+        145
+      ],
+      "specification": 40,
+      "annotation": 9,
+      "inline_proof": 0
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "source_span": [
+        147,
+        204
+      ],
+      "specification": 40,
+      "annotation": 9,
+      "inline_proof": 0
+    },
+    {
+      "function": "cmc_args_code_count",
+      "source_span": [
+        206,
+        454
+      ],
+      "specification": 44,
+      "annotation": 18,
+      "inline_proof": 170
+    },
+    {
+      "function": "cm_binding_address_count_value",
+      "source_span": [
+        661,
+        707
+      ],
+      "specification": 7,
+      "annotation": 0,
+      "inline_proof": 32
+    },
+    {
+      "function": "cm_expr_counts",
+      "source_span": [
+        709,
+        2629
+      ],
+      "specification": 50,
+      "annotation": 105,
+      "inline_proof": 1614
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "source_span": [
+        3118,
+        3852
+      ],
+      "specification": 43,
+      "annotation": 95,
+      "inline_proof": 544
+    },
+    {
+      "function": "cmc_param_stores_count",
+      "source_span": [
+        3854,
+        3999
+      ],
+      "specification": 9,
+      "annotation": 0,
+      "inline_proof": 124
+    },
+    {
+      "function": "cmc_function_prologue_count",
+      "source_span": [
+        4001,
+        4065
+      ],
+      "specification": 15,
+      "annotation": 0,
+      "inline_proof": 44
+    },
+    {
+      "function": "cmc_function_code_count",
+      "source_span": [
+        4067,
+        4216
+      ],
+      "specification": 23,
+      "annotation": 7,
+      "inline_proof": 111
+    },
+    {
+      "function": "cmc_function_prefix_count",
+      "source_span": [
+        4218,
+        4646
+      ],
+      "specification": 42,
+      "annotation": 0,
+      "inline_proof": 364
+    },
+    {
+      "function": "cmc_function_pc",
+      "source_span": [
+        4648,
+        4747
+      ],
+      "specification": 25,
+      "annotation": 0,
+      "inline_proof": 67
+    },
+    {
+      "function": "cmc_functions_code_size_count",
+      "source_span": [
+        4749,
+        5112
+      ],
+      "specification": 38,
+      "annotation": 0,
+      "inline_proof": 307
+    },
+    {
+      "function": "cmc_model_code_length",
+      "source_span": [
+        5114,
+        5279
+      ],
+      "specification": 17,
+      "annotation": 0,
+      "inline_proof": 141
+    },
+    {
+      "function": "cmc_model_data_length",
+      "source_span": [
+        5281,
+        5441
+      ],
+      "specification": 27,
+      "annotation": 0,
+      "inline_proof": 123
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_args_tail_slots_def",
+      "kind": "model",
+      "span": [
+        6,
+        8
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm cm_args_tail_slots_def = new_fun_definition(\n    `cm_args_tail_slots (slots:(cm_slot_d)list) : (cm_slot_d)list =\n       TL slots`);",
+      "dependencies": [],
+      "category": "source_case_model"
+    },
+    {
+      "name": "_e_cm_args_tail_slots",
+      "kind": "export_scaffolding",
+      "span": [
+        9,
+        10
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF int _e_cm_args_tail_slots =\n    cst_add_const_to_header(`cm_args_tail_slots`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "cm_finish_expr_count_cells_with_rules",
+      "kind": "proof",
+      "span": [
+        456,
+        485
+      ],
+      "nonblank_lines": 30,
+      "text": "PROOF static void cm_finish_expr_count_cells_with_rules(\n    const thm shape, const term concrete_lvalue,\n    const term concrete_rvalue, const thm_list extra_rules) {\n  term model_lvalue =\n      `cm_lcount_of\n         (cm_expr_code_counts (p:cm_program)\n           (fid__pre:int) (e:cm_expr))`;\n  term model_rvalue =\n      `cm_rcount_of\n         (cm_expr_code_counts (p:cm_program)\n           (fid__pre:int) (e:cm_expr))`;\n  thm_list rules = THM_LIST(\n      shape, get_cm_expr_code_counts_def(),\n      get_cm_lcount_of_def(), get_cm_rcount_of_def());\n  for (size_t i = 0; i < vector_size(extra_rules); ++i) {\n    vector_add(&rules, extra_rules[i]);\n  }\n  thm lvalue_model =\n      by_rewrite(mk_eq(model_lvalue, concrete_lvalue), rules);\n  thm rvalue_model =\n      by_rewrite(mk_eq(model_rvalue, concrete_rvalue), rules);\n  add_fact_st(sym_rule(lvalue_model));\n  add_fact_st(sym_rule(rvalue_model));\n  cst_set_symbolic_state(retarget_cell_st(\n      cst_get_symbolic_state(), `out_lvalue__addr:addr`,\n      concrete_lvalue, model_lvalue));\n  cst_set_symbolic_state(retarget_cell_st(\n      cst_get_symbolic_state(), `out_rvalue__addr:addr`,\n      concrete_rvalue, model_rvalue));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_finish_expr_count_cells",
+      "kind": "proof",
+      "span": [
+        487,
+        492
+      ],
+      "nonblank_lines": 6,
+      "text": "PROOF static void cm_finish_expr_count_cells(\n    const thm shape, const term concrete_lvalue,\n    const term concrete_rvalue) {\n  cm_finish_expr_count_cells_with_rules(\n      shape, concrete_lvalue, concrete_rvalue, THM_LIST());\n}",
+      "dependencies": [
+        "cm_finish_expr_count_cells_with_rules"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prepare_binary_count_sum",
+      "kind": "proof",
+      "span": [
+        494,
+        577
+      ],
+      "nonblank_lines": 84,
+      "text": "PROOF static void cm_prepare_binary_count_sum(\n    const term concrete_count, const term tail_count,\n    const thm tail_nonnegative, const thm_list extra_rules) {\n  term left_count =\n      `cm_rcount_of\n         (cm_expr_code_counts (p:cm_program)\n           (fid__pre:int) (left_:cm_expr))`;\n  term right_count =\n      `cm_rcount_of\n         (cm_expr_code_counts (p:cm_program)\n           (fid__pre:int) (right_:cm_expr))`;\n  term model_count =\n      `cm_rcount_of\n         (cm_expr_code_counts (p:cm_program) (fid__pre:int)\n           (CMBinaryE (op_:int) (left_:cm_expr)\n             (right_:cm_expr) (ty_:cm_type)))`;\n  thm_list rules = THM_LIST(\n      get_cm_expr_code_counts_def(), get_cm_rcount_of_def(),\n      get_cm_binary_tail_count_def(),\n      eqf_intro_rule(int_arith_rule(`~(9i == 8i)`)),\n      get_theorem_by_name(\"COND_ID\"),\n      int_ring_rule(\n        `!(l:int) (r:int). l + r + 10i + 4i == l + r + 14i`),\n      int_ring_rule(\n        `!(l:int) (r:int). l + r + 10i + 2i == l + r + 12i`),\n      int_ring_rule(\n        `!(l:int) (r:int).\n           l + r + 10i + 1i + 3i == l + r + 14i`),\n      int_ring_rule(\n        `!(l:int) (r:int).\n           l + r + 10i + 1i + 1i == l + r + 12i`));\n  for (size_t i = 0; i < vector_size(extra_rules); ++i) {\n    vector_add(&rules, extra_rules[i]);\n  }\n  thm model = by_rewrite(mk_eq(model_count, concrete_count), rules);\n  thm upper = assume_rule(\n      `cm_rcount_of\n         (cm_expr_code_counts (p:cm_program) (fid__pre:int)\n           (CMBinaryE (op_:int) (left_:cm_expr)\n             (right_:cm_expr) (ty_:cm_type))) <= 2147483647i`);\n  thm upper_equivalence = beta_norm(ap_term_rule(\n      `\\n:int. n <= 2147483647i`, model));\n  thm concrete_upper = eq_mp_rule(upper_equivalence, upper);\n  cm_add_count_facts(from_state_bool(\n      `cm_i32_code_count\n         (cm_rcount_of\n           (cm_expr_code_counts (p:cm_program)\n             (fid__pre:int) (left_:cm_expr)))`));\n  cm_add_count_facts(from_state_bool(\n      `cm_i32_code_count\n         (cm_rcount_of\n           (cm_expr_code_counts (p:cm_program)\n             (fid__pre:int) (right_:cm_expr)))`));\n  thm bounds = specl_rule(\n      TERM_LIST(left_count, right_count, tail_count),\n      int_arith_rule(\n        `!(left_count:int) (right_count:int) (tail_count:int).\n           0i <= left_count ==> 0i <= right_count ==>\n           0i <= tail_count ==>\n           left_count + (right_count + tail_count) <=\n             2147483647i ==>\n           (--2147483648i <= right_count + tail_count &&\n            right_count + tail_count <= 2147483647i &&\n            --2147483648i <=\n              left_count + (right_count + tail_count) &&\n            left_count + (right_count + tail_count) <=\n              2147483647i)`));\n  bounds = mp_rule(bounds, assume_rule(\n      `0i <= cm_rcount_of\n        (cm_expr_code_counts (p:cm_program)\n          (fid__pre:int) (left_:cm_expr))`));\n  bounds = mp_rule(bounds, assume_rule(\n      `0i <= cm_rcount_of\n        (cm_expr_code_counts (p:cm_program)\n          (fid__pre:int) (right_:cm_expr))`));\n  bounds = mp_rule(bounds, tail_nonnegative);\n  bounds = mp_rule(bounds, concrete_upper);\n  add_fact_st(conjunct1_rule(bounds));\n  thm rest = conjunct2_rule(bounds);\n  add_fact_st(conjunct1_rule(rest));\n  rest = conjunct2_rule(rest);\n  add_fact_st(conjunct1_rule(rest));\n  add_fact_st(conjunct2_rule(rest));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_close_binary_count_payload",
+      "kind": "proof",
+      "span": [
+        579,
+        600
+      ],
+      "nonblank_lines": 22,
+      "text": "PROOF static void cm_close_binary_count_payload(const thm shape) {\n  thm left_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){`left_:cm_expr`, `e:cm_expr`}),\n      get_cm_expr_rep_def());\n  apply_hconv_st(eq2ent(left_view));\n  thm right_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`zb:int`, `p:int`},\n      (term_pair){`right_:cm_expr`, `e:cm_expr`}),\n      get_cm_expr_rep_def());\n  apply_hconv_st(eq2ent(right_view));\n  thm payload_view = by_rewrite(\n      `cm_expr_payload (e:cm_expr)\n         (za:int) (zb:int) (zargs:int) -|-\n       fact(zargs == 0i) **\n       cm_expr_node za (left_:cm_expr)\n         (cm_expr_payload left_) **\n       cm_expr_node zb (right_:cm_expr)\n         (cm_expr_payload right_)`,\n      THM_LIST(shape, get_cm_expr_payload_def()));\n  apply_hconv_st(eq2ent(sym_rule(payload_view)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_finish_binary_count_branch",
+      "kind": "proof",
+      "span": [
+        602,
+        629
+      ],
+      "nonblank_lines": 28,
+      "text": "PROOF static void cm_finish_binary_count_branch(\n    const thm shape, const term concrete_count,\n    const thm_list extra_rules) {\n  thm_list rules = THM_LIST(\n      get_cm_binary_tail_count_def(),\n      eqf_intro_rule(int_arith_rule(\n        `~(8i == 0i || 8i == 1i)`)),\n      eqf_intro_rule(int_arith_rule(\n        `~(9i == 0i || 9i == 1i)`)),\n      eqf_intro_rule(int_arith_rule(`~(9i == 8i)`)),\n      get_theorem_by_name(\"COND_ID\"),\n      int_ring_rule(\n        `!(l:int) (r:int). l + r + 10i + 4i == l + r + 14i`),\n      int_ring_rule(\n        `!(l:int) (r:int). l + r + 10i + 2i == l + r + 12i`),\n      int_ring_rule(\n        `!(l:int) (r:int).\n           l + r + 10i + 1i + 3i == l + r + 14i`),\n      int_ring_rule(\n        `!(l:int) (r:int).\n           l + r + 10i + 1i + 1i == l + r + 12i`));\n  for (size_t i = 0; i < vector_size(extra_rules); ++i) {\n    vector_add(&rules, extra_rules[i]);\n  }\n  cm_finish_expr_count_cells_with_rules(\n      shape, `0i`, concrete_count, rules);\n  cm_close_binary_count_payload(shape);\n}",
+      "dependencies": [
+        "cm_close_binary_count_payload",
+        "cm_finish_expr_count_cells_with_rules"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prepare_single_child_add",
+      "kind": "proof",
+      "span": [
+        632,
+        659
+      ],
+      "nonblank_lines": 28,
+      "text": "PROOF static void cm_prepare_single_child_add(\n    const term model_count, const term concrete_count,\n    const thm model_upper, const term child_count,\n    const thm child_i32, const term increment,\n    const thm increment_nonnegative, const thm_list rules) {\n  thm model = by_rewrite(\n      mk_eq(model_count, concrete_count), rules);\n  thm concrete_upper = eq_mp_rule(beta_norm(ap_term_rule(\n      `\\n:int. n <= 2147483647i`, model)), model_upper);\n  thm child_bounds = conv_rule(rewrite_conv(\n      THM_LIST(get_cm_i32_code_count_def())), child_i32);\n  thm addition_bounds = specl_rule(\n      TERM_LIST(child_count, increment),\n      int_arith_rule(\n        `!(child_count:int) (increment:int).\n           0i <= child_count ==> 0i <= increment ==>\n           child_count + increment <= 2147483647i ==>\n           (--2147483648i <= child_count + increment &&\n            child_count + increment <= 2147483647i)`));\n  addition_bounds = mp_rule(\n      addition_bounds, conjunct1_rule(child_bounds));\n  addition_bounds = mp_rule(\n      addition_bounds, increment_nonnegative);\n  addition_bounds = mp_rule(addition_bounds, concrete_upper);\n  add_fact_st(conjunct1_rule(addition_bounds));\n  add_fact_st(conjunct2_rule(addition_bounds));\n  cm_add_count_facts(child_i32);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_rep_slot_type_at",
+      "kind": "proof",
+      "span": [
+        2631,
+        2688
+      ],
+      "nonblank_lines": 58,
+      "text": "PROOF static thm cm_prove_rep_slot_type_at(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(slots:(cm_slot_d)list) index.\n         0i <= index ==>\n         index < ilength slots ==>\n         cm_rep_slot_type slots index ==\n           cm_type_encode (cm_slot_ty (inth index slots))`);\n  gnode_list cases = INDUCT_TAC(root, `slots:(cm_slot_d)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    thm upper = pure_rewrite_rule(THM_LIST(\n        get_theorem_by_name(\"ILENGTH_DEF\")), assume_rule(\n          `(index:int) < ilength ([]:(cm_slot_d)list)`));\n    CONTR_TAC(leaf, mp_rule(mp_rule(int_arith_rule(\n        `0i <= (index:int) ==> index < 0i ==> F`),\n        assume_rule(`0i <= (index:int)`)), upper));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    gnode_list index_cases =\n        BOOL_CASES_TAC(leaf, `(index:int) == 0i`, \"Hindex\");\n    CONV_WITH_ASMP_TAC(index_cases[0], reduce_rewrite_conv, THM_LIST(\n        get_cm_rep_slot_type_def(),\n        get_theorem_by_name(\"INTH_DEF\"),\n        get_theorem_by_name(\"NUM_OF_INT_OF_NUM\"),\n        get_theorem_by_name(\"NTH_DEF\")));\n    thm nonnegative = assume_rule(`0i <= (index:int)`);\n    thm nonzero = assume_rule(`~((index:int) == 0i)`);\n    thm lower = mp_rule(mp_rule(int_arith_rule(\n        `0i <= (index:int) ==> ~(index == 0i) ==> 1i <= index`),\n        nonnegative), nonzero);\n    thm length_step = pure_rewrite_rule(THM_LIST(\n        get_theorem_by_name(\"ILENGTH_DEF\")), assume_rule(\n          `(index:int) <\n             ilength ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`));\n    thm tail_bound = mp_rule(int_arith_rule(\n        `(index:int) < 1i + ilength (a1:(cm_slot_d)list) ==>\n         index - 1i < ilength a1`), length_step);\n    thm tail_nonnegative = mp_rule(int_arith_rule(\n        `1i <= (index:int) ==> 0i <= index - 1i`), lower);\n    thm ih = mp_rule(mp_rule(spec_rule(\n        `(index:int) - 1i`, assume_rule(\n          `!index.\n             0i <= index ==>\n             index < ilength (a1:(cm_slot_d)list) ==>\n             cm_rep_slot_type a1 index ==\n               cm_type_encode (cm_slot_ty (inth index a1))`)),\n        tail_nonnegative), tail_bound);\n    thm lookup = mp_rule(ispecl_rule(TERM_LIST(\n        `a0:cm_slot_d`, `a1:(cm_slot_d)list`, `index:int`),\n        get_cm_rep_inth_cons_tail()), lower);\n    gnode reduced = CONV_WITH_ASMP_TAC(\n        index_cases[1], reduce_rewrite_conv, THM_LIST(\n          get_cm_rep_slot_type_def(), lookup));\n    ACCEPT_TAC(reduced, ih);\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_rep_slot_type_at",
+      "kind": "proof",
+      "span": [
+        2689,
+        2689
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF thm cm_rep_slot_type_at = cm_prove_rep_slot_type_at();",
+      "dependencies": [
+        "cm_prove_rep_slot_type_at"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_rep_slot_type_model",
+      "kind": "proof",
+      "span": [
+        2691,
+        2694
+      ],
+      "nonblank_lines": 4,
+      "text": "PROOF thm cm_rep_slot_type_model(\n    const term slots, const term index) {\n  return specl_rule(TERM_LIST(slots, index), cm_rep_slot_type_at);\n}",
+      "dependencies": [
+        "cm_rep_slot_type_at"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_first_stmt_count_node_fact",
+      "kind": "proof",
+      "span": [
+        2696,
+        2701
+      ],
+      "nonblank_lines": 6,
+      "text": "PROOF static thm cm_first_stmt_count_node_fact(const thm theorem) {\n  if (is_conj(concl(theorem))) {\n    return cm_first_stmt_count_node_fact(conjunct1_rule(theorem));\n  }\n  return theorem;\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_open_stmt_count_facts",
+      "kind": "proof",
+      "span": [
+        2703,
+        2722
+      ],
+      "nonblank_lines": 20,
+      "text": "PROOF static void cm_open_stmt_count_facts(const thm shape) {\n  thm source = from_state_bool(\n      `cm_stmt_counts_representable\n        (p:cm_program) (fid__pre:int) (s:cm_stmt)`);\n  thm shallow = conv_rule(rewrite_conv(THM_LIST(\n      shape, get_cm_stmt_counts_representable_def())), source);\n  thm node = cm_first_stmt_count_node_fact(shallow);\n  thm generic_node = conv_rule(\n      rewrite_conv(THM_LIST(sym_rule(shape))), node);\n  cm_add_count_facts(generic_node);\n  thm representable = conv_rule(rewrite_conv(THM_LIST(\n      shape, get_cm_stmt_counts_representable_def())), source);\n  cm_add_count_facts(representable);\n  thm well_formed = conv_rule(rewrite_conv(THM_LIST(\n      shape, get_cm_stmt_wf_def())),\n      from_state_bool(\n        `cm_stmt_wf (p:cm_program) (f:cm_function_d)\n          (loop_:bool) (s:cm_stmt)`));\n  cm_add_count_facts(well_formed);\n}",
+      "dependencies": [
+        "cm_first_stmt_count_node_fact"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_prepare_stmt_count_value",
+      "kind": "proof",
+      "span": [
+        2724,
+        2745
+      ],
+      "nonblank_lines": 22,
+      "text": "PROOF static void cm_prepare_stmt_count_value(\n    const thm shape, const term concrete_count,\n    const thm_list extra_rules) {\n  term model_count =\n      `cm_stmt_code_count\n        (p:cm_program) (fid__pre:int) (s:cm_stmt)`;\n  thm_list rules = THM_LIST(\n      shape, get_cm_stmt_code_count_def(),\n      get_cm_rvalue_code_count_def(),\n      int_arith_rule(\n        `!(x:int) (y:int) (z:int).\n           x + (y + z) == (x + y) + z`));\n  for (size_t i = 0; i < vector_size(extra_rules); ++i) {\n    vector_add(&rules, extra_rules[i]);\n  }\n  thm concrete_i32 = conv_rule(rewrite_conv(rules),\n      from_state_bool(\n        `cm_i32_code_count\n          (cm_stmt_code_count\n            (p:cm_program) (fid__pre:int) (s:cm_stmt))`));\n  cm_add_count_facts(concrete_i32);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_finish_stmt_count_value",
+      "kind": "proof",
+      "span": [
+        2747,
+        2767
+      ],
+      "nonblank_lines": 21,
+      "text": "PROOF static void cm_finish_stmt_count_value(\n    const thm shape, const term concrete_count,\n    const thm_list extra_rules) {\n  term model_count =\n      `cm_stmt_code_count\n        (p:cm_program) (fid__pre:int) (s:cm_stmt)`;\n  thm_list rules = THM_LIST(\n      shape, get_cm_stmt_code_count_def(),\n      get_cm_rvalue_code_count_def(),\n      int_arith_rule(\n        `!(x:int) (y:int) (z:int).\n           x + (y + z) == (x + y) + z`));\n  for (size_t i = 0; i < vector_size(extra_rules); ++i) {\n    vector_add(&rules, extra_rules[i]);\n  }\n  thm model = by_rewrite(mk_eq(model_count, concrete_count), rules);\n  add_fact_st(sym_rule(model));\n  cst_set_symbolic_state(retarget_cell_st(\n      cst_get_symbolic_state(), `result__addr:addr`,\n      concrete_count, model_count));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_retarget_call_result",
+      "kind": "proof",
+      "span": [
+        2769,
+        2775
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static void cm_retarget_call_result(\n    const term cell, const thm result) {\n  struct dest_eq_results sides = dest_eq(concl(result));\n  add_fact_st(result);\n  cst_set_symbolic_state(retarget_cell_st(\n      cst_get_symbolic_state(), cell, sides.tm1, sides.tm2));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_commit_arith_fact",
+      "kind": "proof",
+      "span": [
+        2777,
+        2780
+      ],
+      "nonblank_lines": 4,
+      "text": "PROOF void cm_commit_arith_fact(const char *chain) {\n  cst_set_symbolic_state(add_arith_fact_st(\n      cst_get_symbolic_state(), chain));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_term_occurrences",
+      "kind": "proof",
+      "span": [
+        2782,
+        2789
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static size_t cm_term_occurrences(\n    const term value, const term_list values) {\n  size_t count = 0;\n  for (size_t i = 0; i < vector_size(values); ++i) {\n    if (alpha_compare(value, values[i]) == 0) ++count;\n  }\n  return count;\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_keep_only_facts",
+      "kind": "proof",
+      "span": [
+        2791,
+        2822
+      ],
+      "nonblank_lines": 32,
+      "text": "PROOF static void cm_keep_only_facts(const term_list kept) {\n  term symbolic = cst_get_symbolic_state();\n  strip_sl_exists_results opened = strip_sl_exists(symbolic);\n  term_list conjuncts = strip_sl_sep(opened.hp);\n  for (size_t i = 0; i < vector_size(conjuncts); ++i) {\n    if (!is_sl_fact(conjuncts[i])) continue;\n    term proposition = dest_sl_fact(conjuncts[i]);\n    bool seen = false;\n    for (size_t j = 0; j < i; ++j) {\n      if (is_sl_fact(conjuncts[j]) &&\n          alpha_compare(proposition,\n            dest_sl_fact(conjuncts[j])) == 0) {\n        seen = true;\n        break;\n      }\n    }\n    if (seen) continue;\n    size_t available = 0;\n    for (size_t j = i; j < vector_size(conjuncts); ++j) {\n      if (is_sl_fact(conjuncts[j]) &&\n          alpha_compare(proposition,\n            dest_sl_fact(conjuncts[j])) == 0) {\n        ++available;\n      }\n    }\n    size_t wanted = cm_term_occurrences(proposition, kept);\n    while (available > wanted) {\n      remove_fact_st(proposition);\n      --available;\n    }\n  }\n}",
+      "dependencies": [
+        "cm_term_occurrences"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_open_stmt_expr_count_payload",
+      "kind": "proof",
+      "span": [
+        2824,
+        2833
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static void cm_open_stmt_expr_count_payload(const thm shape) {\n  thm payload_view = by_rewrite(\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(~(ze == 0i) && za == 0i && zb == 0i) **\n       cm_expr_rep ze (expr_:cm_expr)`,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(payload_view)));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_close_stmt_expr_count_payload",
+      "kind": "proof",
+      "span": [
+        2835,
+        2851
+      ],
+      "nonblank_lines": 17,
+      "text": "PROOF static void cm_close_stmt_expr_count_payload(const thm shape) {\n  thm payload_view = by_rewrite(\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(~(ze == 0i) && za == 0i && zb == 0i) **\n       cm_expr_rep ze (expr_:cm_expr)`,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  thm payload_facts = conj_rule(\n      assume_rule(`~((ze:int) == 0i)`),\n      conj_rule(assume_rule(`(za:int) == 0i`),\n        assume_rule(`(zb:int) == 0i`)));\n  thm payload_intro = frame_right_slrule(\n      add_fact_hconv(payload_facts),\n      `cm_expr_rep (ze:int) (expr_:cm_expr)`);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      trans_slrule(payload_intro, eq2ent(sym_rule(payload_view)))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_open_stmt_seq_count_payload",
+      "kind": "proof",
+      "span": [
+        2853,
+        2877
+      ],
+      "nonblank_lines": 25,
+      "text": "PROOF static void cm_open_stmt_seq_count_payload(const thm shape) {\n  thm payload_view = by_rewrite(\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(ze == 0i) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_) **\n       cm_stmt_node zb (second_:cm_stmt)\n         (cm_stmt_payload second_)`,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(payload_view)));\n  thm first_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){`first_:cm_stmt`, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  thm second_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`zb:int`, `p:int`},\n      (term_pair){`second_:cm_stmt`, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(first_view))));\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(second_view))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_close_stmt_seq_count_payload",
+      "kind": "proof",
+      "span": [
+        2879,
+        2903
+      ],
+      "nonblank_lines": 25,
+      "text": "PROOF static void cm_close_stmt_seq_count_payload(const thm shape) {\n  thm first_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){`first_:cm_stmt`, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  thm second_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`zb:int`, `p:int`},\n      (term_pair){`second_:cm_stmt`, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(first_view)));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(second_view)));\n  thm payload_view = by_rewrite(\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(ze == 0i) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_) **\n       cm_stmt_node zb (second_:cm_stmt)\n         (cm_stmt_payload second_)`,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(payload_view))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_open_stmt_block_count_payload",
+      "kind": "proof",
+      "span": [
+        2905,
+        2924
+      ],
+      "nonblank_lines": 20,
+      "text": "PROOF static void cm_open_stmt_block_count_payload(const thm shape) {\n  term body = dest_comb(dest_eq(concl(shape)).tm2).tm2;\n  term payload_subject = subst(TERM_PAIR_LIST(\n      (term_pair){body, `first_:cm_stmt`}),\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(ze == 0i && ~(za == 0i) && zb == 0i) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_)`);\n  thm payload_view = by_rewrite(payload_subject,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(payload_view)));\n  thm body_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){body, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(body_view))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_close_stmt_block_count_payload",
+      "kind": "proof",
+      "span": [
+        2926,
+        2955
+      ],
+      "nonblank_lines": 30,
+      "text": "PROOF static void cm_close_stmt_block_count_payload(const thm shape) {\n  term body = dest_comb(dest_eq(concl(shape)).tm2).tm2;\n  thm body_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){body, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(body_view)));\n  term payload_subject = subst(TERM_PAIR_LIST(\n      (term_pair){body, `first_:cm_stmt`}),\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(ze == 0i && ~(za == 0i) && zb == 0i) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_)`);\n  thm payload_view = by_rewrite(payload_subject,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  thm payload_facts = conj_rule(\n      assume_rule(`(ze:int) == 0i`),\n      conj_rule(assume_rule(`~((za:int) == 0i)`),\n        assume_rule(`(zb:int) == 0i`)));\n  term body_rep = subst(TERM_PAIR_LIST(\n      (term_pair){body, `first_:cm_stmt`}),\n      `cm_stmt_node (za:int) (first_:cm_stmt)\n         (cm_stmt_payload first_)`);\n  thm payload_intro = frame_right_slrule(\n      add_fact_hconv(payload_facts), body_rep);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      trans_slrule(payload_intro, eq2ent(sym_rule(payload_view)))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_open_stmt_if_count_payload",
+      "kind": "proof",
+      "span": [
+        2957,
+        2990
+      ],
+      "nonblank_lines": 34,
+      "text": "PROOF static void cm_open_stmt_if_count_payload(const thm shape) {\n  dest_comb_results outer = dest_comb(dest_eq(concl(shape)).tm2);\n  dest_comb_results middle = dest_comb(outer.tm1);\n  term guard = dest_comb(middle.tm1).tm2;\n  term yes_branch = middle.tm2;\n  term no_branch = outer.tm2;\n  term payload_subject = subst(TERM_PAIR_LIST(\n      (term_pair){guard, `expr_:cm_expr`},\n      (term_pair){yes_branch, `first_:cm_stmt`},\n      (term_pair){no_branch, `second_:cm_stmt`}),\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       cm_expr_rep ze (expr_:cm_expr) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_) **\n       cm_stmt_node zb (second_:cm_stmt)\n         (cm_stmt_payload second_)`);\n  thm payload_view = by_rewrite(payload_subject,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(payload_view)));\n  thm yes_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){yes_branch, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  thm no_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`zb:int`, `p:int`},\n      (term_pair){no_branch, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(yes_view))));\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(no_view))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_close_stmt_if_count_payload",
+      "kind": "proof",
+      "span": [
+        2992,
+        3025
+      ],
+      "nonblank_lines": 34,
+      "text": "PROOF static void cm_close_stmt_if_count_payload(const thm shape) {\n  dest_comb_results outer = dest_comb(dest_eq(concl(shape)).tm2);\n  dest_comb_results middle = dest_comb(outer.tm1);\n  term guard = dest_comb(middle.tm1).tm2;\n  term yes_branch = middle.tm2;\n  term no_branch = outer.tm2;\n  thm yes_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){yes_branch, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  thm no_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`zb:int`, `p:int`},\n      (term_pair){no_branch, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(yes_view)));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(no_view)));\n  term payload_subject = subst(TERM_PAIR_LIST(\n      (term_pair){guard, `expr_:cm_expr`},\n      (term_pair){yes_branch, `first_:cm_stmt`},\n      (term_pair){no_branch, `second_:cm_stmt`}),\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       cm_expr_rep ze (expr_:cm_expr) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_) **\n       cm_stmt_node zb (second_:cm_stmt)\n         (cm_stmt_payload second_)`);\n  thm payload_view = by_rewrite(payload_subject,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(payload_view))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_open_stmt_while_count_payload",
+      "kind": "proof",
+      "span": [
+        3027,
+        3050
+      ],
+      "nonblank_lines": 24,
+      "text": "PROOF static void cm_open_stmt_while_count_payload(const thm shape) {\n  dest_comb_results outer = dest_comb(dest_eq(concl(shape)).tm2);\n  term guard_term = dest_comb(outer.tm1).tm2;\n  term body_term = outer.tm2;\n  term payload_subject = subst(TERM_PAIR_LIST(\n      (term_pair){guard_term, `expr_:cm_expr`},\n      (term_pair){body_term, `first_:cm_stmt`}),\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(~(ze == 0i) && ~(za == 0i) && zb == 0i) **\n       cm_expr_rep ze (expr_:cm_expr) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_)`);\n  thm payload_view = by_rewrite(payload_subject,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(payload_view)));\n  thm body_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){body_term, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(body_view))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_close_stmt_while_count_payload",
+      "kind": "proof",
+      "span": [
+        3052,
+        3087
+      ],
+      "nonblank_lines": 36,
+      "text": "PROOF static void cm_close_stmt_while_count_payload(const thm shape) {\n  dest_comb_results outer = dest_comb(dest_eq(concl(shape)).tm2);\n  term guard_term = dest_comb(outer.tm1).tm2;\n  term body_term = outer.tm2;\n  thm body_view = inst_rule(TERM_PAIR_LIST(\n      (term_pair){`za:int`, `p:int`},\n      (term_pair){body_term, `s:cm_stmt`}),\n      get_cm_stmt_rep_def());\n  cst_set_symbolic_state(local_apply(\n      cst_get_symbolic_state(), eq2ent(body_view)));\n  term payload_subject = subst(TERM_PAIR_LIST(\n      (term_pair){guard_term, `expr_:cm_expr`},\n      (term_pair){body_term, `first_:cm_stmt`}),\n      `cm_stmt_payload (s:cm_stmt)\n         (ze:int) (za:int) (zb:int) -|-\n       fact(~(ze == 0i) && ~(za == 0i) && zb == 0i) **\n       cm_expr_rep ze (expr_:cm_expr) **\n       cm_stmt_node za (first_:cm_stmt)\n         (cm_stmt_payload first_)`);\n  thm payload_view = by_rewrite(payload_subject,\n      THM_LIST(shape, get_cm_stmt_payload_def()));\n  thm payload_facts = conj_rule(\n      assume_rule(`~((ze:int) == 0i)`),\n      conj_rule(assume_rule(`~((za:int) == 0i)`),\n        assume_rule(`(zb:int) == 0i`)));\n  term payload_frame = subst(TERM_PAIR_LIST(\n      (term_pair){guard_term, `expr_:cm_expr`},\n      (term_pair){body_term, `first_:cm_stmt`}),\n      `cm_expr_rep (ze:int) (expr_:cm_expr) **\n       cm_stmt_node (za:int) (first_:cm_stmt)\n         (cm_stmt_payload first_)`);\n  thm payload_intro = frame_right_slrule(\n      add_fact_hconv(payload_facts), payload_frame);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      trans_slrule(payload_intro, eq2ent(sym_rule(payload_view)))));\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_open_stmt_case_st",
+      "kind": "proof",
+      "span": [
+        3089,
+        3102
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF void cm_open_stmt_case_st(const thm shape, int kind) {\n  cm_open_stmt_count_facts(shape);\n  if (kind == 1 || kind == 3 || kind == 10) {\n    cm_open_stmt_expr_count_payload(shape);\n  } else if (kind == 4) {\n    cm_open_stmt_seq_count_payload(shape);\n  } else if (kind == 5) {\n    cm_open_stmt_block_count_payload(shape);\n  } else if (kind == 6) {\n    cm_open_stmt_if_count_payload(shape);\n  } else if (kind == 7) {\n    cm_open_stmt_while_count_payload(shape);\n  }\n}",
+      "dependencies": [
+        "cm_open_stmt_block_count_payload",
+        "cm_open_stmt_count_facts",
+        "cm_open_stmt_expr_count_payload",
+        "cm_open_stmt_if_count_payload",
+        "cm_open_stmt_seq_count_payload",
+        "cm_open_stmt_while_count_payload"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_close_stmt_case_st",
+      "kind": "proof",
+      "span": [
+        3104,
+        3116
+      ],
+      "nonblank_lines": 13,
+      "text": "PROOF void cm_close_stmt_case_st(const thm shape, int kind) {\n  if (kind == 1 || kind == 3 || kind == 10) {\n    cm_close_stmt_expr_count_payload(shape);\n  } else if (kind == 4) {\n    cm_close_stmt_seq_count_payload(shape);\n  } else if (kind == 5) {\n    cm_close_stmt_block_count_payload(shape);\n  } else if (kind == 6) {\n    cm_close_stmt_if_count_payload(shape);\n  } else if (kind == 7) {\n    cm_close_stmt_while_count_payload(shape);\n  }\n}",
+      "dependencies": [
+        "cm_close_stmt_block_count_payload",
+        "cm_close_stmt_expr_count_payload",
+        "cm_close_stmt_if_count_payload",
+        "cm_close_stmt_seq_count_payload",
+        "cm_close_stmt_while_count_payload"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_concrete_function_ready_def",
+      "kind": "model",
+      "span": [
+        5444,
+        5475
+      ],
+      "nonblank_lines": 32,
+      "text": "PROOF thm cm_concrete_function_ready_def = new_fun_definition(\n    `cm_concrete_function_ready (p:cm_program) (fid:int)\n       (f:cm_function_d) : bool =\n       (f == inth fid (cm_program_functions p) &&\n        cm_function_counts_representable p fid f &&\n        cm_stmt_wf p f F (cm_function_body f) &&\n        cm_stmt_counts_representable p fid (cm_function_body f) &&\n        cm_param_counts_representable (cm_function_params f) &&\n        cm_i32_code_count (cm_function_prologue_count f) &&\n        cm_i32_code_count (cm_function_pc p fid) &&\n        cm_i32_code_count\n          (cm_function_pc p fid + cm_function_prologue_count f) &&\n        cm_i32_code_count\n          ((cm_function_pc p fid + cm_function_prologue_count f) +\n           ilength\n             (cm_emit_stmt p fid\n               (cm_function_pc p fid +\n                cm_function_prologue_count f)\n               0i 0i 0i (cm_function_body f))) &&\n        cm_slots_wf (cm_program_structs p) (cm_function_params f) &&\n        cm_slots_wf (cm_program_structs p) (cm_function_locals f) &&\n        cm_rep_members_safe (cm_function_params f) &&\n        cm_rep_members_safe (cm_function_locals f) &&\n        cm_rep_stmt_temps_safe (cm_function_body f) &&\n        8i + cm_rep_members_size (cm_function_params f) +\n          cm_rep_members_size (cm_function_locals f) +\n          8i * cm_stemps (cm_function_body f) <= 2147483647i &&\n        cm_temp_offset p fid (cm_stemps (cm_function_body f)) <=\n          2147483647i &&\n        cm_function_pc p (fid + 1i) ==\n          cm_function_pc p fid + cm_function_code_count p fid &&\n        cm_i32_code_count (cm_function_pc p (fid + 1i)))`);",
+      "dependencies": [],
+      "category": "outside_runtime_dependency_closure_model"
+    },
+    {
+      "name": "_e_cm_concrete_function_ready",
+      "kind": "export_scaffolding",
+      "span": [
+        5476,
+        5477
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF int _e_cm_concrete_function_ready =\n    cst_add_const_to_header(`cm_concrete_function_ready`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "cm_concrete_functions_ready_def",
+      "kind": "model",
+      "span": [
+        5479,
+        5489
+      ],
+      "nonblank_lines": 11,
+      "text": "PROOF thm cm_concrete_functions_ready_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(!p fid.\n       cm_concrete_functions_ready (p:cm_program) (fid:int)\n         ([]:(cm_function_d)list) = T) &&\n     (!p fid f rest.\n       (cm_concrete_functions_ready (p:cm_program) (fid:int)\n          ((f:cm_function_d) :: (rest:(cm_function_d)list)) <=>\n        cm_i32_code_count (fid + 1i) &&\n        cm_concrete_function_ready p fid f &&\n        cm_concrete_functions_ready p (fid + 1i) rest))`);",
+      "dependencies": [],
+      "category": "outside_runtime_dependency_closure_model"
+    },
+    {
+      "name": "_e_cm_concrete_functions_ready",
+      "kind": "export_scaffolding",
+      "span": [
+        5490,
+        5491
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF int _e_cm_concrete_functions_ready =\n    cst_add_const_to_header(`cm_concrete_functions_ready`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "get_cm_concrete_function_ready_def",
+      "kind": "proof",
+      "span": [
+        5493,
+        5495
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cm_concrete_function_ready_def(void) {\n  return cm_concrete_function_ready_def;\n}",
+      "dependencies": [
+        "cm_concrete_function_ready_def"
+      ],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    },
+    {
+      "name": "get_cm_concrete_functions_ready_def",
+      "kind": "proof",
+      "span": [
+        5497,
+        5499
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cm_concrete_functions_ready_def(void) {\n  return cm_concrete_functions_ready_def;\n}",
+      "dependencies": [
+        "cm_concrete_functions_ready_def"
+      ],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 426,
+    "annotation": 243,
+    "inline_proof": 3651,
+    "export_scaffolding": 6,
+    "exported_shared_proof_closure": 375,
+    "outside_runtime_dependency_closure_model": 43,
+    "outside_runtime_dependency_closure_proof_support": 6,
+    "private_case_proof_support": 288,
+    "source_case_model": 3,
+    "case_proof": 3939,
+    "proof_including_shared": 4314
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        134,
+        134
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        135,
+        135
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        136,
+        136
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        137,
+        137
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        138,
+        138
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        139,
+        139
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        140,
+        140
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        141,
+        141
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_lvalue_count",
+      "kind": "where",
+      "span": [
+        142,
+        142
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        193,
+        193
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        194,
+        194
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        195,
+        195
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        196,
+        196
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        197,
+        197
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        198,
+        198
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        199,
+        199
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        200,
+        200
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_rvalue_count",
+      "kind": "where",
+      "span": [
+        201,
+        201
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        321,
+        321
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        322,
+        322
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        323,
+        323
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        324,
+        324
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        325,
+        325
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        326,
+        326
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        327,
+        327
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        328,
+        328
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        333,
+        333
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        334,
+        334
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        335,
+        336
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        337,
+        337
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        338,
+        338
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        339,
+        339
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        340,
+        340
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        341,
+        341
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_args_code_count",
+      "kind": "where",
+      "span": [
+        342,
+        342
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        885,
+        885
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        886,
+        886
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        887,
+        887
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        888,
+        888
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        889,
+        889
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        890,
+        890
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1013,
+        1013
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1014,
+        1014
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1015,
+        1015
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1016,
+        1016
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1017,
+        1017
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1018,
+        1018
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1019,
+        1019
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1020,
+        1020
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1023,
+        1023
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1024,
+        1024
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1025,
+        1025
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1026,
+        1026
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1027,
+        1027
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1028,
+        1028
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1029,
+        1029
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1030,
+        1030
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1180,
+        1180
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1181,
+        1181
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1182,
+        1182
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1183,
+        1183
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1184,
+        1184
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1185,
+        1185
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1186,
+        1186
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1187,
+        1187
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1190,
+        1190
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1191,
+        1191
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1192,
+        1192
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1193,
+        1193
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1194,
+        1194
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1195,
+        1195
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1196,
+        1196
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1197,
+        1197
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1659,
+        1659
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1660,
+        1660
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1661,
+        1661
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1662,
+        1662
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1663,
+        1663
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1664,
+        1664
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1665,
+        1665
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1666,
+        1666
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1890,
+        1890
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1891,
+        1891
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1892,
+        1892
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1893,
+        1893
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1894,
+        1894
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1895,
+        1895
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1896,
+        1896
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1897,
+        1897
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1900,
+        1900
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1901,
+        1901
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1902,
+        1902
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1903,
+        1903
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1904,
+        1904
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1905,
+        1905
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1906,
+        1906
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        1907,
+        1907
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2092,
+        2092
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2093,
+        2093
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2094,
+        2094
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2095,
+        2095
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2096,
+        2096
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2097,
+        2097
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2098,
+        2098
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2099,
+        2099
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2188,
+        2188
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2189,
+        2189
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2190,
+        2190
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2340,
+        2340
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2341,
+        2341
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2342,
+        2342
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2343,
+        2343
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2344,
+        2344
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2345,
+        2345
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2346,
+        2346
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2347,
+        2347
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2396,
+        2396
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2397,
+        2397
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2398,
+        2398
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2399,
+        2399
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2400,
+        2400
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2401,
+        2401
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2402,
+        2402
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2403,
+        2403
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2461,
+        2461
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2462,
+        2462
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2463,
+        2463
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2464,
+        2464
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2465,
+        2465
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2466,
+        2466
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2467,
+        2467
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2468,
+        2468
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2571,
+        2571
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2572,
+        2572
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2573,
+        2573
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2574,
+        2574
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2575,
+        2575
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2576,
+        2576
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2577,
+        2577
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_expr_counts",
+      "kind": "where",
+      "span": [
+        2578,
+        2578
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3203,
+        3203
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3204,
+        3204
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3205,
+        3205
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3206,
+        3206
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3207,
+        3207
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3208,
+        3208
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3209,
+        3209
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3210,
+        3210
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3285,
+        3285
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3304,
+        3304
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3305,
+        3305
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3306,
+        3306
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3307,
+        3307
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3308,
+        3308
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3309,
+        3309
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3310,
+        3310
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3311,
+        3311
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3389,
+        3389
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3390,
+        3390
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3391,
+        3391
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3392,
+        3392
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3393,
+        3393
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3394,
+        3394
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3395,
+        3395
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3396,
+        3396
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3397,
+        3397
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3407,
+        3407
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3408,
+        3408
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3409,
+        3409
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3410,
+        3410
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3411,
+        3411
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3412,
+        3412
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3413,
+        3413
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3414,
+        3414
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3415,
+        3415
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3454,
+        3454
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3455,
+        3455
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3456,
+        3456
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3457,
+        3457
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3458,
+        3458
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3459,
+        3459
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3460,
+        3460
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3461,
+        3461
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3462,
+        3462
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3495,
+        3495
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3496,
+        3496
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3497,
+        3497
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3498,
+        3498
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3499,
+        3499
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3500,
+        3500
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3501,
+        3501
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3502,
+        3502
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3513,
+        3513
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3514,
+        3514
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3515,
+        3515
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3516,
+        3516
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3517,
+        3517
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3518,
+        3518
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3519,
+        3519
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3520,
+        3520
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3521,
+        3521
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3531,
+        3531
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3532,
+        3532
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3533,
+        3533
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3534,
+        3534
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3535,
+        3535
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3536,
+        3536
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3537,
+        3537
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3538,
+        3538
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3539,
+        3539
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3626,
+        3626
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3627,
+        3627
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3628,
+        3628
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3629,
+        3629
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3630,
+        3630
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3631,
+        3631
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3632,
+        3632
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3633,
+        3633
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3644,
+        3644
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3645,
+        3645
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3646,
+        3646
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3647,
+        3647
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3648,
+        3648
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3649,
+        3649
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3650,
+        3650
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3651,
+        3651
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3652,
+        3652
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3789,
+        3789
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3790,
+        3790
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3791,
+        3791
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3792,
+        3792
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3793,
+        3793
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3794,
+        3794
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3795,
+        3795
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_stmt_code_count",
+      "kind": "where",
+      "span": [
+        3796,
+        3796
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4137,
+        4137
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4138,
+        4138
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4139,
+        4139
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4140,
+        4140
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4141,
+        4141
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4142,
+        4142
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_function_code_count",
+      "kind": "where",
+      "span": [
+        4143,
+        4143
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [
+    "cm_close_stmt_case_st",
+    "cm_commit_arith_fact",
+    "cm_open_stmt_case_st",
+    "cm_rep_slot_type_model"
+  ],
+  "public_wrappers_not_called_by_runtime_proof": [
+    "cm_close_stmt_case_st",
+    "cm_open_stmt_case_st",
+    "cm_rep_slot_type_model"
+  ],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Exported proof helper wrappers and transitive same-file support counted once as shared; unused source readiness definitions/getters inventoried separately."
+}

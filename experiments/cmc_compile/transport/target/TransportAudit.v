@@ -1,0 +1,122 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_region_transport_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_region_generations_refl". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_region_generations_refl.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_region_generations_refl.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_region_generations_trans". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_region_generations_trans.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_region_generations_trans.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_region_generations_prepend". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_region_generations_prepend.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_region_generations_prepend.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_region_generations_cons". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_region_generations_cons.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_region_generations_cons.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_restore_regions_generations". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_restore_regions_generations.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_restore_regions_generations.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_region_base_absent". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_region_base_absent.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_region_base_absent.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_present". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_present.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_present.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_absent". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_absent.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_absent.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_transport". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_transport.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_restore_regions_base_transport.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_restore_regions_bases_transport". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_restore_regions_bases_transport.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_restore_regions_bases_transport.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_frames_saved_generations_mono". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_frames_saved_generations_mono.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_frames_saved_generations_mono.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_enter_call_generations". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_enter_call_generations.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_enter_call_generations.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_activate_local_generations". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_activate_local_generations.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_activate_local_generations.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_restore_call_generations". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_restore_call_generations.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_restore_call_generations.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_r_saved_generations_step". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_r_saved_generations_step.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_r_saved_generations_step.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_l_saved_generations_step". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_l_saved_generations_step.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_l_saved_generations_step.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_s_saved_generations_step". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_s_saved_generations_step.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_s_saved_generations_step.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_v_saved_generations_step". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_v_saved_generations_step.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_v_saved_generations_step.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_c_saved_generations_step". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_c_saved_generations_step.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_c_saved_generations_step.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_task_saved_generations_step". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_task_saved_generations_step.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_task_saved_generations_step.
+Goal True. idtac "AUDIT cmc_simulation_region_transport_migration_lib.cm_start_iter_saved_generations". exact I. Qed.
+Check cmc_simulation_region_transport_migration_lib.cm_start_iter_saved_generations.
+Print Assumptions cmc_simulation_region_transport_migration_lib.cm_start_iter_saved_generations.
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_short_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_value_number_bases". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_value_number_bases.
+Print Assumptions cmc_simulation_short_migration_lib.cm_value_number_bases.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_truth_bases". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_truth_bases.
+Print Assumptions cmc_simulation_short_migration_lib.cm_truth_bases.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_frames_short_bases". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_frames_short_bases.
+Print Assumptions cmc_simulation_short_migration_lib.cm_frames_short_bases.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_enter_call_bases". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_enter_call_bases.
+Print Assumptions cmc_simulation_short_migration_lib.cm_enter_call_bases.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_activate_local_bases". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_activate_local_bases.
+Print Assumptions cmc_simulation_short_migration_lib.cm_activate_local_bases.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_restore_call_bases". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_restore_call_bases.
+Print Assumptions cmc_simulation_short_migration_lib.cm_restore_call_bases.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_frames_short_io". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_frames_short_io.
+Print Assumptions cmc_simulation_short_migration_lib.cm_frames_short_io.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_frames_short_store". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_frames_short_store.
+Print Assumptions cmc_simulation_short_migration_lib.cm_frames_short_store.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_r_short_step". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_r_short_step.
+Print Assumptions cmc_simulation_short_migration_lib.cm_r_short_step.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_l_short_step". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_l_short_step.
+Print Assumptions cmc_simulation_short_migration_lib.cm_l_short_step.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_s_short_step". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_s_short_step.
+Print Assumptions cmc_simulation_short_migration_lib.cm_s_short_step.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_v_short_step". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_v_short_step.
+Print Assumptions cmc_simulation_short_migration_lib.cm_v_short_step.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_c_short_step". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_c_short_step.
+Print Assumptions cmc_simulation_short_migration_lib.cm_c_short_step.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_task_short_step_generation". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_task_short_step_generation.
+Print Assumptions cmc_simulation_short_migration_lib.cm_task_short_step_generation.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_short_support_initial". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_short_support_initial.
+Print Assumptions cmc_simulation_short_migration_lib.cm_short_support_initial.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_short_support_step". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_short_support_step.
+Print Assumptions cmc_simulation_short_migration_lib.cm_short_support_step.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_short_support_iter". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_short_support_iter.
+Print Assumptions cmc_simulation_short_migration_lib.cm_short_support_iter.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_source_termination_short_invariants". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_source_termination_short_invariants.
+Print Assumptions cmc_simulation_short_migration_lib.cm_source_termination_short_invariants.
+Goal True. idtac "AUDIT cmc_simulation_short_migration_lib.cm_source_termination_short_ready". exact I. Qed.
+Check cmc_simulation_short_migration_lib.cm_source_termination_short_ready.
+Print Assumptions cmc_simulation_short_migration_lib.cm_source_termination_short_ready.

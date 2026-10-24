@@ -1,0 +1,98 @@
+--- /Users/nizitong/.codex/skills/qcp-cstar-migration/SKILL.md
++++ /Users/nizitong/.codex/skills/qcp-cstar-migration/SKILL.md
+@@ -53,7 +53,7 @@
+ 使用本机资料时先检查是否仍存在：
+ 
+ - QCP 工具仓库：`/Users/nizitong/QCP/qcp-binary-democases`；实际验证入口为其 `AGENTS.md`。
+-- 当前已验证案例：CMC 的 `cmc_write_byte`、`cmc_write_zeroes`、`cmc_copy_bytes`、`cmc_write_word`、`cmc_write_char`，以及整个 layout 文件的 39 个函数、counts 的 15 个运行时函数、count-context 的 4 个包装函数、function-pc-total 的 2 个函数、emit-globals 和 emit-strings 的递归函数及 emit-data 的组合函数、emit-core 的九个指令生成函数、emit-resolved 与 emit-plan 各八个包装函数及 emit-ast 的两个地址生成函数；QCP 正式文件在 `QCP_examples/QCP_demos_human/`，前五例文件名为函数名加 `_migration.c`，layout 为 `cmc_layout_migration.c`，counts 为 `cmc_counts_migration.c`，count-context 为 `cmc_count_context_migration.c`，function-pc-total 为 `cmc_function_pc_total_migration.c`，emit-globals 为 `cmc_emit_globals_migration.c`，emit-strings 为 `cmc_emit_strings_migration.c`，emit-data 为 `cmc_emit_data_migration.c`，emit-core 为 `cmc_emit_core_migration.c`，emit-resolved 为 `cmc_emit_resolved_migration.c`，emit-plan 为 `cmc_emit_plan_migration.c`，emit-ast 为 `cmc_emit_ast_migration.c`。
++- 当前已验证案例：CMC 的 `cmc_write_byte`、`cmc_write_zeroes`、`cmc_copy_bytes`、`cmc_write_word`、`cmc_write_char`，以及整个 layout 文件的 39 个函数、counts 的 15 个运行时函数、count-context 的 4 个包装函数、function-pc-total 的 2 个函数、emit-globals 和 emit-strings 的递归函数及 emit-data 的组合函数、emit-core 的九个指令生成函数、emit-resolved 与 emit-plan 各八个包装函数及 emit-ast 的两个地址生成函数及 emit-expr-leaf 的九个函数（含两个 static helper）；QCP 正式文件在 `QCP_examples/QCP_demos_human/`，前五例文件名为函数名加 `_migration.c`，layout 为 `cmc_layout_migration.c`，counts 为 `cmc_counts_migration.c`，count-context 为 `cmc_count_context_migration.c`，function-pc-total 为 `cmc_function_pc_total_migration.c`，emit-globals 为 `cmc_emit_globals_migration.c`，emit-strings 为 `cmc_emit_strings_migration.c`，emit-data 为 `cmc_emit_data_migration.c`，emit-core 为 `cmc_emit_core_migration.c`，emit-resolved 为 `cmc_emit_resolved_migration.c`，emit-plan 为 `cmc_emit_plan_migration.c`，emit-ast 为 `cmc_emit_ast_migration.c`，emit-expr-leaf 为 `cmc_emit_expr_leaf_migration.c`。
+ - 基准：`/Users/nizitong/QCP/PV-bench`；信任说明为 `docs/VERIFICATION.md`。
+ - C* 源案例：`/Users/nizitong/cmc/cmc_concrete_emit_bytes.c`；CMC 保证范围为 `CMC_SPEC.md`。
+ 
+@@ -91,4 +91,6 @@
+ 
+ `cmc_concrete_emit_ast.c` 于 2026-10-17 完成两个地址生成函数验证。涉及绑定地址、整数索引前缀、布局/语义偏移桥及双上下文保持时，读取 [references/cmc-emit-ast-case.md](references/cmc-emit-ast-case.md)。本例完成 9 条顶层手工义务、14 个 split，另有 14 条可信自动结果；新增公共定义 7 项、引理 2 条。
+ 
+-这些结果覆盖十六个具体实现文件的运行时部分、95 个运行时函数及必要依赖；不能外推为整个 CMC/TVM 证明已完成迁移。新的函数、其他数据结构和不同方向仍需各自验证。
++`cmc_concrete_emit_expr_leaf.c` 于2026-10-17完成九个运行时函数验证。涉及leaf模型特化、static helper覆盖、声明/实现契约差异、结构体大小和成员偏移桥时，读取 [references/cmc-emit-expr-leaf-case.md](references/cmc-emit-expr-leaf-case.md)。本例完成27条顶层手工义务、37个split，另有49条可信自动结果；新增公共定义10项、引理14条。
++
++这些结果覆盖十七个具体实现文件的运行时部分、104 个运行时函数及必要依赖；不能外推为整个 CMC/TVM 证明已完成迁移。新的函数、其他数据结构和不同方向仍需各自验证。
+--- /Users/nizitong/.codex/skills/qcp-cstar-migration/references/cmc-emit-expr-leaf-case.md
++++ /Users/nizitong/.codex/skills/qcp-cstar-migration/references/cmc-emit-expr-leaf-case.md
+@@ -0,0 +1,37 @@
++# 已验证案例：emit-expr-leaf，C* → QCP
++
++2026-10-17完成cmc_concrete_emit_expr_leaf.c全部九个运行时函数，含两个static helper。C*隔离重放通过，QCP run `cmc_emit_expr_leaf_migration-20261017144315`为done、final-check passed。完整证据及计量见 `/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_expr_leaf/REPORT.md`。
++
++## 范围与原契约
++
++文件中的static cmc_const_immediate和cm_sizeof_value也是待验证运行时函数，不能仅接入假定契约。源cm_emit_const_expr头文件省略了实现前后置中的cm_type_code_wf ty；本例以被验证实现为基线保留它，并单独披露声明差异，不声称更弱头文件已经验证。
++
++四类leaf为Const/String/Getc/Sizeof。独立cm_leaf_expr类型显式限制范围，嵌入既有cm_expr；非leaf投影为None。cm_leaf_rvalue和cm_leaf_code_for精确对应源四条方程及lvalue选择。原契约已有构造子等式，因此此特化不增加输入条件。不要把不支持的构造子默认输出空列表后仍命名为完整cm_expr_code_for；未来迁移递归emitter时需建立完整模型及leaf对应。
++
++保留所有原纯事实与program/function/expression资源。字符串sid只有原[0,INT_MAX]界，不补sid<length；getc不增加typed条件；char立即数支持所有signed64输入，复用tower_u8模型；本例manual以既有类型编码引理和内嵌模运算证明低字节等式，不将导入word库算作直接复用其余数引理；lvalue=1消耗空片段并保留tail。
++
++## 大小与偏移桥
++
++结构体成员前缀使用cm_struct_member_size，普通槽位使用cm_slot_size。先在slots_wf下证明大小一致，再复用AST前缀与core大小桥连接表示和语义。成员offset保留sid有效性判断及越界0；前缀递归保留全部Z索引行为。string前缀可直接别名既有表示前缀，因为两个递归式仅差加法结合；global大小仍需wf桥。
++
++布局/type-code/member-valid已有条件用于推导指针阈值、结构编号与成员边界。C的Z.rem不能无前提当作Z.mod；负常量低字节先按unsigned64取模，再证明二次取低字节等于tower_u8。六个外部helper契约与已验证layout/plan版本一致，不导入旧manual/auto或重复计其实现proof。
++
++## 本例可复用的标注与证明经验
++
++调用cm_emit_plan前，显式把leaf代码转换为singleton计划。此处直接写lvalue==0曾触发过早替换，使谓词匹配失败；等价的0<=lvalue<=0保留了匹配形状，生成的义务再证明lvalue==0。只在遇到同类匹配问题时采用此写法。字符串调用先匹配表示地址，再用typed_program推出语义地址等式；存在量由资源推断，避免where引用断言作用域之外的名字。
++
++资源证明中Intros可能已提取纯事实，需查看实际上下文；payload合取需拆开后才能替换三个空指针。涉及string_scope时显式写Z.eqb。aggressive分支分派按实际生成次序，不能假定纯目标总在空间目标之前。
++
++## 已验证规模
++
++27条顶层手工义务、37个split完成；49条自动witness以Admitted导出，依赖QCP自动层。manual及新增公共库无Admitted/Axiom/Parameter。
++
++| 非空行 | C* | QCP |
++|---|---:|---:|
++| Specification | 195 | 27 |
++| 函数体annotation | 25 | 74 |
++| helper接入annotation | 0（include） | 17 |
++| 案例proof | 512 | 506 |
++| 增量公共proof | 538 | 125 |
++
++QCP新增10项定义/34行，14条引理/125行；已有依赖零新增。按最终合并库统计，包括未直接被manual引用的辅助模型/引理，具体使用情况见shared-helper-usage.json。源8个私有PROOF helpers计案例proof，两个static普通函数也各自计契约/标注/证明。源模型只计四个leaf方程及所需选择器，不把整个递归emitter记为已迁移。行数不是历史工时或工具效率。
+--- /Users/nizitong/Documents/ChatGPT/Cmc/MIGRATION_PLAN.md
++++ /Users/nizitong/Documents/ChatGPT/Cmc/MIGRATION_PLAN.md
+@@ -1,6 +1,6 @@
+ # CMC / TVM：C* → QCP / Rocq 待迁移范围
+ 
+-清点更新：2026-10-17。目标是重建 CMC 具体实现验证、Tower C−/TVM 逻辑模型及编译保持性证明。当前完成 `cmc_write_byte`、`cmc_write_zeroes`、`cmc_copy_bytes`、`cmc_write_word`、`cmc_write_char`、layout 整文件 39 个函数和 counts 的 15 个运行时函数、count-context 的 4 个包装函数、function-pc-total 的 2 个函数、emit-globals 和 emit-strings 的递归函数及 emit-data 组合函数、emit-core 的九个指令生成函数及 emit-resolved、emit-plan 各八个包装函数及 emit-ast 的两个地址生成函数，共十六个具体实现文件的运行时部分、95 个运行时函数的 QCP 流程验证；各案例分别有 2、6、7、37、3、332、184、6、11、9、12、7、83、16、16、14 条可信自动 witness 以 `Admitted` 导出，详见 [write_byte 报告](experiments/cmc_write_byte/REPORT.md)、[write_zeroes 报告](experiments/cmc_write_zeroes/REPORT.md)、[copy_bytes 报告](experiments/cmc_copy_bytes/REPORT.md)、[write_word 报告](experiments/cmc_write_word/REPORT.md)、[write_char 报告](experiments/cmc_write_char/REPORT.md)、[layout 报告](experiments/cmc_layout/REPORT.md)、[counts 报告](experiments/cmc_counts/REPORT.md)、[count-context 报告](experiments/cmc_count_context/REPORT.md)、[function-pc-total 报告](experiments/cmc_function_pc_total/REPORT.md)、[emit-globals 报告](experiments/cmc_emit_globals/REPORT.md)、[emit-strings 报告](experiments/cmc_emit_strings/REPORT.md)、[emit-data 报告](experiments/cmc_emit_data/REPORT.md)、[emit-core 报告](experiments/cmc_emit_core/REPORT.md)、[emit-resolved 报告](experiments/cmc_emit_resolved/REPORT.md)、[emit-plan 报告](experiments/cmc_emit_plan/REPORT.md)、[emit-ast 报告](experiments/cmc_emit_ast/REPORT.md)。
++清点更新：2026-10-17。目标是重建 CMC 具体实现验证、Tower C−/TVM 逻辑模型及编译保持性证明。当前完成 `cmc_write_byte`、`cmc_write_zeroes`、`cmc_copy_bytes`、`cmc_write_word`、`cmc_write_char`、layout 整文件 39 个函数和 counts 的 15 个运行时函数、count-context 的 4 个包装函数、function-pc-total 的 2 个函数、emit-globals 和 emit-strings 的递归函数及 emit-data 组合函数、emit-core 的九个指令生成函数及 emit-resolved、emit-plan 各八个包装函数及 emit-ast 的两个地址生成函数及 emit-expr-leaf 的九个函数，共十七个具体实现文件的运行时部分、104 个运行时函数的 QCP 流程验证；各案例分别有 2、6、7、37、3、332、184、6、11、9、12、7、83、16、16、14、49 条可信自动 witness 以 `Admitted` 导出，详见 [write_byte 报告](experiments/cmc_write_byte/REPORT.md)、[write_zeroes 报告](experiments/cmc_write_zeroes/REPORT.md)、[copy_bytes 报告](experiments/cmc_copy_bytes/REPORT.md)、[write_word 报告](experiments/cmc_write_word/REPORT.md)、[write_char 报告](experiments/cmc_write_char/REPORT.md)、[layout 报告](experiments/cmc_layout/REPORT.md)、[counts 报告](experiments/cmc_counts/REPORT.md)、[count-context 报告](experiments/cmc_count_context/REPORT.md)、[function-pc-total 报告](experiments/cmc_function_pc_total/REPORT.md)、[emit-globals 报告](experiments/cmc_emit_globals/REPORT.md)、[emit-strings 报告](experiments/cmc_emit_strings/REPORT.md)、[emit-data 报告](experiments/cmc_emit_data/REPORT.md)、[emit-core 报告](experiments/cmc_emit_core/REPORT.md)、[emit-resolved 报告](experiments/cmc_emit_resolved/REPORT.md)、[emit-plan 报告](experiments/cmc_emit_plan/REPORT.md)、[emit-ast 报告](experiments/cmc_emit_ast/REPORT.md)、[emit-expr-leaf 报告](experiments/cmc_emit_expr_leaf/REPORT.md)。
+ 
+ [migration_inventory.csv](migration_inventory.csv) 逐项列出 `/Users/nizitong/cmc` 根目录全部 254 个 `.c` 文件、249 个存在的同名头文件、类别、迁移状态、直接依赖和源码哈希。
+ 
+@@ -34,7 +34,8 @@
+ | 已完成 | `cmc_concrete_emit_resolved.c` | 八个 resolved 包装函数；16 条手工义务、8 个 split、16 条可信自动结果；新增公共定义 3 项、引理 10 条 |
+ | 已完成 | `cmc_concrete_emit_plan.c` | 八个计划包装函数；16 条手工义务、32 个 split、16 条可信自动结果；新增公共定义 1 项、引理 1 条 |
+ | 已完成 | `cmc_concrete_emit_ast.c` | 两个绑定地址函数；9 条手工义务、14 个 split、14 条可信自动结果；新增公共定义 7 项、引理 2 条 |
+-| 5：指令与程序生成 | `cmc_concrete_emit_expr*.c`、`cmc_concrete_emit_binary_finish.c`、`cmc_concrete_emit_return.c`、`cmc_concrete_emit_stmt*.c`、`cmc_concrete_emit_function*.c`、`cmc_concrete_emit_prelude.c`、`cmc_concrete_emit_code.c`、`cmc_concrete_patch_calls.c` | 指令列表与实际缓冲区一致；表达式/语句/调用的递归验证；跳转地址和回填 |
++| 已完成 | `cmc_concrete_emit_expr_leaf.c` | 九个运行时函数（含两个static helper）；27条手工义务、37个split、49条可信自动结果；新增公共定义10项、引理14条；保留实现契约并披露const头文件差异 |
++| 5：指令与程序生成 | `cmc_concrete_emit_expr*.c`（leaf已完成）、`cmc_concrete_emit_binary_finish.c`、`cmc_concrete_emit_return.c`、`cmc_concrete_emit_stmt*.c`、`cmc_concrete_emit_function*.c`、`cmc_concrete_emit_prelude.c`、`cmc_concrete_emit_code.c`、`cmc_concrete_patch_calls.c` | 指令列表与实际缓冲区一致；表达式/语句/调用的递归验证；跳转地址和回填 |
+ | 贯穿各批：模型和支持引理 | `tower_base.c`、`cmc_lang.c`、`tvm_model.c`、`cmc_codegen.c`、`cmc_sim*.c`、`cmc_annotate*.c`、`cmc_stack*.c`、`cmc_temp_algebra.c`、`cmc_list_selectors.c`、`cmc_concrete_*ready.c`、`cmc_concrete_emit_stmt_proof.c` | 在 Rocq 重建各案例实际需要的定义和定理，逐渐覆盖完整源/目标语义和代码生成模型 |
+ | 6：编译保持性 | `cmc_preservation_*.c`、`cmc_correct.c` | 在 Rocq 重建模拟不变式、执行保持、调用/返回、类型与栈条件，得到同样前提下的终止观察保持与无目标错误结论 |
+ | 7：顶层组合 | `cmc.c`、`cmc.h` | QCP 验证 `cmc_compile`；把模型保持性与具体输出解码连接起来，恢复成功/容量不足的完整契约 |
+@@ -54,6 +55,6 @@
+ 
+ ## 推荐下一单元
+ 
+-五个基础写入/复制实现、layout、counts、count-context、function-pc-total、emit-globals、emit-strings、emit-data、emit-core、emit-resolved、emit-plan 与 emit-ast 的运行时部分已完成。下一候选为 `cmc_concrete_emit_expr_leaf.c`；开始前仍须审查其完整依赖闭包。继续复用已验证公共库，新增成本单列；完整指令 emitter 语义、readiness 长度桥的 Rocq 重证及具体 TVM 实例化仍待后续迁移。
++五个基础写入/复制实现、layout、counts、count-context、function-pc-total、emit-globals、emit-strings、emit-data、emit-core、emit-resolved、emit-plan、emit-ast 与 emit-expr-leaf 的运行时部分已完成。下一候选为 `cmc_concrete_emit_expr_var.c`；开始前仍须审查其完整依赖闭包。继续复用已验证公共库，新增成本单列；完整指令 emitter 语义、readiness 长度桥的 Rocq 重证及具体 TVM 实例化仍待后续迁移。
+ 
+ 每个单元均记录 source/target 契约、annotation、手写 proof、自动结果信任项及新增公共工作。必须分别验证普通 helper 函数体；仅让顶层 `cmc_compile` 通过，不能替代其所调用 helper 的实现验证。
+--- /Users/nizitong/Documents/ChatGPT/Cmc/migration_inventory.csv
++++ /Users/nizitong/Documents/ChatGPT/Cmc/migration_inventory.csv
+@@ -23,7 +23,7 @@
+ /Users/nizitong/cmc/cmc_concrete_emit_expr.c,/Users/nizitong/cmc/cmc_concrete_emit_expr.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_expr.h;cmc_concrete_emit_plan.h;cmc_concrete_emit_binary_finish.h;cmc_concrete_emit_expr_call.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_expr_simple.c;cmc_concrete_count_context.c;cmc_concrete_emit_plan.c;cmc_concrete_emit_binary_finish.c;cmc_concrete_emit_expr_call.c,c16ef59537ba53c346a9abb0dd7c473a0e662d13e01acb1dd2a14a6d172146ad
+ /Users/nizitong/cmc/cmc_concrete_emit_expr_call.c,/Users/nizitong/cmc/cmc_concrete_emit_expr_call.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_expr_call.h;cmc_concrete_emit_plan.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_plan.c,5517421976483e0c70b0a5a86472489faa0c9c5977c2b716c682f4d07f7f6756
+ /Users/nizitong/cmc/cmc_concrete_emit_expr_dispatch.c,/Users/nizitong/cmc/cmc_concrete_emit_expr_dispatch.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_expr_dispatch.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_expr_leaf.c,8d96173451b64da59ddc548858b05893ecdae3fd0878860aa655504c10670334
+-/Users/nizitong/cmc/cmc_concrete_emit_expr_leaf.c,/Users/nizitong/cmc/cmc_concrete_emit_expr_leaf.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_expr_leaf.h;cmc_concrete_emit_word.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_plan.c;cmc_concrete_emit_word.c,ca5391cbcb4c72498246c8bf6e244c89fb75d5d3c400e0e6313f25a12f508643
++/Users/nizitong/cmc/cmc_concrete_emit_expr_leaf.c,/Users/nizitong/cmc/cmc_concrete_emit_expr_leaf.h,concrete_implementation_and_support,True,qcp_pipeline_verified_9_functions_27_manual_49_trusted_auto_body_contract_header_difference,cmc_concrete_emit_expr_leaf.h;cmc_concrete_emit_word.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_plan.c;cmc_concrete_emit_word.c,ca5391cbcb4c72498246c8bf6e244c89fb75d5d3c400e0e6313f25a12f508643
+ /Users/nizitong/cmc/cmc_concrete_emit_expr_simple.c,/Users/nizitong/cmc/cmc_concrete_emit_expr_simple.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_expr_simple.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_expr_dispatch.c;cmc_concrete_emit_expr_var.c,8798a34429f1ae96ee1cce8848e9ee3328e16e605cec83b9dbfd272f95560a5b
+ /Users/nizitong/cmc/cmc_concrete_emit_expr_var.c,/Users/nizitong/cmc/cmc_concrete_emit_expr_var.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_expr_var.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_ast.c;cmc_concrete_emit_plan.c,523fdadff2cdffac90293c649a7923edfa65356288d83295c3d0e1ab056f8c1b
+ /Users/nizitong/cmc/cmc_concrete_emit_function.c,/Users/nizitong/cmc/cmc_concrete_emit_function.h,concrete_implementation_and_support,True,not_migrated,cmc_concrete_emit_function.h;cmc_concrete_emit_stmt_proof.h;userlib/proof.h;userlib/operational.h;cmc_concrete_emit_stmt.c;cmc_concrete_emit_return.c,3a6bcc5442ff4789f33d59f2b98fd2f0b9563ab47b32142ec25b6ef7174313d7

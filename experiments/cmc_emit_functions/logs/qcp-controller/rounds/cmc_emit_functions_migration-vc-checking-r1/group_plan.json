@@ -1,0 +1,120 @@
+{
+  "groups": [
+    {
+      "id": "readiness",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_functions_which_implies_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_1": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select next function PC representability.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_2": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select the successor PC equality and rewrite function_pc using PreH3.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_3": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select recursive tail readiness; the tail is the exact cm_emit_functions_tail functions in the shape equation.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_4": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select the outer fid+1 representability conjunct.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_5": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select the final temporary offset bound; unfold INT_MAX if needed.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_6": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select the frame bound; unfold INT_MAX if needed.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_7": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select statement temporary safety.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_8": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select local member representation safety.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_9": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select parameter member representation safety.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_10": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select local slot wellformedness.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_11": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select parameter slot wellformedness.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_12": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Rewrite function_pc by PreH3 and the emitted statement length by the already established unconditional cm_emit_stmt_length__stmt_capacity theorem, then select the body-end code-count bound.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_13": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Rewrite function_pc by PreH3 and select the prologue-end bound.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_14": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Rewrite function_pc by PreH3 and select the initial PC bound.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_15": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select prologue count representability.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_16": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select parameter counts representability.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_17": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select statement counts representability.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_18": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select statement wellformedness.",
+            "proof_of_cmc_emit_functions_which_implies_wit_2_split_goal_19": "Rewrite the functions cons equation in the readiness hypothesis only; reduce one cm_concrete_functions_ready constructor, unfold cm_concrete_function_ready for its head, and select the required conjunct. Select function counts representability."
+          }
+        }
+      ]
+    },
+    {
+      "id": "resources",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_functions_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_return_wit_1_split_goal_spatial": "Frame program context and retain the function-list resource. Destruct functions: the nonempty case contradicts fn_pre=0 after opening its header representation; the empty case reduces cm_emit_functions to nil and app_nil_r makes the emitter predicates identical. Reassemble/cancel the unchanged resources."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_return_wit_2_split_goal_spatial": "Use the functions cons equation to expose the target list. Open the tail cm_function_list_rep into its existential body-address list and header/body resources, choose the extended body list bp::bs, and fold the cons header and body representations using the framed head context and statement. Cancel unchanged program and emitter resources."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose one disjunct, introduce pure premises and destruct functions. The nil branch contradicts fn<>0 from the header-list representation. In the cons branch reduce readiness to obtain the head descriptor equality with total lookup; open header and body lists, identify their shared body-address head/tail using bodies equations, choose actual bp and np, substitute the head descriptor, and repackage the remaining tail header/body lists as cm_function_list_rep. Retain the readiness and shape pure facts."
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_which_implies_wit_5",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose one disjunct and unfold cm_function_context_rep only. Extract its nonnull fact and existential parameter/local pointers; choose np=np_2, bp=bp_2 and those same lp,pp in the target. Cancel all five field cells, parameter/local lists, and framed statement/tail lists."
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_which_implies_wit_6",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the first disjunct, choose bp=bp_2 and unfold the target context representation. Supply fn<>0 and existential pp,lp from the current field resources. Cancel all field/list cells; retain the statement frame unchanged."
+        }
+      ]
+    },
+    {
+      "id": "transitions",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_functions_safety_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_safety_wit_2_split_goal_1": "Use PreH60 successor-PC equality and PreH61 cm_i32_code_count for successor PC; unfold representability, derive the upper bound, and discharge the pure assertion under the unchanged resource frame.",
+            "proof_of_cmc_emit_functions_safety_wit_2_split_goal_2": "Use the same equality/representability premises for nonnegativity and INT_MIN<=0; discharge the lower bound under the resource frame."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_safety_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_safety_wit_3_split_goal_1": "Unfold PreH58 cm_i32_code_count(fid_pre+1), select its upper bound, and discharge the pure assertion under the resource frame.",
+            "proof_of_cmc_emit_functions_safety_wit_3_split_goal_2": "Unfold PreH58, use its nonnegative lower bound and INT_MIN<=0, and discharge the pure assertion under the resource frame."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_partial_solve_wit_5_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_partial_solve_wit_5_pure_split_goal_1": "The exact functions cons equality is already a pure premise (PreH20/PreH47); introduce the pure consequent from that premise without consuming spatial resources."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_partial_solve_wit_10_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_partial_solve_wit_10_pure_split_goal_1": "Reduce cm_emit_functions_tail on the displayed cons; the requested cons equality is definitionally reflexive. Introduce that pure consequent under the current frame."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_which_implies_wit_4_split_goal_spatial": "Use the functions cons equation to rewrite the source emission model at its outer functions argument only, reduce one cm_emit_functions constructor, simplify tail observations, and reassociate list append. Pending code becomes head emission followed by tail emission and tail; the identical emitter assertion cancels."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_functions_which_implies_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_functions_which_implies_wit_7_split_goal_spatial": "Use the functions cons equation to rewrite the target emission model at its outer functions argument only, reduce one cm_emit_functions constructor, simplify tail observations, and reassociate append. Completed code becomes (done++head)++recursive-tail; cancel the identical emitter assertion."
+          }
+        }
+      ]
+    }
+  ]
+}

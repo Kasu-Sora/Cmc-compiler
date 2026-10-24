@@ -1,0 +1,97 @@
+{
+  "runtime_functions": 0,
+  "annotation": 0,
+  "specification": 0,
+  "source_top_level_proof_helpers": [
+    {
+      "name": "_cmc_compile_ready_axioms_before",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        4,
+        5
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static size_t _cmc_compile_ready_axioms_before =\n    vector_size(get_all_axioms());",
+      "sha256": "f91eaafde04094abd6f6d4832b16de71549ada129b7d8179bf6bfe0e701b7881"
+    },
+    {
+      "name": "cm_concrete_code_ready_def",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "definition",
+      "span": [
+        7,
+        10
+      ],
+      "nonblank_lines": 4,
+      "text": "PROOF thm cm_concrete_code_ready_def = new_fun_definition(\n    `cm_concrete_code_ready (p:cm_program) : bool =\n       (cm_concrete_structs_ready p &&\n        cm_concrete_functions_ready p 0i (cm_program_functions p))`);",
+      "sha256": "8480066a3c796df892c579f56dc46c43d081c92dd6113d48d68ea24c2e185fb6"
+    },
+    {
+      "name": "_e_cm_concrete_code_ready",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        11,
+        12
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static int _e_cm_concrete_code_ready =\n    cst_add_const_to_header(`cm_concrete_code_ready`);",
+      "sha256": "1e3a2ac913d81057bc09926d5966f69a08ff7060a5517a0a5bf6c2f988de40e1"
+    },
+    {
+      "name": "cm_prove_concrete_code_ready_from_wf",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "proof",
+      "span": [
+        14,
+        34
+      ],
+      "nonblank_lines": 21,
+      "text": "PROOF static thm cm_prove_concrete_code_ready_from_wf(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program).\n         cm_wf_program p ==> cm_concrete_code_ready p`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm wf = assume_rule(`cm_wf_program (p:cm_program)`);\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_wf_program_def(), get_cm_codegen_admissible_def())), wf);\n  thm typed = cm_pick_conjunct(opened,\n      `cm_typed_program (p:cm_program)`);\n  thm structs_ready = mp_rule(spec_rule(`p:cm_program`,\n      get_cmc_structs_ready_from_typed()), typed);\n  thm functions_ready = mp_rule(spec_rule(`p:cm_program`,\n      cm_concrete_functions_ready_from_wf), wf);\n  thm parts = conj_rule(structs_ready, functions_ready);\n  thm view = apply_conversion(rewrite_conv(THM_LIST(\n      cm_concrete_code_ready_def)),\n      `cm_concrete_code_ready (p:cm_program)`);\n  ACCEPT_TAC(leaf, eq_mp_rule(sym_rule(view), parts));\n  return gnode_prove(root);\n}",
+      "sha256": "226789b38b278abd040896ee6eb8bb30eee5f8bbde6eec1a9cf1ac8121c5e4be"
+    },
+    {
+      "name": "cm_concrete_code_ready_from_wf",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "proof",
+      "span": [
+        35,
+        36
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cm_concrete_code_ready_from_wf =\n    cm_prove_concrete_code_ready_from_wf();",
+      "sha256": "5b0cb322e3ada1203743d9aa45cbf755cecbbd5a80f60c3ed4a104bd3c56ba0d"
+    },
+    {
+      "name": "get_cm_concrete_code_ready_def",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "getter",
+      "span": [
+        38,
+        40
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cm_concrete_code_ready_def(void) {\n  return cm_concrete_code_ready_def;\n}",
+      "sha256": "b6195c9242fcdeaa62d60682cb82f7249bb45011a189b44bd2e5c9e9c0dc6673"
+    },
+    {
+      "name": "_cmc_compile_ready_no_axioms",
+      "file": "baseline/cmc_concrete_compile_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        42,
+        44
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF static int _cmc_compile_ready_no_axioms =\n    vector_size(get_all_axioms()) == _cmc_compile_ready_axioms_before\n        ? 1 : (abort(), 0);",
+      "sha256": "5aacb5faac7fcff463fcf1a0ec1819922ba9c04cfa6056194432f65d4e63d38a"
+    }
+  ],
+  "totals": {
+    "definition": 4,
+    "proof": 23,
+    "getter": 3,
+    "framework_scaffolding": 7
+  }
+}

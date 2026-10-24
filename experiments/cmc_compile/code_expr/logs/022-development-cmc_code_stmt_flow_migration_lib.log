@@ -1,0 +1,162 @@
+Chars 0 - 76 [Require~Export~SimpleC.EE.QCP_...] 1.29 secs (1.205u,0.073s)
+Chars 77 - 122 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 123 - 158 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 159 - 180 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 181 - 206 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 207 - 525 [Lemma~cm_s_init_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 526 - 532 [Proof.] 0. secs (0.u,0.s)
+Chars 534 - 717 [(intros~OK~[CODE~SAVED];~pose~...] 0.003 secs (0.003u,0.s)
+Chars 719 - 820 [(cbn[cm_sstart~cm_update_s];~r...] 0. secs (0.u,0.s)
+Chars 822 - 954 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 956 - 1089 [(cbn[cm_emit_stmt~cm_stmt_code...] 0. secs (0.u,0.s)
+Chars 1091 - 1182 [(repeat~rewrite~Zlength_app;~~...] 0.002 secs (0.002u,0.s)
+Chars 1184 - 1297 [(change~~~~(Zlength~~~~~~~(cm_...] 0. secs (0.u,0.s)
+Chars 1299 - 1461 [(unfold~cm_source_function_at,...] 0.008 secs (0.008u,0.s)
+Chars 1462 - 1466 [Qed.] 0.008 secs (0.008u,0.s)
+Chars 1467 - 1750 [Lemma~cm_s_if_layout_step~sp~a...] 0. secs (0.u,0.s)
+Chars 1751 - 1757 [Proof.] 0. secs (0.u,0.s)
+Chars 1759 - 1840 [(intros~[CODE~SAVED];~cm_code_...] 0. secs (0.u,0.s)
+Chars 1842 - 1974 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 1976 - 2166 [(cbn[cm_emit_stmt~cm_stmt_code...] 0.024 secs (0.023u,0.001s)
+Chars 2168 - 2280 [(unfold~cm_normal_cont_code;~r...] 0.046 secs (0.046u,0.s)
+Chars 2281 - 2285 [Qed.] 0.019 secs (0.019u,0.s)
+Chars 2286 - 2573 [Lemma~cm_s_while_layout_step~s...] 0. secs (0.u,0.s)
+Chars 2574 - 2580 [Proof.] 0. secs (0.u,0.s)
+Chars 2582 - 2746 [(intros~[CODE~SAVED];~pose~pro...] 0. secs (0.u,0.s)
+Chars 2748 - 2831 [(cm_code_stmt_reduce;~split;~~...] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_expr/build/Rocq/examples/QCP_demos_human/cmc_code_stmt_flow_migration_lib.v", line 26, characters 53-57:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+guard : cm_expr
+body : cm_stmt
+st : cm_src_state
+ks : list cm_frame
+ann : cm_annotation
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_stmt (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end match ann with
+               | CMAnnotation _ _ b _ _ _ _ _ => b
+               end match ann with
+                   | CMAnnotation _ _ _ c _ _ _ _ => c
+                   end (CMWhileS guard body) ++
+     cm_normal_cont_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_stmt_code_count (cm_source_function_policy sp) p fid
+          (CMWhileS guard body))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end match ann with
+           | CMAnnotation _ _ _ _ cs _ _ _ => cs
+           end)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end
+TAIL :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end +
+     cm_stmt_code_count (cm_source_function_policy sp) p fid
+       (CMWhileS guard body))
+    (cm_normal_cont_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_stmt_code_count (cm_source_function_policy sp) p fid
+          (CMWhileS guard body))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end match ann with
+           | CMAnnotation _ _ _ _ cs _ _ _ => cs
+           end)
+The term "CODE" has type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_stmt (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end match ann with
+               | CMAnnotation _ _ b _ _ _ _ _ => b
+               end match ann with
+                   | CMAnnotation _ _ _ c _ _ _ _ => c
+                   end (CMWhileS guard body) ++
+     cm_normal_cont_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_stmt_code_count (cm_source_function_policy sp) p fid
+          (CMWhileS guard body))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end match ann with
+           | CMAnnotation _ _ _ _ cs _ _ _ => cs
+           end)" while it is expected to have type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_rvalue (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end guard ++
+     [TVMInst TVMJzOp
+        (match ann with
+         | CMAnnotation pc _ _ _ _ _ _ _ => pc
+         end +
+         cm_stmt_code_count (cm_source_function_policy sp) p fid
+           (CMWhileS guard body))] ++
+     cm_emit_stmt (cm_source_function_policy sp) p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end + cm_rvalue_code_count (cm_source_function_policy sp) p fid guard +
+        1) match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_stmt_code_count (cm_source_function_policy sp) p fid
+          (CMWhileS guard body))
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end body ++
+     [TVMInst TVMJmpOp
+        match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end] ++
+     cm_normal_cont_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_stmt_code_count (cm_source_function_policy sp) p fid
+          (CMWhileS guard body))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end match ann with
+           | CMAnnotation _ _ _ _ cs _ _ _ => cs
+           end)".
+

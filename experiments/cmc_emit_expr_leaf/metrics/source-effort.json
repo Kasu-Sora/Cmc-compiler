@@ -1,0 +1,408 @@
+{
+  "source_sha256": "ca5391cbcb4c72498246c8bf6e244c89fb75d5d3c400e0e6313f25a12f508643",
+  "function_counts": [
+    {
+      "function": "cmc_const_immediate",
+      "source_span": [
+        9,
+        72
+      ],
+      "specification": 9,
+      "annotation": 0,
+      "inline_proof": 45
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "source_span": [
+        130,
+        220
+      ],
+      "specification": 24,
+      "annotation": 3,
+      "inline_proof": 52
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "source_span": [
+        240,
+        360
+      ],
+      "specification": 34,
+      "annotation": 6,
+      "inline_proof": 68
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "source_span": [
+        362,
+        420
+      ],
+      "specification": 22,
+      "annotation": 2,
+      "inline_proof": 25
+    },
+    {
+      "function": "cm_sizeof_value",
+      "source_span": [
+        438,
+        524
+      ],
+      "specification": 18,
+      "annotation": 2,
+      "inline_proof": 55
+    },
+    {
+      "function": "cm_type_size_value",
+      "source_span": [
+        526,
+        551
+      ],
+      "specification": 18,
+      "annotation": 3,
+      "inline_proof": 0
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "source_span": [
+        553,
+        652
+      ],
+      "specification": 30,
+      "annotation": 5,
+      "inline_proof": 54
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "source_span": [
+        699,
+        733
+      ],
+      "specification": 19,
+      "annotation": 3,
+      "inline_proof": 7
+    },
+    {
+      "function": "cm_member_offset_value_context",
+      "source_span": [
+        735,
+        844
+      ],
+      "specification": 21,
+      "annotation": 1,
+      "inline_proof": 80
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_leaf_code_shape",
+      "kind": "proof",
+      "span": [
+        75,
+        87
+      ],
+      "nonblank_lines": 13,
+      "text": "PROOF static thm cm_leaf_code_shape(const thm shape,\n                                    const thm lvalue_case) {\n  return by_rewrite(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       (if lvalue__pre == 0i\n        then cm_rcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e)\n        else cm_lcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e))`,\n      THM_LIST(cm_expr_code_for_def, lvalue_case,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def()));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_push_leaf_code_shape",
+      "kind": "proof",
+      "span": [
+        89,
+        98
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cm_push_leaf_code_shape(const thm shape,\n                                     const thm lvalue_case,\n                                     const term code) {\n  thm selected = cm_leaf_code_shape(shape, lvalue_case);\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code),\n      THM_LIST(shape, get_cm_emit_expr_pair_def(),\n        get_cm_rcode_of_def(), get_cm_lcode_of_def(),\n        get_cm_push_code_def(), lvalue_case)));\n}",
+      "dependencies": [
+        "cm_leaf_code_shape"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_getc_code_shape",
+      "kind": "proof",
+      "span": [
+        100,
+        109
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cm_getc_code_shape(const thm shape,\n                                    const thm lvalue_case,\n                                    const term code) {\n  thm selected = cm_leaf_code_shape(shape, lvalue_case);\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code),\n      THM_LIST(shape, get_cm_emit_expr_pair_def(),\n        get_cm_rcode_of_def(), get_cm_lcode_of_def(),\n        lvalue_case)));\n}",
+      "dependencies": [
+        "cm_leaf_code_shape"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_leaf_prepare_code",
+      "kind": "proof",
+      "span": [
+        111,
+        114
+      ],
+      "nonblank_lines": 4,
+      "text": "PROOF static void cm_leaf_prepare_code(const thm code_shape) {\n  substitute_st(code_shape);\n  rewrite_st(THM_LIST(get_theorem_by_name(\"APPEND\")));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_leaf_finish_code",
+      "kind": "proof",
+      "span": [
+        116,
+        128
+      ],
+      "nonblank_lines": 13,
+      "text": "PROOF static void cm_leaf_finish_code(const thm code_shape,\n                                      const int emitted) {\n  if (!emitted) {\n    substitute_st(sym_rule(ispec_rule(\n        `done:(tvm_inst)list`,\n        get_theorem_by_name(\"APPEND_NIL\"))));\n  }\n  thm prefix_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         (done:(tvm_inst)list) ++ code`,\n      sym_rule(code_shape)));\n  substitute_st(prefix_shape);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_leaf_string_address_bridge",
+      "kind": "proof",
+      "span": [
+        222,
+        238
+      ],
+      "nonblank_lines": 17,
+      "text": "PROOF static thm cm_leaf_string_address_bridge(void) {\n  thm typed = eqt_elim_rule(assume_rule(\n      `cm_typed_program (p:cm_program) <=> true`));\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  thm all_wf = conjunct1_rule(conjunct2_rule(opened));\n  thm concrete = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`,\n      `cm_program_globals (p:cm_program)`,\n      `cm_program_strings (p:cm_program)`, `sid:int`),\n      cm_rep_string_address_matches), all_wf);\n  return by_rewrite(\n      `cm_rep_string_address (cm_program_globals (p:cm_program))\n         (cm_program_strings p) (sid:int) ==\n       cm_string_address p sid`,\n      THM_LIST(concrete, get_cm_string_address_def()));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_leaf_type_size_bridge",
+      "kind": "proof",
+      "span": [
+        422,
+        436
+      ],
+      "nonblank_lines": 15,
+      "text": "PROOF static thm cm_leaf_type_size_bridge(void) {\n  thm typed = eqt_elim_rule(assume_rule(\n      `cm_typed_program (p:cm_program) <=> true`));\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  return mp_rule(mp_rule(mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`, `asked:cm_type`),\n      cm_rep_type_size_matches),\n      eqt_elim_rule(assume_rule(\n        `cm_type_code_wf (asked:cm_type) <=> true`))),\n      eqt_elim_rule(assume_rule(\n        `cm_type_refs (cm_program_structs (p:cm_program))\n          (asked:cm_type) <=> true`))),\n      conjunct1_rule(opened));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_member_value_facts_st",
+      "kind": "proof",
+      "span": [
+        654,
+        697
+      ],
+      "nonblank_lines": 44,
+      "text": "PROOF static void cm_add_member_value_facts_st(void) {\n  cm_add_count_facts(from_state_bool(\n      `cm_i32_code_count (base_ty__pre:int)`));\n  thm code_eq = assume_rule(\n      `(base_ty__pre:int) == cm_type_encode (base:cm_type)`);\n  thm type_wf = from_state_bool(\n      `cm_type_code_wf (base:cm_type)`);\n  thm valid = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_member_valid_def())), from_state_bool(\n        `cm_member_valid (p:cm_program) (base:cm_type)\n          (mid__pre:int)`));\n  thm pointer = conjunct1_rule(valid);\n  thm rest = conjunct2_rule(valid);\n  thm structure = conjunct1_rule(rest);\n  rest = conjunct2_rule(rest);\n  thm sid_nonnegative = conjunct1_rule(rest);\n  rest = conjunct2_rule(rest);\n  thm sid_upper = conjunct1_rule(rest);\n  rest = conjunct2_rule(rest);\n  thm mid_nonnegative = conjunct1_rule(rest);\n  thm sid_eq = match_mp_rule(match_mp_rule(match_mp_rule(\n      spec_rule(`base:cm_type`, cm_encoded_member_sid),\n      type_wf), pointer), structure);\n  thm threshold = mp_rule(spec_rule(\n      `base:cm_type`, cm_pointer_encode_threshold), type_wf);\n  thm encoded_threshold = eq_mp_rule(sym_rule(threshold), pointer);\n  add_fact_st(conv_rule(rewrite_conv(THM_LIST(\n      sym_rule(code_eq))), encoded_threshold));\n  add_fact_st(conv_rule(rewrite_conv(THM_LIST(\n      sym_rule(code_eq), sym_rule(sid_eq))), sid_nonnegative));\n  add_fact_st(sid_nonnegative);\n  add_fact_st(mid_nonnegative);\n  thm typed = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), from_state_bool(\n        `cm_typed_program (p:cm_program)`));\n  thm structs_wf = conjunct1_rule(typed);\n  thm selected = mp_rule(mp_rule(spec_rule(\n      `cm_struct_id (cm_pointee (base:cm_type))`, structs_wf),\n      sid_nonnegative), sid_upper);\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_struct_wf_def())), selected);\n  thm slots_wf = conjunct1_rule(conjunct2_rule(opened));\n  add_fact_st(eqt_intro_rule(slots_wf));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 195,
+    "annotation": 25,
+    "inline_proof": 386,
+    "private_case_proof_support": 126,
+    "case_proof": 512,
+    "proof_including_shared": 512
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_const_expr",
+      "kind": "where",
+      "span": [
+        175,
+        175
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "kind": "where",
+      "span": [
+        187,
+        187
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "kind": "where",
+      "span": [
+        188,
+        188
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "kind": "where",
+      "span": [
+        298,
+        299
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "kind": "where",
+      "span": [
+        300,
+        301
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "kind": "where",
+      "span": [
+        321,
+        321
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "kind": "where",
+      "span": [
+        322,
+        322
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "kind": "where",
+      "span": [
+        399,
+        399
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "kind": "where",
+      "span": [
+        400,
+        400
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_sizeof_value",
+      "kind": "where",
+      "span": [
+        505,
+        506
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_type_size_value",
+      "kind": "where",
+      "span": [
+        547,
+        547
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_type_size_value",
+      "kind": "where",
+      "span": [
+        548,
+        548
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_type_size_value",
+      "kind": "where",
+      "span": [
+        549,
+        549
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "kind": "where",
+      "span": [
+        599,
+        599
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "kind": "where",
+      "span": [
+        600,
+        600
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "kind": "where",
+      "span": [
+        601,
+        601
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "kind": "where",
+      "span": [
+        619,
+        619
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "kind": "where",
+      "span": [
+        620,
+        620
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "kind": "where",
+      "span": [
+        725,
+        725
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "kind": "where",
+      "span": [
+        726,
+        726
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "kind": "where",
+      "span": [
+        727,
+        727
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_member_offset_value_context",
+      "kind": "where",
+      "span": [
+        812,
+        812
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Eight same-file static PROOF declarations counted as private case support; new leaf-model and semantic size/address bridge closure inventoried separately."
+}

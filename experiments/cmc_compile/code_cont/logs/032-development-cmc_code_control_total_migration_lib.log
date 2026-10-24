@@ -1,0 +1,61 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.322 secs (1.237u,0.07s)
+Chars 79 - 124 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.011u,0.s)
+Chars 125 - 146 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 147 - 172 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 173 - 757 [Lemma~cm_c_phase_layout_step~s...] 0. secs (0.u,0.s)
+Chars 758 - 764 [Proof.] 0. secs (0.u,0.s)
+Chars 766 - 864 [(cbn~zeta;~intros~NE~READY~COD...] 0.034 secs (0.033u,0.001s)
+Chars 866 - 867 [-] 0. secs (0.u,0.s)
+Chars 868 - 905 [(eapply~cm_c_block_layout_step...] 0. secs (0.u,0.s)
+Chars 907 - 908 [-] 0. secs (0.u,0.s)
+Chars 909 - 944 [(eapply~cm_c_seq_layout_step;~...] 0. secs (0.u,0.s)
+Chars 946 - 947 [-] 0. secs (0.u,0.s)
+Chars 948 - 1085 [(unfold~cm_c_code_ready~in~COD...] 0. secs (0.u,0.s)
+Chars 1087 - 1088 [-] 0. secs (0.u,0.s)
+Chars 1089 - 1140 [(eapply~cm_c_call_layout_step;...] 0.003 secs (0.003u,0.s)
+Chars 1141 - 1145 [Qed.] 0.003 secs (0.003u,0.s)
+Chars 1146 - 1525 [Lemma~cm_c_task_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 1526 - 1532 [Proof.] 0. secs (0.u,0.s)
+Chars 1534 - 1668 [(destruct~ann~as~[pc~temp~b~c~...] 0. secs (0.u,0.s)
+Chars 1670 - 1758 [(unfold~cm_step,~cm_annotation...] 0. secs (0.u,0.s)
+Chars 1760 - 1845 [(apply~Z.eqb_neq~in~EXIT;~dest...] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_cont/build/Rocq/examples/QCP_demos_human/cmc_code_control_total_migration_lib.v", line 24, characters 82-83:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+ctl : cm_control
+st : cm_src_state
+pc, temp, b, c : Z
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+READY :
+  cm_c_layout_ready (cm_source_function_policy sp) ap p fid ctl
+    (CMAnnotation pc temp b c [] spills saved calls)
+LAYOUT :
+  cm_task_layout sp ap p (CMCTask p fid ctl st (cm_cursor_frames []))
+    (CMAnnotation pc temp b c [] spills saved calls)
+EXIT : cm_control_kind ctl <> 4
+The term "I" has type "True" while it is expected to have type
+ "cm_task_layout sp ap p
+    match cm_cursor_frames [] with
+    | [] =>
+        if cm_control_kind ctl =? 5
+        then CMDoneTask st ctl (cm_control_status ctl)
+        else CMDoneTask st (CMError 2) 2
+    | k :: rest => cm_capply sp p fid k ctl st rest
+    end
+    (cm_update_annotation
+       match
+         cm_ann_cursors (CMAnnotation pc temp b c [] spills saved calls)
+       with
+       | [] => CMAUpdate 0 (CMAnnotation pc temp b c [] spills saved calls)
+       | cursor :: _ =>
+           cm_update_c sp ap p fid ctl st
+             (CMAnnotation pc temp b c [] spills saved calls)
+             (cm_cursor_phase cursor)
+       end)".
+

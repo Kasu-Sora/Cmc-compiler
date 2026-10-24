@@ -1,0 +1,69 @@
+[
+  {
+    "name": "cm_emit_simple_expr",
+    "prototype": false,
+    "source_span": [
+      7,
+      96
+    ],
+    "specification": [
+      [
+        11,
+        14
+      ],
+      [
+        15,
+        38
+      ],
+      [
+        39,
+        62
+      ]
+    ],
+    "annotation": [
+      [
+        78,
+        78
+      ],
+      [
+        78,
+        78
+      ],
+      [
+        79,
+        79
+      ],
+      [
+        79,
+        79
+      ],
+      [
+        92,
+        92
+      ],
+      [
+        92,
+        92
+      ],
+      [
+        93,
+        93
+      ]
+    ],
+    "inline_proof": [
+      [
+        64,
+        64
+      ],
+      [
+        66,
+        77
+      ],
+      [
+        82,
+        91
+      ]
+    ],
+    "runtime": "void cm_emit_simple_expr(struct cm_program *program, int fid,\n                         struct cm_function *fn, int pc, int temp,\n                         struct cm_expr *expr, int lvalue,\n                         struct cm_emitter *emitter)\n{\n  if (expr->kind == CMC_EXPR_VAR) {\n    cm_emit_var_expr(program, fid, fn, pc, temp, expr, lvalue, emitter);\n  } else {\n    cm_emit_leaf_expr(program, fid, fn, pc, temp, expr, lvalue, emitter);\n  }\n}\n"
+  }
+]

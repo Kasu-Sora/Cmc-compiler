@@ -1,0 +1,10 @@
+- 迁移整文件时同时覆盖 static 递归数组函数和公开 wrapper。C* 文件级 static proof helpers 仍属于案例 proof，本例 150 行应与 303 行内嵌证明一起计费；公开尾列表观察定义单列。
+- resolved emitter 表示的是“存在 raw 物理数组，且 patch raw=resolved”。回填应从这个 raw 出发证明实际数组变为 resolved；不能把输入当成已经回填的数组，也不能无依据使用 patch 幂等。
+- CALL immediate 保持任意 signed64 域，直接复用 function-pc-total 的总查询契约；有效编号、非负编号或 raw=model-code 均不是原函数前提。空数组的内部契约也不应增加非空指针要求。
+- QCP 不能从 cm_rep_ops(raw) 与 cm_rep_imms(raw) 两个独立投影自动反推出隐藏 raw。可使用透明的相关数组表示，严格展开为原来的 IntArray.full ** Int64Array.full，让 raw 成为直接谓词参数；不能附加额外安全事实或改变所有权。
+- Assert 中引入的存在量不是后续 where 的词法变量。使用命名资源的参数匹配推断，避免在 wrapper 的 where 中引用 raw_prefix；内部递归尾部也应保留同一命名资源视图。
+- 指针位移按元素宽度核对：ops+1 与 imms+1 的生成义务分别含 sizeof(INT) 与 sizeof(INT64)。共享数组 lemma 和非空长度分支承担拆并证明，不能将两者都当作字节偏移 1。
+- 新增含分离逻辑断言的库需要显式接入标准 scope/import；本例首次 design 修复了 sac 未声明。将此类工具修复与 annotation 语义修复、proof 失败分别计数。
+- 数组头尾引理可只表达双数组资源的正反向 entailment，不增加程序有效性或指针非空前提。拆分使用 full_unfold/seg_to_full，合并使用 full_unfold/seg_0_shift；重排资源时显式 cancel 可解决默认匹配残留。两条引理的证明成本单列。
+- wrapper 的 capacity 上界由已拥有的 int 字段通过 store_int_range 推出，不作为新前提。恢复时复用 cm_patch_code_length，并保留 undef_seg 容量尾部。
+- 本例的 Intros 已提取纯事实，追加 Intros_p 会失败；项目 Zlength 不宜直接套用 nat map_length。局部投影长度归纳前清除无关依赖，避免归纳假设携带空间前提。此处短归纳计入案例 proof，不计作新增公共引理。

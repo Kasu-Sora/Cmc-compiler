@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "manual_sha256": "b8f43ba60eeda20d10c150327317d18d3007c4ab6312b1d2df35829bbdd83e24",
+  "lib_sha256": "e0ced4a68d5088341878df0b62c9f294816501f9b3c1529d249da66e472c7722",
+  "new_library_declarations": [
+    {
+      "kind": "From",
+      "name": "Coq",
+      "ending": null
+    },
+    {
+      "kind": "From",
+      "name": "SimpleC",
+      "ending": null
+    },
+    {
+      "kind": "Require",
+      "name": "Import",
+      "ending": null
+    },
+    {
+      "kind": "Import",
+      "name": "naive_C_Rules",
+      "ending": null
+    },
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "Import",
+      "name": "ListNotations",
+      "ending": null
+    },
+    {
+      "kind": "Open",
+      "name": "Scope",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_patch_tail",
+      "ending": null
+    },
+    {
+      "kind": "Open",
+      "name": "Scope",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_patch_arrays_rep",
+      "ending": null
+    },
+    {
+      "kind": "From",
+      "name": "Coq",
+      "ending": null
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_patch_arrays_open__array_open",
+      "ending": "Qed"
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_patch_arrays_cons__array_close",
+      "ending": "Qed"
+    }
+  ],
+  "no_new_manual_or_library_admitted_axiom_parameter": true,
+  "reused_dependencies_unchanged": true,
+  "prior_helper_function_proofs_imported": false,
+  "new_helper_review": {
+    "cm_patch_arrays_open__array_open": {
+      "review": "Unconditional resource entailment opens a cons instruction into int opcode and int64 immediate cells plus the exact correlated tails. Uses standard full_unfold/seg_to_full with sizeof(INT) and sizeof(INT64), preserving arbitrary base addresses and adding no pure premise.",
+      "sha256": "bfd49a680ba9e9bca7ad0d26749e29456e7b23801747fe31294bd28980b3d31f"
+    },
+    "cm_patch_arrays_cons__array_close": {
+      "review": "Reverse unconditional resource entailment joins the two head cells and shifted correlated tails into complete arrays for the cons instruction. Uses full_unfold/seg_0_shift and explicit resource cancellation; no program, validity, nonnull or numeric-range premise added.",
+      "sha256": "348f390a013bd6007feb39858c6e6bc20b8b1d8d0b06119c66b01317570231af"
+    }
+  },
+  "model_review": "Both annotation-stage transparent definitions retain their audited bytes: total tl and exactly IntArray.full ** Int64Array.full. Existing patch and resolved-emitter models remain unchanged.",
+  "manual_review": "Reviewed all 10 final proof regions: empty/nonempty split, CALL and non-CALL recursive reconstruction, resolved-view opening, physical emitter restoration and four parent routes. All regions end in Qed. Controller separately verified original statements, routes, imports, annotation seal and complete goal-check.",
+  "proof_regions": 10,
+  "support_mapping": {
+    "empty arrays": "Zero length forces raw=nil; patch nil is definitional. No nonnull precondition is introduced.",
+    "array opening": "Positive length rules out nil; destructed instruction gives exact head projections and total tail. New opening helper uses the respective 4/8-byte widths.",
+    "recursive returns": "Existing cm_patch_code_length preserves tail length. Opcode equality/inequality selects the existing cm_patch_inst branch. CALL writes the previously verified total PC result, without restricting arbitrary signed64 target; the new cons helper recombines both resources.",
+    "wrapper opening": "Unfolds existential raw, retains patch raw=resolved, derives the signed32 capacity bound from its owned int cell using store_int_range, and rebases segments at zero. Projection lengths are proved locally by list induction.",
+    "wrapper closing": "Uses patch length and projection lengths to restore original pc, fields, capacity and undef suffixes. Does not assume raw=resolved or patch idempotence.",
+    "program ownership": "Original wf/code-ready, complete program context and full function-list ownership are framed throughout; no weaker postcondition or extra input requirement."
+  },
+  "scope": "Two concrete CALL-patching implementation bodies with the established policy/cg parameterization; no new compiler preservation or TVM execution/termination theorem."
+}

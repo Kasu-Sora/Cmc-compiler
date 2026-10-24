@@ -1,0 +1,914 @@
+{
+  "source_sha256": "489f1988b63d9fe3e21326d5cfdaa706b33840a8dff5583766876f6f4fd04ec2",
+  "function_counts": [
+    {
+      "function": "cm_pointer_scale_value",
+      "source_span": [
+        66,
+        161
+      ],
+      "specification": 24,
+      "annotation": 4,
+      "inline_proof": 59
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "source_span": [
+        163,
+        229
+      ],
+      "specification": 36,
+      "annotation": 10,
+      "inline_proof": 12
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "source_span": [
+        231,
+        687
+      ],
+      "specification": 62,
+      "annotation": 75,
+      "inline_proof": 265
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_pointer_value_true",
+      "kind": "proof",
+      "span": [
+        8,
+        12
+      ],
+      "nonblank_lines": 5,
+      "text": "PROOF static thm cm_pointer_value_true(const term ty) {\n  return eq_mp_rule(conjunct2_rule(spec_rule(\n      ty, cm_pointer_code_value_cases)), assume_rule(\n        mk_not(mk_eq(mk_comb(`cm_pointer_code_value`, ty), `0i`))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_pointer_value_false",
+      "kind": "proof",
+      "span": [
+        14,
+        18
+      ],
+      "nonblank_lines": 5,
+      "text": "PROOF static thm cm_pointer_value_false(const term ty) {\n  return eq_mp_rule(conjunct1_rule(spec_rule(\n      ty, cm_pointer_code_value_cases)), assume_rule(\n        mk_eq(mk_comb(`cm_pointer_code_value`, ty), `0i`)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_binary_finish_shape2",
+      "kind": "proof",
+      "span": [
+        20,
+        30
+      ],
+      "nonblank_lines": 11,
+      "text": "PROOF static thm cm_binary_finish_shape2(\n    const term selected, const thm branch1, const thm branch2) {\n  return eqt_elim_rule(apply_conversion(rewrite_conv(THM_LIST(\n      get_cm_binary_finish_code_def(), branch1, branch2,\n      get_theorem_by_name(\"APPEND\"))),\n      mk_eq(\n        `cm_binary_finish_code (p:cm_program) (fid__pre:int)\n           (op__pre:int) (left_e:cm_expr) (right_e:cm_expr)\n           (temp__pre:int)`,\n        selected)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_binary_finish_shape3",
+      "kind": "proof",
+      "span": [
+        32,
+        43
+      ],
+      "nonblank_lines": 12,
+      "text": "PROOF static thm cm_binary_finish_shape3(\n    const term selected, const thm branch1, const thm branch2,\n    const thm branch3) {\n  return eqt_elim_rule(apply_conversion(rewrite_conv(THM_LIST(\n      get_cm_binary_finish_code_def(), branch1, branch2, branch3,\n      get_theorem_by_name(\"APPEND\"))),\n      mk_eq(\n        `cm_binary_finish_code (p:cm_program) (fid__pre:int)\n           (op__pre:int) (left_e:cm_expr) (right_e:cm_expr)\n           (temp__pre:int)`,\n        selected)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_binary_finish_shape4",
+      "kind": "proof",
+      "span": [
+        45,
+        56
+      ],
+      "nonblank_lines": 12,
+      "text": "PROOF static thm cm_binary_finish_shape4(\n    const term selected, const thm branch1, const thm branch2,\n    const thm branch3, const thm branch4) {\n  return eqt_elim_rule(apply_conversion(rewrite_conv(THM_LIST(\n      get_cm_binary_finish_code_def(), branch1, branch2, branch3,\n      branch4, get_theorem_by_name(\"APPEND\"))),\n      mk_eq(\n        `cm_binary_finish_code (p:cm_program) (fid__pre:int)\n           (op__pre:int) (left_e:cm_expr) (right_e:cm_expr)\n           (temp__pre:int)`,\n        selected)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_finish_selected_binary_st",
+      "kind": "proof",
+      "span": [
+        58,
+        64
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static void cm_finish_selected_binary_st(const thm code_shape) {\n  thm normalized = conv_rule(rewrite_conv(THM_LIST(\n      gsym_rule(get_theorem_by_name(\"APPEND_ASSOC\")),\n      get_theorem_by_name(\"APPEND\"),\n      get_theorem_by_name(\"APPEND_NIL\"))), code_shape);\n  cm_restore_code_plan_st(normalized);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 122,
+    "annotation": 89,
+    "inline_proof": 336,
+    "private_case_proof_support": 52,
+    "case_proof": 388,
+    "proof_including_shared": 388
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_pointer_scale_value",
+      "kind": "where",
+      "span": [
+        139,
+        139
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_pointer_scale_value",
+      "kind": "where",
+      "span": [
+        140,
+        141
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_pointer_scale_value",
+      "kind": "where",
+      "span": [
+        142,
+        142
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        206,
+        206
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        207,
+        207
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        208,
+        208
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        209,
+        209
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        210,
+        210
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        211,
+        211
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        217,
+        217
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        218,
+        218
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        221,
+        221
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "kind": "where",
+      "span": [
+        222,
+        222
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        328,
+        328
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        329,
+        329
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        330,
+        330
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        350,
+        350
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        351,
+        351
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        352,
+        352
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        353,
+        353
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        359,
+        359
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        360,
+        360
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        363,
+        363
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        364,
+        364
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        367,
+        367
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        368,
+        368
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        371,
+        371
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        372,
+        372
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        396,
+        396
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        397,
+        397
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        398,
+        398
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        419,
+        419
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        420,
+        420
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        421,
+        421
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        422,
+        422
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        425,
+        425
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        426,
+        426
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        429,
+        429
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        430,
+        430
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        433,
+        433
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        434,
+        434
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        437,
+        437
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        438,
+        438
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        463,
+        463
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        464,
+        464
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        465,
+        465
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        487,
+        487
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        488,
+        488
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        489,
+        489
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        490,
+        490
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        493,
+        493
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        494,
+        494
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        497,
+        497
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        498,
+        498
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        501,
+        501
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        502,
+        502
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        505,
+        505
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        506,
+        506
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        529,
+        529
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        530,
+        530
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        531,
+        531
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        553,
+        553
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        554,
+        554
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        555,
+        555
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        556,
+        556
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        559,
+        559
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        560,
+        560
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        563,
+        563
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        564,
+        564
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        567,
+        567
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        568,
+        568
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        571,
+        571
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        572,
+        572
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        606,
+        606
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        607,
+        607
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        608,
+        608
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        609,
+        609
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        610,
+        610
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        639,
+        639
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        640,
+        640
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        641,
+        641
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        642,
+        642
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        643,
+        643
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        668,
+        668
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        669,
+        669
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        670,
+        670
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        671,
+        671
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "kind": "where",
+      "span": [
+        672,
+        672
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines deduplicated per function/category; body contracts counted once; forward/header duplicates excluded. Same-file private proof support and source model definitions are classified separately; header duplicate contracts excluded."
+}

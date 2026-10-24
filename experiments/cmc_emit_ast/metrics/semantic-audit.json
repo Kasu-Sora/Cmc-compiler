@@ -1,0 +1,107 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cm_emit_binding_address",
+      "source_contract_sha256": "8c825679506919b92cb46d3e409a1eed0f3a7782d7e06799b84f889b8158db56",
+      "target_contract_sha256": "a22aea21471b1b0b31ca6e55b7929493d2cbdff16c871a7c13f98cf3d3dd6704",
+      "checks": [
+        "All ten source pure facts retained in pre/post, including complete parameterized cm_wf_program",
+        "Both full context ownership predicates preserved",
+        "Exact global/local/default address fragment appended to done",
+        "No new fid validity, range, offset or readiness premise"
+      ]
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "source_contract_sha256": "8e18f61a6fa5ff4afc371d15f417c41dbcb8448abdb7163629a208f768f23465",
+      "target_contract_sha256": "f1d79fdbde938bd573f0d2715e50b9d5442b6dbbd3722f8d54dd31cf98529d0e",
+      "checks": [
+        "All ten source pure facts retained in pre/post",
+        "Both full context ownership predicates preserved",
+        "Exact binding fragment consumed from todo and appended to done; arbitrary tail unchanged",
+        "Same existing lookup policy and cg obligations parameters"
+      ]
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_slots_prefix",
+      "kind": "Fixpoint",
+      "nonblank_lines": 7,
+      "sha256": "be1340e829aa6a3a84e79dd7c8e10c48de801f1d2f577ef53325c5f34300c841",
+      "source_declaration": "cm_slots_prefix_def"
+    },
+    {
+      "name": "cm_globals_prefix",
+      "kind": "Fixpoint",
+      "nonblank_lines": 7,
+      "sha256": "2af1f28e04d4014c9b485876176b4115aab220814583b147ac3381a5598276fc",
+      "source_declaration": "cm_globals_prefix_def"
+    },
+    {
+      "name": "cm_global_address",
+      "kind": "Definition",
+      "nonblank_lines": 2,
+      "sha256": "50985490083f2b627d4237e132c57e14956dd2b39efc321f68280895f1df817e",
+      "source_declaration": "cm_global_address_def"
+    },
+    {
+      "name": "cm_param_offset",
+      "kind": "Definition",
+      "nonblank_lines": 3,
+      "sha256": "2b72862ac6d7e3bcff2ece8f55c3d18afa397beb03317267590edd121acbe700",
+      "source_declaration": "cm_param_offset_def"
+    },
+    {
+      "name": "cm_local_offset",
+      "kind": "Definition",
+      "nonblank_lines": 5,
+      "sha256": "0ada3c153f19b7a0bb42ec847297c7f591c80921a2f038ad3f834b4d0775f66e",
+      "source_declaration": "cm_local_offset_def"
+    },
+    {
+      "name": "cm_push_code",
+      "kind": "Definition",
+      "nonblank_lines": 1,
+      "sha256": "bf987723106fc49e9cb8beba7a48587d92cca04fed6fe3ab26722e0cb387735e",
+      "source_declaration": "cm_push_code_def"
+    },
+    {
+      "name": "cm_binding_address_code",
+      "kind": "Definition",
+      "nonblank_lines": 5,
+      "sha256": "460b4dccdde620dfb82ce8381088d010e2ae13af31c051a021eea94f155890b7",
+      "source_declaration": "cm_binding_address_code_def"
+    }
+  ],
+  "model_review": [
+    "Prefixes recurse on lists at every Z index with equality-zero guard, including negatives",
+    "Global address 16+semantic globals prefix; params8+prefix; locals8+params size+prefix",
+    "Push singleton exact; binding code has original global/local/default branches",
+    "Prefix bridge premises match source wellformedness; existing size lemmas reused",
+    "Existing cm_binding_valid, total cm_lookup_policy and full cm_wf_program policy cg preserved"
+  ],
+  "adaptations": [
+    "Explicit inherited lookup policy and codegen-obligations parameters",
+    "Rocq Zlength / list app for ilength / ++",
+    "Five exact verified helper contracts reused; raw resolved memory and plan budget unchanged"
+  ],
+  "scope_boundary": "Concrete binding-address functions under existing logical patch view; four codegen obligations remain parameterized as in counts. No complete emitter semantics, physical CALL rewrite pass, TVM execution or compiler preservation claim.",
+  "review_method": "Manual source/target comparison and theorem review; hashes detect drift, not semantic equivalence.",
+  "final_verification": {
+    "run_id": "cmc_emit_ast_migration-20261017141940",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 2
+  },
+  "proof_audit": {
+    "manual_top_level": 9,
+    "proved_splits": 14,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 14,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

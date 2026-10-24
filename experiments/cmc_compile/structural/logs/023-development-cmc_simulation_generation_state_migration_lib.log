@@ -1,0 +1,89 @@
+1 goal
+  
+  sp : cm_source_lookup_policy
+  p : cm_program
+  fid, slot : Z
+  st : cm_src_state
+  B :
+    cm_first_dynamic_generation p <=
+    match st with
+    | CMState _ _ _ _ _ _ _ _ n _ => n
+    end
+  G :
+    forall slot : Z,
+    0 <= slot < Zlength (cm_program_globals p) ->
+    cm_value_generation_below
+      match st with
+      | CMState _ _ _ _ _ _ _ _ n _ => n
+      end (match st with
+           | CMState _ _ _ _ e _ _ _ _ _ => e
+           end 0 slot)
+  L :
+    forall slot : Z,
+    0 <= slot <
+    Zlength
+      (cm_function_locals
+         (cm_function_at (cm_source_function_policy sp) fid
+            (cm_program_functions p))) ->
+    cm_value_generation_below
+      match st with
+      | CMState _ _ _ _ _ _ _ _ n _ => n
+      end (match st with
+           | CMState _ _ _ _ e _ _ _ _ _ => e
+           end 1 slot)
+  A :
+    forall slot : Z,
+    0 <= slot <
+    Zlength
+      (cm_function_params
+         (cm_function_at (cm_source_function_policy sp) fid
+            (cm_program_functions p))) ->
+    cm_value_generation_below
+      match st with
+      | CMState _ _ _ _ _ _ _ _ n _ => n
+      end (match st with
+           | CMState _ _ _ _ e _ _ _ _ _ => e
+           end 2 slot)
+  T :
+    cm_tags_generation_below
+      match st with
+      | CMState _ _ _ _ _ _ _ _ n _ => n
+      end match st with
+          | CMState _ _ t _ _ _ _ _ _ _ => t
+          end
+  index : Z
+  H :
+    0 <= index <
+    Zlength
+      (cm_function_locals
+         (cm_function_at (cm_source_function_policy sp) fid
+            (cm_program_functions p)))
+  ============================
+  match
+    (if (1 =? 1) && true
+     then
+      CMPtrV match st with
+             | CMState _ _ _ _ _ _ _ _ n _ => n
+             end 0
+        (cm_slot_size (cm_program_structs p)
+           (cm_source_slot_at sp slot
+              (cm_function_locals (cm_source_function_at sp fid p)))) 0
+        (cm_slot_ty
+           (cm_source_slot_at sp slot
+              (cm_function_locals (cm_source_function_at sp fid p))))
+     else match st with
+          | CMState _ _ _ _ e _ _ _ _ _ => e
+          end 1 index)
+  with
+  | CMPtrV g _ _ _ _ =>
+      g < match st with
+          | CMState _ _ _ _ _ _ _ _ n _ => n
+          end + 1
+  | _ => True
+  end
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_generation_state_migration_lib.v", line 25, characters 0-4:
+Error:
+ (in proof cm_activate_local_generation): Attempt to save an incomplete proof
+(the proof term is not complete because of given up (admitted) goals).
+If this is really what you want to do, use Admitted in place of Qed.
+

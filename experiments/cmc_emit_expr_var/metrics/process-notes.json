@@ -1,0 +1,115 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "annotation_development": {
+    "attempts": 1,
+    "formal_case_lib_design_checks": 3,
+    "design_failures": 0,
+    "symexec_runs": 3,
+    "symexec_failures": 2,
+    "post_symexec_library_checks": 1,
+    "post_symexec_library_failures": 0,
+    "main_annotation_check_rounds": 1,
+    "main_annotation_status": "accepted",
+    "repairs": [
+      "Remove where binding to partial assertion existential outside scope; restore full contexts with bound witnesses",
+      "Equivalent lvalue inequalities prevent early substitution during plan matching"
+    ],
+    "runtime_or_contract_changes": false
+  },
+  "proof_development": {
+    "groups": {
+      "branch_plan_normalization": {
+        "development_runs": 2,
+        "development_failures": 1,
+        "debug_runs": 2,
+        "debug_failures": 1,
+        "exact_runs": 0,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Explicit beta/iota/zeta reduction before app_assoc",
+          "Debug import case lib"
+        ]
+      },
+      "return_reassembly": {
+        "development_runs": 0,
+        "development_failures": 0,
+        "debug_runs": 9,
+        "debug_failures": 6,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Debug model/strategy/list imports",
+          "Explicit boolean reduction",
+          "Expression projection name and reduction",
+          "Field-by-field resource cancellation"
+        ]
+      },
+      "representation_context": {
+        "development_runs": 7,
+        "development_failures": 6,
+        "debug_runs": 0,
+        "debug_failures": 0,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "development_diagnostic_show_runs": 2,
+        "repairs": [
+          "Remove redundant pure introductions after Intros",
+          "Destruct payload conjunction",
+          "Spatial/pure branch order",
+          "Sepcon associativity before cancellation"
+        ]
+      }
+    },
+    "owner_command_totals": {
+      "development_runs": 9,
+      "development_failures": 7,
+      "debug_runs": 11,
+      "debug_failures": 7,
+      "exact_runs": 2,
+      "exact_failures": 0,
+      "new_helpers": 0
+    },
+    "counts_note": "Owner-reported calls; controller exact acceptance checks separate. Includes two diagnostic Show development failures.",
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 3,
+    "accepted_group_attempts": {
+      "return_reassembly": 1,
+      "representation_context": 1,
+      "branch_plan_normalization": 1
+    }
+  },
+  "public_reuse": "AST transitive closure; layout binding_array, AST binding_address_plan, plan load contracts",
+  "vc_checking": {
+    "attempts": 1,
+    "top_level_scanned": 9,
+    "no_split_checked_first": 1,
+    "splits_reviewed": 9,
+    "definite_blockers": 0,
+    "owner_debug_checks": 0,
+    "owner_coq_checks": 0,
+    "owner_failures": 0,
+    "groups": 3,
+    "aggressive_top_level": 8,
+    "llm_top_level": 1
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 3,
+    "planned_groups": 3,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T07:35:36.086872Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-17T07:35:36.093820Z"
+  }
+}

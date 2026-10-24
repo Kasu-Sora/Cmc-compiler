@@ -1,0 +1,6 @@
+From SimpleC.EE.QCP_demos_human Require Import cmc_emit_function_migration_goal cmc_emit_function_migration_proof_auto cmc_emit_function_migration_proof_manual.
+
+Module VC_Correctness : VC_Correct.
+  Include cmc_emit_function_migration_proof_auto.
+  Include cmc_emit_function_migration_proof_manual.
+End VC_Correctness.

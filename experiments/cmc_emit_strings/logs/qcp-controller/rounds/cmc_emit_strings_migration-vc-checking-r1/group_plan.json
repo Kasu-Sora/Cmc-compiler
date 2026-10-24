@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "id": "string-node-opening",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_strings_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the framed disjunct and introduce the pre-state variables. Destruct strings: the empty representation supplies node_pre = 0, contradicting the nonnull guard. In the cons case unfold one layer of cm_string_list_rep, extract sourcep and nextp, and instantiate the four right-side existentials with those pointers and the actual head and tail. Unfold cm_rep_strings_safe and cm_rep_strings_size at cons; obtain tail safety and nonnegative tail size from the original safety conjunction, obtain head length nonnegativity from Zlength_nonneg and its equality by cm_rep_string_length, and normalize cm_rep_string_size to derive the capacity sum. Open cm_uint8_buffer by cases on the head bytes: for nil supply the empty-list disjunct of cmc_uint8_buffer_nonnull and the zero-length UCharArray.full from emp; for cons extract its existing nonnull fact and full array. Cancel the three node fields, source array, tail list, initialized prefix and undefined suffix without changing addresses."
+        }
+      ]
+    },
+    {
+      "id": "string-final-return",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_strings_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_strings_return_wit_1_split_goal_1": "Substitute strings = head :: tail and expand the cons equation of cm_rep_strings_size and cm_rep_string_size. The recursive-call return equality then entails the requested cursor equality by linear arithmetic; the spatial frame is only carried through.",
+            "proof_of_cmc_emit_strings_return_wit_1_split_goal_spatial": "Substitute strings = head :: tail, unfold its size and cm_strings_bytes once, and reassociate integer sums and list append to identify the recursive buffer endpoint and contents with the specified whole-list endpoint and prefix ++ (head bytes ++ [0] ++ tail bytes). Fold one layer of cm_string_list_rep at node_pre using the existing nonnull guard and existential sourcep,nextp. Convert UCharArray.full back to cm_uint8_buffer by cases on head bytes: empty bytes reduce to the empty array/emp, nonempty bytes use the retained cmc_uint8_buffer_nonnull premise. Cancel the restored node fields and tail list together with both unchanged buffer segments."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_strings_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_strings_return_wit_2_split_goal_1": "Substitute node_pre = 0 and destruct strings. A cons representation asserts node_pre <> 0 and yields contradiction. In the nil case cm_rep_strings_size is zero, so the pure return equation follows by arithmetic with all spatial resources framed.",
+            "proof_of_cmc_emit_strings_return_wit_2_split_goal_spatial": "Substitute node_pre = 0 and destruct strings, discharging the cons branch by the representation nonnull contradiction. For nil, reduce cm_rep_strings_size and cm_strings_bytes, rewrite prefix ++ [] and cursor_pre + 0, and cancel the unchanged empty-list representation, initialized prefix and undefined suffix."
+          }
+        }
+      ]
+    }
+  ]
+}

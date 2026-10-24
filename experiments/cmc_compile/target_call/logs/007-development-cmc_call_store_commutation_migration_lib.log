@@ -1,0 +1,32 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.325 secs (1.132u,0.11s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 124 - 145 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 146 - 171 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 172 - 310 [Lemma~cm_store_mem_raw_inside~...] 0. secs (0.u,0.s)
+Chars 311 - 317 [Proof.] 0. secs (0.u,0.s)
+Chars 319 - 582 [(intro~H;~destruct~ty;~cbn[cm_...] 0.013 secs (0.013u,0.s)
+Chars 583 - 587 [Qed.] 0.006 secs (0.006u,0.s)
+Chars 588 - 709 [Lemma~cm_store_mem_raw_outside...] 0. secs (0.u,0.s)
+Chars 710 - 716 [Proof.] 0. secs (0.u,0.s)
+Chars 718 - 979 [(intro~H;~destruct~ty;~cbn[cm_...] 0.031 secs (0.028u,0.001s)
+Chars 980 - 984 [Qed.] 0.168 secs (0.167u,0.s)
+Chars 985 - 1198 [Lemma~cm_store_mem_commutes_at...] 0. secs (0.u,0.s)
+Chars 1199 - 1205 [Proof.] 0. secs (0.u,0.s)
+Chars 1207 - 1327 [(unfold~cm_range_disjoint;~int...] 0. secs (0.u,0.s)
+Chars 1329 - 1330 [-] 0. secs (0.u,0.s)
+Chars 1331 - 1552 [(rewrite~cm_store_mem_raw_outs...] 0.002 secs (0.002u,0.s)
+Chars 1554 - 1555 [-] 0. secs (0.u,0.s)
+Chars 1556 - 1609 [(rewrite~!cm_store_mem_raw_out...] 0.002 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_call/build/Rocq/examples/QCP_demos_human/cmc_call_store_commutation_migration_lib.v", line 23, characters 44-55:
+Error:
+In environment
+ta, tb : cm_type
+a, b, va, vb : Z
+mem : Z -> Z
+x : Z
+DIS : a + cm_store_width ta <= b \/ b + cm_store_width tb <= a
+L : x < a
+H : x >= a + cm_store_width ta
+Unable to unify "cm_store_mem tb b vb (cm_store_mem ta a va mem) x" with
+ "cm_store_mem tb b vb mem x".
+

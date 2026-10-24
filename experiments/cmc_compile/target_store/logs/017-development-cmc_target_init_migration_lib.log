@@ -1,0 +1,609 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.382 secs (1.291u,0.077s)
+Chars 79 - 124 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 125 - 146 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 147 - 172 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 173 - 357 [Lemma~cm_store_address_valid~t...] 0. secs (0.u,0.s)
+Chars 358 - 364 [Proof.] 0. secs (0.u,0.s)
+Chars 366 - 534 [(unfold~cm_store_ok;~intro~OK;...] 0.003 secs (0.003u,0.s)
+Chars 535 - 539 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 540 - 767 [Lemma~cm_binding_local_number~...] 0. secs (0.u,0.s)
+Chars 768 - 774 [Proof.] 0. secs (0.u,0.s)
+Chars 776 - 927 [(unfold~cm_binding_address_ok;...] 0.029 secs (0.028u,0.001s)
+Chars 929 - 1011 [(cbn[Z.eqb];~unfold~cm_local_b...] 0.001 secs (0.001u,0.s)
+Chars 1012 - 1016 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 1017 - 1796 [Lemma~cm_target_v_init_step~sp...] 0. secs (0.u,0.s)
+Chars 1797 - 1803 [Proof.] 0. secs (0.u,0.s)
+Chars 1805 - 1887 [(cbn~zeta;~intros~RT~BIND~OK~[...] 0. secs (0.u,0.s)
+Chars 1889 - 1976 [(destruct~vm~as~[vpc~stack~vca...] 0. secs (0.u,0.s)
+Chars 1978 - 2078 [(destruct~SIM~as~[M~[P~[F~[C~[...] 0. secs (0.u,0.s)
+Chars 2080 - 2161 [(pose~proof~(cm_runtime_stack_...] 0. secs (0.u,0.s)
+Chars 2163 - 2274 [(pose~proof~(cm_store_address_...] 0. secs (0.u,0.s)
+Chars 2276 - 2482 [(cbn[cm_task_code~cm_cont_code...] 0. secs (0.u,0.s)
+Chars 2484 - 2552 [(unfold~cm_init_tail_code~in~C...] 0. secs (0.u,0.s)
+Chars 2554 - 2687 [(pose~proof~~~(cm_tvm_init_cod...] 0. secs (0.u,0.s)
+Chars 2689 - 2767 [(cbn[tvm_mem]~in~F;~~~rewrite~...] 0. secs (0.u,0.s)
+Chars 2769 - 2982 [(unfold~cm_target_step_result;...] 0. secs (0.u,0.s)
+Chars 2984 - 3524 [(change~~~~(p~=~p~/\~~~~~cm_ru...] 0. secs (0.u,0.s)
+Chars 3526 - 3634 [(unfold~cm_init_tail_code;~rew...] 0. secs (0.u,0.s)
+Chars 3636 - 3701 [(eapply~cm_machine_source_stor...] 0.008 secs (0.007u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_store/build/Rocq/examples/QCP_demos_human/cmc_target_init_migration_lib.v", line 40, characters 8-31:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+v : cm_value
+st : cm_src_state
+slot, pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+RT :
+  cm_runtime_core (cm_source_function_policy sp) ap p fid st
+    (CMAnnotation pc temp b c (CMACursor (CAInitP slot) owner ob oc :: tail)
+       spills saved calls)
+BIND : cm_binding_address_ok sp p fid 1 slot st = true
+OK :
+  cm_store_ok
+    (cm_slot_ty
+       (cm_source_slot_at sp slot
+          (cm_function_locals (cm_source_function_at sp fid p))))
+    (cm_state_env st 1 slot) st = true
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) pc
+    (cm_char_normalize_code
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p)))) ++
+     cm_fp_relative_address_code
+       (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+     cm_store_code
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p)))) ++
+     cm_cursor_code sp p fid
+       (pc +
+        Zlength
+          (cm_char_normalize_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p)))) ++
+           cm_fp_relative_address_code
+             (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+           cm_store_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))))
+       owner true tail)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    (cm_task_fid
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor (CAInitP slot) owner ob oc :: tail) spills
+                   saved calls)))))
+    (cm_ann_cursors
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+vcalls : list Z
+mem : Z -> Z
+input, output : list Z
+O :
+  tvm_output (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_output st
+I :
+  tvm_input (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_input st
+S :
+  cm_spill_frames_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+C :
+  cm_call_frames_sim
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+    (tvm_calls (TVMState pc [cm_value_number st v] vcalls mem input output))
+F : tower_getw mem 8 = cm_state_fp st
+P :
+  cm_stored_provenance_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+M :
+  cm_initialized_bytes_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+OLD :
+  cm_machine_state_sim (cm_source_function_policy sp) p st
+    (TVMState pc [cm_value_number st v] vcalls mem input output)
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+    [v] []
+MEMORY :
+  cm_runtime_memory_layout (cm_source_function_policy sp) p st
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved calls))
+    (CMSpillFrame fid (cm_state_fp st)
+       (cm_ann_spills
+          (CMAnnotation pc temp b c
+             (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved
+             calls))
+     :: cm_ann_saved
+          (CMAnnotation pc temp b c
+             (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved
+             calls))
+ADDR :
+  match
+    cm_slot_ty
+      (cm_source_slot_at sp slot
+         (cm_function_locals (cm_source_function_at sp fid p)))
+  with
+  | CMCharTy =>
+      tower_addr_valid
+        (tower_wrap64
+           (tower_getw
+              (tvm_mem
+                 (TVMState pc [cm_value_number st v] vcalls mem input output))
+              8 + cm_local_offset (cm_source_function_policy sp) p fid slot))
+  | _ =>
+      tower_word_valid
+        (tower_wrap64
+           (tower_getw
+              (tvm_mem
+                 (TVMState pc [cm_value_number st v] vcalls mem input output))
+              8 + cm_local_offset (cm_source_function_policy sp) p fid slot))
+  end
+EXEC :
+  tvm_iter
+    (cm_code_steps
+       (cm_char_normalize_code
+          (cm_slot_ty
+             (cm_source_slot_at sp slot
+                (cm_function_locals (cm_source_function_at sp fid p)))) ++
+        cm_fp_relative_address_code
+          (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+        cm_store_code
+          (cm_slot_ty
+             (cm_source_slot_at sp slot
+                (cm_function_locals (cm_source_function_at sp fid p))))))
+    (TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+       (TVMState pc [cm_value_number st v] vcalls mem input output)) =
+  TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+    (TVMState
+       (pc +
+        Zlength
+          (cm_char_normalize_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p)))) ++
+           cm_fp_relative_address_code
+             (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+           cm_store_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))))
+       [] vcalls
+       (cm_store_mem
+          (cm_slot_ty
+             (cm_source_slot_at sp slot
+                (cm_function_locals (cm_source_function_at sp fid p))))
+          (cm_value_number st (cm_state_env st 1 slot))
+          (cm_value_number st
+             (cm_convert_value st
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))
+                v)) mem) input output)
+Unable to unify
+ "cm_initialized_bytes_sim (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+    (tvm_mem
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656))) /\
+  cm_stored_provenance_sim (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+    (tvm_mem
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656))) /\
+  tower_getw
+    (tvm_mem
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656))) 8 =
+  cm_state_fp (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655) /\
+  cm_call_frames_sim
+    (tvm_mem
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656))) ?M2657
+    (tvm_calls
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656))) /\
+  cm_spill_frames_sim ?M2653 ?M2654
+    (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+    (tvm_mem
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656))) ?M2658 /\
+  tvm_input
+    (TVMState ?M2666
+       (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655) ?M2664 ++
+        ?M2665) (tvm_calls ?M2656)
+       (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+          (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+          (tvm_mem ?M2656)) (tvm_input ?M2656) (tvm_output ?M2656)) =
+  cm_state_input (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655) /\
+  tvm_output
+    (TVMState ?M2666
+       (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655) ?M2664 ++
+        ?M2665) (tvm_calls ?M2656)
+       (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+          (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+          (tvm_mem ?M2656)) (tvm_input ?M2656) (tvm_output ?M2656)) =
+  cm_state_output (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655) /\
+  cm_operand_suffix_sim (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655) 
+    ?M2664 ?M2665
+    (tvm_stack
+       (TVMState ?M2666
+          (cm_encode_values (cm_state_store ?M2661 ?M2662 ?M2663 ?M2655)
+             ?M2664 ++ ?M2665) (tvm_calls ?M2656)
+          (cm_store_mem ?M2661 (cm_value_number ?M2655 ?M2662)
+             (cm_value_number ?M2655 (cm_convert_value ?M2655 ?M2661 ?M2663))
+             (tvm_mem ?M2656)) (tvm_input ?M2656) 
+          (tvm_output ?M2656)))" with
+ "cm_initialized_bytes_sim
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st)
+    (tvm_mem
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output)) /\
+  cm_stored_provenance_sim
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st)
+    (tvm_mem
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output)) /\
+  tower_getw
+    (tvm_mem
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output)) 8 =
+  cm_state_fp
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st) /\
+  cm_call_frames_sim
+    (tvm_mem
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output))
+    (cm_ann_calls
+       (cm_ann_pop ap
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          (CMAnnotation pc temp b c
+             (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved
+             calls)))
+    (tvm_calls
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output)) /\
+  cm_spill_frames_sim (cm_source_function_policy sp) p
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st)
+    (tvm_mem
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output))
+    (cm_active_spill_frames fid
+       (cm_state_store
+          (cm_slot_ty
+             (cm_source_slot_at sp slot
+                (cm_function_locals (cm_source_function_at sp fid p))))
+          (cm_state_env st 1 slot) v st)
+       (cm_ann_pop ap
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          (CMAnnotation pc temp b c
+             (CMACursor (CAInitP slot) owner ob oc :: tail) spills saved
+             calls))) /\
+  tvm_input
+    (TVMState
+       (pc +
+        Zlength
+          (cm_char_normalize_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p)))) ++
+           cm_fp_relative_address_code
+             (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+           cm_store_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))))
+       [] vcalls
+       (cm_store_mem
+          (cm_slot_ty
+             (cm_source_slot_at sp slot
+                (cm_function_locals (cm_source_function_at sp fid p))))
+          (cm_value_number st (cm_state_env st 1 slot))
+          (cm_value_number st
+             (cm_convert_value st
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))
+                v)) mem) input output) =
+  cm_state_input
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st) /\
+  tvm_output
+    (TVMState
+       (pc +
+        Zlength
+          (cm_char_normalize_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p)))) ++
+           cm_fp_relative_address_code
+             (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+           cm_store_code
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))))
+       [] vcalls
+       (cm_store_mem
+          (cm_slot_ty
+             (cm_source_slot_at sp slot
+                (cm_function_locals (cm_source_function_at sp fid p))))
+          (cm_value_number st (cm_state_env st 1 slot))
+          (cm_value_number st
+             (cm_convert_value st
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))
+                v)) mem) input output) =
+  cm_state_output
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st) /\
+  cm_operand_suffix_sim
+    (cm_state_store
+       (cm_slot_ty
+          (cm_source_slot_at sp slot
+             (cm_function_locals (cm_source_function_at sp fid p))))
+       (cm_state_env st 1 slot) v st) [] []
+    (tvm_stack
+       (TVMState
+          (pc +
+           Zlength
+             (cm_char_normalize_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p)))) ++
+              cm_fp_relative_address_code
+                (cm_local_offset (cm_source_function_policy sp) p fid slot) ++
+              cm_store_code
+                (cm_slot_ty
+                   (cm_source_slot_at sp slot
+                      (cm_function_locals (cm_source_function_at sp fid p))))))
+          [] vcalls
+          (cm_store_mem
+             (cm_slot_ty
+                (cm_source_slot_at sp slot
+                   (cm_function_locals (cm_source_function_at sp fid p))))
+             (cm_value_number st (cm_state_env st 1 slot))
+             (cm_value_number st
+                (cm_convert_value st
+                   (cm_slot_ty
+                      (cm_source_slot_at sp slot
+                         (cm_function_locals (cm_source_function_at sp fid p))))
+                   v)) mem) input output))".
+

@@ -1,0 +1,75 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.294 secs (1.196u,0.094s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.013 secs (0.012u,0.s)
+Chars 124 - 145 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 146 - 171 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 172 - 280 [Lemma~cm_task_layout_done~sp~a...] 0. secs (0.u,0.s)
+Chars 281 - 287 [Proof.] 0. secs (0.u,0.s)
+Chars 288 - 296 [exact~I.] 0. secs (0.u,0.s)
+Chars 297 - 301 [Qed.] 0. secs (0.u,0.s)
+Chars 302 - 414 [Lemma~cm_task_layout_initial~s...] 0. secs (0.u,0.s)
+Chars 415 - 421 [Proof.] 0. secs (0.u,0.s)
+Chars 423 - 445 [(split;~[~~|~reflexivity~]).] 0. secs (0.u,0.s)
+Chars 447 - 722 [(unfold~cm_code_at;~exists~[],...] 0. secs (0.u,0.s)
+Chars 723 - 727 [Qed.] 0. secs (0.u,0.s)
+Chars 728 - 1124 [Lemma~cm_saved_layout_plain~sp...] 0. secs (0.u,0.s)
+Chars 1125 - 1131 [Proof.] 0. secs (0.u,0.s)
+Chars 1132 - 1144 [reflexivity.] 0. secs (0.u,0.s)
+Chars 1145 - 1149 [Qed.] 0. secs (0.u,0.s)
+Chars 1150 - 1303 [Lemma~cm_layout_rvalue_code_le...] 0. secs (0.u,0.s)
+Chars 1304 - 1310 [Proof.] 0. secs (0.u,0.s)
+Chars 1311 - 1388 [exact~(proj2~(cm_emit_pair_len...] 0. secs (0.u,0.s)
+Chars 1389 - 1393 [Qed.] 0. secs (0.u,0.s)
+Chars 1394 - 1547 [Lemma~cm_layout_lvalue_code_le...] 0. secs (0.u,0.s)
+Chars 1548 - 1554 [Proof.] 0. secs (0.u,0.s)
+Chars 1555 - 1632 [exact~(proj1~(cm_emit_pair_len...] 0. secs (0.u,0.s)
+Chars 1633 - 1637 [Qed.] 0. secs (0.u,0.s)
+Chars 1638 - 1699 [Lemma~cm_layout_load_length~ty...] 0. secs (0.u,0.s)
+Chars 1700 - 1706 [Proof.] 0. secs (0.u,0.s)
+Chars 1707 - 1732 [(destruct~ty;~reflexivity).] 0. secs (0.u,0.s)
+Chars 1733 - 1737 [Qed.] 0. secs (0.u,0.s)
+Chars 1738 - 1801 [Lemma~cm_layout_store_length~t...] 0. secs (0.u,0.s)
+Chars 1802 - 1808 [Proof.] 0. secs (0.u,0.s)
+Chars 1809 - 1834 [(destruct~ty;~reflexivity).] 0. secs (0.u,0.s)
+Chars 1835 - 1839 [Qed.] 0. secs (0.u,0.s)
+Chars 1840 - 1943 [Lemma~cm_layout_temp_store_len...] 0. secs (0.u,0.s)
+Chars 1944 - 1950 [Proof.] 0. secs (0.u,0.s)
+Chars 1951 - 1963 [reflexivity.] 0. secs (0.u,0.s)
+Chars 1964 - 1968 [Qed.] 0. secs (0.u,0.s)
+Chars 1969 - 2070 [Lemma~cm_layout_temp_load_leng...] 0. secs (0.u,0.s)
+Chars 2071 - 2077 [Proof.] 0. secs (0.u,0.s)
+Chars 2078 - 2090 [reflexivity.] 0. secs (0.u,0.s)
+Chars 2091 - 2095 [Qed.] 0. secs (0.u,0.s)
+Chars 2096 - 2202 [Lemma~cm_layout_char_normalize...] 0. secs (0.u,0.s)
+Chars 2203 - 2209 [Proof.] 0. secs (0.u,0.s)
+Chars 2210 - 2235 [(destruct~ty;~reflexivity).] 0. secs (0.u,0.s)
+Chars 2236 - 2240 [Qed.] 0. secs (0.u,0.s)
+Chars 2241 - 2388 [Lemma~cm_layout_param_store_le...] 0. secs (0.u,0.s)
+Chars 2389 - 2395 [Proof.] 0. secs (0.u,0.s)
+Chars 2396 - 2520 [(revert~slot;~induction~params...] 0. secs (0.u,0.s)
+Chars 2521 - 2548 [(repeat~rewrite~Zlength_app).] 0. secs (0.u,0.s)
+1 goal
+  
+  policy : cm_lookup_policy
+  p : cm_program
+  fid : Z
+  h : cm_slot_d
+  rest : list cm_slot_d
+  IH :
+    forall slot : Z,
+    Zlength (cm_emit_param_stores policy p fid slot rest) =
+    cm_param_stores_count rest
+  slot : Z
+  ============================
+  Zlength
+    (cm_emit_param_stores policy p fid (slot + 1) rest ++
+     cm_char_normalize_code (cm_slot_ty h) ++
+     cm_fp_relative_address_code (cm_param_offset policy p fid slot) ++
+     cm_store_code (cm_slot_ty h)) =
+  cm_param_stores_count rest + cm_char_normalize_count (cm_slot_ty h) + 5
+Chars 2549 - 2554 [Show.] 0. secs (0.u,0.s)
+Chars 2555 - 2717 [(rewrite~IH,~cm_layout_char_no...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_layout/build/Rocq/examples/QCP_demos_human/cmc_code_layout_facts_migration_lib.v", line 30, characters 166-231:
+Error: Found no subterm matching
+"Zlength (cm_emit_param_stores policy p fid ?M2535 rest)"
+in the current goal.
+

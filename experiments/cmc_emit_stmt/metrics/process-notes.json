@@ -1,0 +1,134 @@
+{
+  "status": "done; 27 groups, merged parent verification, final apply and final check passed",
+  "source_replay": {
+    "calls": 1,
+    "failed": 0
+  },
+  "annotation_observations": [
+    "Local which-implies existential names do not persist across annotations; owner is using transparent stmt constructor projections and retaining node fields/payload."
+  ],
+  "controller_infrastructure_retries": [
+    {
+      "group": "while_plan_transitions",
+      "command": "group-check",
+      "reason": "controller state changed during this command; stale whole-state write refused",
+      "repair": "Same owner retried exact bound command successfully; main delayed next finalize until completion",
+      "count": 1
+    }
+  ],
+  "orchestration_errors": [
+    {
+      "kind": "First group dispatch report-path transcription omitted run directory",
+      "count": 1,
+      "repair": "Immediately corrected path and resent exact controller handoff; owner uses authoritative handoff, no controller retry"
+    }
+  ],
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "annotation_owner_checks": [
+    {
+      "attempt": 1,
+      "design": {
+        "calls": 3,
+        "failed": 0
+      },
+      "symexec": {
+        "calls": 5,
+        "failed": 4
+      },
+      "post_library": {
+        "calls": 1,
+        "failed": 0
+      }
+    },
+    {
+      "attempt": 2,
+      "design": {
+        "calls": 2,
+        "failed": 0
+      },
+      "symexec": {
+        "calls": 2,
+        "failed": 1
+      },
+      "post_library": {
+        "calls": 1,
+        "failed": 0
+      }
+    }
+  ],
+  "observed_annotation_repairs": [
+    "Bind local existential logic names at each boundary.",
+    "Keep node fields and child payload in the same scope; use transparent stmt constructor projections.",
+    "Canonicalize the same count-return local cell using proved count equalities at six call boundaries.",
+    "Repair three accidentally renamed if-helper where keys; keep original guard_, yes_, no_ keys.",
+    "Repair six paired expansion/folding boundaries so unchanged parameter stack cells are preserved at both ends; fixing fold alone exposed loss at expansion (one symexec failure)."
+  ],
+  "dependency_preparation": {
+    "base_artifacts": 162,
+    "current_sources": 5,
+    "rebuilt": 0,
+    "coqdep_batches": 9,
+    "elapsed_seconds": 10.871499
+  },
+  "vc_checking": [
+    {
+      "round": 1,
+      "top_level": 122,
+      "splits": 280,
+      "no_split_checked": 10,
+      "definite_blockers": 6,
+      "debug_calls": 0,
+      "check_calls": 0,
+      "report": "rounds/cmc_emit_stmt_migration-vc-checking-r1/agent_output.md",
+      "reason": "Six no-split plan-folding goals require local stack cells only on RHS; repair internal left local support, preserve original BODY contract."
+    },
+    {
+      "round": 2,
+      "top_level": 120,
+      "splits": 296,
+      "no_split_checked": 4,
+      "definite_blockers": 0,
+      "debug_calls": 0,
+      "check_calls": 0,
+      "groups": 27,
+      "aggressive": 116,
+      "llm": 4,
+      "report": "rounds/cmc_emit_stmt_migration-vc-checking-r2/agent_output.md"
+    }
+  ],
+  "report_repairs": [
+    {
+      "attempt": "annotation-r2",
+      "count": 1,
+      "kind": "comparison fact_sources exact coverage did not match full premises_added/resources_changed strings; formal files unchanged"
+    }
+  ],
+  "dependency_preparation_round2": {
+    "base_artifacts": 162,
+    "current_sources": 5,
+    "rebuilt": 0,
+    "coqdep_batches": 9,
+    "elapsed_seconds": 10.548386
+  },
+  "group_finalizations": {
+    "calls": 27,
+    "accepted": 27,
+    "rejected": 0
+  },
+  "main_final_checks": {
+    "parent_verify": {
+      "calls": 1,
+      "failed": 0
+    },
+    "final_apply": {
+      "calls": 1,
+      "failed": 0
+    },
+    "final_check": {
+      "calls": 1,
+      "failed": 0
+    }
+  }
+}

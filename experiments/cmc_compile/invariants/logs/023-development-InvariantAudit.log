@@ -1,0 +1,486 @@
+AUDIT cmc_simulation_context_migration_lib.cm_task_context_initial
+cm_task_context_initial
+     : forall (p : cm_program) (input : list BinNums.Z),
+       cm_task_context_ready (CMStartTask p input) cm_initial_annotation
+Closed under the global context
+AUDIT cmc_simulation_context_migration_lib.cm_stmt_scope_context_ready
+cm_stmt_scope_context_ready
+     : forall (stmt : cm_stmt) (cursors : list cm_acursor),
+       cm_stmt_scope_ready (cm_cursors_loop_ready cursors)
+         (cm_cursors_call_ready cursors) stmt ->
+       cm_stmt_context_ready stmt cursors
+Closed under the global context
+AUDIT cmc_simulation_context_migration_lib.cm_stmt_wf_scope_ready
+cm_stmt_wf_scope_ready
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fn : cm_function_d) (loop : bool) (stmt : cm_stmt),
+       cm_stmt_wf policy p fn loop stmt -> cm_stmt_scope_ready loop true stmt
+Closed under the global context
+AUDIT cmc_simulation_context_migration_lib.cm_typed_body_scope_ready
+cm_typed_body_scope_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_stmt_scope_ready false true
+         (cm_function_body (cm_source_function_at sp fid p))
+Closed under the global context
+AUDIT cmc_simulation_context_migration_lib.cm_call_ok_scope_ready
+cm_call_ok_scope_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (st : cm_src_state),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_call_ok sp p fid values st = true ->
+       cm_stmt_scope_ready false true
+         (cm_function_body (cm_source_function_at sp fid p))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_stmt_scope_context_view
+cm_stmt_scope_context_view
+     : forall (loop call : bool) (stmt : cm_stmt),
+       cm_stmt_scope_ready loop call stmt ->
+       match stmt with
+       | CMBreakS | CMContinueS => loop = true
+       | CMReturnS _ => call = true
+       | _ => True
+       end
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_r_context_step
+cm_r_context_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_context_ready
+         (CMRTask p fid expr st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_context_ready
+         (cm_rstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_r sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_l_context_step
+cm_l_context_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_task_context_ready
+         (CMLTask p fid expr st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_context_ready
+         (cm_lstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_l sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_s_context_step
+cm_s_context_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (stmt : cm_stmt)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_task_context_ready
+         (CMSTask p fid stmt st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_context_ready
+         (cm_sstart sp p fid stmt st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_s sp ap p fid st ann stmt))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_v_context_step
+cm_v_context_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c pt pb pk : BinNums.Z) (rest : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase pt pb pk :: rest) spills
+           saved calls in
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_context_ready
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_context_ready
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_c_context_step
+cm_c_context_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c pt pb pk : BinNums.Z) (rest : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase pt pb pk :: rest) spills
+           saved calls in
+       cm_task_context_ready
+         (CMCTask p fid ctl st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_context_ready
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_task_context_step_coordinate
+cm_task_context_step_coordinate
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (task : cm_task) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_annotation_erases task ann ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p task ann ->
+       cm_task_context_ready task ann ->
+       cm_task_context_ready (cm_step sp task)
+         (cm_update_annotation (cm_annotation_step sp ap task ann))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_annotated_iter_context_coordinate
+cm_annotated_iter_context_coordinate
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (n : nat) (ast : cm_astate),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_annotation_erases (cm_astate_task ast) (cm_astate_annotation ast) /\
+       cm_annotation_rooted (cm_astate_annotation ast) ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p
+         (cm_astate_task ast) (cm_astate_annotation ast) ->
+       cm_task_context_ready (cm_astate_task ast) (cm_astate_annotation ast) ->
+       cm_task_context_ready (cm_astate_task (cm_annotated_iter sp ap n ast))
+         (cm_astate_annotation (cm_annotated_iter sp ap n ast))
+Closed under the global context
+AUDIT cmc_simulation_context_step_migration_lib.cm_annotated_start_iter_context
+cm_annotated_start_iter_context
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z) 
+         (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_task_context_ready
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+         (cm_astate_annotation
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_call_ok_fid_bounds
+cm_call_ok_fid_bounds
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (st : cm_src_state),
+       cm_call_ok sp p fid values st = true ->
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p))
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_r_fid_step
+cm_r_fid_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (expr : cm_expr) (st : cm_src_state)
+         (ks : list cm_frame),
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_frames_fid_ready p fid ks ->
+       cm_task_fid_ready p (cm_rstart sp p fid expr st ks) /\
+       cm_task_active_fid_ready p (cm_rstart sp p fid expr st ks)
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_l_fid_step
+cm_l_fid_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (expr : cm_expr) (st : cm_src_state)
+         (ks : list cm_frame),
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_frames_fid_ready p fid ks ->
+       cm_task_fid_ready p (cm_lstart sp p fid expr st ks) /\
+       cm_task_active_fid_ready p (cm_lstart sp p fid expr st ks)
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_s_fid_step
+cm_s_fid_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (stmt : cm_stmt) (st : cm_src_state)
+         (ks : list cm_frame),
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_frames_fid_ready p fid ks ->
+       cm_task_fid_ready p (cm_sstart sp p fid stmt st ks) /\
+       cm_task_active_fid_ready p (cm_sstart sp p fid stmt st ks)
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_v_fid_step
+cm_v_fid_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (frame : cm_frame) (v : cm_value)
+         (st : cm_src_state) (ks : list cm_frame),
+       cm_task_succeeds sp (cm_vapply sp p fid frame v st ks) ->
+       cm_frames_fid_ready p fid (frame :: ks) ->
+       cm_task_fid_ready p (cm_vapply sp p fid frame v st ks) /\
+       cm_task_active_fid_ready p (cm_vapply sp p fid frame v st ks)
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_c_fid_step
+cm_c_fid_step
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (frame : cm_frame) (ctl : cm_control)
+         (st : cm_src_state) (ks : list cm_frame),
+       cm_frames_fid_ready p fid (frame :: ks) ->
+       cm_task_fid_ready p (cm_capply sp p fid frame ctl st ks) /\
+       cm_task_active_fid_ready p (cm_capply sp p fid frame ctl st ks)
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_task_fid_step_coordinate
+cm_task_fid_step_coordinate
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (task : cm_task) (ann : cm_annotation),
+       cm_task_coordinate_ready (cm_source_function_policy sp) p task ann ->
+       cm_task_succeeds sp task ->
+       cm_task_fid_ready p task ->
+       cm_task_active_fid_ready p task ->
+       cm_task_fid_ready p (cm_step sp task) /\
+       cm_task_active_fid_ready p (cm_step sp task)
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_annotated_iter_fid_coordinate
+cm_annotated_iter_fid_coordinate
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (n : nat) (ast : cm_astate),
+       cm_task_succeeds sp (cm_astate_task ast) ->
+       cm_annotation_erases (cm_astate_task ast) (cm_astate_annotation ast) /\
+       cm_annotation_rooted (cm_astate_annotation ast) ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p
+         (cm_astate_task ast) (cm_astate_annotation ast) ->
+       cm_task_fid_ready p (cm_astate_task ast) /\
+       cm_task_active_fid_ready p (cm_astate_task ast) ->
+       cm_task_fid_ready p (cm_astate_task (cm_annotated_iter sp ap n ast)) /\
+       cm_task_active_fid_ready p
+         (cm_astate_task (cm_annotated_iter sp ap n ast))
+Closed under the global context
+AUDIT cmc_simulation_fid_migration_lib.cm_annotated_start_iter_fid_ready
+cm_annotated_start_iter_fid_ready
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z) 
+         (n : nat),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_task_fid_ready p
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input))) /\
+       cm_task_active_fid_ready p
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_spill_holds_remove_other
+cm_spill_holds_remove_other
+     : forall (slot other : BinNums.Z) (value : cm_value)
+         (spills : list cm_spill),
+       other <> slot ->
+       cm_spill_holds other value spills ->
+       cm_spill_holds other value (cm_spill_remove slot spills)
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_spill_holds_put_other
+cm_spill_holds_put_other
+     : forall (slot : BinNums.Z) (new_value : cm_value) 
+         (other : BinNums.Z) (value : cm_value) (spills : list cm_spill),
+       other <> slot ->
+       cm_spill_holds other value spills ->
+       cm_spill_holds other value (cm_spill_put slot new_value spills)
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_staged_spills_put_above
+cm_staged_spills_put_above
+     : forall (base : BinNums.Z) (values : list cm_value)
+         (spills : list cm_spill) (slot : BinNums.Z) 
+         (v : cm_value),
+       cm_staged_spills base values spills ->
+       BinInt.Z.le (BinInt.Z.add base (Zcomplements.Zlength values)) slot ->
+       cm_staged_spills base values (cm_spill_put slot v spills)
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_owner_bound
+cm_phase_spill_consistent_owner_bound
+     : forall (phase : cm_aphase) (limit owner : BinNums.Z)
+         (spills : list cm_spill),
+       cm_phase_is_call phase = false ->
+       cm_phase_spill_consistent limit owner phase spills ->
+       BinInt.Z.le owner limit
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_put_above
+cm_phase_spill_consistent_put_above
+     : forall (limit owner : BinNums.Z) (phase : cm_aphase)
+         (spills : list cm_spill) (slot : BinNums.Z) 
+         (v : cm_value),
+       cm_phase_spill_consistent limit owner phase spills ->
+       BinInt.Z.le limit slot ->
+       cm_phase_spill_consistent limit owner phase
+         (cm_spill_put slot v spills)
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_put_above
+cm_cursors_spill_consistent_put_above
+     : forall (ap : cm_annotation_policy) (cursors : list cm_acursor)
+         (limit : BinNums.Z) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (slot : BinNums.Z) 
+         (v : cm_value),
+       cm_cursors_spill_consistent ap limit cursors spills saved ->
+       BinInt.Z.le limit slot ->
+       cm_cursors_spill_consistent ap limit cursors
+         (cm_spill_put slot v spills) saved
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_annotation_spill_consistent_initial
+cm_annotation_spill_consistent_initial
+     : forall ap : cm_annotation_policy,
+       cm_annotation_spill_consistent ap cm_initial_annotation
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_limit
+cm_phase_spill_consistent_limit
+     : forall (limit upper owner : BinNums.Z) (phase : cm_aphase)
+         (spills : list cm_spill),
+       BinInt.Z.le limit upper ->
+       cm_phase_spill_consistent limit owner phase spills ->
+       cm_phase_spill_consistent upper owner phase spills
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_limit
+cm_cursors_spill_consistent_limit
+     : forall (ap : cm_annotation_policy) (limit upper : BinNums.Z)
+         (cursors : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame),
+       BinInt.Z.le limit upper ->
+       cm_cursors_spill_consistent ap limit cursors spills saved ->
+       cm_cursors_spill_consistent ap upper cursors spills saved
+Closed under the global context
+AUDIT cmc_simulation_spill_migration_lib.cm_staged_spills_cons
+cm_staged_spills_cons
+     : forall (base : BinNums.Z) (values : list cm_value)
+         (spills : list cm_spill) (v : cm_value),
+       cm_staged_spills base values spills ->
+       cm_staged_spills base (v :: values)
+         (cm_spill_put (BinInt.Z.add base (Zcomplements.Zlength values)) v
+            spills)
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_done_error_not_succeeds
+cm_done_error_not_succeeds
+     : forall (sp : cm_source_lookup_policy) (st : cm_src_state)
+         (error status : BinNums.Z),
+       ~ cm_task_succeeds sp (CMDoneTask st (CMError error) status)
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_error_not_succeeds
+cm_error_not_succeeds
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (st : cm_src_state) (error : BinNums.Z)
+         (ks : list cm_frame),
+       ~ cm_task_succeeds sp (CMCTask p fid (CMError error) st ks)
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_update_r_spill_consistent
+cm_update_r_spill_consistent
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_spill_consistent ap ann ->
+       cm_annotation_spill_consistent ap
+         (cm_update_annotation (cm_update_r sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_update_l_spill_consistent
+cm_update_l_spill_consistent
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_spill_consistent ap ann ->
+       cm_annotation_spill_consistent ap
+         (cm_update_annotation (cm_update_l sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_update_s_spill_consistent
+cm_update_s_spill_consistent
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (stmt : cm_stmt)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_spill_consistent ap ann ->
+       cm_annotation_spill_consistent ap
+         (cm_update_annotation (cm_update_s sp ap p fid st ann stmt))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_update_v_spill_coordinate
+cm_update_v_spill_coordinate
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c pt pb pk : BinNums.Z) (rest : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase pt pb pk :: rest) spills
+           saved calls in
+       cm_phase_is_call phase = false ->
+       cm_annotation_child_ready (cm_source_function_policy sp) p fid ann ->
+       cm_annotation_spill_consistent ap ann ->
+       cm_annotation_spill_consistent ap
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_update_c_spill_consistent
+cm_update_c_spill_consistent
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp b c pt pb pk : BinNums.Z) (rest : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase pt pb pk :: rest) spills
+           saved calls in
+       cm_annotation_spill_consistent ap ann ->
+       cm_annotation_spill_consistent ap
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_annotation_step_spill_coordinate
+cm_annotation_step_spill_coordinate
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (task : cm_task) (ann : cm_annotation),
+       cm_task_succeeds sp task ->
+       cm_annotation_erases task ann ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p task ann ->
+       cm_annotation_spill_consistent ap ann ->
+       cm_annotation_spill_consistent ap
+         (cm_update_annotation (cm_annotation_step sp ap task ann))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_annotated_iter_spill_coordinate
+cm_annotated_iter_spill_coordinate
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (n : nat) (ast : cm_astate),
+       cm_task_succeeds sp (cm_astate_task ast) ->
+       cm_annotation_erases (cm_astate_task ast) (cm_astate_annotation ast) /\
+       cm_annotation_rooted (cm_astate_annotation ast) ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p
+         (cm_astate_task ast) (cm_astate_annotation ast) ->
+       cm_annotation_spill_consistent ap (cm_astate_annotation ast) ->
+       cm_annotation_spill_consistent ap
+         (cm_astate_annotation (cm_annotated_iter sp ap n ast))
+Closed under the global context
+AUDIT cmc_simulation_spill_update_migration_lib.cm_annotated_start_iter_spill_consistent
+cm_annotated_start_iter_spill_consistent
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z) 
+         (n : nat),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_annotation_spill_consistent ap
+         (cm_astate_annotation
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Closed under the global context
+AUDIT cmc_simulation_support_invariants_migration_lib.cm_control_support_initial
+cm_control_support_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_control_support_invariants sp ap p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Closed under the global context
+AUDIT cmc_simulation_support_invariants_migration_lib.cm_control_support_step
+cm_control_support_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_control_support_invariants sp ap p ast ->
+       cm_control_support_invariants sp ap p (cm_annotated_step sp ap ast)
+Closed under the global context
+AUDIT cmc_simulation_support_invariants_migration_lib.cm_control_support_iter
+cm_control_support_iter
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (n : nat) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_control_support_invariants sp ap p ast ->
+       cm_control_support_invariants sp ap p (cm_annotated_iter sp ap n ast)
+Closed under the global context
+AUDIT cmc_simulation_support_invariants_migration_lib.cm_source_termination_support_invariants
+cm_source_termination_support_invariants
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_control_support_invariants sp ap p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Closed under the global context

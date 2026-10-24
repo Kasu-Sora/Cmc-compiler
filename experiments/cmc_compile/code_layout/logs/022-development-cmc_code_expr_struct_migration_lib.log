@@ -1,0 +1,167 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.578 secs (1.248u,0.139s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.013 secs (0.011u,0.001s)
+Chars 124 - 159 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 160 - 181 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 182 - 207 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 208 - 743 [Ltac~~cm_code_expr_reduce~:=~~...] 0. secs (0.u,0.s)
+Chars 744 - 1012 [Lemma~cm_r_putc_layout_step~sp...] 0.001 secs (0.u,0.s)
+Chars 1013 - 1019 [Proof.] 0. secs (0.u,0.s)
+Chars 1021 - 1102 [(intros~[CODE~SAVED];~cm_code_...] 0. secs (0.u,0.s)
+Chars 1104 - 1236 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 1238 - 1277 [(unfold~cm_emit_rvalue,~cm_exp...] 0. secs (0.u,0.s)
+Chars 1279 - 1407 [(cbn[Z.eqb~cm_emit_rvalue~cm_e...] 0. secs (0.u,0.s)
+Chars 1409 - 1436 [(repeat~rewrite~<-~app_assoc).] 0. secs (0.u,0.s)
+Chars 1438 - 1448 [(cbn[orb]).] 0. secs (0.u,0.s)
+Chars 1450 - 1515 [(change~(Zlength~[TVMInst~TVMD...] 0. secs (0.u,0.s)
+Chars 1517 - 1544 [(repeat~rewrite~Z.add_assoc).] 0. secs (0.u,0.s)
+Chars 1546 - 1558 [reflexivity.] 0. secs (0.u,0.s)
+Chars 1559 - 1563 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 1564 - 1832 [Lemma~cm_r_puti_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 1833 - 1839 [Proof.] 0. secs (0.u,0.s)
+Chars 1841 - 1922 [(intros~[CODE~SAVED];~cm_code_...] 0. secs (0.u,0.s)
+Chars 1924 - 2056 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 2058 - 2097 [(unfold~cm_emit_rvalue,~cm_exp...] 0. secs (0.u,0.s)
+Chars 2099 - 2227 [(cbn[Z.eqb~cm_emit_rvalue~cm_e...] 0. secs (0.u,0.s)
+Chars 2229 - 2256 [(repeat~rewrite~<-~app_assoc).] 0. secs (0.u,0.s)
+Chars 2258 - 2268 [(cbn[orb]).] 0. secs (0.u,0.s)
+Chars 2270 - 2335 [(change~(Zlength~[TVMInst~TVMD...] 0. secs (0.u,0.s)
+Chars 2337 - 2364 [(repeat~rewrite~Z.add_assoc).] 0. secs (0.u,0.s)
+Chars 2366 - 2378 [reflexivity.] 0. secs (0.u,0.s)
+Chars 2379 - 2383 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 2384 - 2652 [Lemma~cm_r_exit_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 2653 - 2659 [Proof.] 0. secs (0.u,0.s)
+Chars 2661 - 2742 [(intros~[CODE~SAVED];~cm_code_...] 0. secs (0.u,0.s)
+Chars 2744 - 2781 [(apply~cm_code_at_append_left~...] 0. secs (0.u,0.s)
+Chars 2783 - 2801 [(rewrite~app_nil_r).] 0. secs (0.u,0.s)
+Chars 2803 - 2814 [exact~CODE.] 0. secs (0.u,0.s)
+Chars 2815 - 2819 [Qed.] 0. secs (0.u,0.s)
+Chars 2820 - 3120 [Lemma~cm_r_index_layout_step~s...] 0. secs (0.u,0.s)
+Chars 3121 - 3127 [Proof.] 0. secs (0.u,0.s)
+Chars 3129 - 3210 [(intros~[CODE~SAVED];~cm_code_...] 0. secs (0.u,0.s)
+Chars 3212 - 3344 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 3346 - 3400 [(unfold~cm_emit_rvalue,~cm_emi...] 0. secs (0.u,0.s)
+Chars 3402 - 3548 [(cbn[Z.eqb~cm_emit_expr_pair~c...] 0. secs (0.u,0.s)
+Chars 3550 - 3649 [(rewrite~cm_layout_load_length...] 0.008 secs (0.008u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_layout/build/Rocq/examples/QCP_demos_human/cmc_code_expr_struct_migration_lib.v", line 44, characters 88-99:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+base, index : cm_expr
+ty : cm_type
+st : cm_src_state
+ks : list cm_frame
+ann : cm_annotation
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_rvalue (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end (CMIndexE base index ty) ++
+     cm_cursor_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_rvalue_code_count (cm_source_function_policy sp) p fid
+          (CMIndexE base index ty))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end false match ann with
+                 | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                 end)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end
+Unable to unify
+ "cm_rcode_of
+    (cm_emit_expr_pair (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end base) ++
+  cm_temp_store_code (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end ++
+  cm_rcode_of
+    (cm_emit_expr_pair (cm_source_function_policy sp) p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end + cm_rvalue_code_count (cm_source_function_policy sp) p fid base +
+        5) (match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end + 1) index) ++
+  [TVMInst TVMPushOp (cm_type_size (cm_program_structs p) ty);
+   TVMInst TVMMulOp 0] ++
+  cm_temp_load_code (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end ++
+  [TVMInst TVMAddOp 0] ++
+  cm_load_code ty ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end +
+     cm_rcount_of
+       (cm_expr_code_counts (cm_source_function_policy sp) p fid base) +
+     cm_rcount_of
+       (cm_expr_code_counts (cm_source_function_policy sp) p fid index) + 13 +
+     1) match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end false match ann with
+                  | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                  end" with
+ "cm_rcode_of
+    (cm_emit_expr_pair (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end base) ++
+  cm_temp_store_code (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end ++
+  cm_rcode_of
+    (cm_emit_expr_pair (cm_source_function_policy sp) p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end + cm_rvalue_code_count (cm_source_function_policy sp) p fid base +
+        5) (match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end + 1) index) ++
+  [TVMInst TVMPushOp (cm_type_size (cm_program_structs p) ty);
+   TVMInst TVMMulOp 0] ++
+  cm_temp_load_code (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end ++
+  [TVMInst TVMAddOp 0] ++
+  cm_load_code ty ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end +
+     cm_rcount_of
+       (cm_expr_code_counts (cm_source_function_policy sp) p fid base) +
+     cm_rcount_of
+       (cm_expr_code_counts (cm_source_function_policy sp) p fid index) + 14)
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end false match ann with
+              | CMAnnotation _ _ _ _ cs _ _ _ => cs
+              end".
+

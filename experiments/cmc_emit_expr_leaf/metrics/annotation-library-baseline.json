@@ -1,0 +1,186 @@
+[
+  {
+    "name": "Coq",
+    "kind": "From",
+    "nonblank_lines": 1,
+    "sha256": "4e83284ecd791e5422ae916d99fb516e12c0e6c2aecc1d7318ffc1a6f0c97ebf"
+  },
+  {
+    "name": "AUXLib",
+    "kind": "From",
+    "nonblank_lines": 1,
+    "sha256": "0895c983338bd9a294f5f2b0741b78f331ca952168adb736ca6e52a9f6d951b5"
+  },
+  {
+    "name": "Export",
+    "kind": "Require",
+    "nonblank_lines": 1,
+    "sha256": "0634261fb41064420961b29cc9f2fd7b18cd57a49e464f7be8bebea8288e68ae"
+  },
+  {
+    "name": "ListNotations",
+    "kind": "Import",
+    "nonblank_lines": 1,
+    "sha256": "ffe54fddf0260d17dad48746d70a49ec0b516227b23710e669d335131daa5cd8"
+  },
+  {
+    "name": "Scope",
+    "kind": "Open",
+    "nonblank_lines": 1,
+    "sha256": "13742437f8b904ab5b42173e649b525fed82d650d7d284fbce95103430be846e"
+  },
+  {
+    "name": "cm_const_immediate",
+    "kind": "Definition",
+    "nonblank_lines": 2,
+    "sha256": "ba18ccaab10699942a5595b03e1fd1acd1e8612694727a184395bc73ae4e3c77",
+    "source_declaration": "cm_const_immediate_def"
+  },
+  {
+    "name": "cm_strings_prefix",
+    "kind": "Definition",
+    "nonblank_lines": 1,
+    "sha256": "623dfba04ca21b6b9434cd6f47caa2333a389c07983bdb2adcbc4b791aed1ae0",
+    "source_declaration": "cm_strings_prefix_def"
+  },
+  {
+    "name": "cm_string_address",
+    "kind": "Definition",
+    "nonblank_lines": 3,
+    "sha256": "dbfa24820e1a86b57e4763c292ed860dd1c71ea44af5e6a06d1561a4d03368b3",
+    "source_declaration": "cm_string_address_def"
+  },
+  {
+    "name": "cm_member_offset_slots",
+    "kind": "Fixpoint",
+    "nonblank_lines": 4,
+    "sha256": "f1f66c46645dc77e24de7f610090fc2b471b865a0bebe23093ff84766a8255d5",
+    "source_declaration": "cm_member_offset_slots_def"
+  },
+  {
+    "name": "cm_member_offset",
+    "kind": "Definition",
+    "nonblank_lines": 3,
+    "sha256": "d0e7a9192ad3ba113379272f3c6b305878235a8f2baf199c63ec28e21c59a2b8",
+    "source_declaration": "cm_member_offset_def"
+  },
+  {
+    "name": "cm_leaf_expr",
+    "kind": "Inductive",
+    "nonblank_lines": 5,
+    "sha256": "8036fb77b36c6b9a2962f66a0e2809559508c95a152268b4de22336fee0d58ed",
+    "source_declaration": "Typed four-constructor restriction adapter; no general emitter claim"
+  },
+  {
+    "name": "cm_leaf_source_expr",
+    "kind": "Definition",
+    "nonblank_lines": 3,
+    "sha256": "f2de2f34cb79679526d726015f4d9731107cd08a1b28db369cff35cb5692b5f1",
+    "source_declaration": "Embedding into existing cm_expr constructors"
+  },
+  {
+    "name": "cm_leaf_of_expr",
+    "kind": "Definition",
+    "nonblank_lines": 6,
+    "sha256": "c1e397bca330d2f7af8ed39f9105a2ff2eee57cd88baa56f11db5a0a649e64cb",
+    "source_declaration": "Partial projection; None for unsupported constructors"
+  },
+  {
+    "name": "cm_leaf_rvalue",
+    "kind": "Definition",
+    "nonblank_lines": 5,
+    "sha256": "e62a666408ca30fb9aedc9b69327ba9f83e10b50d64395e3179a6497d3f4e206",
+    "source_declaration": "cm_emit_expr_pair_def four leaf equations + cm_rcode_of_def + cm_emit_rvalue_def"
+  },
+  {
+    "name": "cm_leaf_code_for",
+    "kind": "Definition",
+    "nonblank_lines": 2,
+    "sha256": "dcfee2dc38960a14bd89b6aa2958d052923228b7a38ba303fef144afd72e5327",
+    "source_declaration": "cm_expr_code_for_def restricted to leaves; all four lcode branches empty"
+  },
+  {
+    "name": "cm_leaf_source_roundtrip",
+    "kind": "Lemma",
+    "nonblank_lines": 2,
+    "sha256": "082657cb14d7e74bab61a3efcb337b62e24f20e684f9ab95146fe220980ca481"
+  },
+  {
+    "name": "cm_leaf_const_source_equation",
+    "kind": "Lemma",
+    "nonblank_lines": 4,
+    "sha256": "6c1396a830985ab0e2f5b6ac425516ae38588ec7d3425cf62bfb7e045e36c2de"
+  },
+  {
+    "name": "cm_leaf_string_source_equation",
+    "kind": "Lemma",
+    "nonblank_lines": 4,
+    "sha256": "e8b3dbd37824132e8db6ed30edc221e7efbac20eb436e6848c79271919f1bfed"
+  },
+  {
+    "name": "cm_leaf_getc_source_equation",
+    "kind": "Lemma",
+    "nonblank_lines": 4,
+    "sha256": "3224f59af7c2840eb3b5255fab967ad24de80f63350e6b604efd6faa3eb54018"
+  },
+  {
+    "name": "cm_leaf_sizeof_source_equation",
+    "kind": "Lemma",
+    "nonblank_lines": 4,
+    "sha256": "120ab34c392c7f575f5384dc28cbb27566b0d59e4a7603e0885b55e6ff5cff8b"
+  },
+  {
+    "name": "cm_rep_globals_size_matches",
+    "kind": "Lemma",
+    "nonblank_lines": 14,
+    "sha256": "72fd6fef12d090ebd75b736c7e6512702fb5cab3f40bcc37f0c219f61e5cc558"
+  },
+  {
+    "name": "cm_rep_string_address_matches",
+    "kind": "Lemma",
+    "nonblank_lines": 4,
+    "sha256": "36bd8255e8d4704ac6d6fae0be83957fe8b9807994f9752cd737d248a717835e"
+  },
+  {
+    "name": "cm_scalar_struct_leaf_size",
+    "kind": "Lemma",
+    "nonblank_lines": 2,
+    "sha256": "86e01cf436401b694548bd843e7a1817f7013b07b2dfd55025d53ec69f5f3fbe"
+  },
+  {
+    "name": "cm_slots_struct_size_matches",
+    "kind": "Lemma",
+    "nonblank_lines": 15,
+    "sha256": "38772c4afd745bc51478bf41e06b50c90e6777e5588ddc033fea9f95f6551375"
+  },
+  {
+    "name": "cm_slots_struct_prefix_matches",
+    "kind": "Lemma",
+    "nonblank_lines": 15,
+    "sha256": "3eef0031916fd90336fe7fba3830b6561e03b402f9110374456d914eb3f92e02"
+  },
+  {
+    "name": "cm_rep_struct_size_nth",
+    "kind": "Lemma",
+    "nonblank_lines": 11,
+    "sha256": "0f4143d2f197112118759392c8a711ca7539ec27ae668d9ceef5e8d9676b5721"
+  },
+  {
+    "name": "cm_rep_type_size_matches",
+    "kind": "Lemma",
+    "nonblank_lines": 24,
+    "sha256": "882ef1ce0e06c1b339b5716f3bd0b43fe48f7ea0635f08483ad74e000cffbd29"
+  },
+  {
+    "name": "cm_rep_struct_member_prefix_nth",
+    "kind": "Lemma",
+    "nonblank_lines": 11,
+    "sha256": "4adeba665164a0f5886a9f159841684cdcd0c8517922b070dde0fb58b6ac6563"
+  },
+  {
+    "name": "cm_rep_struct_member_prefix_matches",
+    "kind": "Lemma",
+    "nonblank_lines": 11,
+    "sha256": "661957b29f965d9e1a5f574bfb9594c0125d8217449b3cadc753674575543fb1"
+  }
+]

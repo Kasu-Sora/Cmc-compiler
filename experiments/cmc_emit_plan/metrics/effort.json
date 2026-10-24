@@ -1,0 +1,2467 @@
+{
+  "direction": "C*/HOL -> QCP/Rocq",
+  "unit": "cmc_concrete_emit_plan.c",
+  "function_count": 8,
+  "counts": {
+    "cstar": {
+      "specification": 117,
+      "annotation": 22,
+      "inline_proof": 67,
+      "exported_shared_proof_closure": 0,
+      "private_case_proof_support": 33,
+      "case_proof": 100,
+      "proof_including_shared": 100,
+      "specification_plus_annotation": 139
+    },
+    "qcp": {
+      "external_declarations": 50,
+      "coq_imports": 1,
+      "integration_helper_specification": 24,
+      "specification": 24,
+      "annotation": 43,
+      "case_proof": 336,
+      "new_common_proof": 7,
+      "new_common_imports_or_scopes": 9,
+      "new_common_definitions": 4,
+      "proof_including_shared": 343,
+      "total_annotation_with_integration": 67,
+      "specification_plus_annotation_with_integration": 91,
+      "specification_plus_annotation": 67
+    }
+  },
+  "regions": [
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        8,
+        11
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 53,
+      "characters": 174,
+      "name": null
+    },
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        13,
+        52
+      ],
+      "nonblank_lines": 40,
+      "new_counted_lines": 40,
+      "lexical_tokens": 436,
+      "characters": 2018,
+      "name": null
+    },
+    {
+      "category": "coq_imports",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        54,
+        54
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 16,
+      "characters": 87,
+      "name": null
+    },
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        56,
+        60
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 64,
+      "characters": 302,
+      "name": null
+    },
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        63,
+        63
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 35,
+      "characters": 143,
+      "name": null
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        67,
+        69
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 109,
+      "characters": 419,
+      "name": "cm_emit_resolved"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        73,
+        75
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 93,
+      "characters": 363,
+      "name": "cm_emit_resolved_call"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        79,
+        81
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 105,
+      "characters": 450,
+      "name": "cm_emit_resolved_normalize"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        85,
+        87
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 105,
+      "characters": 430,
+      "name": "cm_emit_resolved_load"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        91,
+        93
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 105,
+      "characters": 432,
+      "name": "cm_emit_resolved_store"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        98,
+        100
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 85,
+      "characters": 372,
+      "name": "cm_emit_resolved_fp_address"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        105,
+        107
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 317,
+      "characters": 1253,
+      "name": "cm_emit_resolved_temp_store"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        112,
+        114
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 317,
+      "characters": 1251,
+      "name": "cm_emit_resolved_temp_load"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        119,
+        121
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 118,
+      "characters": 465,
+      "name": "cm_emit_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        124,
+        128
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 100,
+      "characters": 353,
+      "name": "cm_emit_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        130,
+        130
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 38,
+      "characters": 141,
+      "name": "cm_emit_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        134,
+        136
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 109,
+      "characters": 441,
+      "name": "cm_emit_call_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        139,
+        142
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 81,
+      "characters": 303,
+      "name": "cm_emit_call_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        144,
+        144
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 32,
+      "characters": 127,
+      "name": "cm_emit_call_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        148,
+        150
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 106,
+      "characters": 461,
+      "name": "cm_emit_normalize_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        153,
+        156
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 88,
+      "characters": 351,
+      "name": "cm_emit_normalize_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        158,
+        158
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 36,
+      "characters": 144,
+      "name": "cm_emit_normalize_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        162,
+        164
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 106,
+      "characters": 441,
+      "name": "cm_emit_load_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        167,
+        170
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 88,
+      "characters": 331,
+      "name": "cm_emit_load_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        172,
+        172
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 36,
+      "characters": 139,
+      "name": "cm_emit_load_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        176,
+        178
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 106,
+      "characters": 443,
+      "name": "cm_emit_store_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        181,
+        184
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 88,
+      "characters": 333,
+      "name": "cm_emit_store_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        186,
+        186
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 36,
+      "characters": 140,
+      "name": "cm_emit_store_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        191,
+        193
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 86,
+      "characters": 383,
+      "name": "cm_emit_fp_address_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        196,
+        199
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 73,
+      "characters": 302,
+      "name": "cm_emit_fp_address_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        201,
+        201
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 32,
+      "characters": 128,
+      "name": "cm_emit_fp_address_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        206,
+        208
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 318,
+      "characters": 1264,
+      "name": "cm_emit_temp_store_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        211,
+        215
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 190,
+      "characters": 723,
+      "name": "cm_emit_temp_store_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        217,
+        217
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 54,
+      "characters": 193,
+      "name": "cm_emit_temp_store_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        222,
+        224
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 318,
+      "characters": 1262,
+      "name": "cm_emit_temp_load_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        227,
+        231
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 190,
+      "characters": 721,
+      "name": "cm_emit_temp_load_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_plan_migration.c",
+      "span": [
+        233,
+        233
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 54,
+      "characters": 192,
+      "name": "cm_emit_temp_load_plan"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        24,
+        33
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 44,
+      "characters": 313,
+      "name": "proof_of_cm_emit_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        35,
+        44
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 44,
+      "characters": 327,
+      "name": "proof_of_cm_emit_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        46,
+        49
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 168,
+      "name": "proof_of_cm_emit_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        51,
+        57
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 305,
+      "name": "proof_of_cm_emit_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        59,
+        66
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 36,
+      "characters": 276,
+      "name": "proof_of_cm_emit_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        68,
+        72
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 175,
+      "name": "proof_of_cm_emit_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        74,
+        83
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 44,
+      "characters": 323,
+      "name": "proof_of_cm_emit_call_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        85,
+        94
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 44,
+      "characters": 337,
+      "name": "proof_of_cm_emit_call_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        96,
+        99
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 178,
+      "name": "proof_of_cm_emit_call_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        101,
+        107
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 330,
+      "name": "proof_of_cm_emit_call_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        109,
+        116
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 36,
+      "characters": 286,
+      "name": "proof_of_cm_emit_call_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        118,
+        122
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 190,
+      "name": "proof_of_cm_emit_call_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        124,
+        131
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 361,
+      "name": "proof_of_cm_emit_normalize_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        133,
+        140
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 361,
+      "name": "proof_of_cm_emit_normalize_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        142,
+        145
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 188,
+      "name": "proof_of_cm_emit_normalize_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        147,
+        153
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 62,
+      "characters": 577,
+      "name": "proof_of_cm_emit_normalize_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        155,
+        162
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 51,
+      "characters": 398,
+      "name": "proof_of_cm_emit_normalize_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        164,
+        168
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 29,
+      "characters": 291,
+      "name": "proof_of_cm_emit_normalize_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        170,
+        177
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 341,
+      "name": "proof_of_cm_emit_load_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        179,
+        186
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 341,
+      "name": "proof_of_cm_emit_load_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        188,
+        191
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 178,
+      "name": "proof_of_cm_emit_load_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        193,
+        199
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 330,
+      "name": "proof_of_cm_emit_load_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        201,
+        208
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 51,
+      "characters": 378,
+      "name": "proof_of_cm_emit_load_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        210,
+        214
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 190,
+      "name": "proof_of_cm_emit_load_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        216,
+        223
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 344,
+      "name": "proof_of_cm_emit_store_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        225,
+        232
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 344,
+      "name": "proof_of_cm_emit_store_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        234,
+        237
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 180,
+      "name": "proof_of_cm_emit_store_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        239,
+        245
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 335,
+      "name": "proof_of_cm_emit_store_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        247,
+        254
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 51,
+      "characters": 381,
+      "name": "proof_of_cm_emit_store_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        256,
+        260
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 193,
+      "name": "proof_of_cm_emit_store_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        262,
+        269
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 370,
+      "name": "proof_of_cm_emit_fp_address_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        271,
+        278
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 46,
+      "characters": 370,
+      "name": "proof_of_cm_emit_fp_address_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        280,
+        283
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 190,
+      "name": "proof_of_cm_emit_fp_address_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        285,
+        291
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 53,
+      "characters": 531,
+      "name": "proof_of_cm_emit_fp_address_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        293,
+        300
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 51,
+      "characters": 407,
+      "name": "proof_of_cm_emit_fp_address_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        302,
+        306
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 26,
+      "characters": 277,
+      "name": "proof_of_cm_emit_fp_address_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        308,
+        315
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 49,
+      "characters": 372,
+      "name": "proof_of_cm_emit_temp_store_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        317,
+        324
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 49,
+      "characters": 372,
+      "name": "proof_of_cm_emit_temp_store_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        326,
+        332
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 30,
+      "characters": 259,
+      "name": "proof_of_cm_emit_temp_store_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        334,
+        340
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 360,
+      "name": "proof_of_cm_emit_temp_store_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        342,
+        350
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 38,
+      "characters": 315,
+      "name": "proof_of_cm_emit_temp_store_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        352,
+        356
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 208,
+      "name": "proof_of_cm_emit_temp_store_plan_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        358,
+        365
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 49,
+      "characters": 369,
+      "name": "proof_of_cm_emit_temp_load_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        367,
+        374
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 49,
+      "characters": 369,
+      "name": "proof_of_cm_emit_temp_load_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        376,
+        382
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 30,
+      "characters": 257,
+      "name": "proof_of_cm_emit_temp_load_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        384,
+        390
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 355,
+      "name": "proof_of_cm_emit_temp_load_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        392,
+        400
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 38,
+      "characters": 313,
+      "name": "proof_of_cm_emit_temp_load_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_plan_migration_proof_manual.v",
+      "span": [
+        402,
+        406
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 205,
+      "name": "proof_of_cm_emit_temp_load_plan_return_wit_1"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        18,
+        24
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 68,
+      "characters": 319,
+      "name": "cm_plan_fragment_capacity"
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        2,
+        2
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 8,
+      "characters": 40,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        3,
+        3
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 6,
+      "characters": 35,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        4,
+        4
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 9,
+      "characters": 51,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        5,
+        5
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 10,
+      "characters": 54,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        6,
+        6
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 10,
+      "characters": 74,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        7,
+        7
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 4,
+      "characters": 35,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        8,
+        8
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 5,
+      "characters": 25,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        9,
+        9
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 5,
+      "characters": 21,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        10,
+        10
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 5,
+      "characters": 28,
+      "name": null
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_plan_migration_lib.v",
+      "span": [
+        12,
+        15
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 42,
+      "characters": 231,
+      "name": "cm_resolved_emitter_plan_rep"
+    }
+  ],
+  "source_effort": {
+    "source_sha256": "ba3dab5367de647a1d606c308c09823e77d527e0ec8b5536902f25d6ae8f6c1a",
+    "function_counts": [
+      {
+        "function": "cm_emit_plan",
+        "source_span": [
+          43,
+          75
+        ],
+        "specification": 11,
+        "annotation": 2,
+        "inline_proof": 15
+      },
+      {
+        "function": "cm_emit_call_plan",
+        "source_span": [
+          77,
+          108
+        ],
+        "specification": 9,
+        "annotation": 1,
+        "inline_proof": 18
+      },
+      {
+        "function": "cm_emit_normalize_plan",
+        "source_span": [
+          110,
+          132
+        ],
+        "specification": 11,
+        "annotation": 2,
+        "inline_proof": 6
+      },
+      {
+        "function": "cm_emit_load_plan",
+        "source_span": [
+          134,
+          152
+        ],
+        "specification": 11,
+        "annotation": 2,
+        "inline_proof": 2
+      },
+      {
+        "function": "cm_emit_store_plan",
+        "source_span": [
+          154,
+          172
+        ],
+        "specification": 11,
+        "annotation": 2,
+        "inline_proof": 2
+      },
+      {
+        "function": "cm_emit_fp_address_plan",
+        "source_span": [
+          174,
+          195
+        ],
+        "specification": 8,
+        "annotation": 1,
+        "inline_proof": 8
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "source_span": [
+          197,
+          243
+        ],
+        "specification": 28,
+        "annotation": 6,
+        "inline_proof": 8
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "source_span": [
+          245,
+          291
+        ],
+        "specification": 28,
+        "annotation": 6,
+        "inline_proof": 8
+      }
+    ],
+    "source_top_level_proof_helpers": [
+      {
+        "name": "cm_plan_add_singleton_capacity",
+        "kind": "proof",
+        "span": [
+          7,
+          22
+        ],
+        "nonblank_lines": 16,
+        "text": "PROOF static void cm_plan_add_singleton_capacity(void) {\n  thm input_capacity = conv_rule(rewrite_conv(THM_LIST(\n      get_theorem_by_name(\"APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"))), assume_rule(\n      `ilength (done:(tvm_inst)list) +\n         ilength ([TVMInst (opcode:tvm_opcode)\n                    (immediate__pre:int)] ++\n                   (tail:(tvm_inst)list)) <= (capacity:int)`));\n  thm tail_nonnegative = ispec_rule(\n      `tail:(tvm_inst)list`, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  add_fact_st(by_defs_arith(\n      `ilength (done:(tvm_inst)list) + 1i <= (capacity:int)`,\n      THM_LIST(get_theorem_by_name(\"ILENGTH_APPEND\"),\n               get_theorem_by_name(\"ILENGTH_DEF\")),\n      THM_LIST(input_capacity, tail_nonnegative)));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_plan_add_call_capacity",
+        "kind": "proof",
+        "span": [
+          24,
+          40
+        ],
+        "nonblank_lines": 17,
+        "text": "PROOF static void cm_plan_add_call_capacity(void) {\n  thm input_capacity = conv_rule(rewrite_conv(THM_LIST(\n      get_theorem_by_name(\"APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"))), assume_rule(\n      `ilength (done:(tvm_inst)list) +\n         ilength ([TVMInst TVMCallOp\n                    (cm_function_pc (p:cm_program)\n                      (function_id__pre:int))] ++\n                   (tail:(tvm_inst)list)) <= (capacity:int)`));\n  thm tail_nonnegative = ispec_rule(\n      `tail:(tvm_inst)list`, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  add_fact_st(by_defs_arith(\n      `ilength (done:(tvm_inst)list) + 1i <= (capacity:int)`,\n      THM_LIST(get_theorem_by_name(\"ILENGTH_APPEND\"),\n               get_theorem_by_name(\"ILENGTH_DEF\")),\n      THM_LIST(input_capacity, tail_nonnegative)));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      }
+    ],
+    "totals": {
+      "specification": 117,
+      "annotation": 22,
+      "inline_proof": 67,
+      "private_case_proof_support": 33,
+      "case_proof": 100,
+      "proof_including_shared": 100
+    },
+    "annotation_entries": [
+      {
+        "function": "cm_emit_plan",
+        "kind": "where",
+        "span": [
+          68,
+          68
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_plan",
+        "kind": "where",
+        "span": [
+          69,
+          69
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_call_plan",
+        "kind": "where",
+        "span": [
+          101,
+          101
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_normalize_plan",
+        "kind": "where",
+        "span": [
+          126,
+          126
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_normalize_plan",
+        "kind": "where",
+        "span": [
+          127,
+          127
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_load_plan",
+        "kind": "where",
+        "span": [
+          148,
+          148
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_load_plan",
+        "kind": "where",
+        "span": [
+          149,
+          149
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_store_plan",
+        "kind": "where",
+        "span": [
+          168,
+          168
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_store_plan",
+        "kind": "where",
+        "span": [
+          169,
+          169
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_fp_address_plan",
+        "kind": "where",
+        "span": [
+          189,
+          189
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "kind": "where",
+        "span": [
+          232,
+          232
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "kind": "where",
+        "span": [
+          233,
+          233
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "kind": "where",
+        "span": [
+          234,
+          234
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "kind": "where",
+        "span": [
+          235,
+          235
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "kind": "where",
+        "span": [
+          236,
+          236
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_store_plan",
+        "kind": "where",
+        "span": [
+          237,
+          237
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "kind": "where",
+        "span": [
+          280,
+          280
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "kind": "where",
+        "span": [
+          281,
+          281
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "kind": "where",
+        "span": [
+          282,
+          282
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "kind": "where",
+        "span": [
+          283,
+          283
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "kind": "where",
+        "span": [
+          284,
+          284
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_temp_load_plan",
+        "kind": "where",
+        "span": [
+          285,
+          285
+        ],
+        "nonblank_lines": 1
+      }
+    ],
+    "public_proof_roots": [],
+    "public_wrappers_not_called_by_runtime_proof": [],
+    "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Same-file static PROOF declarations counted as private case support; source plan definition and public open/close proof dependency closure inventoried separately."
+  },
+  "target_per_function": {
+    "cm_emit_plan": {
+      "specification": 3,
+      "annotation": 6,
+      "case_proof": 44,
+      "specification_plus_annotation": 9
+    },
+    "cm_emit_call_plan": {
+      "specification": 3,
+      "annotation": 5,
+      "case_proof": 44,
+      "specification_plus_annotation": 8
+    },
+    "cm_emit_normalize_plan": {
+      "specification": 3,
+      "annotation": 5,
+      "case_proof": 40,
+      "specification_plus_annotation": 8
+    },
+    "cm_emit_load_plan": {
+      "specification": 3,
+      "annotation": 5,
+      "case_proof": 40,
+      "specification_plus_annotation": 8
+    },
+    "cm_emit_store_plan": {
+      "specification": 3,
+      "annotation": 5,
+      "case_proof": 40,
+      "specification_plus_annotation": 8
+    },
+    "cm_emit_fp_address_plan": {
+      "specification": 3,
+      "annotation": 5,
+      "case_proof": 40,
+      "specification_plus_annotation": 8
+    },
+    "cm_emit_temp_store_plan": {
+      "specification": 3,
+      "annotation": 6,
+      "case_proof": 44,
+      "specification_plus_annotation": 9
+    },
+    "cm_emit_temp_load_plan": {
+      "specification": 3,
+      "annotation": 6,
+      "case_proof": 44,
+      "specification_plus_annotation": 9
+    }
+  },
+  "runtime_tokens_equal": true,
+  "abi_unchanged": true,
+  "coverage": {
+    "cm_emit_plan": [
+      "proof_of_cm_emit_plan_entail_wit_1",
+      "proof_of_cm_emit_plan_return_wit_1",
+      "proof_of_cm_emit_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_call_plan": [
+      "proof_of_cm_emit_call_plan_entail_wit_1",
+      "proof_of_cm_emit_call_plan_return_wit_1",
+      "proof_of_cm_emit_call_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_call_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_normalize_plan": [
+      "proof_of_cm_emit_normalize_plan_entail_wit_1",
+      "proof_of_cm_emit_normalize_plan_return_wit_1",
+      "proof_of_cm_emit_normalize_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_normalize_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_load_plan": [
+      "proof_of_cm_emit_load_plan_entail_wit_1",
+      "proof_of_cm_emit_load_plan_return_wit_1",
+      "proof_of_cm_emit_load_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_load_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_store_plan": [
+      "proof_of_cm_emit_store_plan_entail_wit_1",
+      "proof_of_cm_emit_store_plan_return_wit_1",
+      "proof_of_cm_emit_store_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_store_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_fp_address_plan": [
+      "proof_of_cm_emit_fp_address_plan_entail_wit_1",
+      "proof_of_cm_emit_fp_address_plan_return_wit_1",
+      "proof_of_cm_emit_fp_address_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_fp_address_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_temp_store_plan": [
+      "proof_of_cm_emit_temp_store_plan_entail_wit_1",
+      "proof_of_cm_emit_temp_store_plan_return_wit_1",
+      "proof_of_cm_emit_temp_store_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_temp_store_plan_partial_solve_wit_1"
+    ],
+    "cm_emit_temp_load_plan": [
+      "proof_of_cm_emit_temp_load_plan_entail_wit_1",
+      "proof_of_cm_emit_temp_load_plan_return_wit_1",
+      "proof_of_cm_emit_temp_load_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_temp_load_plan_partial_solve_wit_1"
+    ]
+  },
+  "entries": {
+    "manual_top_level": 16,
+    "manual_splits": 32,
+    "automatic_witnesses": 16,
+    "new_helpers": [
+      "cm_plan_fragment_capacity"
+    ],
+    "new_model_declarations": [
+      "cm_resolved_emitter_plan_rep"
+    ]
+  },
+  "proof_body_lines": 192,
+  "proof_wrapper_lines": 144,
+  "verification": {
+    "cstar": {
+      "command": [
+        "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/arr_sum/toolchain/cstar_v0.5.7_darwin-aarch64/bin/cstarc",
+        "verify",
+        "cmc_concrete_emit_plan.c",
+        "--port",
+        "51195"
+      ],
+      "exit_code": 0,
+      "report": {
+        "verification_conditions": [],
+        "axioms": [],
+        "strategies": []
+      },
+      "clean": true,
+      "verification_seconds": 39.7117440829752,
+      "source_sha256": "ba3dab5367de647a1d606c308c09823e77d527e0ec8b5536902f25d6ae8f6c1a",
+      "log_directory": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_plan/logs/20261017T055216Z-cstar-source"
+    },
+    "qcp_final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T06:11:20.686974Z",
+      "cleanup_removed_count": 0
+    },
+    "phase": "done",
+    "trusted_auto": [
+      "proof_of_cm_emit_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_call_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_call_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_normalize_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_normalize_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_load_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_load_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_store_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_store_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_fp_address_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_fp_address_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_temp_store_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_temp_store_plan_partial_solve_wit_1",
+      "proof_of_cm_emit_temp_load_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_temp_load_plan_partial_solve_wit_1"
+    ],
+    "remaining_manual": 0
+  },
+  "process": {
+    "timing": {
+      "run": {
+        "status": "completed",
+        "phase": "done",
+        "created_at": "2026-10-17T05:51:54.972390Z",
+        "finished_at": "2026-10-17T06:11:20.686974Z",
+        "elapsed_seconds": 1165.714584
+      },
+      "annotation_metrics": {
+        "attempt_count": 1,
+        "annotation_repair_count": 0,
+        "validation_only_attempt_count": 0,
+        "owner_generation_invocation_count": 1,
+        "tool_failure_invocation_count": 0,
+        "controller_tool_failure_invocation_count": 0,
+        "same_attempt_tool_retry_count": 0,
+        "same_attempt_controller_tool_retry_count": 0,
+        "controller_acceptance_run_count": 1,
+        "controller_acceptance_rerun_count": 0,
+        "owner_generation_seconds": 0.18,
+        "controller_main_refresh_seconds": 0,
+        "clean_replay_seconds": 0.179,
+        "wasted_timeout_seconds": 0,
+        "legacy_unclassified_symexec_seconds": 0
+      },
+      "annotation_attempts": [
+        {
+          "attempt": "annotation-attempt1",
+          "round": "cmc_emit_plan_migration-annotation-r1",
+          "activity": "spec-and-annotation",
+          "owner_generation_invocations": 1,
+          "tool_failure_invocations": 0,
+          "same_attempt_tool_retries": 0,
+          "controller_acceptance_runs": 1,
+          "controller_tool_failure_invocations": 0,
+          "same_attempt_controller_tool_retries": 0,
+          "status": "accepted",
+          "created_at": "2026-10-17T05:51:59.799771Z",
+          "finished_at": "2026-10-17T05:57:42.111006Z",
+          "elapsed_seconds": 342.311235,
+          "stages": [
+            {
+              "name": "annotation-work",
+              "started_at": "2026-10-17T05:52:04.376517Z",
+              "finished_at": "2026-10-17T05:56:31.112773Z",
+              "elapsed_seconds": 266.736256
+            },
+            {
+              "name": "formal-case-lib-design-coq-check",
+              "started_at": "2026-10-17T05:54:19.555065Z",
+              "finished_at": "2026-10-17T05:54:21.241312Z",
+              "elapsed_seconds": 1.686247
+            },
+            {
+              "name": "owner-generation",
+              "started_at": "2026-10-17T05:54:28.217967Z",
+              "finished_at": "2026-10-17T05:54:28.397967Z",
+              "elapsed_seconds": 0.18
+            },
+            {
+              "name": "clean-replay",
+              "started_at": "2026-10-17T05:57:04.836883Z",
+              "finished_at": "2026-10-17T05:57:05.015883Z",
+              "elapsed_seconds": 0.179
+            },
+            {
+              "name": "formal-case-lib-coq-check",
+              "started_at": "2026-10-17T05:54:40.869833Z",
+              "calls": 2,
+              "finished_at": "2026-10-17T05:57:04.833034Z",
+              "elapsed_seconds": 0.132885
+            },
+            {
+              "name": "controller-validation",
+              "started_at": "2026-10-17T05:56:31.091956Z",
+              "finished_at": "2026-10-17T05:56:31.155977Z",
+              "elapsed_seconds": 0.060446
+            },
+            {
+              "name": "controller-acceptance-check",
+              "started_at": "2026-10-17T05:56:52.795594Z",
+              "finished_at": "2026-10-17T05:57:05.030632Z",
+              "elapsed_seconds": 12.229613
+            },
+            {
+              "name": "dune-build",
+              "started_at": "2026-10-17T05:57:33.944740Z",
+              "finished_at": "2026-10-17T05:57:42.111006Z",
+              "elapsed_seconds": 8.160946
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "round": "cmc_emit_plan_migration-vc-checking-r1",
+          "phase": "vc-checking",
+          "status": "accepted",
+          "created_at": "2026-10-17T05:57:58.678095Z",
+          "finished_at": "2026-10-17T06:02:05.329172Z",
+          "elapsed_seconds": 246.651077,
+          "stages": [
+            {
+              "name": "witness-analysis",
+              "started_at": "2026-10-17T05:58:04.898446Z",
+              "finished_at": "2026-10-17T06:01:47.887748Z",
+              "elapsed_seconds": 222.989302
+            },
+            {
+              "name": "controller-validation",
+              "started_at": "2026-10-17T06:01:47.858262Z",
+              "finished_at": "2026-10-17T06:01:47.920706Z",
+              "elapsed_seconds": 0.056249
+            },
+            {
+              "name": "controller-plan-check",
+              "started_at": "2026-10-17T06:02:05.096380Z",
+              "finished_at": "2026-10-17T06:02:05.329172Z",
+              "elapsed_seconds": 0.225884
+            }
+          ]
+        },
+        {
+          "round": "cmc_emit_plan_migration-vc-proving-r1",
+          "phase": "vc-proving",
+          "status": "verified",
+          "created_at": "2026-10-17T06:02:16.341115Z",
+          "finished_at": "2026-10-17T06:10:09.859779Z",
+          "elapsed_seconds": 473.518664,
+          "stages": [
+            {
+              "name": "group-work",
+              "started_at": "2026-10-17T06:02:34.754318Z",
+              "finished_at": "2026-10-17T06:09:45.555693Z",
+              "elapsed_seconds": 430.801375
+            },
+            {
+              "name": "preparing",
+              "started_at": "2026-10-17T06:02:27.028378Z",
+              "finished_at": "2026-10-17T06:02:27.105967Z",
+              "elapsed_seconds": 0.069798
+            },
+            {
+              "name": "group-development-check",
+              "started_at": "2026-10-17T06:04:14.362686Z",
+              "calls": 13,
+              "finished_at": "2026-10-17T06:09:05.280030Z",
+              "elapsed_seconds": 32.032413
+            },
+            {
+              "name": "group-coq-check",
+              "started_at": "2026-10-17T06:05:15.404728Z",
+              "calls": 4,
+              "finished_at": "2026-10-17T06:09:18.437810Z",
+              "elapsed_seconds": 12.081156
+            },
+            {
+              "name": "group-validation",
+              "started_at": "2026-10-17T06:05:52.789123Z",
+              "calls": 4,
+              "finished_at": "2026-10-17T06:09:47.492474Z",
+              "elapsed_seconds": 7.434231
+            },
+            {
+              "name": "parent-verify",
+              "started_at": "2026-10-17T06:10:05.235971Z",
+              "finished_at": "2026-10-17T06:10:09.859779Z",
+              "elapsed_seconds": 4.61518
+            }
+          ]
+        }
+      ],
+      "finalization": {
+        "status": "passed",
+        "started_at": "2026-10-17T06:10:09.859779Z",
+        "applied_at": "2026-10-17T06:10:38.715281Z",
+        "finished_at": "2026-10-17T06:11:20.686974Z",
+        "elapsed_seconds": 70.827195
+      }
+    },
+    "notes": {
+      "status": "completed; controller done and final-check passed",
+      "historical_cstar_active_seconds": null,
+      "human_active_seconds": null,
+      "model_active_seconds": null,
+      "public_reuse": "Verified resolved public library and its transitive dependency closure; eight resolved helper contracts; no helper implementation re-proving",
+      "measurement_setup_repairs": [
+        "runpy measure_text initially lacked local script directory on sys.path; corrected before baseline target creation"
+      ],
+      "annotation_development": {
+        "attempts": 1,
+        "formal_case_lib_design_checks": 1,
+        "design_failures": 0,
+        "symexec_runs": 1,
+        "symexec_failures": 0,
+        "post_symexec_library_checks": 1,
+        "post_symexec_library_failures": 0,
+        "main_annotation_check_rounds": 1,
+        "main_annotation_status": "accepted",
+        "repairs": [],
+        "source": "reports/cmc_emit_plan_migration-20261017135154/annotation-attempts/annotation-attempt1/agent_output.md"
+      },
+      "vc_checking": {
+        "attempts": 1,
+        "main_acceptance_checks": 1,
+        "status": "accepted",
+        "top_level_scanned": 16,
+        "no_split_checked_first": 0,
+        "definite_blockers": 0,
+        "split_count": 32,
+        "worker_debug_or_validation_invocations": 0,
+        "worker_command_failures": 0,
+        "planned_group_count": 4,
+        "witnesses_per_group": 4,
+        "source": "reports/cmc_emit_plan_migration-20261017135154/rounds/cmc_emit_plan_migration-vc-checking-r1/agent_output.md"
+      },
+      "proof_development": {
+        "group_worker_checks": {
+          "temp_context": {
+            "dev": 2,
+            "exact": 1,
+            "debug": 1,
+            "failures": 1,
+            "repairs": [
+              "Reorder top-level applications to spatial-first"
+            ],
+            "new_helpers": 0,
+            "status": "accepted",
+            "dev_failures": 1,
+            "debug_failures": 0
+          },
+          "single_instruction": {
+            "dev": 4,
+            "dev_failures": 3,
+            "exact": 1,
+            "debug": 2,
+            "debug_failures": 1,
+            "failures": 4,
+            "repairs": [
+              "Remove tactics after automatic closure",
+              "Correct aggressive branch order",
+              "Replace targeted cancellation with ordinary cancellation"
+            ],
+            "debug_failure_reason": "Missing import in a debug invocation",
+            "new_helpers": 0,
+            "status": "accepted"
+          },
+          "general_fragments": {
+            "dev": 4,
+            "dev_failures": 3,
+            "exact": 1,
+            "debug": 1,
+            "debug_failures": 0,
+            "failures": 3,
+            "repairs": [
+              "Remove tactics after automatic spatial closure",
+              "Correct branch ordering with explicitly instantiated Goal_apply calls"
+            ],
+            "new_helpers": 0,
+            "status": "accepted"
+          },
+          "typed_memory": {
+            "dev": 3,
+            "dev_failures": 2,
+            "exact": 1,
+            "debug": 2,
+            "debug_failures": 1,
+            "failures": 3,
+            "repairs": [
+              "Remove tactics after automatic closure",
+              "Top-level spatial branch first",
+              "Correct debug scope import order"
+            ],
+            "new_helpers": 0,
+            "status": "accepted"
+          }
+        },
+        "group_worker_check_totals": {
+          "dev": 13,
+          "dev_failures": 9,
+          "exact": 4,
+          "debug": 6,
+          "debug_failures": 2,
+          "failures": 11,
+          "new_helpers": 0
+        },
+        "controller_group_repair_count": 0,
+        "controller_group_validation_count": 4,
+        "accepted_group_attempts": {
+          "single_instruction": 1,
+          "general_fragments": 1,
+          "typed_memory": 1,
+          "temp_context": 1
+        }
+      },
+      "proof_progress_snapshot": {
+        "accepted_groups": 4,
+        "planned_groups": 4,
+        "status": "complete"
+      },
+      "final_verification": {
+        "phase": "done",
+        "final_check": {
+          "status": "passed",
+          "checked_at": "2026-10-17T06:11:20.686974Z",
+          "cleanup_removed_count": 0
+        },
+        "controller_updated_at": "2026-10-17T06:11:20.694078Z"
+      }
+    },
+    "historical_cstar_active_seconds": null,
+    "human_active_seconds": null,
+    "model_active_seconds": null
+  },
+  "artifacts": [
+    {
+      "role": "c_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_emit_plan_migration.c",
+      "snapshot": "target/cmc_emit_plan_migration.c",
+      "sha256": "b804dc279d5b382ffca19221137e01427b16fc42689b6254038c48197283f00f"
+    },
+    {
+      "role": "formal_case_lib",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_lib.v",
+      "snapshot": "target/cmc_emit_plan_migration_lib.v",
+      "sha256": "d1ce410f2381e1aa565b400718ecd9d411110e307b74fc0fc1f132d6dbba8acd"
+    },
+    {
+      "role": "goal_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_goal.v",
+      "snapshot": "target/cmc_emit_plan_migration_goal.v",
+      "sha256": "e523cd26e69b2f8553897b71670660ad03d01b8a6620c1efad2d9ef479fc03c7"
+    },
+    {
+      "role": "proof_auto_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_proof_auto.v",
+      "snapshot": "target/cmc_emit_plan_migration_proof_auto.v",
+      "sha256": "7c76df5878512cac8f3479369134b9d18a4d40ab107ee49b5d7d98ad2885ba20"
+    },
+    {
+      "role": "proof_manual_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_proof_manual.v",
+      "snapshot": "target/cmc_emit_plan_migration_proof_manual.v",
+      "sha256": "fcca056ea4e7185444b40f24b0e3af6ac290e86b835d356c1cda5ffbc0992b36"
+    },
+    {
+      "role": "goal_check_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_goal_check.v",
+      "snapshot": "target/cmc_emit_plan_migration_goal_check.v",
+      "sha256": "8cdc937f3e12b7570ddd563ab180e4a5197549fccc8573557dfab13c10e559eb"
+    },
+    {
+      "role": "runtime_abi_header",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_layout_migration_abi.h",
+      "sha256": "44da3388c0964c59aaf92cd1bd4505ac3a1eadcad5aad7b90a6119581625fb6a"
+    }
+  ],
+  "counting_note": "Nonblank exact regions, statement/Proof/Qed wrappers included, generated VC texts and unused aborted split drafts excluded; new shared definitions/proofs separate. The eight runtime bodies and reviewed contracts/models retain their audited identities; case proof equals the per-function sum. Library declarations and all final proved helpers reviewed in final merged form.",
+  "verified_reused_dependencies": [
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_layout_migration_lib.v",
+      "sha256": "dd0537765f50a8d5ea9227206c095d3e0e34b8792b3e2e48f4143049c31ae109",
+      "verified_case": "cmc_layout",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_counts_migration_lib.v",
+      "sha256": "d703265a1d86d57fd1ec04e1a9a13d42693e85b986348e02e19c0417f128ec2f",
+      "verified_case": "cmc_counts",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_copy_bytes_migration_lib.v",
+      "sha256": "49f1103d5501eff2e60a94b04518ff4e7858f795e4953de90bb5cc05529c7924",
+      "verified_case": "cmc_copy_bytes",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_function_pc_total_migration_lib.v",
+      "sha256": "6960f17de8bbdee02c9d28f789cd5aff3d376de97817b2b20d34c0bea198f656",
+      "verified_case": "cmc_function_pc_total",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_layout_migration_abi.h",
+      "sha256": "44da3388c0964c59aaf92cd1bd4505ac3a1eadcad5aad7b90a6119581625fb6a",
+      "verified_case": "cmc_layout",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_globals_migration_lib.v",
+      "sha256": "f102e109bde27bafa875fedfca03f5453201c1408852802843838c4aa6b49d78",
+      "verified_case": "cmc_emit_globals",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_write_word_migration_lib.v",
+      "sha256": "86fa9e40c7960d2469a767fd58da08c301d0f4f138f4dff06d60b827345d6660",
+      "verified_case": "cmc_write_word",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_core_migration_lib.v",
+      "sha256": "367c7727d55fc73470ca881062ef5ff80c067c337310a96e8c6c4f0fde8453bb",
+      "verified_case": "cmc_emit_core",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_emit_resolved_migration.c",
+      "sha256": "bac45e4c2459a8d7803ca212a59c9b244afb893219a6a1a22e8e82c9697a3394"
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_resolved_migration_lib.v",
+      "sha256": "06bf635cf1d0d7cbb9ceaa8cb3c6aa49ab7034e432d3e8bd628761e7372d66bf"
+    }
+  ],
+  "helper_contract_audit": [
+    {
+      "function": "cm_emit_resolved",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_call",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_normalize",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_load",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_store",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_fp_address",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "normalized_contract_identical": true
+    }
+  ],
+  "shared_helper_usage": [
+    {
+      "name": "cm_plan_fragment_capacity",
+      "direct_manual_references": 12,
+      "other_library_references": 0,
+      "lines": 7
+    }
+  ],
+  "common_cost_by_stage": {
+    "annotation_definitions": 4,
+    "annotation_helpers": 7,
+    "final_helpers_added_during_proving": []
+  },
+  "source_text_size": [
+    {
+      "function": "cm_emit_plan",
+      "category": "specification",
+      "characters": 521,
+      "lexical_tokens": 128,
+      "nonblank_lines": 11
+    },
+    {
+      "function": "cm_emit_plan",
+      "category": "annotation",
+      "characters": 89,
+      "lexical_tokens": 42,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_plan",
+      "category": "inline_proof",
+      "characters": 507,
+      "lexical_tokens": 119,
+      "nonblank_lines": 15
+    },
+    {
+      "function": "cm_emit_call_plan",
+      "category": "specification",
+      "characters": 457,
+      "lexical_tokens": 107,
+      "nonblank_lines": 9
+    },
+    {
+      "function": "cm_emit_call_plan",
+      "category": "annotation",
+      "characters": 39,
+      "lexical_tokens": 21,
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_plan",
+      "category": "inline_proof",
+      "characters": 632,
+      "lexical_tokens": 135,
+      "nonblank_lines": 18
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "category": "specification",
+      "characters": 534,
+      "lexical_tokens": 122,
+      "nonblank_lines": 11
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "category": "annotation",
+      "characters": 90,
+      "lexical_tokens": 42,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "category": "inline_proof",
+      "characters": 172,
+      "lexical_tokens": 44,
+      "nonblank_lines": 6
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "category": "specification",
+      "characters": 514,
+      "lexical_tokens": 122,
+      "nonblank_lines": 11
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "category": "annotation",
+      "characters": 90,
+      "lexical_tokens": 42,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "category": "inline_proof",
+      "characters": 140,
+      "lexical_tokens": 44,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "category": "specification",
+      "characters": 516,
+      "lexical_tokens": 122,
+      "nonblank_lines": 11
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "category": "annotation",
+      "characters": 90,
+      "lexical_tokens": 42,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "category": "inline_proof",
+      "characters": 142,
+      "lexical_tokens": 44,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_fp_address_plan",
+      "category": "specification",
+      "characters": 407,
+      "lexical_tokens": 95,
+      "nonblank_lines": 8
+    },
+    {
+      "function": "cm_emit_fp_address_plan",
+      "category": "annotation",
+      "characters": 39,
+      "lexical_tokens": 21,
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_fp_address_plan",
+      "category": "inline_proof",
+      "characters": 198,
+      "lexical_tokens": 44,
+      "nonblank_lines": 8
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "category": "specification",
+      "characters": 1530,
+      "lexical_tokens": 352,
+      "nonblank_lines": 28
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "category": "annotation",
+      "characters": 254,
+      "lexical_tokens": 127,
+      "nonblank_lines": 6
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "category": "inline_proof",
+      "characters": 226,
+      "lexical_tokens": 64,
+      "nonblank_lines": 8
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "category": "specification",
+      "characters": 1528,
+      "lexical_tokens": 352,
+      "nonblank_lines": 28
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "category": "annotation",
+      "characters": 254,
+      "lexical_tokens": 127,
+      "nonblank_lines": 6
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "category": "inline_proof",
+      "characters": 224,
+      "lexical_tokens": 64,
+      "nonblank_lines": 8
+    }
+  ],
+  "source_additional_dependency_definitions": {
+    "scope": "Source incremental dependency closure: resolved-plan definition and public cm_plan_open/cm_plan_close proof routines plus private cm_plan_fragment_term; existing resolved/core models excluded",
+    "declarations": [
+      {
+        "name": "cm_resolved_emitter_plan_rep_def",
+        "category": "definition",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          573,
+          578
+        ],
+        "nonblank_lines": 6,
+        "sha256": "dcb37b41bdcc41bcf52b6ed846adcf17b6071a22932a34f7683291d802c63756"
+      },
+      {
+        "name": "cm_plan_fragment_term",
+        "category": "public_proof_support",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          315,
+          319
+        ],
+        "nonblank_lines": 5,
+        "sha256": "08dd3943d2da204439df45c51173821acb6007c7397cd523e6a9576b900c7adf"
+      },
+      {
+        "name": "cm_plan_open",
+        "category": "public_proof_support",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          321,
+          355
+        ],
+        "nonblank_lines": 34,
+        "sha256": "78040b1a41205863aec58f69ac804daa3a5cfd18e100061b93faf6b1a3cab267"
+      },
+      {
+        "name": "cm_plan_close",
+        "category": "public_proof_support",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          357,
+          369
+        ],
+        "nonblank_lines": 13,
+        "sha256": "66a9debf899a85ee9f07584297f2924bb95e37404224cb7421efa955a45dca2f"
+      }
+    ],
+    "definition_count": 1,
+    "definition_lines": 6,
+    "public_lemma_count": 0,
+    "public_proof_lines": 52,
+    "historical_development_seconds": null,
+    "note": "cm_plan_open and cm_plan_close are two public PROOF routines transforming symbolic states, not exported standalone HOL theorems; their private cm_plan_fragment_term dependency is counted once.",
+    "public_proof_api_count": 2,
+    "private_public_support_count": 1
+  },
+  "unused_split_drafts_aborted": [],
+  "dependency_snapshot_metrics": {
+    "batch_count": 7,
+    "coqdep_process_count": 7,
+    "elapsed_seconds": 7.934567,
+    "node_count": 156,
+    "source_count": 156,
+    "status": "resolved",
+    "strategy": "breadth-batched-coqdep"
+  },
+  "prior_dependency_function_proofs_imported": false
+}

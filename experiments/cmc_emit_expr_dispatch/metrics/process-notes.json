@@ -1,0 +1,116 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "annotation_development": {
+    "attempts": 1,
+    "design_commands": 4,
+    "design_failed": 1,
+    "symexec_commands": 3,
+    "symexec_failed": 2,
+    "post_library_commands": 1,
+    "post_library_failed": 0,
+    "repairs": [
+      "Coverage reverse direction required explicit predicate unfolding and tauto",
+      "Callee matching chose source-view equality; constructor equality reordered",
+      "Callee witnesses still not inferred until emitter plan explicitly rewritten to equal leaf constructor"
+    ],
+    "runtime_or_contract_domain_changes": false,
+    "main_annotation_acceptance": "passed"
+  },
+  "proof_development": {
+    "return_projection": {
+      "development_commands": 0,
+      "debug_commands": 0,
+      "exact_commands": 1,
+      "failed_commands": 0,
+      "new_helpers": 0
+    },
+    "branch_refinement": {
+      "development_commands": 2,
+      "development_failed": 1,
+      "debug_commands": 1,
+      "debug_failed": 0,
+      "exact_commands": 0,
+      "new_helpers": 0,
+      "repairs": [
+        "INT_MAX unfolding name failed; cbn and lia solved numeric bound"
+      ]
+    },
+    "expression_representation": {
+      "development_commands": 9,
+      "development_failed": 8,
+      "debug_commands": 3,
+      "debug_failed": 1,
+      "exact_commands": 0,
+      "new_helpers": 0,
+      "repairs": [
+        "Node witness naming collision",
+        "sepcon association normalization",
+        "Extract payload pure facts before closing node"
+      ],
+      "successful_debug_diagnostics": 2
+    },
+    "owner_totals": {
+      "development_commands": 11,
+      "development_failed": 9,
+      "debug_commands": 4,
+      "debug_failed": 1,
+      "exact_commands": 1,
+      "exact_failed": 0,
+      "new_helpers": 0
+    },
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 3,
+    "accepted_group_attempts": {
+      "return_projection": 1,
+      "expression_representation": 1,
+      "branch_refinement": 1
+    }
+  },
+  "public_reuse": "Leaf library transitive closure; four verified leaf emitter body contracts",
+  "main_audit": {
+    "source_replay": "passed",
+    "source_header_contracts": "identical",
+    "source_incremental_definition": "cm_leaf_expr_def, 6 lines",
+    "source_case_proof_lines": 64,
+    "source_public_proof_reused": "count facts and shape operations already used in counts/layout; leaf implementation and code equations already migrated",
+    "metric_repair": "Source annotation 12 entries occupy 8 unique physical lines; fixed deduplication before final measurement."
+  },
+  "dependency_preparation": {
+    "status": "passed",
+    "backend": "makefile",
+    "base_artifact_count": 154,
+    "rebuilt_count": 0
+  },
+  "vc_checking": {
+    "attempts": 1,
+    "top_level": 13,
+    "no_split": 5,
+    "splits": 8,
+    "blockers": 0,
+    "planned_groups": 3,
+    "aggressive": 8,
+    "LLM": 5,
+    "owner_debug_commands": 0,
+    "owner_check_commands": 0,
+    "report_repairs": 1,
+    "repair_reason": "Structural Blocker Scan machine-readable fields missing from delivery output; no formal change",
+    "main_acceptance": "passed"
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 3,
+    "planned_groups": 3,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T15:51:49.496759Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-17T15:51:49.509595Z"
+  }
+}

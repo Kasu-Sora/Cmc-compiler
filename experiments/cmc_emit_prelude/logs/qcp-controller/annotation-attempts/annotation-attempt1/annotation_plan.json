@@ -1,0 +1,57 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-context",
+      "location": "cmc_emit_prelude: before program->main_id read",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "program and emitter equal their entry addresses",
+        "program is nonnull from context representation"
+      ],
+      "resources": [
+        "all program context fields and represented struct/global/string lists",
+        "unchanged emitter plan",
+        "live uninitialized main_id local"
+      ],
+      "mathematical_state": "Expose the context fields solely to read the logical main identifier; the complete prelude plus arbitrary tail remains unconsumed.",
+      "internal_predicates": []
+    },
+    {
+      "id": "close-context",
+      "location": "cmc_emit_prelude: after main_id read, before first plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program and emitter equal their entry addresses",
+        "main_id equals cm_program_main p, with no validity assumption",
+        "PUSH/STORE/MOD/ADD/HALT opcode codes are 0/5/12/8/27, respectively"
+      ],
+      "resources": [
+        "restored program context",
+        "emitter plan for done and prelude plus tail",
+        "live main_id local"
+      ],
+      "mathematical_state": "The main identifier read from the unchanged context determines the single CALL operand in the literal 11-instruction plan; rewriting the source prelude definition connects the model to this exposed list.",
+      "internal_predicates": []
+    },
+    {
+      "id": "plan-calls",
+      "location": "cmc_emit_prelude: eleven plan helper call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "each non-call C opcode matches its logical opcode and is not CALL",
+        "the call receives the main_id read from the represented context"
+      ],
+      "resources": [
+        "program context framed across each helper",
+        "emitter plan advanced by one specified instruction",
+        "live main_id local"
+      ],
+      "mathematical_state": "The emitted prefix is original done followed by the consumed prelude prefix; remaining plan is the complementary prelude suffix followed by unchanged tail.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

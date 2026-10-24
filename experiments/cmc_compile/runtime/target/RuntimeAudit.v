@@ -1,0 +1,414 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_apply_helpers_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_apply_helpers_migration_lib.cm_ann_replace_as_push_pop". exact I. Qed.
+Check cmc_runtime_apply_helpers_migration_lib.cm_ann_replace_as_push_pop.
+Print Assumptions cmc_runtime_apply_helpers_migration_lib.cm_ann_replace_as_push_pop.
+Goal True. idtac "AUDIT cmc_runtime_apply_helpers_migration_lib.cm_runtime_core_leave_call_cursor". exact I. Qed.
+Check cmc_runtime_apply_helpers_migration_lib.cm_runtime_core_leave_call_cursor.
+Print Assumptions cmc_runtime_apply_helpers_migration_lib.cm_runtime_core_leave_call_cursor.
+Goal True. idtac "AUDIT cmc_runtime_apply_helpers_migration_lib.cm_runtime_core_enter_arg". exact I. Qed.
+Check cmc_runtime_apply_helpers_migration_lib.cm_runtime_core_enter_arg.
+Print Assumptions cmc_runtime_apply_helpers_migration_lib.cm_runtime_core_enter_arg.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_apply_step_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_apply_step_migration_lib.cm_v_runtime_step". exact I. Qed.
+Check cmc_runtime_apply_step_migration_lib.cm_v_runtime_step.
+Print Assumptions cmc_runtime_apply_step_migration_lib.cm_v_runtime_step.
+Goal True. idtac "AUDIT cmc_runtime_apply_step_migration_lib.cm_c_runtime_step". exact I. Qed.
+Check cmc_runtime_apply_step_migration_lib.cm_c_runtime_step.
+Print Assumptions cmc_runtime_apply_step_migration_lib.cm_c_runtime_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_call_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_call_migration_lib.cm_store_params_fp". exact I. Qed.
+Check cmc_runtime_call_migration_lib.cm_store_params_fp.
+Print Assumptions cmc_runtime_call_migration_lib.cm_store_params_fp.
+Goal True. idtac "AUDIT cmc_runtime_call_migration_lib.cm_call_ok_function_wf". exact I. Qed.
+Check cmc_runtime_call_migration_lib.cm_call_ok_function_wf.
+Print Assumptions cmc_runtime_call_migration_lib.cm_call_ok_function_wf.
+Goal True. idtac "AUDIT cmc_runtime_call_migration_lib.cm_call_frame_segment". exact I. Qed.
+Check cmc_runtime_call_migration_lib.cm_call_frame_segment.
+Print Assumptions cmc_runtime_call_migration_lib.cm_call_frame_segment.
+Goal True. idtac "AUDIT cmc_runtime_call_migration_lib.cm_runtime_core_enter_call". exact I. Qed.
+Check cmc_runtime_call_migration_lib.cm_runtime_core_enter_call.
+Print Assumptions cmc_runtime_call_migration_lib.cm_runtime_core_enter_call.
+Goal True. idtac "AUDIT cmc_runtime_call_migration_lib.cm_runtime_stack_halt_initial". exact I. Qed.
+Check cmc_runtime_call_migration_lib.cm_runtime_stack_halt_initial.
+Print Assumptions cmc_runtime_call_migration_lib.cm_runtime_stack_halt_initial.
+Goal True. idtac "AUDIT cmc_runtime_call_migration_lib.cm_runtime_core_halt_initial". exact I. Qed.
+Check cmc_runtime_call_migration_lib.cm_runtime_core_halt_initial.
+Print Assumptions cmc_runtime_call_migration_lib.cm_runtime_core_halt_initial.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_core_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_fields". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_fields.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_fields.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_plain". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_plain.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_plain.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_linear". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_linear.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_linear.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_io". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_io.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_io.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_store". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_store.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_store.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_push_plain". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_push_plain.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_push_plain.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_pop_plain". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_pop_plain.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_pop_plain.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_replace_plain". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_replace_plain.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_replace_plain.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_enter_scope". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_enter_scope.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_enter_scope.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_region_prefix_generations_incl". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_region_prefix_generations_incl.
+Print Assumptions cmc_runtime_core_migration_lib.cm_region_prefix_generations_incl.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_leave_scope". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_leave_scope.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_leave_scope.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_spills_within_remove". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_spills_within_remove.
+Print Assumptions cmc_runtime_core_migration_lib.cm_spills_within_remove.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_spills_within_put". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_spills_within_put.
+Print Assumptions cmc_runtime_core_migration_lib.cm_spills_within_put.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_stack_spill_put". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_stack_spill_put.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_stack_spill_put.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_spill_put". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_spill_put.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_spill_put.
+Goal True. idtac "AUDIT cmc_runtime_core_migration_lib.cm_runtime_core_leave_call". exact I. Qed.
+Check cmc_runtime_core_migration_lib.cm_runtime_core_leave_call.
+Print Assumptions cmc_runtime_core_migration_lib.cm_runtime_core_leave_call.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_frame_geometry_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_slots_wf_nonnegative_members". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_slots_wf_nonnegative_members.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_slots_wf_nonnegative_members.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_slots_size_nonnegative_from_members". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_slots_size_nonnegative_from_members.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_slots_size_nonnegative_from_members.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_slots_prefix_cell_bounds_nat". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_slots_prefix_cell_bounds_nat.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_slots_prefix_cell_bounds_nat.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_source_slot_at_valid". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_source_slot_at_valid.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_source_slot_at_valid.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_slots_prefix_cell_bounds". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_slots_prefix_cell_bounds.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_slots_prefix_cell_bounds.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_generation_bounds". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_generation_bounds.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_generation_bounds.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_unique". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_unique.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_unique.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_region_base_prefix_unique". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_region_base_prefix_unique.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_region_base_prefix_unique.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_geometry". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_geometry.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_regions_for_slots_geometry.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_region_prefix_safe_append". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_region_prefix_safe_append.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_region_prefix_safe_append.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_parameter_region_prefix_safe". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_parameter_region_prefix_safe.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_parameter_region_prefix_safe.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_local_region_frame_safe". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_local_region_frame_safe.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_local_region_frame_safe.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_runtime_stack_region_cons". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_runtime_stack_region_cons.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_runtime_stack_region_cons.
+Goal True. idtac "AUDIT cmc_runtime_frame_geometry_migration_lib.cm_runtime_core_activate_local". exact I. Qed.
+Check cmc_runtime_frame_geometry_migration_lib.cm_runtime_core_activate_local.
+Print Assumptions cmc_runtime_frame_geometry_migration_lib.cm_runtime_core_activate_local.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_invariant_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_invariant_migration_lib.cm_task_runtime_step_support". exact I. Qed.
+Check cmc_runtime_invariant_migration_lib.cm_task_runtime_step_support.
+Print Assumptions cmc_runtime_invariant_migration_lib.cm_task_runtime_step_support.
+Goal True. idtac "AUDIT cmc_runtime_invariant_migration_lib.cm_runtime_support_initial". exact I. Qed.
+Check cmc_runtime_invariant_migration_lib.cm_runtime_support_initial.
+Print Assumptions cmc_runtime_invariant_migration_lib.cm_runtime_support_initial.
+Goal True. idtac "AUDIT cmc_runtime_invariant_migration_lib.cm_runtime_support_step". exact I. Qed.
+Check cmc_runtime_invariant_migration_lib.cm_runtime_support_step.
+Print Assumptions cmc_runtime_invariant_migration_lib.cm_runtime_support_step.
+Goal True. idtac "AUDIT cmc_runtime_invariant_migration_lib.cm_runtime_support_iter". exact I. Qed.
+Check cmc_runtime_invariant_migration_lib.cm_runtime_support_iter.
+Print Assumptions cmc_runtime_invariant_migration_lib.cm_runtime_support_iter.
+Goal True. idtac "AUDIT cmc_runtime_invariant_migration_lib.cm_source_termination_runtime_invariants". exact I. Qed.
+Check cmc_runtime_invariant_migration_lib.cm_source_termination_runtime_invariants.
+Print Assumptions cmc_runtime_invariant_migration_lib.cm_source_termination_runtime_invariants.
+Goal True. idtac "AUDIT cmc_runtime_invariant_migration_lib.cm_source_termination_runtime_invariant". exact I. Qed.
+Check cmc_runtime_invariant_migration_lib.cm_source_termination_runtime_invariant.
+Print Assumptions cmc_runtime_invariant_migration_lib.cm_source_termination_runtime_invariant.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_memory_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_call_frames_lower_range". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_call_frames_lower_range.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_call_frames_lower_range.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_spill_list_lower_range". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_spill_list_lower_range.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_spill_list_lower_range.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_spill_frames_lower_range". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_spill_frames_lower_range.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_spill_frames_lower_range.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_spills_before_range_safe". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_spills_before_range_safe.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_spills_before_range_safe.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_runtime_stack_frame_range". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_runtime_stack_frame_range.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_runtime_stack_frame_range.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_runtime_stack_region_safe". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_runtime_stack_region_safe.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_runtime_stack_region_safe.
+Goal True. idtac "AUDIT cmc_runtime_memory_migration_lib.cm_runtime_stack_memory_layout". exact I. Qed.
+Check cmc_runtime_memory_migration_lib.cm_runtime_stack_memory_layout.
+Print Assumptions cmc_runtime_memory_migration_lib.cm_runtime_stack_memory_layout.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_regions_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_regions_before_nil". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_regions_before_nil.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_regions_before_nil.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_regions_before_cons". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_regions_before_cons.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_regions_before_cons.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_regions_before_app". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_regions_before_app.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_regions_before_app.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_regions_before_mono". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_regions_before_mono.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_regions_before_mono.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_regions_before_incl". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_regions_before_incl.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_regions_before_incl.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_restore_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_restore_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_restore_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_regions_for_slots_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_regions_for_slots_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_regions_for_slots_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_global_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_global_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_global_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_string_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_string_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_string_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_static_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_static_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_static_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_initial_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_initial_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_initial_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_enter_call_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_enter_call_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_enter_call_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_activate_local_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_activate_local_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_activate_local_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_restore_call_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_restore_call_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_restore_call_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_r_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_r_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_r_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_l_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_l_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_l_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_s_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_s_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_s_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_v_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_v_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_v_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_c_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_c_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_c_regions_before.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_task_regions_before_step". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_task_regions_before_step.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_task_regions_before_step.
+Goal True. idtac "AUDIT cmc_runtime_regions_migration_lib.cm_start_iter_regions_before". exact I. Qed.
+Check cmc_runtime_regions_migration_lib.cm_start_iter_regions_before.
+Print Assumptions cmc_runtime_regions_migration_lib.cm_start_iter_regions_before.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_stack_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_region_prefix_safe_refl". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_region_prefix_safe_refl.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_region_prefix_safe_refl.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_region_dead_prefix_refl". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_region_dead_prefix_refl.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_region_dead_prefix_refl.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_region_prefix_member". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_region_prefix_member.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_region_prefix_member.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_region_dead_member". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_region_dead_member.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_region_dead_member.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_restore_regions_dead_prefix". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_restore_regions_dead_prefix.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_restore_regions_dead_prefix.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_frame_segment_bounds". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_frame_segment_bounds.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_frame_segment_bounds.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_call_frames_lower_mono". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_call_frames_lower_mono.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_call_frames_lower_mono.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_spill_list_lower_mono". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_spill_list_lower_mono.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_spill_list_lower_mono.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_spill_frames_lower_mono". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_spill_frames_lower_mono.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_spill_frames_lower_mono.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_spills_within_lower". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_spills_within_lower.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_spills_within_lower.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_runtime_stack_fp_bounds". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_runtime_stack_fp_bounds.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_runtime_stack_fp_bounds.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_runtime_stack_lower". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_runtime_stack_lower.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_runtime_stack_lower.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_runtime_stack_nonempty". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_runtime_stack_nonempty.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_runtime_stack_nonempty.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_task_runtime_initial". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_task_runtime_initial.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_task_runtime_initial.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_runtime_stack_frame_ceiling". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_runtime_stack_frame_ceiling.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_runtime_stack_frame_ceiling.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_runtime_stack_region_bounds". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_runtime_stack_region_bounds.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_runtime_stack_region_bounds.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_spills_within_temp_lower". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_spills_within_temp_lower.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_spills_within_temp_lower.
+Goal True. idtac "AUDIT cmc_runtime_stack_migration_lib.cm_runtime_stack_current_machine_lower". exact I. Qed.
+Check cmc_runtime_stack_migration_lib.cm_runtime_stack_current_machine_lower.
+Print Assumptions cmc_runtime_stack_migration_lib.cm_runtime_stack_current_machine_lower.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_start_step_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_start_step_migration_lib.cm_local_slot_ok_bounds". exact I. Qed.
+Check cmc_runtime_start_step_migration_lib.cm_local_slot_ok_bounds.
+Print Assumptions cmc_runtime_start_step_migration_lib.cm_local_slot_ok_bounds.
+Goal True. idtac "AUDIT cmc_runtime_start_step_migration_lib.cm_r_runtime_step". exact I. Qed.
+Check cmc_runtime_start_step_migration_lib.cm_r_runtime_step.
+Print Assumptions cmc_runtime_start_step_migration_lib.cm_r_runtime_step.
+Goal True. idtac "AUDIT cmc_runtime_start_step_migration_lib.cm_l_runtime_step". exact I. Qed.
+Check cmc_runtime_start_step_migration_lib.cm_l_runtime_step.
+Print Assumptions cmc_runtime_start_step_migration_lib.cm_l_runtime_step.
+Goal True. idtac "AUDIT cmc_runtime_start_step_migration_lib.cm_s_runtime_step". exact I. Qed.
+Check cmc_runtime_start_step_migration_lib.cm_s_runtime_step.
+Print Assumptions cmc_runtime_start_step_migration_lib.cm_s_runtime_step.
+Goal True. idtac "AUDIT cmc_runtime_start_step_migration_lib.cm_runtime_start_step". exact I. Qed.
+Check cmc_runtime_start_step_migration_lib.cm_runtime_start_step.
+Print Assumptions cmc_runtime_start_step_migration_lib.cm_runtime_start_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_static_geometry_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_global_regions_generation_bounds". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_global_regions_generation_bounds.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_global_regions_generation_bounds.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_string_regions_generation_bounds". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_string_regions_generation_bounds.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_string_regions_generation_bounds.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_global_regions_generations_unique". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_global_regions_generations_unique.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_global_regions_generations_unique.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_string_regions_generations_unique". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_string_regions_generations_unique.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_string_regions_generations_unique.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_region_generations_unique_append". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_region_generations_unique_append.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_region_generations_unique_append.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_static_regions_generations_unique". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_static_regions_generations_unique.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_static_regions_generations_unique.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_region_base_member_unique". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_region_base_member_unique.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_region_base_member_unique.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_static_region_base_member". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_static_region_base_member.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_static_region_base_member.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_typed_globals_nonnegative". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_typed_globals_nonnegative.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_typed_globals_nonnegative.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_globals_size_nonnegative_from_members". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_globals_size_nonnegative_from_members.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_globals_size_nonnegative_from_members.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_strings_size_nonnegative". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_strings_size_nonnegative.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_strings_size_nonnegative.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_globals_prefix_cell_bounds_nat". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_globals_prefix_cell_bounds_nat.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_globals_prefix_cell_bounds_nat.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_strings_prefix_cell_bounds_nat". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_strings_prefix_cell_bounds_nat.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_strings_prefix_cell_bounds_nat.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_global_region_member_index_nat". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_global_region_member_index_nat.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_global_region_member_index_nat.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_string_region_member_index_nat". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_string_region_member_index_nat.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_string_region_member_index_nat.
+Goal True. idtac "AUDIT cmc_runtime_static_geometry_migration_lib.cm_typed_static_regions_layout". exact I. Qed.
+Check cmc_runtime_static_geometry_migration_lib.cm_typed_static_regions_layout.
+Print Assumptions cmc_runtime_static_geometry_migration_lib.cm_typed_static_regions_layout.
+Require Import SimpleC.EE.QCP_demos_human.cmc_runtime_transport_migration_lib.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_prefix_suffix_incl". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_prefix_suffix_incl.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_prefix_suffix_incl.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_dead_suffix_incl". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_dead_suffix_incl.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_dead_suffix_incl.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_regions_before_prefix_suffix". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_regions_before_prefix_suffix.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_regions_before_prefix_suffix.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_regions_before_dead_suffix". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_regions_before_dead_suffix.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_regions_before_dead_suffix.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_frame_safe_below_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_frame_safe_below_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_frame_safe_below_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_prefix_safe_below_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_prefix_safe_below_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_prefix_safe_below_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_static_regions_layout_below_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_static_regions_layout_below_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_static_regions_layout_below_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_runtime_stack_below_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_runtime_stack_below_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_runtime_stack_below_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_frame_safe_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_frame_safe_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_frame_safe_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_prefix_safe_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_prefix_safe_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_prefix_safe_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_static_regions_layout_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_static_regions_layout_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_static_regions_layout_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_runtime_stack_bases". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_runtime_stack_bases.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_runtime_stack_bases.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_dead_prefix_cons". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_dead_prefix_cons.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_dead_prefix_cons.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_prefix_dead_cons". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_prefix_dead_cons.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_prefix_dead_cons.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_dead_prefix_trans". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_dead_prefix_trans.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_dead_prefix_trans.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_region_dead_prefix_safe_trans". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_region_dead_prefix_safe_trans.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_region_dead_prefix_safe_trans.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_runtime_stack_dead_prefix". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_runtime_stack_dead_prefix.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_runtime_stack_dead_prefix.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_runtime_stack_restore_incl". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_runtime_stack_restore_incl.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_runtime_stack_restore_incl.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_runtime_stack_regions_for_slots". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_runtime_stack_regions_for_slots.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_runtime_stack_regions_for_slots.
+Goal True. idtac "AUDIT cmc_runtime_transport_migration_lib.cm_runtime_stack_fresh_region". exact I. Qed.
+Check cmc_runtime_transport_migration_lib.cm_runtime_stack_fresh_region.
+Print Assumptions cmc_runtime_transport_migration_lib.cm_runtime_stack_fresh_region.

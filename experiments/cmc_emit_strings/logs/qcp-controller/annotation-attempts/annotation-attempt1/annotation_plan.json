@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-string-copy-boundary",
+      "location": "cmc_emit_strings: after the null-node return, before reading the head fields and calling cmc_copy_bytes",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "all parameters equal their @pre values and node is nonnull",
+        "head length is Zlength of its bytes, nonnegative; tail size is nonnegative",
+        "cursor >= 0; cursor + head length + 1 + tail size <= capacity <= INT_MAX",
+        "source nonnull predicate permits empty byte arrays at any pointer"
+      ],
+      "resources": [
+        "head bytes/length/next fields",
+        "full source byte array, including the zero-length emp case",
+        "remaining string list ownership",
+        "destination initialized prefix and uninitialized suffix"
+      ],
+      "mathematical_state": "strings is head :: tail; head and all tail bytes remain owned while head bytes and one zero terminator are appended before recursively emitting tail",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

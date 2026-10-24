@@ -1,0 +1,44 @@
+[
+  {
+    "name": "cmc_emit_code",
+    "prototype": false,
+    "source_span": [
+      8,
+      79
+    ],
+    "specification": [
+      [
+        10,
+        12
+      ],
+      [
+        13,
+        31
+      ],
+      [
+        32,
+        50
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        53,
+        53
+      ],
+      [
+        55,
+        64
+      ],
+      [
+        66,
+        69
+      ],
+      [
+        71,
+        78
+      ]
+    ],
+    "runtime": "void cmc_emit_code(struct cm_program *program,\n                   struct cm_emitter *emitter)\n{\n  struct cm_function *functions;\n  functions = program->functions;\n  cmc_emit_prelude(program, emitter);\n  cmc_emit_functions(program, functions, 0, 11, emitter);\n}\n"
+  }
+]

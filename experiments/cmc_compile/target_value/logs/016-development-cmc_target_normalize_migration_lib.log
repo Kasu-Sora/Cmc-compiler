@@ -1,0 +1,54 @@
+Chars 0 - 88 [Require~Export~~~SimpleC.EE.QC...] 1.34 secs (1.217u,0.104s)
+Chars 89 - 134 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 135 - 156 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 157 - 182 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 183 - 562 [Lemma~cm_tvm_normalize_pair~ob...] 0. secs (0.u,0.s)
+Chars 563 - 569 [Proof.] 0. secs (0.u,0.s)
+Chars 571 - 644 [(intro~CODE;~cbn[app]~in~CODE;...] 0. secs (0.u,0.s)
+Chars 646 - 767 [(cbn[tvm_iter];~~~rewrite~~~~(...] 0.002 secs (0.001u,0.s)
+Chars 769 - 900 [(cbv[tvm_next_state~tvm_pc~tvm...] 0. secs (0.u,0.s)
+Chars 902 - 989 [(rewrite~~~(cm_tvm_code_step~o...] 0. secs (0.u,0.s)
+Chars 991 - 1211 [(destruct~add;~cbn[tvm_inst_st...] 0.003 secs (0.003u,0.s)
+Chars 1212 - 1216 [Qed.] 0.004 secs (0.004u,0.s)
+Chars 1217 - 1506 [Lemma~cm_tvm_char_normalize~ob...] 0. secs (0.u,0.s)
+Chars 1507 - 1513 [Proof.] 0. secs (0.u,0.s)
+Chars 1515 - 1565 [(intro~CODE;~cbn[cm_char_norma...] 0. secs (0.u,0.s)
+Chars 1567 - 1657 [(pose~proof~(cm_code_at_tail~_...] 0. secs (0.u,0.s)
+Chars 1659 - 1747 [(pose~proof~(cm_code_at_tail~_...] 0. secs (0.u,0.s)
+Chars 1749 - 1829 [(replace~(pc~+~1~+~1)~with~(pc...] 0. secs (0.u,0.s)
+Chars 1831 - 1934 [(change~~~~(tvm_iter~2~~~~~~~(...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_value/build/Rocq/examples/QCP_demos_human/cmc_target_normalize_migration_lib.v", line 27, characters 101-102:
+Error: Cannot infer this placeholder of type "tvm_task" in
+environment:
+obj : tvm_object
+pc, value : Z
+calls : list Z
+mem : Z -> Z
+input, output : list Z
+rest : list tvm_inst
+CODE :
+  cm_code_at (tvm_object_code obj) pc
+    (TVMInst TVMPushOp 256
+     :: TVMInst TVMModOp 0
+        :: TVMInst TVMPushOp 256
+           :: TVMInst TVMAddOp 0
+              :: TVMInst TVMPushOp 256 :: TVMInst TVMModOp 0 :: rest)
+C1 :
+  cm_code_at (tvm_object_code obj) (pc + 1)
+    (TVMInst TVMModOp 0
+     :: TVMInst TVMPushOp 256
+        :: TVMInst TVMAddOp 0
+           :: TVMInst TVMPushOp 256 :: TVMInst TVMModOp 0 :: rest)
+C2 :
+  cm_code_at (tvm_object_code obj) (pc + 2)
+    (TVMInst TVMPushOp 256
+     :: TVMInst TVMAddOp 0
+        :: TVMInst TVMPushOp 256 :: TVMInst TVMModOp 0 :: rest)
+C3 :
+  cm_code_at (tvm_object_code obj) (pc + 1 + 1 + 1)
+    (TVMInst TVMAddOp 0
+     :: TVMInst TVMPushOp 256 :: TVMInst TVMModOp 0 :: rest)
+C4 :
+  cm_code_at (tvm_object_code obj) (pc + 4)
+    (TVMInst TVMPushOp 256 :: TVMInst TVMModOp 0 :: rest)
+

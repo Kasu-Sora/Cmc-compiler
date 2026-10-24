@@ -1,0 +1,45 @@
+Chars 0 - 72 [Require~Export~SimpleC.EE.QCP_...] 1.348 secs (1.227u,0.103s)
+Chars 73 - 118 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.01u,0.s)
+Chars 119 - 140 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 141 - 166 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 167 - 340 [Lemma~cm_restore_value_number~...] 0. secs (0.u,0.s)
+Chars 341 - 347 [Proof.] 0. secs (0.u,0.s)
+Chars 349 - 488 [(intro~INC;~destruct~v;~cbn[cm...] 0. secs (0.u,0.s)
+Chars 489 - 493 [Qed.] 0. secs (0.u,0.s)
+Chars 494 - 604 [Lemma~cm_restore_init_old~all~...] 0. secs (0.u,0.s)
+Chars 605 - 611 [Proof.] 0. secs (0.u,0.s)
+Chars 613 - 699 [(revert~init;~induction~curren...] 0. secs (0.u,0.s)
+Chars 701 - 862 [(destruct~(cm_regions_eqb~(r~:...] 0.001 secs (0.001u,0.s)
+Chars 863 - 867 [Qed.] 0. secs (0.u,0.s)
+Chars 868 - 1049 [Lemma~cm_restore_initialized_s...] 0. secs (0.u,0.s)
+Chars 1050 - 1056 [Proof.] 0. secs (0.u,0.s)
+Chars 1058 - 1209 [(intros~INC~SIM~a~INIT~LIVE;~a...] 0. secs (0.u,0.s)
+Chars 1210 - 1214 [Qed.] 0. secs (0.u,0.s)
+Chars 1215 - 1395 [Lemma~cm_restore_provenance_si...] 0. secs (0.u,0.s)
+Chars 1396 - 1402 [Proof.] 0. secs (0.u,0.s)
+Chars 1404 - 1465 [(intros~INC~SIM~a~TAG~LIVE;~ap...] 0. secs (0.u,0.s)
+Chars 1467 - 1559 [(pose~proof~(cm_restore_call_l...] 0. secs (0.u,0.s)
+Chars 1561 - 1695 [(cbn[cm_restore_call~cm_state_...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_value/build/Rocq/examples/QCP_demos_human/cmc_target_scope_memory_migration_lib.v", line 28, characters 131-134:
+Error:
+In environment
+st : cm_src_state
+env : Z -> Z -> cm_value
+fp : Z
+old : list cm_region
+mem : Z -> Z
+INC : incl old (cm_state_regions st)
+a : Z
+SIM :
+  cm_state_init st a = true /\
+  tower_getw mem a = cm_value_number st (cm_state_tags st a)
+TAG : cm_state_tagged st a = true
+LIVE : cm_live_address (cm_restore_call st env fp old) a
+LIVE0 : cm_live_address st a
+The term "SIM" has type
+ "cm_state_init st a = true /\
+  tower_getw mem a = cm_value_number st (cm_state_tags st a)"
+while it is expected to have type
+ "cm_state_init (cm_restore_call st env fp old) a = true /\
+  tower_getw mem a = cm_value_number st (cm_state_tags st a)".
+

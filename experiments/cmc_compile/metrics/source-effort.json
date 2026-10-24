@@ -1,0 +1,225 @@
+{
+  "source_sha256": "eaa51e1a84814585561d9980cf2f5042d2861210b6964a2aa88dc2447b127118",
+  "function_counts": [
+    {
+      "function": "cmc_compile",
+      "source_span": [
+        144,
+        648
+      ],
+      "specification": 12,
+      "annotation": 2,
+      "inline_proof": 435
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "_cmc_axioms_before",
+      "kind": "proof",
+      "span": [
+        16,
+        17
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static size_t _cmc_axioms_before =\n    vector_size(get_all_axioms());",
+      "dependencies": [],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    },
+    {
+      "name": "cmc_prove_program_valid_wf",
+      "kind": "proof",
+      "span": [
+        20,
+        35
+      ],
+      "nonblank_lines": 16,
+      "text": "PROOF static thm cmc_prove_program_valid_wf(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program).\n         cm_rep_program_valid p == 1i ==> cm_wf_program p`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = BOOL_CASES_TAC(\n      leaf, `cm_wf_program (p:cm_program)`, \"Hwf\");\n  ACCEPT_TAC(cases[0],\n      assume_rule(`cm_wf_program (p:cm_program)`));\n  thm impossible = conv_rule(reduce_rewrite_conv(THM_LIST(\n      get_cm_rep_program_valid_def(),\n      assume_rule(`~cm_wf_program (p:cm_program)`))),\n      assume_rule(`cm_rep_program_valid (p:cm_program) == 1i`));\n  CONTR_TAC(cases[1], impossible);\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cmc_program_valid_wf",
+      "kind": "proof",
+      "span": [
+        37,
+        38
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cmc_program_valid_wf =\n    cmc_prove_program_valid_wf();",
+      "dependencies": [
+        "cmc_prove_program_valid_wf"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cmc_fold_output_view",
+      "kind": "proof",
+      "span": [
+        40,
+        60
+      ],
+      "nonblank_lines": 21,
+      "text": "PROOF static thm cmc_fold_output_view(\n    const thm view, const term ops, const term imms, const term data) {\n  term existential = dest_eq(concl(view)).tm2;\n  dest_binder_results outer = dest_sl_exists(existential);\n  dest_binder_results middle = dest_sl_exists(outer.tm);\n  dest_binder_results inner = dest_sl_exists(middle.tm);\n  term body = subst(TERM_PAIR_LIST(\n      (term_pair){ops, outer.v},\n      (term_pair){imms, middle.v},\n      (term_pair){data, inner.v}), inner.tm);\n  term data_existential = subst(TERM_PAIR_LIST(\n      (term_pair){ops, outer.v},\n      (term_pair){imms, middle.v}), middle.tm);\n  term imms_existential = subst(TERM_PAIR_LIST(\n      (term_pair){ops, outer.v}), outer.tm);\n  thm introduced = refl_slrule(body);\n  introduced = exists_slrule(data_existential, data, introduced);\n  introduced = exists_slrule(imms_existential, imms, introduced);\n  introduced = exists_slrule(existential, ops, introduced);\n  return trans_slrule(introduced, eq2ent(sym_rule(view)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cmc_fold_two_exists_view",
+      "kind": "proof",
+      "span": [
+        62,
+        76
+      ],
+      "nonblank_lines": 15,
+      "text": "PROOF static thm cmc_fold_two_exists_view(\n    const thm view, const term first, const term second) {\n  term existential = dest_eq(concl(view)).tm2;\n  dest_binder_results outer = dest_sl_exists(existential);\n  dest_binder_results inner = dest_sl_exists(outer.tm);\n  term body = subst(TERM_PAIR_LIST(\n      (term_pair){first, outer.v},\n      (term_pair){second, inner.v}), inner.tm);\n  term inner_existential = subst(TERM_PAIR_LIST(\n      (term_pair){first, outer.v}), outer.tm);\n  thm introduced = refl_slrule(body);\n  introduced = exists_slrule(inner_existential, second, introduced);\n  introduced = exists_slrule(existential, first, introduced);\n  return trans_slrule(introduced, eq2ent(sym_rule(view)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cmc_fold_one_exists_view",
+      "kind": "proof",
+      "span": [
+        78,
+        87
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cmc_fold_one_exists_view(\n    const thm view, const term witness) {\n  term existential = dest_eq(concl(view)).tm2;\n  dest_binder_results outer = dest_sl_exists(existential);\n  term body = subst(TERM_PAIR_LIST(\n      (term_pair){witness, outer.v}), outer.tm);\n  thm introduced = exists_slrule(\n      existential, witness, refl_slrule(body));\n  return trans_slrule(introduced, eq2ent(sym_rule(view)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "_cmc_bridge_axioms_before",
+      "kind": "proof",
+      "span": [
+        89,
+        90
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static size_t _cmc_bridge_axioms_before =\n    vector_size(get_all_axioms());",
+      "dependencies": [],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    },
+    {
+      "name": "cmc_prove_compile_success_bridge",
+      "kind": "proof",
+      "span": [
+        94,
+        133
+      ],
+      "nonblank_lines": 40,
+      "text": "PROOF static thm cmc_prove_compile_success_bridge(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (obj:tvm_object) (input:(int)list)\n         (output:(int)list) (status:int).\n         cm_wf_program p &&\n         cm_source_terminates p input output status &&\n         cm_output_decodes 0i\n           (cm_rep_ops (cm_model_code p))\n           (cm_rep_imms (cm_model_code p))\n           (cm_model_data_bytes p) obj ==>\n         tvm_terminates obj input output status`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm premises = assume_rule(\n      `cm_wf_program (p:cm_program) &&\n       cm_source_terminates p (input:(int)list)\n         (output:(int)list) (status:int) &&\n       cm_output_decodes 0i\n         (cm_rep_ops (cm_model_code p))\n         (cm_rep_imms (cm_model_code p))\n         (cm_model_data_bytes p) (obj:tvm_object)`);\n  thm wf = conjunct1_rule(premises);\n  thm source = conjunct1_rule(conjunct2_rule(premises));\n  thm decoded = conjunct2_rule(conjunct2_rule(premises));\n  thm modeled = match_mp_rule(get_cm_model_output_decodes(), wf);\n  thm same_object = match_mp_rule(specl_rule(TERM_LIST(\n      `0i:int`, `cm_rep_ops (cm_model_code (p:cm_program))`,\n      `cm_rep_imms (cm_model_code (p:cm_program))`,\n      `cm_model_data_bytes (p:cm_program)`, `obj:tvm_object`,\n      `cm_compile_model (p:cm_program)`),\n      get_cm_output_decode_unique()), conj_rule(decoded, modeled));\n  thm preserved = match_mp_rule(\n      get_cmc_preservation(), conj_rule(wf, source));\n  thm lifted = beta_norm(ap_term_rule(\n      `\\candidate:tvm_object.\n         tvm_terminates candidate (input:(int)list)\n           (output:(int)list) (status:int)`,\n      same_object));\n  ACCEPT_TAC(leaf, eq_mp_rule(sym_rule(lifted), preserved));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cmc_compile_success_bridge",
+      "kind": "proof",
+      "span": [
+        134,
+        135
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cmc_compile_success_bridge =\n    cmc_prove_compile_success_bridge();",
+      "dependencies": [
+        "cmc_prove_compile_success_bridge"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "get_cmc_compile_success_bridge",
+      "kind": "proof",
+      "span": [
+        136,
+        138
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cmc_compile_success_bridge(void) {\n  return cmc_compile_success_bridge;\n}",
+      "dependencies": [
+        "cmc_compile_success_bridge"
+      ],
+      "category": "getter_scaffolding"
+    },
+    {
+      "name": "_cmc_pre_body_no_axioms",
+      "kind": "proof",
+      "span": [
+        140,
+        142
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF static int _cmc_pre_body_no_axioms =\n    vector_size(get_all_axioms()) == _cmc_axioms_before\n        ? 1 : (abort(), 0);",
+      "dependencies": [
+        "_cmc_axioms_before"
+      ],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    },
+    {
+      "name": "cmc_final_checks",
+      "kind": "proof",
+      "span": [
+        650,
+        670
+      ],
+      "nonblank_lines": 21,
+      "text": "PROOF static int cmc_final_checks(void) {\n  ENSURE_COND(vector_size(get_all_axioms()) == _cmc_bridge_axioms_before,\n      \"cmc logical bridge introduced an axiom\");\n  ENSURE_COND(!IS_NULL(get_cmc_compile_success_bridge()) &&\n      vector_size(hyp(get_cmc_compile_success_bridge())) == 0 &&\n      vector_size(free_vars(concl(get_cmc_compile_success_bridge()))) == 0 &&\n      alpha_compare(concl(get_cmc_compile_success_bridge()),\n        `!(p:cm_program) (obj:tvm_object) (input:(int)list)\n           (output:(int)list) (status:int).\n           cm_wf_program p &&\n           cm_source_terminates p input output status &&\n           cm_output_decodes 0i\n             (cm_rep_ops (cm_model_code p))\n             (cm_rep_imms (cm_model_code p))\n             (cm_model_data_bytes p) obj ==>\n           tvm_terminates obj input output status`) == 0,\n      \"concrete compiler success bridge has the wrong contract\");\n  return 0;\nerr:\n  return -1;\n}",
+      "dependencies": [
+        "_cmc_bridge_axioms_before",
+        "get_cmc_compile_success_bridge"
+      ],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    },
+    {
+      "name": "_cmc_checks",
+      "kind": "proof",
+      "span": [
+        671,
+        671
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static int _cmc_checks = cmc_final_checks();",
+      "dependencies": [
+        "cmc_final_checks"
+      ],
+      "category": "outside_runtime_dependency_closure_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 12,
+    "annotation": 2,
+    "inline_proof": 435,
+    "exported_shared_proof_closure": 42,
+    "getter_scaffolding": 3,
+    "outside_runtime_dependency_closure_proof_support": 29,
+    "private_case_proof_support": 64,
+    "case_proof": 499,
+    "proof_including_shared": 541
+  },
+  "annotation_entries": [
+    {
+      "function": "cmc_compile",
+      "kind": "where",
+      "span": [
+        396,
+        396
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_compile",
+      "kind": "where",
+      "span": [
+        397,
+        397
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [
+    "get_cmc_compile_success_bridge"
+  ],
+  "public_wrappers_not_called_by_runtime_proof": [
+    "get_cmc_compile_success_bridge"
+  ],
+  "counting_note": "Nonblank non-comment physical lines deduplicated per function/category; body contracts counted once; forward/header duplicates excluded. Same-file private proof support and source model definitions are classified separately; header duplicate contracts excluded.",
+  "public_linkage_note": "Static source proof helpers used only by this case are counted in case proof; externally linked theorem constants, if any, count as shared support."
+}

@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-contexts",
+      "location": "cm_emit_binding_address: entry before scope dispatch",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "All five C arguments equal their entry values",
+        "program and fn are nonnull by their contexts",
+        "slot is nonnegative from binding_valid",
+        "Exact fragment capacity remains available"
+      ],
+      "resources": [
+        "Every program-context header field and its structs/globals/strings lists",
+        "Every function-context header field and params/locals lists",
+        "Resolved emitter ownership with logical done and raw patch view"
+      ],
+      "mathematical_state": "All ten source contract facts persist; opening both contexts exposes precisely the subresources required by the existing layout helper contracts. Each branch returns the representation address that the prefix bridges identify with its exact binding fragment.",
+      "internal_predicates": []
+    },
+    {
+      "id": "open-plan",
+      "location": "cm_emit_binding_address_plan: entry before direct emitter call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "All five C arguments equal their entry values",
+        "The original fragment-plus-tail budget implies fragment capacity",
+        "The remaining tail fits after appending the exact fragment"
+      ],
+      "resources": [
+        "Complete program_context_rep",
+        "Complete function_context_rep",
+        "Resolved emitter ownership with unchanged done"
+      ],
+      "mathematical_state": "The plan is a capacity budget over the same resolved buffer; opening it exposes direct-call capacity while retaining the budget for the unchanged tail. All ten source facts are preserved by the direct call.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

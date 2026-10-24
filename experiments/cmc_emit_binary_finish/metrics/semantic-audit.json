@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cm_pointer_scale_value",
+      "target_contract_sha256": "745a62bb38a6fc26467bbb75a9b96fd4e5e69215a8356177ff75f9f10a4ad347",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_binary_generic_fragment",
+      "target_contract_sha256": "4eea9bd1441b189a4efea11e3fb617340d222f924b4ed65f9741fe2d9b8aaa94",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_binary_finish_plan",
+      "target_contract_sha256": "a8c6a8e2c12b89775860c84f3e4bbc12a2a02063e7039f5c0795f11e1db7c23f",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    }
+  ],
+  "annotation_stage_model_declarations": [],
+  "source_to_target": [
+    "HOL int/list -> Z/list; existing lookup policy unchanged",
+    "Exact binary finish and pointer scale models imported unchanged from verified call library",
+    "Arbitrary int op, all pointer combinations and exact code ordering retained",
+    "All original resources and pure pre/post facts retained",
+    "All seven imported helper implementations previously verified; no pending external implementation"
+  ],
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "final_review": "The final applied C contracts and runtime bodies match the accepted audited annotation. All 99 final Qed blocks match their reviewed group proofs: constructor/encoding bridges preserve pointee size, wf and refs; exact branch instruction lists and plan tails normalize by existing definitions and list associativity; opcode obligations reduce to existing concrete codes. No new model, premise, helper, or resource weakening."
+}

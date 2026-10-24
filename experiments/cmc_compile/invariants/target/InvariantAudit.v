@@ -1,0 +1,147 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_context_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_context_migration_lib.cm_task_context_initial". exact I. Qed.
+Check cmc_simulation_context_migration_lib.cm_task_context_initial.
+Print Assumptions cmc_simulation_context_migration_lib.cm_task_context_initial.
+Goal True. idtac "AUDIT cmc_simulation_context_migration_lib.cm_stmt_scope_context_ready". exact I. Qed.
+Check cmc_simulation_context_migration_lib.cm_stmt_scope_context_ready.
+Print Assumptions cmc_simulation_context_migration_lib.cm_stmt_scope_context_ready.
+Goal True. idtac "AUDIT cmc_simulation_context_migration_lib.cm_stmt_wf_scope_ready". exact I. Qed.
+Check cmc_simulation_context_migration_lib.cm_stmt_wf_scope_ready.
+Print Assumptions cmc_simulation_context_migration_lib.cm_stmt_wf_scope_ready.
+Goal True. idtac "AUDIT cmc_simulation_context_migration_lib.cm_typed_body_scope_ready". exact I. Qed.
+Check cmc_simulation_context_migration_lib.cm_typed_body_scope_ready.
+Print Assumptions cmc_simulation_context_migration_lib.cm_typed_body_scope_ready.
+Goal True. idtac "AUDIT cmc_simulation_context_migration_lib.cm_call_ok_scope_ready". exact I. Qed.
+Check cmc_simulation_context_migration_lib.cm_call_ok_scope_ready.
+Print Assumptions cmc_simulation_context_migration_lib.cm_call_ok_scope_ready.
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_context_step_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_stmt_scope_context_view". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_stmt_scope_context_view.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_stmt_scope_context_view.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_r_context_step". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_r_context_step.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_r_context_step.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_l_context_step". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_l_context_step.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_l_context_step.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_s_context_step". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_s_context_step.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_s_context_step.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_v_context_step". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_v_context_step.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_v_context_step.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_c_context_step". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_c_context_step.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_c_context_step.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_task_context_step_coordinate". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_task_context_step_coordinate.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_task_context_step_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_annotated_iter_context_coordinate". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_annotated_iter_context_coordinate.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_annotated_iter_context_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_context_step_migration_lib.cm_annotated_start_iter_context". exact I. Qed.
+Check cmc_simulation_context_step_migration_lib.cm_annotated_start_iter_context.
+Print Assumptions cmc_simulation_context_step_migration_lib.cm_annotated_start_iter_context.
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_fid_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_call_ok_fid_bounds". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_call_ok_fid_bounds.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_call_ok_fid_bounds.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_r_fid_step". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_r_fid_step.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_r_fid_step.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_l_fid_step". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_l_fid_step.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_l_fid_step.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_s_fid_step". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_s_fid_step.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_s_fid_step.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_v_fid_step". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_v_fid_step.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_v_fid_step.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_c_fid_step". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_c_fid_step.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_c_fid_step.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_task_fid_step_coordinate". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_task_fid_step_coordinate.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_task_fid_step_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_annotated_iter_fid_coordinate". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_annotated_iter_fid_coordinate.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_annotated_iter_fid_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_fid_migration_lib.cm_annotated_start_iter_fid_ready". exact I. Qed.
+Check cmc_simulation_fid_migration_lib.cm_annotated_start_iter_fid_ready.
+Print Assumptions cmc_simulation_fid_migration_lib.cm_annotated_start_iter_fid_ready.
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_spill_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_spill_holds_remove_other". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_spill_holds_remove_other.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_spill_holds_remove_other.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_spill_holds_put_other". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_spill_holds_put_other.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_spill_holds_put_other.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_staged_spills_put_above". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_staged_spills_put_above.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_staged_spills_put_above.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_owner_bound". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_owner_bound.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_owner_bound.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_put_above". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_put_above.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_put_above.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_put_above". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_put_above.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_put_above.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_annotation_spill_consistent_initial". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_annotation_spill_consistent_initial.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_annotation_spill_consistent_initial.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_limit". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_limit.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_phase_spill_consistent_limit.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_limit". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_limit.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_cursors_spill_consistent_limit.
+Goal True. idtac "AUDIT cmc_simulation_spill_migration_lib.cm_staged_spills_cons". exact I. Qed.
+Check cmc_simulation_spill_migration_lib.cm_staged_spills_cons.
+Print Assumptions cmc_simulation_spill_migration_lib.cm_staged_spills_cons.
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_spill_update_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_done_error_not_succeeds". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_done_error_not_succeeds.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_done_error_not_succeeds.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_error_not_succeeds". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_error_not_succeeds.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_error_not_succeeds.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_update_r_spill_consistent". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_update_r_spill_consistent.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_update_r_spill_consistent.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_update_l_spill_consistent". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_update_l_spill_consistent.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_update_l_spill_consistent.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_update_s_spill_consistent". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_update_s_spill_consistent.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_update_s_spill_consistent.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_update_v_spill_coordinate". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_update_v_spill_coordinate.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_update_v_spill_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_update_c_spill_consistent". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_update_c_spill_consistent.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_update_c_spill_consistent.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_annotation_step_spill_coordinate". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_annotation_step_spill_coordinate.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_annotation_step_spill_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_annotated_iter_spill_coordinate". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_annotated_iter_spill_coordinate.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_annotated_iter_spill_coordinate.
+Goal True. idtac "AUDIT cmc_simulation_spill_update_migration_lib.cm_annotated_start_iter_spill_consistent". exact I. Qed.
+Check cmc_simulation_spill_update_migration_lib.cm_annotated_start_iter_spill_consistent.
+Print Assumptions cmc_simulation_spill_update_migration_lib.cm_annotated_start_iter_spill_consistent.
+Require Import SimpleC.EE.QCP_demos_human.cmc_simulation_support_invariants_migration_lib.
+Goal True. idtac "AUDIT cmc_simulation_support_invariants_migration_lib.cm_control_support_initial". exact I. Qed.
+Check cmc_simulation_support_invariants_migration_lib.cm_control_support_initial.
+Print Assumptions cmc_simulation_support_invariants_migration_lib.cm_control_support_initial.
+Goal True. idtac "AUDIT cmc_simulation_support_invariants_migration_lib.cm_control_support_step". exact I. Qed.
+Check cmc_simulation_support_invariants_migration_lib.cm_control_support_step.
+Print Assumptions cmc_simulation_support_invariants_migration_lib.cm_control_support_step.
+Goal True. idtac "AUDIT cmc_simulation_support_invariants_migration_lib.cm_control_support_iter". exact I. Qed.
+Check cmc_simulation_support_invariants_migration_lib.cm_control_support_iter.
+Print Assumptions cmc_simulation_support_invariants_migration_lib.cm_control_support_iter.
+Goal True. idtac "AUDIT cmc_simulation_support_invariants_migration_lib.cm_source_termination_support_invariants". exact I. Qed.
+Check cmc_simulation_support_invariants_migration_lib.cm_source_termination_support_invariants.
+Print Assumptions cmc_simulation_support_invariants_migration_lib.cm_source_termination_support_invariants.

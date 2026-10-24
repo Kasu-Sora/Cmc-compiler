@@ -1,0 +1,77 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "type-open",
+      "location": "cm_expr_type_code_context: before reading expr->ty",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "expr and code equal their entry values",
+        "expr is nonnull from cm_expr_rep"
+      ],
+      "resources": [
+        "all cm_expr header fields and cm_expr_payload",
+        "uninitialized output int"
+      ],
+      "mathematical_state": "The stored ty field is the encoding of the abstract expression type; the expression payload is unchanged.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_lvalue_count_context-open",
+      "location": "cm_expr_lvalue_count_context: before cm_expr_lvalue_count call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "all parameters equal their entry values",
+        "program and fn nonnull from their context predicates",
+        "f equals total function lookup under the same policy",
+        "all original wellformedness, representability and struct-safety facts"
+      ],
+      "resources": [
+        "all five program fields, struct/global/string lists",
+        "all five function fields and parameter/local lists",
+        "cm_expr_rep for unchanged expr"
+      ],
+      "mathematical_state": "The full immutable contexts are exposed so the helper borrows struct/global/local resources; remaining fields and lists are framed across the call and refolded at return. The exact count model and i32 bound come from the unchanged helper contract.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_rvalue_count_context-open",
+      "location": "cm_expr_rvalue_count_context: before cm_expr_rvalue_count call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "all parameters equal their entry values",
+        "program and fn nonnull from their context predicates",
+        "f equals total function lookup under the same policy",
+        "all original wellformedness, representability and struct-safety facts"
+      ],
+      "resources": [
+        "all five program fields, struct/global/string lists",
+        "all five function fields and parameter/local lists",
+        "cm_expr_rep for unchanged expr"
+      ],
+      "mathematical_state": "The full immutable contexts are exposed so the helper borrows struct/global/local resources; remaining fields and lists are framed across the call and refolded at return. The exact count model and i32 bound come from the unchanged helper contract.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_stmt_code_count_context-open",
+      "location": "cm_stmt_code_count_context: before cmc_stmt_code_count call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "all parameters equal their entry values",
+        "program and fn nonnull from their context predicates",
+        "f equals total function lookup under the same policy",
+        "all original wellformedness, representability and struct-safety facts"
+      ],
+      "resources": [
+        "all five program fields, struct/global/string lists",
+        "all five function fields and parameter/local lists",
+        "cm_stmt_rep for unchanged stmt"
+      ],
+      "mathematical_state": "The full immutable contexts are exposed so the helper borrows struct/global/local resources and return type; remaining fields and lists are framed across the call and refolded at return. The exact count model and i32 bound come from the unchanged helper contract.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

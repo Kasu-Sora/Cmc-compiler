@@ -1,0 +1,19 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/invariants/build/Rocq/examples/QCP_demos_human/cmc_simulation_support_invariants_migration_lib.v", line 40, characters 1-21:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+input, output : list Z
+status : Z
+n : nat
+WF : cm_semantic_wf_program (cm_source_function_policy sp) p
+INPUT : cm_valid_input input
+st : tower_byte_value status
+ctl : cm_src_state
+RUN : cm_control
+SUCCESS : cm_exec sp (CMStartTask p input) (CMOutcome ctl RUN status)
+OUTPUT : cm_success_control RUN /\ cm_state_output ctl = output
+The term "st" has type "0 <= status < 256" while it is expected to have type
+ "cm_src_state".
+

@@ -1,0 +1,164 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cm_emit_args_reload_plan",
+      "target_contract_sha256": "79d26fd58a6357854ac6dfad89b040e742ebc14412c4320db02f17ff971e8fc6",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "target_contract_sha256": "c7a01ccaca2ee1ff73fea6d1ac43677a84f206a3b58858fbbcfef5651f7e034a",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "target_contract_sha256": "e7635c2739a92c7bd4cc723d7a360e4e7fd6d4c8a8efa112580e2b0eaa1a2818",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_emit_pair",
+      "kind": "Record",
+      "span": [
+        12,
+        12
+      ],
+      "sha256": "a01a787d762f97cfdf0e383ffb09ccd1a029d4383d994f91eb0adc72be8d53ac",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_pointer_scale",
+      "kind": "Definition",
+      "span": [
+        13,
+        13
+      ],
+      "sha256": "7074ceb63b913f07cba5712bfd5eb0a288ef761d577d538099b6310f0b1c4880",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_binary_finish_code",
+      "kind": "Definition",
+      "span": [
+        14,
+        25
+      ],
+      "sha256": "240c83aed4ef48ed03e0eb2cec6d32a4a006b4dad35a1e8e68aab21a29e7b720",
+      "nonblank_lines": 12
+    },
+    {
+      "name": "cm_emit_args_reload",
+      "kind": "Fixpoint",
+      "span": [
+        26,
+        27
+      ],
+      "sha256": "fb2c79a688e1f2ac4448e6f5155b4174f95e2b3ab649c6b65ec3cd9981732b2b",
+      "nonblank_lines": 2
+    },
+    {
+      "name": "cm_emit_expr_pair",
+      "kind": "Fixpoint",
+      "span": [
+        28,
+        73
+      ],
+      "sha256": "bcf76bf22d4322f4dda95c07387388b4d3fe8965d73e88c541045d56d329b9ff",
+      "nonblank_lines": 46
+    },
+    {
+      "name": "cm_expr_code_for",
+      "kind": "Definition",
+      "span": [
+        74,
+        76
+      ],
+      "sha256": "a96137effcf7d524e2c9cb006114d5b75396d24a0b588e5dd7821f5e345d6ddc",
+      "nonblank_lines": 3
+    },
+    {
+      "name": "cm_emit_args_store",
+      "kind": "Fixpoint",
+      "span": [
+        77,
+        80
+      ],
+      "sha256": "37ec2faa82fd938cf2e537de8425c95d9032a769674e6a8c4c0d04d4b8e8c110",
+      "nonblank_lines": 4
+    },
+    {
+      "name": "cm_expr_temps_for",
+      "kind": "Definition",
+      "span": [
+        81,
+        81
+      ],
+      "sha256": "31773d2ea33b5c17d93c14d7939687059d67296914469f7175e1ba2a5ecbc4d3",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_args_head",
+      "kind": "Definition",
+      "span": [
+        85,
+        85
+      ],
+      "sha256": "9cb48df573795c2d1d384374fa97413237278593215d1a504fbd2e7607efbb67",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_args_tail",
+      "kind": "Definition",
+      "span": [
+        86,
+        86
+      ],
+      "sha256": "d14a1d3f7e55306413b3f39b84a013aa9790413d215733baa404f386b8f0fee3",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_call_slots_tail",
+      "kind": "Definition",
+      "span": [
+        87,
+        87
+      ],
+      "sha256": "98fcb71de2821c525cc4fa3b13b17814e19c1b005713082d94a8d5764547be73",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_call_args",
+      "kind": "Definition",
+      "span": [
+        88,
+        88
+      ],
+      "sha256": "fc9d8beb31d585b1cf16b6a0c93557cc4a0d107752c0ab3718b15d5aae3e521a",
+      "nonblank_lines": 1
+    }
+  ],
+  "source_to_target": [
+    "HOL int/list -> Z/list; existing policy/cg boundary unchanged",
+    "All 14 cm_expr constructors have exact source code equations; var delegates existing models",
+    "Nested argument-store fixpoint and standalone cm_emit_args_store agree by structural recursion",
+    "Pointer arithmetic and short-circuit branches retain source opcode/target offsets",
+    "All original resources and pure postconditions retained",
+    "External cm_emit_expr exact header contract remains an explicit pending implementation dependency"
+  ],
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "final_review": {
+    "controller_phase": "done",
+    "manual_top_level": 21,
+    "source_contracts_preserved": true,
+    "full_general_expression_model_reviewed": true,
+    "external_cm_emit_expr_body_pending": true,
+    "final_models_unchanged_from_annotation": true,
+    "manual_and_final_library_reviewed": true
+  }
+}

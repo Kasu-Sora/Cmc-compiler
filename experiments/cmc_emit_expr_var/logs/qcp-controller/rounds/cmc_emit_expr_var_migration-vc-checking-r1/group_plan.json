@@ -1,0 +1,84 @@
+{
+  "groups": [
+    {
+      "id": "return_reassembly",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_var_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_return_wit_1_split_goal_spatial": "Substitute e = CMVarE scope slot ty. Expand cm_var_code_for and cm_var_rcode using the given lvalue_pre = 0 and binding-array-code = 0; use app_assoc to identify (done ++ address) ++ load with done ++ (address ++ load). Preserve the program/function context frames and emitter resource. Reduce cm_expr_rep/cm_expr_node at CMVarE, instantiate its child-pointer existentials with 0,0,0, use expr_pre <> 0 and the trivial payload equalities, and cancel the seven expression-field resources. No new helper is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_var_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_return_wit_2_split_goal_spatial": "Substitute e = CMVarE scope slot ty. Reduce cm_var_code_for/cm_var_rcode using lvalue_pre = 0 and the supplied nonzero binding-array code (Z.eqb_neq); app_nil_r identifies the code with address alone. Preserve both context predicates and the emitter with done ++ address. Fold the expression representation by choosing child pointers 0,0,0, supplying expr_pre <> 0 and the leaf payload equalities, then cancel the seven fields. No new helper is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_var_expr_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_return_wit_3_split_goal_spatial": "Use lvalue_pre <> 0 to reduce cm_var_code_for via Z.eqb_neq and cm_var_lcode to address code. Substitute e = CMVarE scope slot ty and fold cm_expr_rep/cm_expr_node with child-pointer witnesses 0,0,0, using the supplied expr_pre <> 0. Cancel the seven expression fields and frame the unchanged program/function contexts and emitter done ++ address. No array-code case distinction or new helper is needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "representation_context",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_var_expr_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_which_implies_wit_1_split_goal_1": "Substitute e = CMVarE scope slot ty and reduce cm_expr_rep/cm_expr_node. Extract expr <> 0 from the node's pure conjunct; the seven owned fields and empty leaf payload remain only as the antecedent frame for this pure entailment.",
+            "proof_of_cm_emit_var_expr_which_implies_wit_1_split_goal_spatial": "Substitute the supplied CMVarE equality, reduce cm_expr_rep/cm_expr_node and constructor projections, expose a,b,args, and extract the leaf payload a=0 /\\ b=0 /\\ args=0. Substitute these values, remove emp, and cancel the seven expression fields. No new helper is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_var_expr_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose either identical disjunct of the whole VC. Introduce the scalar/model parameters and unfold cm_program_context_rep and cm_function_context_rep. Extract program <> 0, fn <> 0 and the three program pointers sp,gp,tp plus function pointers pp,lp. Instantiate the consequent existentials in their order lp,pp,tp,gp,sp with precisely those pointers. Reassociate separation conjunction, reintroduce the two pure facts, and cancel all ten field resources and five list-representation resources without unfolding the lists. No new helper is needed."
+        },
+        {
+          "name": "proof_of_cm_emit_var_expr_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_which_implies_wit_3_split_goal_spatial": "Unfold the two consequent context predicates. Supply their program/function nonzero facts from PreH5 and PreH6, instantiate program pointers with sp,gp,tp and function pointers with pp,lp, and reassociate/cancel the ten fields and five list representations. Field bounds are available but no additional arithmetic or list unfolding is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "branch_plan_normalization",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_var_expr_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_which_implies_wit_4_split_goal_spatial": "Derive lvalue=0 by lia from 0<=lvalue<=0. Unfold cm_var_code_for/cm_var_rcode and rewrite the supplied binding-array-code=0. Rewrite (address ++ load) ++ tail to address ++ (load ++ tail) using app_assoc, leaving identical emitter-plan resources on both sides; close by reflexive entailment. No resource unpacking, existential choice or new helper is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_var_expr_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_which_implies_wit_5_split_goal_spatial": "Derive lvalue=0 from the two bounds, unfold cm_var_code_for/cm_var_rcode, and use the given nonzero binding-array code with Z.eqb_neq. Simplify address ++ [] with app_nil_r; the emitter-plan done and pending address ++ tail now match exactly, so close by reflexive entailment. No new helper is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_var_expr_which_implies_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_var_expr_which_implies_wit_6_split_goal_spatial": "Use the given lvalue<>0 to rewrite its zero test to false. Unfold cm_var_code_for/cm_var_lcode, exposing exactly the same pending address ++ tail emitter-plan resource on both sides. Close by reflexive entailment without inspecting array-code, unpacking resources or adding helpers."
+          }
+        }
+      ]
+    }
+  ]
+}

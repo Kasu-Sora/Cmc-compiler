@@ -1,0 +1,191 @@
+Chars 0 - 79 [Require~Export~~~SimpleC.EE.QC...] 1.27 secs (1.204u,0.066s)
+Chars 80 - 125 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 126 - 147 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 148 - 173 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 174 - 411 [Lemma~cm_spill_holds_range~pol...] 0. secs (0.u,0.s)
+Chars 412 - 418 [Proof.] 0. secs (0.u,0.s)
+Chars 420 - 538 [(induction~spills~as~[|~[s~v]~...] 0. secs (0.u,0.s)
+Chars 540 - 635 [(intros~[H~T];~destruct~(s~=?~...] 0. secs (0.u,0.s)
+Chars 636 - 640 [Qed.] 0. secs (0.u,0.s)
+Chars 641 - 1370 [Lemma~cm_target_v_assign_right...] 0. secs (0.u,0.s)
+Chars 1371 - 1377 [Proof.] 0. secs (0.u,0.s)
+Chars 1379 - 1470 [(cbn~zeta;~intros~RT~FID~SLOT~...] 0. secs (0.u,0.s)
+Chars 1472 - 1559 [(destruct~vm~as~[vpc~stack~vca...] 0. secs (0.u,0.s)
+Chars 1561 - 1683 [(destruct~SIM~as~[M~[P~[F~[C~[...] 0.001 secs (0.001u,0.s)
+Chars 1685 - 1766 [(pose~proof~(cm_runtime_stack_...] 0. secs (0.u,0.s)
+Chars 1768 - 1853 [(pose~proof~(cm_runtime_store_...] 0. secs (0.u,0.s)
+Chars 1855 - 1968 [(pose~proof~(cm_spill_holds_ra...] 0. secs (0.u,0.s)
+Chars 1970 - 2090 [(pose~proof~(cm_spill_sim_hold...] 0. secs (0.u,0.s)
+Chars 2092 - 2206 [(pose~proof~~~(cm_runtime_temp...] 0. secs (0.u,0.s)
+Chars 2208 - 2387 [(cbn[cm_task_code~cm_cont_code...] 0. secs (0.u,0.s)
+Chars 2389 - 2560 [(pose~proof~~~(cm_tvm_assign_t...] 0.027 secs (0.026u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_store/build/Rocq/examples/QCP_demos_human/cmc_target_assign_migration_lib.v", line 30, characters 157-158:
+Error: Cannot infer this placeholder of type "list tvm_inst" in
+environment:
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+v : cm_value
+st : cm_src_state
+ptr : cm_value
+ty : cm_type
+pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+RT :
+  cm_runtime_core (cm_source_function_policy sp) ap p fid st
+    (CMAnnotation pc temp b c
+       (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved calls)
+FID : 0 <= fid
+SLOT : 0 <= owner < cm_temp_slots (cm_source_function_at sp fid p)
+HOLD : cm_spill_holds owner ptr spills
+OK : cm_store_ok ty ptr st = true
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) pc
+    (cm_assign_tail_code (cm_source_function_policy sp) p fid ty owner ++
+     cm_cursor_code sp p fid
+       (pc +
+        Zlength
+          (cm_assign_tail_code (cm_source_function_policy sp) p fid ty owner))
+       owner (false || cm_phase_yields_normal (CAAssignRP ptr ty)) tail)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    (cm_task_fid
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                   saved calls)))))
+    (cm_ann_cursors
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+vcalls : list Z
+mem : Z -> Z
+input, output : list Z
+O :
+  tvm_output (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_output st
+I :
+  tvm_input (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_input st
+SS :
+  cm_spill_frames_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_ann_saved
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+S :
+  cm_spill_list_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_spill_frame_fid
+       (CMSpillFrame fid (cm_state_fp st)
+          (cm_ann_spills
+             (CMAnnotation pc temp b c
+                (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                saved calls))))
+    (cm_spill_frame_fp
+       (CMSpillFrame fid (cm_state_fp st)
+          (cm_ann_spills
+             (CMAnnotation pc temp b c
+                (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                saved calls))))
+    (cm_spill_frame_spills
+       (CMSpillFrame fid (cm_state_fp st)
+          (cm_ann_spills
+             (CMAnnotation pc temp b c
+                (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                saved calls))))
+C :
+  cm_call_frames_sim
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+    (tvm_calls (TVMState pc [cm_value_number st v] vcalls mem input output))
+F : tower_getw mem 8 = cm_state_fp st
+P :
+  cm_stored_provenance_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+M :
+  cm_initialized_bytes_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+OLD :
+  cm_machine_state_sim (cm_source_function_policy sp) p st
+    (TVMState pc [cm_value_number st v] vcalls mem input output)
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls)) [v] []
+MEMORY :
+  cm_runtime_memory_layout (cm_source_function_policy sp) p st
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+    (CMSpillFrame fid (cm_state_fp st)
+       (cm_ann_spills
+          (CMAnnotation pc temp b c
+             (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+             calls))
+     :: cm_ann_saved
+          (CMAnnotation pc temp b c
+             (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+             calls))
+FP : cm_range_disjoint (cm_value_number st ptr) (cm_store_width ty) 8 8
+CALLS :
+  cm_call_frames_range_safe (cm_value_number st ptr) 
+    (cm_store_width ty)
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills saved
+          calls))
+SP :
+  cm_spill_list_range_safe (cm_source_function_policy sp) p
+    (cm_spill_frame_fid
+       (CMSpillFrame fid (cm_state_fp st)
+          (cm_ann_spills
+             (CMAnnotation pc temp b c
+                (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                saved calls))))
+    (cm_spill_frame_fp
+       (CMSpillFrame fid (cm_state_fp st)
+          (cm_ann_spills
+             (CMAnnotation pc temp b c
+                (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                saved calls)))) (cm_value_number st ptr) 
+    (cm_store_width ty)
+    (cm_spill_frame_spills
+       (CMSpillFrame fid (cm_state_fp st)
+          (cm_ann_spills
+             (CMAnnotation pc temp b c
+                (CMACursor (CAAssignRP ptr ty) owner ob oc :: tail) spills
+                saved calls))))
+DIS :
+  cm_range_disjoint (cm_value_number st ptr) (cm_store_width ty)
+    (cm_state_fp st +
+     cm_temp_offset (cm_source_function_policy sp) p fid owner) 8
+WORD :
+  tower_getw mem
+    (cm_state_fp st +
+     cm_temp_offset (cm_source_function_policy sp) p fid owner) =
+  cm_value_number st ptr
+ADDR :
+  tower_word_valid
+    (tower_getw mem 8 +
+     cm_temp_offset (cm_source_function_policy sp) p fid owner)
+

@@ -1,0 +1,183 @@
+{
+  "run": {
+    "status": "completed",
+    "phase": "done",
+    "created_at": "2026-10-18T09:08:09.706888Z",
+    "finished_at": "2026-10-18T10:07:43.392707Z",
+    "elapsed_seconds": 3573.685819
+  },
+  "annotation_metrics": {
+    "attempt_count": 1,
+    "annotation_repair_count": 0,
+    "validation_only_attempt_count": 0,
+    "owner_generation_invocation_count": 8,
+    "tool_failure_invocation_count": 0,
+    "controller_tool_failure_invocation_count": 0,
+    "same_attempt_tool_retry_count": 0,
+    "same_attempt_controller_tool_retry_count": 0,
+    "controller_acceptance_run_count": 1,
+    "controller_acceptance_rerun_count": 0,
+    "owner_generation_seconds": 12.636,
+    "controller_main_refresh_seconds": 0,
+    "clean_replay_seconds": 4.383,
+    "wasted_timeout_seconds": 0,
+    "legacy_unclassified_symexec_seconds": 0
+  },
+  "annotation_attempts": [
+    {
+      "attempt": "annotation-attempt1",
+      "round": "cmc_emit_expr_call_migration-annotation-r1",
+      "activity": "spec-and-annotation",
+      "owner_generation_invocations": 8,
+      "tool_failure_invocations": 0,
+      "same_attempt_tool_retries": 0,
+      "controller_acceptance_runs": 1,
+      "controller_tool_failure_invocations": 0,
+      "same_attempt_controller_tool_retries": 0,
+      "status": "accepted",
+      "created_at": "2026-10-18T09:08:25.204694Z",
+      "finished_at": "2026-10-18T09:35:07.316458Z",
+      "elapsed_seconds": 1602.111764,
+      "stages": [
+        {
+          "name": "annotation-work",
+          "started_at": "2026-10-18T09:08:38.271698Z",
+          "finished_at": "2026-10-18T09:33:19.034639Z",
+          "elapsed_seconds": 1480.762941
+        },
+        {
+          "name": "formal-case-lib-design-coq-check",
+          "started_at": "2026-10-18T09:12:09.201115Z",
+          "calls": 10,
+          "finished_at": "2026-10-18T09:28:35.347126Z",
+          "elapsed_seconds": 15.448849
+        },
+        {
+          "name": "owner-generation",
+          "started_at": "2026-10-18T09:14:29.290062Z",
+          "calls": 8,
+          "finished_at": "2026-10-18T09:29:32.891716Z",
+          "elapsed_seconds": 12.636
+        },
+        {
+          "name": "clean-replay",
+          "started_at": "2026-10-18T09:34:19.182054Z",
+          "finished_at": "2026-10-18T09:34:23.565054Z",
+          "elapsed_seconds": 4.383
+        },
+        {
+          "name": "formal-case-lib-coq-check",
+          "started_at": "2026-10-18T09:30:15.791892Z",
+          "calls": 2,
+          "finished_at": "2026-10-18T09:34:19.176870Z",
+          "elapsed_seconds": 0.139517
+        },
+        {
+          "name": "controller-validation",
+          "started_at": "2026-10-18T09:33:19.011826Z",
+          "finished_at": "2026-10-18T09:33:19.079331Z",
+          "elapsed_seconds": 0.063926
+        },
+        {
+          "name": "controller-acceptance-check",
+          "started_at": "2026-10-18T09:33:57.782287Z",
+          "finished_at": "2026-10-18T09:34:23.581859Z",
+          "elapsed_seconds": 25.794205
+        },
+        {
+          "name": "dune-build",
+          "started_at": "2026-10-18T09:34:54.380063Z",
+          "finished_at": "2026-10-18T09:35:07.316458Z",
+          "elapsed_seconds": 12.930798
+        }
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "round": "cmc_emit_expr_call_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "created_at": "2026-10-18T09:35:33.415754Z",
+      "finished_at": "2026-10-18T09:50:35.806712Z",
+      "elapsed_seconds": 902.390958,
+      "stages": [
+        {
+          "name": "witness-analysis",
+          "started_at": "2026-10-18T09:35:45.126881Z",
+          "finished_at": "2026-10-18T09:50:12.640219Z",
+          "elapsed_seconds": 867.513338
+        },
+        {
+          "name": "controller-validation",
+          "started_at": "2026-10-18T09:48:32.395100Z",
+          "calls": 3,
+          "finished_at": "2026-10-18T09:50:12.672811Z",
+          "elapsed_seconds": 0.128979
+        },
+        {
+          "name": "controller-plan-check",
+          "started_at": "2026-10-18T09:50:31.481288Z",
+          "finished_at": "2026-10-18T09:50:35.806712Z",
+          "elapsed_seconds": 4.318385
+        }
+      ]
+    },
+    {
+      "round": "cmc_emit_expr_call_migration-vc-proving-r1",
+      "phase": "vc-proving",
+      "status": "verified",
+      "created_at": "2026-10-18T09:50:48.187090Z",
+      "finished_at": "2026-10-18T10:06:58.674911Z",
+      "elapsed_seconds": 970.487821,
+      "stages": [
+        {
+          "name": "group-work",
+          "started_at": "2026-10-18T09:51:12.936722Z",
+          "finished_at": "2026-10-18T10:06:20.841037Z",
+          "elapsed_seconds": 907.904315
+        },
+        {
+          "name": "preparing",
+          "started_at": "2026-10-18T09:50:58.311663Z",
+          "finished_at": "2026-10-18T09:50:58.402372Z",
+          "elapsed_seconds": 0.08317
+        },
+        {
+          "name": "group-development-check",
+          "started_at": "2026-10-18T09:53:20.467609Z",
+          "calls": 35,
+          "finished_at": "2026-10-18T10:05:25.620170Z",
+          "elapsed_seconds": 107.700654
+        },
+        {
+          "name": "group-coq-check",
+          "started_at": "2026-10-18T09:55:12.187767Z",
+          "calls": 7,
+          "finished_at": "2026-10-18T10:05:44.577036Z",
+          "elapsed_seconds": 24.024627
+        },
+        {
+          "name": "group-validation",
+          "started_at": "2026-10-18T09:55:53.169028Z",
+          "calls": 7,
+          "finished_at": "2026-10-18T10:06:23.319186Z",
+          "elapsed_seconds": 14.61007
+        },
+        {
+          "name": "parent-verify",
+          "started_at": "2026-10-18T10:06:41.885359Z",
+          "finished_at": "2026-10-18T10:06:58.674911Z",
+          "elapsed_seconds": 16.780695
+        }
+      ]
+    }
+  ],
+  "finalization": {
+    "status": "passed",
+    "started_at": "2026-10-18T10:06:58.674911Z",
+    "applied_at": "2026-10-18T10:07:19.290840Z",
+    "finished_at": "2026-10-18T10:07:43.392707Z",
+    "elapsed_seconds": 44.717796
+  }
+}

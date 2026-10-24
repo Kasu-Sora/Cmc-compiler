@@ -1,0 +1,51 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_generation_state_migration_lib.v", line 53, characters 109-115:
+Error:
+In environment
+policy : cm_lookup_policy
+p : cm_program
+fid, limit : Z
+env : Z -> Z -> cm_value
+slot : Z
+G :
+  forall slot : Z,
+  0 <= slot < Zlength (cm_program_globals p) ->
+  cm_value_generation_below limit (env 0 slot)
+L :
+  forall slot : Z,
+  0 <= slot <
+  Zlength
+    (cm_function_locals (cm_function_at policy fid (cm_program_functions p))) ->
+  cm_value_generation_below limit (env 1 slot)
+A :
+  forall slot : Z,
+  0 <= slot <
+  Zlength
+    (cm_function_params (cm_function_at policy fid (cm_program_functions p))) ->
+  cm_value_generation_below limit (env 2 slot)
+The term "G slot" has type
+ "0 <= slot < Zlength (cm_program_globals p) ->
+  cm_value_generation_below limit (env 0 slot)"
+while it is expected to have type
+ "0 = 0 /\ 0 <= slot < Zlength (cm_program_globals p) \/
+  0 = 1 /\
+  0 <= slot <
+  Zlength
+    (cm_function_locals (cm_function_at policy fid (cm_program_functions p))) \/
+  0 = 2 /\
+  0 <= slot <
+  Zlength
+    (cm_function_params (cm_function_at policy fid (cm_program_functions p))) ->
+  cm_value_generation_below limit (env 0 slot)"
+(cannot unify "0 = 0 /\ 0 <= slot < Zlength (cm_program_globals p) \/
+               0 = 1 /\
+               0 <= slot <
+               Zlength
+                 (cm_function_locals
+                    (cm_function_at policy fid (cm_program_functions p))) \/
+               0 = 2 /\
+               0 <= slot <
+               Zlength
+                 (cm_function_params
+                    (cm_function_at policy fid (cm_program_functions p)))"
+and "0 <= slot < Zlength (cm_program_globals p)").
+

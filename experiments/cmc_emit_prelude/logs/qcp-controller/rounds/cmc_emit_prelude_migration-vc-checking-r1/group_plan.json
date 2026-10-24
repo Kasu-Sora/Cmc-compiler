@@ -1,0 +1,34 @@
+{
+  "groups": [
+    {
+      "id": "prelude_context_plan",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prelude_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Context-open pattern: unfold the witness and select the first disjunct. Introduce the quantified state, unfold cm_program_context_rep on the left, extract its nonzero fact and existential s, g, t. Choose t, g, s in the target existential declaration order. Preserve the complete resolved emitter plan as a frame, introduce the nonzero pure fact, and cancel the five identical field resources and three list predicates. Both addresses are already program_pre; no current-to-pre bridge or additional helper is needed."
+        },
+        {
+          "name": "proof_of_cmc_emit_prelude_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prelude_entail_wit_2_split_goal_1": "Opcode pattern: introduce the quantified state and bounds; the consequent is the closed equality tvm_opcode_code TVMHaltOp = 27. Reduce tvm_opcode_code and introduce the pure reflexive equality under the unchanged antecedent. No heap change or additional premise is needed.",
+            "proof_of_cmc_emit_prelude_entail_wit_2_split_goal_2": "Opcode pattern: introduce the quantified state and bounds; the consequent is the closed equality tvm_opcode_code TVMAddOp = 8. Reduce tvm_opcode_code and introduce the pure reflexive equality under the unchanged antecedent. No heap change or additional premise is needed.",
+            "proof_of_cmc_emit_prelude_entail_wit_2_split_goal_3": "Opcode pattern: introduce the quantified state and bounds; the consequent is the closed equality tvm_opcode_code TVMModOp = 12. Reduce tvm_opcode_code and introduce the pure reflexive equality under the unchanged antecedent. No heap change or additional premise is needed.",
+            "proof_of_cmc_emit_prelude_entail_wit_2_split_goal_4": "Opcode pattern: introduce the quantified state and bounds; the consequent is the closed equality tvm_opcode_code TVMStoreOp = 5. Reduce tvm_opcode_code and introduce the pure reflexive equality under the unchanged antecedent. No heap change or additional premise is needed.",
+            "proof_of_cmc_emit_prelude_entail_wit_2_split_goal_5": "Opcode pattern: introduce the quantified state and bounds; the consequent is the closed equality tvm_opcode_code TVMPushOp = 0. Reduce tvm_opcode_code and introduce the pure reflexive equality under the unchanged antecedent. No heap change or additional premise is needed.",
+            "proof_of_cmc_emit_prelude_entail_wit_2_split_goal_spatial": "Context-close pattern: retain the resolved emitter plan as a frame. Unfold cm_program_context_rep on the right, use PreH3 for program_pre <> 0, and choose the existing sp, gp, tp field values for its existential witnesses. Cancel all five program fields and three list predicates. Unfold only cm_emit_prelude and reduce append of its concrete eleven-element list to identify the two pending instruction lists; no main-id validity or arithmetic premise is required."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prelude_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prelude_return_wit_1_split_goal_spatial": "Append-normalization pattern: introduce quantified state and pure premises, substitute main_id using PreH1. Unfold cm_emit_prelude, normalize the eleven nested singleton appends by list append associativity and reduction to done ++ the concrete eleven-instruction prelude. Keep cm_resolved_emitter_plan_rep opaque; after this argument equality, cancel the emitter plan and unchanged program_context_rep across the reversed separating-conjunction order. No new existential, heap mutation, arithmetic assumption, or helper is needed."
+          }
+        }
+      ]
+    }
+  ]
+}

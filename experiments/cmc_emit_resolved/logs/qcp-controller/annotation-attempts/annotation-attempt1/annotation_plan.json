@@ -1,0 +1,143 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "cm_emit_resolved-core-call",
+      "location": "cm_emit_resolved: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "op == op@pre",
+        "immediate == immediate@pre",
+        "op == tvm_opcode_code(opcode)",
+        "tvm_opcode_code(opcode) != 22",
+        "Zlength(done) + 1 <= capacity"
+      ],
+      "resources": [
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cons(TVMInst(opcode, immediate), nil).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_call-core-call",
+      "location": "cm_emit_resolved_call: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "function_id == function_id@pre",
+        "Zlength(done) + 1 <= capacity"
+      ],
+      "resources": [
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cons(TVMInst(TVMCallOp, cm_function_pc(policy, p, function_id)), nil).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_normalize-core-call",
+      "location": "cm_emit_resolved_normalize: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "ty == ty@pre",
+        "ty == cm_type_encode(model_ty)",
+        "cm_type_code_wf(model_ty)",
+        "Zlength(done) + Zlength(cm_char_normalize_code(model_ty)) <= capacity"
+      ],
+      "resources": [
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cm_char_normalize_code(model_ty).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_load-core-call",
+      "location": "cm_emit_resolved_load: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "ty == ty@pre",
+        "ty == cm_type_encode(model_ty)",
+        "cm_type_code_wf(model_ty)",
+        "Zlength(done) + Zlength(cm_load_code(model_ty)) <= capacity"
+      ],
+      "resources": [
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cm_load_code(model_ty).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_store-core-call",
+      "location": "cm_emit_resolved_store: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "ty == ty@pre",
+        "ty == cm_type_encode(model_ty)",
+        "cm_type_code_wf(model_ty)",
+        "Zlength(done) + Zlength(cm_store_code(model_ty)) <= capacity"
+      ],
+      "resources": [
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cm_store_code(model_ty).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_fp_address-core-call",
+      "location": "cm_emit_resolved_fp_address: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "offset == offset@pre",
+        "Zlength(done) + Zlength(cm_fp_relative_address_code(offset)) <= capacity"
+      ],
+      "resources": [
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cm_fp_relative_address_code(offset).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_temp_store-core-call",
+      "location": "cm_emit_resolved_temp_store: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "fn == fn@pre",
+        "temp == temp@pre",
+        "0 <= temp && structs == cm_program_structs(p) && f == cm_function_at(policy, fid, cm_program_functions(p)) && cm_slots_wf(structs, cm_function_params(f)) && cm_slots_wf(structs, cm_function_locals(f)) && cm_rep_members_safe(cm_function_params(f)) && cm_rep_members_safe(cm_function_locals(f)) && cm_temp_offset(policy, p, fid, temp) <= 2147483647",
+        "Zlength(done) + Zlength(cm_temp_store_code(policy, p, fid, temp)) <= capacity"
+      ],
+      "resources": [
+        "cm_function_context_rep(fn, f, body, next)",
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cm_temp_store_code(policy, p, fid, temp).",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_emit_resolved_temp_load-core-call",
+      "location": "cm_emit_resolved_temp_load: before verified core helper call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "fn == fn@pre",
+        "temp == temp@pre",
+        "0 <= temp && structs == cm_program_structs(p) && f == cm_function_at(policy, fid, cm_program_functions(p)) && cm_slots_wf(structs, cm_function_params(f)) && cm_slots_wf(structs, cm_function_locals(f)) && cm_rep_members_safe(cm_function_params(f)) && cm_rep_members_safe(cm_function_locals(f)) && cm_temp_offset(policy, p, fid, temp) <= 2147483647",
+        "Zlength(done) + Zlength(cm_temp_load_code(policy, p, fid, temp)) <= capacity"
+      ],
+      "resources": [
+        "cm_function_context_rep(fn, f, body, next)",
+        "cm_emitter_plan_rep over existential raw_prefix and exact raw fragment"
+      ],
+      "mathematical_state": "The physical raw prefix patches to done. Length preservation gives the core capacity plan; the exact fragment patches to cm_temp_load_code(policy, p, fid, temp).",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

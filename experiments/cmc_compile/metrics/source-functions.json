@@ -1,0 +1,65 @@
+[
+  {
+    "name": "cmc_compile",
+    "prototype": false,
+    "source_span": [
+      144,
+      648
+    ],
+    "specification": [
+      [
+        145,
+        146
+      ],
+      [
+        147,
+        149
+      ],
+      [
+        150,
+        156
+      ]
+    ],
+    "annotation": [
+      [
+        396,
+        396
+      ],
+      [
+        397,
+        397
+      ]
+    ],
+    "inline_proof": [
+      [
+        158,
+        224
+      ],
+      [
+        234,
+        256
+      ],
+      [
+        261,
+        284
+      ],
+      [
+        292,
+        394
+      ],
+      [
+        400,
+        411
+      ],
+      [
+        414,
+        469
+      ],
+      [
+        480,
+        645
+      ]
+    ],
+    "runtime": "int cmc_compile(struct cm_program *program, struct cm_output *output)\n{\n  int code_length = cmc_model_code_length(program);\n  int data_length = cmc_model_data_length(program);\n  output->code_length = code_length;\n  output->data_length = data_length;\n  output->entry = -1;\n  if (code_length > output->code_capacity) {\n    return CMC_CAPACITY;\n  }\n  if (data_length > output->data_capacity) {\n    return CMC_CAPACITY;\n  }\n  struct cm_emitter emitter;\n  emitter.output = output;\n  emitter.pc = 0;\n  cmc_emit_code(program, &emitter);\n  cmc_patch_resolved_calls(program, &emitter);\n  struct cm_global *globals = program->globals;\n  struct cm_string *strings = program->strings;\n  unsigned char *data = output->data;\n  int output_data_capacity = output->data_capacity;\n  int emitted_data = cmc_emit_data(\n      globals, strings, data, output_data_capacity);\n  output->entry = 0;\n  return CMC_OK;\n}\n"
+  }
+]

@@ -1,0 +1,1488 @@
+Chars 0 - 70 [Require~Import~SimpleC.EE.QCP_...] 1.26 secs (1.187u,0.071s)
+Chars 71 - 81 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_args_migration_lib.cm_args_wf_slots_nonempty
+Chars 82 - 150 [idtac~"AUDIT~cmc_type_args_mig...] 0. secs (0.u,0.s)
+Chars 151 - 159 [exact~I.] 0. secs (0.u,0.s)
+Chars 160 - 164 [Qed.] 0. secs (0.u,0.s)
+cm_args_wf_slots_nonempty
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (f : cm_function_d) (args : list cm_expr) 
+         (slots : list cm_slot_d),
+       cm_args_wf policy p f args slots -> args <> nil -> slots <> nil
+Chars 165 - 225 [Check~cmc_type_args_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 226 - 298 [Print~Assumptions~cmc_type_arg...] 0. secs (0.u,0.s)
+Chars 299 - 309 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_args_migration_lib.cm_args_wf_tails
+Chars 310 - 369 [idtac~"AUDIT~cmc_type_args_mig...] 0. secs (0.u,0.s)
+Chars 370 - 378 [exact~I.] 0. secs (0.u,0.s)
+Chars 379 - 383 [Qed.] 0. secs (0.u,0.s)
+cm_args_wf_tails
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (f : cm_function_d) (args : list cm_expr) 
+         (slots : list cm_slot_d),
+       cm_args_wf policy p f args slots ->
+       args <> nil -> cm_args_wf policy p f (List.tl args) (List.tl slots)
+Chars 384 - 435 [Check~cmc_type_args_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 436 - 499 [Print~Assumptions~cmc_type_arg...] 0. secs (0.u,0.s)
+Chars 500 - 510 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_args_migration_lib.cm_args_wf_head_convertible
+Chars 511 - 581 [idtac~"AUDIT~cmc_type_args_mig...] 0. secs (0.u,0.s)
+Chars 582 - 590 [exact~I.] 0. secs (0.u,0.s)
+Chars 591 - 595 [Qed.] 0. secs (0.u,0.s)
+cm_args_wf_head_convertible
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (nilexpr : cm_expr) (p : cm_program) (f : cm_function_d)
+         (args : list cm_expr) (slots : list cm_slot_d),
+       cm_args_wf policy p f args slots ->
+       args <> nil ->
+       cm_expr_convertible (List.hd nilexpr args)
+         (cm_slot_ty (List.hd nilslot slots))
+Chars 596 - 658 [Check~cmc_type_args_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 659 - 733 [Print~Assumptions~cmc_type_arg...] 0. secs (0.u,0.s)
+Chars 734 - 744 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_args_migration_lib.cm_arg_progress_extend
+Chars 745 - 810 [idtac~"AUDIT~cmc_type_args_mig...] 0. secs (0.u,0.s)
+Chars 811 - 819 [exact~I.] 0. secs (0.u,0.s)
+Chars 820 - 824 [Qed.] 0. secs (0.u,0.s)
+cm_arg_progress_extend
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (f : cm_function_d) (all_args : list cm_expr)
+         (slots : list cm_slot_d) (done : list cm_value)
+         (rest : list cm_expr) (incoming : cm_value),
+       cm_args_wf policy p f all_args slots ->
+       cm_arg_progress_type_ready nilslot all_args slots done rest ->
+       rest <> nil ->
+       cm_value_convertible_to incoming (cm_arg_next_type nilslot slots done) ->
+       cm_arg_progress_type_ready nilslot all_args slots
+         (done ++ incoming :: nil) (List.tl rest)
+Chars 825 - 882 [Check~cmc_type_args_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 883 - 952 [Print~Assumptions~cmc_type_arg...] 0. secs (0.u,0.s)
+Chars 953 - 963 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_args_migration_lib.cm_arg_progress_next_expr
+Chars 964 - 1032 [idtac~"AUDIT~cmc_type_args_mig...] 0. secs (0.u,0.s)
+Chars 1033 - 1041 [exact~I.] 0. secs (0.u,0.s)
+Chars 1042 - 1046 [Qed.] 0. secs (0.u,0.s)
+cm_arg_progress_next_expr
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (nilexpr : cm_expr) (p : cm_program) (f : cm_function_d)
+         (all_args : list cm_expr) (slots : list cm_slot_d)
+         (done : list cm_value) (rest : list cm_expr) 
+         (incoming : cm_value),
+       cm_args_wf policy p f all_args slots ->
+       cm_arg_progress_type_ready nilslot all_args slots done rest ->
+       rest <> nil ->
+       cm_value_convertible_to incoming (cm_arg_next_type nilslot slots done) ->
+       cm_expr_convertible (List.hd nilexpr rest)
+         (cm_arg_next_type nilslot slots (done ++ incoming :: nil))
+Chars 1047 - 1107 [Check~cmc_type_args_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1108 - 1180 [Print~Assumptions~cmc_type_arg...] 0. secs (0.u,0.s)
+Chars 1181 - 1253 [Require~Import~SimpleC.EE.QCP_...] 0.003 secs (0.001u,0.s)
+Chars 1254 - 1264 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_binary_migration_lib.cm_binary_value_type_ready
+Chars 1265 - 1336 [idtac~"AUDIT~cmc_type_binary_m...] 0. secs (0.u,0.s)
+Chars 1337 - 1345 [exact~I.] 0. secs (0.u,0.s)
+Chars 1346 - 1350 [Qed.] 0. secs (0.u,0.s)
+cm_binary_value_type_ready
+     : forall (p : cm_program) (st : cm_src_state) 
+         (op : BinNums.Z) (l r : cm_value) (a b ty : cm_type),
+       cm_binary_types op a b ty ->
+       cm_value_type_compatible l a ->
+       cm_value_type_compatible r b ->
+       cm_binary_ok p op l r st = true ->
+       cm_value_type_compatible (cm_binary_value p op l r ty st) ty
+Chars 1351 - 1414 [Check~cmc_type_binary_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1415 - 1490 [Print~Assumptions~cmc_type_bin...] 0.135 secs (0.121u,0.008s)
+Chars 1491 - 1564 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 1565 - 1575 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_binding_migration_lib.cm_source_global_at_valid
+Chars 1576 - 1647 [idtac~"AUDIT~cmc_type_binding_...] 0. secs (0.u,0.s)
+Chars 1648 - 1656 [exact~I.] 0. secs (0.u,0.s)
+Chars 1657 - 1661 [Qed.] 0. secs (0.u,0.s)
+cm_source_global_at_valid
+     : forall (sp : cm_source_lookup_policy) (globals : list cm_global_d)
+         (i : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 i /\
+       BinInt.Z.lt i (Zcomplements.Zlength globals) ->
+       cm_source_global_at sp i globals = cm_global_at i globals
+Chars 1662 - 1725 [Check~cmc_type_binding_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1726 - 1801 [Print~Assumptions~cmc_type_bin...] 0.122 secs (0.115u,0.006s)
+Chars 1802 - 1812 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_binding_migration_lib.cm_source_struct_at_valid
+Chars 1813 - 1884 [idtac~"AUDIT~cmc_type_binding_...] 0. secs (0.u,0.s)
+Chars 1885 - 1893 [exact~I.] 0. secs (0.u,0.s)
+Chars 1894 - 1898 [Qed.] 0. secs (0.u,0.s)
+cm_source_struct_at_valid
+     : forall (sp : cm_source_lookup_policy) (structs : list cm_struct_d)
+         (i : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 i /\
+       BinInt.Z.lt i (Zcomplements.Zlength structs) ->
+       cm_source_struct_at sp i structs = cm_struct_at i structs
+Chars 1899 - 1962 [Check~cmc_type_binding_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1963 - 2038 [Print~Assumptions~cmc_type_bin...] 0.12 secs (0.115u,0.005s)
+Chars 2039 - 2049 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_binding_migration_lib.cm_binding_pointer_type
+Chars 2050 - 2119 [idtac~"AUDIT~cmc_type_binding_...] 0. secs (0.u,0.s)
+Chars 2120 - 2128 [exact~I.] 0. secs (0.u,0.s)
+Chars 2129 - 2133 [Qed.] 0. secs (0.u,0.s)
+cm_binding_pointer_type
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid scope slot : BinNums.Z) (ty : cm_type) 
+         (st : cm_src_state),
+       cm_binding_valid p (cm_source_function_at sp fid p) scope slot ->
+       cm_binding_address_ok sp p fid scope slot st = true ->
+       cm_value_type
+         (if BinInt.Z.eqb scope BinNums.Z0
+          then cm_global_pointer sp p slot
+          else cm_state_env st scope slot) =
+       cm_lvalue_output_type p (cm_source_function_at sp fid p)
+         (CMVarE scope slot ty)
+Chars 2134 - 2195 [Check~cmc_type_binding_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2196 - 2269 [Print~Assumptions~cmc_type_bin...] 0.088 secs (0.088u,0.s)
+Chars 2270 - 2280 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_binding_migration_lib.cm_binding_output_array
+Chars 2281 - 2350 [idtac~"AUDIT~cmc_type_binding_...] 0. secs (0.u,0.s)
+Chars 2351 - 2359 [exact~I.] 0. secs (0.u,0.s)
+Chars 2360 - 2364 [Qed.] 0. secs (0.u,0.s)
+cm_binding_output_array
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid scope slot : BinNums.Z) (ty : cm_type),
+       cm_function_wf (cm_source_function_policy sp) p
+         (cm_source_function_at sp fid p) ->
+       cm_binding_valid p (cm_source_function_at sp fid p) scope slot ->
+       cm_lvalue_output_type p (cm_source_function_at sp fid p)
+         (CMVarE scope slot ty) =
+       (if cm_binding_array sp p fid scope slot
+        then cm_binding_type p (cm_source_function_at sp fid p) scope slot
+        else
+         CMPtrTy
+           (cm_binding_type p (cm_source_function_at sp fid p) scope slot))
+Chars 2365 - 2426 [Check~cmc_type_binding_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2427 - 2500 [Print~Assumptions~cmc_type_bin...] 0.233 secs (0.229u,0.003s)
+Chars 2501 - 2511 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_binding_migration_lib.cm_member_output_array
+Chars 2512 - 2580 [idtac~"AUDIT~cmc_type_binding_...] 0. secs (0.u,0.s)
+Chars 2581 - 2589 [exact~I.] 0. secs (0.u,0.s)
+Chars 2590 - 2594 [Qed.] 0. secs (0.u,0.s)
+cm_member_output_array
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (base : cm_type) (mid : BinNums.Z),
+       cm_member_valid p base mid ->
+       cm_member_lvalue_type p base mid =
+       (if cm_member_array sp p base mid
+        then cm_member_type p base mid
+        else CMPtrTy (cm_member_type p base mid))
+Chars 2595 - 2655 [Check~cmc_type_binding_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2656 - 2728 [Print~Assumptions~cmc_type_bin...] 0.196 secs (0.193u,0.002s)
+Chars 2729 - 2799 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 2800 - 2810 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_call_migration_lib.cm_type_enter_call
+Chars 2811 - 2872 [idtac~"AUDIT~cmc_type_call_mig...] 0. secs (0.u,0.s)
+Chars 2873 - 2881 [exact~I.] 0. secs (0.u,0.s)
+Chars 2882 - 2886 [Qed.] 0. secs (0.u,0.s)
+cm_type_enter_call
+     : forall (sp : cm_source_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (caller callee : BinNums.Z) 
+         (st : cm_src_state) (values : list cm_value) 
+         (ret : cm_type) (returnpc temp breakpc continuepc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       BinInt.Z.le BinNums.Z0 callee /\
+       BinInt.Z.lt callee (Zcomplements.Zlength (cm_program_functions p)) ->
+       caller = BinNums.Zneg BinNums.xH \/
+       BinInt.Z.le BinNums.Z0 caller /\
+       BinInt.Z.lt caller (Zcomplements.Zlength (cm_program_functions p)) ->
+       ret = cm_function_ret (cm_source_function_at sp callee p) ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p caller
+         tail ->
+       cm_cursor_head_input_type_ready p caller ret tail ->
+       (forall v : cm_value,
+        cm_value_type_compatible v ret ->
+        cm_cursor_head_value_type_ready (cm_source_function_policy sp)
+          nilslot p caller v tail) ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMSTask p callee
+            (cm_function_body (cm_source_function_at sp callee p))
+            (cm_enter_call sp p callee values st)
+            (CMCallK caller (cm_state_env st) (cm_state_fp st)
+               (cm_state_regions st) ret :: cm_cursor_frames tail))
+         (cm_ann_enter_call sp p caller callee st ret returnpc temp breakpc
+            continuepc tail spills saved calls)
+Chars 2887 - 2940 [Check~cmc_type_call_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2941 - 3006 [Print~Assumptions~cmc_type_cal...] 0.002 secs (0.002u,0.s)
+Chars 3007 - 3017 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_call_migration_lib.cm_halt_cursors_type
+Chars 3018 - 3081 [idtac~"AUDIT~cmc_type_call_mig...] 0. secs (0.u,0.s)
+Chars 3082 - 3090 [exact~I.] 0. secs (0.u,0.s)
+Chars 3091 - 3095 [Qed.] 0. secs (0.u,0.s)
+cm_halt_cursors_type
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid owner ob oc : BinNums.Z),
+       cm_cursors_type_ready policy nilslot p fid
+         (CMACursor CAHaltP owner ob oc :: nil)
+Chars 3096 - 3151 [Check~cmc_type_call_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3152 - 3219 [Print~Assumptions~cmc_type_cal...] 0. secs (0.u,0.s)
+Chars 3220 - 3230 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_call_migration_lib.cm_type_start_step
+Chars 3231 - 3292 [idtac~"AUDIT~cmc_type_call_mig...] 0. secs (0.u,0.s)
+Chars 3293 - 3301 [exact~I.] 0. secs (0.u,0.s)
+Chars 3302 - 3306 [Qed.] 0. secs (0.u,0.s)
+cm_type_start_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (input : list BinNums.Z),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_step sp (CMStartTask p input))
+         (cm_update_annotation
+            (cm_annotation_step sp ap (CMStartTask p input)
+               cm_initial_annotation))
+Chars 3307 - 3360 [Check~cmc_type_call_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3361 - 3426 [Print~Assumptions~cmc_type_cal...] 0.004 secs (0.004u,0.s)
+Chars 3427 - 3506 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 3507 - 3517 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_value_type_scalar
+Chars 3518 - 3590 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 3591 - 3599 [exact~I.] 0. secs (0.u,0.s)
+Chars 3600 - 3604 [Qed.] 0. secs (0.u,0.s)
+cm_value_type_scalar
+     : forall v : cm_value, cm_scalar_expr_type (cm_value_type v)
+Chars 3605 - 3669 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3670 - 3746 [Print~Assumptions~cmc_type_com...] 0. secs (0.u,0.s)
+Chars 3747 - 3757 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_compatible_scalar
+Chars 3758 - 3830 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 3831 - 3839 [exact~I.] 0. secs (0.u,0.s)
+Chars 3840 - 3844 [Qed.] 0. secs (0.u,0.s)
+cm_compatible_scalar
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v ty -> cm_scalar_expr_type ty
+Chars 3845 - 3909 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3910 - 3986 [Print~Assumptions~cmc_type_com...] 0. secs (0.u,0.s)
+Chars 3987 - 3997 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_compatible_integer
+Chars 3998 - 4071 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 4072 - 4080 [exact~I.] 0. secs (0.u,0.s)
+Chars 4081 - 4085 [Qed.] 0. secs (0.u,0.s)
+cm_compatible_integer
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v ty ->
+       cm_integer_type ty -> cm_integer_type (cm_value_type v)
+Chars 4086 - 4151 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4152 - 4229 [Print~Assumptions~cmc_type_com...] 0. secs (0.u,0.s)
+Chars 4230 - 4240 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_compatible_pointer
+Chars 4241 - 4314 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 4315 - 4323 [exact~I.] 0. secs (0.u,0.s)
+Chars 4324 - 4328 [Qed.] 0. secs (0.u,0.s)
+cm_compatible_pointer
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v ty ->
+       cm_is_pointer ty -> cm_is_pointer (cm_value_type v)
+Chars 4329 - 4394 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4395 - 4472 [Print~Assumptions~cmc_type_com...] 0. secs (0.u,0.s)
+Chars 4473 - 4483 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_compatible_convertible
+Chars 4484 - 4561 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 4562 - 4570 [exact~I.] 0. secs (0.u,0.s)
+Chars 4571 - 4575 [Qed.] 0. secs (0.u,0.s)
+cm_compatible_convertible
+     : forall (v : cm_value) (from to : cm_type),
+       cm_value_type_compatible v from ->
+       cm_convertible from to -> cm_value_convertible_to v to
+Chars 4576 - 4645 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4646 - 4727 [Print~Assumptions~cmc_type_com...] 0.001 secs (0.001u,0.s)
+Chars 4728 - 4738 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_expr_value_convertible
+Chars 4739 - 4816 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 4817 - 4825 [exact~I.] 0. secs (0.u,0.s)
+Chars 4826 - 4830 [Qed.] 0. secs (0.u,0.s)
+cm_expr_value_convertible
+     : forall (expr : cm_expr) (v : cm_value) (ty : cm_type),
+       cm_expr_value_type_ready expr v ->
+       cm_expr_convertible expr ty -> cm_value_convertible_to v ty
+Chars 4831 - 4900 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4901 - 4982 [Print~Assumptions~cmc_type_com...] 0.001 secs (0.001u,0.s)
+Chars 4983 - 4993 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_convert_value_type
+Chars 4994 - 5067 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 5068 - 5076 [exact~I.] 0. secs (0.u,0.s)
+Chars 5077 - 5081 [Qed.] 0. secs (0.u,0.s)
+cm_convert_value_type
+     : forall (st : cm_src_state) (ty : cm_type) (v : cm_value),
+       cm_scalar_expr_type ty ->
+       cm_value_convertible_to v ty ->
+       cm_value_type_compatible (cm_convert_value st ty v) ty
+Chars 5082 - 5147 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5148 - 5225 [Print~Assumptions~cmc_type_com...] 0.083 secs (0.083u,0.s)
+Chars 5226 - 5236 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_phase_expr_value_ready
+Chars 5237 - 5314 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 5315 - 5323 [exact~I.] 0. secs (0.u,0.s)
+Chars 5324 - 5328 [Qed.] 0. secs (0.u,0.s)
+cm_phase_expr_value_ready
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (phase : cm_aphase)
+         (expr : cm_expr) (v : cm_value),
+       cm_phase_expr_type_ready policy nilslot p fid phase expr ->
+       cm_expr_value_type_ready expr v ->
+       cm_phase_value_type_ready policy nilslot p fid phase v
+Chars 5329 - 5398 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5399 - 5480 [Print~Assumptions~cmc_type_com...] 0.001 secs (0.001u,0.s)
+Chars 5481 - 5491 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_cursor_expr_value_ready
+Chars 5492 - 5570 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 5571 - 5579 [exact~I.] 0. secs (0.u,0.s)
+Chars 5580 - 5584 [Qed.] 0. secs (0.u,0.s)
+cm_cursor_expr_value_ready
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (cursors : list cm_acursor),
+       cm_cursor_head_expr_type_ready policy nilslot p fid expr cursors ->
+       cm_cursor_expr_values_type_ready policy nilslot p fid expr cursors
+Chars 5585 - 5655 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5656 - 5738 [Print~Assumptions~cmc_type_com...] 0.001 secs (0.001u,0.s)
+Chars 5739 - 5749 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_compatibility_migration_lib.cm_type_ready_same_cursors
+Chars 5750 - 5828 [idtac~"AUDIT~cmc_type_compatib...] 0. secs (0.u,0.s)
+Chars 5829 - 5837 [exact~I.] 0. secs (0.u,0.s)
+Chars 5838 - 5842 [Qed.] 0. secs (0.u,0.s)
+cm_type_ready_same_cursors
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (task : cm_task) (leftann rightann : cm_annotation),
+       cm_ann_cursors leftann = cm_ann_cursors rightann ->
+       cm_task_type_ready policy nilslot p task leftann ->
+       cm_task_type_ready policy nilslot p task rightann
+Chars 5843 - 5913 [Check~cmc_type_compatibility_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5914 - 5996 [Print~Assumptions~cmc_type_com...] 0. secs (0.u,0.s)
+Chars 5997 - 6070 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 6071 - 6081 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_control_migration_lib.cm_convert_value_type_ready
+Chars 6082 - 6155 [idtac~"AUDIT~cmc_type_control_...] 0. secs (0.u,0.s)
+Chars 6156 - 6164 [exact~I.] 0. secs (0.u,0.s)
+Chars 6165 - 6169 [Qed.] 0. secs (0.u,0.s)
+cm_convert_value_type_ready
+     : forall (st : cm_src_state) (v : cm_value) (ty : cm_type),
+       cm_value_convertible_to v ty ->
+       cm_value_type_compatible (cm_convert_value st ty v) ty
+Chars 6170 - 6235 [Check~cmc_type_control_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6236 - 6313 [Print~Assumptions~cmc_type_con...] 0.122 secs (0.12u,0.001s)
+Chars 6314 - 6324 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_control_migration_lib.cm_zero_value_convertible
+Chars 6325 - 6396 [idtac~"AUDIT~cmc_type_control_...] 0. secs (0.u,0.s)
+Chars 6397 - 6405 [exact~I.] 0. secs (0.u,0.s)
+Chars 6406 - 6410 [Qed.] 0. secs (0.u,0.s)
+cm_zero_value_convertible
+     : forall ty : cm_type,
+       cm_scalar_expr_type ty ->
+       cm_value_convertible_to (CMIntV BinNums.Z0) ty
+Chars 6411 - 6474 [Check~cmc_type_control_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6475 - 6550 [Print~Assumptions~cmc_type_con...] 0. secs (0.u,0.s)
+Chars 6551 - 6561 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_control_migration_lib.cm_c_type_ready_step
+Chars 6562 - 6628 [idtac~"AUDIT~cmc_type_control_...] 0. secs (0.u,0.s)
+Chars 6629 - 6637 [exact~I.] 0. secs (0.u,0.s)
+Chars 6638 - 6642 [Qed.] 0. secs (0.u,0.s)
+cm_c_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (phase : cm_aphase) (owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (ctl : cm_control) 
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_frame_fid_ready p fid (cm_phase_frame phase) ->
+       cm_control_type_ready (cm_source_function_policy sp) p fid ctl ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+         (cm_ann_cursors ann) ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Chars 6643 - 6701 [Check~cmc_type_control_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6702 - 6772 [Print~Assumptions~cmc_type_con...] 0.496 secs (0.494u,0.002s)
+Chars 6773 - 6846 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 6847 - 6924 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 6925 - 6935 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_access_migration_lib.cm_r_var_type_ready_step
+Chars 6936 - 7010 [idtac~"AUDIT~cmc_type_expr_acc...] 0. secs (0.u,0.s)
+Chars 7011 - 7019 [exact~I.] 0. secs (0.u,0.s)
+Chars 7020 - 7024 [Qed.] 0. secs (0.u,0.s)
+cm_r_var_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid scope slot : BinNums.Z)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMVarE scope slot ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMVarE scope slot ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMVarE scope slot ty)))
+Chars 7025 - 7091 [Check~cmc_type_expr_access_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7092 - 7170 [Print~Assumptions~cmc_type_exp...] 0.116 secs (0.115u,0.s)
+Chars 7171 - 7181 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_access_migration_lib.cm_r_member_type_ready_step
+Chars 7182 - 7259 [idtac~"AUDIT~cmc_type_expr_acc...] 0. secs (0.u,0.s)
+Chars 7260 - 7268 [exact~I.] 0. secs (0.u,0.s)
+Chars 7269 - 7273 [Qed.] 0. secs (0.u,0.s)
+cm_r_member_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (base : cm_expr) (mid : BinNums.Z) (ty : cm_type)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMMemberE base mid ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMMemberE base mid ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMMemberE base mid ty)))
+Chars 7274 - 7343 [Check~cmc_type_expr_access_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7344 - 7425 [Print~Assumptions~cmc_type_exp...] 0.096 secs (0.096u,0.s)
+Chars 7426 - 7501 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 7502 - 7512 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_call_migration_lib.cm_r_call_type_ready_step
+Chars 7513 - 7586 [idtac~"AUDIT~cmc_type_expr_cal...] 0. secs (0.u,0.s)
+Chars 7587 - 7595 [exact~I.] 0. secs (0.u,0.s)
+Chars 7596 - 7600 [Qed.] 0. secs (0.u,0.s)
+cm_r_call_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid callee : BinNums.Z)
+         (args : list cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMCallE callee args ty) st
+            (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMCallE callee args ty) st
+            (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMCallE callee args ty)))
+Chars 7601 - 7666 [Check~cmc_type_expr_call_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7667 - 7744 [Print~Assumptions~cmc_type_exp...] 0.127 secs (0.126u,0.s)
+Chars 7745 - 7820 [Require~Import~SimpleC.EE.QCP_...] 0.022 secs (0.022u,0.s)
+Chars 7821 - 7831 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_leaf_migration_lib.cm_r_type_yield
+Chars 7832 - 7895 [idtac~"AUDIT~cmc_type_expr_lea...] 0. secs (0.u,0.s)
+Chars 7896 - 7904 [exact~I.] 0. secs (0.u,0.s)
+Chars 7905 - 7909 [Qed.] 0. secs (0.u,0.s)
+cm_r_type_yield
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation) (v : cm_value) (out : cm_src_state)
+         (outks : list cm_frame) (outann : cm_annotation),
+       cm_task_type_ready policy nilslot p (CMRTask p fid expr st ks) ann ->
+       cm_expr_value_type_ready expr v ->
+       cm_ann_cursors outann = cm_ann_cursors ann ->
+       cm_task_type_ready policy nilslot p (CMVTask p fid v out outks) outann
+Chars 7910 - 7965 [Check~cmc_type_expr_leaf_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7966 - 8033 [Print~Assumptions~cmc_type_exp...] 0. secs (0.u,0.s)
+Chars 8034 - 8044 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_leaf_migration_lib.cm_type_error
+Chars 8045 - 8106 [idtac~"AUDIT~cmc_type_expr_lea...] 0. secs (0.u,0.s)
+Chars 8107 - 8115 [exact~I.] 0. secs (0.u,0.s)
+Chars 8116 - 8120 [Qed.] 0. secs (0.u,0.s)
+cm_type_error
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_cursors_type_ready policy nilslot p fid (cm_ann_cursors ann) ->
+       cm_task_type_ready policy nilslot p
+         (CMCTask p fid (CMError (BinNums.Zpos BinNums.xH)) st ks) ann
+Chars 8121 - 8174 [Check~cmc_type_expr_leaf_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8175 - 8240 [Print~Assumptions~cmc_type_exp...] 0. secs (0.u,0.s)
+Chars 8241 - 8251 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_leaf_migration_lib.cm_r_const_type_ready_step
+Chars 8252 - 8326 [idtac~"AUDIT~cmc_type_expr_lea...] 0. secs (0.u,0.s)
+Chars 8327 - 8335 [exact~I.] 0. secs (0.u,0.s)
+Chars 8336 - 8340 [Qed.] 0. secs (0.u,0.s)
+cm_r_const_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid n : BinNums.Z)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMConstE n ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMConstE n ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMConstE n ty)))
+Chars 8341 - 8407 [Check~cmc_type_expr_leaf_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8408 - 8486 [Print~Assumptions~cmc_type_exp...] 0.088 secs (0.087u,0.s)
+Chars 8487 - 8497 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_leaf_migration_lib.cm_r_string_type_ready_step
+Chars 8498 - 8573 [idtac~"AUDIT~cmc_type_expr_lea...] 0. secs (0.u,0.s)
+Chars 8574 - 8582 [exact~I.] 0. secs (0.u,0.s)
+Chars 8583 - 8587 [Qed.] 0. secs (0.u,0.s)
+cm_r_string_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid sid : BinNums.Z)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMStringE sid ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMStringE sid ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMStringE sid ty)))
+Chars 8588 - 8655 [Check~cmc_type_expr_leaf_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8656 - 8735 [Print~Assumptions~cmc_type_exp...] 0. secs (0.u,0.s)
+Chars 8736 - 8746 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_leaf_migration_lib.cm_r_sizeof_type_ready_step
+Chars 8747 - 8822 [idtac~"AUDIT~cmc_type_expr_lea...] 0. secs (0.u,0.s)
+Chars 8823 - 8831 [exact~I.] 0. secs (0.u,0.s)
+Chars 8832 - 8836 [Qed.] 0. secs (0.u,0.s)
+cm_r_sizeof_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (asked ty : cm_type) (st : cm_src_state) 
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMSizeofE asked ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMSizeofE asked ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMSizeofE asked ty)))
+Chars 8837 - 8904 [Check~cmc_type_expr_leaf_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8905 - 8984 [Print~Assumptions~cmc_type_exp...] 0. secs (0.u,0.s)
+Chars 8985 - 8995 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_leaf_migration_lib.cm_r_getc_type_ready_step
+Chars 8996 - 9069 [idtac~"AUDIT~cmc_type_expr_lea...] 0. secs (0.u,0.s)
+Chars 9070 - 9078 [exact~I.] 0. secs (0.u,0.s)
+Chars 9079 - 9083 [Qed.] 0. secs (0.u,0.s)
+cm_r_getc_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMGetcE ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMGetcE ty) st ks)
+         (cm_update_annotation (cm_update_r sp ap p fid st ann (CMGetcE ty)))
+Chars 9084 - 9149 [Check~cmc_type_expr_leaf_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9150 - 9227 [Print~Assumptions~cmc_type_exp...] 0.001 secs (0.001u,0.s)
+Chars 9228 - 9298 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 9299 - 9309 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_migration_lib.cm_r_type_ready_step
+Chars 9310 - 9373 [idtac~"AUDIT~cmc_type_expr_mig...] 0. secs (0.u,0.s)
+Chars 9374 - 9382 [exact~I.] 0. secs (0.u,0.s)
+Chars 9383 - 9387 [Qed.] 0. secs (0.u,0.s)
+cm_r_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (expr : cm_expr) (st : cm_src_state) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid expr st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_r sp ap p fid st ann expr))
+Chars 9388 - 9443 [Check~cmc_type_expr_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9444 - 9511 [Print~Assumptions~cmc_type_exp...] 0.345 secs (0.343u,0.001s)
+Chars 9512 - 9589 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 9590 - 9600 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_struct_migration_lib.cm_r_assign_type_ready_step
+Chars 9601 - 9678 [idtac~"AUDIT~cmc_type_expr_str...] 0. secs (0.u,0.s)
+Chars 9679 - 9687 [exact~I.] 0. secs (0.u,0.s)
+Chars 9688 - 9692 [Qed.] 0. secs (0.u,0.s)
+cm_r_assign_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (dst src : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMAssignE dst src ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMAssignE dst src ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMAssignE dst src ty)))
+Chars 9693 - 9762 [Check~cmc_type_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9763 - 9844 [Print~Assumptions~cmc_type_exp...] 0.091 secs (0.09u,0.s)
+Chars 9845 - 9855 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_struct_migration_lib.cm_r_binary_type_ready_step
+Chars 9856 - 9933 [idtac~"AUDIT~cmc_type_expr_str...] 0. secs (0.u,0.s)
+Chars 9934 - 9942 [exact~I.] 0. secs (0.u,0.s)
+Chars 9943 - 9947 [Qed.] 0. secs (0.u,0.s)
+cm_r_binary_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid op : BinNums.Z)
+         (lhs rhs : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMBinaryE op lhs rhs ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMBinaryE op lhs rhs ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMBinaryE op lhs rhs ty)))
+Chars 9948 - 10017 [Check~cmc_type_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10018 - 10099 [Print~Assumptions~cmc_type_exp...] 0.005 secs (0.005u,0.s)
+Chars 10100 - 10110 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_struct_migration_lib.cm_r_putc_type_ready_step
+Chars 10111 - 10186 [idtac~"AUDIT~cmc_type_expr_str...] 0. secs (0.u,0.s)
+Chars 10187 - 10195 [exact~I.] 0. secs (0.u,0.s)
+Chars 10196 - 10200 [Qed.] 0. secs (0.u,0.s)
+cm_r_putc_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (arg : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMPutcE arg ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMPutcE arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMPutcE arg ty)))
+Chars 10201 - 10268 [Check~cmc_type_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10269 - 10348 [Print~Assumptions~cmc_type_exp...] 0.005 secs (0.005u,0.s)
+Chars 10349 - 10359 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_struct_migration_lib.cm_r_puti_type_ready_step
+Chars 10360 - 10435 [idtac~"AUDIT~cmc_type_expr_str...] 0. secs (0.u,0.s)
+Chars 10436 - 10444 [exact~I.] 0. secs (0.u,0.s)
+Chars 10445 - 10449 [Qed.] 0. secs (0.u,0.s)
+cm_r_puti_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (arg : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMPutiE arg ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMPutiE arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMPutiE arg ty)))
+Chars 10450 - 10517 [Check~cmc_type_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10518 - 10597 [Print~Assumptions~cmc_type_exp...] 0.007 secs (0.007u,0.s)
+Chars 10598 - 10608 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_struct_migration_lib.cm_r_exit_type_ready_step
+Chars 10609 - 10684 [idtac~"AUDIT~cmc_type_expr_str...] 0. secs (0.u,0.s)
+Chars 10685 - 10693 [exact~I.] 0. secs (0.u,0.s)
+Chars 10694 - 10698 [Qed.] 0. secs (0.u,0.s)
+cm_r_exit_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (arg : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMExitE arg ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMExitE arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMExitE arg ty)))
+Chars 10699 - 10766 [Check~cmc_type_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10767 - 10846 [Print~Assumptions~cmc_type_exp...] 0.004 secs (0.004u,0.s)
+Chars 10847 - 10857 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_struct_migration_lib.cm_r_index_type_ready_step
+Chars 10858 - 10934 [idtac~"AUDIT~cmc_type_expr_str...] 0. secs (0.u,0.s)
+Chars 10935 - 10943 [exact~I.] 0. secs (0.u,0.s)
+Chars 10944 - 10948 [Qed.] 0. secs (0.u,0.s)
+cm_r_index_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (base index : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMIndexE base index ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMIndexE base index ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMIndexE base index ty)))
+Chars 10949 - 11017 [Check~cmc_type_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11018 - 11098 [Print~Assumptions~cmc_type_exp...] 0.003 secs (0.003u,0.s)
+Chars 11099 - 11175 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 11176 - 11186 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_unary_migration_lib.cm_pointer_pointee_type
+Chars 11187 - 11259 [idtac~"AUDIT~cmc_type_expr_una...] 0. secs (0.u,0.s)
+Chars 11260 - 11268 [exact~I.] 0. secs (0.u,0.s)
+Chars 11269 - 11273 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_pointee_type
+     : forall ty : cm_type, cm_is_pointer ty -> ty = CMPtrTy (cm_pointee ty)
+Chars 11274 - 11338 [Check~cmc_type_expr_unary_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11339 - 11415 [Print~Assumptions~cmc_type_exp...] 0. secs (0.u,0.s)
+Chars 11416 - 11426 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_expr_unary_migration_lib.cm_r_unary_type_ready_step
+Chars 11427 - 11502 [idtac~"AUDIT~cmc_type_expr_una...] 0. secs (0.u,0.s)
+Chars 11503 - 11511 [exact~I.] 0. secs (0.u,0.s)
+Chars 11512 - 11516 [Qed.] 0. secs (0.u,0.s)
+cm_r_unary_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid op : BinNums.Z)
+         (arg : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMRTask p fid (CMUnaryE op arg ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_rstart sp p fid (CMUnaryE op arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMUnaryE op arg ty)))
+Chars 11517 - 11584 [Check~cmc_type_expr_unary_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11585 - 11664 [Print~Assumptions~cmc_type_exp...] 0.113 secs (0.113u,0.s)
+Chars 11665 - 11736 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 11737 - 11747 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_scalar_type_is_expr_type
+Chars 11748 - 11819 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 11820 - 11828 [exact~I.] 0. secs (0.u,0.s)
+Chars 11829 - 11833 [Qed.] 0. secs (0.u,0.s)
+cm_scalar_type_is_expr_type
+     : forall (structs : list cm_struct_d) (ty : cm_type),
+       cm_scalar_type structs ty -> cm_scalar_expr_type ty
+Chars 11834 - 11897 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 11898 - 11973 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 11974 - 11984 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_convertible_scalar_types
+Chars 11985 - 12056 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 12057 - 12065 [exact~I.] 0. secs (0.u,0.s)
+Chars 12066 - 12070 [Qed.] 0. secs (0.u,0.s)
+cm_convertible_scalar_types
+     : forall from to : cm_type,
+       cm_convertible from to ->
+       cm_scalar_expr_type from /\ cm_scalar_expr_type to
+Chars 12071 - 12134 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12135 - 12210 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 12211 - 12221 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_expr_convertible_source_scalar
+Chars 12222 - 12299 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 12300 - 12308 [exact~I.] 0. secs (0.u,0.s)
+Chars 12309 - 12313 [Qed.] 0. secs (0.u,0.s)
+cm_expr_convertible_source_scalar
+     : forall (expr : cm_expr) (ty : cm_type),
+       cm_expr_convertible expr ty -> cm_scalar_expr_type (cm_expr_type expr)
+Chars 12314 - 12383 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12384 - 12465 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 12466 - 12476 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_typed_function_at
+Chars 12477 - 12541 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 12542 - 12550 [exact~I.] 0. secs (0.u,0.s)
+Chars 12551 - 12555 [Qed.] 0. secs (0.u,0.s)
+cm_typed_function_at
+     : forall (policy : cm_lookup_policy) (p : cm_program) (fid : BinNums.Z),
+       cm_typed_program policy p ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_function_wf policy p
+         (cm_function_at policy fid (cm_program_functions p))
+Chars 12556 - 12612 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12613 - 12681 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 12682 - 12692 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_stmt_wf_loop_mono
+Chars 12693 - 12757 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 12758 - 12766 [exact~I.] 0. secs (0.u,0.s)
+Chars 12767 - 12771 [Qed.] 0. secs (0.u,0.s)
+cm_stmt_wf_loop_mono
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (f : cm_function_d) (loop : bool) (stmt : cm_stmt),
+       cm_stmt_wf policy p f loop stmt -> cm_stmt_wf policy p f true stmt
+Chars 12772 - 12828 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 12829 - 12897 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 12898 - 12908 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_args_wf_exprs
+Chars 12909 - 12969 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 12970 - 12978 [exact~I.] 0. secs (0.u,0.s)
+Chars 12979 - 12983 [Qed.] 0. secs (0.u,0.s)
+cm_args_wf_exprs
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (f : cm_function_d) (args : list cm_expr) 
+         (slots : list cm_slot_d),
+       cm_args_wf policy p f args slots ->
+       cm_exprs_type_ready policy p f args
+Chars 12984 - 13036 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 13037 - 13101 [Print~Assumptions~cmc_type_fac...] 0.001 secs (0.001u,0.s)
+Chars 13102 - 13112 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_value_type_compatible_refl
+Chars 13113 - 13186 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 13187 - 13195 [exact~I.] 0. secs (0.u,0.s)
+Chars 13196 - 13200 [Qed.] 0. secs (0.u,0.s)
+cm_value_type_compatible_refl
+     : forall v : cm_value, cm_value_type_compatible v (cm_value_type v)
+Chars 13201 - 13266 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 13267 - 13344 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 13345 - 13355 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_pointer_value_view
+Chars 13356 - 13421 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 13422 - 13430 [exact~I.] 0. secs (0.u,0.s)
+Chars 13431 - 13435 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_value_view
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v (CMPtrTy ty) ->
+       v <> CMNullV -> cm_ptr_view v = ty
+Chars 13436 - 13493 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 13494 - 13563 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 13564 - 13574 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_expr_not_zero_ready
+Chars 13575 - 13641 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 13642 - 13650 [exact~I.] 0. secs (0.u,0.s)
+Chars 13651 - 13655 [Qed.] 0. secs (0.u,0.s)
+cm_expr_not_zero_ready
+     : forall (expr : cm_expr) (v : cm_value),
+       expr <> CMConstE BinNums.Z0 CMIntTy ->
+       cm_value_type_compatible v (cm_expr_type expr) ->
+       cm_expr_value_type_ready expr v
+Chars 13656 - 13714 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 13715 - 13785 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 13786 - 13796 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_const_expr_value_ready
+Chars 13797 - 13866 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 13867 - 13875 [exact~I.] 0. secs (0.u,0.s)
+Chars 13876 - 13880 [Qed.] 0. secs (0.u,0.s)
+cm_const_expr_value_ready
+     : forall (st : cm_src_state) (n : BinNums.Z) (ty : cm_type),
+       cm_integer_type ty ->
+       cm_expr_value_type_ready (CMConstE n ty)
+         (cm_convert_value st ty (CMIntV n))
+Chars 13881 - 13942 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 13943 - 14016 [Print~Assumptions~cmc_type_fac...] 0.089 secs (0.089u,0.s)
+Chars 14017 - 14027 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_cursors_type_tail
+Chars 14028 - 14092 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 14093 - 14101 [exact~I.] 0. secs (0.u,0.s)
+Chars 14102 - 14106 [Qed.] 0. secs (0.u,0.s)
+cm_cursors_type_tail
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (phase : cm_aphase)
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor),
+       cm_cursors_type_ready policy nilslot p fid
+         (CMACursor phase owner ob oc :: rest) ->
+       cm_cursors_type_ready policy nilslot p (cm_phase_next_fid fid phase)
+         rest
+Chars 14107 - 14163 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 14164 - 14232 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 14233 - 14243 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_facts_migration_lib.cm_cursors_result_ready
+Chars 14244 - 14311 [idtac~"AUDIT~cmc_type_facts_mi...] 0. secs (0.u,0.s)
+Chars 14312 - 14320 [exact~I.] 0. secs (0.u,0.s)
+Chars 14321 - 14325 [Qed.] 0. secs (0.u,0.s)
+cm_cursors_result_ready
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (phase : cm_aphase)
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor) 
+         (ty : cm_type) (v : cm_value),
+       cm_cursors_type_ready policy nilslot p fid
+         (CMACursor phase owner ob oc :: rest) ->
+       cm_phase_result_type p fid phase ty ->
+       cm_value_type_compatible v ty ->
+       cm_cursor_head_value_type_ready policy nilslot p
+         (cm_phase_next_fid fid phase) v rest
+Chars 14326 - 14385 [Check~cmc_type_facts_migration...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 14386 - 14457 [Print~Assumptions~cmc_type_fac...] 0. secs (0.u,0.s)
+Chars 14458 - 14533 [Require~Import~SimpleC.EE.QCP_...] 0.003 secs (0.001u,0.s)
+Chars 14534 - 14544 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_invariant_migration_lib.cm_type_support_initial
+Chars 14545 - 14616 [idtac~"AUDIT~cmc_type_invarian...] 0. secs (0.u,0.s)
+Chars 14617 - 14625 [exact~I.] 0. secs (0.u,0.s)
+Chars 14626 - 14630 [Qed.] 0. secs (0.u,0.s)
+cm_type_support_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_type_support_invariants sp ap nilslot p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Chars 14631 - 14694 [Check~cmc_type_invariant_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 14695 - 14770 [Print~Assumptions~cmc_type_inv...] 0.004 secs (0.003u,0.s)
+Chars 14771 - 14781 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_invariant_migration_lib.cm_type_support_step
+Chars 14782 - 14850 [idtac~"AUDIT~cmc_type_invarian...] 0. secs (0.u,0.s)
+Chars 14851 - 14859 [exact~I.] 0. secs (0.u,0.s)
+Chars 14860 - 14864 [Qed.] 0. secs (0.u,0.s)
+cm_type_support_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_type_support_invariants sp ap nilslot p ast ->
+       cm_type_support_invariants sp ap nilslot p
+         (cm_annotated_step sp ap ast)
+Chars 14865 - 14925 [Check~cmc_type_invariant_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 14926 - 14998 [Print~Assumptions~cmc_type_inv...] 6.103 secs (6.059u,0.03s)
+Chars 14999 - 15009 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_invariant_migration_lib.cm_type_support_iter
+Chars 15010 - 15078 [idtac~"AUDIT~cmc_type_invarian...] 0. secs (0.u,0.s)
+Chars 15079 - 15087 [exact~I.] 0. secs (0.u,0.s)
+Chars 15088 - 15092 [Qed.] 0. secs (0.u,0.s)
+cm_type_support_iter
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (n : nat) 
+         (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_type_support_invariants sp ap nilslot p ast ->
+       cm_type_support_invariants sp ap nilslot p
+         (cm_annotated_iter sp ap n ast)
+Chars 15093 - 15153 [Check~cmc_type_invariant_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 15154 - 15226 [Print~Assumptions~cmc_type_inv...] 6.099 secs (6.066u,0.022s)
+Chars 15227 - 15237 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_invariant_migration_lib.cm_source_termination_type_invariants
+Chars 15238 - 15323 [idtac~~"AUDIT~cmc_type_invaria...] 0. secs (0.u,0.s)
+Chars 15324 - 15332 [exact~I.] 0. secs (0.u,0.s)
+Chars 15333 - 15337 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_type_invariants
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program)
+         (input output : list BinNums.Z) (status : BinNums.Z) 
+         (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_type_support_invariants sp ap nilslot p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Chars 15338 - 15415 [Check~cmc_type_invariant_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 15416 - 15505 [Print~Assumptions~cmc_type_inv...] 6.195 secs (6.166u,0.018s)
+Chars 15506 - 15516 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_invariant_migration_lib.cm_source_termination_type_ready
+Chars 15517 - 15597 [idtac~~"AUDIT~cmc_type_invaria...] 0. secs (0.u,0.s)
+Chars 15598 - 15606 [exact~I.] 0. secs (0.u,0.s)
+Chars 15607 - 15611 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_type_ready
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program)
+         (input output : list BinNums.Z) (status : BinNums.Z) 
+         (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_astate_task
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+         (cm_astate_annotation
+            (cm_annotated_iter sp ap n
+               (cm_annotated_start (cm_source_function_policy sp) p input)))
+Chars 15612 - 15684 [Check~cmc_type_invariant_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 15685 - 15769 [Print~Assumptions~cmc_type_inv...] 6.163 secs (6.137u,0.021s)
+Chars 15770 - 15848 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 15849 - 15859 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_facts_migration_lib.cm_nonarray_lvalue_output
+Chars 15860 - 15936 [idtac~"AUDIT~cmc_type_lvalue_f...] 0. secs (0.u,0.s)
+Chars 15937 - 15945 [exact~I.] 0. secs (0.u,0.s)
+Chars 15946 - 15950 [Qed.] 0. secs (0.u,0.s)
+cm_nonarray_lvalue_output
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (f : cm_function_d) (expr : cm_expr),
+       cm_function_wf policy p f ->
+       cm_expr_wf policy p f expr ->
+       ~ cm_expr_array p f expr ->
+       cm_lvalue_output_type p f expr = CMPtrTy (cm_expr_type expr)
+Chars 15951 - 16019 [Check~cmc_type_lvalue_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 16020 - 16100 [Print~Assumptions~cmc_type_lva...] 0.09 secs (0.089u,0.s)
+Chars 16101 - 16111 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_facts_migration_lib.cm_binary_operand_scalars
+Chars 16112 - 16188 [idtac~"AUDIT~cmc_type_lvalue_f...] 0. secs (0.u,0.s)
+Chars 16189 - 16197 [exact~I.] 0. secs (0.u,0.s)
+Chars 16198 - 16202 [Qed.] 0. secs (0.u,0.s)
+cm_binary_operand_scalars
+     : forall (op : BinNums.Z) (a b ty : cm_type),
+       cm_binary_types op a b ty ->
+       cm_scalar_expr_type a /\ cm_scalar_expr_type b
+Chars 16203 - 16271 [Check~cmc_type_lvalue_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 16272 - 16352 [Print~Assumptions~cmc_type_lva...] 0. secs (0.u,0.s)
+Chars 16353 - 16363 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_facts_migration_lib.cm_nonzero_cursor_values
+Chars 16364 - 16439 [idtac~"AUDIT~cmc_type_lvalue_f...] 0. secs (0.u,0.s)
+Chars 16440 - 16448 [exact~I.] 0. secs (0.u,0.s)
+Chars 16449 - 16453 [Qed.] 0. secs (0.u,0.s)
+cm_nonzero_cursor_values
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (cursors : list cm_acursor),
+       expr <> CMConstE BinNums.Z0 CMIntTy ->
+       cm_cursor_expr_values_type_ready policy nilslot p fid expr cursors ->
+       forall v : cm_value,
+       cm_value_type_compatible v (cm_expr_type expr) ->
+       cm_cursor_head_value_type_ready policy nilslot p fid v cursors
+Chars 16454 - 16521 [Check~cmc_type_lvalue_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 16522 - 16601 [Print~Assumptions~cmc_type_lva...] 0. secs (0.u,0.s)
+Chars 16602 - 16674 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 16675 - 16685 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_migration_lib.cm_lvalue_result_type_ready
+Chars 16686 - 16758 [idtac~"AUDIT~cmc_type_lvalue_m...] 0. secs (0.u,0.s)
+Chars 16759 - 16767 [exact~I.] 0. secs (0.u,0.s)
+Chars 16768 - 16772 [Qed.] 0. secs (0.u,0.s)
+cm_lvalue_result_type_ready
+     : forall (policy : cm_lookup_policy) (nilslot : cm_slot_d)
+         (p : cm_program) (fid : BinNums.Z) (ty : cm_type)
+         (cursors : list cm_acursor) (v : cm_value),
+       cm_cursor_head_lvalue_type_ready policy nilslot p fid ty cursors ->
+       cm_value_type_compatible v ty ->
+       cm_cursor_head_value_type_ready policy nilslot p fid v cursors
+Chars 16773 - 16837 [Check~cmc_type_lvalue_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 16838 - 16914 [Print~Assumptions~cmc_type_lva...] 0. secs (0.u,0.s)
+Chars 16915 - 16925 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_migration_lib.cm_l_var_type_ready_step
+Chars 16926 - 16995 [idtac~"AUDIT~cmc_type_lvalue_m...] 0. secs (0.u,0.s)
+Chars 16996 - 17004 [exact~I.] 0. secs (0.u,0.s)
+Chars 17005 - 17009 [Qed.] 0. secs (0.u,0.s)
+cm_l_var_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid scope slot : BinNums.Z)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMLTask p fid (CMVarE scope slot ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_lstart sp p fid (CMVarE scope slot ty) st ks)
+         (cm_update_annotation
+            (cm_update_l sp ap p fid st ann (CMVarE scope slot ty)))
+Chars 17010 - 17071 [Check~cmc_type_lvalue_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 17072 - 17145 [Print~Assumptions~cmc_type_lva...] 0.09 secs (0.09u,0.s)
+Chars 17146 - 17156 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_migration_lib.cm_l_unary_type_ready_step
+Chars 17157 - 17228 [idtac~"AUDIT~cmc_type_lvalue_m...] 0. secs (0.u,0.s)
+Chars 17229 - 17237 [exact~I.] 0. secs (0.u,0.s)
+Chars 17238 - 17242 [Qed.] 0. secs (0.u,0.s)
+cm_l_unary_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid op : BinNums.Z)
+         (arg : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMLTask p fid (CMUnaryE op arg ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_lstart sp p fid (CMUnaryE op arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_l sp ap p fid st ann (CMUnaryE op arg ty)))
+Chars 17243 - 17306 [Check~cmc_type_lvalue_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 17307 - 17382 [Print~Assumptions~cmc_type_lva...] 0.001 secs (0.001u,0.s)
+Chars 17383 - 17393 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_migration_lib.cm_l_index_type_ready_step
+Chars 17394 - 17465 [idtac~"AUDIT~cmc_type_lvalue_m...] 0. secs (0.u,0.s)
+Chars 17466 - 17474 [exact~I.] 0. secs (0.u,0.s)
+Chars 17475 - 17479 [Qed.] 0. secs (0.u,0.s)
+cm_l_index_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (base index : cm_expr) (ty : cm_type) (st : cm_src_state)
+         (ks : list cm_frame) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMLTask p fid (CMIndexE base index ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_lstart sp p fid (CMIndexE base index ty) st ks)
+         (cm_update_annotation
+            (cm_update_l sp ap p fid st ann (CMIndexE base index ty)))
+Chars 17480 - 17543 [Check~cmc_type_lvalue_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 17544 - 17619 [Print~Assumptions~cmc_type_lva...] 0.006 secs (0.006u,0.s)
+Chars 17620 - 17630 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_migration_lib.cm_l_member_type_ready_step
+Chars 17631 - 17703 [idtac~"AUDIT~cmc_type_lvalue_m...] 0. secs (0.u,0.s)
+Chars 17704 - 17712 [exact~I.] 0. secs (0.u,0.s)
+Chars 17713 - 17717 [Qed.] 0. secs (0.u,0.s)
+cm_l_member_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (base : cm_expr) (mid : BinNums.Z) (ty : cm_type)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMLTask p fid (CMMemberE base mid ty) st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_lstart sp p fid (CMMemberE base mid ty) st ks)
+         (cm_update_annotation
+            (cm_update_l sp ap p fid st ann (CMMemberE base mid ty)))
+Chars 17718 - 17782 [Check~cmc_type_lvalue_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 17783 - 17859 [Print~Assumptions~cmc_type_lva...] 0.006 secs (0.005u,0.s)
+Chars 17860 - 17870 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_lvalue_migration_lib.cm_l_type_ready_step
+Chars 17871 - 17936 [idtac~"AUDIT~cmc_type_lvalue_m...] 0. secs (0.u,0.s)
+Chars 17937 - 17945 [exact~I.] 0. secs (0.u,0.s)
+Chars 17946 - 17950 [Qed.] 0. secs (0.u,0.s)
+cm_l_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (expr : cm_expr) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMLTask p fid expr st ks) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_lstart sp p fid expr st ks)
+         (cm_update_annotation (cm_update_l sp ap p fid st ann expr))
+Chars 17951 - 18008 [Check~cmc_type_lvalue_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 18009 - 18078 [Print~Assumptions~cmc_type_lva...] 0.097 secs (0.097u,0.s)
+Chars 18079 - 18155 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 18156 - 18166 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_pointer_retype_type_ready
+Chars 18167 - 18244 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 18245 - 18253 [exact~I.] 0. secs (0.u,0.s)
+Chars 18254 - 18258 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_retype_type_ready
+     : forall (v : cm_value) (ty : cm_type),
+       cm_is_pointer (cm_value_type v) ->
+       cm_is_pointer ty ->
+       cm_value_type_compatible (cm_pointer_retype ty v) ty
+Chars 18259 - 18328 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 18329 - 18410 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 18411 - 18421 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_load_value_type_ready
+Chars 18422 - 18495 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 18496 - 18504 [exact~I.] 0. secs (0.u,0.s)
+Chars 18505 - 18509 [Qed.] 0. secs (0.u,0.s)
+cm_load_value_type_ready
+     : forall (st : cm_src_state) (ptr : cm_value) (ty : cm_type),
+       cm_scalar_expr_type ty ->
+       cm_load_ok ty ptr st = true ->
+       cm_value_type_compatible (cm_load_value ty ptr st) ty
+Chars 18510 - 18575 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 18576 - 18653 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 18654 - 18664 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_pointer_live_nonnull
+Chars 18665 - 18737 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 18738 - 18746 [exact~I.] 0. secs (0.u,0.s)
+Chars 18747 - 18751 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_live_nonnull
+     : forall (st : cm_src_state) (v : cm_value),
+       cm_pointer_live st v = true -> v <> CMNullV
+Chars 18752 - 18816 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 18817 - 18893 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 18894 - 18904 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_ptr_add_type_ready
+Chars 18905 - 18975 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 18976 - 18984 [exact~I.] 0. secs (0.u,0.s)
+Chars 18985 - 18989 [Qed.] 0. secs (0.u,0.s)
+cm_ptr_add_type_ready
+     : forall (structs : list cm_struct_d) (st : cm_src_state)
+         (ptr : cm_value) (index : BinNums.Z) (ty : cm_type),
+       cm_value_type_compatible ptr (CMPtrTy ty) ->
+       cm_pointer_live st ptr = true ->
+       cm_value_type_compatible (cm_ptr_add structs ptr index) (CMPtrTy ty)
+Chars 18990 - 19052 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 19053 - 19127 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 19128 - 19138 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_ptr_shift_type_ready
+Chars 19139 - 19211 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 19212 - 19220 [exact~I.] 0. secs (0.u,0.s)
+Chars 19221 - 19225 [Qed.] 0. secs (0.u,0.s)
+cm_ptr_shift_type_ready
+     : forall (structs : list cm_struct_d) (st : cm_src_state)
+         (ptr : cm_value) (index : BinNums.Z) (ty : cm_type),
+       cm_value_type_compatible ptr (CMPtrTy ty) ->
+       cm_ptr_shift_ok structs ptr index st = true ->
+       cm_value_type_compatible (cm_ptr_add structs ptr index) (CMPtrTy ty)
+Chars 19226 - 19290 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 19291 - 19367 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 19368 - 19378 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_member_value_type_ready
+Chars 19379 - 19454 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 19455 - 19463 [exact~I.] 0. secs (0.u,0.s)
+Chars 19464 - 19468 [Qed.] 0. secs (0.u,0.s)
+cm_member_value_type_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (v : cm_value) (base : cm_type)
+         (mid : BinNums.Z),
+       cm_member_valid p base mid ->
+       cm_value_type_compatible v base ->
+       cm_ptr_member_ok sp p v mid st = true ->
+       cm_value_type_compatible (cm_ptr_member sp p v mid)
+         (cm_member_lvalue_type p base mid)
+Chars 19469 - 19536 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 19537 - 19616 [Print~Assumptions~cmc_type_ope...] 0.09 secs (0.089u,0.s)
+Chars 19617 - 19627 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_unary_value_type_ready
+Chars 19628 - 19702 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 19703 - 19711 [exact~I.] 0. secs (0.u,0.s)
+Chars 19712 - 19716 [Qed.] 0. secs (0.u,0.s)
+cm_unary_value_type_ready
+     : forall (op : BinNums.Z) (v : cm_value) (st : cm_src_state),
+       cm_value_type_compatible (cm_unary_value op v st) CMIntTy
+Chars 19717 - 19783 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 19784 - 19862 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 19863 - 19873 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_integer_pointerb_false
+Chars 19874 - 19948 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 19949 - 19957 [exact~I.] 0. secs (0.u,0.s)
+Chars 19958 - 19962 [Qed.] 0. secs (0.u,0.s)
+cm_integer_pointerb_false
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v ty ->
+       cm_integer_type ty -> cm_is_pointerb (cm_value_type v) = false
+Chars 19963 - 20029 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 20030 - 20108 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 20109 - 20119 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_operations_migration_lib.cm_pointer_pointerb_true
+Chars 20120 - 20193 [idtac~"AUDIT~cmc_type_operatio...] 0. secs (0.u,0.s)
+Chars 20194 - 20202 [exact~I.] 0. secs (0.u,0.s)
+Chars 20203 - 20207 [Qed.] 0. secs (0.u,0.s)
+cm_pointer_pointerb_true
+     : forall (v : cm_value) (ty : cm_type),
+       cm_value_type_compatible v ty ->
+       cm_is_pointer ty -> cm_is_pointerb (cm_value_type v) = true
+Chars 20208 - 20273 [Check~cmc_type_operations_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 20274 - 20351 [Print~Assumptions~cmc_type_ope...] 0. secs (0.u,0.s)
+Chars 20352 - 20427 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 20428 - 20438 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_statement_migration_lib.cm_s_type_ready_step
+Chars 20439 - 20507 [idtac~"AUDIT~cmc_type_statemen...] 0. secs (0.u,0.s)
+Chars 20508 - 20516 [exact~I.] 0. secs (0.u,0.s)
+Chars 20517 - 20521 [Qed.] 0. secs (0.u,0.s)
+cm_s_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (stmt : cm_stmt) (st : cm_src_state) (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (CMSTask p fid stmt st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_sstart sp p fid stmt st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_s sp ap p fid st ann stmt))
+Chars 20522 - 20582 [Check~cmc_type_statement_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 20583 - 20655 [Print~Assumptions~cmc_type_sta...] 0.024 secs (0.024u,0.s)
+Chars 20656 - 20726 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 20727 - 20737 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_step_migration_lib.cm_v_type_ready_step
+Chars 20738 - 20801 [idtac~"AUDIT~cmc_type_step_mig...] 0. secs (0.u,0.s)
+Chars 20802 - 20810 [exact~I.] 0. secs (0.u,0.s)
+Chars 20811 - 20815 [Qed.] 0. secs (0.u,0.s)
+cm_v_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (phase : cm_aphase) (owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (v : cm_value) (st : cm_src_state)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_frame_fid_ready p fid (cm_phase_frame phase) ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+         (cm_ann_cursors ann) ->
+       cm_phase_value_type_ready (cm_source_function_policy sp) nilslot p fid
+         phase v ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Chars 20816 - 20871 [Check~cmc_type_step_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 20872 - 20939 [Print~Assumptions~cmc_type_ste...] 0.353 secs (0.351u,0.001s)
+Chars 20940 - 20950 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_step_migration_lib.cm_task_type_step_support
+Chars 20951 - 21019 [idtac~"AUDIT~cmc_type_step_mig...] 0. secs (0.u,0.s)
+Chars 21020 - 21028 [exact~I.] 0. secs (0.u,0.s)
+Chars 21029 - 21033 [Qed.] 0. secs (0.u,0.s)
+cm_task_type_step_support
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (task : cm_task)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_annotation_erases task ann ->
+       cm_task_coordinate_ready (cm_source_function_policy sp) p task ann ->
+       cm_task_fid_ready p task ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p task ann ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_step sp task)
+         (cm_update_annotation (cm_annotation_step sp ap task ann))
+Chars 21034 - 21094 [Check~cmc_type_step_migration_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 21095 - 21167 [Print~Assumptions~cmc_type_ste...] 0.571 secs (0.568u,0.002s)
+Chars 21168 - 21244 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 21245 - 21255 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_value_args_migration_lib.cm_v_args_type_ready_step
+Chars 21256 - 21330 [idtac~"AUDIT~cmc_type_value_ar...] 0. secs (0.u,0.s)
+Chars 21331 - 21339 [exact~I.] 0. secs (0.u,0.s)
+Chars 21340 - 21344 [Qed.] 0. secs (0.u,0.s)
+cm_v_args_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid callee : BinNums.Z)
+         (args : list cm_expr) (values : list cm_value) 
+         (ret : cm_type) (all_args : list cm_expr)
+         (base current scratch owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (v : cm_value) (st : cm_src_state)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_ann_cursors ann =
+       (CMACursor
+          (CAArgP callee args values ret all_args base current scratch) owner
+          ob oc :: rest)%list ->
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+         (cm_ann_cursors ann) ->
+       cm_value_convertible_to v
+         (cm_arg_next_type nilslot
+            (cm_function_params (cm_source_function_at sp callee p))
+            (List.rev values)) ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_vapply sp p fid
+            (cm_phase_frame
+               (CAArgP callee args values ret all_args base current scratch))
+            v st (cm_cursor_frames rest))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann
+               (CAArgP callee args values ret all_args base current scratch)))
+Chars 21345 - 21411 [Check~cmc_type_value_args_migr...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 21412 - 21490 [Print~Assumptions~cmc_type_val...] 0.095 secs (0.095u,0.s)
+Chars 21491 - 21568 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 21569 - 21579 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_value_basic_migration_lib.cm_v_basic_type_ready_step
+Chars 21580 - 21656 [idtac~"AUDIT~cmc_type_value_ba...] 0. secs (0.u,0.s)
+Chars 21657 - 21665 [exact~I.] 0. secs (0.u,0.s)
+Chars 21666 - 21670 [Qed.] 0. secs (0.u,0.s)
+cm_v_basic_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (phase : cm_aphase) (owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (v : cm_value) (st : cm_src_state)
+         (ann : cm_annotation),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_ann_cursors ann = (CMACursor phase owner ob oc :: rest)%list ->
+       cm_frame_fid_ready p fid (cm_phase_frame phase) ->
+       match phase with
+       | CABinLP _ _ _ _ | CABinRP _ _ _ _ _ | CAArgP _ _ _ _ _ _ _ _ =>
+           False
+       | _ => True
+       end ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+         (cm_ann_cursors ann) ->
+       cm_phase_value_type_ready (cm_source_function_policy sp) nilslot p fid
+         phase v ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Chars 21671 - 21739 [Check~cmc_type_value_basic_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 21740 - 21820 [Print~Assumptions~cmc_type_val...] 0.242 secs (0.24u,0.001s)
+Chars 21821 - 21899 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 21900 - 21910 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_value_binary_migration_lib.cm_binary_short_result
+Chars 21911 - 21984 [idtac~"AUDIT~cmc_type_value_bi...] 0. secs (0.u,0.s)
+Chars 21985 - 21993 [exact~I.] 0. secs (0.u,0.s)
+Chars 21994 - 21998 [Qed.] 0. secs (0.u,0.s)
+cm_binary_short_result
+     : forall (op : BinNums.Z) (a b ty : cm_type),
+       cm_binary_types op a b ty ->
+       op = BinNums.Z0 \/ op = BinNums.Zpos BinNums.xH -> ty = CMIntTy
+Chars 21999 - 22064 [Check~cmc_type_value_binary_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 22065 - 22142 [Print~Assumptions~cmc_type_val...] 0. secs (0.u,0.s)
+Chars 22143 - 22153 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_value_binary_migration_lib.cm_v_binleft_type_ready_step
+Chars 22154 - 22233 [idtac~~"AUDIT~cmc_type_value_b...] 0. secs (0.u,0.s)
+Chars 22234 - 22242 [exact~I.] 0. secs (0.u,0.s)
+Chars 22243 - 22247 [Qed.] 0. secs (0.u,0.s)
+cm_v_binleft_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid op : BinNums.Z)
+         (lhs rhs : cm_expr) (ty : cm_type) (owner ob oc : BinNums.Z)
+         (rest : list cm_acursor) (v : cm_value) (st : cm_src_state)
+         (ann : cm_annotation),
+       cm_ann_cursors ann =
+       (CMACursor (CABinLP op lhs rhs ty) owner ob oc :: rest)%list ->
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+         (cm_ann_cursors ann) ->
+       cm_value_type_compatible v (cm_expr_type lhs) ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_vapply sp p fid (cm_phase_frame (CABinLP op lhs rhs ty)) v st
+            (cm_cursor_frames rest))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CABinLP op lhs rhs ty)))
+Chars 22248 - 22319 [Check~cmc_type_value_binary_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 22320 - 22403 [Print~Assumptions~cmc_type_val...] 0.163 secs (0.162u,0.s)
+Chars 22404 - 22414 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_type_value_binary_migration_lib.cm_v_binright_type_ready_step
+Chars 22415 - 22495 [idtac~~"AUDIT~cmc_type_value_b...] 0. secs (0.u,0.s)
+Chars 22496 - 22504 [exact~I.] 0. secs (0.u,0.s)
+Chars 22505 - 22509 [Qed.] 0. secs (0.u,0.s)
+cm_v_binright_type_ready_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid op : BinNums.Z)
+         (lhs rhs : cm_expr) (left : cm_value) (ty : cm_type)
+         (owner ob oc : BinNums.Z) (rest : list cm_acursor) 
+         (v : cm_value) (st : cm_src_state) (ann : cm_annotation),
+       cm_ann_cursors ann =
+       (CMACursor (CABinRP op lhs rhs left ty) owner ob oc :: rest)%list ->
+       cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+         (cm_ann_cursors ann) ->
+       cm_value_type_compatible v (cm_expr_type rhs) ->
+       cm_task_type_ready (cm_source_function_policy sp) nilslot p
+         (cm_vapply sp p fid (cm_phase_frame (CABinRP op lhs rhs left ty)) v
+            st (cm_cursor_frames rest))
+         (cm_update_annotation
+            (cm_update_v sp ap p fid v st ann (CABinRP op lhs rhs left ty)))
+Chars 22510 - 22582 [Check~cmc_type_value_binary_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 22583 - 22667 [Print~Assumptions~cmc_type_val...] 0.125 secs (0.125u,0.s)
+Chars 22668 - 22740 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)

@@ -1,0 +1,84 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.246 secs (1.176u,0.068s)
+Chars 79 - 124 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 125 - 160 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 161 - 182 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 183 - 208 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 209 - 791 [Lemma~cm_v_arg_cons_layout_ste...] 0. secs (0.u,0.s)
+Chars 792 - 798 [Proof.] 0. secs (0.u,0.s)
+Chars 800 - 939 [(cbn~zeta;~intros~[CODE~[_~SAV...] 0.002 secs (0.002u,0.s)
+Chars 941 - 1015 [(repeat~rewrite~<-~app_assoc~i...] 0. secs (0.u,0.s)
+Chars 1017 - 1179 [(cbn[cm_emit_args_store]~in~CO...] 0.047 secs (0.045u,0.001s)
+2 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  v : cm_value
+  st : cm_src_state
+  callee : Z
+  arg : cm_expr
+  args : list cm_expr
+  values : list cm_value
+  ret : cm_type
+  all_args : list cm_expr
+  base, current, scratch, pc, temp, b, c, owner, ob, oc : Z
+  tail : list cm_acursor
+  spills : list cm_spill
+  saved : list cm_spill_frame
+  calls : list cm_call_sim_frame
+  CODE :
+    cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+      (pc + 5)
+      ((cm_expr_code_for (cm_source_function_policy sp) p fid 
+          (pc + 5) scratch arg 0 ++
+        cm_temp_store_code (cm_source_function_policy sp) p fid (current + 1) ++
+        cm_emit_args_store (cm_source_function_policy sp) p fid
+          (pc + 5 +
+           cm_rvalue_code_count (cm_source_function_policy sp) p fid arg + 5)
+          (current + 1 + 1) scratch args) ++
+       cm_emit_args_reload (cm_source_function_policy sp) p fid base all_args ++
+       [TVMInst TVMCallOp
+          (cm_function_pc (cm_source_function_policy sp) p callee)] ++
+       cm_cursor_code sp p fid
+         (pc +
+          (5 +
+           (Zlength
+              (cm_expr_code_for (cm_source_function_policy sp) p fid 
+                 (pc + 5) scratch arg 0) +
+            (5 +
+             Zlength
+               (cm_emit_args_store (cm_source_function_policy sp) p fid
+                  (pc + 5 +
+                   cm_rvalue_code_count (cm_source_function_policy sp) p fid
+                     arg + 5) (current + 1 + 1) scratch args)) +
+            (Zlength
+               (cm_emit_args_reload (cm_source_function_policy sp) p fid base
+                  all_args) + Z.succ 0)))) owner false tail)
+  SAVED :
+    cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+      fid tail calls
+  ============================
+  pc = pc + 5 + cm_rvalue_code_count (cm_source_function_policy sp) p fid arg
+
+goal 2 is:
+ Zlength
+   (cm_expr_code_for (cm_source_function_policy sp) p fid 
+      (pc + 5) scratch arg 0) +
+ (5 +
+  Zlength
+    (cm_emit_args_store (cm_source_function_policy sp) p fid
+       (pc + 5 +
+        cm_rvalue_code_count (cm_source_function_policy sp) p fid arg + 5)
+       (current + 1 + 1) scratch args)) =
+ Zlength
+   (cm_emit_args_store (cm_source_function_policy sp) p fid
+      (pc + 5 + cm_rvalue_code_count (cm_source_function_policy sp) p fid arg +
+       5) (current + 1 + 1) scratch args)
+Chars 1180 - 1185 [Show.] 0. secs (0.u,0.s)
+Chars 1186 - 1190 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_cont/build/Rocq/examples/QCP_demos_human/cmc_code_value_call_migration_lib.v", line 16, characters 0-4:
+Error:
+ (in proof cm_v_arg_cons_layout_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

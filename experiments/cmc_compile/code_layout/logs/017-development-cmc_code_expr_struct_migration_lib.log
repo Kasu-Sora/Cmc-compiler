@@ -1,0 +1,3761 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.344 secs (1.222u,0.103s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.01u,0.s)
+Chars 124 - 159 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 160 - 181 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 182 - 207 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 208 - 661 [Ltac~~cm_code_expr_reduce~:=~~...] 0. secs (0.u,0.s)
+Chars 662 - 930 [Lemma~cm_r_putc_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 931 - 937 [Proof.] 0. secs (0.u,0.s)
+Chars 939 - 1020 [(intros~[CODE~SAVED];~cm_code_...] 0.008 secs (0.008u,0.s)
+Chars 1022 - 1154 [(match~type~of~CODE~with~~|~cm...] 0.002 secs (0.002u,0.s)
+Chars 1156 - 1278 [(cbn[cm_emit_rvalue~cm_expr_co...] 0. secs (0.u,0.s)
+1 goal
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  arg : cm_expr
+  ty : cm_type
+  st : cm_src_state
+  ks : list cm_frame
+  ann : cm_annotation
+  CODE :
+    cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+      match ann with
+      | CMAnnotation pc _ _ _ _ _ _ _ => pc
+      end
+      (cm_emit_rvalue (cm_source_function_policy sp) p fid
+         match ann with
+         | CMAnnotation pc _ _ _ _ _ _ _ => pc
+         end match ann with
+             | CMAnnotation _ temp _ _ _ _ _ _ => temp
+             end (CMPutcE arg ty) ++
+       (fix cm_cursor_code
+          (sp : cm_source_lookup_policy) (p : cm_program) 
+          (fid pc temp : Z) (normal : bool) (cursors : list cm_acursor)
+          {struct cursors} : list tvm_inst :=
+          match cursors with
+          | [] => []
+          | cursor :: rest =>
+              (if normal
+               then
+                cm_normal_phase_code sp p fid pc temp
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end match cursor with
+                      | CMACursor _ _ b _ => b
+                      end match cursor with
+                          | CMACursor _ _ _ c => c
+                          end
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+               else
+                match
+                  match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end
+                with
+                | CALoadP ty => cm_load_code ty
+                | CAAssignLP src ty =>
+                    cm_temp_store_code (cm_source_function_policy sp) p fid
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end ++
+                    cm_emit_rvalue (cm_source_function_policy sp) p fid
+                      (pc +
+                       Zlength
+                         (cm_temp_store_code (cm_source_function_policy sp) p
+                            fid
+                            match cursor with
+                            | CMACursor _ temp0 _ _ => temp0
+                            end))
+                      (match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end + 1) src ++
+                    cm_assign_tail_code (cm_source_function_policy sp) p fid
+                      ty
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end
+                | CAAssignRP _ ty =>
+                    cm_assign_tail_code (cm_source_function_policy sp) p fid
+                      ty
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end
+                | CABinLP op lhs rhs _ =>
+                    if (op =? 0) || (op =? 1)
+                    then
+                     [TVMInst (if op =? 0 then TVMJnzOp else TVMJzOp)
+                        (pc +
+                         cm_rvalue_code_count (cm_source_function_policy sp)
+                           p fid rhs + 4)] ++
+                     cm_emit_rvalue (cm_source_function_policy sp) p fid
+                       (pc + 1)
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end rhs ++
+                     [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                      TVMInst TVMJmpOp
+                        (pc +
+                         cm_rvalue_code_count (cm_source_function_policy sp)
+                           p fid rhs + 5);
+                      TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                    else
+                     cm_temp_store_code (cm_source_function_policy sp) p fid
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end ++
+                     cm_emit_rvalue (cm_source_function_policy sp) p fid
+                       (pc +
+                        Zlength
+                          (cm_temp_store_code (cm_source_function_policy sp)
+                             p fid
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end))
+                       (match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end + 1) rhs ++
+                     cm_binary_finish_code (cm_source_function_policy sp) p
+                       fid op lhs rhs
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end
+                | CABinRP op lhs rhs _ _ =>
+                    if (op =? 0) || (op =? 1)
+                    then
+                     [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                      TVMInst TVMJmpOp (pc + 4);
+                      TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                    else
+                     cm_binary_finish_code (cm_source_function_policy sp) p
+                       fid op lhs rhs
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end
+                | CAUnaryP op =>
+                    [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                     TVMInst (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                | CAIndexLP index ty =>
+                    cm_temp_store_code (cm_source_function_policy sp) p fid
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end ++
+                    cm_emit_rvalue (cm_source_function_policy sp) p fid
+                      (pc +
+                       Zlength
+                         (cm_temp_store_code (cm_source_function_policy sp) p
+                            fid
+                            match cursor with
+                            | CMACursor _ temp0 _ _ => temp0
+                            end))
+                      (match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end + 1) index ++
+                    cm_index_tail_code (cm_source_function_policy sp) p fid
+                      ty
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end
+                | CAIndexRP _ ty =>
+                    cm_index_tail_code (cm_source_function_policy sp) p fid
+                      ty
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end
+                | CAMemberP mid base_ty => cm_member_tail_code p base_ty mid
+                | CAPutcP => [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                | CAPutiP => [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                | CAHaltP | CAExitP => cm_status_tail_code
+                | CAExprStmtP => [TVMInst TVMPopOp 0]
+                | CAInitP slot => cm_init_tail_code sp p fid slot
+                | CABlockP _ _ true target => [TVMInst TVMJmpOp target]
+                | CABlockP _ _ false _ => []
+                | CASeqP second =>
+                    cm_emit_stmt (cm_source_function_policy sp) p fid pc
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end match cursor with
+                          | CMACursor _ _ b _ => b
+                          end match cursor with
+                              | CMACursor _ _ _ c => c
+                              end second
+                | CAIfP yes no =>
+                    [TVMInst TVMJzOp
+                       (pc + 1 +
+                        cm_stmt_code_count (cm_source_function_policy sp) p
+                          fid yes + 1)] ++
+                    cm_emit_stmt (cm_source_function_policy sp) p fid
+                      (pc + 1)
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end match cursor with
+                          | CMACursor _ _ b _ => b
+                          end match cursor with
+                              | CMACursor _ _ _ c => c
+                              end yes ++
+                    [TVMInst TVMJmpOp
+                       (pc + 2 +
+                        cm_stmt_code_count (cm_source_function_policy sp) p
+                          fid yes +
+                        cm_stmt_code_count (cm_source_function_policy sp) p
+                          fid no)] ++
+                    cm_emit_stmt (cm_source_function_policy sp) p fid
+                      (pc + 2 +
+                       cm_stmt_code_count (cm_source_function_policy sp) p
+                         fid yes)
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end match cursor with
+                          | CMACursor _ _ b _ => b
+                          end match cursor with
+                              | CMACursor _ _ _ c => c
+                              end no
+                | CAWhileGuardP _ body loop_start loop_end =>
+                    [TVMInst TVMJzOp loop_end] ++
+                    cm_emit_stmt (cm_source_function_policy sp) p fid
+                      (pc + 1)
+                      match cursor with
+                      | CMACursor _ temp0 _ _ => temp0
+                      end loop_end loop_start body ++
+                    [TVMInst TVMJmpOp loop_start]
+                | CAWhileBodyP _ _ _ _ loop_start _ =>
+                    [TVMInst TVMJmpOp loop_start]
+                | CAArgP callee rest0 _ _ all_args base_slot current_slot
+                  scratch =>
+                    cm_temp_store_code (cm_source_function_policy sp) p fid
+                      current_slot ++
+                    cm_emit_args_store (cm_source_function_policy sp) p fid
+                      (pc +
+                       Zlength
+                         (cm_temp_store_code (cm_source_function_policy sp) p
+                            fid current_slot)) (current_slot + 1) scratch
+                      rest0 ++
+                    cm_emit_args_reload (cm_source_function_policy sp) p fid
+                      base_slot all_args ++
+                    [TVMInst TVMCallOp
+                       (cm_function_pc (cm_source_function_policy sp) p
+                          callee)]
+                | _ => cm_return_tail_code sp p fid
+                end) ++
+              (if
+                if normal
+                then
+                 cm_normal_phase_stops
+                   match cursor with
+                   | CMACursor phase _ _ _ => phase
+                   end
+                else
+                 match
+                   match cursor with
+                   | CMACursor phase _ _ _ => phase
+                   end
+                 with
+                 | CABlockP _ _ jump _ => jump
+                 | CAHaltP | CAExitP | CAReturnP | CACallP _ _ _ _ _ => true
+                 | _ => false
+                 end
+               then []
+               else
+                cm_cursor_code sp p fid
+                  (pc +
+                   Zlength
+                     (if normal
+                      then
+                       cm_normal_phase_code sp p fid pc temp
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end match cursor with
+                             | CMACursor _ _ b _ => b
+                             end
+                         match cursor with
+                         | CMACursor _ _ _ c => c
+                         end
+                         match cursor with
+                         | CMACursor phase _ _ _ => phase
+                         end
+                      else
+                       match
+                         match cursor with
+                         | CMACursor phase _ _ _ => phase
+                         end
+                       with
+                       | CALoadP ty => cm_load_code ty
+                       | CAAssignLP src ty =>
+                           cm_temp_store_code (cm_source_function_policy sp)
+                             p fid
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end ++
+                           cm_emit_rvalue (cm_source_function_policy sp) p
+                             fid
+                             (pc +
+                              Zlength
+                                (cm_temp_store_code
+                                   (cm_source_function_policy sp) p fid
+                                   match cursor with
+                                   | CMACursor _ temp0 _ _ => temp0
+                                   end))
+                             (match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end + 1) src ++
+                           cm_assign_tail_code (cm_source_function_policy sp)
+                             p fid ty
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                       | CAAssignRP _ ty =>
+                           cm_assign_tail_code (cm_source_function_policy sp)
+                             p fid ty
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                       | CABinLP op lhs rhs _ =>
+                           if (op =? 0) || (op =? 1)
+                           then
+                            [TVMInst (if op =? 0 then TVMJnzOp else TVMJzOp)
+                               (pc +
+                                cm_rvalue_code_count
+                                  (cm_source_function_policy sp) p fid rhs +
+                                4)] ++
+                            cm_emit_rvalue (cm_source_function_policy sp) p
+                              fid (pc + 1)
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end rhs ++
+                            [TVMInst TVMPushOp 0; 
+                             TVMInst TVMNeOp 0;
+                             TVMInst TVMJmpOp
+                               (pc +
+                                cm_rvalue_code_count
+                                  (cm_source_function_policy sp) p fid rhs +
+                                5);
+                             TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                           else
+                            cm_temp_store_code (cm_source_function_policy sp)
+                              p fid
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end ++
+                            cm_emit_rvalue (cm_source_function_policy sp) p
+                              fid
+                              (pc +
+                               Zlength
+                                 (cm_temp_store_code
+                                    (cm_source_function_policy sp) p fid
+                                    match cursor with
+                                    | CMACursor _ temp0 _ _ => temp0
+                                    end))
+                              (match cursor with
+                               | CMACursor _ temp0 _ _ => temp0
+                               end + 1) rhs ++
+                            cm_binary_finish_code
+                              (cm_source_function_policy sp) p fid op lhs rhs
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end
+                       | CABinRP op lhs rhs _ _ =>
+                           if (op =? 0) || (op =? 1)
+                           then
+                            [TVMInst TVMPushOp 0; 
+                             TVMInst TVMNeOp 0; TVMInst TVMJmpOp (pc + 4);
+                             TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                           else
+                            cm_binary_finish_code
+                              (cm_source_function_policy sp) p fid op lhs rhs
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end
+                       | CAUnaryP op =>
+                           [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                            TVMInst (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                       | CAIndexLP index ty =>
+                           cm_temp_store_code (cm_source_function_policy sp)
+                             p fid
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end ++
+                           cm_emit_rvalue (cm_source_function_policy sp) p
+                             fid
+                             (pc +
+                              Zlength
+                                (cm_temp_store_code
+                                   (cm_source_function_policy sp) p fid
+                                   match cursor with
+                                   | CMACursor _ temp0 _ _ => temp0
+                                   end))
+                             (match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end + 1) index ++
+                           cm_index_tail_code (cm_source_function_policy sp)
+                             p fid ty
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                       | CAIndexRP _ ty =>
+                           cm_index_tail_code (cm_source_function_policy sp)
+                             p fid ty
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                       | CAMemberP mid base_ty =>
+                           cm_member_tail_code p base_ty mid
+                       | CAPutcP => [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                       | CAPutiP => [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                       | CAHaltP | CAExitP => cm_status_tail_code
+                       | CAExprStmtP => [TVMInst TVMPopOp 0]
+                       | CAInitP slot => cm_init_tail_code sp p fid slot
+                       | CABlockP _ _ true target =>
+                           [TVMInst TVMJmpOp target]
+                       | CABlockP _ _ false _ => []
+                       | CASeqP second =>
+                           cm_emit_stmt (cm_source_function_policy sp) p fid
+                             pc
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor with
+                             | CMACursor _ _ _ c => c
+                             end second
+                       | CAIfP yes no =>
+                           [TVMInst TVMJzOp
+                              (pc + 1 +
+                               cm_stmt_code_count
+                                 (cm_source_function_policy sp) p fid yes + 1)] ++
+                           cm_emit_stmt (cm_source_function_policy sp) p fid
+                             (pc + 1)
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor with
+                             | CMACursor _ _ _ c => c
+                             end yes ++
+                           [TVMInst TVMJmpOp
+                              (pc + 2 +
+                               cm_stmt_code_count
+                                 (cm_source_function_policy sp) p fid yes +
+                               cm_stmt_code_count
+                                 (cm_source_function_policy sp) p fid no)] ++
+                           cm_emit_stmt (cm_source_function_policy sp) p fid
+                             (pc + 2 +
+                              cm_stmt_code_count
+                                (cm_source_function_policy sp) p fid yes)
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor with
+                             | CMACursor _ _ _ c => c
+                             end no
+                       | CAWhileGuardP _ body loop_start loop_end =>
+                           [TVMInst TVMJzOp loop_end] ++
+                           cm_emit_stmt (cm_source_function_policy sp) p fid
+                             (pc + 1)
+                             match cursor with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end loop_end loop_start body ++
+                           [TVMInst TVMJmpOp loop_start]
+                       | CAWhileBodyP _ _ _ _ loop_start _ =>
+                           [TVMInst TVMJmpOp loop_start]
+                       | CAArgP callee rest0 _ _ all_args base_slot
+                         current_slot scratch =>
+                           cm_temp_store_code (cm_source_function_policy sp)
+                             p fid current_slot ++
+                           cm_emit_args_store (cm_source_function_policy sp)
+                             p fid
+                             (pc +
+                              Zlength
+                                (cm_temp_store_code
+                                   (cm_source_function_policy sp) p fid
+                                   current_slot)) 
+                             (current_slot + 1) scratch rest0 ++
+                           cm_emit_args_reload (cm_source_function_policy sp)
+                             p fid base_slot all_args ++
+                           [TVMInst TVMCallOp
+                              (cm_function_pc (cm_source_function_policy sp)
+                                 p callee)]
+                       | _ => cm_return_tail_code sp p fid
+                       end))
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end
+                  (normal
+                   || match
+                        match cursor with
+                        | CMACursor phase _ _ _ => phase
+                        end
+                      with
+                      | CAExprStmtP | CAInitP _ | 
+                        CABlockP _ _ _ _ | CASeqP _ | 
+                        CAIfP _ _ | CAWhileGuardP _ _ _ _ |
+                        CAWhileBodyP _ _ _ _ _ _ => true
+                      | _ => false
+                      end) rest)
+          end) sp p fid
+         (match ann with
+          | CMAnnotation pc _ _ _ _ _ _ _ => pc
+          end +
+          cm_rvalue_code_count (cm_source_function_policy sp) p fid
+            (CMPutcE arg ty))
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end false match ann with
+                   | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                   end)
+  SAVED :
+    (fix cm_saved_layout
+       (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+       (p : cm_program) (code : list tvm_inst) (fid : Z)
+       (cursors : list cm_acursor) (calls : list cm_call_sim_frame) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => calls = []
+       | cursor :: rest =>
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CABlockP _ _ jump target =>
+               jump = false \/
+               cm_code_at code target
+                 ((fix cm_cursor_code
+                     (sp0 : cm_source_lookup_policy) 
+                     (p0 : cm_program) (fid0 pc temp : Z) 
+                     (normal : bool) (cursors0 : list cm_acursor) {struct
+                      cursors0} : list tvm_inst :=
+                     match cursors0 with
+                     | [] => []
+                     | cursor0 :: rest0 =>
+                         (if normal
+                          then
+                           cm_normal_phase_code sp0 p0 fid0 pc temp
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ _ c => c
+                             end
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                          else
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CALoadP ty => cm_load_code ty
+                           | CAAssignLP src ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) src ++
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAAssignRP _ ty =>
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CABinLP op lhs rhs _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst
+                                   (if op =? 0 then TVMJnzOp else TVMJzOp)
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 4)] ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc + 1)
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end rhs ++
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 5);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_temp_store_code
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc +
+                                   Zlength
+                                     (cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end))
+                                  (match cursor0 with
+                                   | CMACursor _ temp0 _ _ => temp0
+                                   end + 1) rhs ++
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CABinRP op lhs rhs _ _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp (pc + 4);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CAUnaryP op =>
+                               [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                                TVMInst
+                                  (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                           | CAIndexLP index ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) index ++
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAIndexRP _ ty =>
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAMemberP mid base_ty =>
+                               cm_member_tail_code p0 base_ty mid
+                           | CAPutcP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                           | CAPutiP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                           | CAHaltP | CAExitP => cm_status_tail_code
+                           | CAExprStmtP => [TVMInst TVMPopOp 0]
+                           | CAInitP slot =>
+                               cm_init_tail_code sp0 p0 fid0 slot
+                           | CABlockP _ _ true target0 =>
+                               [TVMInst TVMJmpOp target0]
+                           | CABlockP _ _ false _ => []
+                           | CASeqP second =>
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 pc
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end second
+                           | CAIfP yes no =>
+                               [TVMInst TVMJzOp
+                                  (pc + 1 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes + 1)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end yes ++
+                               [TVMInst TVMJmpOp
+                                  (pc + 2 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     no)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc + 2 +
+                                  cm_stmt_code_count
+                                    (cm_source_function_policy sp0) p0 fid0
+                                    yes)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end no
+                           | CAWhileGuardP _ body loop_start loop_end =>
+                               [TVMInst TVMJzOp loop_end] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end loop_end loop_start body ++
+                               [TVMInst TVMJmpOp loop_start]
+                           | CAWhileBodyP _ _ _ _ loop_start _ =>
+                               [TVMInst TVMJmpOp loop_start]
+                           | CAArgP callee rest1 _ _ all_args base_slot
+                             current_slot scratch =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 current_slot ++
+                               cm_emit_args_store
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0 current_slot)) 
+                                 (current_slot + 1) scratch rest1 ++
+                               cm_emit_args_reload
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 base_slot all_args ++
+                               [TVMInst TVMCallOp
+                                  (cm_function_pc
+                                     (cm_source_function_policy sp0) p0
+                                     callee)]
+                           | _ => cm_return_tail_code sp0 p0 fid0
+                           end) ++
+                         (if
+                           if normal
+                           then
+                            cm_normal_phase_stops
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CABlockP _ _ jump0 _ => jump0
+                            | CAHaltP | CAExitP | 
+                              CAReturnP | CACallP _ _ _ _ _ => true
+                            | _ => false
+                            end
+                          then []
+                          else
+                           cm_cursor_code sp0 p0 fid0
+                             (pc +
+                              Zlength
+                                (if normal
+                                 then
+                                  cm_normal_phase_code sp0 p0 fid0 pc temp
+                                    match cursor0 with
+                                    | CMACursor _ temp0 _ _ => temp0
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ b _ => b
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ _ c => c
+                                    end
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                 else
+                                  match
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                  with
+                                  | CALoadP ty => cm_load_code ty
+                                  | CAAssignLP src ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0
+                                              match cursor0 with
+                                              | CMACursor _ temp0 _ _ =>
+                                                 temp0
+                                              end))
+                                        (match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end + 1) src ++
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAAssignRP _ ty =>
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CABinLP op lhs rhs _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst
+                                          (if op =? 0
+                                           then TVMJnzOp
+                                           else TVMJzOp)
+                                          (pc +
+                                           cm_rvalue_code_count
+                                             (cm_source_function_policy sp0)
+                                             p0 fid0 rhs + 4)] ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 (pc + 1)
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end rhs ++
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp
+                                          (pc +
+                                           cm_rvalue_code_count
+                                             (cm_source_function_policy sp0)
+                                             p0 fid0 rhs + 5);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_temp_store_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         (pc +
+                                          Zlength
+                                            (cm_temp_store_code
+                                               (cm_source_function_policy sp0)
+                                               p0 fid0
+                                               match ... with
+                                               | ... temp0
+                                               end))
+                                         (match cursor0 with
+                                          | CMACursor _ temp0 _ _ => temp0
+                                          end + 1) rhs ++
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CABinRP op lhs rhs _ _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp (pc + 4);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CAUnaryP op =>
+                                      [TVMInst TVMPushOp
+                                         (if op =? 0 then -1 else 0);
+                                       TVMInst
+                                         (if op =? 0
+                                          then TVMMulOp
+                                          else TVMEqOp) 0]
+                                  | CAIndexLP index ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0
+                                              match cursor0 with
+                                              | CMACursor _ temp0 _ _ =>
+                                                 temp0
+                                              end))
+                                        (match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end + 1) index ++
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAIndexRP _ ty =>
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAMemberP mid base_ty =>
+                                      cm_member_tail_code p0 base_ty mid
+                                  | CAPutcP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutcOp 0]
+                                  | CAPutiP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutiOp 0]
+                                  | CAHaltP | CAExitP => cm_status_tail_code
+                                  | CAExprStmtP => [TVMInst TVMPopOp 0]
+                                  | CAInitP slot =>
+                                      cm_init_tail_code sp0 p0 fid0 slot
+                                  | CABlockP _ _ true target0 =>
+                                      [TVMInst TVMJmpOp target0]
+                                  | CABlockP _ _ false _ => []
+                                  | CASeqP second =>
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 pc
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end second
+                                  | CAIfP yes no =>
+                                      [TVMInst TVMJzOp
+                                         (pc + 1 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes + 1)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end yes ++
+                                      [TVMInst TVMJmpOp
+                                         (pc + 2 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 no)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc + 2 +
+                                         cm_stmt_code_count
+                                           (cm_source_function_policy sp0) p0
+                                           fid0 yes)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end no
+                                  | CAWhileGuardP _ body loop_start loop_end =>
+                                      [TVMInst TVMJzOp loop_end] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end loop_end loop_start body ++
+                                      [TVMInst TVMJmpOp loop_start]
+                                  | CAWhileBodyP _ _ _ _ loop_start _ =>
+                                      [TVMInst TVMJmpOp loop_start]
+                                  | CAArgP callee rest1 _ _ all_args
+                                    base_slot current_slot scratch =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 current_slot ++
+                                      cm_emit_args_store
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0 current_slot))
+                                        (current_slot + 1) scratch rest1 ++
+                                      cm_emit_args_reload
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 base_slot all_args ++
+                                      [TVMInst TVMCallOp
+                                         (cm_function_pc
+                                            (cm_source_function_policy sp0)
+                                            p0 callee)]
+                                  | _ => cm_return_tail_code sp0 p0 fid0
+                                  end))
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             (normal
+                              || match
+                                   match cursor0 with
+                                   | CMACursor phase _ _ _ => phase
+                                   end
+                                 with
+                                 | CAExprStmtP | CAInitP _ |
+                                   CABlockP _ _ _ _ | 
+                                   CASeqP _ | CAIfP _ _ |
+                                   CAWhileGuardP _ _ _ _ |
+                                   CAWhileBodyP _ _ _ _ _ _ => true
+                                 | _ => false
+                                 end) rest0)
+                     end) sp p fid target
+                    match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end true rest)
+           | CAWhileGuardP guard body loop_start loop_end |
+             CAWhileBodyP guard body _ _ loop_start loop_end =>
+               cm_code_at code loop_start
+                 (cm_emit_rvalue (cm_source_function_policy sp) p fid
+                    loop_start
+                    match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end guard ++
+                  [TVMInst TVMJzOp loop_end] ++
+                  cm_emit_stmt (cm_source_function_policy sp) p fid
+                    (loop_start +
+                     cm_rvalue_code_count (cm_source_function_policy sp) p
+                       fid guard + 1)
+                    match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end loop_end loop_start body ++
+                  [TVMInst TVMJmpOp loop_start] ++
+                  (fix cm_cursor_code
+                     (sp0 : cm_source_lookup_policy) 
+                     (p0 : cm_program) (fid0 pc temp : Z) 
+                     (normal : bool) (cursors0 : list cm_acursor) {struct
+                      cursors0} : list tvm_inst :=
+                     match cursors0 with
+                     | [] => []
+                     | cursor0 :: rest0 =>
+                         (if normal
+                          then
+                           cm_normal_phase_code sp0 p0 fid0 pc temp
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ _ c => c
+                             end
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                          else
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CALoadP ty => cm_load_code ty
+                           | CAAssignLP src ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) src ++
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAAssignRP _ ty =>
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CABinLP op lhs rhs _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst
+                                   (if op =? 0 then TVMJnzOp else TVMJzOp)
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 4)] ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc + 1)
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end rhs ++
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 5);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_temp_store_code
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc +
+                                   Zlength
+                                     (cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end))
+                                  (match cursor0 with
+                                   | CMACursor _ temp0 _ _ => temp0
+                                   end + 1) rhs ++
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CABinRP op lhs rhs _ _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp (pc + 4);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CAUnaryP op =>
+                               [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                                TVMInst
+                                  (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                           | CAIndexLP index ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) index ++
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAIndexRP _ ty =>
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAMemberP mid base_ty =>
+                               cm_member_tail_code p0 base_ty mid
+                           | CAPutcP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                           | CAPutiP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                           | CAHaltP | CAExitP => cm_status_tail_code
+                           | CAExprStmtP => [TVMInst TVMPopOp 0]
+                           | CAInitP slot =>
+                               cm_init_tail_code sp0 p0 fid0 slot
+                           | CABlockP _ _ true target =>
+                               [TVMInst TVMJmpOp target]
+                           | CABlockP _ _ false _ => []
+                           | CASeqP second =>
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 pc
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end second
+                           | CAIfP yes no =>
+                               [TVMInst TVMJzOp
+                                  (pc + 1 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes + 1)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end yes ++
+                               [TVMInst TVMJmpOp
+                                  (pc + 2 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     no)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc + 2 +
+                                  cm_stmt_code_count
+                                    (cm_source_function_policy sp0) p0 fid0
+                                    yes)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end no
+                           | CAWhileGuardP _ body0 loop_start0 loop_end0 =>
+                               [TVMInst TVMJzOp loop_end0] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end loop_end0 loop_start0 body0 ++
+                               [TVMInst TVMJmpOp loop_start0]
+                           | CAWhileBodyP _ _ _ _ loop_start0 _ =>
+                               [TVMInst TVMJmpOp loop_start0]
+                           | CAArgP callee rest1 _ _ all_args base_slot
+                             current_slot scratch =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 current_slot ++
+                               cm_emit_args_store
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0 current_slot)) 
+                                 (current_slot + 1) scratch rest1 ++
+                               cm_emit_args_reload
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 base_slot all_args ++
+                               [TVMInst TVMCallOp
+                                  (cm_function_pc
+                                     (cm_source_function_policy sp0) p0
+                                     callee)]
+                           | _ => cm_return_tail_code sp0 p0 fid0
+                           end) ++
+                         (if
+                           if normal
+                           then
+                            cm_normal_phase_stops
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CABlockP _ _ jump _ => jump
+                            | CAHaltP | CAExitP | 
+                              CAReturnP | CACallP _ _ _ _ _ => true
+                            | _ => false
+                            end
+                          then []
+                          else
+                           cm_cursor_code sp0 p0 fid0
+                             (pc +
+                              Zlength
+                                (if normal
+                                 then
+                                  cm_normal_phase_code sp0 p0 fid0 pc temp
+                                    match cursor0 with
+                                    | CMACursor _ temp0 _ _ => temp0
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ b _ => b
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ _ c => c
+                                    end
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                 else
+                                  match
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                  with
+                                  | CALoadP ty => cm_load_code ty
+                                  | CAAssignLP src ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code ... p0 fid0
+                                              ...))
+                                        (match ... with
+                                         | ... => temp0
+                                         end + 1) src ++
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAAssignRP _ ty =>
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CABinLP op lhs rhs _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst
+                                          (if op =? 0
+                                           then TVMJnzOp
+                                           else TVMJzOp)
+                                          (pc +
+                                           cm_rvalue_code_count ... p0 fid0
+                                             rhs + 4)] ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 (pc + 1)
+                                         match ... with
+                                         | ... => temp0
+                                         end rhs ++
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp (... + 5);
+                                        TVMInst TVMPushOp (... ... ...)]
+                                      else
+                                       cm_temp_store_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 (pc + Zlength ...)
+                                         (...
+                                          ...
+                                          end + 1) rhs ++
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match ... with
+                                         | ... => temp0
+                                         end
+                                  | CABinRP op lhs rhs _ _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp (pc + 4);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CAUnaryP op =>
+                                      [TVMInst TVMPushOp
+                                         (if op =? 0 then -1 else 0);
+                                       TVMInst
+                                         (if op =? 0
+                                          then TVMMulOp
+                                          else TVMEqOp) 0]
+                                  | CAIndexLP index ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code ... p0 fid0
+                                              ...))
+                                        (match ... with
+                                         | ... => temp0
+                                         end + 1) index ++
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAIndexRP _ ty =>
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAMemberP mid base_ty =>
+                                      cm_member_tail_code p0 base_ty mid
+                                  | CAPutcP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutcOp 0]
+                                  | CAPutiP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutiOp 0]
+                                  | CAHaltP | CAExitP => cm_status_tail_code
+                                  | CAExprStmtP => [TVMInst TVMPopOp 0]
+                                  | CAInitP slot =>
+                                      cm_init_tail_code sp0 p0 fid0 slot
+                                  | CABlockP _ _ true target =>
+                                      [TVMInst TVMJmpOp target]
+                                  | CABlockP _ _ false _ => []
+                                  | CASeqP second =>
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 pc
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end second
+                                  | CAIfP yes no =>
+                                      [TVMInst TVMJzOp
+                                         (pc + 1 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes + 1)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end yes ++
+                                      [TVMInst TVMJmpOp
+                                         (pc + 2 +
+                                          cm_stmt_code_count ... p0 fid0 yes +
+                                          cm_stmt_code_count (...) p0 fid0 no)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc + 2 +
+                                         cm_stmt_code_count (...) p0 fid0 yes)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end no
+                                  | CAWhileGuardP _ body0 loop_start0
+                                    loop_end0 =>
+                                      [TVMInst TVMJzOp loop_end0] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end loop_end0 loop_start0 body0 ++
+                                      [TVMInst TVMJmpOp loop_start0]
+                                  | CAWhileBodyP _ _ _ _ loop_start0 _ =>
+                                      [TVMInst TVMJmpOp loop_start0]
+                                  | CAArgP callee rest1 _ _ all_args
+                                    base_slot current_slot scratch =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 current_slot ++
+                                      cm_emit_args_store
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code ... p0 fid0
+                                              current_slot))
+                                        (current_slot + 1) scratch rest1 ++
+                                      cm_emit_args_reload
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 base_slot all_args ++
+                                      [TVMInst TVMCallOp
+                                         (cm_function_pc
+                                            (cm_source_function_policy sp0)
+                                            p0 callee)]
+                                  | _ => cm_return_tail_code sp0 p0 fid0
+                                  end))
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             (normal
+                              || match
+                                   match cursor0 with
+                                   | CMACursor phase _ _ _ => phase
+                                   end
+                                 with
+                                 | CAExprStmtP | CAInitP _ |
+                                   CABlockP _ _ _ _ | 
+                                   CASeqP _ | CAIfP _ _ |
+                                   CAWhileGuardP _ _ _ _ |
+                                   CAWhileBodyP _ _ _ _ _ _ => true
+                                 | _ => false
+                                 end) rest0)
+                     end) sp p fid loop_end
+                    match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end true rest) /\
+               cm_code_at code loop_end
+                 ((fix cm_cursor_code
+                     (sp0 : cm_source_lookup_policy) 
+                     (p0 : cm_program) (fid0 pc temp : Z) 
+                     (normal : bool) (cursors0 : list cm_acursor) {struct
+                      cursors0} : list tvm_inst :=
+                     match cursors0 with
+                     | [] => []
+                     | cursor0 :: rest0 =>
+                         (if normal
+                          then
+                           cm_normal_phase_code sp0 p0 fid0 pc temp
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ _ c => c
+                             end
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                          else
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CALoadP ty => cm_load_code ty
+                           | CAAssignLP src ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) src ++
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAAssignRP _ ty =>
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CABinLP op lhs rhs _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst
+                                   (if op =? 0 then TVMJnzOp else TVMJzOp)
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 4)] ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc + 1)
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end rhs ++
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 5);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_temp_store_code
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc +
+                                   Zlength
+                                     (cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end))
+                                  (match cursor0 with
+                                   | CMACursor _ temp0 _ _ => temp0
+                                   end + 1) rhs ++
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CABinRP op lhs rhs _ _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp (pc + 4);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CAUnaryP op =>
+                               [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                                TVMInst
+                                  (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                           | CAIndexLP index ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) index ++
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAIndexRP _ ty =>
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAMemberP mid base_ty =>
+                               cm_member_tail_code p0 base_ty mid
+                           | CAPutcP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                           | CAPutiP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                           | CAHaltP | CAExitP => cm_status_tail_code
+                           | CAExprStmtP => [TVMInst TVMPopOp 0]
+                           | CAInitP slot =>
+                               cm_init_tail_code sp0 p0 fid0 slot
+                           | CABlockP _ _ true target =>
+                               [TVMInst TVMJmpOp target]
+                           | CABlockP _ _ false _ => []
+                           | CASeqP second =>
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 pc
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end second
+                           | CAIfP yes no =>
+                               [TVMInst TVMJzOp
+                                  (pc + 1 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes + 1)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end yes ++
+                               [TVMInst TVMJmpOp
+                                  (pc + 2 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     no)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc + 2 +
+                                  cm_stmt_code_count
+                                    (cm_source_function_policy sp0) p0 fid0
+                                    yes)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end no
+                           | CAWhileGuardP _ body0 loop_start0 loop_end0 =>
+                               [TVMInst TVMJzOp loop_end0] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end loop_end0 loop_start0 body0 ++
+                               [TVMInst TVMJmpOp loop_start0]
+                           | CAWhileBodyP _ _ _ _ loop_start0 _ =>
+                               [TVMInst TVMJmpOp loop_start0]
+                           | CAArgP callee rest1 _ _ all_args base_slot
+                             current_slot scratch =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 current_slot ++
+                               cm_emit_args_store
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0 current_slot)) 
+                                 (current_slot + 1) scratch rest1 ++
+                               cm_emit_args_reload
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 base_slot all_args ++
+                               [TVMInst TVMCallOp
+                                  (cm_function_pc
+                                     (cm_source_function_policy sp0) p0
+                                     callee)]
+                           | _ => cm_return_tail_code sp0 p0 fid0
+                           end) ++
+                         (if
+                           if normal
+                           then
+                            cm_normal_phase_stops
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CABlockP _ _ jump _ => jump
+                            | CAHaltP | CAExitP | 
+                              CAReturnP | CACallP _ _ _ _ _ => true
+                            | _ => false
+                            end
+                          then []
+                          else
+                           cm_cursor_code sp0 p0 fid0
+                             (pc +
+                              Zlength
+                                (if normal
+                                 then
+                                  cm_normal_phase_code sp0 p0 fid0 pc temp
+                                    match cursor0 with
+                                    | CMACursor _ temp0 _ _ => temp0
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ b _ => b
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ _ c => c
+                                    end
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                 else
+                                  match
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                  with
+                                  | CALoadP ty => cm_load_code ty
+                                  | CAAssignLP src ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0
+                                              match cursor0 with
+                                              | CMACursor _ temp0 _ _ =>
+                                                 temp0
+                                              end))
+                                        (match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end + 1) src ++
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAAssignRP _ ty =>
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CABinLP op lhs rhs _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst
+                                          (if op =? 0
+                                           then TVMJnzOp
+                                           else TVMJzOp)
+                                          (pc +
+                                           cm_rvalue_code_count
+                                             (cm_source_function_policy sp0)
+                                             p0 fid0 rhs + 4)] ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 (pc + 1)
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end rhs ++
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp
+                                          (pc +
+                                           cm_rvalue_code_count
+                                             (cm_source_function_policy sp0)
+                                             p0 fid0 rhs + 5);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_temp_store_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         (pc +
+                                          Zlength
+                                            (cm_temp_store_code
+                                               (cm_source_function_policy sp0)
+                                               p0 fid0
+                                               match ... with
+                                               | ... temp0
+                                               end))
+                                         (match cursor0 with
+                                          | CMACursor _ temp0 _ _ => temp0
+                                          end + 1) rhs ++
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CABinRP op lhs rhs _ _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp (pc + 4);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CAUnaryP op =>
+                                      [TVMInst TVMPushOp
+                                         (if op =? 0 then -1 else 0);
+                                       TVMInst
+                                         (if op =? 0
+                                          then TVMMulOp
+                                          else TVMEqOp) 0]
+                                  | CAIndexLP index ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0
+                                              match cursor0 with
+                                              | CMACursor _ temp0 _ _ =>
+                                                 temp0
+                                              end))
+                                        (match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end + 1) index ++
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAIndexRP _ ty =>
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAMemberP mid base_ty =>
+                                      cm_member_tail_code p0 base_ty mid
+                                  | CAPutcP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutcOp 0]
+                                  | CAPutiP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutiOp 0]
+                                  | CAHaltP | CAExitP => cm_status_tail_code
+                                  | CAExprStmtP => [TVMInst TVMPopOp 0]
+                                  | CAInitP slot =>
+                                      cm_init_tail_code sp0 p0 fid0 slot
+                                  | CABlockP _ _ true target =>
+                                      [TVMInst TVMJmpOp target]
+                                  | CABlockP _ _ false _ => []
+                                  | CASeqP second =>
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 pc
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end second
+                                  | CAIfP yes no =>
+                                      [TVMInst TVMJzOp
+                                         (pc + 1 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes + 1)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end yes ++
+                                      [TVMInst TVMJmpOp
+                                         (pc + 2 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 no)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc + 2 +
+                                         cm_stmt_code_count
+                                           (cm_source_function_policy sp0) p0
+                                           fid0 yes)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end no
+                                  | CAWhileGuardP _ body0 loop_start0
+                                    loop_end0 =>
+                                      [TVMInst TVMJzOp loop_end0] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end loop_end0 loop_start0 body0 ++
+                                      [TVMInst TVMJmpOp loop_start0]
+                                  | CAWhileBodyP _ _ _ _ loop_start0 _ =>
+                                      [TVMInst TVMJmpOp loop_start0]
+                                  | CAArgP callee rest1 _ _ all_args
+                                    base_slot current_slot scratch =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 current_slot ++
+                                      cm_emit_args_store
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0 current_slot))
+                                        (current_slot + 1) scratch rest1 ++
+                                      cm_emit_args_reload
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 base_slot all_args ++
+                                      [TVMInst TVMCallOp
+                                         (cm_function_pc
+                                            (cm_source_function_policy sp0)
+                                            p0 callee)]
+                                  | _ => cm_return_tail_code sp0 p0 fid0
+                                  end))
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             (normal
+                              || match
+                                   match cursor0 with
+                                   | CMACursor phase _ _ _ => phase
+                                   end
+                                 with
+                                 | CAExprStmtP | CAInitP _ |
+                                   CABlockP _ _ _ _ | 
+                                   CASeqP _ | CAIfP _ _ |
+                                   CAWhileGuardP _ _ _ _ |
+                                   CAWhileBodyP _ _ _ _ _ _ => true
+                                 | _ => false
+                                 end) rest0)
+                     end) sp p fid loop_end
+                    match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end true rest)
+           | CACallP caller _ _ _ _ =>
+               calls <> [] /\
+               cm_code_at code
+                 (cm_call_sim_return (hd (cm_call_nil ap) calls))
+                 ((fix cm_cursor_code
+                     (sp0 : cm_source_lookup_policy) 
+                     (p0 : cm_program) (fid0 pc temp : Z) 
+                     (normal : bool) (cursors0 : list cm_acursor) {struct
+                      cursors0} : list tvm_inst :=
+                     match cursors0 with
+                     | [] => []
+                     | cursor0 :: rest0 =>
+                         (if normal
+                          then
+                           cm_normal_phase_code sp0 p0 fid0 pc temp
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ b _ => b
+                             end
+                             match cursor0 with
+                             | CMACursor _ _ _ c => c
+                             end
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                          else
+                           match
+                             match cursor0 with
+                             | CMACursor phase _ _ _ => phase
+                             end
+                           with
+                           | CALoadP ty => cm_load_code ty
+                           | CAAssignLP src ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) src ++
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAAssignRP _ ty =>
+                               cm_assign_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CABinLP op lhs rhs _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst
+                                   (if op =? 0 then TVMJnzOp else TVMJzOp)
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 4)] ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc + 1)
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end rhs ++
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp
+                                   (pc +
+                                    cm_rvalue_code_count
+                                      (cm_source_function_policy sp0) p0 fid0
+                                      rhs + 5);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_temp_store_code
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end ++
+                                cm_emit_rvalue
+                                  (cm_source_function_policy sp0) p0 fid0
+                                  (pc +
+                                   Zlength
+                                     (cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end))
+                                  (match cursor0 with
+                                   | CMACursor _ temp0 _ _ => temp0
+                                   end + 1) rhs ++
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CABinRP op lhs rhs _ _ =>
+                               if (op =? 0) || (op =? 1)
+                               then
+                                [TVMInst TVMPushOp 0; 
+                                 TVMInst TVMNeOp 0;
+                                 TVMInst TVMJmpOp (pc + 4);
+                                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                               else
+                                cm_binary_finish_code
+                                  (cm_source_function_policy sp0) p0 fid0 op
+                                  lhs rhs
+                                  match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end
+                           | CAUnaryP op =>
+                               [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                                TVMInst
+                                  (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                           | CAIndexLP index ty =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end ++
+                               cm_emit_rvalue (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0
+                                       match cursor0 with
+                                       | CMACursor _ temp0 _ _ => temp0
+                                       end))
+                                 (match cursor0 with
+                                  | CMACursor _ temp0 _ _ => temp0
+                                  end + 1) index ++
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAIndexRP _ ty =>
+                               cm_index_tail_code
+                                 (cm_source_function_policy sp0) p0 fid0 ty
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                           | CAMemberP mid base_ty =>
+                               cm_member_tail_code p0 base_ty mid
+                           | CAPutcP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                           | CAPutiP =>
+                               [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                           | CAHaltP | CAExitP => cm_status_tail_code
+                           | CAExprStmtP => [TVMInst TVMPopOp 0]
+                           | CAInitP slot =>
+                               cm_init_tail_code sp0 p0 fid0 slot
+                           | CABlockP _ _ true target =>
+                               [TVMInst TVMJmpOp target]
+                           | CABlockP _ _ false _ => []
+                           | CASeqP second =>
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 pc
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end second
+                           | CAIfP yes no =>
+                               [TVMInst TVMJzOp
+                                  (pc + 1 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes + 1)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end yes ++
+                               [TVMInst TVMJmpOp
+                                  (pc + 2 +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     yes +
+                                   cm_stmt_code_count
+                                     (cm_source_function_policy sp0) p0 fid0
+                                     no)] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0
+                                 (pc + 2 +
+                                  cm_stmt_code_count
+                                    (cm_source_function_policy sp0) p0 fid0
+                                    yes)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ b _ => b
+                                 end
+                                 match cursor0 with
+                                 | CMACursor _ _ _ c => c
+                                 end no
+                           | CAWhileGuardP _ body loop_start loop_end =>
+                               [TVMInst TVMJzOp loop_end] ++
+                               cm_emit_stmt (cm_source_function_policy sp0)
+                                 p0 fid0 (pc + 1)
+                                 match cursor0 with
+                                 | CMACursor _ temp0 _ _ => temp0
+                                 end loop_end loop_start body ++
+                               [TVMInst TVMJmpOp loop_start]
+                           | CAWhileBodyP _ _ _ _ loop_start _ =>
+                               [TVMInst TVMJmpOp loop_start]
+                           | CAArgP callee rest1 _ _ all_args base_slot
+                             current_slot scratch =>
+                               cm_temp_store_code
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 current_slot ++
+                               cm_emit_args_store
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 (pc +
+                                  Zlength
+                                    (cm_temp_store_code
+                                       (cm_source_function_policy sp0) p0
+                                       fid0 current_slot)) 
+                                 (current_slot + 1) scratch rest1 ++
+                               cm_emit_args_reload
+                                 (cm_source_function_policy sp0) p0 fid0
+                                 base_slot all_args ++
+                               [TVMInst TVMCallOp
+                                  (cm_function_pc
+                                     (cm_source_function_policy sp0) p0
+                                     callee)]
+                           | _ => cm_return_tail_code sp0 p0 fid0
+                           end) ++
+                         (if
+                           if normal
+                           then
+                            cm_normal_phase_stops
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                           else
+                            match
+                              match cursor0 with
+                              | CMACursor phase _ _ _ => phase
+                              end
+                            with
+                            | CABlockP _ _ jump _ => jump
+                            | CAHaltP | CAExitP | 
+                              CAReturnP | CACallP _ _ _ _ _ => true
+                            | _ => false
+                            end
+                          then []
+                          else
+                           cm_cursor_code sp0 p0 fid0
+                             (pc +
+                              Zlength
+                                (if normal
+                                 then
+                                  cm_normal_phase_code sp0 p0 fid0 pc temp
+                                    match cursor0 with
+                                    | CMACursor _ temp0 _ _ => temp0
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ b _ => b
+                                    end
+                                    match cursor0 with
+                                    | CMACursor _ _ _ c => c
+                                    end
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                 else
+                                  match
+                                    match cursor0 with
+                                    | CMACursor phase _ _ _ => phase
+                                    end
+                                  with
+                                  | CALoadP ty => cm_load_code ty
+                                  | CAAssignLP src ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0
+                                              match cursor0 with
+                                              | CMACursor _ temp0 _ _ =>
+                                                 temp0
+                                              end))
+                                        (match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end + 1) src ++
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAAssignRP _ ty =>
+                                      cm_assign_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CABinLP op lhs rhs _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst
+                                          (if op =? 0
+                                           then TVMJnzOp
+                                           else TVMJzOp)
+                                          (pc +
+                                           cm_rvalue_code_count
+                                             (cm_source_function_policy sp0)
+                                             p0 fid0 rhs + 4)] ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 (pc + 1)
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end rhs ++
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp
+                                          (pc +
+                                           cm_rvalue_code_count
+                                             (cm_source_function_policy sp0)
+                                             p0 fid0 rhs + 5);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_temp_store_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end ++
+                                       cm_emit_rvalue
+                                         (cm_source_function_policy sp0) p0
+                                         fid0
+                                         (pc +
+                                          Zlength
+                                            (cm_temp_store_code
+                                               (cm_source_function_policy sp0)
+                                               p0 fid0
+                                               match ... with
+                                               | ... temp0
+                                               end))
+                                         (match cursor0 with
+                                          | CMACursor _ temp0 _ _ => temp0
+                                          end + 1) rhs ++
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CABinRP op lhs rhs _ _ =>
+                                      if (op =? 0) || (op =? 1)
+                                      then
+                                       [TVMInst TVMPushOp 0;
+                                        TVMInst TVMNeOp 0;
+                                        TVMInst TVMJmpOp (pc + 4);
+                                        TVMInst TVMPushOp
+                                          (if op =? 0 then 1 else 0)]
+                                      else
+                                       cm_binary_finish_code
+                                         (cm_source_function_policy sp0) p0
+                                         fid0 op lhs rhs
+                                         match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end
+                                  | CAUnaryP op =>
+                                      [TVMInst TVMPushOp
+                                         (if op =? 0 then -1 else 0);
+                                       TVMInst
+                                         (if op =? 0
+                                          then TVMMulOp
+                                          else TVMEqOp) 0]
+                                  | CAIndexLP index ty =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end ++
+                                      cm_emit_rvalue
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0
+                                              match cursor0 with
+                                              | CMACursor _ temp0 _ _ =>
+                                                 temp0
+                                              end))
+                                        (match cursor0 with
+                                         | CMACursor _ temp0 _ _ => temp0
+                                         end + 1) index ++
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAIndexRP _ ty =>
+                                      cm_index_tail_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 ty
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                  | CAMemberP mid base_ty =>
+                                      cm_member_tail_code p0 base_ty mid
+                                  | CAPutcP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutcOp 0]
+                                  | CAPutiP =>
+                                      [TVMInst TVMDupOp 0;
+                                       TVMInst TVMPutiOp 0]
+                                  | CAHaltP | CAExitP => cm_status_tail_code
+                                  | CAExprStmtP => [TVMInst TVMPopOp 0]
+                                  | CAInitP slot =>
+                                      cm_init_tail_code sp0 p0 fid0 slot
+                                  | CABlockP _ _ true target =>
+                                      [TVMInst TVMJmpOp target]
+                                  | CABlockP _ _ false _ => []
+                                  | CASeqP second =>
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 pc
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end second
+                                  | CAIfP yes no =>
+                                      [TVMInst TVMJzOp
+                                         (pc + 1 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes + 1)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end yes ++
+                                      [TVMInst TVMJmpOp
+                                         (pc + 2 +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 yes +
+                                          cm_stmt_code_count
+                                            (cm_source_function_policy sp0)
+                                            p0 fid0 no)] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc + 2 +
+                                         cm_stmt_code_count
+                                           (cm_source_function_policy sp0) p0
+                                           fid0 yes)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ b _ => b
+                                        end
+                                        match cursor0 with
+                                        | CMACursor _ _ _ c => c
+                                        end no
+                                  | CAWhileGuardP _ body loop_start loop_end =>
+                                      [TVMInst TVMJzOp loop_end] ++
+                                      cm_emit_stmt
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 (pc + 1)
+                                        match cursor0 with
+                                        | CMACursor _ temp0 _ _ => temp0
+                                        end loop_end loop_start body ++
+                                      [TVMInst TVMJmpOp loop_start]
+                                  | CAWhileBodyP _ _ _ _ loop_start _ =>
+                                      [TVMInst TVMJmpOp loop_start]
+                                  | CAArgP callee rest1 _ _ all_args
+                                    base_slot current_slot scratch =>
+                                      cm_temp_store_code
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 current_slot ++
+                                      cm_emit_args_store
+                                        (cm_source_function_policy sp0) p0
+                                        fid0
+                                        (pc +
+                                         Zlength
+                                           (cm_temp_store_code
+                                              (cm_source_function_policy sp0)
+                                              p0 fid0 current_slot))
+                                        (current_slot + 1) scratch rest1 ++
+                                      cm_emit_args_reload
+                                        (cm_source_function_policy sp0) p0
+                                        fid0 base_slot all_args ++
+                                      [TVMInst TVMCallOp
+                                         (cm_function_pc
+                                            (cm_source_function_policy sp0)
+                                            p0 callee)]
+                                  | _ => cm_return_tail_code sp0 p0 fid0
+                                  end))
+                             match cursor0 with
+                             | CMACursor _ temp0 _ _ => temp0
+                             end
+                             (normal
+                              || match
+                                   match cursor0 with
+                                   | CMACursor phase _ _ _ => phase
+                                   end
+                                 with
+                                 | CAExprStmtP | CAInitP _ |
+                                   CABlockP _ _ _ _ | 
+                                   CASeqP _ | CAIfP _ _ |
+                                   CAWhileGuardP _ _ _ _ |
+                                   CAWhileBodyP _ _ _ _ _ _ => true
+                                 | _ => false
+                                 end) rest0)
+                     end) sp p caller
+                    (cm_call_sim_return (hd (cm_call_nil ap) calls))
+                    match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end false rest)
+           | _ => True
+           end /\
+           cm_saved_layout sp ap p code
+             (if
+               match
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+               with
+               | CACallP _ _ _ _ _ => true
+               | _ => false
+               end
+              then
+               cm_phase_caller
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+              else fid) rest
+             (if
+               match
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+               with
+               | CACallP _ _ _ _ _ => true
+               | _ => false
+               end
+              then tl calls
+              else calls)
+       end) sp ap p (cm_model_code (cm_source_function_policy sp) p) fid
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end match ann with
+          | CMAnnotation _ _ _ _ _ _ _ cs => cs
+          end
+  ============================
+  cm_emit_rvalue (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end (CMPutcE arg ty) ++
+  (fix cm_cursor_code
+     (sp0 : cm_source_lookup_policy) (p0 : cm_program) 
+     (fid0 pc temp : Z) (normal : bool) (cursors : list cm_acursor) {struct
+      cursors} : list tvm_inst :=
+     match cursors with
+     | [] => []
+     | cursor :: rest =>
+         (if normal
+          then
+           cm_normal_phase_code sp0 p0 fid0 pc temp
+             match cursor with
+             | CMACursor _ temp0 _ _ => temp0
+             end match cursor with
+                 | CMACursor _ _ b _ => b
+                 end match cursor with
+                     | CMACursor _ _ _ c => c
+                     end
+             match cursor with
+             | CMACursor phase _ _ _ => phase
+             end
+          else
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CALoadP ty0 => cm_load_code ty0
+           | CAAssignLP src ty0 =>
+               cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end ++
+               cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                 (pc +
+                  Zlength
+                    (cm_temp_store_code (cm_source_function_policy sp0) p0
+                       fid0
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end))
+                 (match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end + 1) src ++
+               cm_assign_tail_code (cm_source_function_policy sp0) p0 fid0
+                 ty0 match cursor with
+                     | CMACursor _ temp0 _ _ => temp0
+                     end
+           | CAAssignRP _ ty0 =>
+               cm_assign_tail_code (cm_source_function_policy sp0) p0 fid0
+                 ty0 match cursor with
+                     | CMACursor _ temp0 _ _ => temp0
+                     end
+           | CABinLP op lhs rhs _ =>
+               if (op =? 0) || (op =? 1)
+               then
+                [TVMInst (if op =? 0 then TVMJnzOp else TVMJzOp)
+                   (pc +
+                    cm_rvalue_code_count (cm_source_function_policy sp0) p0
+                      fid0 rhs + 4)] ++
+                cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                  (pc + 1)
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end rhs ++
+                [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                 TVMInst TVMJmpOp
+                   (pc +
+                    cm_rvalue_code_count (cm_source_function_policy sp0) p0
+                      fid0 rhs + 5);
+                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+               else
+                cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end ++
+                cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                  (pc +
+                   Zlength
+                     (cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end))
+                  (match cursor with
+                   | CMACursor _ temp0 _ _ => temp0
+                   end + 1) rhs ++
+                cm_binary_finish_code (cm_source_function_policy sp0) p0 fid0
+                  op lhs rhs
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end
+           | CABinRP op lhs rhs _ _ =>
+               if (op =? 0) || (op =? 1)
+               then
+                [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                 TVMInst TVMJmpOp (pc + 4);
+                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+               else
+                cm_binary_finish_code (cm_source_function_policy sp0) p0 fid0
+                  op lhs rhs
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end
+           | CAUnaryP op =>
+               [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                TVMInst (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+           | CAIndexLP index ty0 =>
+               cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end ++
+               cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                 (pc +
+                  Zlength
+                    (cm_temp_store_code (cm_source_function_policy sp0) p0
+                       fid0
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end))
+                 (match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end + 1) index ++
+               cm_index_tail_code (cm_source_function_policy sp0) p0 fid0 ty0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end
+           | CAIndexRP _ ty0 =>
+               cm_index_tail_code (cm_source_function_policy sp0) p0 fid0 ty0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end
+           | CAMemberP mid base_ty => cm_member_tail_code p0 base_ty mid
+           | CAPutcP => [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+           | CAPutiP => [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+           | CAHaltP | CAExitP => cm_status_tail_code
+           | CAExprStmtP => [TVMInst TVMPopOp 0]
+           | CAInitP slot => cm_init_tail_code sp0 p0 fid0 slot
+           | CABlockP _ _ true target => [TVMInst TVMJmpOp target]
+           | CABlockP _ _ false _ => []
+           | CASeqP second =>
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 pc
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end second
+           | CAIfP yes no =>
+               [TVMInst TVMJzOp
+                  (pc + 1 +
+                   cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                     yes + 1)] ++
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 
+                 (pc + 1)
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end yes ++
+               [TVMInst TVMJmpOp
+                  (pc + 2 +
+                   cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                     yes +
+                   cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                     no)] ++
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                 (pc + 2 +
+                  cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                    yes)
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end no
+           | CAWhileGuardP _ body loop_start loop_end =>
+               [TVMInst TVMJzOp loop_end] ++
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 
+                 (pc + 1)
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end loop_end loop_start body ++
+               [TVMInst TVMJmpOp loop_start]
+           | CAWhileBodyP _ _ _ _ loop_start _ =>
+               [TVMInst TVMJmpOp loop_start]
+           | CAArgP callee rest0 _ _ all_args base_slot current_slot scratch =>
+               cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                 current_slot ++
+               cm_emit_args_store (cm_source_function_policy sp0) p0 fid0
+                 (pc +
+                  Zlength
+                    (cm_temp_store_code (cm_source_function_policy sp0) p0
+                       fid0 current_slot)) (current_slot + 1) scratch rest0 ++
+               cm_emit_args_reload (cm_source_function_policy sp0) p0 fid0
+                 base_slot all_args ++
+               [TVMInst TVMCallOp
+                  (cm_function_pc (cm_source_function_policy sp0) p0 callee)]
+           | _ => cm_return_tail_code sp0 p0 fid0
+           end) ++
+         (if
+           if normal
+           then
+            cm_normal_phase_stops
+              match cursor with
+              | CMACursor phase _ _ _ => phase
+              end
+           else
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABlockP _ _ jump _ => jump
+            | CAHaltP | CAExitP | CAReturnP | CACallP _ _ _ _ _ => true
+            | _ => false
+            end
+          then []
+          else
+           cm_cursor_code sp0 p0 fid0
+             (pc +
+              Zlength
+                (if normal
+                 then
+                  cm_normal_phase_code sp0 p0 fid0 pc temp
+                    match cursor with
+                    | CMACursor _ temp0 _ _ => temp0
+                    end match cursor with
+                        | CMACursor _ _ b _ => b
+                        end match cursor with
+                            | CMACursor _ _ _ c => c
+                            end
+                    match cursor with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                 else
+                  match
+                    match cursor with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CALoadP ty0 => cm_load_code ty0
+                  | CAAssignLP src ty0 =>
+                      cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end ++
+                      cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                        (pc +
+                         Zlength
+                           (cm_temp_store_code
+                              (cm_source_function_policy sp0) p0 fid0
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end))
+                        (match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end + 1) src ++
+                      cm_assign_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CAAssignRP _ ty0 =>
+                      cm_assign_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CABinLP op lhs rhs _ =>
+                      if (op =? 0) || (op =? 1)
+                      then
+                       [TVMInst (if op =? 0 then TVMJnzOp else TVMJzOp)
+                          (pc +
+                           cm_rvalue_code_count
+                             (cm_source_function_policy sp0) p0 fid0 rhs + 4)] ++
+                       cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                         (pc + 1)
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end rhs ++
+                       [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                        TVMInst TVMJmpOp
+                          (pc +
+                           cm_rvalue_code_count
+                             (cm_source_function_policy sp0) p0 fid0 rhs + 5);
+                        TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                      else
+                       cm_temp_store_code (cm_source_function_policy sp0) p0
+                         fid0
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end ++
+                       cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                         (pc +
+                          Zlength
+                            (cm_temp_store_code
+                               (cm_source_function_policy sp0) p0 fid0
+                               match cursor with
+                               | CMACursor _ temp0 _ _ => temp0
+                               end))
+                         (match cursor with
+                          | CMACursor _ temp0 _ _ => temp0
+                          end + 1) rhs ++
+                       cm_binary_finish_code (cm_source_function_policy sp0)
+                         p0 fid0 op lhs rhs
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end
+                  | CABinRP op lhs rhs _ _ =>
+                      if (op =? 0) || (op =? 1)
+                      then
+                       [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                        TVMInst TVMJmpOp (pc + 4);
+                        TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                      else
+                       cm_binary_finish_code (cm_source_function_policy sp0)
+                         p0 fid0 op lhs rhs
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end
+                  | CAUnaryP op =>
+                      [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                       TVMInst (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                  | CAIndexLP index ty0 =>
+                      cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end ++
+                      cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                        (pc +
+                         Zlength
+                           (cm_temp_store_code
+                              (cm_source_function_policy sp0) p0 fid0
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end))
+                        (match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end + 1) index ++
+                      cm_index_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CAIndexRP _ ty0 =>
+                      cm_index_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CAMemberP mid base_ty =>
+                      cm_member_tail_code p0 base_ty mid
+                  | CAPutcP => [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                  | CAPutiP => [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                  | CAHaltP | CAExitP => cm_status_tail_code
+                  | CAExprStmtP => [TVMInst TVMPopOp 0]
+                  | CAInitP slot => cm_init_tail_code sp0 p0 fid0 slot
+                  | CABlockP _ _ true target => [TVMInst TVMJmpOp target]
+                  | CABlockP _ _ false _ => []
+                  | CASeqP second =>
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 pc
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end match cursor with
+                            | CMACursor _ _ b _ => b
+                            end
+                        match cursor with
+                        | CMACursor _ _ _ c => c
+                        end second
+                  | CAIfP yes no =>
+                      [TVMInst TVMJzOp
+                         (pc + 1 +
+                          cm_stmt_code_count (cm_source_function_policy sp0)
+                            p0 fid0 yes + 1)] ++
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                        (pc + 1)
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end match cursor with
+                            | CMACursor _ _ b _ => b
+                            end
+                        match cursor with
+                        | CMACursor _ _ _ c => c
+                        end yes ++
+                      [TVMInst TVMJmpOp
+                         (pc + 2 +
+                          cm_stmt_code_count (cm_source_function_policy sp0)
+                            p0 fid0 yes +
+                          cm_stmt_code_count (cm_source_function_policy sp0)
+                            p0 fid0 no)] ++
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                        (pc + 2 +
+                         cm_stmt_code_count (cm_source_function_policy sp0)
+                           p0 fid0 yes)
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end match cursor with
+                            | CMACursor _ _ b _ => b
+                            end
+                        match cursor with
+                        | CMACursor _ _ _ c => c
+                        end no
+                  | CAWhileGuardP _ body loop_start loop_end =>
+                      [TVMInst TVMJzOp loop_end] ++
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                        (pc + 1)
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end loop_end loop_start body ++
+                      [TVMInst TVMJmpOp loop_start]
+                  | CAWhileBodyP _ _ _ _ loop_start _ =>
+                      [TVMInst TVMJmpOp loop_start]
+                  | CAArgP callee rest0 _ _ all_args base_slot current_slot
+                    scratch =>
+                      cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0 current_slot ++
+                      cm_emit_args_store (cm_source_function_policy sp0) p0
+                        fid0
+                        (pc +
+                         Zlength
+                           (cm_temp_store_code
+                              (cm_source_function_policy sp0) p0 fid0
+                              current_slot)) (current_slot + 1) scratch rest0 ++
+                      cm_emit_args_reload (cm_source_function_policy sp0) p0
+                        fid0 base_slot all_args ++
+                      [TVMInst TVMCallOp
+                         (cm_function_pc (cm_source_function_policy sp0) p0
+                            callee)]
+                  | _ => cm_return_tail_code sp0 p0 fid0
+                  end))
+             match cursor with
+             | CMACursor _ temp0 _ _ => temp0
+             end
+             (normal
+              || match
+                   match cursor with
+                   | CMACursor phase _ _ _ => phase
+                   end
+                 with
+                 | CAExprStmtP | CAInitP _ | CABlockP _ _ _ _ | 
+                   CASeqP _ | CAIfP _ _ | CAWhileGuardP _ _ _ _ |
+                   CAWhileBodyP _ _ _ _ _ _ => true
+                 | _ => false
+                 end) rest)
+     end) sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end +
+     (cm_rcount_of
+        (cm_expr_code_counts (cm_source_function_policy sp) p fid arg) + 2))
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end false match ann with
+              | CMAnnotation _ _ _ _ cs _ _ _ => cs
+              end =
+  cm_emit_rvalue (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end arg ++
+  [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0] ++
+  (fix cm_cursor_code
+     (sp0 : cm_source_lookup_policy) (p0 : cm_program) 
+     (fid0 pc temp : Z) (normal : bool) (cursors : list cm_acursor) {struct
+      cursors} : list tvm_inst :=
+     match cursors with
+     | [] => []
+     | cursor :: rest =>
+         (if normal
+          then
+           cm_normal_phase_code sp0 p0 fid0 pc temp
+             match cursor with
+             | CMACursor _ temp0 _ _ => temp0
+             end match cursor with
+                 | CMACursor _ _ b _ => b
+                 end match cursor with
+                     | CMACursor _ _ _ c => c
+                     end
+             match cursor with
+             | CMACursor phase _ _ _ => phase
+             end
+          else
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CALoadP ty0 => cm_load_code ty0
+           | CAAssignLP src ty0 =>
+               cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end ++
+               cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                 (pc +
+                  Zlength
+                    (cm_temp_store_code (cm_source_function_policy sp0) p0
+                       fid0
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end))
+                 (match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end + 1) src ++
+               cm_assign_tail_code (cm_source_function_policy sp0) p0 fid0
+                 ty0 match cursor with
+                     | CMACursor _ temp0 _ _ => temp0
+                     end
+           | CAAssignRP _ ty0 =>
+               cm_assign_tail_code (cm_source_function_policy sp0) p0 fid0
+                 ty0 match cursor with
+                     | CMACursor _ temp0 _ _ => temp0
+                     end
+           | CABinLP op lhs rhs _ =>
+               if (op =? 0) || (op =? 1)
+               then
+                [TVMInst (if op =? 0 then TVMJnzOp else TVMJzOp)
+                   (pc +
+                    cm_rvalue_code_count (cm_source_function_policy sp0) p0
+                      fid0 rhs + 4)] ++
+                cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                  (pc + 1)
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end rhs ++
+                [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                 TVMInst TVMJmpOp
+                   (pc +
+                    cm_rvalue_code_count (cm_source_function_policy sp0) p0
+                      fid0 rhs + 5);
+                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+               else
+                cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end ++
+                cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                  (pc +
+                   Zlength
+                     (cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end))
+                  (match cursor with
+                   | CMACursor _ temp0 _ _ => temp0
+                   end + 1) rhs ++
+                cm_binary_finish_code (cm_source_function_policy sp0) p0 fid0
+                  op lhs rhs
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end
+           | CABinRP op lhs rhs _ _ =>
+               if (op =? 0) || (op =? 1)
+               then
+                [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                 TVMInst TVMJmpOp (pc + 4);
+                 TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+               else
+                cm_binary_finish_code (cm_source_function_policy sp0) p0 fid0
+                  op lhs rhs
+                  match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end
+           | CAUnaryP op =>
+               [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                TVMInst (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+           | CAIndexLP index ty0 =>
+               cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end ++
+               cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                 (pc +
+                  Zlength
+                    (cm_temp_store_code (cm_source_function_policy sp0) p0
+                       fid0
+                       match cursor with
+                       | CMACursor _ temp0 _ _ => temp0
+                       end))
+                 (match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end + 1) index ++
+               cm_index_tail_code (cm_source_function_policy sp0) p0 fid0 ty0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end
+           | CAIndexRP _ ty0 =>
+               cm_index_tail_code (cm_source_function_policy sp0) p0 fid0 ty0
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end
+           | CAMemberP mid base_ty => cm_member_tail_code p0 base_ty mid
+           | CAPutcP => [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+           | CAPutiP => [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+           | CAHaltP | CAExitP => cm_status_tail_code
+           | CAExprStmtP => [TVMInst TVMPopOp 0]
+           | CAInitP slot => cm_init_tail_code sp0 p0 fid0 slot
+           | CABlockP _ _ true target => [TVMInst TVMJmpOp target]
+           | CABlockP _ _ false _ => []
+           | CASeqP second =>
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 pc
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end second
+           | CAIfP yes no =>
+               [TVMInst TVMJzOp
+                  (pc + 1 +
+                   cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                     yes + 1)] ++
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 
+                 (pc + 1)
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end yes ++
+               [TVMInst TVMJmpOp
+                  (pc + 2 +
+                   cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                     yes +
+                   cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                     no)] ++
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                 (pc + 2 +
+                  cm_stmt_code_count (cm_source_function_policy sp0) p0 fid0
+                    yes)
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end no
+           | CAWhileGuardP _ body loop_start loop_end =>
+               [TVMInst TVMJzOp loop_end] ++
+               cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 
+                 (pc + 1)
+                 match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end loop_end loop_start body ++
+               [TVMInst TVMJmpOp loop_start]
+           | CAWhileBodyP _ _ _ _ loop_start _ =>
+               [TVMInst TVMJmpOp loop_start]
+           | CAArgP callee rest0 _ _ all_args base_slot current_slot scratch =>
+               cm_temp_store_code (cm_source_function_policy sp0) p0 fid0
+                 current_slot ++
+               cm_emit_args_store (cm_source_function_policy sp0) p0 fid0
+                 (pc +
+                  Zlength
+                    (cm_temp_store_code (cm_source_function_policy sp0) p0
+                       fid0 current_slot)) (current_slot + 1) scratch rest0 ++
+               cm_emit_args_reload (cm_source_function_policy sp0) p0 fid0
+                 base_slot all_args ++
+               [TVMInst TVMCallOp
+                  (cm_function_pc (cm_source_function_policy sp0) p0 callee)]
+           | _ => cm_return_tail_code sp0 p0 fid0
+           end) ++
+         (if
+           if normal
+           then
+            cm_normal_phase_stops
+              match cursor with
+              | CMACursor phase _ _ _ => phase
+              end
+           else
+            match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CABlockP _ _ jump _ => jump
+            | CAHaltP | CAExitP | CAReturnP | CACallP _ _ _ _ _ => true
+            | _ => false
+            end
+          then []
+          else
+           cm_cursor_code sp0 p0 fid0
+             (pc +
+              Zlength
+                (if normal
+                 then
+                  cm_normal_phase_code sp0 p0 fid0 pc temp
+                    match cursor with
+                    | CMACursor _ temp0 _ _ => temp0
+                    end match cursor with
+                        | CMACursor _ _ b _ => b
+                        end match cursor with
+                            | CMACursor _ _ _ c => c
+                            end
+                    match cursor with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                 else
+                  match
+                    match cursor with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CALoadP ty0 => cm_load_code ty0
+                  | CAAssignLP src ty0 =>
+                      cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end ++
+                      cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                        (pc +
+                         Zlength
+                           (cm_temp_store_code
+                              (cm_source_function_policy sp0) p0 fid0
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end))
+                        (match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end + 1) src ++
+                      cm_assign_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CAAssignRP _ ty0 =>
+                      cm_assign_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CABinLP op lhs rhs _ =>
+                      if (op =? 0) || (op =? 1)
+                      then
+                       [TVMInst (if op =? 0 then TVMJnzOp else TVMJzOp)
+                          (pc +
+                           cm_rvalue_code_count
+                             (cm_source_function_policy sp0) p0 fid0 rhs + 4)] ++
+                       cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                         (pc + 1)
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end rhs ++
+                       [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                        TVMInst TVMJmpOp
+                          (pc +
+                           cm_rvalue_code_count
+                             (cm_source_function_policy sp0) p0 fid0 rhs + 5);
+                        TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                      else
+                       cm_temp_store_code (cm_source_function_policy sp0) p0
+                         fid0
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end ++
+                       cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                         (pc +
+                          Zlength
+                            (cm_temp_store_code
+                               (cm_source_function_policy sp0) p0 fid0
+                               match cursor with
+                               | CMACursor _ temp0 _ _ => temp0
+                               end))
+                         (match cursor with
+                          | CMACursor _ temp0 _ _ => temp0
+                          end + 1) rhs ++
+                       cm_binary_finish_code (cm_source_function_policy sp0)
+                         p0 fid0 op lhs rhs
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end
+                  | CABinRP op lhs rhs _ _ =>
+                      if (op =? 0) || (op =? 1)
+                      then
+                       [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+                        TVMInst TVMJmpOp (pc + 4);
+                        TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+                      else
+                       cm_binary_finish_code (cm_source_function_policy sp0)
+                         p0 fid0 op lhs rhs
+                         match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end
+                  | CAUnaryP op =>
+                      [TVMInst TVMPushOp (if op =? 0 then -1 else 0);
+                       TVMInst (if op =? 0 then TVMMulOp else TVMEqOp) 0]
+                  | CAIndexLP index ty0 =>
+                      cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end ++
+                      cm_emit_rvalue (cm_source_function_policy sp0) p0 fid0
+                        (pc +
+                         Zlength
+                           (cm_temp_store_code
+                              (cm_source_function_policy sp0) p0 fid0
+                              match cursor with
+                              | CMACursor _ temp0 _ _ => temp0
+                              end))
+                        (match cursor with
+                         | CMACursor _ temp0 _ _ => temp0
+                         end + 1) index ++
+                      cm_index_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CAIndexRP _ ty0 =>
+                      cm_index_tail_code (cm_source_function_policy sp0) p0
+                        fid0 ty0
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end
+                  | CAMemberP mid base_ty =>
+                      cm_member_tail_code p0 base_ty mid
+                  | CAPutcP => [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0]
+                  | CAPutiP => [TVMInst TVMDupOp 0; TVMInst TVMPutiOp 0]
+                  | CAHaltP | CAExitP => cm_status_tail_code
+                  | CAExprStmtP => [TVMInst TVMPopOp 0]
+                  | CAInitP slot => cm_init_tail_code sp0 p0 fid0 slot
+                  | CABlockP _ _ true target => [TVMInst TVMJmpOp target]
+                  | CABlockP _ _ false _ => []
+                  | CASeqP second =>
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0 pc
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end match cursor with
+                            | CMACursor _ _ b _ => b
+                            end
+                        match cursor with
+                        | CMACursor _ _ _ c => c
+                        end second
+                  | CAIfP yes no =>
+                      [TVMInst TVMJzOp
+                         (pc + 1 +
+                          cm_stmt_code_count (cm_source_function_policy sp0)
+                            p0 fid0 yes + 1)] ++
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                        (pc + 1)
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end match cursor with
+                            | CMACursor _ _ b _ => b
+                            end
+                        match cursor with
+                        | CMACursor _ _ _ c => c
+                        end yes ++
+                      [TVMInst TVMJmpOp
+                         (pc + 2 +
+                          cm_stmt_code_count (cm_source_function_policy sp0)
+                            p0 fid0 yes +
+                          cm_stmt_code_count (cm_source_function_policy sp0)
+                            p0 fid0 no)] ++
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                        (pc + 2 +
+                         cm_stmt_code_count (cm_source_function_policy sp0)
+                           p0 fid0 yes)
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end match cursor with
+                            | CMACursor _ _ b _ => b
+                            end
+                        match cursor with
+                        | CMACursor _ _ _ c => c
+                        end no
+                  | CAWhileGuardP _ body loop_start loop_end =>
+                      [TVMInst TVMJzOp loop_end] ++
+                      cm_emit_stmt (cm_source_function_policy sp0) p0 fid0
+                        (pc + 1)
+                        match cursor with
+                        | CMACursor _ temp0 _ _ => temp0
+                        end loop_end loop_start body ++
+                      [TVMInst TVMJmpOp loop_start]
+                  | CAWhileBodyP _ _ _ _ loop_start _ =>
+                      [TVMInst TVMJmpOp loop_start]
+                  | CAArgP callee rest0 _ _ all_args base_slot current_slot
+                    scratch =>
+                      cm_temp_store_code (cm_source_function_policy sp0) p0
+                        fid0 current_slot ++
+                      cm_emit_args_store (cm_source_function_policy sp0) p0
+                        fid0
+                        (pc +
+                         Zlength
+                           (cm_temp_store_code
+                              (cm_source_function_policy sp0) p0 fid0
+                              current_slot)) (current_slot + 1) scratch rest0 ++
+                      cm_emit_args_reload (cm_source_function_policy sp0) p0
+                        fid0 base_slot all_args ++
+                      [TVMInst TVMCallOp
+                         (cm_function_pc (cm_source_function_policy sp0) p0
+                            callee)]
+                  | _ => cm_return_tail_code sp0 p0 fid0
+                  end))
+             match cursor with
+             | CMACursor _ temp0 _ _ => temp0
+             end
+             (normal
+              || match
+                   match cursor with
+                   | CMACursor phase _ _ _ => phase
+                   end
+                 with
+                 | CAExprStmtP | CAInitP _ | CABlockP _ _ _ _ | 
+                   CASeqP _ | CAIfP _ _ | CAWhileGuardP _ _ _ _ |
+                   CAWhileBodyP _ _ _ _ _ _ => true
+                 | _ => false
+                 end) rest)
+     end) sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end + cm_rvalue_code_count (cm_source_function_policy sp) p fid arg +
+     Zlength [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0])
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end (false || false)
+    match ann with
+    | CMAnnotation _ _ _ _ cs _ _ _ => cs
+    end
+Chars 1280 - 1285 [Show.] 0.042 secs (0.041u,0.001s)
+Chars 1286 - 1290 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_layout/build/Rocq/examples/QCP_demos_human/cmc_code_expr_struct_migration_lib.v", line 13, characters 0-4:
+Error:  (in proof cm_r_putc_layout_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

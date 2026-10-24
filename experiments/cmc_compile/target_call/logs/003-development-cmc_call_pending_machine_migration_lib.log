@@ -1,0 +1,67 @@
+Chars 0 - 80 [Require~Export~~~SimpleC.EE.QC...] 1.619 secs (1.24u,0.174s)
+Chars 81 - 126 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.012u,0.s)
+Chars 127 - 148 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 149 - 174 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 175 - 1213 [Lemma~cm_machine_call_pending_...] 0.001 secs (0.u,0.s)
+Chars 1214 - 1220 [Proof.] 0. secs (0.u,0.s)
+Chars 1222 - 1315 [(cbn~zeta;~~~intros~WF~BEFORE~...] 0. secs (0.u,0.s)
+Chars 1317 - 1466 [(unfold~cm_machine_state_sim;~...] 0. secs (0.u,0.s)
+Chars 1468 - 1587 [(split;~~~[~apply~cm_call_pend...] 0. secs (0.u,0.s)
+Chars 1589 - 1680 [(split;~~~[~cbn[tvm_mem];~rewr...] 0. secs (0.u,0.s)
+Chars 1682 - 1837 [(split;~[~now~apply~cm_call_fr...] 0.002 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_call/build/Rocq/examples/QCP_demos_human/cmc_call_pending_machine_migration_lib.v", line 20, characters 64-65:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+vm : tvm_state
+calls : list cm_call_sim_frame
+frames : list cm_spill_frame
+values : list cm_value
+pc : Z
+WF :
+  cm_function_wf (cm_source_function_policy sp) p
+    (cm_source_function_at sp fid p)
+BEFORE : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+GEN : cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+FGEN : cm_spill_frames_generation_below (cm_state_nextgen st) frames
+TAG : cm_tagged_span_valid st
+OUT :
+  forall a : Z,
+  cm_live_address st a ->
+  a < cm_state_fp (cm_call_base_state sp p fid st) \/
+  cm_state_fp (cm_call_base_state sp p fid st) + 8 <= a
+OUT8 : forall a : Z, cm_live_address st a -> a < 8 \/ 16 <= a
+CALLS : cm_call_frames_range_safe 8 8 calls
+SPILLS :
+  cm_spill_frames_range_safe (cm_source_function_policy sp) p 8 8 frames
+SIGN : tower_signed64 (cm_state_fp (cm_call_base_state sp p fid st))
+M : cm_initialized_bytes_sim st (tvm_mem vm)
+P : cm_stored_provenance_sim st (tvm_mem vm)
+F : tower_getw (tvm_mem vm) 8 = cm_state_fp st
+C : cm_call_frames_sim (tvm_mem vm) calls (tvm_calls vm)
+S :
+  cm_spill_frames_sim (cm_source_function_policy sp) p st (tvm_mem vm) frames
+I : tvm_input vm = cm_state_input st
+O : tvm_output vm = cm_state_output st
+STACK : cm_operand_suffix_sim st values [] (tvm_stack vm)
+The term "I" has type "tvm_input vm = cm_state_input st"
+while it is expected to have type
+ "cm_spill_list_sim (cm_source_function_policy sp) p
+    (cm_call_pending_base sp p fid st)
+    (tvm_mem
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (tvm_calls vm)
+          (tower_setw (tvm_mem vm) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm)))
+    (cm_spill_frame_fid
+       (CMSpillFrame fid (cm_state_fp (cm_call_base_state sp p fid st)) []))
+    (cm_spill_frame_fp
+       (CMSpillFrame fid (cm_state_fp (cm_call_base_state sp p fid st)) []))
+    (cm_spill_frame_spills
+       (CMSpillFrame fid (cm_state_fp (cm_call_base_state sp p fid st)) []))".
+

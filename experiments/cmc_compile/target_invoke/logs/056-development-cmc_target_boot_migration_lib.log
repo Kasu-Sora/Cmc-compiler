@@ -1,0 +1,47 @@
+Chars 0 - 75 [Require~Export~SimpleC.EE.QCP_...] 1.324 secs (1.234u,0.076s)
+Chars 76 - 111 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 112 - 157 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 158 - 179 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 180 - 205 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 206 - 304 [Lemma~cm_model_prelude_at~poli...] 0. secs (0.u,0.s)
+Chars 305 - 311 [Proof.] 0. secs (0.u,0.s)
+Chars 312 - 395 [(exists~[],(cm_emit_functions~...] 0. secs (0.u,0.s)
+Chars 396 - 400 [Qed.] 0. secs (0.u,0.s)
+Chars 401 - 677 [Lemma~cm_tvm_prelude_prefix~po...] 0. secs (0.u,0.s)
+Chars 678 - 684 [Proof.] 0. secs (0.u,0.s)
+Chars 686 - 821 [(intro~WF;~~~assert~(LOAD~:~tv...] 0. secs (0.u,0.s)
+Chars 823 - 899 [(pose~proof~(cm_model_prelude_...] 0. secs (0.u,0.s)
+Chars 901 - 991 [(pose~proof~(cm_code_at_tail~_...] 0. secs (0.u,0.s)
+Chars 993 - 1120 [(change~(tvm_iter~4~(TVMBoot~(...] 0. secs (0.u,0.s)
+Chars 1122 - 1149 [(cbn[tvm_step];~rewrite~LOAD).] 0. secs (0.u,0.s)
+Chars 1151 - 1296 [(change~(tvm_initial_state~(cm...] 0. secs (0.u,0.s)
+Chars 1298 - 1366 [(cbn[tvm_iter];~rewrite~(cm_tv...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/build/Rocq/examples/QCP_demos_human/cmc_target_boot_migration_lib.v", line 18, characters 48-52:
+Error:
+In environment
+policy : cm_lookup_policy
+p : cm_program
+input : list Z
+WF : cm_semantic_wf_program policy p
+LOAD : tvm_load_okb (cm_compile_model policy p) = true
+CODE : cm_code_at (cm_model_code policy p) 0 (cm_emit_prelude policy p)
+C1 :
+  cm_code_at (cm_model_code policy p) (0 + 1)
+    [TVMInst TVMPushOp 8; TVMInst TVMStoreOp 0;
+     TVMInst TVMCallOp (cm_function_pc policy p (cm_program_main p));
+     TVMInst TVMPushOp 256; TVMInst TVMModOp 0; TVMInst TVMPushOp 256;
+     TVMInst TVMAddOp 0; TVMInst TVMPushOp 256; TVMInst TVMModOp 0;
+     TVMInst TVMHaltOp 0]
+C2 :
+  cm_code_at (cm_model_code policy p) (0 + 1 + 1)
+    [TVMInst TVMStoreOp 0;
+     TVMInst TVMCallOp (cm_function_pc policy p (cm_program_main p));
+     TVMInst TVMPushOp 256; TVMInst TVMModOp 0; TVMInst TVMPushOp 256;
+     TVMInst TVMAddOp 0; TVMInst TVMPushOp 256; TVMInst TVMModOp 0;
+     TVMInst TVMHaltOp 0]
+The term "CODE" has type
+ "cm_code_at (cm_model_code policy p) 0 (cm_emit_prelude policy p)"
+while it is expected to have type
+ "cm_code_at (tvm_object_code ?obj) (tvm_pc ?st)
+    (TVMInst TVMPushOp ?imm :: ?rest)".
+

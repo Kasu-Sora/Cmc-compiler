@@ -1,0 +1,70 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.262 secs (1.182u,0.069s)
+Chars 78 - 154 [Require~Export~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 155 - 200 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 201 - 222 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 223 - 248 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 249 - 484 [Lemma~cm_lvalue_result_type_re...] 0. secs (0.u,0.s)
+Chars 485 - 491 [Proof.] 0. secs (0.u,0.s)
+Chars 492 - 635 [(destruct~cursors;~~~cbv~beta~...] 0. secs (0.u,0.s)
+Chars 636 - 640 [Qed.] 0. secs (0.u,0.s)
+Chars 641 - 1021 [Lemma~cm_l_var_type_ready_step...] 0. secs (0.u,0.s)
+Chars 1022 - 1028 [Proof.] 0. secs (0.u,0.s)
+Chars 1030 - 1080 [(intros~[_~[FL~[FU~[[BV~TY]~[L...] 0. secs (0.u,0.s)
+Chars 1082 - 1195 [(cbn[cm_lstart~cm_update_l~cm_...] 0. secs (0.u,0.s)
+Chars 1197 - 1198 [-] 0. secs (0.u,0.s)
+Chars 1199 - 1267 [(cbn[cm_task_type_ready];~spli...] 0. secs (0.u,0.s)
+Chars 1271 - 1369 [(eapply~cm_lvalue_result_type_...] 0. secs (0.u,0.s)
+Chars 1371 - 1372 [-] 0. secs (0.u,0.s)
+Chars 1373 - 1403 [(apply~cm_type_error;~exact~CT).] 0. secs (0.u,0.s)
+Chars 1404 - 1408 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 1409 - 1781 [Lemma~cm_l_unary_type_ready_st...] 0. secs (0.u,0.s)
+Chars 1782 - 1788 [Proof.] 0. secs (0.u,0.s)
+Chars 1790 - 1835 [(intros~[_~[FL~[FU~[EW~[LV~[CT...] 0. secs (0.u,0.s)
+Chars 1837 - 1869 [(cbn[cm_lvalue]~in~LV;~subst~op).] 0. secs (0.u,0.s)
+Chars 1871 - 1908 [(destruct~EW~as~[AW~[[_~[PTR~T...] 0. secs (0.u,0.s)
+Chars 1910 - 1979 [(pose~proof~(cm_pointer_pointe...] 0. secs (0.u,0.s)
+Chars 1981 - 2049 [(cbn[cm_lstart~cm_update_l~cm_...] 0. secs (0.u,0.s)
+Chars 2051 - 2102 [(cbn[cm_lvalue_output_type~cm_...] 0. secs (0.u,0.s)
+Chars 2104 - 2127 [(rewrite~<-~PT~in~IN,~VAL).] 0. secs (0.u,0.s)
+Chars 2129 - 2204 [(repeat~(first~~~[~assumption~...] 0. secs (0.u,0.s)
+1 goal
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  nilslot : cm_slot_d
+  p : cm_program
+  fid : Z
+  arg : cm_expr
+  ty : cm_type
+  st : cm_src_state
+  ks : list cm_frame
+  ann : cm_annotation
+  FL : 0 <= fid
+  FU : fid < Zlength (cm_program_functions p)
+  AW :
+    cm_expr_wf (cm_source_function_policy sp) p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p)) arg
+  PTR : cm_is_pointer (cm_expr_type arg)
+  TY : ty = cm_pointee (cm_expr_type arg)
+  CT :
+    cm_cursors_type_ready (cm_source_function_policy sp) nilslot p fid
+      (cm_ann_cursors ann)
+  VAL :
+    cm_cursor_head_lvalue_type_ready (cm_source_function_policy sp) nilslot p
+      fid (cm_expr_type arg) (cm_ann_cursors ann)
+  IN :
+    cm_cursor_head_input_type_ready p fid (cm_expr_type arg)
+      (cm_ann_cursors ann)
+  PT : cm_expr_type arg = CMPtrTy ty
+  ============================
+  cm_task_type_ready (cm_source_function_policy sp) nilslot p
+    (if 2 =? 2
+     then CMRTask p fid arg st ks
+     else CMCTask p fid (CMError 1) st ks) ann
+Chars 2206 - 2211 [Show.] 0. secs (0.u,0.s)
+Chars 2213 - 2214 [-] 0. secs (0.u,0.s)
+Chars 2215 - 2225 [now~right.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_lvalue_migration_lib.v", line 32, characters 3-12:
+Error: Not an inductive goal with 2 constructors.
+

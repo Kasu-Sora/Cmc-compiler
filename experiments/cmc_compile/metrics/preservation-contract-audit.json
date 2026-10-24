@@ -1,0 +1,49 @@
+{
+  "status": "mathematical_contract_review_passed",
+  "target_file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/target/cmc_preservation_complete_migration_lib.v",
+  "theorems": [
+    {
+      "name": "cm_preservation_reachable",
+      "statement": "Theorem cm_preservation_reachable sp ap nilslot p input n :\n cm_semantic_wf_program(cm_source_function_policy sp)p ->cm_task_succeeds sp(CMStartTask p input) ->\n cm_preservation_invariant sp ap nilslot p(cm_annotated_iter sp ap n(cm_annotated_start(cm_source_function_policy sp)p input)).",
+      "sha256": "4d991bb1a7d9174c68d6e7fd180cc92eb64693b423e2e9261e322b3f0ac570fc"
+    },
+    {
+      "name": "cmc_preservation",
+      "statement": "Theorem cmc_preservation sp p input output status :\n cm_semantic_wf_program(cm_source_function_policy sp)p ->cm_source_terminates sp p input output status ->\n tvm_terminates(cm_compile_model(cm_source_function_policy sp)p)input output status.",
+      "sha256": "85e6f3615a44428e335a06b1ea9ff31c3d7dc0428ca5164cd9bb032fd6f83616"
+    },
+    {
+      "name": "cmc_compile_success_bridge",
+      "statement": "Theorem cmc_compile_success_bridge sp p obj input output status :\n cm_semantic_wf_program(cm_source_function_policy sp)p ->cm_source_terminates sp p input output status ->\n cm_output_decodes 0(cm_rep_ops(cm_model_code(cm_source_function_policy sp)p))(cm_rep_imms(cm_model_code(cm_source_function_policy sp)p))(cm_model_data_bytes p)obj ->\n tvm_terminates obj input output status.",
+      "sha256": "4336208de0386ac82af155d72e17e5682f52eeedf1887559647e24768162daba"
+    }
+  ],
+  "source_roots": [
+    {
+      "file": "cmc_correct.c",
+      "name": "cmc_prove_preservation",
+      "line": 145
+    },
+    {
+      "file": "cmc.c",
+      "name": "cmc_prove_compile_success_bridge",
+      "line": 95
+    },
+    {
+      "file": "cmc_preservation_total.c",
+      "name": "cm_preservation_invariant_def",
+      "line": 45
+    }
+  ],
+  "review": [
+    "Preservation still assumes semantic well-formedness and successful source termination and concludes target termination with the identical input, output trace and exit status.",
+    "Success bridge additionally assumes the original model opcode/immediate/data decoding relation, then concludes the same TVM observation for that decoded object.",
+    "The original eighteen-conjunct invariant is reconstructed and proved for every annotated state reached along a successful source run. Induction uses a stronger internal support invariant. No extra internal invariant is an input premise of preservation or the success bridge.",
+    "This does not claim a name-for-name port of every C* support export, or a separate arbitrary-state theorem for the original weak eighteen-conjunct step premise.",
+    "No divergence preservation, bidirectional equivalence or concrete TVM interpreter implementation guarantee is claimed."
+  ],
+  "source_unchanged": true,
+  "public_lemma_assumptions": [],
+  "kernel_checkpoint": "target_invoke/metrics/checkpoint.json",
+  "top_c_validation_separate": true
+}

@@ -1,0 +1,68 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cm_emit_var_expr",
+      "source_contract_sha256": "c76b8e094c87a89e7c4eb92ca8123a814fd63bb05ea0dff6cae5d3ccba4a5ec7",
+      "target_contract_sha256": "06ff86ebaf93dfeac36ee402e46e7deed69b25feeafd4c919a7f4d8a791ffc03",
+      "checks": [
+        "Original lvalue/slot bounds, constructor identity, wf_program, total f lookup, binding_valid and type_code_wf retained in pre/post",
+        "Original params/locals slots_wf and all globals/member-safe facts retained in pre/post",
+        "Full program/function/expression ownership retained; exact code consumption, output append and arbitrary tail",
+        "No added fid bounds, binding type equality, scalar or typed input requirement"
+      ]
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_var_lcode",
+      "kind": "Definition",
+      "nonblank_lines": 2,
+      "sha256": "eeea524f185ce19f4b22bde08d7b2b31072303ba330439e566d97b897fc8d259",
+      "source_declaration": "cm_emit_expr_pair.Var lcode + cm_lcode_of + cm_emit_lvalue"
+    },
+    {
+      "name": "cm_var_rcode",
+      "kind": "Definition",
+      "nonblank_lines": 4,
+      "sha256": "d3987d8f1bf58f2cd7ab1f54217322a4cbc31b99be0dac46af959b4e01bb3958",
+      "source_declaration": "cm_emit_expr_pair.Var rcode + cm_rcode_of + cm_emit_rvalue; existing array code encoding"
+    },
+    {
+      "name": "cm_var_code_for",
+      "kind": "Definition",
+      "nonblank_lines": 3,
+      "sha256": "828ef0286bfe89fce54e6525701a8914ca588524ad3b4c755e14b124d818bec5",
+      "source_declaration": "cm_expr_code_for restricted under CMVarE constructor premise"
+    }
+  ],
+  "model_review": [
+    "cm_var_lcode\u76f4\u63a5\u590d\u7528\u65e2\u6709binding_address_code\uff1bcm_var_rcode\u4e3a\u5730\u5740\u52a0\u6761\u4ef6\u52a0\u8f7d\uff1bcm_var_code_for\u4fdd\u7559lvalue\u96f6/\u975e\u96f6\u9009\u62e9\u3002",
+    "\u53d8\u91cf\u4e13\u7528\u5b9a\u4e49\u4e0d\u63a5\u53d7\u4efb\u610fcm_expr\uff0c\u539f\u5951\u7ea6e=CMVarE\u652f\u6301\u8be5\u7279\u5316\uff1b\u6e90\u65b9\u7a0b\u4e0d\u4f9d\u8d56pc/temp\uff0cC\u53c2\u6570\u4ecd\u4fdd\u7559\u3002",
+    "\u6e90cm_binding_array\u7684global/local\u975e\u96f6count\u4e0e\u65e2\u6709cm_binding_array_code\u7f16\u7801\u4e00\u81f4\uff1b\u5728\u539fbinding_valid\u4e0e\u603bf\u67e5\u8be2\u6761\u4ef6\u4e0b\u590d\u7528\u65e2\u6709lookup\u8bed\u4e49\uff0c\u53c2\u6570\u5206\u652f\u975e\u6570\u7ec4\u3002",
+    "cm_var_source_equation\u4ee5\u5e03\u5c14\u53d6\u53cd\u5c55\u5f00\u6e90Var\u5206\u652f\uff1b\u662f\u672c\u5730Rocq\u7b49\u5f0f\uff0cHOL\u5230Rocq\u5bf9\u5e94\u53e6\u7531\u6e90\u5ba1\u8ba1\u786e\u8ba4\uff0c\u672a\u5ba3\u79f0\u8de8\u903b\u8f91\u5143\u5b9a\u7406\u3002",
+    "\u65e2\u6709wf_program\u53ca\u56db\u4e2acodegen obligation\u53c2\u6570\u4fdd\u6301\uff1b\u4e09\u4e2ahelper\u6309\u5df2\u9a8c\u8bc1\u5951\u7ea6\u63a5\u5165\u3002"
+  ],
+  "adaptations": [
+    "Variable-only specialization under original constructor premise",
+    "Existing lookup/codegen obligation parameters unchanged",
+    "Three verified helper contracts reused"
+  ],
+  "scope_boundary": "\u4ec5\u9a8c\u8bc1\u53d8\u91cf\u8868\u8fbe\u5f0f\u751f\u6210\u5b9e\u73b0\u53ca\u6240\u9700\u6a21\u578b\uff1b\u5b8c\u6574\u9012\u5f52\u8868\u8fbe\u5f0f\u3001TVM\u8bed\u4e49\u548c\u7f16\u8bd1\u4fdd\u6301\u6027\u672a\u5168\u91cf\u8fc1\u79fb\u3002",
+  "review_method": "Manual source/target contract and model correspondence review; later hashes only guard drift.",
+  "final_verification": {
+    "run_id": "cmc_emit_expr_var_migration-20261017152044",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 1
+  },
+  "proof_audit": {
+    "manual_top_level": 9,
+    "proved_splits": 9,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 22,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

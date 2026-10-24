@@ -1,0 +1,3773 @@
+{
+  "generation": 433,
+  "run_id": "cmc_emit_expr_migration-20261018184521",
+  "case": "cmc_emit_expr_migration",
+  "phase": "done",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.v",
+    "case_name": "cmc_emit_expr_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/public_helper_lemma_lib.v",
+    "sha256": "03a9914b2af6ed69ad96c4fdd7b1043e5d7225a9a14a0724aa7f823fa9773e36",
+    "declaration_count": 15,
+    "helper_count": 15
+  },
+  "problem_context": {
+    "problem_statement": "Migrate ENTIRE /Users/nizitong/cmc/cmc_concrete_emit_expr.c from C*/HOL to QCP/Rocq, preserving exact runtime tokens and every original BODY contract meaning. Frozen source/header/runtime snapshots and source-function/spec/proof regions are under /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_expr/. Verify all seven bodies: static cm_emit_intrinsic_expr, cm_emit_unary_expr, cm_emit_index_expr, cm_emit_assignment_expr, cm_emit_binary_expr, cm_emit_member_expr, and public cm_emit_expr. Source C* attributes are reference semantics, not a user-authored frozen QCP spec. Translate all original pre/post pure facts, complete program/function/expression resources, exact cm_expr_code_for prefix consumption/done append and arbitrary tail, all kind/constructor-specific helper conditions, lvalue range, wf/typing/count/slot/safety/size/temp/pc premises. Preserve total fid lookup and existing policy/cg parameterization. Do not add input restrictions or weaken postconditions. Do not change runtime bodies. Add required forward prototypes with identical contracts; count duplicates separately.\nReuse existing verified ABI and cm_emitter declaration. Import cmc_emit_binary_finish_migration_lib (which imports call) and any other needed already verified libraries. General cm_expr_code_for/emit_expr_pair and length/count models already exist in cmc_emit_expr_call_migration_lib; reuse unchanged rather than redefining. All external runtime helpers have previous verified implementations in emit_simple, emit_call, binary_finish, emit_plan, count_context, emit_expr_leaf. Locate actual accepted BODY contracts, do not guess header specs. Recursive cm_emit_expr prototype must match its implemented BODY and the external contract assumed by previous cmc_emit_expr_call_migration.c. This task closes that modular implementation dependency; it does not prove termination or TVM execution preservation. Do not import old manual/auto proof modules, and do not modify earlier verified C/libs.\nThe static source helper proofs describe shape equations, recursive child wf/count/type/pc/temp bounds, short circuit jump targets, heap opening/reassembly and member typing. Preserve those facts through annotations and use checked case-lib lemmas only where needed. Existing count/type/slot/size/plan bridges should be reused. No Admitted/Axiom/Parameter in new case library or manual. Generated QCP automatic witness trust is separately disclosed.\nRecord actual design/symexec/post-lib calls and failures plus real repairs in agent_output.md for effort accounting. Persist progress and continue to completion. Stop all formal/report writes after terminal delivery. Main performs final semantic/provenance audit, incremental public-cost accounting and only updates skill after controller done."
+  },
+  "formal_case_lib_policy": "create",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-18T10:45:21.604650Z"
+  },
+  "symexec_profile": {
+    "name": "recursive-large",
+    "timeout_seconds": 7200,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 6,
+  "max_parallel_group_workers": 3,
+  "dune_preparation": {
+    "status": "passed",
+    "build_mode": "makefile",
+    "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.vo",
+    "build_root": ".",
+    "make_executable": "/usr/bin/make",
+    "coqc_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqc",
+    "coqdep_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqdep",
+    "run_makefile": "verification_runs/cmc_emit_expr_migration-20261018184521/Makefile",
+    "run_makefile_sha256": "b3ae69ebb475ed7b3b87dc4309cd388a0ae435b8b2f9e5670e3fd71102cbdb4a",
+    "snapshot": "verification_runs/cmc_emit_expr_migration-20261018184521/makefile_dependency_snapshot.json",
+    "snapshot_sha256": "2faf11ad3718e7e78a2f038db7591f3f8869b242c8fedeb820a4f39dab5fbc43",
+    "dependency_digest": "f82fb365633c332f252a7d60ecaa93c388aca48ad82e240e3d02bb25df8ddbe6",
+    "source_digest": "b612073ad9aea1cf93bce6dcffaea53b542b11df574640c84d5c8e26922aa28f",
+    "artifact_digest": "7db7d05c721d6fdc95402f67df9f81616c89dd370016246321617b0277066d85",
+    "configuration_digest": "83db48906dfbb7805fb46e0b33b5cfb55e4c16ae9c74fd38557d6ef3f04e0d98",
+    "base_artifact_count": 160,
+    "current_source_count": 5,
+    "rebuilt_count": 0,
+    "dependency_metrics": {
+      "status": "resolved",
+      "strategy": "breadth-batched-coqdep",
+      "batch_count": 13,
+      "coqdep_process_count": 13,
+      "node_count": 165,
+      "source_count": 165,
+      "elapsed_seconds": 15.472486
+    },
+    "current_cleanup": {
+      "status": "passed",
+      "removed_count": 0,
+      "first_removed": null
+    },
+    "make_seconds": 0.008239,
+    "returncode": 0,
+    "elapsed_seconds": 15.734391
+  },
+  "rounds": {
+    "cmc_emit_expr_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_emit_expr_migration-annotation-r1-attempt-1"
+    },
+    "cmc_emit_expr_migration-vc-checking-r1": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1"
+    },
+    "cmc_emit_expr_migration-annotation-r2": {
+      "phase": "annotation",
+      "current_attempt": "cmc_emit_expr_migration-annotation-r2-attempt-1"
+    },
+    "cmc_emit_expr_migration-vc-checking-r2": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_emit_expr_migration-vc-checking-r2-attempt-1"
+    },
+    "cmc_emit_expr_migration-vc-proving-r1": {
+      "phase": "vc-proving-preparing",
+      "current_attempt": "cmc_emit_expr_migration-vc-proving-r1"
+    }
+  },
+  "attempts": {
+    "cmc_emit_expr_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_emit_expr_migration-annotation-r1-attempt-1",
+      "round": "cmc_emit_expr_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "stale",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-18T10:45:34.934169Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "7b46e2679081e715aa3c7db4c1036c9e76c0f010dbef583c31847d83b94afbf1",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "input_sha256": "b31ca83cb8ef098122ecea102267b8f50b02366c6e4e038dd24661cdd3d92649",
+      "owner": "annotation/cmc_emit_expr_migration-20261018184521",
+      "started_at": "2026-10-18T10:45:35.036935Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_emit_expr_migration-20261018184521",
+        "claimed_at": "2026-10-18T10:45:35.036935Z",
+        "finalized_at": "2026-10-18T11:05:13.072649Z"
+      },
+      "timing": {
+        "formal-case-lib-design-coq-check": [
+          {
+            "started_at": "2026-10-18T10:49:49.837307Z",
+            "finished_at": "2026-10-18T10:49:51.252191Z",
+            "elapsed_seconds": 1.414884
+          },
+          {
+            "started_at": "2026-10-18T10:53:02.385284Z",
+            "finished_at": "2026-10-18T10:53:02.454391Z",
+            "elapsed_seconds": 0.069107
+          },
+          {
+            "started_at": "2026-10-18T10:55:40.869148Z",
+            "finished_at": "2026-10-18T10:55:42.513409Z",
+            "elapsed_seconds": 1.644261
+          }
+        ],
+        "owner-generation": [
+          {
+            "started_at": "2026-10-18T10:52:09.120289Z",
+            "finished_at": "2026-10-18T10:52:09.152289Z",
+            "elapsed_seconds": 0.032
+          },
+          {
+            "started_at": "2026-10-18T10:53:13.051422Z",
+            "finished_at": "2026-10-18T10:53:13.082422Z",
+            "elapsed_seconds": 0.031
+          },
+          {
+            "started_at": "2026-10-18T10:53:46.690009Z",
+            "finished_at": "2026-10-18T10:53:46.743009Z",
+            "elapsed_seconds": 0.053
+          },
+          {
+            "started_at": "2026-10-18T10:54:25.209155Z",
+            "finished_at": "2026-10-18T10:54:26.075155Z",
+            "elapsed_seconds": 0.866
+          },
+          {
+            "started_at": "2026-10-18T10:55:47.291736Z",
+            "finished_at": "2026-10-18T10:56:21.237736Z",
+            "elapsed_seconds": 33.946
+          },
+          {
+            "started_at": "2026-10-18T10:57:00.012283Z",
+            "finished_at": "2026-10-18T10:57:00.297283Z",
+            "elapsed_seconds": 0.285
+          },
+          {
+            "started_at": "2026-10-18T10:57:31.376297Z",
+            "finished_at": "2026-10-18T10:58:15.293297Z",
+            "elapsed_seconds": 43.917
+          },
+          {
+            "started_at": "2026-10-18T10:59:26.291221Z",
+            "finished_at": "2026-10-18T11:00:17.783221Z",
+            "elapsed_seconds": 51.492
+          },
+          {
+            "started_at": "2026-10-18T11:00:49.854945Z",
+            "finished_at": "2026-10-18T11:01:48.330945Z",
+            "elapsed_seconds": 58.476
+          },
+          {
+            "started_at": "2026-10-18T11:02:15.061655Z",
+            "finished_at": "2026-10-18T11:03:52.494655Z",
+            "elapsed_seconds": 97.433
+          }
+        ],
+        "formal-case-lib-coq-check": [
+          {
+            "started_at": "2026-10-18T11:04:18.379196Z",
+            "finished_at": "2026-10-18T11:04:18.448899Z",
+            "elapsed_seconds": 0.069703
+          },
+          {
+            "started_at": "2026-10-18T11:07:53.772365Z",
+            "finished_at": "2026-10-18T11:07:53.841510Z",
+            "elapsed_seconds": 0.069145
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-18T11:05:13.015407Z",
+            "finished_at": "2026-10-18T11:05:13.152246Z",
+            "elapsed_seconds": 0.133128
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-18T11:07:53.879088Z",
+            "finished_at": "2026-10-18T11:09:31.683088Z",
+            "elapsed_seconds": 97.804
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-18T11:07:26.928564Z",
+            "finished_at": "2026-10-18T11:09:31.732582Z",
+            "elapsed_seconds": 124.798779
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-18T11:11:21.086936Z",
+            "finished_at": "2026-10-18T11:11:36.718337Z",
+            "elapsed_seconds": 15.625974
+          }
+        ]
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-18T10:52:09.152277Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "7e59cc1f2d7e71b758896d737185f9a37fec38a15c48076a721b2e46d917fd26",
+          "elapsed_seconds": 0.032,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 2,
+          "recorded_at": "2026-10-18T10:53:13.082415Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "bf604af38d46601af5fabd481d2563f6890fa6a687424884e6cd64da36e46546",
+          "elapsed_seconds": 0.031,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 3,
+          "recorded_at": "2026-10-18T10:53:46.743002Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "1883477564ab0adf62f811b528b339d8cfc18eae8b0c1df531f1db2972a77e57",
+          "elapsed_seconds": 0.053,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 4,
+          "recorded_at": "2026-10-18T10:54:26.075148Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "badd7447600a7acde3f1fb4eee2f171836779713ecd4dae0f065d4b17779fa56",
+          "elapsed_seconds": 0.866,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 5,
+          "recorded_at": "2026-10-18T10:56:21.237728Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "66929170e8b7477011e947253f5479bde4b01ccad565ff9fabd76b0948268816",
+          "elapsed_seconds": 33.946,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 6,
+          "recorded_at": "2026-10-18T10:57:00.297276Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "31babe0767a1feb02ab3fd99f1ab0d77f0e963519f2dbb8bec2507d84a852dd2",
+          "elapsed_seconds": 0.285,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 7,
+          "recorded_at": "2026-10-18T10:58:15.293290Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "56c963f30bc49286f154aa039aa4f0fdedd31ba13feff8fbe75c05d1acb9f21b",
+          "elapsed_seconds": 43.917,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 8,
+          "recorded_at": "2026-10-18T11:00:17.783213Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "cce5fa073fc5a289259b6de426c48b97cebdabf97c1ad9987f633d3193868951",
+          "elapsed_seconds": 51.492,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 9,
+          "recorded_at": "2026-10-18T11:01:48.330938Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "0ca06b9fa48de2b2cd4efd22bdb195bbcec6cb8ab6a418a5d85fb49756f753e8",
+          "elapsed_seconds": 58.476,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 10,
+          "recorded_at": "2026-10-18T11:03:52.489279Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "2426842496be0ca3bb8791eefcdc2b5fcc4ac89cfeee8fb6d881e65115b16284",
+          "elapsed_seconds": 97.433,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_emit_expr_migration-annotation-r1-attempt-1",
+        "round": "cmc_emit_expr_migration-annotation-r1",
+        "formal_input_digest": "2426842496be0ca3bb8791eefcdc2b5fcc4ac89cfeee8fb6d881e65115b16284",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c": "434888d633479f6a8f3684cfa33890df4a74119b1e63445461a271c14317baaa",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v": "82d801e687b2da1f0cbdbe27a54aad3b5fd404782560d7de5b0245dbd1c9ebcc",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_auto.v": "d1b3c22b10394b33a82774e89e1ef9e111847022fb65d32fa98adae66b7bcc79",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.v": "621ed12c5399e4051d88e5724b82300dcb90734f3d8c21eda559c18b66edffc9"
+        },
+        "performance_profile": "recursive-large",
+        "timeout_seconds": 7200.0,
+        "elapsed_seconds": 97.433,
+        "recorded_at": "2026-10-18T11:03:52.494647Z"
+      },
+      "returned_at": "2026-10-18T11:05:13.072649Z",
+      "artifact_sha256": {
+        "report": "5bdc4bb3ad85eaa994ae27ea899eaf219ba54b9a9f598282dcc0f2fecc6b7514",
+        "plan": "052e1f7f0d3a41918c0ce1c77be78c97e216dfa6d433de1fdbc14674446c94c2",
+        "output": "033ff9f1f36a7479f9e856eb7fd8e3f454b27b4b6c59e221871c6ff2ebf6d7e3"
+      },
+      "after_snapshot": {
+        "digest": "4d5a42f5048ee7f7094ed379c966e37a41d10f58110653f1c1c441bb0e88ae39",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.v"
+      ],
+      "annotation_activity": "spec-and-annotation",
+      "finished_at": "2026-10-18T11:11:36.718337Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 0,
+          "provable_count": 0,
+          "statements": []
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-18T11:03:52.494647Z",
+            "performance_profile": "recursive-large",
+            "timeout_seconds": 7200.0,
+            "elapsed_seconds": 97.433
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": false,
+          "errors": []
+        },
+        "formal_case_lib_dune": {
+          "status": "passed",
+          "build_mode": "makefile",
+          "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.vo",
+          "returncode": 0,
+          "base_artifact_count": 160,
+          "current_source_count": 1,
+          "rebuilt_count": 0,
+          "dependency_metrics": {
+            "status": "resolved",
+            "strategy": "breadth-batched-coqdep",
+            "batch_count": 11,
+            "coqdep_process_count": 11,
+            "node_count": 161,
+            "source_count": 161,
+            "elapsed_seconds": 13.516578
+          },
+          "current_cleanup": {
+            "status": "passed",
+            "removed_count": 0,
+            "first_removed": null
+          },
+          "make_seconds": 0.00839,
+          "elapsed_seconds": 13.709388
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      },
+      "stale_reason": "retry:vc-checking-annotation-gap"
+    },
+    "cmc_emit_expr_migration-vc-checking-r1-attempt-1": {
+      "attempt_id": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+      "round": "cmc_emit_expr_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "stale",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r1/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-18T11:11:46.341811Z",
+      "owner": "vc-checking/cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+      "started_at": "2026-10-18T11:11:52.865669Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+        "claimed_at": "2026-10-18T11:11:52.865669Z",
+        "finalized_at": "2026-10-18T11:16:03.189960Z"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-18T11:14:21.019258Z",
+            "finished_at": "2026-10-18T11:14:21.113073Z",
+            "elapsed_seconds": 0.087863
+          },
+          {
+            "started_at": "2026-10-18T11:16:03.109044Z",
+            "finished_at": "2026-10-18T11:16:03.241221Z",
+            "elapsed_seconds": 0.126242
+          }
+        ]
+      },
+      "returned_at": "2026-10-18T11:16:03.189960Z",
+      "artifact_sha256": {
+        "report": "786cf9e76e57e5521308cdff1c881edd91902ca1ee4c487d41e42cecb9cc33c7",
+        "output": "b17ec2221019bc2178c6ec6d52c65f5cb66f197b4d4bad83cfc00f5690167e0c"
+      },
+      "finished_at": "2026-10-18T11:16:03.241221Z",
+      "stale_reason": "retry:vc-checking-annotation-gap"
+    },
+    "cmc_emit_expr_migration-annotation-r2-attempt-1": {
+      "attempt_id": "cmc_emit_expr_migration-annotation-r2-attempt-1",
+      "round": "cmc_emit_expr_migration-annotation-r2",
+      "phase": "annotation",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt2",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt2/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt2/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt2/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-18T11:16:14.450019Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/annotation-attempts/annotation-attempt2/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt2",
+      "annotation_iteration": 2,
+      "failed_vcs": [
+        {
+          "source_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+          "name": "proof_of_cm_emit_expr_which_implies_wit_2",
+          "parent": null,
+          "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1625-1626, cm_emit_expr CONST branch emitter-plan conversion",
+          "manual": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt1/after/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+          "manual_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "statement_sha256": "d72cb18d2dc69df10f5eed63abb9d9f7caf169636f2b206643b82d25e8ef08fd",
+          "message": "Both alternatives of each listed whole VC require pc = pc_pre and temp = temp_pre, but neither entry-state variable occurs in any antecedent premise or spatial resource. The entry-state scalars are independently universally quantified. For example, CONST with e = CMConstE 0 CMIntTy, lvalue = pc = temp = 0, pc_pre = temp_pre = 1, empty done/tail and a capacity-1 empty emitter satisfies the antecedent while both required equalities are false for every existential simple. The same missing scalar bridge affects STRING, VAR, SIZEOF and GETC."
+        },
+        {
+          "source_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+          "name": "proof_of_cm_emit_expr_which_implies_wit_4",
+          "parent": null,
+          "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1634-1635, cm_emit_expr STRING branch emitter-plan conversion",
+          "manual": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt1/after/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+          "manual_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "statement_sha256": "06ba10e35e7c9b70ef895b2eeceddf9bc433152419b9a0a8ee1ad23335c50403",
+          "message": "Both alternatives of each listed whole VC require pc = pc_pre and temp = temp_pre, but neither entry-state variable occurs in any antecedent premise or spatial resource. The entry-state scalars are independently universally quantified. For example, CONST with e = CMConstE 0 CMIntTy, lvalue = pc = temp = 0, pc_pre = temp_pre = 1, empty done/tail and a capacity-1 empty emitter satisfies the antecedent while both required equalities are false for every existential simple. The same missing scalar bridge affects STRING, VAR, SIZEOF and GETC."
+        },
+        {
+          "source_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+          "name": "proof_of_cm_emit_expr_which_implies_wit_6",
+          "parent": null,
+          "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1643-1644, cm_emit_expr VAR branch emitter-plan conversion",
+          "manual": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt1/after/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+          "manual_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "statement_sha256": "757b9b9b7a932b94f22b0a9a904dbb183113e9db20249664a9a10ca43a9c8c22",
+          "message": "Both alternatives of each listed whole VC require pc = pc_pre and temp = temp_pre, but neither entry-state variable occurs in any antecedent premise or spatial resource. The entry-state scalars are independently universally quantified. For example, CONST with e = CMConstE 0 CMIntTy, lvalue = pc = temp = 0, pc_pre = temp_pre = 1, empty done/tail and a capacity-1 empty emitter satisfies the antecedent while both required equalities are false for every existential simple. The same missing scalar bridge affects STRING, VAR, SIZEOF and GETC."
+        },
+        {
+          "source_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+          "name": "proof_of_cm_emit_expr_which_implies_wit_19",
+          "parent": null,
+          "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1703-1704, cm_emit_expr SIZEOF branch emitter-plan conversion",
+          "manual": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt1/after/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+          "manual_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "statement_sha256": "fcc3977581a42b72f3d664d327768ca1b32751849a33a9d723003e5a4faa5403",
+          "message": "Both alternatives of each listed whole VC require pc = pc_pre and temp = temp_pre, but neither entry-state variable occurs in any antecedent premise or spatial resource. The entry-state scalars are independently universally quantified. For example, CONST with e = CMConstE 0 CMIntTy, lvalue = pc = temp = 0, pc_pre = temp_pre = 1, empty done/tail and a capacity-1 empty emitter satisfies the antecedent while both required equalities are false for every existential simple. The same missing scalar bridge affects STRING, VAR, SIZEOF and GETC."
+        },
+        {
+          "source_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+          "name": "proof_of_cm_emit_expr_which_implies_wit_21",
+          "parent": null,
+          "annotation_location": "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c:1712-1713, cm_emit_expr GETC branch emitter-plan conversion",
+          "manual": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt1/after/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+          "manual_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "statement_sha256": "59176f1d7a2a805c1dbabc511237c4d2c9ddb1d918e14a64f41e6aa67b967d9b",
+          "message": "Both alternatives of each listed whole VC require pc = pc_pre and temp = temp_pre, but neither entry-state variable occurs in any antecedent premise or spatial resource. The entry-state scalars are independently universally quantified. For example, CONST with e = CMConstE 0 CMIntTy, lvalue = pc = temp = 0, pc_pre = temp_pre = 1, empty done/tail and a capacity-1 empty emitter satisfies the antecedent while both required equalities are false for every existential simple. The same missing scalar bridge affects STRING, VAR, SIZEOF and GETC."
+        }
+      ],
+      "feedback_sources": [
+        {
+          "phase": "vc-checking",
+          "attempt_id": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+          "evidence": [
+            "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r1/agent_report.json",
+            "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r1/agent_output.md"
+          ]
+        }
+      ],
+      "retry_reason": "vc-checking-annotation-gap",
+      "before_snapshot": {
+        "digest": "4d5a42f5048ee7f7094ed379c966e37a41d10f58110653f1c1c441bb0e88ae39",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "input_sha256": "cb6ae881ded3afe9e434cb32b44c852131490c4ce126d77d45830316ab1d8bda",
+      "retry_previous_attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+      "owner": "annotation/cmc_emit_expr_migration-20261018184521",
+      "started_at": "2026-10-18T11:16:35.298356Z",
+      "delivery": {
+        "action_id": "append-cmc_emit_expr_migration-annotation-r2-attempt-1",
+        "kind": "append-annotation-agent",
+        "owner": "annotation/cmc_emit_expr_migration-20261018184521",
+        "claimed_at": "2026-10-18T11:16:35.298356Z",
+        "finalized_at": "2026-10-18T11:24:25.447924Z"
+      },
+      "timing": {
+        "formal-case-lib-design-coq-check": [
+          {
+            "started_at": "2026-10-18T11:19:25.271891Z",
+            "finished_at": "2026-10-18T11:19:25.339579Z",
+            "elapsed_seconds": 0.067688
+          }
+        ],
+        "owner-generation": [
+          {
+            "started_at": "2026-10-18T11:19:36.969503Z",
+            "finished_at": "2026-10-18T11:21:13.879503Z",
+            "elapsed_seconds": 96.91
+          }
+        ],
+        "formal-case-lib-coq-check": [
+          {
+            "started_at": "2026-10-18T11:22:11.952389Z",
+            "finished_at": "2026-10-18T11:22:12.022349Z",
+            "elapsed_seconds": 0.06996
+          },
+          {
+            "started_at": "2026-10-18T11:25:05.296305Z",
+            "finished_at": "2026-10-18T11:25:05.364186Z",
+            "elapsed_seconds": 0.067881
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-18T11:23:46.230512Z",
+            "finished_at": "2026-10-18T11:23:46.553116Z",
+            "elapsed_seconds": 0.281388
+          },
+          {
+            "started_at": "2026-10-18T11:24:25.214207Z",
+            "finished_at": "2026-10-18T11:24:25.910904Z",
+            "elapsed_seconds": 0.656928
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-18T11:25:05.398020Z",
+            "finished_at": "2026-10-18T11:26:42.426020Z",
+            "elapsed_seconds": 97.028
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-18T11:24:39.169554Z",
+            "finished_at": "2026-10-18T11:26:42.618948Z",
+            "elapsed_seconds": 123.371302
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-18T11:27:42.698662Z",
+            "finished_at": "2026-10-18T11:43:18.347907Z",
+            "elapsed_seconds": 16.302165
+          }
+        ]
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-18T11:21:13.874613Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "cd63f8ec939a3c57f78c589bf90ad9bb19e25df4ba2eeeaf9869900170fb72cc",
+          "elapsed_seconds": 96.91,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_emit_expr_migration-annotation-r2-attempt-1",
+        "round": "cmc_emit_expr_migration-annotation-r2",
+        "formal_input_digest": "cd63f8ec939a3c57f78c589bf90ad9bb19e25df4ba2eeeaf9869900170fb72cc",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c": "c2a160f893fa8d9dc576fd837cb8dc08a9e47679946bd803eaee7319dc4addd5",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v": "66569a65cf7d9d778ea79662a5cd81ec8bf5e7aedbbd110c57450c25f1bc556f",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_auto.v": "d1b3c22b10394b33a82774e89e1ef9e111847022fb65d32fa98adae66b7bcc79",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal_check.v": "621ed12c5399e4051d88e5724b82300dcb90734f3d8c21eda559c18b66edffc9"
+        },
+        "performance_profile": "recursive-large",
+        "timeout_seconds": 7200.0,
+        "elapsed_seconds": 96.91,
+        "recorded_at": "2026-10-18T11:21:13.879492Z"
+      },
+      "returned_at": "2026-10-18T11:24:25.447924Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "plan": "0ea000772d0c38db0401dae34f28675d4e834f1b2467608c18a41bc4926a59c7",
+        "output": "6c1b1a0ed8fd68c23774db11d2e36cad220bbca397d681591ae96870f232a4d7"
+      },
+      "after_snapshot": {
+        "digest": "2f3cdcf939d038a41cd4c1f5473e49faa86585c9333b8ba3af915f2d9910e97d",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_goal.v"
+      ],
+      "annotation_activity": "annotation-repair",
+      "finished_at": "2026-10-18T11:43:18.347907Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 5,
+          "provable_count": 5,
+          "statements": [
+            {
+              "source": {
+                "attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+                "name": "proof_of_cm_emit_expr_which_implies_wit_2",
+                "statement_sha256": "d72cb18d2dc69df10f5eed63abb9d9f7caf169636f2b206643b82d25e8ef08fd"
+              },
+              "current": [
+                {
+                  "name": "proof_of_cm_emit_expr_which_implies_wit_2",
+                  "statement_sha256": "d72cb18d2dc69df10f5eed63abb9d9f7caf169636f2b206643b82d25e8ef08fd"
+                }
+              ]
+            },
+            {
+              "source": {
+                "attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+                "name": "proof_of_cm_emit_expr_which_implies_wit_4",
+                "statement_sha256": "06ba10e35e7c9b70ef895b2eeceddf9bc433152419b9a0a8ee1ad23335c50403"
+              },
+              "current": [
+                {
+                  "name": "proof_of_cm_emit_expr_which_implies_wit_4",
+                  "statement_sha256": "06ba10e35e7c9b70ef895b2eeceddf9bc433152419b9a0a8ee1ad23335c50403"
+                }
+              ]
+            },
+            {
+              "source": {
+                "attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+                "name": "proof_of_cm_emit_expr_which_implies_wit_6",
+                "statement_sha256": "757b9b9b7a932b94f22b0a9a904dbb183113e9db20249664a9a10ca43a9c8c22"
+              },
+              "current": [
+                {
+                  "name": "proof_of_cm_emit_expr_which_implies_wit_6",
+                  "statement_sha256": "757b9b9b7a932b94f22b0a9a904dbb183113e9db20249664a9a10ca43a9c8c22"
+                }
+              ]
+            },
+            {
+              "source": {
+                "attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+                "name": "proof_of_cm_emit_expr_which_implies_wit_19",
+                "statement_sha256": "fcc3977581a42b72f3d664d327768ca1b32751849a33a9d723003e5a4faa5403"
+              },
+              "current": [
+                {
+                  "name": "proof_of_cm_emit_expr_which_implies_wit_19",
+                  "statement_sha256": "fcc3977581a42b72f3d664d327768ca1b32751849a33a9d723003e5a4faa5403"
+                }
+              ]
+            },
+            {
+              "source": {
+                "attempt": "cmc_emit_expr_migration-vc-checking-r1-attempt-1",
+                "name": "proof_of_cm_emit_expr_which_implies_wit_21",
+                "statement_sha256": "59176f1d7a2a805c1dbabc511237c4d2c9ddb1d918e14a64f41e6aa67b967d9b"
+              },
+              "current": [
+                {
+                  "name": "proof_of_cm_emit_expr_which_implies_wit_21",
+                  "statement_sha256": "59176f1d7a2a805c1dbabc511237c4d2c9ddb1d918e14a64f41e6aa67b967d9b"
+                }
+              ]
+            }
+          ]
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-18T11:21:13.879492Z",
+            "performance_profile": "recursive-large",
+            "timeout_seconds": 7200.0,
+            "elapsed_seconds": 96.91
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": false,
+          "errors": []
+        },
+        "formal_case_lib_dune": {
+          "status": "passed",
+          "build_mode": "makefile",
+          "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.vo",
+          "returncode": 0,
+          "base_artifact_count": 160,
+          "current_source_count": 1,
+          "rebuilt_count": 0,
+          "dependency_metrics": {
+            "status": "resolved",
+            "strategy": "breadth-batched-coqdep",
+            "batch_count": 11,
+            "coqdep_process_count": 11,
+            "node_count": 161,
+            "source_count": 161,
+            "elapsed_seconds": 12.727446
+          },
+          "current_cleanup": {
+            "status": "passed",
+            "removed_count": 0,
+            "first_removed": null
+          },
+          "make_seconds": 0.007676,
+          "elapsed_seconds": 12.913807
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      }
+    },
+    "cmc_emit_expr_migration-vc-checking-r2-attempt-1": {
+      "attempt_id": "cmc_emit_expr_migration-vc-checking-r2-attempt-1",
+      "round": "cmc_emit_expr_migration-vc-checking-r2",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r2",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r2/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r2/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r2/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-18T11:52:11.305107Z",
+      "owner": "vc-checking/cmc_emit_expr_migration-vc-checking-r2-attempt-1",
+      "started_at": "2026-10-18T11:52:17.308711Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_migration-vc-checking-r2-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_emit_expr_migration-vc-checking-r2-attempt-1",
+        "claimed_at": "2026-10-18T11:52:17.308711Z",
+        "finalized_at": "2026-10-18T12:00:06.225224Z"
+      },
+      "returned_at": "2026-10-18T12:00:06.225224Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "output": "b345523192d858567484102d7d298c651514d290905eb37e57541a717c752850"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-18T12:00:05.914869Z",
+            "finished_at": "2026-10-18T12:00:06.614736Z",
+            "elapsed_seconds": 0.625051
+          }
+        ],
+        "post-vc-checking-symexec": [
+          {
+            "started_at": "2026-10-18T12:00:20.795173Z",
+            "finished_at": "2026-10-18T12:01:56.482173Z",
+            "elapsed_seconds": 95.687
+          }
+        ],
+        "controller-plan-check": [
+          {
+            "started_at": "2026-10-18T12:00:20.486478Z",
+            "finished_at": "2026-10-18T12:01:56.798346Z",
+            "elapsed_seconds": 96.232466
+          }
+        ]
+      },
+      "agent_output_metrics": {
+        "bytes": 30147,
+        "lines": 267,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 176,
+        "structural_no_split_checked_first": 12,
+        "structural_definite_blockers": 0
+      },
+      "finished_at": "2026-10-18T12:01:56.798346Z",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r2/group_plan.json",
+      "group_plan_sha256": "f3bf00b7905a35db0f90fdde4f46ce4c09a4aeb8f313f43996a0e70195fe0d54",
+      "main_check": {
+        "manual_refresh": {
+          "status": "passed",
+          "returncode": 0,
+          "timeout_seconds": 7200.0,
+          "elapsed_seconds": 95.687,
+          "performance_profile": "recursive-large"
+        }
+      }
+    },
+    "cmc_emit_expr_migration-vc-proving-r1": {
+      "attempt_id": "cmc_emit_expr_migration-vc-proving-r1",
+      "round": "cmc_emit_expr_migration-vc-proving-r1",
+      "phase": "vc-proving-preparing",
+      "status": "verified",
+      "directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/cmc_emit_expr_migration-vc-proving-r1",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-proving-r1",
+      "base_manifest": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/cmc_emit_expr_migration-vc-proving-r1/base_manifest.json",
+      "group_workers_manifest": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-proving-r1/group_workers_manifest.json",
+      "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-proving-r1/proving_merged_result.json",
+      "groups": {
+        "simple_view_conversion": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/simple_view_conversion",
+          "started_at": "2026-10-18T12:02:50.114915Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-simple_view_conversion",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/simple_view_conversion",
+            "claimed_at": "2026-10-18T12:02:50.114915Z",
+            "finalized_at": "2026-10-18T12:07:13.317968Z"
+          },
+          "timing_interval_index": 0,
+          "returned_at": "2026-10-18T12:07:13.317968Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d91336ab94b53e4af372715a82fd01ada3cb6ed3f2e7ad63c9125142b317ce72",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "c6c2d415d536bb3e3e4f6d45b0a6fca21fbbc2488351f91c4020bd105b719841"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d91336ab94b53e4af372715a82fd01ada3cb6ed3f2e7ad63c9125142b317ce72",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T12:07:17.552080Z"
+        },
+        "constructor_facts_a": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/constructor_facts_a",
+          "started_at": "2026-10-18T12:10:07.220770Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-constructor_facts_a",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/constructor_facts_a",
+            "claimed_at": "2026-10-18T12:10:07.220770Z",
+            "finalized_at": "2026-10-18T12:16:51.936137Z"
+          },
+          "timing_interval_index": 3,
+          "returned_at": "2026-10-18T12:16:51.936137Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "b58fa799a726424072f17ce965beb421a8f37d46ffc33f87431790096fb7b5d6",
+            "group_worker_lib": "1b1bacfcb5cfb602bcbb490de284eb6a1e4ac1cfbe23c41160884a83436258aa",
+            "output": "cf19c547b0a547f59952b487b23e0d5796a710d7a0751f2f58025d935ea16760"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 4,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "b58fa799a726424072f17ce965beb421a8f37d46ffc33f87431790096fb7b5d6",
+            "group_worker_lib": "1b1bacfcb5cfb602bcbb490de284eb6a1e4ac1cfbe23c41160884a83436258aa"
+          },
+          "accepted_at": "2026-10-18T12:16:56.533343Z"
+        },
+        "constructor_facts_b": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/constructor_facts_b",
+          "started_at": "2026-10-18T12:10:06.341015Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-constructor_facts_b",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/constructor_facts_b",
+            "claimed_at": "2026-10-18T12:10:06.341015Z",
+            "finalized_at": "2026-10-18T12:13:32.911164Z"
+          },
+          "timing_interval_index": 1,
+          "returned_at": "2026-10-18T12:13:32.911164Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "717dc3b7210f899906fbb1c55341bf2f4ec802a833b14147946f954b7b70f777",
+            "group_worker_lib": "db320967dcb50947e48f7ea82940f133a9107969c93c296f4b50078bbe24a647",
+            "output": "1adb9d849fae58a3f928632cc95527d435cf5b619179005383210fe3f9b0dc0d"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 1,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "717dc3b7210f899906fbb1c55341bf2f4ec802a833b14147946f954b7b70f777",
+            "group_worker_lib": "db320967dcb50947e48f7ea82940f133a9107969c93c296f4b50078bbe24a647"
+          },
+          "accepted_at": "2026-10-18T12:13:37.275276Z"
+        },
+        "constructor_facts_c": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/constructor_facts_c",
+          "started_at": "2026-10-18T12:10:06.815181Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-constructor_facts_c",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/constructor_facts_c",
+            "claimed_at": "2026-10-18T12:10:06.815181Z",
+            "finalized_at": "2026-10-18T12:15:54.437164Z"
+          },
+          "timing_interval_index": 2,
+          "returned_at": "2026-10-18T12:15:54.437164Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "bb9408966194910b2c90fbb530e328010505ad8ee9c9c3a0825b85471f20cd39",
+            "group_worker_lib": "0758045489543a961292ea005a86452214199d23417e6ec67ac1d711c854f970",
+            "output": "c7cf68d6f87ece87ef04020cb32eae93daaa8b8e7f3ba5b6947d44d0f2b90bbe"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 7,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "bb9408966194910b2c90fbb530e328010505ad8ee9c9c3a0825b85471f20cd39",
+            "group_worker_lib": "0758045489543a961292ea005a86452214199d23417e6ec67ac1d711c854f970"
+          },
+          "accepted_at": "2026-10-18T12:15:59.178059Z"
+        },
+        "node_opening": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/node_opening",
+          "started_at": "2026-10-18T15:44:09.309165Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-node_opening",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/node_opening",
+            "claimed_at": "2026-10-18T15:44:09.309165Z",
+            "finalized_at": "2026-10-18T15:47:03.267739Z"
+          },
+          "timing_interval_index": 29,
+          "returned_at": "2026-10-18T15:47:03.267739Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7e712be96928cf7fbe74351e51ead6b6259a41ad8a370a2013f7e2f4a46095d7",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "78936b4699b0bd82a07a5baab0a73329c9056fea9e49b0cad6c3baf1632e2411"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7e712be96928cf7fbe74351e51ead6b6259a41ad8a370a2013f7e2f4a46095d7",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:47:08.321846Z"
+        },
+        "node_closing": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/node_closing",
+          "started_at": "2026-10-18T15:28:54.285239Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-node_closing",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/node_closing",
+            "claimed_at": "2026-10-18T15:28:54.285239Z",
+            "finalized_at": "2026-10-18T15:34:42.487377Z"
+          },
+          "timing_interval_index": 20,
+          "returned_at": "2026-10-18T15:34:42.487377Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "895790d7068b07dddd334e931f0a84c43a4026e0df5bd12a2072b9866c909863",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "c9d78519fe4dedd34ae583621a780567df9c027caf23ef262f9e170b3b35cfcb"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "895790d7068b07dddd334e931f0a84c43a4026e0df5bd12a2072b9866c909863",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:34:47.339157Z"
+        },
+        "intrinsic_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_results",
+          "started_at": "2026-10-18T15:14:02.912349Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-intrinsic_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_results",
+            "claimed_at": "2026-10-18T15:14:02.912349Z",
+            "finalized_at": "2026-10-18T15:16:44.923262Z"
+          },
+          "timing_interval_index": 10,
+          "returned_at": "2026-10-18T15:16:44.923262Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "6e39d7cac1051139bef78026a7c147293d4bc234388ae31db048a8fb9ac9f9fa",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "2d26a63112b069065e1e4dae4cb9b93f3703030c116736ca6b357c8507b375e8"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "6e39d7cac1051139bef78026a7c147293d4bc234388ae31db048a8fb9ac9f9fa",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:17:26.201781Z"
+        },
+        "intrinsic_constants": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_constants",
+          "started_at": "2026-10-18T15:45:38.063295Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-intrinsic_constants",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_constants",
+            "claimed_at": "2026-10-18T15:45:38.063295Z",
+            "finalized_at": "2026-10-18T15:49:30.353775Z"
+          },
+          "timing_interval_index": 31,
+          "returned_at": "2026-10-18T15:49:30.353775Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "58cc2f98ad44ba93a56adf5532f6efe87fefa101b31418b0ef8f1635135e5879",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "022c132b3831a3eb2d1140b32b4ae105038ae6d3f3decd7a98b7e2176326262c"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "58cc2f98ad44ba93a56adf5532f6efe87fefa101b31418b0ef8f1635135e5879",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:49:36.813883Z"
+        },
+        "intrinsic_plans": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_plans",
+          "started_at": "2026-10-18T15:31:15.727282Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-intrinsic_plans",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_plans",
+            "claimed_at": "2026-10-18T15:31:15.727282Z",
+            "finalized_at": "2026-10-18T15:34:00.384640Z"
+          },
+          "timing_interval_index": 21,
+          "returned_at": "2026-10-18T15:34:00.384640Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5fadb05bf83e255d9eff43fe07a1aa913afcbe3ef04e9aad2b8a23958d35fd23",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "39f612d8e9ab3565e31707d8811a699ea58074cd8c6ec0aa105e92be4c256a07"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5fadb05bf83e255d9eff43fe07a1aa913afcbe3ef04e9aad2b8a23958d35fd23",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:34:05.050163Z"
+        },
+        "intrinsic_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_bounds",
+          "started_at": "2026-10-18T15:17:43.372025Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-intrinsic_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/intrinsic_bounds",
+            "claimed_at": "2026-10-18T15:17:43.372025Z",
+            "finalized_at": "2026-10-18T15:21:07.885714Z"
+          },
+          "timing_interval_index": 12,
+          "returned_at": "2026-10-18T15:21:07.885714Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "181cafb7d9718aaf691558ab2daa51d8c22fc4353f7b0382aceafe51f0167f55",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "f18f726335507820d69e449a169303d14a09cddec5bad4995dae19bac26a2364"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "181cafb7d9718aaf691558ab2daa51d8c22fc4353f7b0382aceafe51f0167f55",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:21:12.280553Z"
+        },
+        "unary_deref_address_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_deref_address_results",
+          "started_at": "2026-10-18T15:41:26.458027Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_deref_address_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_deref_address_results",
+            "claimed_at": "2026-10-18T15:41:26.458027Z",
+            "finalized_at": "2026-10-18T15:45:09.417275Z"
+          },
+          "timing_interval_index": 27,
+          "returned_at": "2026-10-18T15:45:09.417275Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "2befe240f52b4a98a90aadb0810394893506ed7bd05a2f83bc36a7cf75750376",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "4d3bf68f22d6638d7ce35e50864190b5f9f183595c206fb85a8d0a7e081f396f"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "2befe240f52b4a98a90aadb0810394893506ed7bd05a2f83bc36a7cf75750376",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:45:14.051375Z"
+        },
+        "unary_arithmetic_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_arithmetic_results",
+          "started_at": "2026-10-18T15:41:26.874280Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_arithmetic_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_arithmetic_results",
+            "claimed_at": "2026-10-18T15:41:26.874280Z",
+            "finalized_at": "2026-10-18T15:44:42.108077Z"
+          },
+          "timing_interval_index": 28,
+          "returned_at": "2026-10-18T15:44:42.108077Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "476b0d446f4f9d3fcc4d2b9ebb8c7045b577704552650f7c885df889195864d7",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "4fb7b720e8f6cd60cd66acb04944279a4fd40a769fee328bfc7ee45bc338c36b"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "476b0d446f4f9d3fcc4d2b9ebb8c7045b577704552650f7c885df889195864d7",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:44:46.583406Z"
+        },
+        "unary_call_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_call_bounds",
+          "started_at": "2026-10-18T15:27:31.562728Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_call_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_call_bounds",
+            "claimed_at": "2026-10-18T15:27:31.562728Z",
+            "finalized_at": "2026-10-18T15:30:46.574174Z"
+          },
+          "timing_interval_index": 18,
+          "returned_at": "2026-10-18T15:30:46.574174Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "37f5fbc2a2b4aef106cfae4405901d3ab6cac64f05e2a092698d3d2fb32cfbbe",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "5ac7d0700351e63eb666aab7b7f220ca475330f7f7896964899ba56e15c2559c"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "37f5fbc2a2b4aef106cfae4405901d3ab6cac64f05e2a092698d3d2fb32cfbbe",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:30:51.378530Z"
+        },
+        "unary_constants": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_constants",
+          "started_at": "2026-10-18T15:50:06.565542Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_constants",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_constants",
+            "claimed_at": "2026-10-18T15:50:06.565542Z",
+            "finalized_at": "2026-10-18T15:52:39.815705Z"
+          },
+          "timing_interval_index": 33,
+          "returned_at": "2026-10-18T15:52:39.815705Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "67e873cd5628f4a0d4a1c37b46c9e9e5b9c018ac0b8e4de12e8b704b4c298a60",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "755c267111658e0864412256356c74cdac10c6ed5c2059d49f54f8e3a1240ad7"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "67e873cd5628f4a0d4a1c37b46c9e9e5b9c018ac0b8e4de12e8b704b4c298a60",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:52:45.808695Z"
+        },
+        "unary_shapes": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_shapes",
+          "started_at": "2026-10-18T15:53:09.928746Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_shapes",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_shapes",
+            "claimed_at": "2026-10-18T15:53:09.928746Z",
+            "finalized_at": "2026-10-18T15:55:29.862059Z"
+          },
+          "timing_interval_index": 36,
+          "returned_at": "2026-10-18T15:55:29.862059Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c323e0a63155ea48ad31d9d2128371bb7067b21825371be820caf5b067d41f5c",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "1a199089876f49d63370902bfd2322d65b6bc4f60b38eefaf9ef4b2456911103"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c323e0a63155ea48ad31d9d2128371bb7067b21825371be820caf5b067d41f5c",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:56:08.148457Z"
+        },
+        "unary_plans": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_plans",
+          "started_at": "2026-10-18T15:31:16.172094Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_plans",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_plans",
+            "claimed_at": "2026-10-18T15:31:16.172094Z",
+            "finalized_at": "2026-10-18T15:37:19.313382Z"
+          },
+          "timing_interval_index": 22,
+          "returned_at": "2026-10-18T15:37:19.313382Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "ddf5be46b0b0b6f5d7e7a67aeae942ecb590a8d4410ca85878645cadf6e1e072",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "701ebe68eadb073f642aef6ca20981638a51af850c69676e9cdde20f23f79ee3"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "ddf5be46b0b0b6f5d7e7a67aeae942ecb590a8d4410ca85878645cadf6e1e072",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:37:23.894268Z"
+        },
+        "unary_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_bounds",
+          "started_at": "2026-10-18T12:51:25.325420Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-unary_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/unary_bounds",
+            "claimed_at": "2026-10-18T12:51:25.325420Z",
+            "finalized_at": "2026-10-18T13:49:37.234639Z"
+          },
+          "timing_interval_index": 7,
+          "returned_at": "2026-10-18T13:49:37.234639Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "9b5df0dea54c2e4600a0673eb09977dfc9bca35d56dfa3abc00169fd1716074a",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "39e28f640e62937e4129c0133c0e6e9a36c14f1c214f580987a773403df5d9c2"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "9b5df0dea54c2e4600a0673eb09977dfc9bca35d56dfa3abc00169fd1716074a",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T13:49:41.486258Z"
+        },
+        "index_results_plans": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/index_results_plans",
+          "started_at": "2026-10-18T15:19:57.899708Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-index_results_plans",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/index_results_plans",
+            "claimed_at": "2026-10-18T15:19:57.899708Z",
+            "finalized_at": "2026-10-18T15:23:11.278004Z"
+          },
+          "timing_interval_index": 14,
+          "returned_at": "2026-10-18T15:23:11.278004Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c96ef67be566badb762834f964cc640698ec0c32aefee5b7f997244afc78174a",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "8496fdeaf2e29dc1d804a66cb1e66f185ed522e1b6b86d3c2a922efb7d678ea1"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c96ef67be566badb762834f964cc640698ec0c32aefee5b7f997244afc78174a",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:23:15.951683Z"
+        },
+        "index_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/index_bounds",
+          "started_at": "2026-10-18T12:14:07.234251Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-index_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/index_bounds",
+            "claimed_at": "2026-10-18T12:14:07.234251Z",
+            "finalized_at": "2026-10-18T12:35:37.897025Z"
+          },
+          "timing_interval_index": 4,
+          "returned_at": "2026-10-18T12:35:37.897025Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "e34536217dc77eb6559cc26ba384a5acbb6742a852016f8ff6b9fc3547a9b170",
+            "group_worker_lib": "59af50210def7d284ddbe9f0d1c54935a039310b894d9505f40174e5fd5076ee",
+            "output": "2ff6c10a21d1c3be636778e5a33e32786d7e633b7c87497ed1f02c222729959e"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 1,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "e34536217dc77eb6559cc26ba384a5acbb6742a852016f8ff6b9fc3547a9b170",
+            "group_worker_lib": "59af50210def7d284ddbe9f0d1c54935a039310b894d9505f40174e5fd5076ee"
+          },
+          "accepted_at": "2026-10-18T12:35:46.684871Z"
+        },
+        "index_assignment_constants": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/index_assignment_constants",
+          "started_at": "2026-10-18T15:47:38.786314Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-index_assignment_constants",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/index_assignment_constants",
+            "claimed_at": "2026-10-18T15:47:38.786314Z",
+            "finalized_at": "2026-10-18T15:51:04.744349Z"
+          },
+          "timing_interval_index": 32,
+          "returned_at": "2026-10-18T15:51:04.744349Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "df1c003cf78b147780f2f260fd7e91d327eed8162faf2a393253caf0c9920dc5",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "ae3cc6f74bff698d87f57d5a435af1a4ee3a00e909f779ed870224772b2919f3"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "df1c003cf78b147780f2f260fd7e91d327eed8162faf2a393253caf0c9920dc5",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:51:09.227938Z"
+        },
+        "assignment_results_plans": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/assignment_results_plans",
+          "started_at": "2026-10-18T15:23:37.811653Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-assignment_results_plans",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/assignment_results_plans",
+            "claimed_at": "2026-10-18T15:23:37.811653Z",
+            "finalized_at": "2026-10-18T15:27:00.511387Z"
+          },
+          "timing_interval_index": 16,
+          "returned_at": "2026-10-18T15:27:00.511387Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3646d6f202e08fa5b52de5a9e9d921169f2ee5b527bc3cfb739f127a0337fb01",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "80e06c012002bb82129001feb45c3d2cdba71eab83e0341ecd51e1bf3348c4d5"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3646d6f202e08fa5b52de5a9e9d921169f2ee5b527bc3cfb739f127a0337fb01",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:27:05.277265Z"
+        },
+        "assignment_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/assignment_bounds",
+          "started_at": "2026-10-18T12:16:23.325953Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-assignment_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/assignment_bounds",
+            "claimed_at": "2026-10-18T12:16:23.325953Z",
+            "finalized_at": "2026-10-18T15:05:50.961890Z"
+          },
+          "timing_interval_index": 5,
+          "returned_at": "2026-10-18T15:05:50.961890Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "cf635ad86bb2b828f70ae41278e7c1d2d731cb0e157a716ed61717f6f65bc1c8",
+            "group_worker_lib": "efc39c9680849cd58ff81733b8348b44ae083facee0155b9b4bf6d829834b3e4",
+            "output": "bbaacd032c13f85f0f412c92f2131b1439ef096633c71dd34b81d73346322a40"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 1,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "cf635ad86bb2b828f70ae41278e7c1d2d731cb0e157a716ed61717f6f65bc1c8",
+            "group_worker_lib": "efc39c9680849cd58ff81733b8348b44ae083facee0155b9b4bf6d829834b3e4"
+          },
+          "accepted_at": "2026-10-18T15:05:55.329830Z"
+        },
+        "binary_short_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_short_results",
+          "started_at": "2026-10-18T15:21:52.575990Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_short_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_short_results",
+            "claimed_at": "2026-10-18T15:21:52.575990Z",
+            "finalized_at": "2026-10-18T15:25:59.671123Z"
+          },
+          "timing_interval_index": 15,
+          "returned_at": "2026-10-18T15:25:59.671123Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "562878632763d4edc7cb7165e1b07e6c12bff15f9b6ab0774e9bdf3b71a3bf60",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "73e664731462a622dda7a4cb56104b952ba4c5870c1adf0ddf180e01fead0295"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "562878632763d4edc7cb7165e1b07e6c12bff15f9b6ab0774e9bdf3b71a3bf60",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:26:41.377617Z"
+        },
+        "binary_regular_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_regular_results",
+          "started_at": "2026-10-18T15:23:38.473660Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_regular_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_regular_results",
+            "claimed_at": "2026-10-18T15:23:38.473660Z",
+            "finalized_at": "2026-10-18T15:28:23.819127Z"
+          },
+          "timing_interval_index": 17,
+          "returned_at": "2026-10-18T15:28:23.819127Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "92c967c490dc788c8f78200ed44f16c5d4d7b51781d77acbe373820349807709",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "07bd58ff3243c256b4e013d1492d7c60e1da2f9db500c70be508c7dd2f1f7ddb"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "92c967c490dc788c8f78200ed44f16c5d4d7b51781d77acbe373820349807709",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:28:28.332575Z"
+        },
+        "binary_short_bounds_a": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_short_bounds_a",
+          "started_at": "2026-10-18T14:05:52.688415Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_short_bounds_a",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_short_bounds_a",
+            "claimed_at": "2026-10-18T14:05:52.688415Z",
+            "finalized_at": "2026-10-18T15:18:23.992434Z"
+          },
+          "timing_interval_index": 9,
+          "returned_at": "2026-10-18T15:18:23.992434Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "43ab9f993df118bd5918c8b2efbb885f4ae0d66d7c6bc7b0c1dc5a54075df6d1",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "fccb21a8bed4ae075b00be21266073c53b8ea494ae9f9a669c7b4fdc60e3660a"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "43ab9f993df118bd5918c8b2efbb885f4ae0d66d7c6bc7b0c1dc5a54075df6d1",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:18:28.868941Z"
+        },
+        "binary_short_bounds_b": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_short_bounds_b",
+          "started_at": "2026-10-18T15:14:03.339210Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_short_bounds_b",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_short_bounds_b",
+            "claimed_at": "2026-10-18T15:14:03.339210Z",
+            "finalized_at": "2026-10-18T15:19:32.072950Z"
+          },
+          "timing_interval_index": 11,
+          "returned_at": "2026-10-18T15:19:32.072950Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "9e74c29d2fa78d6bc436d2f0bc05172b1af93dded9475f755514c3bb65cf9db1",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "e8da1ecc738e402908baceaa4f9e121681c08d61a741821ae9c30514388327b6"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "9e74c29d2fa78d6bc436d2f0bc05172b1af93dded9475f755514c3bb65cf9db1",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:19:36.407054Z"
+        },
+        "binary_regular_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_regular_bounds",
+          "started_at": "2026-10-18T12:17:33.077319Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_regular_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_regular_bounds",
+            "claimed_at": "2026-10-18T12:17:33.077319Z",
+            "finalized_at": "2026-10-18T13:10:20.872344Z"
+          },
+          "timing_interval_index": 6,
+          "returned_at": "2026-10-18T13:10:20.872344Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3e2fc672076fb15a70cb25bd401a7b2587d1595d07d829dda55a6f92e35f2463",
+            "group_worker_lib": "5b57ac90a51aa77208d0d8a7eb2e31b35dbf3949c602478d64b31a574c1e028a",
+            "output": "66367998572cc3b480a258c706c541e87ff914df4ccd4d1924eebec2d1c44fe5"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 1,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3e2fc672076fb15a70cb25bd401a7b2587d1595d07d829dda55a6f92e35f2463",
+            "group_worker_lib": "5b57ac90a51aa77208d0d8a7eb2e31b35dbf3949c602478d64b31a574c1e028a"
+          },
+          "accepted_at": "2026-10-18T13:10:25.370043Z"
+        },
+        "binary_call_shapes": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_call_shapes",
+          "started_at": "2026-10-18T15:27:31.980479Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_call_shapes",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_call_shapes",
+            "claimed_at": "2026-10-18T15:27:31.980479Z",
+            "finalized_at": "2026-10-18T15:30:31.007135Z"
+          },
+          "timing_interval_index": 19,
+          "returned_at": "2026-10-18T15:30:31.007135Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5e31d9c68da6dfc4a496afc2153179313f66ba69939551afb5901fe81f3224f4",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "e8122ac6f88486038e35cedcda3751b30b9e0b55408e1c77b3c6fdbfff9e4b58"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5e31d9c68da6dfc4a496afc2153179313f66ba69939551afb5901fe81f3224f4",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:30:37.333617Z"
+        },
+        "binary_branch_constants": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_branch_constants",
+          "started_at": "2026-10-18T15:45:37.605461Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_branch_constants",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_branch_constants",
+            "claimed_at": "2026-10-18T15:45:37.605461Z",
+            "finalized_at": "2026-10-18T15:51:33.935531Z"
+          },
+          "timing_interval_index": 30,
+          "returned_at": "2026-10-18T15:51:33.935531Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "234ae7ce65777d5def9d265118f9ae794f4cdd4b623e6d4214b2d08ac7256be8",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "07d15344f70124b146585cbf0baa5a90c55632557cdf6ad7877171f5e00d0a0a"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "234ae7ce65777d5def9d265118f9ae794f4cdd4b623e6d4214b2d08ac7256be8",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:51:38.942612Z"
+        },
+        "binary_emit_constants_a": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_emit_constants_a",
+          "started_at": "2026-10-18T15:51:56.951446Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_emit_constants_a",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_emit_constants_a",
+            "claimed_at": "2026-10-18T15:51:56.951446Z",
+            "finalized_at": "2026-10-18T15:56:35.796346Z"
+          },
+          "timing_interval_index": 34,
+          "returned_at": "2026-10-18T15:56:35.796346Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7c9de810ead700ef7c82cf6b0a94f2a35626ab4882734c0e9a9f1507695e8b9c",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "7bc05d0ebac26f4d65957fa6b2c0446284ca693024c5d6c960a9506f624f92c1"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7c9de810ead700ef7c82cf6b0a94f2a35626ab4882734c0e9a9f1507695e8b9c",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:56:40.356220Z"
+        },
+        "binary_emit_constants_b": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_emit_constants_b",
+          "started_at": "2026-10-18T15:51:57.409594Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-binary_emit_constants_b",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/binary_emit_constants_b",
+            "claimed_at": "2026-10-18T15:51:57.409594Z",
+            "finalized_at": "2026-10-18T15:57:01.420040Z"
+          },
+          "timing_interval_index": 35,
+          "returned_at": "2026-10-18T15:57:01.420040Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "fe992a4f47fde3c68e4d6440c9d0c927806f65dbc0fb320627e6df90beb1a861",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "77346fa81d6d82205ed8dd5f896d2276a230c49404f7c825fd468c2cb4ae8036"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "fe992a4f47fde3c68e4d6440c9d0c927806f65dbc0fb320627e6df90beb1a861",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:57:06.115213Z"
+        },
+        "member_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/member_results",
+          "started_at": "2026-10-18T15:19:06.848545Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-member_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/member_results",
+            "claimed_at": "2026-10-18T15:19:06.848545Z",
+            "finalized_at": "2026-10-18T15:22:43.586934Z"
+          },
+          "timing_interval_index": 13,
+          "returned_at": "2026-10-18T15:22:43.586934Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d6e057f4b5beb395036241e6ba7b7a07b2cbdd6537546b45df17a7881eb4aeb6",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "1d1a1cbec0dc70a41d4644c2573e660a7713378e7ecf04ac9daa07e09257ff3f"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d6e057f4b5beb395036241e6ba7b7a07b2cbdd6537546b45df17a7881eb4aeb6",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:22:47.968033Z"
+        },
+        "member_bounds_constants": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/member_bounds_constants",
+          "started_at": "2026-10-18T13:15:11.880890Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-member_bounds_constants",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/member_bounds_constants",
+            "claimed_at": "2026-10-18T13:15:11.880890Z",
+            "finalized_at": "2026-10-18T15:05:43.794261Z"
+          },
+          "timing_interval_index": 8,
+          "returned_at": "2026-10-18T15:05:43.794261Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "e087db9e1fb644c25913632ec50c54121bbdca71efed44e08b5a639203ece372",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "b7f463fca9aea4bd78a337d22a9131963f4141e07ab0996dbecb9508337d157b"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "e087db9e1fb644c25913632ec50c54121bbdca71efed44e08b5a639203ece372",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:05:47.884334Z"
+        },
+        "simple_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/simple_results",
+          "started_at": "2026-10-18T15:37:18.479245Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-simple_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/simple_results",
+            "claimed_at": "2026-10-18T15:37:18.479245Z",
+            "finalized_at": "2026-10-18T15:39:11.076232Z"
+          },
+          "timing_interval_index": 23,
+          "returned_at": "2026-10-18T15:39:11.076232Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "2bccb54afe065cca48e7d32e6d34ee146877c82011a644fff3c2cf72e8820322",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "3d90bf664e27d77048fa2195cd418cb7680ad88d43d931e49463cb63614b8c24"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "2bccb54afe065cca48e7d32e6d34ee146877c82011a644fff3c2cf72e8820322",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:39:39.971995Z"
+        },
+        "dispatch_heap_a": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_heap_a",
+          "started_at": "2026-10-18T15:40:01.778254Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-dispatch_heap_a",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_heap_a",
+            "claimed_at": "2026-10-18T15:40:01.778254Z",
+            "finalized_at": "2026-10-18T15:43:30.781130Z"
+          },
+          "timing_interval_index": 26,
+          "returned_at": "2026-10-18T15:43:30.781130Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "29f025b95701eadefa27338a63af3ada8ece6e231aaee2b955d6df8cf57f4407",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "552dbdbe414a00cbea707dc6e5e2299d8c87e56c55e3b019921394fd422e63ac"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "29f025b95701eadefa27338a63af3ada8ece6e231aaee2b955d6df8cf57f4407",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:43:35.485105Z"
+        },
+        "dispatch_heap_b": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_heap_b",
+          "started_at": "2026-10-18T15:37:18.897006Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-dispatch_heap_b",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_heap_b",
+            "claimed_at": "2026-10-18T15:37:18.897006Z",
+            "finalized_at": "2026-10-18T15:40:27.263337Z"
+          },
+          "timing_interval_index": 24,
+          "returned_at": "2026-10-18T15:40:27.263337Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5308378ec2f0c77fe21765b1cddef99ccd6f5defb1381ced453f4dc6aa4bda6a",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "7808f9c722183d5f1af343d1e2f25333cda9510bbf2eb38c46758d352f859d01"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5308378ec2f0c77fe21765b1cddef99ccd6f5defb1381ced453f4dc6aa4bda6a",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:40:31.608524Z"
+        },
+        "dispatch_heap_c": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_heap_c",
+          "started_at": "2026-10-18T15:37:59.841515Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-dispatch_heap_c",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_heap_c",
+            "claimed_at": "2026-10-18T15:37:59.841515Z",
+            "finalized_at": "2026-10-18T15:40:50.910543Z"
+          },
+          "timing_interval_index": 25,
+          "returned_at": "2026-10-18T15:40:50.910543Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c358e3443b41a9c8ca1487295b592cd049da01f38bf702d21b973cb7e3c608c9",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "45caa734941432cc89a830c87b56a967e23f80beebf3954666522f4062ae87c7"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c358e3443b41a9c8ca1487295b592cd049da01f38bf702d21b973cb7e3c608c9",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:40:55.254908Z"
+        },
+        "dispatch_constructor_shapes": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_constructor_shapes",
+          "started_at": "2026-10-18T15:57:29.719867Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-dispatch_constructor_shapes",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_constructor_shapes",
+            "claimed_at": "2026-10-18T15:57:29.719867Z",
+            "finalized_at": "2026-10-18T15:58:55.987059Z"
+          },
+          "timing_interval_index": 37,
+          "returned_at": "2026-10-18T15:58:55.987059Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "762e78d405e2f82485d2b5adf55db8cfc6d3e42d157cd885aac27e0109d89560",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "c6feac8e745dd757d0b4d452de91dabe8552d83ab7bec8dbdb0aba1fe7877670"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "762e78d405e2f82485d2b5adf55db8cfc6d3e42d157cd885aac27e0109d89560",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:59:00.475773Z"
+        },
+        "dispatch_call_shapes": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_call_shapes",
+          "started_at": "2026-10-18T15:57:30.273200Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-dispatch_call_shapes",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_call_shapes",
+            "claimed_at": "2026-10-18T15:57:30.273200Z",
+            "finalized_at": "2026-10-18T15:59:17.212807Z"
+          },
+          "timing_interval_index": 38,
+          "returned_at": "2026-10-18T15:59:17.212807Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "58c8cdd4421981228be9d5f04904347d9fe503aa8a9a38ffe930a469c4254938",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "86d800bf32f7222ceeab39d6af88bd86440ee3ac8fdfcc5019aa55e325149162"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "58c8cdd4421981228be9d5f04904347d9fe503aa8a9a38ffe930a469c4254938",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:59:21.678018Z"
+        },
+        "dispatch_intrinsic_shapes": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_intrinsic_shapes",
+          "started_at": "2026-10-18T15:57:30.741643Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_migration-vc-proving-r1-dispatch_intrinsic_shapes",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_migration-vc-proving-r1/dispatch_intrinsic_shapes",
+            "claimed_at": "2026-10-18T15:57:30.741643Z",
+            "finalized_at": "2026-10-18T15:59:42.361061Z"
+          },
+          "timing_interval_index": 39,
+          "returned_at": "2026-10-18T15:59:42.361061Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "619ed85599d9b5fa77b043f48bfdfeb13442d30870e974e152aefb418cdcba5f",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+            "output": "5c1da7e3a2b6e9eaa7e2139f3228454149100aeca8dbde1ad829a039486f122b"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "619ed85599d9b5fa77b043f48bfdfeb13442d30870e974e152aefb418cdcba5f",
+            "group_worker_lib": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44"
+          },
+          "accepted_at": "2026-10-18T15:59:46.731884Z"
+        }
+      },
+      "priority_group_ids": [
+        "simple_view_conversion"
+      ],
+      "previous_proving_round": null,
+      "max_parallel_group_workers": 3,
+      "created_at": "2026-10-18T12:02:27.185735Z",
+      "base_manifest_sha256": "e6fb1dbc06a38d3c57eae7235e6cac38001ea69e0d15b7aed997526aebf46162",
+      "group_workers_manifest_sha256": "4127c9fca2b2257265a13cae98e19f95442e8076fa09ba75ecaea6d92531f728",
+      "timing": {
+        "preparing": [
+          {
+            "started_at": "2026-10-18T12:02:32.615356Z",
+            "finished_at": "2026-10-18T12:02:33.392277Z",
+            "elapsed_seconds": 0.697766
+          }
+        ],
+        "group-work": [
+          {
+            "started_at": "2026-10-18T12:02:50.114915Z",
+            "finished_at": "2026-10-18T12:07:13.317968Z",
+            "elapsed_seconds": 263.203053
+          },
+          {
+            "started_at": "2026-10-18T12:10:06.341015Z",
+            "finished_at": "2026-10-18T12:13:32.911164Z",
+            "elapsed_seconds": 206.570149
+          },
+          {
+            "started_at": "2026-10-18T12:10:06.815181Z",
+            "finished_at": "2026-10-18T12:15:54.437164Z",
+            "elapsed_seconds": 347.621983
+          },
+          {
+            "started_at": "2026-10-18T12:10:07.220770Z",
+            "finished_at": "2026-10-18T12:16:51.936137Z",
+            "elapsed_seconds": 404.715367
+          },
+          {
+            "started_at": "2026-10-18T12:14:07.234251Z",
+            "finished_at": "2026-10-18T12:35:37.897025Z",
+            "elapsed_seconds": 1290.662774
+          },
+          {
+            "started_at": "2026-10-18T12:16:23.325953Z",
+            "finished_at": "2026-10-18T15:05:50.961890Z",
+            "elapsed_seconds": 10167.635937
+          },
+          {
+            "started_at": "2026-10-18T12:17:33.077319Z",
+            "finished_at": "2026-10-18T13:10:20.872344Z",
+            "elapsed_seconds": 3167.795025
+          },
+          {
+            "started_at": "2026-10-18T12:51:25.325420Z",
+            "finished_at": "2026-10-18T13:49:37.234639Z",
+            "elapsed_seconds": 3491.909219
+          },
+          {
+            "started_at": "2026-10-18T13:15:11.880890Z",
+            "finished_at": "2026-10-18T15:05:43.794261Z",
+            "elapsed_seconds": 6631.913371
+          },
+          {
+            "started_at": "2026-10-18T14:05:52.688415Z",
+            "finished_at": "2026-10-18T15:18:23.992434Z",
+            "elapsed_seconds": 4351.304019
+          },
+          {
+            "started_at": "2026-10-18T15:14:02.912349Z",
+            "finished_at": "2026-10-18T15:16:44.923262Z",
+            "elapsed_seconds": 162.010913
+          },
+          {
+            "started_at": "2026-10-18T15:14:03.339210Z",
+            "finished_at": "2026-10-18T15:19:32.072950Z",
+            "elapsed_seconds": 328.73374
+          },
+          {
+            "started_at": "2026-10-18T15:17:43.372025Z",
+            "finished_at": "2026-10-18T15:21:07.885714Z",
+            "elapsed_seconds": 204.513689
+          },
+          {
+            "started_at": "2026-10-18T15:19:06.848545Z",
+            "finished_at": "2026-10-18T15:22:43.586934Z",
+            "elapsed_seconds": 216.738389
+          },
+          {
+            "started_at": "2026-10-18T15:19:57.899708Z",
+            "finished_at": "2026-10-18T15:23:11.278004Z",
+            "elapsed_seconds": 193.378296
+          },
+          {
+            "started_at": "2026-10-18T15:21:52.575990Z",
+            "finished_at": "2026-10-18T15:25:59.671123Z",
+            "elapsed_seconds": 247.095133
+          },
+          {
+            "started_at": "2026-10-18T15:23:37.811653Z",
+            "finished_at": "2026-10-18T15:27:00.511387Z",
+            "elapsed_seconds": 202.699734
+          },
+          {
+            "started_at": "2026-10-18T15:23:38.473660Z",
+            "finished_at": "2026-10-18T15:28:23.819127Z",
+            "elapsed_seconds": 285.345467
+          },
+          {
+            "started_at": "2026-10-18T15:27:31.562728Z",
+            "finished_at": "2026-10-18T15:30:46.574174Z",
+            "elapsed_seconds": 195.011446
+          },
+          {
+            "started_at": "2026-10-18T15:27:31.980479Z",
+            "finished_at": "2026-10-18T15:30:31.007135Z",
+            "elapsed_seconds": 179.026656
+          },
+          {
+            "started_at": "2026-10-18T15:28:54.285239Z",
+            "finished_at": "2026-10-18T15:34:42.487377Z",
+            "elapsed_seconds": 348.202138
+          },
+          {
+            "started_at": "2026-10-18T15:31:15.727282Z",
+            "finished_at": "2026-10-18T15:34:00.384640Z",
+            "elapsed_seconds": 164.657358
+          },
+          {
+            "started_at": "2026-10-18T15:31:16.172094Z",
+            "finished_at": "2026-10-18T15:37:19.313382Z",
+            "elapsed_seconds": 363.141288
+          },
+          {
+            "started_at": "2026-10-18T15:37:18.479245Z",
+            "finished_at": "2026-10-18T15:39:11.076232Z",
+            "elapsed_seconds": 112.596987
+          },
+          {
+            "started_at": "2026-10-18T15:37:18.897006Z",
+            "finished_at": "2026-10-18T15:40:27.263337Z",
+            "elapsed_seconds": 188.366331
+          },
+          {
+            "started_at": "2026-10-18T15:37:59.841515Z",
+            "finished_at": "2026-10-18T15:40:50.910543Z",
+            "elapsed_seconds": 171.069028
+          },
+          {
+            "started_at": "2026-10-18T15:40:01.778254Z",
+            "finished_at": "2026-10-18T15:43:30.781130Z",
+            "elapsed_seconds": 209.002876
+          },
+          {
+            "started_at": "2026-10-18T15:41:26.458027Z",
+            "finished_at": "2026-10-18T15:45:09.417275Z",
+            "elapsed_seconds": 222.959248
+          },
+          {
+            "started_at": "2026-10-18T15:41:26.874280Z",
+            "finished_at": "2026-10-18T15:44:42.108077Z",
+            "elapsed_seconds": 195.233797
+          },
+          {
+            "started_at": "2026-10-18T15:44:09.309165Z",
+            "finished_at": "2026-10-18T15:47:03.267739Z",
+            "elapsed_seconds": 173.958574
+          },
+          {
+            "started_at": "2026-10-18T15:45:37.605461Z",
+            "finished_at": "2026-10-18T15:51:33.935531Z",
+            "elapsed_seconds": 356.33007
+          },
+          {
+            "started_at": "2026-10-18T15:45:38.063295Z",
+            "finished_at": "2026-10-18T15:49:30.353775Z",
+            "elapsed_seconds": 232.29048
+          },
+          {
+            "started_at": "2026-10-18T15:47:38.786314Z",
+            "finished_at": "2026-10-18T15:51:04.744349Z",
+            "elapsed_seconds": 205.958035
+          },
+          {
+            "started_at": "2026-10-18T15:50:06.565542Z",
+            "finished_at": "2026-10-18T15:52:39.815705Z",
+            "elapsed_seconds": 153.250163
+          },
+          {
+            "started_at": "2026-10-18T15:51:56.951446Z",
+            "finished_at": "2026-10-18T15:56:35.796346Z",
+            "elapsed_seconds": 278.8449
+          },
+          {
+            "started_at": "2026-10-18T15:51:57.409594Z",
+            "finished_at": "2026-10-18T15:57:01.420040Z",
+            "elapsed_seconds": 304.010446
+          },
+          {
+            "started_at": "2026-10-18T15:53:09.928746Z",
+            "finished_at": "2026-10-18T15:55:29.862059Z",
+            "elapsed_seconds": 139.933313
+          },
+          {
+            "started_at": "2026-10-18T15:57:29.719867Z",
+            "finished_at": "2026-10-18T15:58:55.987059Z",
+            "elapsed_seconds": 86.267192
+          },
+          {
+            "started_at": "2026-10-18T15:57:30.273200Z",
+            "finished_at": "2026-10-18T15:59:17.212807Z",
+            "elapsed_seconds": 106.939607
+          },
+          {
+            "started_at": "2026-10-18T15:57:30.741643Z",
+            "finished_at": "2026-10-18T15:59:42.361061Z",
+            "elapsed_seconds": 131.619418
+          }
+        ],
+        "group-development-check": [
+          {
+            "started_at": "2026-10-18T12:04:28.212223Z",
+            "finished_at": "2026-10-18T12:04:51.170547Z",
+            "elapsed_seconds": 22.958324
+          },
+          {
+            "started_at": "2026-10-18T12:05:41.331206Z",
+            "finished_at": "2026-10-18T12:05:44.217125Z",
+            "elapsed_seconds": 2.885919
+          },
+          {
+            "started_at": "2026-10-18T12:06:38.078208Z",
+            "finished_at": "2026-10-18T12:06:41.283979Z",
+            "elapsed_seconds": 3.205771
+          },
+          {
+            "started_at": "2026-10-18T12:11:45.435025Z",
+            "finished_at": "2026-10-18T12:11:45.435025Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T12:12:03.307292Z",
+            "finished_at": "2026-10-18T12:12:03.307292Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T12:12:15.063639Z",
+            "finished_at": "2026-10-18T12:12:17.652466Z",
+            "elapsed_seconds": 2.588827
+          },
+          {
+            "started_at": "2026-10-18T12:12:36.764671Z",
+            "finished_at": "2026-10-18T12:12:39.815200Z",
+            "elapsed_seconds": 3.050529
+          },
+          {
+            "started_at": "2026-10-18T12:12:18.223459Z",
+            "finished_at": "2026-10-18T12:12:45.624859Z",
+            "elapsed_seconds": 27.4014
+          },
+          {
+            "started_at": "2026-10-18T12:12:51.310354Z",
+            "finished_at": "2026-10-18T12:12:53.988234Z",
+            "elapsed_seconds": 2.67788
+          },
+          {
+            "started_at": "2026-10-18T12:12:54.548908Z",
+            "finished_at": "2026-10-18T12:12:57.221008Z",
+            "elapsed_seconds": 2.6721
+          },
+          {
+            "started_at": "2026-10-18T12:13:13.463649Z",
+            "finished_at": "2026-10-18T12:13:16.032402Z",
+            "elapsed_seconds": 2.568753
+          },
+          {
+            "started_at": "2026-10-18T12:13:19.338900Z",
+            "finished_at": "2026-10-18T12:13:21.978966Z",
+            "elapsed_seconds": 2.640066
+          },
+          {
+            "started_at": "2026-10-18T12:13:43.347166Z",
+            "finished_at": "2026-10-18T12:13:45.989445Z",
+            "elapsed_seconds": 2.642279
+          },
+          {
+            "started_at": "2026-10-18T12:13:50.092945Z",
+            "finished_at": "2026-10-18T12:13:52.726973Z",
+            "elapsed_seconds": 2.634028
+          },
+          {
+            "started_at": "2026-10-18T12:14:27.949333Z",
+            "finished_at": "2026-10-18T12:14:30.817959Z",
+            "elapsed_seconds": 2.868626
+          },
+          {
+            "started_at": "2026-10-18T12:14:06.202108Z",
+            "finished_at": "2026-10-18T12:14:31.095431Z",
+            "elapsed_seconds": 24.893323
+          },
+          {
+            "started_at": "2026-10-18T12:15:06.215776Z",
+            "finished_at": "2026-10-18T12:15:12.065504Z",
+            "elapsed_seconds": 5.849728
+          },
+          {
+            "started_at": "2026-10-18T12:14:57.718095Z",
+            "finished_at": "2026-10-18T12:15:24.217143Z",
+            "elapsed_seconds": 26.499048
+          },
+          {
+            "started_at": "2026-10-18T12:15:42.630011Z",
+            "finished_at": "2026-10-18T12:15:47.306659Z",
+            "elapsed_seconds": 4.676648
+          },
+          {
+            "started_at": "2026-10-18T12:16:37.705409Z",
+            "finished_at": "2026-10-18T12:16:40.236301Z",
+            "elapsed_seconds": 2.530892
+          },
+          {
+            "started_at": "2026-10-18T12:17:03.931623Z",
+            "finished_at": "2026-10-18T12:17:06.474661Z",
+            "elapsed_seconds": 2.543038
+          },
+          {
+            "started_at": "2026-10-18T12:17:27.815963Z",
+            "finished_at": "2026-10-18T12:17:27.815963Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T12:17:43.770687Z",
+            "finished_at": "2026-10-18T12:17:46.359532Z",
+            "elapsed_seconds": 2.588845
+          },
+          {
+            "started_at": "2026-10-18T12:17:49.642237Z",
+            "finished_at": "2026-10-18T12:17:49.642237Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T12:18:19.647849Z",
+            "finished_at": "2026-10-18T12:18:22.356186Z",
+            "elapsed_seconds": 2.708337
+          },
+          {
+            "started_at": "2026-10-18T12:18:22.665515Z",
+            "finished_at": "2026-10-18T12:18:48.385472Z",
+            "elapsed_seconds": 25.719957
+          },
+          {
+            "started_at": "2026-10-18T12:18:50.425233Z",
+            "finished_at": "2026-10-18T12:18:53.063707Z",
+            "elapsed_seconds": 2.638474
+          },
+          {
+            "started_at": "2026-10-18T12:19:08.243571Z",
+            "finished_at": "2026-10-18T12:19:10.891113Z",
+            "elapsed_seconds": 2.647542
+          },
+          {
+            "started_at": "2026-10-18T12:19:24.241240Z",
+            "finished_at": "2026-10-18T12:19:24.241240Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T12:34:21.483887Z",
+            "finished_at": "2026-10-18T12:34:49.565052Z",
+            "elapsed_seconds": 28.081165
+          },
+          {
+            "started_at": "2026-10-18T12:35:08.329682Z",
+            "finished_at": "2026-10-18T12:35:11.267903Z",
+            "elapsed_seconds": 2.938221
+          },
+          {
+            "started_at": "2026-10-18T12:35:55.938306Z",
+            "finished_at": "2026-10-18T12:35:58.567205Z",
+            "elapsed_seconds": 2.628899
+          },
+          {
+            "started_at": "2026-10-18T12:51:43.835878Z",
+            "finished_at": "2026-10-18T12:51:43.835878Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T12:51:42.277350Z",
+            "finished_at": "2026-10-18T12:51:44.910460Z",
+            "elapsed_seconds": 2.63311
+          },
+          {
+            "started_at": "2026-10-18T13:07:12.532249Z",
+            "finished_at": "2026-10-18T13:07:15.680756Z",
+            "elapsed_seconds": 3.148507
+          },
+          {
+            "started_at": "2026-10-18T13:07:14.339435Z",
+            "finished_at": "2026-10-18T13:07:46.128804Z",
+            "elapsed_seconds": 31.789369
+          },
+          {
+            "started_at": "2026-10-18T13:07:53.419623Z",
+            "finished_at": "2026-10-18T13:07:59.155503Z",
+            "elapsed_seconds": 5.73588
+          },
+          {
+            "started_at": "2026-10-18T13:08:14.477348Z",
+            "finished_at": "2026-10-18T13:08:18.462855Z",
+            "elapsed_seconds": 3.985507
+          },
+          {
+            "started_at": "2026-10-18T13:08:17.181929Z",
+            "finished_at": "2026-10-18T13:08:21.025507Z",
+            "elapsed_seconds": 3.843578
+          },
+          {
+            "started_at": "2026-10-18T13:08:34.511756Z",
+            "finished_at": "2026-10-18T13:08:40.034556Z",
+            "elapsed_seconds": 5.5228
+          },
+          {
+            "started_at": "2026-10-18T13:08:45.946984Z",
+            "finished_at": "2026-10-18T13:08:48.712514Z",
+            "elapsed_seconds": 2.76553
+          },
+          {
+            "started_at": "2026-10-18T13:09:00.952402Z",
+            "finished_at": "2026-10-18T13:09:04.900831Z",
+            "elapsed_seconds": 3.948429
+          },
+          {
+            "started_at": "2026-10-18T13:09:22.744370Z",
+            "finished_at": "2026-10-18T13:09:28.595889Z",
+            "elapsed_seconds": 5.851519
+          },
+          {
+            "started_at": "2026-10-18T13:09:06.297580Z",
+            "finished_at": "2026-10-18T13:09:37.924913Z",
+            "elapsed_seconds": 31.627333
+          },
+          {
+            "started_at": "2026-10-18T13:09:43.744355Z",
+            "finished_at": "2026-10-18T13:09:48.805329Z",
+            "elapsed_seconds": 5.060974
+          },
+          {
+            "started_at": "2026-10-18T13:09:56.329516Z",
+            "finished_at": "2026-10-18T13:09:59.795203Z",
+            "elapsed_seconds": 3.465687
+          },
+          {
+            "started_at": "2026-10-18T13:10:13.519675Z",
+            "finished_at": "2026-10-18T13:10:16.854836Z",
+            "elapsed_seconds": 3.335161
+          },
+          {
+            "started_at": "2026-10-18T13:10:23.718481Z",
+            "finished_at": "2026-10-18T13:10:27.541015Z",
+            "elapsed_seconds": 3.822534
+          },
+          {
+            "started_at": "2026-10-18T13:10:37.115325Z",
+            "finished_at": "2026-10-18T13:10:40.527952Z",
+            "elapsed_seconds": 3.412627
+          },
+          {
+            "started_at": "2026-10-18T13:14:22.975297Z",
+            "finished_at": "2026-10-18T13:14:39.733713Z",
+            "elapsed_seconds": 16.758416
+          },
+          {
+            "started_at": "2026-10-18T13:30:29.253168Z",
+            "finished_at": "2026-10-18T13:30:33.148253Z",
+            "elapsed_seconds": 3.895085
+          },
+          {
+            "started_at": "2026-10-18T13:30:38.408139Z",
+            "finished_at": "2026-10-18T13:31:00.143202Z",
+            "elapsed_seconds": 21.735063
+          },
+          {
+            "started_at": "2026-10-18T13:48:50.525007Z",
+            "finished_at": "2026-10-18T13:49:14.095793Z",
+            "elapsed_seconds": 23.570786
+          },
+          {
+            "started_at": "2026-10-18T14:05:55.828542Z",
+            "finished_at": "2026-10-18T14:06:23.714787Z",
+            "elapsed_seconds": 27.886245
+          },
+          {
+            "started_at": "2026-10-18T14:06:25.860091Z",
+            "finished_at": "2026-10-18T14:07:12.670168Z",
+            "elapsed_seconds": 46.810077
+          },
+          {
+            "started_at": "2026-10-18T14:06:47.242253Z",
+            "finished_at": "2026-10-18T14:07:23.156320Z",
+            "elapsed_seconds": 35.914067
+          },
+          {
+            "started_at": "2026-10-18T14:48:54.698611Z",
+            "finished_at": "2026-10-18T14:49:44.166418Z",
+            "elapsed_seconds": 49.467807
+          },
+          {
+            "started_at": "2026-10-18T14:49:10.681952Z",
+            "finished_at": "2026-10-18T14:49:49.613070Z",
+            "elapsed_seconds": 38.931118
+          },
+          {
+            "started_at": "2026-10-18T14:49:58.903765Z",
+            "finished_at": "2026-10-18T14:49:58.903765Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-18T15:05:21.945569Z",
+            "finished_at": "2026-10-18T15:05:26.138403Z",
+            "elapsed_seconds": 4.192834
+          },
+          {
+            "started_at": "2026-10-18T15:14:17.857814Z",
+            "finished_at": "2026-10-18T15:14:22.812494Z",
+            "elapsed_seconds": 4.95468
+          },
+          {
+            "started_at": "2026-10-18T15:15:05.519240Z",
+            "finished_at": "2026-10-18T15:15:08.976991Z",
+            "elapsed_seconds": 3.457751
+          },
+          {
+            "started_at": "2026-10-18T15:15:08.311590Z",
+            "finished_at": "2026-10-18T15:15:25.760051Z",
+            "elapsed_seconds": 17.448461
+          },
+          {
+            "started_at": "2026-10-18T15:15:56.962955Z",
+            "finished_at": "2026-10-18T15:16:07.014305Z",
+            "elapsed_seconds": 10.05135
+          },
+          {
+            "started_at": "2026-10-18T15:16:08.364309Z",
+            "finished_at": "2026-10-18T15:16:25.952925Z",
+            "elapsed_seconds": 17.588616
+          },
+          {
+            "started_at": "2026-10-18T15:16:45.118780Z",
+            "finished_at": "2026-10-18T15:16:49.378449Z",
+            "elapsed_seconds": 4.259669
+          },
+          {
+            "started_at": "2026-10-18T15:16:56.847882Z",
+            "finished_at": "2026-10-18T15:17:14.222601Z",
+            "elapsed_seconds": 17.374719
+          },
+          {
+            "started_at": "2026-10-18T15:17:23.925174Z",
+            "finished_at": "2026-10-18T15:17:28.159408Z",
+            "elapsed_seconds": 4.234234
+          },
+          {
+            "started_at": "2026-10-18T15:18:14.641702Z",
+            "finished_at": "2026-10-18T15:18:32.480462Z",
+            "elapsed_seconds": 17.83876
+          },
+          {
+            "started_at": "2026-10-18T15:19:28.262973Z",
+            "finished_at": "2026-10-18T15:19:31.412844Z",
+            "elapsed_seconds": 3.149871
+          },
+          {
+            "started_at": "2026-10-18T15:20:16.898087Z",
+            "finished_at": "2026-10-18T15:20:20.494818Z",
+            "elapsed_seconds": 3.596731
+          },
+          {
+            "started_at": "2026-10-18T15:20:39.973097Z",
+            "finished_at": "2026-10-18T15:20:45.095995Z",
+            "elapsed_seconds": 5.122898
+          },
+          {
+            "started_at": "2026-10-18T15:21:14.690589Z",
+            "finished_at": "2026-10-18T15:21:22.239042Z",
+            "elapsed_seconds": 7.548453
+          },
+          {
+            "started_at": "2026-10-18T15:21:24.802701Z",
+            "finished_at": "2026-10-18T15:21:28.230496Z",
+            "elapsed_seconds": 3.427795
+          },
+          {
+            "started_at": "2026-10-18T15:21:40.904505Z",
+            "finished_at": "2026-10-18T15:21:48.734485Z",
+            "elapsed_seconds": 7.82998
+          },
+          {
+            "started_at": "2026-10-18T15:22:05.784598Z",
+            "finished_at": "2026-10-18T15:22:17.577691Z",
+            "elapsed_seconds": 11.793093
+          },
+          {
+            "started_at": "2026-10-18T15:23:20.618745Z",
+            "finished_at": "2026-10-18T15:23:24.155781Z",
+            "elapsed_seconds": 3.537036
+          },
+          {
+            "started_at": "2026-10-18T15:23:55.994564Z",
+            "finished_at": "2026-10-18T15:23:59.607214Z",
+            "elapsed_seconds": 3.61265
+          },
+          {
+            "started_at": "2026-10-18T15:24:30.890987Z",
+            "finished_at": "2026-10-18T15:24:38.509245Z",
+            "elapsed_seconds": 7.618258
+          },
+          {
+            "started_at": "2026-10-18T15:24:54.594565Z",
+            "finished_at": "2026-10-18T15:24:58.624649Z",
+            "elapsed_seconds": 4.030084
+          },
+          {
+            "started_at": "2026-10-18T15:24:50.979734Z",
+            "finished_at": "2026-10-18T15:25:02.740452Z",
+            "elapsed_seconds": 11.760718
+          },
+          {
+            "started_at": "2026-10-18T15:25:01.663096Z",
+            "finished_at": "2026-10-18T15:25:05.148355Z",
+            "elapsed_seconds": 3.485259
+          },
+          {
+            "started_at": "2026-10-18T15:25:18.089206Z",
+            "finished_at": "2026-10-18T15:25:21.695174Z",
+            "elapsed_seconds": 3.605968
+          },
+          {
+            "started_at": "2026-10-18T15:25:31.728358Z",
+            "finished_at": "2026-10-18T15:25:39.947013Z",
+            "elapsed_seconds": 8.218655
+          },
+          {
+            "started_at": "2026-10-18T15:25:55.350344Z",
+            "finished_at": "2026-10-18T15:26:04.046917Z",
+            "elapsed_seconds": 8.696573
+          },
+          {
+            "started_at": "2026-10-18T15:26:01.439564Z",
+            "finished_at": "2026-10-18T15:26:05.480003Z",
+            "elapsed_seconds": 4.040439
+          },
+          {
+            "started_at": "2026-10-18T15:26:32.401746Z",
+            "finished_at": "2026-10-18T15:26:42.734612Z",
+            "elapsed_seconds": 10.332866
+          },
+          {
+            "started_at": "2026-10-18T15:26:54.531341Z",
+            "finished_at": "2026-10-18T15:27:03.869520Z",
+            "elapsed_seconds": 9.338179
+          },
+          {
+            "started_at": "2026-10-18T15:28:56.015414Z",
+            "finished_at": "2026-10-18T15:28:59.344099Z",
+            "elapsed_seconds": 3.328685
+          },
+          {
+            "started_at": "2026-10-18T15:29:00.904905Z",
+            "finished_at": "2026-10-18T15:29:04.140386Z",
+            "elapsed_seconds": 3.235481
+          },
+          {
+            "started_at": "2026-10-18T15:29:24.299489Z",
+            "finished_at": "2026-10-18T15:29:42.842671Z",
+            "elapsed_seconds": 18.543182
+          },
+          {
+            "started_at": "2026-10-18T15:29:20.294818Z",
+            "finished_at": "2026-10-18T15:29:53.618349Z",
+            "elapsed_seconds": 33.323531
+          },
+          {
+            "started_at": "2026-10-18T15:32:37.005618Z",
+            "finished_at": "2026-10-18T15:32:40.578484Z",
+            "elapsed_seconds": 3.572866
+          },
+          {
+            "started_at": "2026-10-18T15:32:44.564101Z",
+            "finished_at": "2026-10-18T15:32:47.583068Z",
+            "elapsed_seconds": 3.018967
+          },
+          {
+            "started_at": "2026-10-18T15:33:10.774249Z",
+            "finished_at": "2026-10-18T15:33:14.521634Z",
+            "elapsed_seconds": 3.747385
+          },
+          {
+            "started_at": "2026-10-18T15:33:15.710841Z",
+            "finished_at": "2026-10-18T15:33:18.768123Z",
+            "elapsed_seconds": 3.057282
+          },
+          {
+            "started_at": "2026-10-18T15:33:21.079696Z",
+            "finished_at": "2026-10-18T15:33:24.859204Z",
+            "elapsed_seconds": 3.779508
+          },
+          {
+            "started_at": "2026-10-18T15:33:29.558808Z",
+            "finished_at": "2026-10-18T15:33:32.595400Z",
+            "elapsed_seconds": 3.036592
+          },
+          {
+            "started_at": "2026-10-18T15:33:33.589550Z",
+            "finished_at": "2026-10-18T15:33:43.713223Z",
+            "elapsed_seconds": 10.123673
+          },
+          {
+            "started_at": "2026-10-18T15:34:03.736168Z",
+            "finished_at": "2026-10-18T15:34:06.848718Z",
+            "elapsed_seconds": 3.11255
+          },
+          {
+            "started_at": "2026-10-18T15:34:23.323900Z",
+            "finished_at": "2026-10-18T15:34:26.728815Z",
+            "elapsed_seconds": 3.404915
+          },
+          {
+            "started_at": "2026-10-18T15:34:38.600448Z",
+            "finished_at": "2026-10-18T15:34:41.995884Z",
+            "elapsed_seconds": 3.395436
+          },
+          {
+            "started_at": "2026-10-18T15:38:32.511816Z",
+            "finished_at": "2026-10-18T15:38:37.037117Z",
+            "elapsed_seconds": 4.525301
+          },
+          {
+            "started_at": "2026-10-18T15:38:48.784642Z",
+            "finished_at": "2026-10-18T15:38:53.107226Z",
+            "elapsed_seconds": 4.322584
+          },
+          {
+            "started_at": "2026-10-18T15:39:11.162742Z",
+            "finished_at": "2026-10-18T15:39:15.748649Z",
+            "elapsed_seconds": 4.585907
+          },
+          {
+            "started_at": "2026-10-18T15:39:35.908273Z",
+            "finished_at": "2026-10-18T15:39:46.955331Z",
+            "elapsed_seconds": 11.047058
+          },
+          {
+            "started_at": "2026-10-18T15:39:53.117590Z",
+            "finished_at": "2026-10-18T15:40:03.455317Z",
+            "elapsed_seconds": 10.337727
+          },
+          {
+            "started_at": "2026-10-18T15:41:10.782324Z",
+            "finished_at": "2026-10-18T15:41:14.770884Z",
+            "elapsed_seconds": 3.98856
+          },
+          {
+            "started_at": "2026-10-18T15:42:39.433231Z",
+            "finished_at": "2026-10-18T15:42:42.784489Z",
+            "elapsed_seconds": 3.351258
+          },
+          {
+            "started_at": "2026-10-18T15:42:51.449268Z",
+            "finished_at": "2026-10-18T15:42:57.651847Z",
+            "elapsed_seconds": 6.202579
+          },
+          {
+            "started_at": "2026-10-18T15:42:56.843864Z",
+            "finished_at": "2026-10-18T15:43:00.353721Z",
+            "elapsed_seconds": 3.509857
+          },
+          {
+            "started_at": "2026-10-18T15:43:23.984599Z",
+            "finished_at": "2026-10-18T15:43:27.565258Z",
+            "elapsed_seconds": 3.580659
+          },
+          {
+            "started_at": "2026-10-18T15:43:30.155925Z",
+            "finished_at": "2026-10-18T15:43:33.704732Z",
+            "elapsed_seconds": 3.548807
+          },
+          {
+            "started_at": "2026-10-18T15:43:46.113296Z",
+            "finished_at": "2026-10-18T15:43:53.131569Z",
+            "elapsed_seconds": 7.018273
+          },
+          {
+            "started_at": "2026-10-18T15:43:59.216463Z",
+            "finished_at": "2026-10-18T15:44:05.687491Z",
+            "elapsed_seconds": 6.471028
+          },
+          {
+            "started_at": "2026-10-18T15:45:32.909305Z",
+            "finished_at": "2026-10-18T15:45:38.484538Z",
+            "elapsed_seconds": 5.575233
+          },
+          {
+            "started_at": "2026-10-18T15:46:14.445590Z",
+            "finished_at": "2026-10-18T15:46:28.494085Z",
+            "elapsed_seconds": 14.048495
+          },
+          {
+            "started_at": "2026-10-18T15:46:46.565652Z",
+            "finished_at": "2026-10-18T15:47:33.601107Z",
+            "elapsed_seconds": 47.035455
+          },
+          {
+            "started_at": "2026-10-18T15:48:54.627551Z",
+            "finished_at": "2026-10-18T15:50:18.425142Z",
+            "elapsed_seconds": 83.797591
+          },
+          {
+            "started_at": "2026-10-18T15:51:07.064106Z",
+            "finished_at": "2026-10-18T15:51:40.852659Z",
+            "elapsed_seconds": 33.788553
+          },
+          {
+            "started_at": "2026-10-18T15:54:12.660332Z",
+            "finished_at": "2026-10-18T15:54:18.725746Z",
+            "elapsed_seconds": 6.065414
+          }
+        ],
+        "group-coq-check": [
+          {
+            "started_at": "2026-10-18T12:06:49.345487Z",
+            "finished_at": "2026-10-18T12:06:53.326777Z",
+            "elapsed_seconds": 3.98129
+          },
+          {
+            "started_at": "2026-10-18T12:13:01.653501Z",
+            "finished_at": "2026-10-18T12:13:05.671389Z",
+            "elapsed_seconds": 4.017888
+          },
+          {
+            "started_at": "2026-10-18T12:15:18.183176Z",
+            "finished_at": "2026-10-18T12:15:22.550126Z",
+            "elapsed_seconds": 4.36695
+          },
+          {
+            "started_at": "2026-10-18T12:35:07.192927Z",
+            "finished_at": "2026-10-18T12:35:11.586797Z",
+            "elapsed_seconds": 4.39387
+          },
+          {
+            "started_at": "2026-10-18T13:09:48.976114Z",
+            "finished_at": "2026-10-18T13:09:53.798316Z",
+            "elapsed_seconds": 4.822202
+          },
+          {
+            "started_at": "2026-10-18T13:30:40.118240Z",
+            "finished_at": "2026-10-18T13:30:46.428288Z",
+            "elapsed_seconds": 6.310048
+          },
+          {
+            "started_at": "2026-10-18T14:49:52.995431Z",
+            "finished_at": "2026-10-18T14:49:57.235976Z",
+            "elapsed_seconds": 4.240545
+          },
+          {
+            "started_at": "2026-10-18T14:49:56.629763Z",
+            "finished_at": "2026-10-18T14:50:02.401904Z",
+            "elapsed_seconds": 5.772141
+          },
+          {
+            "started_at": "2026-10-18T15:16:20.562794Z",
+            "finished_at": "2026-10-18T15:16:25.424542Z",
+            "elapsed_seconds": 4.861748
+          },
+          {
+            "started_at": "2026-10-18T15:17:22.585736Z",
+            "finished_at": "2026-10-18T15:17:27.027517Z",
+            "elapsed_seconds": 4.441781
+          },
+          {
+            "started_at": "2026-10-18T15:18:40.921147Z",
+            "finished_at": "2026-10-18T15:18:45.068386Z",
+            "elapsed_seconds": 4.147239
+          },
+          {
+            "started_at": "2026-10-18T15:20:32.543937Z",
+            "finished_at": "2026-10-18T15:20:36.484716Z",
+            "elapsed_seconds": 3.940779
+          },
+          {
+            "started_at": "2026-10-18T15:21:59.129144Z",
+            "finished_at": "2026-10-18T15:22:03.515714Z",
+            "elapsed_seconds": 4.38657
+          },
+          {
+            "started_at": "2026-10-18T15:22:28.362749Z",
+            "finished_at": "2026-10-18T15:22:32.502622Z",
+            "elapsed_seconds": 4.139873
+          },
+          {
+            "started_at": "2026-10-18T15:25:18.555101Z",
+            "finished_at": "2026-10-18T15:25:33.215069Z",
+            "elapsed_seconds": 14.659968
+          },
+          {
+            "started_at": "2026-10-18T15:26:17.785829Z",
+            "finished_at": "2026-10-18T15:26:21.894870Z",
+            "elapsed_seconds": 4.109041
+          },
+          {
+            "started_at": "2026-10-18T15:27:11.077626Z",
+            "finished_at": "2026-10-18T15:27:15.223461Z",
+            "elapsed_seconds": 4.145835
+          },
+          {
+            "started_at": "2026-10-18T15:29:55.299751Z",
+            "finished_at": "2026-10-18T15:29:59.630815Z",
+            "elapsed_seconds": 4.331064
+          },
+          {
+            "started_at": "2026-10-18T15:33:36.226522Z",
+            "finished_at": "2026-10-18T15:33:41.041534Z",
+            "elapsed_seconds": 4.815012
+          },
+          {
+            "started_at": "2026-10-18T15:33:52.089987Z",
+            "finished_at": "2026-10-18T15:33:56.383574Z",
+            "elapsed_seconds": 4.293587
+          },
+          {
+            "started_at": "2026-10-18T15:34:53.471884Z",
+            "finished_at": "2026-10-18T15:34:57.617636Z",
+            "elapsed_seconds": 4.145752
+          },
+          {
+            "started_at": "2026-10-18T15:38:45.981813Z",
+            "finished_at": "2026-10-18T15:38:50.252426Z",
+            "elapsed_seconds": 4.270613
+          },
+          {
+            "started_at": "2026-10-18T15:39:57.919995Z",
+            "finished_at": "2026-10-18T15:40:02.426085Z",
+            "elapsed_seconds": 4.50609
+          },
+          {
+            "started_at": "2026-10-18T15:40:14.844656Z",
+            "finished_at": "2026-10-18T15:40:18.953648Z",
+            "elapsed_seconds": 4.108992
+          },
+          {
+            "started_at": "2026-10-18T15:43:07.442841Z",
+            "finished_at": "2026-10-18T15:43:11.614207Z",
+            "elapsed_seconds": 4.171366
+          },
+          {
+            "started_at": "2026-10-18T15:44:16.809974Z",
+            "finished_at": "2026-10-18T15:44:22.096915Z",
+            "elapsed_seconds": 5.286941
+          },
+          {
+            "started_at": "2026-10-18T15:44:23.062232Z",
+            "finished_at": "2026-10-18T15:44:34.221491Z",
+            "elapsed_seconds": 11.159259
+          },
+          {
+            "started_at": "2026-10-18T15:46:37.399859Z",
+            "finished_at": "2026-10-18T15:46:41.777490Z",
+            "elapsed_seconds": 4.377631
+          },
+          {
+            "started_at": "2026-10-18T15:46:40.052342Z",
+            "finished_at": "2026-10-18T15:46:45.127438Z",
+            "elapsed_seconds": 5.075096
+          },
+          {
+            "started_at": "2026-10-18T15:48:00.202109Z",
+            "finished_at": "2026-10-18T15:49:08.431371Z",
+            "elapsed_seconds": 68.229262
+          },
+          {
+            "started_at": "2026-10-18T15:50:25.986330Z",
+            "finished_at": "2026-10-18T15:50:31.293769Z",
+            "elapsed_seconds": 5.307439
+          },
+          {
+            "started_at": "2026-10-18T15:47:35.378129Z",
+            "finished_at": "2026-10-18T15:50:33.655774Z",
+            "elapsed_seconds": 178.277645
+          },
+          {
+            "started_at": "2026-10-18T15:54:31.323707Z",
+            "finished_at": "2026-10-18T15:55:06.094059Z",
+            "elapsed_seconds": 34.770352
+          },
+          {
+            "started_at": "2026-10-18T15:55:16.574334Z",
+            "finished_at": "2026-10-18T15:55:20.185828Z",
+            "elapsed_seconds": 3.611494
+          },
+          {
+            "started_at": "2026-10-18T15:53:19.293632Z",
+            "finished_at": "2026-10-18T15:55:34.176574Z",
+            "elapsed_seconds": 134.882942
+          },
+          {
+            "started_at": "2026-10-18T15:58:31.462665Z",
+            "finished_at": "2026-10-18T15:58:37.605741Z",
+            "elapsed_seconds": 6.143076
+          },
+          {
+            "started_at": "2026-10-18T15:58:41.540013Z",
+            "finished_at": "2026-10-18T15:58:51.546137Z",
+            "elapsed_seconds": 10.006124
+          },
+          {
+            "started_at": "2026-10-18T15:58:47.492078Z",
+            "finished_at": "2026-10-18T15:58:54.032483Z",
+            "elapsed_seconds": 6.540405
+          }
+        ],
+        "group-validation": [
+          {
+            "started_at": "2026-10-18T12:07:13.114624Z",
+            "finished_at": "2026-10-18T12:07:17.759735Z",
+            "elapsed_seconds": 4.565101
+          },
+          {
+            "started_at": "2026-10-18T12:13:32.703070Z",
+            "finished_at": "2026-10-18T12:13:37.488930Z",
+            "elapsed_seconds": 4.706664
+          },
+          {
+            "started_at": "2026-10-18T12:15:54.193765Z",
+            "finished_at": "2026-10-18T12:15:59.398526Z",
+            "elapsed_seconds": 5.122297
+          },
+          {
+            "started_at": "2026-10-18T12:16:51.724604Z",
+            "finished_at": "2026-10-18T12:16:56.755972Z",
+            "elapsed_seconds": 4.95017
+          },
+          {
+            "started_at": "2026-10-18T12:35:37.605764Z",
+            "finished_at": "2026-10-18T12:35:47.068919Z",
+            "elapsed_seconds": 9.323804
+          },
+          {
+            "started_at": "2026-10-18T13:10:20.666106Z",
+            "finished_at": "2026-10-18T13:10:25.599576Z",
+            "elapsed_seconds": 4.851834
+          },
+          {
+            "started_at": "2026-10-18T13:49:37.029626Z",
+            "finished_at": "2026-10-18T13:49:41.738771Z",
+            "elapsed_seconds": 4.618328
+          },
+          {
+            "started_at": "2026-10-18T15:05:43.595372Z",
+            "finished_at": "2026-10-18T15:05:48.109204Z",
+            "elapsed_seconds": 4.432661
+          },
+          {
+            "started_at": "2026-10-18T15:05:50.762262Z",
+            "finished_at": "2026-10-18T15:05:55.563129Z",
+            "elapsed_seconds": 4.720596
+          },
+          {
+            "started_at": "2026-10-18T15:16:44.710892Z",
+            "finished_at": "2026-10-18T15:16:49.740026Z",
+            "elapsed_seconds": 4.948461
+          },
+          {
+            "started_at": "2026-10-18T15:17:21.346967Z",
+            "finished_at": "2026-10-18T15:17:26.451866Z",
+            "elapsed_seconds": 5.021249
+          },
+          {
+            "started_at": "2026-10-18T15:18:23.774130Z",
+            "finished_at": "2026-10-18T15:18:29.117832Z",
+            "elapsed_seconds": 5.257708
+          },
+          {
+            "started_at": "2026-10-18T15:19:31.863057Z",
+            "finished_at": "2026-10-18T15:19:36.646745Z",
+            "elapsed_seconds": 4.702751
+          },
+          {
+            "started_at": "2026-10-18T15:21:07.676285Z",
+            "finished_at": "2026-10-18T15:21:12.522801Z",
+            "elapsed_seconds": 4.765141
+          },
+          {
+            "started_at": "2026-10-18T15:22:43.375663Z",
+            "finished_at": "2026-10-18T15:22:48.218062Z",
+            "elapsed_seconds": 4.759038
+          },
+          {
+            "started_at": "2026-10-18T15:23:11.033986Z",
+            "finished_at": "2026-10-18T15:23:16.199215Z",
+            "elapsed_seconds": 5.084099
+          },
+          {
+            "started_at": "2026-10-18T15:25:59.453737Z",
+            "finished_at": "2026-10-18T15:26:04.950057Z",
+            "elapsed_seconds": 5.413539
+          },
+          {
+            "started_at": "2026-10-18T15:26:35.534654Z",
+            "finished_at": "2026-10-18T15:26:41.674559Z",
+            "elapsed_seconds": 6.048843
+          },
+          {
+            "started_at": "2026-10-18T15:27:00.286490Z",
+            "finished_at": "2026-10-18T15:27:05.541008Z",
+            "elapsed_seconds": 5.169483
+          },
+          {
+            "started_at": "2026-10-18T15:28:23.612288Z",
+            "finished_at": "2026-10-18T15:28:28.596159Z",
+            "elapsed_seconds": 4.899237
+          },
+          {
+            "started_at": "2026-10-18T15:30:30.796092Z",
+            "finished_at": "2026-10-18T15:30:37.595684Z",
+            "elapsed_seconds": 6.71521
+          },
+          {
+            "started_at": "2026-10-18T15:30:46.328543Z",
+            "finished_at": "2026-10-18T15:30:51.645177Z",
+            "elapsed_seconds": 5.232501
+          },
+          {
+            "started_at": "2026-10-18T15:34:00.121266Z",
+            "finished_at": "2026-10-18T15:34:05.322563Z",
+            "elapsed_seconds": 5.117246
+          },
+          {
+            "started_at": "2026-10-18T15:34:42.278115Z",
+            "finished_at": "2026-10-18T15:34:47.608625Z",
+            "elapsed_seconds": 5.249736
+          },
+          {
+            "started_at": "2026-10-18T15:37:19.103672Z",
+            "finished_at": "2026-10-18T15:37:24.163811Z",
+            "elapsed_seconds": 4.978556
+          },
+          {
+            "started_at": "2026-10-18T15:39:10.860527Z",
+            "finished_at": "2026-10-18T15:39:16.285181Z",
+            "elapsed_seconds": 5.335425
+          },
+          {
+            "started_at": "2026-10-18T15:39:34.681921Z",
+            "finished_at": "2026-10-18T15:39:40.265595Z",
+            "elapsed_seconds": 5.490352
+          },
+          {
+            "started_at": "2026-10-18T15:40:27.054978Z",
+            "finished_at": "2026-10-18T15:40:31.883155Z",
+            "elapsed_seconds": 4.746071
+          },
+          {
+            "started_at": "2026-10-18T15:40:50.702292Z",
+            "finished_at": "2026-10-18T15:40:55.532505Z",
+            "elapsed_seconds": 4.748685
+          },
+          {
+            "started_at": "2026-10-18T15:43:30.566209Z",
+            "finished_at": "2026-10-18T15:43:35.801260Z",
+            "elapsed_seconds": 5.119296
+          },
+          {
+            "started_at": "2026-10-18T15:44:41.894459Z",
+            "finished_at": "2026-10-18T15:44:46.868515Z",
+            "elapsed_seconds": 4.89173
+          },
+          {
+            "started_at": "2026-10-18T15:45:09.199629Z",
+            "finished_at": "2026-10-18T15:45:14.341456Z",
+            "elapsed_seconds": 5.057829
+          },
+          {
+            "started_at": "2026-10-18T15:47:03.049934Z",
+            "finished_at": "2026-10-18T15:47:08.624028Z",
+            "elapsed_seconds": 5.487903
+          },
+          {
+            "started_at": "2026-10-18T15:49:30.036880Z",
+            "finished_at": "2026-10-18T15:49:37.196664Z",
+            "elapsed_seconds": 7.045785
+          },
+          {
+            "started_at": "2026-10-18T15:51:04.530024Z",
+            "finished_at": "2026-10-18T15:51:09.530064Z",
+            "elapsed_seconds": 4.916211
+          },
+          {
+            "started_at": "2026-10-18T15:51:33.689452Z",
+            "finished_at": "2026-10-18T15:51:39.285307Z",
+            "elapsed_seconds": 5.500368
+          },
+          {
+            "started_at": "2026-10-18T15:52:39.591687Z",
+            "finished_at": "2026-10-18T15:52:46.112705Z",
+            "elapsed_seconds": 6.438759
+          },
+          {
+            "started_at": "2026-10-18T15:55:29.626469Z",
+            "finished_at": "2026-10-18T15:55:35.052986Z",
+            "elapsed_seconds": 5.341662
+          },
+          {
+            "started_at": "2026-10-18T15:56:03.645557Z",
+            "finished_at": "2026-10-18T15:56:08.456025Z",
+            "elapsed_seconds": 4.728666
+          },
+          {
+            "started_at": "2026-10-18T15:56:35.560101Z",
+            "finished_at": "2026-10-18T15:56:40.683289Z",
+            "elapsed_seconds": 5.028418
+          },
+          {
+            "started_at": "2026-10-18T15:57:01.201615Z",
+            "finished_at": "2026-10-18T15:57:06.469694Z",
+            "elapsed_seconds": 5.165221
+          },
+          {
+            "started_at": "2026-10-18T15:58:55.755744Z",
+            "finished_at": "2026-10-18T15:59:00.797584Z",
+            "elapsed_seconds": 4.956649
+          },
+          {
+            "started_at": "2026-10-18T15:59:16.974770Z",
+            "finished_at": "2026-10-18T15:59:21.993456Z",
+            "elapsed_seconds": 4.93665
+          },
+          {
+            "started_at": "2026-10-18T15:59:42.150447Z",
+            "finished_at": "2026-10-18T15:59:47.158437Z",
+            "elapsed_seconds": 4.924729
+          }
+        ],
+        "parent-verify": [
+          {
+            "started_at": "2026-10-18T16:00:22.825732Z",
+            "finished_at": "2026-10-18T16:13:45.365406Z",
+            "elapsed_seconds": 802.973495
+          }
+        ]
+      },
+      "finished_at": "2026-10-18T16:13:45.365406Z",
+      "verified_result_sha256": "f79d705100e2cb83b4d45414e11168e118ffe462ffe81cb76f7380413f0cdbc5"
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_emit_expr_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_emit_expr_migration-annotation-r2-attempt-1",
+    "iteration_count": 2,
+    "owner": "annotation/cmc_emit_expr_migration-20261018184521"
+  },
+  "accepted_rounds": {
+    "annotation": {
+      "round": "cmc_emit_expr_migration-annotation-r2",
+      "attempt_id": "cmc_emit_expr_migration-annotation-r2-attempt-1",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/annotation_history/annotation-attempt2"
+    },
+    "vc-checking": {
+      "round": "cmc_emit_expr_migration-vc-checking-r2",
+      "attempt_id": "cmc_emit_expr_migration-vc-checking-r2-attempt-1",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-checking-r2/group_plan.json",
+      "group_plan_sha256": "f3bf00b7905a35db0f90fdde4f46ce4c09a4aeb8f313f43996a0e70195fe0d54",
+      "proof_manual_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+      "agent_output_metrics": {
+        "bytes": 30147,
+        "lines": 267,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 176,
+        "structural_no_split_checked_first": 12,
+        "structural_definite_blockers": 0
+      }
+    },
+    "vc-proving-preparing": {
+      "round": "cmc_emit_expr_migration-vc-proving-r1",
+      "attempt_id": "cmc_emit_expr_migration-vc-proving-r1",
+      "result_sha256": "f79d705100e2cb83b4d45414e11168e118ffe462ffe81cb76f7380413f0cdbc5"
+    }
+  },
+  "next_actions": [],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": {
+    "round": "cmc_emit_expr_migration-vc-proving-r1",
+    "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/rounds/cmc_emit_expr_migration-vc-proving-r1/proving_merged_result.json",
+    "result_sha256": "f79d705100e2cb83b4d45414e11168e118ffe462ffe81cb76f7380413f0cdbc5",
+    "proof_manual_sha256": "276deccdb96d4bb90e3d4983b4bfae9fd55551464a077c317a760bd6651b3096",
+    "proving_merged_lib_sha256": "9c29d9d9729c5085841a1aa41b5875f71e44d368bed0b3efbec45f6118a07431"
+  },
+  "final_apply": {
+    "status": "passed",
+    "transaction_id": "97cab938b92844eda7c6fc4f3c41fa44",
+    "applied_at": "2026-10-18T16:14:00.139050Z"
+  },
+  "final_check": {
+    "status": "passed",
+    "checked_at": "2026-10-18T16:16:05.661872Z",
+    "cleanup_removed_count": 0
+  },
+  "created_at": "2026-10-18T10:45:21.604656Z",
+  "updated_at": "2026-10-18T16:16:05.742387Z",
+  "final_apply_transaction": {
+    "transaction_id": "97cab938b92844eda7c6fc4f3c41fa44",
+    "status": "completed",
+    "records": [
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/cmc_emit_expr_migration-vc-proving-r1/proving_merged/cmc_emit_expr_migration_proof_manual.v",
+        "source_sha256": "276deccdb96d4bb90e3d4983b4bfae9fd55551464a077c317a760bd6651b3096",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v",
+        "existed": true,
+        "before_sha256": "a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/final-check/backup/97cab938b92844eda7c6fc4f3c41fa44/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_proof_manual.v"
+      },
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_migration-20261018184521/cmc_emit_expr_migration-vc-proving-r1/proving_merged/cmc_emit_expr_migration_lib.v",
+        "source_sha256": "9c29d9d9729c5085841a1aa41b5875f71e44d368bed0b3efbec45f6118a07431",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v",
+        "existed": true,
+        "before_sha256": "2d42196f3a4802b289764f4f413f3cebf793dcc9633192596352ffbe3c133a44",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_migration-20261018184521/final-check/backup/97cab938b92844eda7c6fc4f3c41fa44/Rocq/examples/QCP_demos_human/cmc_emit_expr_migration_lib.v"
+      }
+    ],
+    "prepared_at": "2026-10-18T16:13:59.967953Z",
+    "backed_up_at": "2026-10-18T16:14:00.054141Z",
+    "completed_at": "2026-10-18T16:14:00.139045Z"
+  },
+  "finished_at": "2026-10-18T16:16:05.661872Z"
+}

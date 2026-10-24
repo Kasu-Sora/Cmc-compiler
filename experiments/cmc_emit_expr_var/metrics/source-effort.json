@@ -1,0 +1,231 @@
+{
+  "source_sha256": "523fdadff2cdffac90293c649a7923edfa65356288d83295c3d0e1ab056f8c1b",
+  "function_counts": [
+    {
+      "function": "cm_emit_var_expr",
+      "source_span": [
+        29,
+        250
+      ],
+      "specification": 45,
+      "annotation": 21,
+      "inline_proof": 140
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_var_code_shape",
+      "kind": "proof",
+      "span": [
+        7,
+        26
+      ],
+      "nonblank_lines": 20,
+      "text": "PROOF static thm cm_var_code_shape(const thm shape,\n                                   const thm lvalue_case,\n                                   const thm array_case,\n                                   const term code) {\n  thm selected = by_rewrite(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       (if lvalue__pre == 0i\n        then cm_rcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e)\n        else cm_lcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e))`,\n      THM_LIST(cm_expr_code_for_def, lvalue_case,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def()));\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code), THM_LIST(\n        shape, get_cm_emit_expr_pair_def(), get_cm_rcode_of_def(),\n        get_cm_lcode_of_def(), lvalue_case, array_case,\n        get_theorem_by_name(\"APPEND_NIL\"))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 45,
+    "annotation": 21,
+    "inline_proof": 140,
+    "private_case_proof_support": 20,
+    "case_proof": 160,
+    "proof_including_shared": 160
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        99,
+        99
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        99,
+        99
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        100,
+        100
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        101,
+        101
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        129,
+        129
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        129,
+        129
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        130,
+        130
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        131,
+        131
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        132,
+        132
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        143,
+        143
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        143,
+        143
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        175,
+        175
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        175,
+        175
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        176,
+        176
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        177,
+        177
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        178,
+        178
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        206,
+        206
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        206,
+        206
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        207,
+        207
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        208,
+        208
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_var_expr",
+      "kind": "where",
+      "span": [
+        209,
+        209
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. One same-file static PROOF helper counted as private case support; variable-model increment inventoried separately."
+}

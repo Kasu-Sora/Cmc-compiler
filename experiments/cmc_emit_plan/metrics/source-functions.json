@@ -1,0 +1,370 @@
+[
+  {
+    "name": "cm_emit_plan",
+    "prototype": false,
+    "source_span": [
+      43,
+      75
+    ],
+    "specification": [
+      [
+        45,
+        47
+      ],
+      [
+        48,
+        52
+      ],
+      [
+        53,
+        55
+      ]
+    ],
+    "annotation": [
+      [
+        68,
+        68
+      ],
+      [
+        69,
+        69
+      ]
+    ],
+    "inline_proof": [
+      [
+        57,
+        67
+      ],
+      [
+        71,
+        74
+      ]
+    ],
+    "runtime": "void cm_emit_plan(struct cm_emitter *emitter, int op,\n                  long long immediate)\n{\n  cm_emit_resolved(emitter, op, immediate);\n}\n"
+  },
+  {
+    "name": "cm_emit_call_plan",
+    "prototype": false,
+    "source_span": [
+      77,
+      108
+    ],
+    "specification": [
+      [
+        78,
+        79
+      ],
+      [
+        80,
+        82
+      ],
+      [
+        83,
+        86
+      ]
+    ],
+    "annotation": [
+      [
+        101,
+        101
+      ]
+    ],
+    "inline_proof": [
+      [
+        88,
+        100
+      ],
+      [
+        103,
+        107
+      ]
+    ],
+    "runtime": "void cm_emit_call_plan(struct cm_emitter *emitter, int function_id)\n{\n  cm_emit_resolved_call(emitter, function_id);\n}\n"
+  },
+  {
+    "name": "cm_emit_normalize_plan",
+    "prototype": false,
+    "source_span": [
+      110,
+      132
+    ],
+    "specification": [
+      [
+        111,
+        113
+      ],
+      [
+        114,
+        118
+      ],
+      [
+        119,
+        121
+      ]
+    ],
+    "annotation": [
+      [
+        126,
+        126
+      ],
+      [
+        127,
+        127
+      ]
+    ],
+    "inline_proof": [
+      [
+        123,
+        125
+      ],
+      [
+        129,
+        131
+      ]
+    ],
+    "runtime": "void cm_emit_normalize_plan(struct cm_emitter *emitter, int ty)\n{\n  cm_emit_resolved_normalize(emitter, ty);\n}\n"
+  },
+  {
+    "name": "cm_emit_load_plan",
+    "prototype": false,
+    "source_span": [
+      134,
+      152
+    ],
+    "specification": [
+      [
+        135,
+        137
+      ],
+      [
+        138,
+        142
+      ],
+      [
+        143,
+        145
+      ]
+    ],
+    "annotation": [
+      [
+        148,
+        148
+      ],
+      [
+        149,
+        149
+      ]
+    ],
+    "inline_proof": [
+      [
+        147,
+        147
+      ],
+      [
+        151,
+        151
+      ]
+    ],
+    "runtime": "void cm_emit_load_plan(struct cm_emitter *emitter, int ty)\n{\n  cm_emit_resolved_load(emitter, ty);\n}\n"
+  },
+  {
+    "name": "cm_emit_store_plan",
+    "prototype": false,
+    "source_span": [
+      154,
+      172
+    ],
+    "specification": [
+      [
+        155,
+        157
+      ],
+      [
+        158,
+        162
+      ],
+      [
+        163,
+        165
+      ]
+    ],
+    "annotation": [
+      [
+        168,
+        168
+      ],
+      [
+        169,
+        169
+      ]
+    ],
+    "inline_proof": [
+      [
+        167,
+        167
+      ],
+      [
+        171,
+        171
+      ]
+    ],
+    "runtime": "void cm_emit_store_plan(struct cm_emitter *emitter, int ty)\n{\n  cm_emit_resolved_store(emitter, ty);\n}\n"
+  },
+  {
+    "name": "cm_emit_fp_address_plan",
+    "prototype": false,
+    "source_span": [
+      174,
+      195
+    ],
+    "specification": [
+      [
+        176,
+        177
+      ],
+      [
+        178,
+        180
+      ],
+      [
+        181,
+        183
+      ]
+    ],
+    "annotation": [
+      [
+        189,
+        189
+      ]
+    ],
+    "inline_proof": [
+      [
+        185,
+        188
+      ],
+      [
+        191,
+        194
+      ]
+    ],
+    "runtime": "void cm_emit_fp_address_plan(struct cm_emitter *emitter,\n                             long long offset)\n{\n  cm_emit_resolved_fp_address(emitter, offset);\n}\n"
+  },
+  {
+    "name": "cm_emit_temp_store_plan",
+    "prototype": false,
+    "source_span": [
+      197,
+      243
+    ],
+    "specification": [
+      [
+        199,
+        202
+      ],
+      [
+        203,
+        214
+      ],
+      [
+        215,
+        226
+      ]
+    ],
+    "annotation": [
+      [
+        232,
+        232
+      ],
+      [
+        233,
+        233
+      ],
+      [
+        234,
+        234
+      ],
+      [
+        235,
+        235
+      ],
+      [
+        236,
+        236
+      ],
+      [
+        237,
+        237
+      ]
+    ],
+    "inline_proof": [
+      [
+        228,
+        231
+      ],
+      [
+        239,
+        242
+      ]
+    ],
+    "runtime": "void cm_emit_temp_store_plan(struct cm_function *fn, int temp,\n                             struct cm_emitter *emitter)\n{\n  cm_emit_resolved_temp_store(fn, temp, emitter);\n}\n"
+  },
+  {
+    "name": "cm_emit_temp_load_plan",
+    "prototype": false,
+    "source_span": [
+      245,
+      291
+    ],
+    "specification": [
+      [
+        247,
+        250
+      ],
+      [
+        251,
+        262
+      ],
+      [
+        263,
+        274
+      ]
+    ],
+    "annotation": [
+      [
+        280,
+        280
+      ],
+      [
+        281,
+        281
+      ],
+      [
+        282,
+        282
+      ],
+      [
+        283,
+        283
+      ],
+      [
+        284,
+        284
+      ],
+      [
+        285,
+        285
+      ]
+    ],
+    "inline_proof": [
+      [
+        276,
+        279
+      ],
+      [
+        287,
+        290
+      ]
+    ],
+    "runtime": "void cm_emit_temp_load_plan(struct cm_function *fn, int temp,\n                            struct cm_emitter *emitter)\n{\n  cm_emit_resolved_temp_load(fn, temp, emitter);\n}\n"
+  }
+]

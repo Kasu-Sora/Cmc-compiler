@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "manual_sha256": "683e6f650bc6d7b0344a416024f3d2a9841608ab2969a90a57a7959de252f86c",
+  "lib_sha256": "f77636b901a4d684f3914d2e16b46fca5f71fa3b705ef34bd0a14ec3f5512473",
+  "new_library_declarations": [
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "From",
+      "name": "Coq",
+      "ending": null
+    },
+    {
+      "kind": "Import",
+      "name": "ListNotations",
+      "ending": null
+    },
+    {
+      "kind": "Open",
+      "name": "Scope",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_model_code",
+      "ending": null
+    }
+  ],
+  "no_new_manual_or_library_admitted_axiom_parameter": true,
+  "reused_dependencies_unchanged": true,
+  "prior_helper_function_proofs_imported": false,
+  "new_helper_review": {},
+  "model_review": "Exact source cm_model_code = prelude ++ functions-from-zero composition retains reviewed annotation bytes.",
+  "manual_review": "Reviewed every final region: context open/close preserves all original pure facts and full function-list ownership; PC-zero is derived from existing function PC/prefix definitions; exact plan composition is exposed with append associativity; both helper postconditions restore the exact original context/list/facts and final done/tail. All completed regions end in Qed. Controller checks statements/routes, imports, annotation seal and full goal-check.",
+  "proof_regions": 6,
+  "support_mapping": {
+    "PC-zero": "Existing total cm_function_pc and prefix definitions, derived in the case proof without an added premise.",
+    "program read": "Existing context definition and same fields restored, retaining whole function-list ownership.",
+    "model composition": "Exact prelude then complete functions at fid zero; append associativity under arbitrary done/tail.",
+    "original facts": "All seven original pure facts retained through both helper calls and into postcondition."
+  },
+  "scope": "One concrete emission implementation BODY, existing policy/cg boundary preserved; no new patch/link, compiler preservation or TVM execution/termination theorem."
+}

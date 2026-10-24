@@ -1,0 +1,45 @@
+{
+  "groups": [
+    {
+      "id": "buffer-composition",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_data_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_data_entail_wit_1_split_goal_spatial": "Introduce the descriptor lists and premises. Normalize 0 + 8 to 8 and app nil (zeros 8) to zeros 8, preserving the byte model. Both sides then contain the identical initialized segment and global/string list resources, merely permuted; cancel the frames. There are no existential witnesses or array splits."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_data_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_data_return_wit_1_split_goal_1": "Introduce all arguments. The requested pure return equality is exactly PreH2; lift it into the pure entailment while discarding the spatial frame with the standard entailment tactic. No model unfolding or existential is needed.",
+            "proof_of_cmc_emit_data_return_wit_1_split_goal_spatial": "Introduce all arguments and rewrite retval_2 using PreH5, the globals helper postcondition. The initialized prefix already has exactly app (app (zeros 8) (cm_globals_bytes structs globals)) (cm_strings_bytes strings). Both array endpoints then match the result endpoint; cancel the initialized segment, undefined suffix, and preserved global/string lists up to separation conjunction permutation. No new helper or array join is required."
+          }
+        }
+      ]
+    },
+    {
+      "id": "helper-call-pure",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_data_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_data_partial_solve_wit_1_pure_split_goal_1": "Introduce arguments and prove the pure nil-list equality by reflexivity, using the standard pure entailment introduction over the unchanged local-variable, list, and array frame. No resource transformation or existential is needed."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_data_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_data_partial_solve_wit_3_pure_split_goal_1": "Introduce arguments and lift the pure nonnegativity conclusion over the unchanged local-variable, list, and buffer frame. PreH7 gives retval = 8 + cm_rep_globals_size globals and PreH11 gives the size nonnegative; rewrite or use lia. No predicate unfolding, existential, or new helper is needed."
+          }
+        }
+      ]
+    }
+  ]
+}

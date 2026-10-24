@@ -1,0 +1,70 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.396 secs (1.273u,0.083s)
+Chars 79 - 124 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 125 - 146 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 147 - 172 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 173 - 302 [Lemma~cm_succeeds_control_not_...] 0. secs (0.u,0.s)
+Chars 303 - 309 [Proof.] 0. secs (0.u,0.s)
+Chars 310 - 389 [(destruct~ctl;~cbn[cm_control_...] 0. secs (0.u,0.s)
+Chars 390 - 394 [Qed.] 0. secs (0.u,0.s)
+Chars 395 - 613 [Lemma~cm_c_code_ready_coordina...] 0. secs (0.u,0.s)
+Chars 614 - 620 [Proof.] 0. secs (0.u,0.s)
+Chars 622 - 687 [(intros~CUR~C~guard~body~env~r...] 0. secs (0.u,0.s)
+Chars 689 - 833 [(unfold~cm_annotation_child_re...] 0. secs (0.u,0.s)
+Chars 835 - 883 [exact~(proj1~(proj2~(proj2~(pr...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/readiness/build/Rocq/examples/QCP_demos_human/cmc_layout_readiness_control_migration_lib.v", line 13, characters 29-44:
+Error:
+In environment
+policy : cm_lookup_policy
+p : cm_program
+fid : Z
+ann : cm_annotation
+owner, ob, oc : Z
+rest : list cm_acursor
+guard : cm_expr
+body : cm_stmt
+env : Z -> Z -> cm_value
+regions : list cm_region
+start, finish : Z
+CUR :
+  cm_ann_cursors ann =
+  CMACursor (CAWhileBodyP guard body env regions start finish) owner ob oc
+  :: rest
+C :
+  cm_ann_temp ann =
+  cm_phase_child_temp (CAWhileBodyP guard body env regions start finish)
+    owner /\
+  (cm_phase_control_regular
+     (CAWhileBodyP guard body env regions start finish) = true ->
+   cm_ann_break ann =
+   cm_cursor_break
+     (CMACursor (CAWhileBodyP guard body env regions start finish) owner ob
+        oc) /\
+   cm_ann_continue ann =
+   cm_cursor_continue
+     (CMACursor (CAWhileBodyP guard body env regions start finish) owner ob
+        oc)) /\
+  (cm_ann_break ann = finish /\
+   cm_ann_continue ann = start /\
+   finish =
+   start + cm_rvalue_code_count policy p fid guard + 1 +
+   cm_stmt_code_count policy p fid body + 1) /\
+  cm_cursors_coordinate policy p
+    (cm_phase_next_fid fid (CAWhileBodyP guard body env regions start finish))
+    owner
+    (cm_cursor_break
+       (CMACursor (CAWhileBodyP guard body env regions start finish) owner ob
+          oc))
+    (cm_cursor_continue
+       (CMACursor (CAWhileBodyP guard body env regions start finish) owner ob
+          oc)) rest
+The term "proj1 (proj2 C)" has type
+ "cm_phase_control_regular (CAWhileBodyP guard body env regions start finish) =
+  true ->
+  cm_ann_break ann =
+  cm_cursor_break
+    (CMACursor (CAWhileBodyP guard body env regions start finish) owner ob oc) /\
+  cm_ann_continue ann =
+  cm_cursor_continue
+    (CMACursor (CAWhileBodyP guard body env regions start finish) owner ob oc)"
+while it is expected to have type "?A1 /\ ?B1".
+

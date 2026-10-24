@@ -1,0 +1,65 @@
+Chars 0 - 79 [Require~Export~~~SimpleC.EE.QC...] 1.287 secs (1.204u,0.07s)
+Chars 80 - 158 [Require~Export~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 159 - 204 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 205 - 240 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 241 - 262 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 263 - 288 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 289 - 1053 [Lemma~cm_c_while_layout_step~s...] 0.001 secs (0.001u,0.s)
+Chars 1054 - 1060 [Proof.] 0. secs (0.u,0.s)
+Chars 1062 - 1257 [(cbn~zeta;~intros~NE~ERR~END~[...] 0.148 secs (0.144u,0.004s)
+Chars 1259 - 1260 [-] 0. secs (0.u,0.s)
+Chars 1261 - 1357 [(destruct~SITES~as~[SITE~_];~c...] 0.017 secs (0.017u,0.s)
+Chars 1359 - 1360 [-] 0. secs (0.u,0.s)
+Chars 1361 - 1380 [exact~(proj2~SITES).] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_cont/build/Rocq/examples/QCP_demos_human/cmc_code_control_loop_migration_lib.v", line 17, characters 9-20:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+guard : cm_expr
+body : cm_stmt
+env : Z -> Z -> cm_value
+regions : list cm_region
+loop_start, loop_end, pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+NE : 1 <> 4
+ERR : 1 <> 5
+END :
+  loop_end =
+  loop_start +
+  cm_rvalue_code_count (cm_source_function_policy sp) p fid guard + 1 +
+  cm_stmt_code_count (cm_source_function_policy sp) p fid body + 1
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) pc
+    [TVMInst TVMJmpOp b]
+SITES :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) loop_start
+    (cm_emit_rvalue (cm_source_function_policy sp) p fid loop_start owner
+       guard ++
+     [TVMInst TVMJzOp loop_end] ++
+     cm_emit_stmt (cm_source_function_policy sp) p fid
+       (loop_start +
+        cm_rvalue_code_count (cm_source_function_policy sp) p fid guard + 1)
+       owner loop_end loop_start body ++
+     [TVMInst TVMJmpOp loop_start] ++
+     cm_normal_cont_code sp p fid loop_end owner tail) /\
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) loop_end
+    (cm_normal_cont_code sp p fid loop_end owner tail)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid tail calls
+The term "proj2 SITES" has type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p) loop_end
+    (cm_normal_cont_code sp p fid loop_end owner tail)"
+while it is expected to have type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p) loop_end
+    (if cm_list_empty tail
+     then []
+     else cm_cursor_code sp p fid loop_end owner true tail)".
+

@@ -1,0 +1,269 @@
+{
+  "source_sha256": "56570bbac3f043048d66b88d83a31a643b0a9736950c8252b4ffc88ed964543c",
+  "function_counts": [
+    {
+      "function": "cmc_patch_code_arrays",
+      "source_span": [
+        179,
+        444
+      ],
+      "specification": 21,
+      "annotation": 8,
+      "inline_proof": 205
+    },
+    {
+      "function": "cmc_patch_resolved_calls",
+      "source_span": [
+        446,
+        574
+      ],
+      "specification": 15,
+      "annotation": 0,
+      "inline_proof": 98
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_patch_tail_def",
+      "kind": "model",
+      "span": [
+        9,
+        13
+      ],
+      "nonblank_lines": 5,
+      "text": "PROOF thm cm_patch_tail_def = new_rec_definition(\n    get_theorem_by_name(\"list_RECURSION\"),\n    `(cm_patch_tail ([]:(tvm_inst)list) == ([]:(tvm_inst)list)) /\\\n     (!(head:tvm_inst) (rest:(tvm_inst)list).\n        cm_patch_tail (head :: rest) == rest)`);",
+      "dependencies": [],
+      "category": "exported_shared_model"
+    },
+    {
+      "name": "_cm_patch_tail_export",
+      "kind": "export_scaffolding",
+      "span": [
+        14,
+        15
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF int _cm_patch_tail_export =\n    cst_add_const_to_header(`cm_patch_tail`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "cm_patch_prove_ilength_zero_nil",
+      "kind": "proof",
+      "span": [
+        17,
+        40
+      ],
+      "nonblank_lines": 24,
+      "text": "PROOF static thm cm_patch_prove_ilength_zero_nil(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(code:(tvm_inst)list). ilength code == 0i ==> code == []`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = DISJ_CASES_TAC(leaf,\n      ispec_rule(`code:(tvm_inst)list`,\n        get_theorem_by_name(\"list_CASES\")), \"Hshape\");\n  ACCEPT_TAC(cases[0], assume_rule(\n      `(code:(tvm_inst)list) == ([]:(tvm_inst)list)`));\n  gnode cons = ASMP_EXISTS_TAC(cases[1], \"Hshape\", \"head\");\n  cons = ASMP_EXISTS_TAC(cons, \"Hshape\", \"rest\");\n  thm zero = conv_rule(rewrite_conv(THM_LIST(\n      assume_rule(\n        `(code:(tvm_inst)list) ==\n         (head:tvm_inst) :: (rest:(tvm_inst)list)`),\n      get_theorem_by_name(\"ILENGTH_DEF\"))),\n      assume_rule(`ilength (code:(tvm_inst)list) == 0i`));\n  thm nonnegative = ispec_rule(`rest:(tvm_inst)list`,\n      get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  CONTR_TAC(cons, mp_rule(mp_rule(int_arith_rule(\n      `1i + ilength (rest:(tvm_inst)list) == 0i ==>\n       0i <= ilength rest ==> F`), zero), nonnegative));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_ilength_zero_nil",
+      "kind": "proof",
+      "span": [
+        41,
+        42
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_patch_ilength_zero_nil =\n    cm_patch_prove_ilength_zero_nil();",
+      "dependencies": [
+        "cm_patch_prove_ilength_zero_nil"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_nonempty_shape_slrule",
+      "kind": "proof",
+      "span": [
+        45,
+        78
+      ],
+      "nonblank_lines": 34,
+      "text": "PROOF static thm cm_patch_nonempty_shape_slrule(const thm nonempty) {\n  term code = `raw:(tvm_inst)list`;\n  term head = `HD (raw:(tvm_inst)list)`;\n  term rest = `TL (raw:(tvm_inst)list)`;\n  term opcode = `tvm_inst_op (HD (raw:(tvm_inst)list))`;\n  term immediate = `tvm_inst_imm (HD (raw:(tvm_inst)list))`;\n  thm list_shape = mp_rule(\n      ispec_rule(code, get_theorem_by_name(\"CONS_HD_TL\")), nonempty);\n  thm rebuilt_head = spec_rule(head, get_tvm_inst_reconstruct());\n  thm rebuilt_list = mk_comb_rule(mk_comb_rule(\n      refl_rule(`CONS:tvm_inst->(tvm_inst)list->(tvm_inst)list`),\n      rebuilt_head), refl_rule(rest));\n  thm shape = trans_rule(list_shape, sym_rule(rebuilt_list));\n  thm introduced = conv_rule(\n      pure_rewrite_conv(THM_LIST(sl_sep_emp_right())),\n      intro_fact_slrule(shape, refl_slrule(`emp`)));\n  term rest_exists =\n      `exists rest_:(tvm_inst)list.\n         fact((raw:(tvm_inst)list) ==\n              TVMInst (tvm_inst_op (HD raw))\n                (tvm_inst_imm (HD raw)) :: rest_)`;\n  term immediate_exists =\n      `exists model_imm_:int. exists rest_:(tvm_inst)list.\n         fact((raw:(tvm_inst)list) ==\n              TVMInst (tvm_inst_op (HD raw)) model_imm_ :: rest_)`;\n  term all_exist =\n      `exists opcode_:tvm_opcode. exists model_imm_:int.\n       exists rest_:(tvm_inst)list.\n         fact((raw:(tvm_inst)list) ==\n              TVMInst opcode_ model_imm_ :: rest_)`;\n  introduced = exists_slrule(rest_exists, rest, introduced);\n  introduced = exists_slrule(immediate_exists, immediate, introduced);\n  return exists_slrule(all_exist, opcode, introduced);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_prove_rep_imms_length",
+      "kind": "proof",
+      "span": [
+        80,
+        91
+      ],
+      "nonblank_lines": 12,
+      "text": "PROOF static thm cm_patch_prove_rep_imms_length(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(code:(tvm_inst)list).\n         ilength (cm_rep_imms code) == ilength code`);\n  gnode_list cases = INDUCT_TAC(root, `code:(tvm_inst)list`);\n  for (size_t i = 0; i < vector_size(cases); ++i) {\n    gnode leaf = AUTO_INTROS_TAC(cases[i]);\n    CONV_WITH_ASMP_TAC(leaf, reduce_rewrite_conv, THM_LIST(\n        get_cm_rep_imms_def(), get_theorem_by_name(\"ILENGTH_DEF\")));\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_rep_imms_length",
+      "kind": "proof",
+      "span": [
+        92,
+        93
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_patch_rep_imms_length =\n    cm_patch_prove_rep_imms_length();",
+      "dependencies": [
+        "cm_patch_prove_rep_imms_length"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_rep_ops_cons",
+      "kind": "proof",
+      "span": [
+        95,
+        102
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static thm cm_patch_rep_ops_cons(const thm shape) {\n  thm lifted = ap_term_rule(\n      `cm_rep_ops:(tvm_inst)list->(int)list`, shape);\n  return trans_rule(lifted, apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_ops_def(), get_tvm_inst_op_def())),\n      rhs_of(lifted)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_rep_imms_cons",
+      "kind": "proof",
+      "span": [
+        104,
+        111
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static thm cm_patch_rep_imms_cons(const thm shape) {\n  thm lifted = ap_term_rule(\n      `cm_rep_imms:(tvm_inst)list->(int)list`, shape);\n  return trans_rule(lifted, apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_imms_def(), get_tvm_inst_imm_def())),\n      rhs_of(lifted)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_ilength_cons",
+      "kind": "proof",
+      "span": [
+        113,
+        120
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static thm cm_patch_ilength_cons(const thm shape) {\n  thm lifted = ap_term_rule(\n      `ilength:(tvm_inst)list->int`, shape);\n  return trans_rule(lifted, apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        get_theorem_by_name(\"ILENGTH_DEF\"))),\n      rhs_of(lifted)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_resolved_ops_cons",
+      "kind": "proof",
+      "span": [
+        122,
+        135
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static thm cm_patch_resolved_ops_cons(\n    const term program, const thm shape) {\n  thm lifted = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         cm_rep_ops (cm_patch_code (p:cm_program) code)`,\n      shape));\n  lifted = inst_rule(TERM_PAIR_LIST(\n      (term_pair){program, `p:cm_program`}), lifted);\n  return trans_rule(lifted, apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        cm_patch_code_def, cm_patch_inst_def,\n        get_cm_rep_ops_def(), get_tvm_inst_op_def())),\n      rhs_of(lifted)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_resolved_imms_cons",
+      "kind": "proof",
+      "span": [
+        137,
+        149
+      ],
+      "nonblank_lines": 13,
+      "text": "PROOF static thm cm_patch_resolved_imms_cons(\n    const term program, const thm shape) {\n  thm lifted = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         cm_rep_imms (cm_patch_code (p:cm_program) code)`,\n      shape));\n  lifted = inst_rule(TERM_PAIR_LIST(\n      (term_pair){program, `p:cm_program`}), lifted);\n  return trans_rule(lifted, apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        cm_patch_code_def, get_cm_rep_imms_def())),\n      rhs_of(lifted)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_split_array",
+      "kind": "proof",
+      "span": [
+        152,
+        161
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static thm cm_patch_split_array(\n    const term base, const term ty, const term length,\n    const term head, const term tail, const thm whole_model,\n    const thm array_def, const thm positive) {\n  thm split = mp_rule(specl_rule(TERM_LIST(\n      base, ty, length, head, tail),\n      get_theorem_by_name(\"array_at_split_first\")), positive);\n  return conv_rule(rewrite_conv(THM_LIST(\n      sym_rule(whole_model), gsym_rule(array_def))), split);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_merge_array",
+      "kind": "proof",
+      "span": [
+        163,
+        177
+      ],
+      "nonblank_lines": 15,
+      "text": "PROOF static thm cm_patch_merge_array(\n    const term base, const term ty, const term length,\n    const term head, const term tail, const thm whole_model,\n    const thm array_def) {\n  term length_variable = `patch_length:int`;\n  thm merged = specl_rule(TERM_LIST(\n      base, ty, `patch_length - 1i`, head, tail),\n      get_theorem_by_name(\"array_at_merge_first\"));\n  thm count = int_arith_rule(\n      `(patch_length - 1i) + 1i == patch_length`);\n  thm result = conv_rule(rewrite_conv(THM_LIST(\n      count, sym_rule(whole_model), gsym_rule(array_def))), merged);\n  return inst_rule(TERM_PAIR_LIST(\n      (term_pair){length, length_variable}), result);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 36,
+    "annotation": 8,
+    "inline_proof": 303,
+    "export_scaffolding": 2,
+    "exported_shared_model": 5,
+    "private_case_proof_support": 150,
+    "case_proof": 453,
+    "proof_including_shared": 453
+  },
+  "annotation_entries": [
+    {
+      "function": "cmc_patch_code_arrays",
+      "kind": "where",
+      "span": [
+        376,
+        376
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_patch_code_arrays",
+      "kind": "where",
+      "span": [
+        377,
+        378
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cmc_patch_code_arrays",
+      "kind": "where",
+      "span": [
+        379,
+        379
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_patch_code_arrays",
+      "kind": "where",
+      "span": [
+        405,
+        405
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cmc_patch_code_arrays",
+      "kind": "where",
+      "span": [
+        406,
+        407
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cmc_patch_code_arrays",
+      "kind": "where",
+      "span": [
+        408,
+        408
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines deduplicated per function/category; body contracts counted once; forward/header duplicates excluded. Same-file private proof support and source model definitions are classified separately; header duplicate contracts excluded.",
+  "public_linkage_note": "Static source proof helpers used only by this case are counted in case proof; externally linked theorem constants, if any, count as shared support."
+}

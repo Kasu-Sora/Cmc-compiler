@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "manual_sha256": "b2c92696697394a41bba163c078980887eee871e747ef420ab39161bd14e6836",
+  "lib_sha256": "167036a8f2a4b4db852860b6117cfd51aeee42a6049727c4d9d266babf1b54db",
+  "new_library_declarations": [
+    {
+      "kind": "From",
+      "name": "Coq",
+      "ending": null
+    },
+    {
+      "kind": "From",
+      "name": "AUXLib",
+      "ending": null
+    },
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "Import",
+      "name": "ListNotations",
+      "ending": null
+    },
+    {
+      "kind": "Open",
+      "name": "Scope",
+      "ending": null
+    },
+    {
+      "kind": "Fixpoint",
+      "name": "cm_emit_param_stores",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_emit_prologue",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_emit_function",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_emit_params_head",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_emit_params_tail",
+      "ending": null
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_function_slots_size_snoc__param_transition",
+      "ending": "Qed"
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_function_slots_prefix_app__param_emission",
+      "ending": "Qed"
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_function_param_count_length__prologue_layout",
+      "ending": "Qed"
+    }
+  ],
+  "no_new_manual_or_library_admitted_axiom_parameter": true,
+  "reused_dependencies_unchanged": true,
+  "prior_helper_function_proofs_imported": false,
+  "new_helper_review": {
+    "cm_function_slots_size_snoc__param_transition": "Induction over prefix proves additive size of prefix++[h], unconditionally; no prefix wf is assumed.",
+    "cm_function_slots_prefix_app__param_emission": "Induction over prefix, Zlength nonnegativity and the zero/nonzero index branches prove that indexing prefix++rest at its prefix length yields prefix size; no additional input restriction.",
+    "cm_function_param_count_length__prologue_layout": "List induction and scalar-type cases prove length <= parameter store count unconditionally; each element contributes nonnegative normalization count plus five."
+  },
+  "model_review": "Three exact emission definitions and two total head/tail observations retain their annotation-stage reviewed bytes.",
+  "manual_review": "Reviewed all final proof regions: parameter arithmetic and observations, list/function resources, opcode computation, code concatenation, and function bounds. All 125 proof regions end in Qed, covering 41 original top-level obligations and 84 splits. Controller checks unchanged statements, routes, helper/import safety and full goal-check.",
+  "support_mapping": {
+    "prefix offset and snoc extension": "Two unconditional list induction helpers, with original full/prefix/slot equations.",
+    "parameter length bound": "New unconditional length/count helper plus original representable count condition.",
+    "semantic/encoded size agreement and nonnegativity": "Reused verified size matching/nonnegative lemmas; indexed slots wf supplies required head/tail facts.",
+    "parameter observations": "Transparent head/tail computation and original cons shape, preserving all pure conditions.",
+    "slot and function resources": "Existing representations, null/cons reasoning and explicit resource opening/folding.",
+    "emission order and sequence boundaries": "Exact new models and append associativity, preserving arbitrary done/tail.",
+    "integer, temporary-slot and PC bounds": "Original bounds and reused nonnegative/length/count facts, checked arithmetic."
+  },
+  "scope": "Three runtime BODY contracts and necessary function proof support; no new TVM execution, termination, linking or compilation-preservation theorem."
+}

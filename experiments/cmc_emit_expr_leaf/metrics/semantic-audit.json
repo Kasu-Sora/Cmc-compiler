@@ -1,0 +1,191 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cmc_const_immediate",
+      "source_contract_sha256": "a06ec67c476dbda47e66e2e6552e390ca09201ad8c24b13380d352e14f7137cb",
+      "target_contract_sha256": "7b2d41917a61ee03fb29d232773dd232047b7587e9372e12ed2e7c92533d1063",
+      "checks": [
+        "All signed64 inputs retained; unsigned64 remainder gives Euclidean low byte for char",
+        "Exact encoding and type_code_wf facts retained in pre/post; nonchar identity"
+      ]
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "source_contract_sha256": "30744af72910539d3d57bf6806edc490b477ca362988452f57a16a43ecfecb78",
+      "target_contract_sha256": "5f21fc6f61fbfeb5449da0f1eac76f4dadff5e234f40960b65ce8daad4a51652",
+      "checks": [
+        "Original BODY type_code_wf pre/post retained; weaker header discrepancy disclosed",
+        "lvalue bounds, constructor shape and total f lookup retained",
+        "Full program/function/expression resources; exact singleton or empty leaf plan consumption"
+      ]
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "source_contract_sha256": "4b46c1285bdbe8131b9c732332323b09c8a5a5e82b5f96ed1ace6f6e91d7913d",
+      "target_contract_sha256": "fbd4faa3febfcaf22c7426d0836fee93b6060933b0af9c415ef74e80bae61ea0",
+      "checks": [
+        "Original sid[0,INT_MAX], typed, globals/strings-safe and combined-size facts retained in pre/post",
+        "No sid<length strengthening",
+        "Exact semantic string address; complete resources and plan tail preserved"
+      ]
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "source_contract_sha256": "8973929d22fca7ec56682d25fc7eca5bf690cb16b5dfc7f6892bce709660eaa9",
+      "target_contract_sha256": "26f6f1f449bb93a15c16fa60c29b6cae526b247608f825251ce99eaf0dd459ff",
+      "checks": [
+        "Original lvalue bounds, constructor shape, total f lookup retained; no typed/wf added",
+        "Exact GETC0 or empty fragment; full three contexts and plan tail preserved"
+      ]
+    },
+    {
+      "function": "cm_sizeof_value",
+      "source_contract_sha256": "39f2fbe8f59569faa588ef7708e8fe6834201a69686d5796b1343a5bf311b675",
+      "target_contract_sha256": "33d85c0595fc98d427e24e9a8f58f738dce9e827b8484d9b247d3d6078016de4",
+      "checks": [
+        "Original code encoding, typed, code-wf, type refs, structs-safe retained in pre/post",
+        "Return semantic type_size, full program context preserved; pointer and narrowed branches verified"
+      ]
+    },
+    {
+      "function": "cm_type_size_value",
+      "source_contract_sha256": "39f2fbe8f59569faa588ef7708e8fe6834201a69686d5796b1343a5bf311b675",
+      "target_contract_sha256": "33d85c0595fc98d427e24e9a8f58f738dce9e827b8484d9b247d3d6078016de4",
+      "checks": [
+        "Same full original type-size contract; static helper body also verified"
+      ]
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "source_contract_sha256": "ae833ac9ffd7f77f255cbbf7388961bd8218366249726487a2874b1690b6ade1",
+      "target_contract_sha256": "4cb1a42056877c89468a04145a1c3e9df6a1ba605a05702558ebc887a060bbd0",
+      "checks": [
+        "Original lvalue, constructor, lookup, typed, asked-code-wf/type-refs and structs-safe facts retained",
+        "Exact semantic sizeof PUSH or empty fragment; full resources and tail retained"
+      ]
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "source_contract_sha256": "d2388677ecaefe1a1a1032617e9d99f76c01813958c624677855f0e78a96ac33",
+      "target_contract_sha256": "d821142e1b3eaa91cb5f437c045ddaa5c564efc2aa1b98141f009f185107b3cd",
+      "checks": [
+        "Original six pure conditions retained in pre/post and complete program context",
+        "Return original member_array_code under original member validity"
+      ]
+    },
+    {
+      "function": "cm_member_offset_value_context",
+      "source_contract_sha256": "3ed73a64bb2b91b7d4e7a471643cdcf842f77ebdb189e1a6798ea01cdde7786f",
+      "target_contract_sha256": "3b052d5441f9413d98886053fd2bc69ed2e4a0944784e36b35a1795e363ece0a",
+      "checks": [
+        "Original six pure conditions retained in pre/post and complete program context",
+        "Return semantic member_offset; C remainder bridged under derived nonnegative pointer encoding, no new bounds"
+      ]
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_const_immediate",
+      "kind": "Definition",
+      "nonblank_lines": 2,
+      "sha256": "ba18ccaab10699942a5595b03e1fd1acd1e8612694727a184395bc73ae4e3c77",
+      "source_declaration": "cm_const_immediate_def"
+    },
+    {
+      "name": "cm_strings_prefix",
+      "kind": "Definition",
+      "nonblank_lines": 1,
+      "sha256": "623dfba04ca21b6b9434cd6f47caa2333a389c07983bdb2adcbc4b791aed1ae0",
+      "source_declaration": "cm_strings_prefix_def"
+    },
+    {
+      "name": "cm_string_address",
+      "kind": "Definition",
+      "nonblank_lines": 3,
+      "sha256": "dbfa24820e1a86b57e4763c292ed860dd1c71ea44af5e6a06d1561a4d03368b3",
+      "source_declaration": "cm_string_address_def"
+    },
+    {
+      "name": "cm_member_offset_slots",
+      "kind": "Fixpoint",
+      "nonblank_lines": 4,
+      "sha256": "f1f66c46645dc77e24de7f610090fc2b471b865a0bebe23093ff84766a8255d5",
+      "source_declaration": "cm_member_offset_slots_def"
+    },
+    {
+      "name": "cm_member_offset",
+      "kind": "Definition",
+      "nonblank_lines": 3,
+      "sha256": "d0e7a9192ad3ba113379272f3c6b305878235a8f2baf199c63ec28e21c59a2b8",
+      "source_declaration": "cm_member_offset_def"
+    },
+    {
+      "name": "cm_leaf_expr",
+      "kind": "Inductive",
+      "nonblank_lines": 5,
+      "sha256": "8036fb77b36c6b9a2962f66a0e2809559508c95a152268b4de22336fee0d58ed",
+      "source_declaration": "Typed four-constructor restriction adapter; no general emitter claim"
+    },
+    {
+      "name": "cm_leaf_source_expr",
+      "kind": "Definition",
+      "nonblank_lines": 3,
+      "sha256": "f2de2f34cb79679526d726015f4d9731107cd08a1b28db369cff35cb5692b5f1",
+      "source_declaration": "Embedding into existing cm_expr constructors"
+    },
+    {
+      "name": "cm_leaf_of_expr",
+      "kind": "Definition",
+      "nonblank_lines": 6,
+      "sha256": "c1e397bca330d2f7af8ed39f9105a2ff2eee57cd88baa56f11db5a0a649e64cb",
+      "source_declaration": "Partial projection; None for unsupported constructors"
+    },
+    {
+      "name": "cm_leaf_rvalue",
+      "kind": "Definition",
+      "nonblank_lines": 5,
+      "sha256": "e62a666408ca30fb9aedc9b69327ba9f83e10b50d64395e3179a6497d3f4e206",
+      "source_declaration": "cm_emit_expr_pair_def four leaf equations + cm_rcode_of_def + cm_emit_rvalue_def"
+    },
+    {
+      "name": "cm_leaf_code_for",
+      "kind": "Definition",
+      "nonblank_lines": 2,
+      "sha256": "dcfee2dc38960a14bd89b6aa2958d052923228b7a38ba303fef144afd72e5327",
+      "source_declaration": "cm_expr_code_for_def restricted to leaves; all four lcode branches empty"
+    }
+  ],
+  "model_review": [
+    "\u56db\u7c7bleaf\u91c7\u7528\u72ec\u7acbcm_leaf_expr\u7c7b\u578b\uff0c\u5d4c\u5165\u73b0\u6709cm_expr\uff1b\u975eleaf\u6295\u5f71\u4e3aNone\uff0c\u6ca1\u6709\u628a\u975eleaf\u4ee3\u7801\u4f2a\u5b9a\u4e49\u4e3a\u7a7a\u3002",
+    "cm_leaf_rvalue/code_for\u5bf9\u5e94\u6e90Const/String/Getc/Sizeof\u56db\u6761\u65b9\u7a0b\u53calvalue\u9009\u62e9\uff1b\u8fd9\u4e9b\u5206\u652f\u4e0d\u4f9d\u8d56fid/pc/temp\uff0c\u51fd\u6570\u5951\u7ea6\u4ecd\u4fdd\u7559\u539f\u53c2\u6570\u548c\u603bf\u67e5\u8be2\u3002",
+    "cm_const_immediate\u4e0e\u6e90char\u4f4e\u5b57\u8282/\u975echar\u6052\u7b49\u5206\u652f\u4e00\u81f4\uff1b\u4f7f\u7528\u65e2\u6709tower_u8\u3002",
+    "cm_strings_prefix\u76f4\u63a5\u590d\u7528\u73b0\u6709\u8868\u793a\u524d\u7f00\uff1b\u5176\u9012\u5f52\u4e0e\u6e90\u5b57\u7b26\u4e32\u524d\u7f00\u5728\u6240\u6709Z\u7d22\u5f15\u4e0a\u6309\u52a0\u6cd5\u7ed3\u5408\u5f8b\u76f8\u540c\uff0c\u5305\u542b\u8d1f\u7d22\u5f15\u3002",
+    "\u8bed\u4e49string_address\u4fdd\u630116+globals\u8bed\u4e49\u5927\u5c0f+strings\u524d\u7f00\uff1btyped\u6761\u4ef6\u7528\u4e8e\u8fde\u63a5\u8868\u793a\u4e0e\u8bed\u4e49global\u5927\u5c0f\u3002",
+    "\u6210\u5458\u524d\u7f00\u4f7f\u7528cm_struct_member_size\uff0c\u4fdd\u7559\u6240\u6709Z\u7d22\u5f15\u9012\u5f52\uff1bmember_offset\u4fdd\u7559\u5408\u6cd5sid\u5224\u65ad\uff0c\u8d8a\u754c\u4e3a0\u3002",
+    "\u65e2\u6709cm_type_size/struct_slots_size\u6a21\u578b\u590d\u7528\uff1bslots_wf\u4e0b\u666e\u901a\u69fd\u5927\u5c0f\u4e0e\u7ed3\u6784\u69fd\u5927\u5c0f\u76f8\u7b49\uff0c\u518d\u8fde\u63a5\u8868\u793astruct\u5927\u5c0f\u4e0e\u8bed\u4e49type\u5927\u5c0f\u3002",
+    "\u6e90\u4e0e\u76ee\u6807\u7684leaf\u65b9\u7a0b\u5bf9\u5e94\u7531\u6e90\u7801\u5ba1\u8ba1\u786e\u8ba4\uff1b\u672c\u4f8b\u4e0d\u628a\u8fd9\u4e9bRocq\u65b9\u7a0b\u5f15\u7406\u79f0\u4e3a\u5df2\u5b8c\u6210HOL\u5230Rocq\u5143\u5b9a\u7406\u3002"
+  ],
+  "adaptations": [
+    "Existing lookup policy/typed_program preserved",
+    "Typed leaf-only specialization under existing constructor premises, no added precondition",
+    "Six exact previous helper contracts reused; both static runtime helpers separately verified"
+  ],
+  "scope_boundary": "\u9a8c\u8bc1\u8303\u56f4\u4e3a\u8be5\u4e5d\u4e2a\u5177\u4f53\u5b9e\u73b0\u53ca\u6240\u9700leaf\u6a21\u578b/\u6865\u63a5\uff1b\u5b8c\u6574\u9012\u5f52expression emitter\u3001TVM\u8fd0\u884c\u8bed\u4e49\u53ca\u7f16\u8bd1\u4fdd\u6301\u6027\u4ecd\u672a\u5168\u91cf\u8fc1\u79fb\u3002",
+  "review_method": "Manual review of original contracts, exact leaf equations, representations and bridge premises; later hashes detect drift, not equivalence.",
+  "final_verification": {
+    "run_id": "cmc_emit_expr_leaf_migration-20261017144315",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 9
+  },
+  "proof_audit": {
+    "manual_top_level": 27,
+    "proved_splits": 37,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 49,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

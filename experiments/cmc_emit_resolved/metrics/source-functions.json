@@ -1,0 +1,368 @@
+[
+  {
+    "name": "cm_emit_resolved",
+    "prototype": false,
+    "source_span": [
+      264,
+      314
+    ],
+    "specification": [
+      [
+        266,
+        267
+      ],
+      [
+        268,
+        272
+      ],
+      [
+        273,
+        275
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        277,
+        300
+      ],
+      [
+        302,
+        313
+      ]
+    ],
+    "runtime": "void cm_emit_resolved(struct cm_emitter *emitter, int op,\n                      long long immediate)\n{\n  cm_emit(emitter, op, immediate);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_call",
+    "prototype": false,
+    "source_span": [
+      316,
+      376
+    ],
+    "specification": [
+      [
+        317,
+        318
+      ],
+      [
+        319,
+        321
+      ],
+      [
+        322,
+        325
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        327,
+        357
+      ],
+      [
+        359,
+        375
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_call(struct cm_emitter *emitter, int function_id)\n{\n  cm_emit(emitter, CMC_OP_CALL, function_id);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_normalize",
+    "prototype": false,
+    "source_span": [
+      378,
+      416
+    ],
+    "specification": [
+      [
+        379,
+        380
+      ],
+      [
+        381,
+        386
+      ],
+      [
+        387,
+        389
+      ]
+    ],
+    "annotation": [
+      [
+        406,
+        406
+      ]
+    ],
+    "inline_proof": [
+      [
+        391,
+        405
+      ],
+      [
+        408,
+        415
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_normalize(struct cm_emitter *emitter, int ty)\n{\n  cm_emit_normalize(emitter, ty);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_load",
+    "prototype": false,
+    "source_span": [
+      418,
+      450
+    ],
+    "specification": [
+      [
+        419,
+        420
+      ],
+      [
+        421,
+        425
+      ],
+      [
+        426,
+        428
+      ]
+    ],
+    "annotation": [
+      [
+        442,
+        442
+      ]
+    ],
+    "inline_proof": [
+      [
+        430,
+        441
+      ],
+      [
+        444,
+        449
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_load(struct cm_emitter *emitter, int ty)\n{\n  cm_emit_load(emitter, ty);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_store",
+    "prototype": false,
+    "source_span": [
+      452,
+      484
+    ],
+    "specification": [
+      [
+        453,
+        454
+      ],
+      [
+        455,
+        459
+      ],
+      [
+        460,
+        462
+      ]
+    ],
+    "annotation": [
+      [
+        476,
+        476
+      ]
+    ],
+    "inline_proof": [
+      [
+        464,
+        475
+      ],
+      [
+        478,
+        483
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_store(struct cm_emitter *emitter, int ty)\n{\n  cm_emit_store(emitter, ty);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_fp_address",
+    "prototype": false,
+    "source_span": [
+      486,
+      521
+    ],
+    "specification": [
+      [
+        488,
+        489
+      ],
+      [
+        490,
+        493
+      ],
+      [
+        494,
+        496
+      ]
+    ],
+    "annotation": [
+      [
+        512,
+        512
+      ]
+    ],
+    "inline_proof": [
+      [
+        498,
+        511
+      ],
+      [
+        514,
+        520
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_fp_address(struct cm_emitter *emitter,\n                                 long long offset)\n{\n  cm_emit_fp_address(emitter, offset);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_temp_store",
+    "prototype": false,
+    "source_span": [
+      523,
+      589
+    ],
+    "specification": [
+      [
+        525,
+        527
+      ],
+      [
+        528,
+        540
+      ],
+      [
+        541,
+        552
+      ]
+    ],
+    "annotation": [
+      [
+        571,
+        571
+      ],
+      [
+        572,
+        572
+      ],
+      [
+        573,
+        573
+      ],
+      [
+        574,
+        574
+      ],
+      [
+        575,
+        575
+      ],
+      [
+        576,
+        576
+      ],
+      [
+        577,
+        577
+      ],
+      [
+        578,
+        578
+      ],
+      [
+        579,
+        579
+      ]
+    ],
+    "inline_proof": [
+      [
+        554,
+        570
+      ],
+      [
+        581,
+        588
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_temp_store(struct cm_function *fn, int temp,\n                                 struct cm_emitter *emitter)\n{\n  cm_emit_temp_store(fn, temp, emitter);\n}\n"
+  },
+  {
+    "name": "cm_emit_resolved_temp_load",
+    "prototype": false,
+    "source_span": [
+      591,
+      657
+    ],
+    "specification": [
+      [
+        593,
+        595
+      ],
+      [
+        596,
+        608
+      ],
+      [
+        609,
+        620
+      ]
+    ],
+    "annotation": [
+      [
+        639,
+        639
+      ],
+      [
+        640,
+        640
+      ],
+      [
+        641,
+        641
+      ],
+      [
+        642,
+        642
+      ],
+      [
+        643,
+        643
+      ],
+      [
+        644,
+        644
+      ],
+      [
+        645,
+        645
+      ],
+      [
+        646,
+        646
+      ],
+      [
+        647,
+        647
+      ]
+    ],
+    "inline_proof": [
+      [
+        622,
+        638
+      ],
+      [
+        649,
+        656
+      ]
+    ],
+    "runtime": "void cm_emit_resolved_temp_load(struct cm_function *fn, int temp,\n                                struct cm_emitter *emitter)\n{\n  cm_emit_temp_load(fn, temp, emitter);\n}\n"
+  }
+]

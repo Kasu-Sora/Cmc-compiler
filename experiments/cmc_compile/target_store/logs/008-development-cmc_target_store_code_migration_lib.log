@@ -1,0 +1,74 @@
+Chars 0 - 80 [Require~Export~~~SimpleC.EE.QC...] 1.224 secs (1.143u,0.068s)
+Chars 81 - 126 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 127 - 148 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 149 - 174 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 175 - 571 [Lemma~cm_tvm_convert~st~v~ty~o...] 0. secs (0.u,0.s)
+Chars 572 - 578 [Proof.] 0. secs (0.u,0.s)
+Chars 580 - 730 [(intro~CODE;~rewrite~cm_conver...] 0.001 secs (0.001u,0.s)
+Chars 732 - 772 [(eapply~cm_tvm_char_normalize;...] 0. secs (0.u,0.s)
+Chars 773 - 777 [Qed.] 0. secs (0.u,0.s)
+Chars 778 - 1182 [Lemma~cm_tvm_typed_store~obj~p...] 0. secs (0.u,0.s)
+Chars 1183 - 1189 [Proof.] 0. secs (0.u,0.s)
+Chars 1191 - 1711 [(intros~WRAP~ADDR~CODE;~destru...] 0.002 secs (0.002u,0.s)
+Chars 1712 - 1716 [Qed.] 0.041 secs (0.038u,0.002s)
+Chars 1717 - 2258 [Lemma~cm_tvm_address_store~obj...] 0. secs (0.u,0.s)
+Chars 2259 - 2265 [Proof.] 0. secs (0.u,0.s)
+Chars 2267 - 2346 [(intros~WRAP~ADDR~CODE;~~~pose...] 0. secs (0.u,0.s)
+Chars 2348 - 2426 [(change~~~~(cm_code_at~(tvm_ob...] 0. secs (0.u,0.s)
+Chars 2428 - 2630 [(change~~~~(tvm_step~~~~~~~(tv...] 0. secs (0.u,0.s)
+Chars 2632 - 2688 [(rewrite~(cm_tvm_fp_address_va...] 0. secs (0.u,0.s)
+Chars 2690 - 2774 [(rewrite~(cm_tvm_typed_store~_...] 0.002 secs (0.002u,0.s)
+Chars 2775 - 2779 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 2780 - 3551 [Lemma~cm_tvm_init_code~st~v~ty...] 0. secs (0.u,0.s)
+Chars 3552 - 3558 [Proof.] 0. secs (0.u,0.s)
+Chars 3560 - 3633 [(intros~ADDR~CODE;~pose~proof~...] 0. secs (0.u,0.s)
+Chars 3635 - 3714 [(pose~proof~(cm_tvm_convert~st...] 0. secs (0.u,0.s)
+Chars 3716 - 3919 [(pose~proof~~~(cm_tvm_address_...] 0. secs (0.u,0.s)
+Chars 3921 - 4102 [(assert~~~(N~:~~~~cm_code_step...] 0. secs (0.u,0.s)
+Chars 4104 - 4359 [(rewrite~N,~tvm_iter_add,~CONV...] 0.003 secs (0.003u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_store/build/Rocq/examples/QCP_demos_human/cmc_target_store_code_migration_lib.v", line 47, characters 194-195:
+Error: Cannot infer this placeholder of type "Z" in
+environment:
+st : cm_src_state
+v : cm_value
+obj : tvm_object
+pc : Z
+calls : list Z
+mem : Z -> Z
+input, output : list Z
+offset : Z
+rest : list tvm_inst
+ADDR : tower_word_valid (tower_wrap64 (tower_getw mem 8 + offset))
+CODE :
+  cm_code_at (tvm_object_code obj) pc
+    (cm_char_normalize_code CMIntTy ++
+     cm_fp_relative_address_code offset ++ cm_store_code CMIntTy ++ rest)
+TAIL :
+  cm_code_at (tvm_object_code obj)
+    (pc + Zlength (cm_char_normalize_code CMIntTy))
+    (cm_fp_relative_address_code offset ++ cm_store_code CMIntTy ++ rest)
+CONV :
+  tvm_iter (cm_code_steps (cm_char_normalize_code CMIntTy))
+    (TVMRunTask obj
+       (TVMState pc [cm_value_number st v] calls mem input output)) =
+  TVMRunTask obj
+    (TVMState (pc + Zlength (cm_char_normalize_code CMIntTy))
+       [cm_value_number st (cm_convert_value st CMIntTy v)] calls mem input
+       output)
+STORE :
+  tvm_iter 5
+    (TVMRunTask obj
+       (TVMState (pc + Zlength (cm_char_normalize_code CMIntTy))
+          [cm_value_number st (cm_convert_value st CMIntTy v)] calls mem
+          input output)) =
+  TVMRunTask obj
+    (TVMState (pc + Zlength (cm_char_normalize_code CMIntTy) + 5) [] calls
+       (cm_store_mem CMIntTy (tower_wrap64 (tower_getw mem 8 + offset))
+          (cm_value_number st (cm_convert_value st CMIntTy v)) mem) input
+       output)
+N :
+  cm_code_steps
+    (cm_char_normalize_code CMIntTy ++
+     cm_fp_relative_address_code offset ++ cm_store_code CMIntTy) =
+  (cm_code_steps (cm_char_normalize_code CMIntTy) + 5)%nat
+

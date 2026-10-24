@@ -1,0 +1,42 @@
+Chars 0 - 87 [Require~Export~~~SimpleC.EE.QC...] 1.395 secs (1.308u,0.082s)
+Chars 88 - 133 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.011u,0.s)
+Chars 134 - 155 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 156 - 181 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 182 - 425 [Definition~cm_task_tagged_vali...] 0. secs (0.u,0.s)
+Chars 426 - 506 [Lemma~cm_pointer_store_width~t...] 0. secs (0.u,0.s)
+Chars 507 - 513 [Proof.] 0. secs (0.u,0.s)
+Chars 514 - 551 [(destruct~ty;~cbn;~intros;~con...] 0. secs (0.u,0.s)
+Chars 552 - 556 [Qed.] 0. secs (0.u,0.s)
+Chars 557 - 827 [Lemma~cm_pointer_region_witnes...] 0. secs (0.u,0.s)
+Chars 828 - 834 [Proof.] 0. secs (0.u,0.s)
+Chars 836 - 915 [(induction~regions~as~[|~r~res...] 0. secs (0.u,0.s)
+Chars 917 - 1026 [(rewrite~orb_true_iff;~intros~...] 0.002 secs (0.002u,0.s)
+Chars 1028 - 1118 [(repeat~rewrite~andb_true_iff~...] 0.024 secs (0.024u,0.s)
+Chars 1120 - 1195 [(apply~Z.eqb_eq~in~G;~apply~Z....] 0. secs (0.u,0.s)
+1 goal
+  
+  r : cm_region
+  rest : list cm_region
+  ptr : cm_value
+  IH :
+    cm_pointer_region_ok rest ptr true = true ->
+    exists r : cm_region,
+      In r rest /\
+      cm_region_gen r = cm_ptr_gen ptr /\
+      cm_region_live r = true /\
+      cm_region_writable r = true /\
+      cm_region_lo r <= cm_ptr_lo ptr /\ cm_ptr_hi ptr <= cm_region_hi r
+  G : cm_region_gen r = cm_ptr_gen ptr
+  L : cm_region_live r = true
+  LO : cm_region_lo r <= cm_ptr_lo ptr
+  HI : cm_ptr_hi ptr <= cm_region_hi r
+  W : cm_region_writable r = true
+  ============================
+  In r (r :: rest)
+Chars 1196 - 1201 [Show.] 0.001 secs (0.u,0.s)
+Chars 1202 - 1206 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/tagged/build/Rocq/examples/QCP_demos_human/cmc_tagged_store_migration_lib.v", line 17, characters 0-4:
+Error:
+ (in proof cm_pointer_region_witness): Attempt to save an incomplete proof
+(there are remaining open goals).
+

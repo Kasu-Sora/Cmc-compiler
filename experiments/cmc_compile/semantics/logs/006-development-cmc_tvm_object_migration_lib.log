@@ -1,0 +1,15 @@
+1 goal
+  
+  op : tvm_opcode
+  imm : Z
+  rest : list tvm_inst
+  IH : cm_decode_pairs (cm_rep_ops rest) (cm_rep_imms rest) = rest
+  ============================
+  tvm_decode_pair (tvm_opcode_code op) imm
+  :: cm_decode_pairs
+       (map (fun i : tvm_inst => tvm_opcode_code (tvm_inst_op i)) rest)
+       (map tvm_inst_imm rest) = TVMInst op imm :: rest
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/semantics/build/Rocq/examples/QCP_demos_human/cmc_tvm_object_migration_lib.v", line 128, characters 164-196:
+Error: Found no subterm matching "tvm_opcode_decode (tvm_opcode_code ?M2536)"
+in the current goal.
+

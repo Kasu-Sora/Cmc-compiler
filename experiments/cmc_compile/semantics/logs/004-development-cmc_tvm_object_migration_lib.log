@@ -1,0 +1,24 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/semantics/build/Rocq/examples/QCP_demos_human/cmc_tvm_object_migration_lib.v", line 104, characters 13-27:
+Error: In environment
+code : list tvm_inst
+d : tvm_inst
+Unable to unify
+ "(Forall ?M2528 ?M2530 ->
+   forall i : Z,
+   0 <= i -> i < Zlength ?M2530 -> ?M2528 (nth (Z.to_nat i) ?M2530 ?M2529)) /\
+  ((forall i : Z,
+    0 <= i -> i < Zlength ?M2530 -> ?M2528 (nth (Z.to_nat i) ?M2530 ?M2529)) ->
+   Forall ?M2528 ?M2530)" with
+ "(tvm_targets_valid code ->
+   forall i : Z,
+   0 <= i ->
+   i < Zlength code ->
+   tvm_opcode_is_target (tvm_inst_op (nth (Z.to_nat i) code d)) = true ->
+   tvm_target_valid code (tvm_inst_imm (nth (Z.to_nat i) code d))) /\
+  ((forall i : Z,
+    0 <= i ->
+    i < Zlength code ->
+    tvm_opcode_is_target (tvm_inst_op (nth (Z.to_nat i) code d)) = true ->
+    tvm_target_valid code (tvm_inst_imm (nth (Z.to_nat i) code d))) ->
+   tvm_targets_valid code)".
+

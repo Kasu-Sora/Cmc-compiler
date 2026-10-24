@@ -1,0 +1,23 @@
+Chars 0 - 71 [Require~Export~SimpleC.EE.QCP_...] 1.497 secs (1.289u,0.129s)
+Chars 72 - 117 [From~Coq~Require~Import~ZArith...] 0.013 secs (0.012u,0.s)
+Chars 118 - 153 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 154 - 175 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 176 - 201 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 202 - 445 [Lemma~cm_binding_array_code_ag...] 0. secs (0.u,0.s)
+Chars 446 - 452 [Proof.] 0. secs (0.u,0.s)
+Chars 454 - 744 [(intros~[[->~B]|~[[->~B]|~[->~...] 0.002 secs (0.002u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_expr/build/Rocq/examples/QCP_demos_human/cmc_code_binding_migration_lib.v", line 10, characters 279-290:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid, slot : Z
+B : 0 <= slot < Zlength (cm_function_locals (cm_source_function_at sp fid p))
+Unable to unify
+ "negb
+    (negb
+       (cm_slot_count
+          (cm_slot_at slot
+             (cm_function_locals (cm_source_function_at sp fid p))) =? 0))"
+with "0 =? 0".
+

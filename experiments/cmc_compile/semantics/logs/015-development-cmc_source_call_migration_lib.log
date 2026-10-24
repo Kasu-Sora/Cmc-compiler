@@ -1,0 +1,21 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/semantics/build/Rocq/examples/QCP_demos_human/cmc_source_call_migration_lib.v", line 73, characters 0-388:
+Error:
+The following term contains unresolved implicit arguments:
+  (fun (sp : cm_source_lookup_policy) (p : cm_program) 
+     (fid : Z) (values : list ?A) (st : cm_src_state) =>
+   let f := cm_source_function_at sp fid p in
+   let size := cm_frame_size (cm_program_structs p) f in
+   (0 <=? fid) && (fid <? Zlength (cm_program_functions p)) &&
+   (Zlength values =? Zlength (cm_function_params f)) && 
+   (8 <=? size) && (cm_static_size p <=? cm_state_fp st - size) &&
+   (cm_state_fp st <=? 1048576) && tower_word_validb (cm_state_fp st - size))
+More precisely: 
+- ?A: Cannot infer the implicit parameter A of Zlength whose type is 
+  "Type" in
+  environment:
+  sp : cm_source_lookup_policy
+  p : cm_program
+  fid : Z
+  f := cm_source_function_at sp fid p : cm_function_d
+  size := cm_frame_size (cm_program_structs p) f : Z
+

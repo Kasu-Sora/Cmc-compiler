@@ -1,0 +1,78 @@
+Chars 0 - 93 [Require~Export~~~SimpleC.EE.QC...] 1.285 secs (1.21u,0.072s)
+Chars 94 - 139 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 140 - 161 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 162 - 187 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 188 - 327 [Definition~cm_region_bases_bel...] 0. secs (0.u,0.s)
+Chars 328 - 455 [Definition~cm_static_regions~p...] 0. secs (0.u,0.s)
+Chars 456 - 893 [Definition~cm_task_static_base...] 0. secs (0.u,0.s)
+Chars 1042 - 1298 [Definition~cm_frame_saved_stat...] 0. secs (0.u,0.s)
+Chars 1299 - 1477 [Fixpoint~cm_frames_saved_stati...] 0. secs (0.u,0.s)
+Chars 1478 - 1704 [Definition~cm_task_saved_stati...] 0. secs (0.u,0.s)
+Chars 1705 - 1798 [Lemma~cm_region_bases_refl~reg...] 0. secs (0.u,0.s)
+Chars 1799 - 1805 [Proof.] 0. secs (0.u,0.s)
+Chars 1806 - 1830 [(intros~g~H;~reflexivity).] 0. secs (0.u,0.s)
+Chars 1831 - 1835 [Qed.] 0. secs (0.u,0.s)
+Chars 1836 - 1998 [Lemma~cm_region_bases_trans~a~...] 0. secs (0.u,0.s)
+Chars 1999 - 2005 [Proof.] 0. secs (0.u,0.s)
+Chars 2006 - 2051 [(intros~A~B~g~H;~rewrite~(A~g~...] 0. secs (0.u,0.s)
+Chars 2052 - 2056 [Qed.] 0. secs (0.u,0.s)
+Chars 2057 - 2180 [Lemma~cm_region_bases_cons_fre...] 0. secs (0.u,0.s)
+Chars 2181 - 2187 [Proof.] 0. secs (0.u,0.s)
+Chars 2188 - 2300 [(intros~B~g~H;~cbn[cm_region_b...] 0.001 secs (0.001u,0.s)
+Chars 2301 - 2305 [Qed.] 0. secs (0.u,0.s)
+Chars 2306 - 2487 [Lemma~cm_regions_for_slots_bas...] 0. secs (0.u,0.s)
+Chars 2488 - 2494 [Proof.] 0. secs (0.u,0.s)
+Chars 2496 - 2583 [(revert~first~base;~induction~...] 0. secs (0.u,0.s)
+Chars 2585 - 2710 [(cbn[cm_regions_for_slots~app]...] 0. secs (0.u,0.s)
+Chars 2711 - 2715 [Qed.] 0. secs (0.u,0.s)
+Chars 2716 - 2969 [Lemma~cm_restore_regions_bases...] 0. secs (0.u,0.s)
+Chars 2970 - 2976 [Proof.] 0. secs (0.u,0.s)
+Chars 2978 - 3077 [(revert~reference;~induction~c...] 0. secs (0.u,0.s)
+Chars 3079 - 3166 [(cbn[cm_restore_regions];~dest...] 0. secs (0.u,0.s)
+Chars 3168 - 3309 [(cbn[cm_region_base];~destruct...] 0. secs (0.u,0.s)
+Chars 3311 - 3335 [(destruct~(gen~=?~g)~eqn:E).] 0. secs (0.u,0.s)
+Chars 3337 - 3338 [-] 0. secs (0.u,0.s)
+Chars 3339 - 3440 [(specialize~(C~g~B);~~~cbn[cm_...] 0. secs (0.u,0.s)
+Chars 3442 - 3443 [-] 0. secs (0.u,0.s)
+Chars 3521 - 3530 [clear~IH.] 0. secs (0.u,0.s)
+Chars 3534 - 3640 [(revert~C~O~E;~induction~rest~...] 0. secs (0.u,0.s)
+Chars 3644 - 3705 [(destruct~(cm_regions_eqb~(r~:...] 0. secs (0.u,0.s)
+Chars 3709 - 3842 [(cbn[cm_region_base];~destruct...] 0. secs (0.u,0.s)
+Chars 3846 - 3870 [(destruct~(g'~=?~g)~eqn:E').] 0. secs (0.u,0.s)
+Chars 3874 - 3875 [+] 0. secs (0.u,0.s)
+Chars 3876 - 3980 [(specialize~(C~g~B);~~~cbn[cm_...] 0. secs (0.u,0.s)
+Chars 3984 - 3985 [+] 0. secs (0.u,0.s)
+1 goal
+  
+  gen, base, lo, hi : Z
+  writable, live : bool
+  g', b', l', h' : Z
+  w', live' : bool
+  rest, old : list cm_region
+  limit : Z
+  reference : list cm_region
+  g : Z
+  B : g < limit
+  IH :
+    cm_region_bases_below_equal
+      (CMRegion gen base lo hi writable live :: rest) reference limit ->
+    cm_region_bases_below_equal old reference limit ->
+    (gen =? g) = false ->
+    cm_region_base (cm_restore_regions rest old) g =
+    cm_region_base reference g
+  C :
+    cm_region_bases_below_equal
+      (CMRegion gen base lo hi writable live
+       :: CMRegion g' b' l' h' w' live' :: rest) reference limit
+  O : cm_region_bases_below_equal old reference limit
+  E : (gen =? g) = false
+  E' : (g' =? g) = false
+  ============================
+  cm_region_base (cm_restore_regions rest old) g = cm_region_base reference g
+Chars 3986 - 3991 [Show.] 0. secs (0.u,0.s)
+Chars 3992 - 3996 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_static_bases_migration_lib.v", line 47, characters 0-4:
+Error:
+ (in proof cm_restore_regions_bases_common): Attempt to save an incomplete proof
+(there are remaining open goals).
+

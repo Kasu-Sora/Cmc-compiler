@@ -1,0 +1,1242 @@
+{
+  "generation": 133,
+  "run_id": "cmc_emit_expr_leaf_migration-20261017144315",
+  "case": "cmc_emit_expr_leaf_migration",
+  "phase": "done",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_emit_expr_leaf_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal_check.v",
+    "case_name": "cmc_emit_expr_leaf_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/public_helper_lemma_lib.v",
+    "sha256": "d1dd6612ab2c2ca4fcb706e953f0d05ed1e858e7308c8a5d8dce3d87c228be6d",
+    "declaration_count": 0,
+    "helper_count": 0
+  },
+  "problem_context": {
+    "problem_statement": "Migrate ALL NINE runtime functions of /Users/nizitong/cmc/cmc_concrete_emit_expr_leaf.c from C*/HOL to QCP/Rocq. Include static cmc_const_immediate and cm_sizeof_value plus cm_emit_const_expr, cm_emit_string_expr, cm_emit_getc_expr, cm_type_size_value, cm_emit_sizeof_expr, cm_member_array_value_context, cm_member_offset_value_context. Keep exact runtime tokens including static; ABI header/emitter unchanged. Frozen source/dependencies at /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_expr_leaf/baseline. Read whole original .c/.h, not only hints. No user QCP formal spec supplied.\n\nOriginal header has a discrepancy: cm_emit_const_expr .h omits cm_type_code_wf ty, whereas body contract includes it in BOTH pre/post. Preserve the body contract (verified implementation baseline); main documents discrepancy, do not silently remove that premise or claim weaker header verified. All other source pre/post facts and full program/function/expression resources must remain. Source static helpers are runtime bodies, not assumed prototypes.\n\nReuse already verified layout/counts/core/globals/resolved/plan/ast/word definitions and lemmas as applicable. Do not change earlier verified files or import old manual/auto proofs. Helper contracts must match exact previous verified definitions: cm_emit_plan from cmc_emit_plan_migration.c; cmc_string_address, cmc_type_size_at, cmc_member_array, cmc_pointee, cmc_member_offset_at from cmc_layout_migration.c. Any unused helper need not be declared. Reuse unsigned byte bridge from word lib, cm_char_encode from core, arbitrary-Z prefix bridge from AST, existing type encoding/member lemmas from layout/counts.\n\nConst helper: all signed64 value; type_code_wf and exact encode only. Char normalization is Euclidean low byte (unsigned64 conversion then %256 then uchar), including negative inputs; non-char identity. Do not add scalar type or input nonnegative premises.\n\nFour leaf emitters: preserve lvalue in[0,1], source constructor identity and total f lookup; exact leaf code fragment appended and corresponding plan prefix consumed; lvalue1 emits empty code and preserves resources. const includes type_code_wf; string includes all sid[0,INT_MAX], typed, safe globals/strings and combined-size facts in BOTH pre/post (no sid<length strengthening); sizeof preserves typed/type-code-wf/type_refs/structs-safe. getc does not require typed or wf.\n\nSource cm_expr_code_for and cm_emit_expr_pair are not yet fully migrated. For this leaf-only case either migrate exact required expression-model closure, or use an explicitly named leaf-restricted model (NOT a falsely claimed general cm_expr_code_for with dummy nonleaf clauses) and provide exact source-equation correspondence for Const/String/Getc/Sizeof under the existing constructor premises; no new input assumption and no new arbitrary code axiom. Mark unsupported nonleaf behavior explicitly; do not expand task into whole compiler unnecessarily. Source definitions at defs581 and codegen710. Keep SAME existing total cm_lookup_policy, typed_program; no new fid bounds.\n\nType-size helpers return semantic cm_type_size(structs,asked), not representation size alone. Need bridge under original typed/type_code_wf/type_refs; reuse scalar bridges, add only absent struct/prefix/type bridge closure. Member wrappers keep every original count/typed/type/membership/structs-safe premise and exact return; original pointer encoding modulo uses C rem (QCP Z.rem), semantic bridge must handle signs correctly from original facts. No new sid/mid bounds unless derived.\n\nPotential public bridges: defs cm_rep_string_address_matches(2124), cm_rep_type_size_matches(1641), cm_rep_struct_member_prefix_matches(1857). Reuse existing definitions where semantically equivalent; preserve arbitrary Z prefix semantics and source struct slot size versus ordinary slot size distinction. Main separately inventories source closure and incremental costs.\n\nFollow full annotation owner workflow, no manual editing. Record actual design/symexec/post-lib invocation counts, failures and repairs; stop writes at terminal delivery. Main replays original C*, audits semantics/runtime and measures final costs; skill updates only after done."
+  },
+  "formal_case_lib_policy": "create",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-17T06:43:15.455112Z"
+  },
+  "symexec_profile": {
+    "name": "standard",
+    "timeout_seconds": 3600,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 12,
+  "max_parallel_group_workers": 3,
+  "dune_preparation": {
+    "status": "passed",
+    "build_mode": "makefile",
+    "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal_check.vo",
+    "build_root": ".",
+    "make_executable": "/usr/bin/make",
+    "coqc_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqc",
+    "coqdep_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqdep",
+    "run_makefile": "verification_runs/cmc_emit_expr_leaf_migration-20261017144315/Makefile",
+    "run_makefile_sha256": "4bf5889680cbd528e2184d7d55bb9879c0a5476b95caf20368cdc60864c04ea8",
+    "snapshot": "verification_runs/cmc_emit_expr_leaf_migration-20261017144315/makefile_dependency_snapshot.json",
+    "snapshot_sha256": "e26cbf60653f05d72b05fd55f1242fb51b5a4e04c5f05ec986bb40034b4f964c",
+    "dependency_digest": "59b6fe413e1b477d96d308d9d42679edb91e4ac64ca0aec734028dadc940a6cb",
+    "source_digest": "136fb6f13c5679ba8b94ba3f7b153bbfcc53daba4833ef92a2bd3662822a5803",
+    "artifact_digest": "05e0a502bf43a9d47937f5c2a6953924affa46f83ae88fc48cdc7be53d10ad90",
+    "configuration_digest": "83db48906dfbb7805fb46e0b33b5cfb55e4c16ae9c74fd38557d6ef3f04e0d98",
+    "base_artifact_count": 153,
+    "current_source_count": 5,
+    "rebuilt_count": 0,
+    "dependency_metrics": {
+      "status": "resolved",
+      "strategy": "breadth-batched-coqdep",
+      "batch_count": 9,
+      "coqdep_process_count": 9,
+      "node_count": 158,
+      "source_count": 158,
+      "elapsed_seconds": 10.258089
+    },
+    "current_cleanup": {
+      "status": "passed",
+      "removed_count": 0,
+      "first_removed": null
+    },
+    "make_seconds": 0.007656,
+    "returncode": 0,
+    "elapsed_seconds": 10.444752
+  },
+  "rounds": {
+    "cmc_emit_expr_leaf_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_emit_expr_leaf_migration-annotation-r1-attempt-1"
+    },
+    "cmc_emit_expr_leaf_migration-vc-checking-r1": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1"
+    },
+    "cmc_emit_expr_leaf_migration-vc-proving-r1": {
+      "phase": "vc-proving-preparing",
+      "current_attempt": "cmc_emit_expr_leaf_migration-vc-proving-r1"
+    }
+  },
+  "attempts": {
+    "cmc_emit_expr_leaf_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_emit_expr_leaf_migration-annotation-r1-attempt-1",
+      "round": "cmc_emit_expr_leaf_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_leaf_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-17T06:43:20.590997Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "38b45f842f4c09824d6442e480de1f1db33e5cf98ec4188d194c6348b3e90673",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "input_sha256": "9743b02e499ee1af8113cd60091fac0d79e661ed6e1c8e3e240ece5db28edc43",
+      "owner": "annotation/cmc_emit_expr_leaf_migration-20261017144315",
+      "started_at": "2026-10-17T06:43:27.758417Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_leaf_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_emit_expr_leaf_migration-20261017144315",
+        "claimed_at": "2026-10-17T06:43:27.758417Z",
+        "finalized_at": "2026-10-17T06:53:17.558705Z"
+      },
+      "timing": {
+        "formal-case-lib-design-coq-check": [
+          {
+            "started_at": "2026-10-17T06:47:56.084554Z",
+            "finished_at": "2026-10-17T06:47:57.667381Z",
+            "elapsed_seconds": 1.582827
+          },
+          {
+            "started_at": "2026-10-17T06:48:32.712992Z",
+            "finished_at": "2026-10-17T06:48:34.262784Z",
+            "elapsed_seconds": 1.549792
+          },
+          {
+            "started_at": "2026-10-17T06:49:12.550233Z",
+            "finished_at": "2026-10-17T06:49:12.617527Z",
+            "elapsed_seconds": 0.067294
+          },
+          {
+            "started_at": "2026-10-17T06:49:48.616702Z",
+            "finished_at": "2026-10-17T06:49:48.684532Z",
+            "elapsed_seconds": 0.06783
+          },
+          {
+            "started_at": "2026-10-17T06:50:28.087619Z",
+            "finished_at": "2026-10-17T06:50:28.155583Z",
+            "elapsed_seconds": 0.067964
+          },
+          {
+            "started_at": "2026-10-17T06:50:51.776121Z",
+            "finished_at": "2026-10-17T06:50:51.844544Z",
+            "elapsed_seconds": 0.068423
+          }
+        ],
+        "owner-generation": [
+          {
+            "started_at": "2026-10-17T06:48:38.818042Z",
+            "finished_at": "2026-10-17T06:48:38.847042Z",
+            "elapsed_seconds": 0.029
+          },
+          {
+            "started_at": "2026-10-17T06:49:18.429319Z",
+            "finished_at": "2026-10-17T06:49:18.455319Z",
+            "elapsed_seconds": 0.026
+          },
+          {
+            "started_at": "2026-10-17T06:49:59.908099Z",
+            "finished_at": "2026-10-17T06:50:00.042099Z",
+            "elapsed_seconds": 0.134
+          },
+          {
+            "started_at": "2026-10-17T06:50:33.801283Z",
+            "finished_at": "2026-10-17T06:50:34.064283Z",
+            "elapsed_seconds": 0.263
+          },
+          {
+            "started_at": "2026-10-17T06:50:59.850296Z",
+            "finished_at": "2026-10-17T06:51:00.369296Z",
+            "elapsed_seconds": 0.519
+          }
+        ],
+        "formal-case-lib-coq-check": [
+          {
+            "started_at": "2026-10-17T06:51:14.110874Z",
+            "finished_at": "2026-10-17T06:51:14.180261Z",
+            "elapsed_seconds": 0.069387
+          },
+          {
+            "started_at": "2026-10-17T06:53:50.797238Z",
+            "finished_at": "2026-10-17T06:53:50.865327Z",
+            "elapsed_seconds": 0.068089
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-17T06:53:17.536930Z",
+            "finished_at": "2026-10-17T06:53:17.601946Z",
+            "elapsed_seconds": 0.06157
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-17T06:53:50.870256Z",
+            "finished_at": "2026-10-17T06:53:51.402256Z",
+            "elapsed_seconds": 0.532
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-17T06:53:34.190637Z",
+            "finished_at": "2026-10-17T06:53:51.418218Z",
+            "elapsed_seconds": 17.222162
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-17T06:54:14.971599Z",
+            "finished_at": "2026-10-17T06:54:25.470756Z",
+            "elapsed_seconds": 10.493454
+          }
+        ]
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-17T06:48:38.847035Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "af52f3a259e71b1a0c9432ec9fa13674e2f1d394238654b35c5c6263b3d90d82",
+          "elapsed_seconds": 0.029,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 2,
+          "recorded_at": "2026-10-17T06:49:18.455313Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "b42d9b51dc2a9c557f66527c56c6541c1708b46dcf3bcb70be0bf07099b0d474",
+          "elapsed_seconds": 0.026,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 3,
+          "recorded_at": "2026-10-17T06:50:00.042091Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "1e70c4683bf15ae02ccfeb29ae7f987d4b47b5aa690ca2a250f20c5f1b3b152a",
+          "elapsed_seconds": 0.134,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 4,
+          "recorded_at": "2026-10-17T06:50:34.064276Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "ca06180b77b2fa059868772fc35b25ec3081131672b4a5603353bbee6f63d8ba",
+          "elapsed_seconds": 0.263,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 5,
+          "recorded_at": "2026-10-17T06:51:00.368314Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "cfb4d1d6b5d2a61b7ebb3df27b78f4b6cb317fff30b9cd79a1517d7c47069149",
+          "elapsed_seconds": 0.519,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_emit_expr_leaf_migration-annotation-r1-attempt-1",
+        "round": "cmc_emit_expr_leaf_migration-annotation-r1",
+        "formal_input_digest": "cfb4d1d6b5d2a61b7ebb3df27b78f4b6cb317fff30b9cd79a1517d7c47069149",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_emit_expr_leaf_migration.c": "08b5e15a02c81f1968112128ad8e2522c33f21cde726c47164350ea6621d1ad6",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal.v": "4ef865953a4a28e14ffa782ec9674869e4159f0870629e7829b26219cd993a8f",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_auto.v": "29cfbca8d4d1f63f10a6b5a81a6a8c5305a65cc0a6029ea8fad56c1ab1c53567",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v": "d07ce878b82426e337f8cb4f238cf828723f0fc98a744908f3713daadc9eeab9",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal_check.v": "a27b037309997718954151325b4bc12e468c397623dbf337c3a325818cc18efe"
+        },
+        "performance_profile": "standard",
+        "timeout_seconds": 3600.0,
+        "elapsed_seconds": 0.519,
+        "recorded_at": "2026-10-17T06:51:00.369289Z"
+      },
+      "returned_at": "2026-10-17T06:53:17.558705Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "plan": "d2013d959744bbec9ea26c6802786c2b59eece8cbc79b9223a58060ed5023a20",
+        "output": "b26f457bcbe6920afc070a8d51b9d17614851fc05cded3e3ea3f58d49165f892"
+      },
+      "after_snapshot": {
+        "digest": "32a93424b0e2a864393a66a84dd15e7a9c84fde5872b267a1c8cc079ce82987c",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_leaf_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal_check.v"
+      ],
+      "annotation_activity": "spec-and-annotation",
+      "finished_at": "2026-10-17T06:54:25.470756Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 0,
+          "provable_count": 0,
+          "statements": []
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-17T06:51:00.369289Z",
+            "performance_profile": "standard",
+            "timeout_seconds": 3600.0,
+            "elapsed_seconds": 0.519
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": false,
+          "errors": []
+        },
+        "formal_case_lib_dune": {
+          "status": "passed",
+          "build_mode": "makefile",
+          "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.vo",
+          "returncode": 0,
+          "base_artifact_count": 153,
+          "current_source_count": 1,
+          "rebuilt_count": 0,
+          "dependency_metrics": {
+            "status": "resolved",
+            "strategy": "breadth-batched-coqdep",
+            "batch_count": 7,
+            "coqdep_process_count": 7,
+            "node_count": 154,
+            "source_count": 154,
+            "elapsed_seconds": 8.076211
+          },
+          "current_cleanup": {
+            "status": "passed",
+            "removed_count": 0,
+            "first_removed": null
+          },
+          "make_seconds": 0.007549,
+          "elapsed_seconds": 8.256199
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      }
+    },
+    "cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1": {
+      "attempt_id": "cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1",
+      "round": "cmc_emit_expr_leaf_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-checking-r1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-checking-r1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-checking-r1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-checking-r1/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-17T06:54:31.021862Z",
+      "owner": "vc-checking/cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1",
+      "started_at": "2026-10-17T06:56:01.449935Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1",
+        "claimed_at": "2026-10-17T06:56:01.449935Z",
+        "finalized_at": "2026-10-17T06:59:47.519486Z"
+      },
+      "returned_at": "2026-10-17T06:59:47.519486Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "output": "2f225d2c1d6742d118e67ccf619f96a42ea6c4ac5021ffdc288d741ffa1d8456"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-17T06:59:47.487580Z",
+            "finished_at": "2026-10-17T06:59:47.551324Z",
+            "elapsed_seconds": 0.057723
+          }
+        ],
+        "post-vc-checking-symexec": [
+          {
+            "started_at": "2026-10-17T07:00:02.547931Z",
+            "finished_at": "2026-10-17T07:00:03.050931Z",
+            "elapsed_seconds": 0.503
+          }
+        ],
+        "controller-plan-check": [
+          {
+            "started_at": "2026-10-17T07:00:02.512662Z",
+            "finished_at": "2026-10-17T07:00:03.079704Z",
+            "elapsed_seconds": 0.560417
+          }
+        ]
+      },
+      "agent_output_metrics": {
+        "bytes": 9463,
+        "lines": 93,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 27,
+        "structural_no_split_checked_first": 4,
+        "structural_definite_blockers": 0
+      },
+      "finished_at": "2026-10-17T07:00:03.079704Z",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "a29330396e11ecddf172dc360d6b8c67495a04da8d30e2d030b9c0dd2b514c46",
+      "main_check": {
+        "manual_refresh": {
+          "status": "passed",
+          "returncode": 0,
+          "timeout_seconds": 3600.0,
+          "elapsed_seconds": 0.503,
+          "performance_profile": "standard"
+        }
+      }
+    },
+    "cmc_emit_expr_leaf_migration-vc-proving-r1": {
+      "attempt_id": "cmc_emit_expr_leaf_migration-vc-proving-r1",
+      "round": "cmc_emit_expr_leaf_migration-vc-proving-r1",
+      "phase": "vc-proving-preparing",
+      "status": "verified",
+      "directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/cmc_emit_expr_leaf_migration-vc-proving-r1",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-proving-r1",
+      "base_manifest": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/cmc_emit_expr_leaf_migration-vc-proving-r1/base_manifest.json",
+      "group_workers_manifest": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-proving-r1/group_workers_manifest.json",
+      "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-proving-r1/proving_merged_result.json",
+      "groups": {
+        "constant_value": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/constant_value",
+          "started_at": "2026-10-17T07:05:25.094543Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-constant_value",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/constant_value",
+            "claimed_at": "2026-10-17T07:05:25.094543Z",
+            "finalized_at": "2026-10-17T07:08:03.961899Z"
+          },
+          "timing_interval_index": 4,
+          "returned_at": "2026-10-17T07:08:03.961899Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7b1753787d33d05e083eb846e0734ccff64df53ffa89e03e421f301d09a99a08",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "223640fb27b2a97e98cf443db6d479defaaddfe4722b56a7a610ecaab55cf8b0"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7b1753787d33d05e083eb846e0734ccff64df53ffa89e03e421f301d09a99a08",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:08:05.726846Z"
+        },
+        "leaf_const": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_const",
+          "started_at": "2026-10-17T07:07:41.649407Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-leaf_const",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_const",
+            "claimed_at": "2026-10-17T07:07:41.649407Z",
+            "finalized_at": "2026-10-17T07:13:24.828031Z"
+          },
+          "timing_interval_index": 5,
+          "returned_at": "2026-10-17T07:13:24.828031Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7db476920e351269a9cd8ccfb4afd356cfa09b3b73ba14732ae7c855ba4cae9f",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "a7f4c6da6d2a1457dd2c9fb7db73c4d173633de263a71202d1b1e76376f82ace"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7db476920e351269a9cd8ccfb4afd356cfa09b3b73ba14732ae7c855ba4cae9f",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:13:26.753558Z"
+        },
+        "leaf_string": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_string",
+          "started_at": "2026-10-17T07:00:16.304895Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-leaf_string",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_string",
+            "claimed_at": "2026-10-17T07:00:16.304895Z",
+            "finalized_at": "2026-10-17T07:07:22.656464Z"
+          },
+          "timing_interval_index": 0,
+          "returned_at": "2026-10-17T07:07:22.656464Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "ad3c21ad3692591e06d074f9468585aa909ea4cee8695f399975dd6db7961281",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "3b06e243a65dd2fc429346a50c2177cc3dd7fef1aa72540ed0fa7969b80e35ee"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "ad3c21ad3692591e06d074f9468585aa909ea4cee8695f399975dd6db7961281",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:07:24.438532Z"
+        },
+        "leaf_getc": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_getc",
+          "started_at": "2026-10-17T07:10:35.065892Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-leaf_getc",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_getc",
+            "claimed_at": "2026-10-17T07:10:35.065892Z",
+            "finalized_at": "2026-10-17T07:13:54.561994Z"
+          },
+          "timing_interval_index": 7,
+          "returned_at": "2026-10-17T07:13:54.561994Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "437c1626d50be834575765dc405b228394919844b79bbd6a0f325d9b9aca0687",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "3c9fc48b624e8574db19c77749868881cda88012d326b053a33ade2a8124e9ef"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "437c1626d50be834575765dc405b228394919844b79bbd6a0f325d9b9aca0687",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:13:56.347163Z"
+        },
+        "sizeof_value": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/sizeof_value",
+          "started_at": "2026-10-17T07:00:30.315792Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-sizeof_value",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/sizeof_value",
+            "claimed_at": "2026-10-17T07:00:30.315792Z",
+            "finalized_at": "2026-10-17T07:05:07.539211Z"
+          },
+          "timing_interval_index": 1,
+          "returned_at": "2026-10-17T07:05:07.539211Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "53a5e003f7c52c812dd1c99ab981eafc61a7af01c29e63321fe391a64a7d7e0c",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "e2b08dae176fb3cba0308878c2caf010ea11b1a3a53967b3a6e32d1c338b7ca3"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "53a5e003f7c52c812dd1c99ab981eafc61a7af01c29e63321fe391a64a7d7e0c",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:05:09.650747Z"
+        },
+        "leaf_sizeof": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_sizeof",
+          "started_at": "2026-10-17T07:08:19.127222Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-leaf_sizeof",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/leaf_sizeof",
+            "claimed_at": "2026-10-17T07:08:19.127222Z",
+            "finalized_at": "2026-10-17T07:14:06.083115Z"
+          },
+          "timing_interval_index": 6,
+          "returned_at": "2026-10-17T07:14:06.083115Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "cf88c6952b51610c78d6b7a85b5d9101d366ff43739ce2df98adad41bf45f342",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "1d99195945f4978b1c87e259c94f40203f42b2333bf237bd0c3fa6dcd8a8a207"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "cf88c6952b51610c78d6b7a85b5d9101d366ff43739ce2df98adad41bf45f342",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:14:07.875687Z"
+        },
+        "member_context": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/member_context",
+          "started_at": "2026-10-17T07:04:56.707792Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-member_context",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/member_context",
+            "claimed_at": "2026-10-17T07:04:56.707792Z",
+            "finalized_at": "2026-10-17T07:10:14.780147Z"
+          },
+          "timing_interval_index": 3,
+          "returned_at": "2026-10-17T07:10:14.780147Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "6753d57af9070798991fdcb6bf8023e2d6da7250ca4c1d5f4e9d61e2af31caf4",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "1399b6e08199305991de9bac295ec1585ab06e9ee4da67361b4b017f469fc406"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "6753d57af9070798991fdcb6bf8023e2d6da7250ca4c1d5f4e9d61e2af31caf4",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:10:16.639100Z"
+        },
+        "member_results": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/member_results",
+          "started_at": "2026-10-17T07:00:42.278496Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_leaf_migration-vc-proving-r1-member_results",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_leaf_migration-vc-proving-r1/member_results",
+            "claimed_at": "2026-10-17T07:00:42.278496Z",
+            "finalized_at": "2026-10-17T07:04:40.256995Z"
+          },
+          "timing_interval_index": 2,
+          "returned_at": "2026-10-17T07:04:40.256995Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c238eb7fff73011b803e45fee5d529f6fa41acf8ef158e1424803125a24feca7",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+            "output": "58b4de788c32544132cf97f7febf46b8e55fffe58054109507d8c603f0bd5d44"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "c238eb7fff73011b803e45fee5d529f6fa41acf8ef158e1424803125a24feca7",
+            "group_worker_lib": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+          },
+          "accepted_at": "2026-10-17T07:04:42.065824Z"
+        }
+      },
+      "priority_group_ids": [],
+      "previous_proving_round": null,
+      "max_parallel_group_workers": 3,
+      "created_at": "2026-10-17T07:00:06.873086Z",
+      "base_manifest_sha256": "0841be3e3e52698c86c0c5bdec980b3366d3751e358d6bb617f2133487bd1612",
+      "group_workers_manifest_sha256": "2930701e9e7dd18ebe30ad217b0ecbb51eb3982c3d01e85a256c518dea3db464",
+      "timing": {
+        "preparing": [
+          {
+            "started_at": "2026-10-17T07:00:11.788846Z",
+            "finished_at": "2026-10-17T07:00:11.878342Z",
+            "elapsed_seconds": 0.081848
+          }
+        ],
+        "group-work": [
+          {
+            "started_at": "2026-10-17T07:00:16.304895Z",
+            "finished_at": "2026-10-17T07:07:22.656464Z",
+            "elapsed_seconds": 426.351569
+          },
+          {
+            "started_at": "2026-10-17T07:00:30.315792Z",
+            "finished_at": "2026-10-17T07:05:07.539211Z",
+            "elapsed_seconds": 277.223419
+          },
+          {
+            "started_at": "2026-10-17T07:00:42.278496Z",
+            "finished_at": "2026-10-17T07:04:40.256995Z",
+            "elapsed_seconds": 237.978499
+          },
+          {
+            "started_at": "2026-10-17T07:04:56.707792Z",
+            "finished_at": "2026-10-17T07:10:14.780147Z",
+            "elapsed_seconds": 318.072355
+          },
+          {
+            "started_at": "2026-10-17T07:05:25.094543Z",
+            "finished_at": "2026-10-17T07:08:03.961899Z",
+            "elapsed_seconds": 158.867356
+          },
+          {
+            "started_at": "2026-10-17T07:07:41.649407Z",
+            "finished_at": "2026-10-17T07:13:24.828031Z",
+            "elapsed_seconds": 343.178624
+          },
+          {
+            "started_at": "2026-10-17T07:08:19.127222Z",
+            "finished_at": "2026-10-17T07:14:06.083115Z",
+            "elapsed_seconds": 346.955893
+          },
+          {
+            "started_at": "2026-10-17T07:10:35.065892Z",
+            "finished_at": "2026-10-17T07:13:54.561994Z",
+            "elapsed_seconds": 199.496102
+          }
+        ],
+        "group-development-check": [
+          {
+            "started_at": "2026-10-17T07:01:56.801237Z",
+            "finished_at": "2026-10-17T07:01:59.721728Z",
+            "elapsed_seconds": 2.920491
+          },
+          {
+            "started_at": "2026-10-17T07:02:08.620173Z",
+            "finished_at": "2026-10-17T07:02:10.941056Z",
+            "elapsed_seconds": 2.320883
+          },
+          {
+            "started_at": "2026-10-17T07:02:11.018675Z",
+            "finished_at": "2026-10-17T07:02:13.971799Z",
+            "elapsed_seconds": 2.953124
+          },
+          {
+            "started_at": "2026-10-17T07:02:39.478381Z",
+            "finished_at": "2026-10-17T07:02:43.508053Z",
+            "elapsed_seconds": 4.029672
+          },
+          {
+            "started_at": "2026-10-17T07:02:42.372376Z",
+            "finished_at": "2026-10-17T07:02:46.162767Z",
+            "elapsed_seconds": 3.790391
+          },
+          {
+            "started_at": "2026-10-17T07:03:18.241277Z",
+            "finished_at": "2026-10-17T07:03:25.304856Z",
+            "elapsed_seconds": 7.063579
+          },
+          {
+            "started_at": "2026-10-17T07:03:26.028027Z",
+            "finished_at": "2026-10-17T07:03:30.338185Z",
+            "elapsed_seconds": 4.310158
+          },
+          {
+            "started_at": "2026-10-17T07:03:56.974083Z",
+            "finished_at": "2026-10-17T07:04:06.415427Z",
+            "elapsed_seconds": 9.441344
+          },
+          {
+            "started_at": "2026-10-17T07:04:05.364913Z",
+            "finished_at": "2026-10-17T07:04:10.556508Z",
+            "elapsed_seconds": 5.191595
+          },
+          {
+            "started_at": "2026-10-17T07:04:42.214581Z",
+            "finished_at": "2026-10-17T07:04:57.935334Z",
+            "elapsed_seconds": 15.720753
+          },
+          {
+            "started_at": "2026-10-17T07:05:07.046390Z",
+            "finished_at": "2026-10-17T07:05:24.886825Z",
+            "elapsed_seconds": 17.840435
+          },
+          {
+            "started_at": "2026-10-17T07:05:56.714671Z",
+            "finished_at": "2026-10-17T07:06:14.757378Z",
+            "elapsed_seconds": 18.042707
+          },
+          {
+            "started_at": "2026-10-17T07:06:29.856413Z",
+            "finished_at": "2026-10-17T07:06:31.752677Z",
+            "elapsed_seconds": 1.896264
+          },
+          {
+            "started_at": "2026-10-17T07:06:54.314197Z",
+            "finished_at": "2026-10-17T07:06:56.092069Z",
+            "elapsed_seconds": 1.777872
+          },
+          {
+            "started_at": "2026-10-17T07:07:05.106252Z",
+            "finished_at": "2026-10-17T07:07:06.807118Z",
+            "elapsed_seconds": 1.700866
+          },
+          {
+            "started_at": "2026-10-17T07:07:18.629732Z",
+            "finished_at": "2026-10-17T07:07:20.369308Z",
+            "elapsed_seconds": 1.739576
+          },
+          {
+            "started_at": "2026-10-17T07:07:30.207628Z",
+            "finished_at": "2026-10-17T07:07:32.681871Z",
+            "elapsed_seconds": 2.474243
+          },
+          {
+            "started_at": "2026-10-17T07:07:48.639318Z",
+            "finished_at": "2026-10-17T07:07:50.517024Z",
+            "elapsed_seconds": 1.877706
+          },
+          {
+            "started_at": "2026-10-17T07:08:45.537255Z",
+            "finished_at": "2026-10-17T07:08:48.671482Z",
+            "elapsed_seconds": 3.134227
+          },
+          {
+            "started_at": "2026-10-17T07:09:29.590929Z",
+            "finished_at": "2026-10-17T07:09:32.303196Z",
+            "elapsed_seconds": 2.712267
+          },
+          {
+            "started_at": "2026-10-17T07:09:29.258396Z",
+            "finished_at": "2026-10-17T07:09:36.364385Z",
+            "elapsed_seconds": 7.105989
+          },
+          {
+            "started_at": "2026-10-17T07:09:41.563854Z",
+            "finished_at": "2026-10-17T07:09:44.108869Z",
+            "elapsed_seconds": 2.545015
+          },
+          {
+            "started_at": "2026-10-17T07:09:48.274480Z",
+            "finished_at": "2026-10-17T07:09:51.389346Z",
+            "elapsed_seconds": 3.114866
+          },
+          {
+            "started_at": "2026-10-17T07:10:01.473846Z",
+            "finished_at": "2026-10-17T07:10:04.602855Z",
+            "elapsed_seconds": 3.129009
+          },
+          {
+            "started_at": "2026-10-17T07:10:04.786990Z",
+            "finished_at": "2026-10-17T07:10:08.420067Z",
+            "elapsed_seconds": 3.633077
+          },
+          {
+            "started_at": "2026-10-17T07:10:15.784052Z",
+            "finished_at": "2026-10-17T07:10:19.164371Z",
+            "elapsed_seconds": 3.380319
+          },
+          {
+            "started_at": "2026-10-17T07:10:34.950207Z",
+            "finished_at": "2026-10-17T07:10:38.616231Z",
+            "elapsed_seconds": 3.666024
+          },
+          {
+            "started_at": "2026-10-17T07:10:41.608549Z",
+            "finished_at": "2026-10-17T07:10:46.149377Z",
+            "elapsed_seconds": 4.540828
+          },
+          {
+            "started_at": "2026-10-17T07:11:03.400903Z",
+            "finished_at": "2026-10-17T07:11:07.885363Z",
+            "elapsed_seconds": 4.48446
+          },
+          {
+            "started_at": "2026-10-17T07:11:18.687864Z",
+            "finished_at": "2026-10-17T07:11:23.150122Z",
+            "elapsed_seconds": 4.462258
+          },
+          {
+            "started_at": "2026-10-17T07:11:21.867694Z",
+            "finished_at": "2026-10-17T07:11:26.538193Z",
+            "elapsed_seconds": 4.670499
+          },
+          {
+            "started_at": "2026-10-17T07:11:37.260726Z",
+            "finished_at": "2026-10-17T07:11:39.311167Z",
+            "elapsed_seconds": 2.050441
+          },
+          {
+            "started_at": "2026-10-17T07:11:39.610353Z",
+            "finished_at": "2026-10-17T07:11:44.237935Z",
+            "elapsed_seconds": 4.627582
+          },
+          {
+            "started_at": "2026-10-17T07:11:54.711659Z",
+            "finished_at": "2026-10-17T07:11:59.429410Z",
+            "elapsed_seconds": 4.717751
+          },
+          {
+            "started_at": "2026-10-17T07:11:55.920546Z",
+            "finished_at": "2026-10-17T07:12:01.400622Z",
+            "elapsed_seconds": 5.480076
+          },
+          {
+            "started_at": "2026-10-17T07:12:12.565018Z",
+            "finished_at": "2026-10-17T07:12:18.291659Z",
+            "elapsed_seconds": 5.726641
+          },
+          {
+            "started_at": "2026-10-17T07:12:19.249087Z",
+            "finished_at": "2026-10-17T07:12:21.705735Z",
+            "elapsed_seconds": 2.456648
+          },
+          {
+            "started_at": "2026-10-17T07:12:18.500210Z",
+            "finished_at": "2026-10-17T07:12:23.805935Z",
+            "elapsed_seconds": 5.305725
+          },
+          {
+            "started_at": "2026-10-17T07:12:29.136758Z",
+            "finished_at": "2026-10-17T07:12:35.713209Z",
+            "elapsed_seconds": 6.576451
+          },
+          {
+            "started_at": "2026-10-17T07:12:33.424590Z",
+            "finished_at": "2026-10-17T07:12:40.022225Z",
+            "elapsed_seconds": 6.597635
+          },
+          {
+            "started_at": "2026-10-17T07:13:00.793410Z",
+            "finished_at": "2026-10-17T07:13:07.325628Z",
+            "elapsed_seconds": 6.532218
+          }
+        ],
+        "group-coq-check": [
+          {
+            "started_at": "2026-10-17T07:03:30.342820Z",
+            "finished_at": "2026-10-17T07:03:35.984248Z",
+            "elapsed_seconds": 5.641428
+          },
+          {
+            "started_at": "2026-10-17T07:03:54.909532Z",
+            "finished_at": "2026-10-17T07:04:04.862382Z",
+            "elapsed_seconds": 9.95285
+          },
+          {
+            "started_at": "2026-10-17T07:04:16.159197Z",
+            "finished_at": "2026-10-17T07:04:19.128225Z",
+            "elapsed_seconds": 2.969028
+          },
+          {
+            "started_at": "2026-10-17T07:06:29.216301Z",
+            "finished_at": "2026-10-17T07:06:50.021595Z",
+            "elapsed_seconds": 20.805294
+          },
+          {
+            "started_at": "2026-10-17T07:07:30.442140Z",
+            "finished_at": "2026-10-17T07:07:33.484673Z",
+            "elapsed_seconds": 3.042533
+          },
+          {
+            "started_at": "2026-10-17T07:09:41.099285Z",
+            "finished_at": "2026-10-17T07:09:44.165168Z",
+            "elapsed_seconds": 3.065883
+          },
+          {
+            "started_at": "2026-10-17T07:12:44.328491Z",
+            "finished_at": "2026-10-17T07:12:46.639060Z",
+            "elapsed_seconds": 2.310569
+          },
+          {
+            "started_at": "2026-10-17T07:12:49.820966Z",
+            "finished_at": "2026-10-17T07:12:59.029802Z",
+            "elapsed_seconds": 9.208836
+          },
+          {
+            "started_at": "2026-10-17T07:13:16.939733Z",
+            "finished_at": "2026-10-17T07:13:21.917216Z",
+            "elapsed_seconds": 4.977483
+          },
+          {
+            "started_at": "2026-10-17T07:13:27.667632Z",
+            "finished_at": "2026-10-17T07:13:30.476298Z",
+            "elapsed_seconds": 2.808666
+          }
+        ],
+        "group-validation": [
+          {
+            "started_at": "2026-10-17T07:04:40.226312Z",
+            "finished_at": "2026-10-17T07:04:42.095160Z",
+            "elapsed_seconds": 1.860397
+          },
+          {
+            "started_at": "2026-10-17T07:05:07.512614Z",
+            "finished_at": "2026-10-17T07:05:09.681084Z",
+            "elapsed_seconds": 2.160196
+          },
+          {
+            "started_at": "2026-10-17T07:07:22.629075Z",
+            "finished_at": "2026-10-17T07:07:24.470638Z",
+            "elapsed_seconds": 1.833612
+          },
+          {
+            "started_at": "2026-10-17T07:08:03.934324Z",
+            "finished_at": "2026-10-17T07:08:05.761358Z",
+            "elapsed_seconds": 1.819425
+          },
+          {
+            "started_at": "2026-10-17T07:10:14.752333Z",
+            "finished_at": "2026-10-17T07:10:16.677127Z",
+            "elapsed_seconds": 1.91677
+          },
+          {
+            "started_at": "2026-10-17T07:13:24.798347Z",
+            "finished_at": "2026-10-17T07:13:26.794216Z",
+            "elapsed_seconds": 1.987959
+          },
+          {
+            "started_at": "2026-10-17T07:13:54.534186Z",
+            "finished_at": "2026-10-17T07:13:56.390082Z",
+            "elapsed_seconds": 1.848034
+          },
+          {
+            "started_at": "2026-10-17T07:14:06.055631Z",
+            "finished_at": "2026-10-17T07:14:07.942285Z",
+            "elapsed_seconds": 1.878893
+          }
+        ],
+        "parent-verify": [
+          {
+            "started_at": "2026-10-17T07:14:27.033456Z",
+            "finished_at": "2026-10-17T07:15:04.536776Z",
+            "elapsed_seconds": 37.494569
+          }
+        ]
+      },
+      "finished_at": "2026-10-17T07:15:04.536776Z",
+      "verified_result_sha256": "43fd1dbbaeffe51d05b688dfe7695a80458ab3ad30b113e2e1f243d08b17246f"
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_emit_expr_leaf_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_emit_expr_leaf_migration-annotation-r1-attempt-1",
+    "iteration_count": 1,
+    "owner": "annotation/cmc_emit_expr_leaf_migration-20261017144315"
+  },
+  "accepted_rounds": {
+    "annotation": {
+      "round": "cmc_emit_expr_leaf_migration-annotation-r1",
+      "attempt_id": "cmc_emit_expr_leaf_migration-annotation-r1-attempt-1",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/annotation_history/annotation-attempt1"
+    },
+    "vc-checking": {
+      "round": "cmc_emit_expr_leaf_migration-vc-checking-r1",
+      "attempt_id": "cmc_emit_expr_leaf_migration-vc-checking-r1-attempt-1",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "a29330396e11ecddf172dc360d6b8c67495a04da8d30e2d030b9c0dd2b514c46",
+      "proof_manual_sha256": "d07ce878b82426e337f8cb4f238cf828723f0fc98a744908f3713daadc9eeab9",
+      "agent_output_metrics": {
+        "bytes": 9463,
+        "lines": 93,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 27,
+        "structural_no_split_checked_first": 4,
+        "structural_definite_blockers": 0
+      }
+    },
+    "vc-proving-preparing": {
+      "round": "cmc_emit_expr_leaf_migration-vc-proving-r1",
+      "attempt_id": "cmc_emit_expr_leaf_migration-vc-proving-r1",
+      "result_sha256": "43fd1dbbaeffe51d05b688dfe7695a80458ab3ad30b113e2e1f243d08b17246f"
+    }
+  },
+  "next_actions": [],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": {
+    "round": "cmc_emit_expr_leaf_migration-vc-proving-r1",
+    "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/rounds/cmc_emit_expr_leaf_migration-vc-proving-r1/proving_merged_result.json",
+    "result_sha256": "43fd1dbbaeffe51d05b688dfe7695a80458ab3ad30b113e2e1f243d08b17246f",
+    "proof_manual_sha256": "4346c80856973d484ea614b5fccdd24eabae6c7828abfe1c0350a3306bb72ffd",
+    "proving_merged_lib_sha256": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+  },
+  "final_apply": {
+    "status": "passed",
+    "transaction_id": "b8fb3635e08143d38c103e6db3ea4b3b",
+    "applied_at": "2026-10-17T07:15:12.756237Z"
+  },
+  "final_check": {
+    "status": "passed",
+    "checked_at": "2026-10-17T07:15:30.764661Z",
+    "cleanup_removed_count": 0
+  },
+  "created_at": "2026-10-17T06:43:15.455117Z",
+  "updated_at": "2026-10-17T07:15:30.771923Z",
+  "final_apply_transaction": {
+    "transaction_id": "b8fb3635e08143d38c103e6db3ea4b3b",
+    "status": "completed",
+    "records": [
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/cmc_emit_expr_leaf_migration-vc-proving-r1/proving_merged/cmc_emit_expr_leaf_migration_proof_manual.v",
+        "source_sha256": "4346c80856973d484ea614b5fccdd24eabae6c7828abfe1c0350a3306bb72ffd",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v",
+        "existed": true,
+        "before_sha256": "d07ce878b82426e337f8cb4f238cf828723f0fc98a744908f3713daadc9eeab9",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/final-check/backup/b8fb3635e08143d38c103e6db3ea4b3b/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v"
+      },
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_leaf_migration-20261017144315/cmc_emit_expr_leaf_migration-vc-proving-r1/proving_merged/cmc_emit_expr_leaf_migration_lib.v",
+        "source_sha256": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v",
+        "existed": true,
+        "before_sha256": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_leaf_migration-20261017144315/final-check/backup/b8fb3635e08143d38c103e6db3ea4b3b/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v"
+      }
+    ],
+    "prepared_at": "2026-10-17T07:15:12.734188Z",
+    "backed_up_at": "2026-10-17T07:15:12.746922Z",
+    "completed_at": "2026-10-17T07:15:12.756235Z"
+  },
+  "finished_at": "2026-10-17T07:15:30.764661Z"
+}

@@ -1,0 +1,32 @@
+{
+  "status": "kernel_checked_and_canonically_published",
+  "complete_original_invariants": 17,
+  "total_original_invariants": 18,
+  "top_level_verified": false,
+  "new_actual_steps": [
+    "S: complete including declaration and initialization activation",
+    "V: member",
+    "V: short-circuit left and right",
+    "V: assign-left, index-left, ordinary binary-left, nonfinal argument",
+    "V: index-right"
+  ],
+  "new_support": [
+    "fresh-region memory and provenance simulation",
+    "spill preservation under region-base transport",
+    "temporary store noninterference derived from runtime stack",
+    "temporary slot load and stored value recovery",
+    "actual address/load/store/multiply/add instruction fragments"
+  ],
+  "local_premises": "Local branch lemmas retain necessary projections of original invariants. Full target-step dispatch must still derive these projections. C Require unchanged.",
+  "remaining": [
+    "Start/prelude and call entry",
+    "ordinary binary completion",
+    "assignment and initialization source stores",
+    "final argument call entry",
+    "call return/fallthrough",
+    "total target simulation induction",
+    "original preservation and successful compile bridge",
+    "top-level QCP validation",
+    "skill update after top-level validation"
+  ]
+}

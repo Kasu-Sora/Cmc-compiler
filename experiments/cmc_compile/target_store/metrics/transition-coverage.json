@@ -1,0 +1,26 @@
+{
+  "status": "kernel_checked_and_canonically_published",
+  "complete_original_invariants": 17,
+  "total_original_invariants": 18,
+  "top_level_verified": false,
+  "new_actual_steps": [
+    "V: local initialization",
+    "V: assignment-right"
+  ],
+  "new_support": [
+    "typed source-memory store preserves initialized bytes and provenance",
+    "store disjoint from call frames, frame-pointer word and temporary spills",
+    "actual normalize/address/store/reload sequence and assignment result"
+  ],
+  "local_premises": "Derived runtime memory layout, store safety, held temporary value; total invariant dispatcher still pending. Original C Require unchanged.",
+  "remaining": [
+    "Start/prelude",
+    "empty/final argument call entry",
+    "ordinary binary completion",
+    "call return/fallthrough",
+    "full target-step dispatch and induction",
+    "original preservation",
+    "success bridge",
+    "top QCP validation"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cmc_emit_globals",
+      "source_contract_sha256": "b3246b1015d0a398a305dfc34376163c0bec804dcf9a35aa083ae7b8829b3b0a",
+      "target_contract_sha256": "a0534b62f95cb58af47ed72e928c480eb3d1e91c1edcdee45c6edd51156b741e",
+      "checks": [
+        "Original globals safety and complete pointwise global wellformedness retained and restored",
+        "Same nonnegative cursor, capacity bound and total output-space requirement",
+        "Global-list ownership preserved",
+        "Original initialized prefix followed by exact cm_globals_bytes, with same undefined remainder",
+        "Exact returned cursor+representation size",
+        "No added nonnull data or initialized-value precondition; empty list and all original branches preserved"
+      ],
+      "adaptation": "Existing UCharArray segment predicates represent source initialized and undefined byte regions; same verified global models and ABI reused."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_data_globals_wf",
+      "kind": "Fixpoint",
+      "nonblank_lines": 6,
+      "sha256": "96753f2adcd9959a3391a5331881f302095329c77998d9e855b9d8344552293d"
+    }
+  ],
+  "inherited_model_boundary": "Immutable verified counts/layout/copy-bytes and word encoding models; this case does not introduce lookup-policy or codegen-obligations parameters. Full pointer-initialization restrictions remain in existing cm_global_wf.",
+  "review_method": "Manual comparison of source/target pre/post resources and definition conjuncts; hashes are drift checks, not an automatic equivalence proof.",
+  "encoding_bridge_review": "Existing counts map/seq/power-divisor model must be proved equal to existing eight-entry word model for all signed values, without replacing either dependency.",
+  "final_verification": {
+    "run_id": "cmc_emit_globals_migration-20261016102210",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 1
+  },
+  "proof_audit": {
+    "manual_top_level": 9,
+    "proved_splits": 8,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 9,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

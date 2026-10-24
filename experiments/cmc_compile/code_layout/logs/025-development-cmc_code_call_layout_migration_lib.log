@@ -1,0 +1,127 @@
+Chars 0 - 80 [Require~Export~~~SimpleC.EE.QC...] 1.32 secs (1.206u,0.098s)
+Chars 81 - 126 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.01u,0.s)
+Chars 127 - 162 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 163 - 184 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 185 - 210 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 211 - 935 [Lemma~cm_layout_enter_call~sp~...] 0. secs (0.u,0.s)
+Chars 936 - 942 [Proof.] 0. secs (0.u,0.s)
+Chars 944 - 966 [(intros~B~RETURN~SAVED).] 0. secs (0.u,0.s)
+Chars 968 - 1062 [(pose~proof~~~(cm_model_functi...] 0. secs (0.u,0.s)
+Chars 1064 - 1460 [(cbv[cm_task_layout~cm_task_co...] 0. secs (0.u,0.s)
+Chars 1462 - 1535 [(repeat~rewrite~app_nil_r;~rep...] 0.003 secs (0.003u,0.s)
+Chars 1536 - 1540 [Qed.] 0.006 secs (0.006u,0.s)
+Chars 1541 - 1660 [Lemma~cm_model_status_tail_at~...] 0. secs (0.u,0.s)
+Chars 1661 - 1667 [Proof.] 0. secs (0.u,0.s)
+Chars 1668 - 1932 [(exists~~~~~[TVMInst~TVMPushOp...] 0. secs (0.u,0.s)
+Chars 1933 - 1937 [Qed.] 0. secs (0.u,0.s)
+Chars 1938 - 2216 [Lemma~cm_start_task_layout_ste...] 0. secs (0.u,0.s)
+Chars 2217 - 2223 [Proof.] 0. secs (0.u,0.s)
+Chars 2225 - 2288 [(intro~OK;~pose~proof~(cm_call...] 0. secs (0.u,0.s)
+Chars 2290 - 2457 [(cbv[cm_step~cm_begin_call~cm_...] 0.613 secs (0.601u,0.011s)
+Chars 2459 - 2482 [(rewrite~OK;~cbn[andb]).] 1.591 secs (1.562u,0.026s)
+Chars 2483 - 2571 [(eapply~cm_layout_enter_call~w...] 0.064 secs (0.062u,0.001s)
+Chars 2573 - 2758 [(cbn[cm_cont_code~cm_cursor_co...] 0. secs (0.u,0.s)
+Chars 2759 - 2763 [Qed.] 1.77 secs (1.763u,0.005s)
+Chars 2764 - 3231 [Lemma~cm_r_call_nil_layout_ste...] 0. secs (0.u,0.s)
+Chars 3232 - 3238 [Proof.] 0. secs (0.u,0.s)
+Chars 3240 - 3323 [(intros~OK~DEPTH~[CODE~SAVED];...] 0. secs (0.u,0.s)
+Chars 3325 - 3349 [(apply~Z.ltb_lt~in~DEPTH).] 0. secs (0.u,0.s)
+Chars 3351 - 3472 [(cbn[cm_rstart~cm_args_start~c...] 0. secs (0.u,0.s)
+Chars 3474 - 3545 [(eapply~cm_layout_enter_call~w...] 0.003 secs (0.003u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_layout/build/Rocq/examples/QCP_demos_human/cmc_code_call_layout_migration_lib.v", line 36, characters 8-46:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid, callee : Z
+ty : cm_type
+st : cm_src_state
+ann : cm_annotation
+OK : cm_call_ok sp p callee [] st = true
+DEPTH :
+  (cm_call_depth (cm_cursor_frames (cm_ann_cursors ann)) <? 65536) = true
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+    (cm_ann_pc ann)
+    (cm_task_code sp p
+       (CMRTask p fid (CMCallE callee [] ty) st
+          (cm_cursor_frames (cm_ann_cursors ann))) ann)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    (cm_task_fid
+       (CMRTask p fid (CMCallE callee [] ty) st
+          (cm_cursor_frames (cm_ann_cursors ann)))) 
+    (cm_ann_cursors ann) (cm_ann_calls ann)
+B : 0 <= callee < Zlength (cm_program_functions p)
+Unable to unify
+ "cm_code_at (cm_model_code (cm_source_function_policy ?M2546) ?M2548)
+    (cm_ann_pc
+       (cm_ann_enter_call ?M2546 ?M2548 ?M2549 ?M2550 
+          ?M2551 ?M2553 ?M2554 ?M2555 ?M2556 ?M2557 
+          ?M2558 ?M2559 ?M2560 ?M2561))
+    (cm_task_code ?M2546 ?M2548
+       (CMSTask ?M2548 ?M2550
+          (cm_function_body (cm_source_function_at ?M2546 ?M2550 ?M2548))
+          (cm_enter_call ?M2546 ?M2548 ?M2550 [] ?M2551)
+          (CMCallK ?M2549 (cm_state_env ?M2551) (cm_state_fp ?M2551)
+             (cm_state_regions ?M2551) ?M2553 :: cm_cursor_frames ?M2558))
+       (cm_ann_enter_call ?M2546 ?M2548 ?M2549 ?M2550 
+          ?M2551 ?M2553 ?M2554 ?M2555 ?M2556 ?M2557 
+          ?M2558 ?M2559 ?M2560 ?M2561)) /\
+  cm_saved_layout ?M2546 ?M2547 ?M2548
+    (cm_model_code (cm_source_function_policy ?M2546) ?M2548)
+    (cm_task_fid
+       (CMSTask ?M2548 ?M2550
+          (cm_function_body (cm_source_function_at ?M2546 ?M2550 ?M2548))
+          (cm_enter_call ?M2546 ?M2548 ?M2550 [] ?M2551)
+          (CMCallK ?M2549 (cm_state_env ?M2551) (cm_state_fp ?M2551)
+             (cm_state_regions ?M2551) ?M2553 :: cm_cursor_frames ?M2558)))
+    (cm_ann_cursors
+       (cm_ann_enter_call ?M2546 ?M2548 ?M2549 ?M2550 
+          ?M2551 ?M2553 ?M2554 ?M2555 ?M2556 ?M2557 
+          ?M2558 ?M2559 ?M2560 ?M2561))
+    (cm_ann_calls
+       (cm_ann_enter_call ?M2546 ?M2548 ?M2549 ?M2550 
+          ?M2551 ?M2553 ?M2554 ?M2555 ?M2556 ?M2557 
+          ?M2558 ?M2559 ?M2560 ?M2561))" with
+ "match
+    cm_begin_call sp p fid callee [] st ty
+      (cm_cursor_frames (cm_ann_cursors ann))
+  with
+  | CMDoneTask _ _ _ => True
+  | _ =>
+      cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+        (cm_ann_pc
+           (cm_ann_enter_call sp p fid callee st ty 
+              (cm_ann_pc ann + 1) (cm_ann_temp ann) 
+              (cm_ann_break ann) (cm_ann_continue ann) 
+              (cm_ann_cursors ann) (cm_ann_spills ann) 
+              (cm_ann_saved ann) (cm_ann_calls ann)))
+        (cm_task_code sp p
+           (cm_begin_call sp p fid callee [] st ty
+              (cm_cursor_frames (cm_ann_cursors ann)))
+           (cm_ann_enter_call sp p fid callee st ty 
+              (cm_ann_pc ann + 1) (cm_ann_temp ann) 
+              (cm_ann_break ann) (cm_ann_continue ann) 
+              (cm_ann_cursors ann) (cm_ann_spills ann) 
+              (cm_ann_saved ann) (cm_ann_calls ann))) /\
+      cm_saved_layout sp ap p
+        (cm_model_code (cm_source_function_policy sp) p)
+        (cm_task_fid
+           (cm_begin_call sp p fid callee [] st ty
+              (cm_cursor_frames (cm_ann_cursors ann))))
+        (cm_ann_cursors
+           (cm_ann_enter_call sp p fid callee st ty 
+              (cm_ann_pc ann + 1) (cm_ann_temp ann) 
+              (cm_ann_break ann) (cm_ann_continue ann) 
+              (cm_ann_cursors ann) (cm_ann_spills ann) 
+              (cm_ann_saved ann) (cm_ann_calls ann)))
+        (cm_ann_calls
+           (cm_ann_enter_call sp p fid callee st ty 
+              (cm_ann_pc ann + 1) (cm_ann_temp ann) 
+              (cm_ann_break ann) (cm_ann_continue ann) 
+              (cm_ann_cursors ann) (cm_ann_spills ann) 
+              (cm_ann_saved ann) (cm_ann_calls ann)))
+  end".
+

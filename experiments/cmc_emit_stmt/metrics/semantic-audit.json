@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cmc_emit_if_stmt",
+      "target_contract_sha256": "6a5dc55cc888cb35874fcaf874fc99aa8e1afb2647ed0134f4af9d18fc0f09ad",
+      "source_contract_sha256": "fee6737c40861cd721b66ca1758b6652a3883c377b3be7bffe77333ba59d810a",
+      "status": "reviewed",
+      "review": "All original pure facts, complete program/function/statement resources, original loop context, arbitrary done/tail and exact emission prefix/postfix retained; if constructor condition unchanged. Existing arbitrary policy/cg parameters retained."
+    },
+    {
+      "function": "cmc_emit_stmt",
+      "target_contract_sha256": "9a23e02885c4c46dde86d5d273f8919bf06f2f992253b342e64ad0b57e520a6a",
+      "source_contract_sha256": "2ddf89110da3e577f387ba69a50e72b6c7734564083f17605f41d7f905eec14d",
+      "status": "reviewed",
+      "review": "All original pure facts, complete program/function/statement resources, original loop context, arbitrary done/tail and exact emission prefix/postfix retained; if constructor condition unchanged. Existing arbitrary policy/cg parameters retained."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_emit_stmt",
+      "kind": "Fixpoint",
+      "span": [
+        9,
+        34
+      ],
+      "sha256": "9854802b26999ba34d3f49fc3647cd8aaa476d41c324b8578047573f6e4f5278",
+      "nonblank_lines": 26
+    },
+    {
+      "name": "cm_stmt_expr",
+      "kind": "Definition",
+      "span": [
+        37,
+        39
+      ],
+      "sha256": "4d571e0471a07226c86b16c9c06821a417e38a97283c1b39861096306c3236eb",
+      "nonblank_lines": 3
+    },
+    {
+      "name": "cm_stmt_first",
+      "kind": "Definition",
+      "span": [
+        40,
+        41
+      ],
+      "sha256": "de1d674fac693ce7a060ed1f80bbfed58fc0a23bb60cd51a56de70e00940b37f",
+      "nonblank_lines": 2
+    },
+    {
+      "name": "cm_stmt_second",
+      "kind": "Definition",
+      "span": [
+        42,
+        43
+      ],
+      "sha256": "05c074f47b5acda739f795916d4656c4c4fa072956c91a25904824641236c6a2",
+      "nonblank_lines": 2
+    }
+  ],
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "source_model": "baseline/cmc_codegen.c:891",
+  "model_review": "Initial cm_emit_stmt Fixpoint reviewed constructor by constructor: preserves all 11 HOL cases, ordered code, if jump targets and branch PCs, while break=end and continue=guard PC, init slot lookup/store/normalization and return epilogue. Final declarations must be reviewed separately.",
+  "annotation_stage_model_review": {
+    "cm_emit_stmt": "All 11 HOL constructor equations reviewed. Existing cm_expr_code_for(...,0) selects rvalue code; exact concatenation order, if no/end PCs, while break=end/continue=pc, slot type and return type normalization preserved.",
+    "cm_stmt_expr": "Transparent projection returns embedded expression for Expr/Init/If/While/Return; irrelevant cases return a fixed Const 0 Int. It is used under constructor/kind facts, not as a new premise.",
+    "cm_stmt_first": "Transparent projection of first child for Seq/Block/If/While; irrelevant cases Skip. No heap or operational assumption.",
+    "cm_stmt_second": "Transparent projection of second child for Seq/If; irrelevant cases Skip. No heap or operational assumption."
+  },
+  "final_library_review": "final-library-review.json",
+  "final_model_hashes_unchanged": true,
+  "new_assumptions": false
+}

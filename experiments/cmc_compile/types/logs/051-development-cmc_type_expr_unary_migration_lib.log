@@ -1,0 +1,42 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.26 secs (1.184u,0.068s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 124 - 145 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 146 - 171 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 172 - 254 [Lemma~cm_pointer_pointee_type~...] 0. secs (0.u,0.s)
+Chars 255 - 261 [Proof.] 0. secs (0.u,0.s)
+Chars 262 - 317 [(destruct~ty;~cbn[cm_is_pointe...] 0. secs (0.u,0.s)
+Chars 318 - 322 [Qed.] 0. secs (0.u,0.s)
+Chars 323 - 749 [Lemma~cm_r_unary_type_ready_st...] 0. secs (0.u,0.s)
+Chars 750 - 756 [Proof.] 0. secs (0.u,0.s)
+Chars 758 - 806 [(intros~WF~[_~[FL~[FU~[EW~[SC~...] 0. secs (0.u,0.s)
+Chars 808 - 863 [(pose~proof~(cm_typed_function...] 0. secs (0.u,0.s)
+Chars 865 - 968 [(pose~proof~~~(cm_nonzero_curs...] 0. secs (0.u,0.s)
+Chars 970 - 1008 [(destruct~EW~as~[AW~[[BOUND~UT...] 0. secs (0.u,0.s)
+Chars 1010 - 1061 [(assert~(CASES~:~op~=~0~\/~op~...] 0.001 secs (0.u,0.s)
+Chars 1063 - 1239 [(destruct~CASES~as~[->|~[->|~[...] 0.027 secs (0.026u,0.s)
+Chars 1241 - 1344 [all:~~(try~~~~match~goal~with~...] 0.005 secs (0.004u,0.s)
+Chars 1346 - 1503 [all:~~(try~~~~match~goal~with~...] 0.001 secs (0.u,0.s)
+Chars 1505 - 1820 [all:~~(try~(solve~~~~[~repeat~...] 0.095 secs (0.085u,0.008s)
+Chars 1822 - 1823 [-] 0. secs (0.u,0.s)
+Chars 1824 - 1907 [(repeat~(first~~~[~assumption~...] 0.007 secs (0.007u,0.s)
+Chars 1911 - 1912 [+] 0. secs (0.u,0.s)
+Chars 1913 - 1923 [now~right.] 0. secs (0.u,0.s)
+Chars 1927 - 1928 [+] 0. secs (0.u,0.s)
+Chars 1929 - 1973 [(intros~result~v~->~V;~apply~R...] 0. secs (0.u,0.s)
+Chars 1977 - 1978 [+] 0. secs (0.u,0.s)
+Chars 1979 - 2117 [(apply~cm_cursor_expr_value_re...] 0. secs (0.u,0.s)
+Chars 2119 - 2120 [-] 0. secs (0.u,0.s)
+Chars 2121 - 2156 [(destruct~(LVAL~eq_refl)~as~[L...] 0.002 secs (0.002u,0.s)
+Chars 2160 - 2223 [(pose~proof~(cm_nonarray_lvalu...] 0. secs (0.u,0.s)
+Chars 2227 - 2244 [(rewrite~OUT,~<-~UT).] 0.002 secs (0.002u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_expr_unary_migration_lib.v", line 32, characters 3-19:
+Error: Found no subterm matching
+"CMPtrTy
+   match arg with
+   | CMConstE _ t | CMStringE _ t | CMVarE _ _ t | 
+     CMAssignE _ _ t | CMBinaryE _ _ _ t | CMUnaryE _ _ t | 
+     CMIndexE _ _ t | CMMemberE _ _ t | CMCallE _ _ t | 
+     CMSizeofE _ t | CMGetcE t | CMPutcE _ t | CMPutiE _ t | 
+     CMExitE _ t => t
+   end" in the current goal.
+

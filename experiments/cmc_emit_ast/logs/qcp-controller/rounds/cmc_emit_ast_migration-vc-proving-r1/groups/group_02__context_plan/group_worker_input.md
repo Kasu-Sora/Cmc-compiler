@@ -1,0 +1,87 @@
+# Group worker handoff
+
+Read `.agents/skills/group-worker-proving/SKILL.md`, `.agents/skills/group-worker-proving/workflows/group-worker-proving.md`, and `.agents/skills/group-worker-proving/workflows/commands-and-checks.md` completely. This handoff adds only the current assignment; do not use a parent transcript or sibling output.
+
+## Assignment
+
+- Group: `context_plan`; attempt 1; earlier compact attempts 0
+- Difficulty hint: 2/5
+- Required suffix for every new or adapted helper: `__context_plan`
+
+
+### `proof_of_cm_emit_binding_address_entail_wit_1` — `LLM_pre_process`
+
+Strategy: Choose the first disjunct of the whole VC and introduce its parameters and pure hypotheses. Unfold cm_program_context_rep and cm_function_context_rep only on the left, extracting program_pre/fn_pre nonzero and their existential field pointers. From cm_binding_valid, split its three scope cases to obtain 0 <= slot_pre. Instantiate the consequent existentials zl,zp,tp,gp,sp with the extracted locals,params,strings,globals,structs pointers. Reintroduce the unchanged pure hypotheses and cancel the exact program/function fields, list representations, and framed cm_resolved_emitter_rep. All current parameters already coincide with their pre values in this VC.
+
+Prove only the top-level VC, opening with `LLM_pre_process ltac:(...)` and an explicit closer; do not edit its split goals.
+
+Split goals:
+
+  - none generated
+
+### `proof_of_cm_emit_binding_address_plan_entail_wit_1` — `aggressive_pre_process`
+
+Prove every listed split goal first, each opening with `LLM_pre_process ltac:(...)` and an explicit closer. Then prove the top-level VC with `aggressive_pre_process` and close each resulting branch with only `Goal_apply <split-goal lemma>` for the corresponding split goal, with no other tactic in the top-level proof. This is a worker proof rule; controller validation does not inspect the spelling of these applications.
+
+Split goals:
+
+  - `proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_1`: Unfold cm_resolved_emitter_plan_rep in the framed antecedent and extract its bound Zlength done + Zlength (fragment ++ tail) <= capacity, where fragment is cm_binding_address_code. Apply the first conjunct of existing cm_plan_fragment_capacity (or Zlength_app and Zlength_nonneg tail) to obtain the pure capacity conclusion. Do not open the program/function/resolved-emitter predicates.
+  - `proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_2`: Extract the same plan bound and use the second conjunct of cm_plan_fragment_capacity, equivalently two Zlength_app rewrites, to obtain Zlength (done ++ fragment) + Zlength tail <= capacity. No existential or heap rewrite is needed.
+  - `proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_spatial`: Unfold cm_resolved_emitter_plan_rep in the antecedent, remove its pure capacity conjunct, and retain cm_resolved_emitter_rep with the identical done prefix. Frame and cancel the unchanged program and function context resources.
+
+### `proof_of_cm_emit_binding_address_plan_return_wit_1` — `aggressive_pre_process`
+
+Prove every listed split goal first, each opening with `LLM_pre_process ltac:(...)` and an explicit closer. Then prove the top-level VC with `aggressive_pre_process` and close each resulting branch with only `Goal_apply <split-goal lemma>` for the corresponding split goal, with no other tactic in the top-level proof. This is a worker proof rule; controller validation does not inspect the spelling of these applications.
+
+Split goals:
+
+  - `proof_of_cm_emit_binding_address_plan_return_wit_1_split_goal_spatial`: Unfold cm_resolved_emitter_plan_rep on the right for the new prefix done ++ cm_binding_address_code and todo = tail. Supply its capacity conjunct directly from PreH11, and cancel the identical resolved-emitter resource and program/function context frame. There are no new existential witnesses or code-sequence equalities.
+
+## Write boundary
+
+- Editable top-level proof spans: `proof_of_cm_emit_binding_address_entail_wit_1`, `proof_of_cm_emit_binding_address_plan_entail_wit_1`, `proof_of_cm_emit_binding_address_plan_return_wit_1`.
+- Editable aggressive split-goal proof spans: `proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_1`, `proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_2`, `proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_spatial`, `proof_of_cm_emit_binding_address_plan_return_wit_1_split_goal_spatial`.
+- Protected LLM_pre_process split blocks: none; their tokens remain `Proof. Abort.`.
+- In `group_worker_lib`, append only proved suffixed helpers, token-identical sealed helper copies, and needed official imports.
+- All declaration statements, other proof tokens, the manual prelude, and the seed library stay protected.
+
+Whitespace, comments, line endings, and the final newline are formatting. The controller compares protected Rocq tokens, declaration ownership, proof mode, and kernel results. For an aggressive top-level proof, follow the worker rule above and use `Goal_apply` for the split lemmas; controller validation deliberately does not inspect that tactic choice.
+
+
+## Files
+
+- Copied manual: `/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_ast_migration-20261017141940/cmc_emit_ast_migration-vc-proving-r1/groups/group_02__context_plan/cmc_emit_ast_migration_proof_manual.v`
+- `group_worker_lib`: `/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_ast_migration-20261017141940/cmc_emit_ast_migration-vc-proving-r1/groups/group_02__context_plan/cmc_emit_ast_migration_lib.v`
+- Read-only `formal_case_lib`: `Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_lib.v`
+- Frozen helper candidates: `/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_ast_migration-20261017141940/cmc_emit_ast_migration-vc-proving-r1/public_helper_snapshot.txt` — search by needed helper/predicate names and read only matching declarations; never import this file
+- Terminal report: `/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_ast_migration-20261017141940/rounds/cmc_emit_ast_migration-vc-proving-r1/groups/group_02__context_plan/group_worker_report.json`
+- Notes: `/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_ast_migration-20261017141940/rounds/cmc_emit_ast_migration-vc-proving-r1/groups/group_02__context_plan/group_worker_output.md`. They are optional for ordinary outcomes, but an
+  `annotation-gap` blocker requires a non-empty explanation here because the controller preserves this
+  exact Markdown as part of the aggregated annotation feedback.
+- Previous proving round: none; no reuse note is expected.
+
+The group directory must finish with the copied manual and `group_worker_lib`.
+
+## Planned helpers
+
+- none planned
+
+`local` stays in this group. A proved `public` helper is promoted by the controller for later rounds. Historical token-identical copies may keep their sealed suffix; adaptations use this group's suffix.
+
+## Commands
+
+Run a needed command unchanged with its bound cwd. Prefer a direct system-terminal call. If terminal operations are available only through `functions.exec`, use a transparent cell that awaits exactly one `tools.exec_command` to launch, or one `tools.write_stdin` to continue the same live session (or the runtime-documented normalized equivalent), and only forwards the result. Pass command/argv, every argument, and cwd unchanged when launching; preserve the exact session handle when continuing. Use a normalized equivalent only if its input shape accepts those values unchanged; never serialize argv into shell text, reparse a rendered command, or add quoting. Do not call another tool in the cell, construct, alter, sequence, wrap, pipe, or background commands. Preserve every outer cell and inner process/session handle until terminal exit; if the bridge yields a running cell, resume only that cell with `functions.wait`.
+
+```text
+/Users/nizitong/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/bin/python3.12 /Users/nizitong/QCP/qcp-binary-democases/.agents/scripts/verification-orchestrator/controller.py --main-root /Users/nizitong/QCP/qcp-binary-democases coq-debug --run cmc_emit_ast_migration-20261017141940 --round cmc_emit_ast_migration-vc-proving-r1 --group context_plan
+/Users/nizitong/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/bin/python3.12 /Users/nizitong/QCP/qcp-binary-democases/.agents/scripts/verification-orchestrator/controller.py --main-root /Users/nizitong/QCP/qcp-binary-democases coq-check --run cmc_emit_ast_migration-20261017141940 --round cmc_emit_ast_migration-vc-proving-r1 --target-kind group-development --group context_plan
+/Users/nizitong/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/bin/python3.12 /Users/nizitong/QCP/qcp-binary-democases/.agents/scripts/verification-orchestrator/controller.py --main-root /Users/nizitong/QCP/qcp-binary-democases coq-check --run cmc_emit_ast_migration-20261017141940 --round cmc_emit_ast_migration-vc-proving-r1 --target-kind group-check --group context_plan
+```
+
+Debug script: `/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_ast_migration-20261017141940/_coq_builds/cmc_emit_ast_migration-vc-proving-r1/group_02/src/.coq_debug/group_02_context_plan.v`. Debug, development, and exact are optional proof feedback. `finalize-delivery` seals the two formal files and immediately runs the single mandatory controller group validation.
+
+## Completion
+
+Do not use raw Coq, Dune, Rocq MCP, `Admitted.`, new assumptions, forbidden lemmas, or the forbidden tactics `entailer!` and the bare alias `pre_process` (both are scanned exactly like a forbidden lemma; calls made inside `LLM_pre_process` and `Goal_apply` are unaffected). Repair a recoverable controller failure in this same worker. At the end, success is exactly `status: completed`; `blocked` adds one complete `blocker`. Do not copy version, diff, check status, or controller output.
+
+If an assigned VC exposes an annotation/specification gap outside this group's write boundary, stop proof-only edits and return `blocked` with `blocker.failure_class` exactly `annotation-gap`. Its `vcs` must list every affected exact sealed-manual `name`, `parent`, and `annotation_location`; `message` explains existing premises and the missing conclusion. The controller validates and schedules from those structured VCs.

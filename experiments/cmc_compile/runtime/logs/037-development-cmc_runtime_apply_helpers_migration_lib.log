@@ -1,0 +1,75 @@
+Chars 0 - 79 [Require~Export~~~SimpleC.EE.QC...] 1.388 secs (1.171u,0.074s)
+Chars 80 - 125 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.01u,0.s)
+Chars 126 - 147 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 148 - 173 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 174 - 458 [Lemma~cm_ann_replace_as_push_p...] 0.001 secs (0.u,0.s)
+Chars 459 - 465 [Proof.] 0. secs (0.u,0.s)
+Chars 466 - 548 [(intro~CUR;~unfold~cm_ann_repl...] 0. secs (0.u,0.s)
+Chars 549 - 553 [Qed.] 0. secs (0.u,0.s)
+Chars 554 - 908 [Lemma~cm_runtime_core_leave_ca...] 0. secs (0.u,0.s)
+Chars 909 - 915 [Proof.] 0. secs (0.u,0.s)
+Chars 917 - 996 [(intros~CUR~CORE;~destruct~COR...] 0. secs (0.u,0.s)
+Chars 998 - 1110 [(cbn[cm_runtime_stack~cm_curso...] 0. secs (0.u,0.s)
+Chars 1112 - 1179 [(destruct~R~as~[PRE~[SEG~[SP~[...] 0. secs (0.u,0.s)
+Chars 1181 - 1260 [(destruct~(cm_ann_saved~ann)~a...] 0. secs (0.u,0.s)
+Chars 1262 - 1349 [(destruct~(cm_ann_calls~ann)~a...] 0. secs (0.u,0.s)
+Chars 1351 - 1478 [(cbn[hd~cm_spill_frame_fid~cm_...] 0. secs (0.u,0.s)
+Chars 1480 - 1546 [(eapply~cm_runtime_core_leave_...] 0. secs (0.u,0.s)
+Chars 1548 - 1566 [(split;~[~exact~B~|~~]).] 0. secs (0.u,0.s)
+1 focused goal (shelved: 1)
+  
+  policy : cm_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, caller : Z
+  st : cm_src_state
+  ann : cm_annotation
+  env : Z -> Z -> cm_value
+  fp : Z
+  regions : list cm_region
+  ret : cm_type
+  owner, ob, oc : Z
+  rest : list cm_acursor
+  targetpc : Z
+  CUR :
+    cm_ann_cursors ann =
+    CMACursor (CACallP caller env fp regions ret) owner ob oc :: rest
+  B : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+  PRE :
+    cm_region_prefix_safe policy p (cm_state_regions st) fid 
+      (cm_state_fp st) (cm_state_regions st) regions
+  SEG : cm_frame_segment policy p fid (cm_state_fp st) fp
+  SP :
+    cm_spills_within_frame policy p fid (cm_state_fp st) fp
+      (cm_ann_spills ann)
+  vs : list cm_spill
+  saved : list cm_spill_frame
+  SV : cm_ann_saved ann = CMSpillFrame caller fp vs :: saved
+  S : CMSpillFrame caller fp vs :: saved <> []
+  returnpc : Z
+  calls : list cm_call_sim_frame
+  CL :
+    cm_ann_calls ann = CMCallSimFrame (cm_state_fp st) fp returnpc :: calls
+  C : CMCallSimFrame (cm_state_fp st) fp returnpc :: calls <> []
+  REC :
+    cm_runtime_stack policy ap p (cm_state_regions st) caller fp regions rest
+      (cm_spill_frame_spills
+         (hd (cm_saved_nil ap) (CMSpillFrame caller fp vs :: saved)))
+      (tl (CMSpillFrame caller fp vs :: saved))
+      (tl (CMCallSimFrame (cm_state_fp st) fp returnpc :: calls))
+  OLD :
+    cm_runtime_stack policy ap p (cm_state_regions st) fid 
+      (cm_state_fp st) (cm_state_regions st) (cm_ann_cursors ann)
+      (cm_ann_spills ann) (CMSpillFrame caller fp vs :: saved)
+      (CMCallSimFrame (cm_state_fp st) fp returnpc :: calls)
+  ============================
+  cm_runtime_stack policy ap p (cm_state_regions st) 
+    ?fid (cm_state_fp st) (cm_state_regions st) (cm_ann_cursors ann)
+    (cm_ann_spills ann) (cm_ann_saved ann) (cm_ann_calls ann)
+Chars 1567 - 1572 [Show.] 0. secs (0.u,0.s)
+Chars 1573 - 1577 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/build/Rocq/examples/QCP_demos_human/cmc_runtime_apply_helpers_migration_lib.v", line 20, characters 0-4:
+Error:
+ (in proof cm_runtime_core_leave_call_cursor): Attempt to save an incomplete proof
+(there are remaining open goals).
+

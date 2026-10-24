@@ -1,0 +1,201 @@
+Chars 0 - 76 [Require~Export~SimpleC.EE.QCP_...] 1.316 secs (1.211u,0.083s)
+Chars 77 - 122 [From~Coq~Require~Import~ZArith...] 0.013 secs (0.011u,0.001s)
+Chars 123 - 158 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 159 - 180 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 181 - 206 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 207 - 749 [Lemma~cm_v_binary_r_layout_ste...] 0.002 secs (0.u,0.s)
+Chars 750 - 756 [Proof.] 0. secs (0.u,0.s)
+Chars 758 - 1022 [(cbn~zeta;~intros~OK~[CODE~[_~...] 0.039 secs (0.036u,0.002s)
+Chars 1023 - 1027 [Qed.] 0.018 secs (0.018u,0.s)
+Chars 1028 - 1532 [Lemma~cm_v_binary_l_layout_ste...] 0. secs (0.u,0.s)
+Chars 1533 - 1539 [Proof.] 0. secs (0.u,0.s)
+Chars 1541 - 1707 [(cbn~zeta;~intros~->~[CODE~[_~...] 0.52 secs (0.505u,0.013s)
+Chars 1709 - 1892 [all:~~(destruct~(cm_truth~st~v...] 0.829 secs (0.823u,0.004s)
+Chars 1894 - 2142 [all:~~(fold~app~in~CODE;~~~~ma...] 0.004 secs (0.004u,0.s)
+Chars 2144 - 2292 [all:~~(repeat~rewrite~Zlength_...] 0.059 secs (0.059u,0.s)
+6 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  v : cm_value
+  st : cm_src_state
+  op : Z
+  lhs, rhs : cm_expr
+  ty : cm_type
+  pc, b, c, owner, ob, oc : Z
+  tail : list cm_acursor
+  spills : list cm_spill
+  saved : list cm_spill_frame
+  calls : list cm_call_sim_frame
+  ZERO : (op =? 0) = true
+  ONE : (op =? 1) = false
+  CODE :
+    cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+      (pc + 1)
+      (cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + 1) owner rhs ++
+       [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+        TVMInst TVMJmpOp
+          (pc + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+           5); TVMInst TVMPushOp 1] ++
+       cm_cursor_code sp p fid
+         (pc +
+          (Z.succ 0 +
+           (cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+            Z.succ (Z.succ (Z.succ (Z.succ 0)))))) owner false tail)
+  SAVED :
+    cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+      fid tail calls
+  ============================
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (pc + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 5)
+    (cm_cont_code sp p fid
+       (pc + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+        5) owner tail)
+
+goal 2 is:
+ cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+   (pc + 1)
+   (cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + 1) owner rhs ++
+    (if (op =? 0) || (op =? 1)
+     then
+      [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+       TVMInst TVMJmpOp
+         (pc + 1 +
+          cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 4);
+       TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+     else
+      cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs rhs
+        owner) ++
+    cm_cursor_code sp p fid
+      (pc + 1 + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+       Zlength
+         (if (op =? 0) || (op =? 1)
+          then
+           [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+            TVMInst TVMJmpOp
+              (pc + 1 +
+               cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+               4); TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+          else
+           cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs
+             rhs owner)) owner false tail)
+goal 3 is:
+ cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+   (pc + 1)
+   (cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + 1) owner rhs ++
+    (if (op =? 0) || (op =? 1)
+     then
+      [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+       TVMInst TVMJmpOp
+         (pc + 1 +
+          cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 4);
+       TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+     else
+      cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs rhs
+        owner) ++
+    cm_cursor_code sp p fid
+      (pc + 1 + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+       Zlength
+         (if (op =? 0) || (op =? 1)
+          then
+           [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+            TVMInst TVMJmpOp
+              (pc + 1 +
+               cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+               4); TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+          else
+           cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs
+             rhs owner)) owner false tail)
+goal 4 is:
+ cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+   (pc + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 5)
+   (cm_cont_code sp p fid
+      (pc + cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 5)
+      owner tail)
+goal 5 is:
+ cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+   (pc +
+    Zlength (cm_temp_store_code (cm_source_function_policy sp) p fid owner))
+   (cm_emit_rvalue (cm_source_function_policy sp) p fid
+      (pc +
+       Zlength
+         (cm_temp_store_code (cm_source_function_policy sp) p fid owner))
+      (owner + 1) rhs ++
+    (if (op =? 0) || (op =? 1)
+     then
+      [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+       TVMInst TVMJmpOp
+         (pc +
+          Zlength
+            (cm_temp_store_code (cm_source_function_policy sp) p fid owner) +
+          cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 4);
+       TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+     else
+      cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs rhs
+        owner) ++
+    cm_cursor_code sp p fid
+      (pc +
+       Zlength
+         (cm_temp_store_code (cm_source_function_policy sp) p fid owner) +
+       cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+       Zlength
+         (if (op =? 0) || (op =? 1)
+          then
+           [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+            TVMInst TVMJmpOp
+              (pc +
+               Zlength
+                 (cm_temp_store_code (cm_source_function_policy sp) p fid
+                    owner) +
+               cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+               4); TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+          else
+           cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs
+             rhs owner)) owner false tail)
+goal 6 is:
+ cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+   (pc +
+    Zlength (cm_temp_store_code (cm_source_function_policy sp) p fid owner))
+   (cm_emit_rvalue (cm_source_function_policy sp) p fid
+      (pc +
+       Zlength
+         (cm_temp_store_code (cm_source_function_policy sp) p fid owner))
+      (owner + 1) rhs ++
+    (if (op =? 0) || (op =? 1)
+     then
+      [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+       TVMInst TVMJmpOp
+         (pc +
+          Zlength
+            (cm_temp_store_code (cm_source_function_policy sp) p fid owner) +
+          cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs + 4);
+       TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+     else
+      cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs rhs
+        owner) ++
+    cm_cursor_code sp p fid
+      (pc +
+       Zlength
+         (cm_temp_store_code (cm_source_function_policy sp) p fid owner) +
+       cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+       Zlength
+         (if (op =? 0) || (op =? 1)
+          then
+           [TVMInst TVMPushOp 0; TVMInst TVMNeOp 0;
+            TVMInst TVMJmpOp
+              (pc +
+               Zlength
+                 (cm_temp_store_code (cm_source_function_policy sp) p fid
+                    owner) +
+               cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs +
+               4); TVMInst TVMPushOp (if op =? 0 then 1 else 0)]
+          else
+           cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs
+             rhs owner)) owner false tail)
+Chars 2294 - 2299 [Show.] 0.003 secs (0.001u,0.s)
+Chars 2301 - 2477 [all:~~(match~type~of~CODE~with...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_cont/build/Rocq/examples/QCP_demos_human/cmc_code_value_binary_migration_lib.v", line 24, characters 101-132:
+Error: Tactic failure:  Cannot find witness.
+

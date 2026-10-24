@@ -1,0 +1,6 @@
+From SimpleC.EE.QCP_demos_human Require Import cmc_copy_bytes_migration_goal cmc_copy_bytes_migration_proof_auto cmc_copy_bytes_migration_proof_manual.
+
+Module VC_Correctness : VC_Correct.
+  Include cmc_copy_bytes_migration_proof_auto.
+  Include cmc_copy_bytes_migration_proof_manual.
+End VC_Correctness.

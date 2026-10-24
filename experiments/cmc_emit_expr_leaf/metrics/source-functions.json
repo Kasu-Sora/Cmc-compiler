@@ -1,0 +1,475 @@
+[
+  {
+    "name": "cmc_const_immediate",
+    "prototype": false,
+    "source_span": [
+      9,
+      72
+    ],
+    "specification": [
+      [
+        10,
+        10
+      ],
+      [
+        11,
+        13
+      ],
+      [
+        14,
+        18
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        23,
+        47
+      ],
+      [
+        50,
+        69
+      ]
+    ],
+    "runtime": "static long long cmc_const_immediate(long long value, int ty)\n{\n  if (ty == CMC_TYPE_CHAR) {\n    unsigned long long bits = (unsigned long long)value;\n    unsigned char byte = (unsigned char)(bits % 256ULL);\n    return (long long)byte;\n  } else {\n    return value;\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_const_expr",
+    "prototype": false,
+    "source_span": [
+      130,
+      220
+    ],
+    "specification": [
+      [
+        134,
+        137
+      ],
+      [
+        138,
+        147
+      ],
+      [
+        148,
+        157
+      ]
+    ],
+    "annotation": [
+      [
+        175,
+        175
+      ],
+      [
+        187,
+        187
+      ],
+      [
+        188,
+        188
+      ]
+    ],
+    "inline_proof": [
+      [
+        159,
+        173
+      ],
+      [
+        178,
+        186
+      ],
+      [
+        190,
+        200
+      ],
+      [
+        202,
+        209
+      ],
+      [
+        211,
+        219
+      ]
+    ],
+    "runtime": "void cm_emit_const_expr(struct cm_program *program, int fid,\n                        struct cm_function *fn, int pc, int temp,\n                        struct cm_expr *expr, int lvalue,\n                        struct cm_emitter *emitter)\n{\n  if (!lvalue) {\n    long long immediate =\n        cmc_const_immediate(expr->value, expr->ty);\n    cm_emit_plan(emitter, CMC_OP_PUSH, immediate);\n  } else {\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_string_expr",
+    "prototype": false,
+    "source_span": [
+      240,
+      360
+    ],
+    "specification": [
+      [
+        244,
+        247
+      ],
+      [
+        248,
+        262
+      ],
+      [
+        263,
+        277
+      ]
+    ],
+    "annotation": [
+      [
+        298,
+        299
+      ],
+      [
+        300,
+        301
+      ],
+      [
+        321,
+        321
+      ],
+      [
+        322,
+        322
+      ]
+    ],
+    "inline_proof": [
+      [
+        279,
+        287
+      ],
+      [
+        289,
+        295
+      ],
+      [
+        297,
+        297
+      ],
+      [
+        304,
+        320
+      ],
+      [
+        324,
+        331
+      ],
+      [
+        333,
+        341
+      ],
+      [
+        343,
+        359
+      ]
+    ],
+    "runtime": "void cm_emit_string_expr(struct cm_program *program, int fid,\n                         struct cm_function *fn, int pc, int temp,\n                         struct cm_expr *expr, int lvalue,\n                         struct cm_emitter *emitter)\n{\n  int string_id = (int)expr->value;\n  if (!lvalue) {\n    long long address = cmc_string_address(\n        program->globals, program->strings, string_id);\n    cm_emit_plan(emitter, CMC_OP_PUSH, address);\n  } else {\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_getc_expr",
+    "prototype": false,
+    "source_span": [
+      362,
+      420
+    ],
+    "specification": [
+      [
+        366,
+        369
+      ],
+      [
+        370,
+        378
+      ],
+      [
+        379,
+        387
+      ]
+    ],
+    "annotation": [
+      [
+        399,
+        399
+      ],
+      [
+        400,
+        400
+      ]
+    ],
+    "inline_proof": [
+      [
+        389,
+        389
+      ],
+      [
+        391,
+        398
+      ],
+      [
+        402,
+        408
+      ],
+      [
+        410,
+        417
+      ],
+      [
+        419,
+        419
+      ]
+    ],
+    "runtime": "void cm_emit_getc_expr(struct cm_program *program, int fid,\n                       struct cm_function *fn, int pc, int temp,\n                       struct cm_expr *expr, int lvalue,\n                       struct cm_emitter *emitter)\n{\n  if (!lvalue) {\n    cm_emit_plan(emitter, CMC_OP_GETC, 0);\n  } else {\n  }\n}\n"
+  },
+  {
+    "name": "cm_sizeof_value",
+    "prototype": false,
+    "source_span": [
+      438,
+      524
+    ],
+    "specification": [
+      [
+        440,
+        441
+      ],
+      [
+        442,
+        448
+      ],
+      [
+        449,
+        457
+      ]
+    ],
+    "annotation": [
+      [
+        505,
+        506
+      ]
+    ],
+    "inline_proof": [
+      [
+        460,
+        469
+      ],
+      [
+        472,
+        491
+      ],
+      [
+        493,
+        502
+      ],
+      [
+        504,
+        504
+      ],
+      [
+        508,
+        521
+      ]
+    ],
+    "runtime": "static long long cm_sizeof_value(struct cm_program *program,\n                                 long long code)\n{\n  long long result;\n  if (code >= 1024) {\n    result = 8;\n  } else {\n    int narrowed = (int)code;\n    result = cmc_type_size_at(program->structs, narrowed);\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cm_type_size_value",
+    "prototype": false,
+    "source_span": [
+      526,
+      551
+    ],
+    "specification": [
+      [
+        528,
+        529
+      ],
+      [
+        530,
+        536
+      ],
+      [
+        537,
+        545
+      ]
+    ],
+    "annotation": [
+      [
+        547,
+        547
+      ],
+      [
+        548,
+        548
+      ],
+      [
+        549,
+        549
+      ]
+    ],
+    "inline_proof": [],
+    "runtime": "long long cm_type_size_value(struct cm_program *program,\n                             long long code)\n{\n  return cm_sizeof_value(program, code);\n}\n"
+  },
+  {
+    "name": "cm_emit_sizeof_expr",
+    "prototype": false,
+    "source_span": [
+      553,
+      652
+    ],
+    "specification": [
+      [
+        557,
+        560
+      ],
+      [
+        561,
+        573
+      ],
+      [
+        574,
+        586
+      ]
+    ],
+    "annotation": [
+      [
+        599,
+        599
+      ],
+      [
+        600,
+        600
+      ],
+      [
+        601,
+        601
+      ],
+      [
+        619,
+        619
+      ],
+      [
+        620,
+        620
+      ]
+    ],
+    "inline_proof": [
+      [
+        588,
+        597
+      ],
+      [
+        603,
+        608
+      ],
+      [
+        609,
+        618
+      ],
+      [
+        622,
+        630
+      ],
+      [
+        632,
+        640
+      ],
+      [
+        642,
+        651
+      ]
+    ],
+    "runtime": "void cm_emit_sizeof_expr(struct cm_program *program, int fid,\n                         struct cm_function *fn, int pc, int temp,\n                         struct cm_expr *expr, int lvalue,\n                         struct cm_emitter *emitter)\n{\n  if (!lvalue) {\n    long long size = cm_sizeof_value(program, expr->value);\n    cm_emit_plan(emitter, CMC_OP_PUSH, size);\n  } else {\n  }\n}\n"
+  },
+  {
+    "name": "cm_member_array_value_context",
+    "prototype": false,
+    "source_span": [
+      699,
+      733
+    ],
+    "specification": [
+      [
+        701,
+        702
+      ],
+      [
+        703,
+        710
+      ],
+      [
+        711,
+        719
+      ]
+    ],
+    "annotation": [
+      [
+        725,
+        725
+      ],
+      [
+        726,
+        726
+      ],
+      [
+        727,
+        727
+      ]
+    ],
+    "inline_proof": [
+      [
+        721,
+        724
+      ],
+      [
+        729,
+        731
+      ]
+    ],
+    "runtime": "int cm_member_array_value_context(struct cm_program *program,\n                                  int base_ty, int mid)\n{\n  int result = cmc_member_array(program, base_ty, mid);\n  return result;\n}\n"
+  },
+  {
+    "name": "cm_member_offset_value_context",
+    "prototype": false,
+    "source_span": [
+      735,
+      844
+    ],
+    "specification": [
+      [
+        737,
+        738
+      ],
+      [
+        739,
+        746
+      ],
+      [
+        747,
+        757
+      ]
+    ],
+    "annotation": [
+      [
+        812,
+        812
+      ]
+    ],
+    "inline_proof": [
+      [
+        759,
+        761
+      ],
+      [
+        763,
+        782
+      ],
+      [
+        784,
+        811
+      ],
+      [
+        814,
+        842
+      ]
+    ],
+    "runtime": "long long cm_member_offset_value_context(struct cm_program *program,\n                                         int base_ty, int mid)\n{\n  int pointee = cmc_pointee(base_ty);\n  int sid = (pointee % 1024) - 2;\n  long long result = cmc_member_offset_at(program->structs, sid, mid);\n  return result;\n}\n"
+  }
+]

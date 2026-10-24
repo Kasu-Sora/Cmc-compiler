@@ -1,0 +1,92 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_call_observation_migration_lib.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_state_pointwise_refl". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_state_pointwise_refl.
+Print Assumptions cmc_call_observation_migration_lib.cm_state_pointwise_refl.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_state_pointwise_sym". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_state_pointwise_sym.
+Print Assumptions cmc_call_observation_migration_lib.cm_state_pointwise_sym.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_state_pointwise_trans". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_state_pointwise_trans.
+Print Assumptions cmc_call_observation_migration_lib.cm_state_pointwise_trans.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_value_number". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_value_number.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_value_number.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_live". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_live.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_live.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_initialized". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_initialized.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_initialized.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_provenance". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_provenance.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_provenance.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_spill_list". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_spill_list.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_spill_list.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_spill_frames". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_spill_frames.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_spill_frames.
+Goal True. idtac "AUDIT cmc_call_observation_migration_lib.cm_pointwise_machine_sim". exact I. Qed.
+Check cmc_call_observation_migration_lib.cm_pointwise_machine_sim.
+Print Assumptions cmc_call_observation_migration_lib.cm_pointwise_machine_sim.
+Require Import SimpleC.EE.QCP_demos_human.cmc_call_pending_machine_migration_lib.
+Goal True. idtac "AUDIT cmc_call_pending_machine_migration_lib.cm_machine_call_pending_store". exact I. Qed.
+Check cmc_call_pending_machine_migration_lib.cm_machine_call_pending_store.
+Print Assumptions cmc_call_pending_machine_migration_lib.cm_machine_call_pending_store.
+Goal True. idtac "AUDIT cmc_call_pending_machine_migration_lib.cm_call_pending_encode_values". exact I. Qed.
+Check cmc_call_pending_machine_migration_lib.cm_call_pending_encode_values.
+Print Assumptions cmc_call_pending_machine_migration_lib.cm_call_pending_encode_values.
+Require Import SimpleC.EE.QCP_demos_human.cmc_call_pending_memory_migration_lib.
+Goal True. idtac "AUDIT cmc_call_pending_memory_migration_lib.cm_call_pending_initialized_transport". exact I. Qed.
+Check cmc_call_pending_memory_migration_lib.cm_call_pending_initialized_transport.
+Print Assumptions cmc_call_pending_memory_migration_lib.cm_call_pending_initialized_transport.
+Goal True. idtac "AUDIT cmc_call_pending_memory_migration_lib.cm_call_pending_provenance_transport". exact I. Qed.
+Check cmc_call_pending_memory_migration_lib.cm_call_pending_provenance_transport.
+Print Assumptions cmc_call_pending_memory_migration_lib.cm_call_pending_provenance_transport.
+Goal True. idtac "AUDIT cmc_call_pending_memory_migration_lib.cm_call_pending_spills_transport". exact I. Qed.
+Check cmc_call_pending_memory_migration_lib.cm_call_pending_spills_transport.
+Print Assumptions cmc_call_pending_memory_migration_lib.cm_call_pending_spills_transport.
+Require Import SimpleC.EE.QCP_demos_human.cmc_call_pending_migration_lib.
+Goal True. idtac "AUDIT cmc_call_pending_migration_lib.cm_call_pending_structure". exact I. Qed.
+Check cmc_call_pending_migration_lib.cm_call_pending_structure.
+Print Assumptions cmc_call_pending_migration_lib.cm_call_pending_structure.
+Goal True. idtac "AUDIT cmc_call_pending_migration_lib.cm_call_pending_bases". exact I. Qed.
+Check cmc_call_pending_migration_lib.cm_call_pending_bases.
+Print Assumptions cmc_call_pending_migration_lib.cm_call_pending_bases.
+Goal True. idtac "AUDIT cmc_call_pending_migration_lib.cm_call_pending_live_old_or_param". exact I. Qed.
+Check cmc_call_pending_migration_lib.cm_call_pending_live_old_or_param.
+Print Assumptions cmc_call_pending_migration_lib.cm_call_pending_live_old_or_param.
+Goal True. idtac "AUDIT cmc_call_pending_migration_lib.cm_call_pending_value_number". exact I. Qed.
+Check cmc_call_pending_migration_lib.cm_call_pending_value_number.
+Print Assumptions cmc_call_pending_migration_lib.cm_call_pending_value_number.
+Goal True. idtac "AUDIT cmc_call_pending_migration_lib.cm_store_params_reverse_structure". exact I. Qed.
+Check cmc_call_pending_migration_lib.cm_store_params_reverse_structure.
+Print Assumptions cmc_call_pending_migration_lib.cm_store_params_reverse_structure.
+Goal True. idtac "AUDIT cmc_call_pending_migration_lib.cm_store_params_reverse_value_number". exact I. Qed.
+Check cmc_call_pending_migration_lib.cm_store_params_reverse_value_number.
+Print Assumptions cmc_call_pending_migration_lib.cm_store_params_reverse_value_number.
+Require Import SimpleC.EE.QCP_demos_human.cmc_call_store_commutation_migration_lib.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_store_mem_raw_inside". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_store_mem_raw_inside.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_store_mem_raw_inside.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_store_mem_raw_outside". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_store_mem_raw_outside.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_store_mem_raw_outside.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_store_mem_commutes_at". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_store_mem_commutes_at.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_store_mem_commutes_at.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_pointwise_convert_value". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_pointwise_convert_value.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_pointwise_convert_value.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_store_mem_pointwise". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_store_mem_pointwise.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_store_mem_pointwise.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_pointwise_store". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_pointwise_store.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_pointwise_store.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_mark_init_commutes". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_mark_init_commutes.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_mark_init_commutes.
+Goal True. idtac "AUDIT cmc_call_store_commutation_migration_lib.cm_clear_tagged_commutes". exact I. Qed.
+Check cmc_call_store_commutation_migration_lib.cm_clear_tagged_commutes.
+Print Assumptions cmc_call_store_commutation_migration_lib.cm_clear_tagged_commutes.

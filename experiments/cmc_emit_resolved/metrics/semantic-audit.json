@@ -1,0 +1,133 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cm_emit_resolved",
+      "source_contract_sha256": "6fb22b470c9e1454a94663a09fc4c36f50aaf16a6e7b0a3d081b2e798f46430d",
+      "target_contract_sha256": "0b2c22b2f31dce24b1f6c2980807cab2b7cda5b60edae97a0f0b9d8ce182ed77",
+      "checks": [
+        "op equals opcode code; non-CALL exclusion and singleton capacity bound retained",
+        "Exact resolved singleton appended; raw buffer represented existentially"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_call",
+      "source_contract_sha256": "9a4661ae88faa6309e2d0e4b2d7090c9c670b323c6b4a6b7cf2a32ee6abb66a6",
+      "target_contract_sha256": "657857bf3cbe3aa2a8dbc574d6dc0978aded6c9c4ae5edac0217e99cfb94a2b7",
+      "checks": [
+        "No function-id validity, range, readiness or PC-representability premise",
+        "All signed int function_id supported, raw CALL identifier written",
+        "Resolved result is CALL(cm_function_pc policy p function_id)"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_normalize",
+      "source_contract_sha256": "5c5a4631ddfcdd924f426632e80c5714c4410a87a06c5d3335a11199494c2816",
+      "target_contract_sha256": "3d282374f9371ddce9bb19e3595f465c44be9eb6e921c386f6f555b8f0447c3a",
+      "checks": [
+        "Original type-code-wf and encoded equality only",
+        "Exact normalize fragment length capacity bound and resolved append"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_load",
+      "source_contract_sha256": "f25d274914a6a8103af933ae87bbbf481be7ce9b97130066a6202ddb25d4e886",
+      "target_contract_sha256": "0eabba6de47b1b3fe5136da0790cb22e133335a42b3d9ccdfa6d710294992bce",
+      "checks": [
+        "Original type-code-wf and encoded equality only",
+        "Exact load fragment length capacity bound and resolved append"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_store",
+      "source_contract_sha256": "2aa15467e33850808d08dd723fed27591ffc3b65e8e091c57610dd5540a8a45c",
+      "target_contract_sha256": "00276b816f0b1fd77e659fc212df60f4d43f31db495aeae7a8b13635de6b664d",
+      "checks": [
+        "Original type-code-wf and encoded equality only",
+        "Exact store fragment length capacity bound and resolved append"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_fp_address",
+      "source_contract_sha256": "1fbb83058acd743b3df83efa388ebebd7d651a6bd6f515aa3ccea0f1debcae13",
+      "target_contract_sha256": "c212e9c61771d77df68e21c3bc41b00ee03c305fc487fbab14318892c311b518",
+      "checks": [
+        "Exact source FP-address fragment and capacity condition",
+        "Raw and resolved prefixes linked by full patch map"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "source_contract_sha256": "5650810100a1d83aff5d0435ed02ad2793792d2c8f7295f0e8e5208b69a9c813",
+      "target_contract_sha256": "faef52a5b0fab0acd54d21f9145345ef73930315f5b9847c558ad8cd703634c0",
+      "checks": [
+        "Original eight pure facts retained in both pre and post",
+        "Additional pre fragment capacity bound, full function context ownership",
+        "Same total lookup policy for function identity/offset; no new fid bound",
+        "Exact resolved temp-store fragment append"
+      ]
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "source_contract_sha256": "a353fa2addbd7cd3d609212c4d51eeaaf90fc44ee1e83cb08f59470fadee3bd1",
+      "target_contract_sha256": "24b9aabb14bea0ccaf41f06a592473ff2b7eecd2cfda1fb8d34b0fe334d40b7b",
+      "checks": [
+        "Original eight pure facts retained in both pre and post",
+        "Additional pre fragment capacity bound, full function context ownership",
+        "Same total lookup policy for function identity/offset; no new fid bound",
+        "Exact resolved temp-load fragment append"
+      ]
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_patch_inst",
+      "kind": "Definition",
+      "nonblank_lines": 6,
+      "sha256": "fe8559d8812fb825f5abafb910c2577caec86d1b3258ab5a4c92ccef3e008c1f",
+      "source_declaration": "cm_patch_inst_def"
+    },
+    {
+      "name": "cm_patch_code",
+      "kind": "Definition",
+      "nonblank_lines": 2,
+      "sha256": "0ea252cf5da4b9d56280c30d28f35d552c19788c67b301137e6bff8ae7a8a255",
+      "source_declaration": "cm_patch_code_def"
+    },
+    {
+      "name": "cm_resolved_emitter_rep",
+      "kind": "Definition",
+      "nonblank_lines": 6,
+      "sha256": "9e10ea50d4784f75bd581c25ea13d00cc9ec013dd0e6cd185cacd9869d5d3d24",
+      "source_declaration": "cm_resolved_emitter_rep_def"
+    }
+  ],
+  "model_review": [
+    "Patch changes only CALL immediate to existing total cm_function_pc, retaining opcode",
+    "Patch-code map retains instruction order and cardinality",
+    "Resolved representation existentially owns RAW buffer, with equality to patched logical prefix",
+    "Core representation/fragment models, total lookup and function-PC definitions unchanged"
+  ],
+  "adaptations": [
+    "Consistent explicit cm_lookup_policy parameter throughout patch model and wrapper contracts",
+    "Rocq map represents source list recursion; Zlength represents ilength",
+    "Reused exact emitter ABI declaration and seven verified helper contracts"
+  ],
+  "scope_boundary": "Concrete emission wrappers under logical patch interpretation. Actual call-buffer rewrite pass, complete TVM semantics and compiler preservation not claimed.",
+  "review_method": "Manual comparison of definitions/contracts and ownership; hashes detect later drift.",
+  "final_verification": {
+    "run_id": "cmc_emit_resolved_migration-20261017131857",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 8
+  },
+  "proof_audit": {
+    "manual_top_level": 16,
+    "proved_splits": 8,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 16,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

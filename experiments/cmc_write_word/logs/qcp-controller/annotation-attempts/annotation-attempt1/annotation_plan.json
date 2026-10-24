@@ -1,0 +1,186 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "byte-call-0",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 0",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b0 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 0)",
+        "0 <= tower_encode_byte(word_value, 0) < 256"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 0, prefix extended by the first 0 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 0, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 0 little-endian bytes of the source integer encoding have been appended; this call appends digit 0. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-1",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 1",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b1 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 1)",
+        "0 <= tower_encode_byte(word_value, 1) < 256"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 1, prefix extended by the first 1 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 1, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 1 little-endian bytes of the source integer encoding have been appended; this call appends digit 1. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-2",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 2",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b2 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 2)",
+        "0 <= tower_encode_byte(word_value, 2) < 256",
+        "all parameter values equal @pre",
+        "b0 through b7 equal their corresponding tower_encode_byte values",
+        "exists bits_value, bits == bits_value (retains the no-longer-read local store)"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 2, prefix extended by the first 2 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 2, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 2 little-endian bytes of the source integer encoding have been appended; this call appends digit 2. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition. A full call-boundary Assert normalizes (cursor + (k - 1)) + 1 to cursor + k while retaining all live locals; k = 2 also establishes all eight runtime-to-source byte bridges.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-3",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 3",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b3 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 3)",
+        "0 <= tower_encode_byte(word_value, 3) < 256",
+        "all parameter values equal @pre",
+        "b0 through b7 equal their corresponding tower_encode_byte values",
+        "exists bits_value, bits == bits_value (retains the no-longer-read local store)"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 3, prefix extended by the first 3 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 3, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 3 little-endian bytes of the source integer encoding have been appended; this call appends digit 3. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition. A full call-boundary Assert normalizes (cursor + (k - 1)) + 1 to cursor + k while retaining all live locals; k = 2 also establishes all eight runtime-to-source byte bridges.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-4",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 4",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b4 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 4)",
+        "0 <= tower_encode_byte(word_value, 4) < 256",
+        "all parameter values equal @pre",
+        "b0 through b7 equal their corresponding tower_encode_byte values",
+        "exists bits_value, bits == bits_value (retains the no-longer-read local store)"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 4, prefix extended by the first 4 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 4, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 4 little-endian bytes of the source integer encoding have been appended; this call appends digit 4. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition. A full call-boundary Assert normalizes (cursor + (k - 1)) + 1 to cursor + k while retaining all live locals; k = 2 also establishes all eight runtime-to-source byte bridges.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-5",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 5",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b5 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 5)",
+        "0 <= tower_encode_byte(word_value, 5) < 256",
+        "all parameter values equal @pre",
+        "b0 through b7 equal their corresponding tower_encode_byte values",
+        "exists bits_value, bits == bits_value (retains the no-longer-read local store)"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 5, prefix extended by the first 5 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 5, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 5 little-endian bytes of the source integer encoding have been appended; this call appends digit 5. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition. A full call-boundary Assert normalizes (cursor + (k - 1)) + 1 to cursor + k while retaining all live locals; k = 2 also establishes all eight runtime-to-source byte bridges.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-6",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 6",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b6 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 6)",
+        "0 <= tower_encode_byte(word_value, 6) < 256",
+        "all parameter values equal @pre",
+        "b0 through b7 equal their corresponding tower_encode_byte values",
+        "exists bits_value, bits == bits_value (retains the no-longer-read local store)"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 6, prefix extended by the first 6 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 6, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 6 little-endian bytes of the source integer encoding have been appended; this call appends digit 6. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition. A full call-boundary Assert normalizes (cursor + (k - 1)) + 1 to cursor + k while retaining all live locals; k = 2 also establishes all eight runtime-to-source byte bridges.",
+      "internal_predicates": []
+    },
+    {
+      "id": "byte-call-7",
+      "location": "cmc_write_word: cmc_write_byte call at cursor + 7",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor",
+        "cursor + 8 <= capacity <= 2147483647",
+        "b7 is the unsigned-cast runtime digit and must equal tower_encode_byte(word_value, 7)",
+        "0 <= tower_encode_byte(word_value, 7) < 256",
+        "all parameter values equal @pre",
+        "b0 through b7 equal their corresponding tower_encode_byte values",
+        "exists bits_value, bits == bits_value (retains the no-longer-read local store)"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor + 7, prefix extended by the first 7 mathematical bytes)",
+        "UCharArray::undef_seg(data, cursor + 7, capacity)",
+        "all live scalar local stores are retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 7 little-endian bytes of the source integer encoding have been appended; this call appends digit 7. The list witness retains left-associated append so each helper postcondition supplies the next helper precondition. A full call-boundary Assert normalizes (cursor + (k - 1)) + 1 to cursor + k while retaining all live locals; k = 2 also establishes all eight runtime-to-source byte bridges.",
+      "internal_predicates": []
+    },
+    {
+      "id": "word-exit",
+      "location": "cmc_write_word: exit after the eighth cmc_write_byte call",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "(cursor + 7) + 1 = cursor + 8",
+        "all parameter values equal @pre"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, (cursor + 7) + 1, eight left-associated singleton appends)",
+        "UCharArray::undef_seg(data, (cursor + 7) + 1, capacity)",
+        "live scalar locals are reclaimed by symbolic execution"
+      ],
+      "mathematical_state": "Append associativity and the transparent tower_word_bytes definition identify the final prefix with prefix ++ tower_word_bytes(word_value). No extra exit Assert is inserted; the function Ensure creates this obligation.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

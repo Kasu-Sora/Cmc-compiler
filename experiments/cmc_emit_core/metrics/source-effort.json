@@ -1,0 +1,257 @@
+{
+  "source_sha256": "1a465ba5357c98c36f2d5e6cadfa5361e013168dd34433e71a0161bfef39457d",
+  "function_counts": [
+    {
+      "function": "cm_emit_raw",
+      "source_span": [
+        157,
+        264
+      ],
+      "specification": 8,
+      "annotation": 0,
+      "inline_proof": 93
+    },
+    {
+      "function": "cm_emit",
+      "source_span": [
+        266,
+        388
+      ],
+      "specification": 9,
+      "annotation": 0,
+      "inline_proof": 110
+    },
+    {
+      "function": "cm_emit_normalize",
+      "source_span": [
+        390,
+        501
+      ],
+      "specification": 10,
+      "annotation": 0,
+      "inline_proof": 90
+    },
+    {
+      "function": "cm_emit_load",
+      "source_span": [
+        503,
+        554
+      ],
+      "specification": 10,
+      "annotation": 0,
+      "inline_proof": 34
+    },
+    {
+      "function": "cm_emit_store",
+      "source_span": [
+        556,
+        607
+      ],
+      "specification": 10,
+      "annotation": 0,
+      "inline_proof": 34
+    },
+    {
+      "function": "cm_emit_fp_address",
+      "source_span": [
+        609,
+        640
+      ],
+      "specification": 8,
+      "annotation": 0,
+      "inline_proof": 17
+    },
+    {
+      "function": "cm_emit_temp_store",
+      "source_span": [
+        642,
+        712
+      ],
+      "specification": 28,
+      "annotation": 0,
+      "inline_proof": 36
+    },
+    {
+      "function": "cm_emit_temp_load",
+      "source_span": [
+        714,
+        784
+      ],
+      "specification": 28,
+      "annotation": 0,
+      "inline_proof": 36
+    },
+    {
+      "function": "cmc_binary_opcode",
+      "source_span": [
+        786,
+        861
+      ],
+      "specification": 5,
+      "annotation": 0,
+      "inline_proof": 43
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_open_emit_fragment",
+      "kind": "proof",
+      "span": [
+        3,
+        12
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static void cm_open_emit_fragment(const thm code_shape) {\n  thm todo_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         code ++ (tail:(tvm_inst)list)`,\n      code_shape));\n  substitute_st(todo_shape);\n  rewrite_st(THM_LIST(\n      gsym_rule(get_theorem_by_name(\"APPEND_ASSOC\")),\n      get_theorem_by_name(\"APPEND\")));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_close_emit_fragment",
+      "kind": "proof",
+      "span": [
+        14,
+        23
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static void cm_close_emit_fragment(const thm code_shape) {\n  rewrite_st(THM_LIST(\n      gsym_rule(get_theorem_by_name(\"APPEND_ASSOC\")),\n      get_theorem_by_name(\"APPEND\")));\n  thm done_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         (done:(tvm_inst)list) ++ code`,\n      sym_rule(code_shape)));\n  substitute_st(done_shape);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_opcode_fact",
+      "kind": "proof",
+      "span": [
+        25,
+        32
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static void cm_add_opcode_fact(const term concrete,\n                                     const term opcode) {\n  thm code_fact = eqt_elim_rule(apply_conversion(\n      reduce_rewrite_conv(THM_LIST(get_tvm_opcode_code_def())),\n      mk_eq(concrete,\n        mk_comb(`tvm_opcode_code:tvm_opcode->int`, opcode))));\n  add_fact_st(code_fact);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_retarget_call_result",
+      "kind": "proof",
+      "span": [
+        34,
+        40
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static void cm_retarget_call_result(\n    const term cell, const thm result) {\n  struct dest_eq_results sides = dest_eq(concl(result));\n  add_fact_st(result);\n  cst_set_symbolic_state(retarget_cell64_st(\n      cst_get_symbolic_state(), cell, sides.tm1, sides.tm2));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_temp_offset_model_bridge",
+      "kind": "proof",
+      "span": [
+        42,
+        69
+      ],
+      "nonblank_lines": 28,
+      "text": "PROOF static thm cm_temp_offset_model_bridge(void) {\n  thm params_wf = eqt_elim_rule(assume_rule(\n      `cm_slots_wf (structs:(cm_struct_d)list)\n         (cm_function_params (f:cm_function_d)) <=> true`));\n  thm locals_wf = eqt_elim_rule(assume_rule(\n      `cm_slots_wf (structs:(cm_struct_d)list)\n         (cm_function_locals (f:cm_function_d)) <=> true`));\n  thm params_size = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_params (f:cm_function_d)`),\n      cm_rep_members_size_matches), params_wf);\n  thm locals_size = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_locals (f:cm_function_d)`),\n      cm_rep_members_size_matches), locals_wf);\n  return by_rewrite(\n      `8i +\n         cm_rep_members_size (cm_function_params (f:cm_function_d)) +\n         cm_rep_members_size (cm_function_locals f) +\n         8i * (temp__pre:int) ==\n       cm_temp_offset (p:cm_program) (fid:int) temp__pre`,\n      THM_LIST(get_cm_temp_offset_def(), params_size, locals_size,\n        assume_rule(\n          `structs == cm_program_structs (p:cm_program)`),\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid:int) (cm_program_functions p)`)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_open_function_context",
+      "kind": "proof",
+      "span": [
+        71,
+        79
+      ],
+      "nonblank_lines": 9,
+      "text": "PROOF static void cm_open_function_context(void) {\n  thm context_view = apply_conversion(\n      pure_rewrite_conv(THM_LIST(cm_function_context_rep_def)),\n      `cm_function_context_rep (fn__pre:int)\n        (f:cm_function_d) (body:int) (next:int)`);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      rename_exists_hconv(eq2ent(context_view),\n        TERM_LIST(`params_ptr_:int`, `locals_ptr_:int`))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_close_function_context",
+      "kind": "proof",
+      "span": [
+        81,
+        87
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static void cm_close_function_context(void) {\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      cm_function_context_fold_hconv(\n        `fn__pre:int`, `f:cm_function_d`,\n        `body:int`, `next:int`,\n        `params_ptr_:int`, `locals_ptr_:int`)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_finish_binary_opcode_reduction",
+      "kind": "proof",
+      "span": [
+        89,
+        96
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static thm cm_finish_binary_opcode_reduction(\n    const thm reduction) {\n  struct dest_eq_results sides = dest_eq(concl(reduction));\n  thm residual = eqt_elim_rule(apply_conversion(\n      reduce_rewrite_conv(THM_LIST(get_tvm_opcode_code_def())),\n      sides.tm2));\n  return eq_mp_rule(sym_rule(reduction), residual);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_binary_opcode_case",
+      "kind": "proof",
+      "span": [
+        98,
+        108
+      ],
+      "nonblank_lines": 11,
+      "text": "PROOF static void cm_add_binary_opcode_case(\n    const term concrete, const thm condition) {\n  thm reduction = apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        condition, get_cm_binary_opcode_def())),\n      mk_eq(\n        `tvm_opcode_code (cm_binary_opcode (op__pre:int))`,\n        concrete));\n  add_fact_st(sym_rule(\n      cm_finish_binary_opcode_reduction(reduction)));\n}",
+      "dependencies": [
+        "cm_finish_binary_opcode_reduction"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_binary_opcode_default",
+      "kind": "proof",
+      "span": [
+        110,
+        127
+      ],
+      "nonblank_lines": 18,
+      "text": "PROOF static void cm_add_binary_opcode_default(void) {\n  thm reduction = apply_conversion(\n      reduce_rewrite_conv(THM_LIST(\n        eqf_intro_rule(assume_rule(`~(op__pre == 2i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 3i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 4i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 5i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 6i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 7i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 8i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 9i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 10i)`)),\n        eqf_intro_rule(assume_rule(`~(op__pre == 11i)`)),\n        get_cm_binary_opcode_def())),\n      `tvm_opcode_code (cm_binary_opcode (op__pre:int)) == 12i`);\n  add_fact_st(sym_rule(\n      cm_finish_binary_opcode_reduction(reduction)));\n}",
+      "dependencies": [
+        "cm_finish_binary_opcode_reduction"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_model_char_from_encoded_type",
+      "kind": "proof",
+      "span": [
+        129,
+        140
+      ],
+      "nonblank_lines": 12,
+      "text": "PROOF static thm cm_model_char_from_encoded_type(void) {\n  thm type_code_wf = eqt_elim_rule(assume_rule(\n      `cm_type_code_wf (model_ty:cm_type) <=> true`));\n  thm char_iff = mp_rule(\n      spec_rule(`model_ty:cm_type`, cm_char_encode),\n      type_code_wf);\n  thm encoded_char = trans_rule(\n      sym_rule(assume_rule(\n        `(ty__pre:int) == cm_type_encode (model_ty:cm_type)`)),\n      assume_rule(`(ty__pre:int) == 1i`));\n  return eq_mp_rule(char_iff, encoded_char);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_model_not_char_from_encoded_type",
+      "kind": "proof",
+      "span": [
+        142,
+        155
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static thm cm_model_not_char_from_encoded_type(void) {\n  thm type_code_wf = eqt_elim_rule(assume_rule(\n      `cm_type_code_wf (model_ty:cm_type) <=> true`));\n  thm char_iff = mp_rule(\n      spec_rule(`model_ty:cm_type`, cm_char_encode),\n      type_code_wf);\n  thm not_encoded = conv_rule(\n      subs_conv(THM_LIST(assume_rule(\n        `(ty__pre:int) == cm_type_encode (model_ty:cm_type)`))),\n      assume_rule(`~((ty__pre:int) == 1i)`));\n  return eq_mp_rule(\n      beta_norm(ap_term_rule(`\\b:bool. ~b`, char_iff)),\n      not_encoded);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 116,
+    "annotation": 0,
+    "inline_proof": 493,
+    "private_case_proof_support": 142,
+    "case_proof": 635,
+    "proof_including_shared": 635
+  },
+  "annotation_entries": [],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Exported proof helper wrappers and transitive same-file support counted once as shared; unused source readiness definitions/getters inventoried separately."
+}

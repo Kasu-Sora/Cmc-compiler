@@ -1,0 +1,67 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cm_expr_type_code_context",
+      "source_contract_sha256": "eefe221a5618446031f941fad1a2dd08b11f5d7d9c14d0991bc8022228835ed1",
+      "target_contract_sha256": "45854e4b2909dce13e0153c20037704454cf8be1e6276230cdbd9155a5cfc39a",
+      "checks": [
+        "Exact encoded type output, expr ownership restored; no added type validity precondition.",
+        "Same runtime parameters/results; source contract has no additional fid bound",
+        "Same full contexts and original pure facts under the established counts translation"
+      ],
+      "adaptation": "Reuse the same cm_lookup_policy and cm_codegen_obligations boundary from verified counts; no additional abstraction or concrete TVM instantiation."
+    },
+    {
+      "function": "cm_expr_lvalue_count_context",
+      "source_contract_sha256": "c569a2fe3e2016015683598ccfa56154fb7c60eed3f1d96ce299c1aecaedc5d4",
+      "target_contract_sha256": "878012ffb64c0f9a2f4a85c27e3be20151688dfa5bf780f69c63be8d4ed07cb1",
+      "checks": [
+        "Full program/function/expr ownership and original wf/lookup/representability/struct safety restored; exact lvalue count and i32 bound.",
+        "Same runtime parameters/results; source contract has no additional fid bound",
+        "Same full contexts and original pure facts under the established counts translation"
+      ],
+      "adaptation": "Reuse the same cm_lookup_policy and cm_codegen_obligations boundary from verified counts; no additional abstraction or concrete TVM instantiation."
+    },
+    {
+      "function": "cm_expr_rvalue_count_context",
+      "source_contract_sha256": "2b87c2715f6858e8ba8a30a00a3a1843b5c058e3f284e359aa7610cd1e26c801",
+      "target_contract_sha256": "877a559dd62ac2e9dbb9db74fc003c89d25cd453ea5babae1167cca3430edeae",
+      "checks": [
+        "Full program/function/expr ownership and original wf/lookup/representability/struct safety restored; exact rvalue count and i32 bound.",
+        "Same runtime parameters/results; source contract has no additional fid bound",
+        "Same full contexts and original pure facts under the established counts translation"
+      ],
+      "adaptation": "Reuse the same cm_lookup_policy and cm_codegen_obligations boundary from verified counts; no additional abstraction or concrete TVM instantiation."
+    },
+    {
+      "function": "cm_stmt_code_count_context",
+      "source_contract_sha256": "a2810ab60506779ff961877cb70fa91a93e22045a6e1e5f866f146aaadd84526",
+      "target_contract_sha256": "38e10609a785f3ab514f73e10d2e9fec1aa3ffacd212c41c558479de7dc07ce7",
+      "checks": [
+        "Full program/function/stmt ownership restored; original loop_ and function lookup equality retained; exact statement count and i32 bound.",
+        "Same runtime parameters/results; source contract has no additional fid bound",
+        "Same full contexts and original pure facts under the established counts translation"
+      ],
+      "adaptation": "Reuse the same cm_lookup_policy and cm_codegen_obligations boundary from verified counts; no additional abstraction or concrete TVM instantiation."
+    }
+  ],
+  "annotation_stage_model_declarations": [],
+  "inherited_model_boundary": "Counts library and layout lookup policy preserved byte-for-byte; four universally quantified emitter/TVM obligations still lack concrete Rocq instantiation. No new model definitions.",
+  "review_method": "Manual source/target pre/post and resource comparison; hashes only detect subsequent changes, not semantic equivalence.",
+  "final_verification": {
+    "run_id": "cmc_count_context_migration-20261016020312",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 4
+  },
+  "proof_audit": {
+    "manual_top_level": 8,
+    "proved_splits": 4,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 6,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

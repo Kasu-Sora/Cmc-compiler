@@ -1,0 +1,3136 @@
+{
+  "status": "kernel_checked_published_public_support_only",
+  "top_level_verified": false,
+  "modules": [
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_apply_helpers_migration_lib.v",
+      "sha256": "975c0e89b64eef4facea5fee0a50d93efff071c5dae1d62c3103bd68dcb4b053",
+      "counts": {
+        "definitions": 0,
+        "lemmas": 3,
+        "definition_lines": 0,
+        "lemma_lines": 29,
+        "decision_proof_lines": 0,
+        "automation_declarations": 4,
+        "automation_lines": 11,
+        "proof_lines": 40
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_ann_replace_as_push_pop",
+          "ending": "Qed",
+          "span": [
+            5,
+            7
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_leave_call_cursor",
+          "ending": "Qed",
+          "span": [
+            8,
+            20
+          ],
+          "nonblank_lines": 13,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_enter_arg",
+          "ending": "Qed",
+          "span": [
+            21,
+            33
+          ],
+          "nonblank_lines": 13,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_conj",
+          "span": [
+            34,
+            34
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_spill_bounds",
+          "span": [
+            35,
+            35
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_apply_atom",
+          "span": [
+            36,
+            42
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_apply_finish",
+          "span": [
+            43,
+            44
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_apply_step_migration_lib.v",
+      "sha256": "0b707b9afd16fca1157df0b03147adb7d2485a05f9dffb85f9ab612320510a4c",
+      "counts": {
+        "definitions": 0,
+        "lemmas": 2,
+        "definition_lines": 0,
+        "lemma_lines": 28,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 28
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_v_runtime_step",
+          "ending": "Qed",
+          "span": [
+            5,
+            21
+          ],
+          "nonblank_lines": 16,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_c_runtime_step",
+          "ending": "Qed",
+          "span": [
+            23,
+            34
+          ],
+          "nonblank_lines": 12,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_call_migration_lib.v",
+      "sha256": "b9328a9c5bb40896847fcc5d38e58a75feb3e26e493897a0628b2ae573997023",
+      "counts": {
+        "definitions": 0,
+        "lemmas": 6,
+        "definition_lines": 0,
+        "lemma_lines": 43,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 43
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_store_params_fp",
+          "ending": "Qed",
+          "span": [
+            5,
+            6
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_call_ok_function_wf",
+          "ending": "Qed",
+          "span": [
+            7,
+            11
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_call_frame_segment",
+          "ending": "Qed",
+          "span": [
+            12,
+            22
+          ],
+          "nonblank_lines": 11,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_frame.c",
+              "span": [
+                1017,
+                1018
+              ],
+              "nonblank_lines": 2,
+              "sha256": "b52eab464982eca53ab54ec02e85668d39dc9c676957e56b13cfa728255a630a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_enter_call",
+          "ending": "Qed",
+          "span": [
+            23,
+            36
+          ],
+          "nonblank_lines": 14,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                644,
+                645
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_halt_initial",
+          "ending": "Qed",
+          "span": [
+            37,
+            45
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                4142,
+                4143
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_halt_initial",
+          "ending": "Qed",
+          "span": [
+            46,
+            47
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_core_migration_lib.v",
+      "sha256": "41bae0e584b2cf25eaf13578fbcb902e585f1caeb305aab9dd5c62cf6e2b4565",
+      "counts": {
+        "definitions": 1,
+        "lemmas": 16,
+        "definition_lines": 2,
+        "lemma_lines": 71,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 71
+      },
+      "declarations": [
+        {
+          "kind": "Definition",
+          "name": "cm_runtime_core",
+          "span": [
+            5,
+            6
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                12,
+                20
+              ],
+              "nonblank_lines": 9,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_fields",
+          "ending": "Qed",
+          "span": [
+            7,
+            10
+          ],
+          "nonblank_lines": 4,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                50,
+                51
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_plain",
+          "ending": "Qed",
+          "span": [
+            11,
+            12
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                80,
+                81
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_linear",
+          "ending": "Qed",
+          "span": [
+            13,
+            14
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                144,
+                145
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_io",
+          "ending": "Qed",
+          "span": [
+            15,
+            16
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                772,
+                773
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_store",
+          "ending": "Qed",
+          "span": [
+            17,
+            18
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                801,
+                802
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_push_plain",
+          "ending": "Qed",
+          "span": [
+            19,
+            22
+          ],
+          "nonblank_lines": 4,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                188,
+                189
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_pop_plain",
+          "ending": "Qed",
+          "span": [
+            23,
+            27
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                239,
+                240
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_replace_plain",
+          "ending": "Qed",
+          "span": [
+            28,
+            32
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                304,
+                305
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_enter_scope",
+          "ending": "Qed",
+          "span": [
+            33,
+            37
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                486,
+                487
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_generations_incl",
+          "ending": "Qed",
+          "span": [
+            38,
+            39
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_leave_scope",
+          "ending": "Qed",
+          "span": [
+            40,
+            47
+          ],
+          "nonblank_lines": 8,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                570,
+                571
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spills_within_remove",
+          "ending": "Qed",
+          "span": [
+            48,
+            49
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_runtime.c",
+              "span": [
+                1384,
+                1385
+              ],
+              "nonblank_lines": 2,
+              "sha256": "2973e2efbc6e168c85e266da45cb87297503bdd40879c976c64ea935c3cdd7f1"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spills_within_put",
+          "ending": "Qed",
+          "span": [
+            50,
+            55
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_runtime.c",
+              "span": [
+                1441,
+                1442
+              ],
+              "nonblank_lines": 2,
+              "sha256": "2973e2efbc6e168c85e266da45cb87297503bdd40879c976c64ea935c3cdd7f1"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_spill_put",
+          "ending": "Qed",
+          "span": [
+            56,
+            64
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_runtime.c",
+              "span": [
+                1622,
+                1623
+              ],
+              "nonblank_lines": 2,
+              "sha256": "2973e2efbc6e168c85e266da45cb87297503bdd40879c976c64ea935c3cdd7f1"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_spill_put",
+          "ending": "Qed",
+          "span": [
+            65,
+            66
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                349,
+                350
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_leave_call",
+          "ending": "Qed",
+          "span": [
+            67,
+            77
+          ],
+          "nonblank_lines": 11,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                745,
+                746
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_frame_geometry_migration_lib.v",
+      "sha256": "f984338906192e29733e0c64add79fdf59a113e76e438f938842eb5cb3ae57c9",
+      "counts": {
+        "definitions": 0,
+        "lemmas": 14,
+        "definition_lines": 0,
+        "lemma_lines": 96,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 96
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_slots_wf_nonnegative_members",
+          "ending": "Qed",
+          "span": [
+            5,
+            10
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_slots_size_nonnegative_from_members",
+          "ending": "Qed",
+          "span": [
+            11,
+            12
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_slots_prefix_cell_bounds_nat",
+          "ending": "Qed",
+          "span": [
+            13,
+            22
+          ],
+          "nonblank_lines": 10,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_source_slot_at_valid",
+          "ending": "Qed",
+          "span": [
+            23,
+            27
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_slots_prefix_cell_bounds",
+          "ending": "Qed",
+          "span": [
+            28,
+            33
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_frame.c",
+              "span": [
+                160,
+                161
+              ],
+              "nonblank_lines": 2,
+              "sha256": "b52eab464982eca53ab54ec02e85668d39dc9c676957e56b13cfa728255a630a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_for_slots_generation_bounds",
+          "ending": "Qed",
+          "span": [
+            34,
+            40
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_for_slots_unique",
+          "ending": "Qed",
+          "span": [
+            41,
+            45
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_base_prefix_unique",
+          "ending": "Qed",
+          "span": [
+            46,
+            52
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_for_slots_geometry",
+          "ending": "Qed",
+          "span": [
+            53,
+            60
+          ],
+          "nonblank_lines": 8,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_safe_append",
+          "ending": "Qed",
+          "span": [
+            61,
+            66
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_frame.c",
+              "span": [
+                860,
+                861
+              ],
+              "nonblank_lines": 2,
+              "sha256": "b52eab464982eca53ab54ec02e85668d39dc9c676957e56b13cfa728255a630a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_parameter_region_prefix_safe",
+          "ending": "Qed",
+          "span": [
+            67,
+            75
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_frame.c",
+              "span": [
+                911,
+                912
+              ],
+              "nonblank_lines": 2,
+              "sha256": "b52eab464982eca53ab54ec02e85668d39dc9c676957e56b13cfa728255a630a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_local_region_frame_safe",
+          "ending": "Qed",
+          "span": [
+            76,
+            84
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_frame.c",
+              "span": [
+                1115,
+                1116
+              ],
+              "nonblank_lines": 2,
+              "sha256": "b52eab464982eca53ab54ec02e85668d39dc9c676957e56b13cfa728255a630a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_region_cons",
+          "ending": "Qed",
+          "span": [
+            85,
+            93
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_core_activate_local",
+          "ending": "Qed",
+          "span": [
+            94,
+            100
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_transition.c",
+              "span": [
+                438,
+                439
+              ],
+              "nonblank_lines": 2,
+              "sha256": "dadfda7cac34ea171ea46eaa547e92fa558f91e3424f1d0c2fdae9c1eaa7c85d"
+            }
+          ]
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_invariant_migration_lib.v",
+      "sha256": "3ec597da2cd2475612c6fe2d8d4a8412401a9aeb01837ac2cb6d6342670633ef",
+      "counts": {
+        "definitions": 1,
+        "lemmas": 6,
+        "definition_lines": 3,
+        "lemma_lines": 58,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 58
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_task_runtime_step_support",
+          "ending": "Qed",
+          "span": [
+            5,
+            34
+          ],
+          "nonblank_lines": 30,
+          "source_declarations": []
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_runtime_support_invariants",
+          "span": [
+            35,
+            37
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_support_initial",
+          "ending": "Qed",
+          "span": [
+            38,
+            40
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_support_step",
+          "ending": "Qed",
+          "span": [
+            41,
+            48
+          ],
+          "nonblank_lines": 8,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_support_iter",
+          "ending": "Qed",
+          "span": [
+            49,
+            51
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Theorem",
+          "name": "cm_source_termination_runtime_invariants",
+          "ending": "Qed",
+          "span": [
+            52,
+            59
+          ],
+          "nonblank_lines": 8,
+          "source_declarations": []
+        },
+        {
+          "kind": "Theorem",
+          "name": "cm_source_termination_runtime_invariant",
+          "ending": "Qed",
+          "span": [
+            60,
+            65
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_memory_migration_lib.v",
+      "sha256": "85af02232472c660b170cf6de90298906083c0393eea4df3c9eb821b5a861dd3",
+      "counts": {
+        "definitions": 8,
+        "lemmas": 7,
+        "definition_lines": 10,
+        "lemma_lines": 62,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 62
+      },
+      "declarations": [
+        {
+          "kind": "Definition",
+          "name": "cm_range_disjoint",
+          "span": [
+            5,
+            5
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_store_memory.c",
+              "span": [
+                11,
+                15
+              ],
+              "nonblank_lines": 5,
+              "sha256": "01bc176948801299b08a769f7038d7f54a445647182dd18f6b89206e50dd5346"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_call_frames_range_safe",
+          "span": [
+            6,
+            6
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                11,
+                19
+              ],
+              "nonblank_lines": 9,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_spill_list_range_safe",
+          "span": [
+            7,
+            7
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                21,
+                30
+              ],
+              "nonblank_lines": 10,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_spill_frames_range_safe",
+          "span": [
+            8,
+            8
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                32,
+                42
+              ],
+              "nonblank_lines": 11,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_machine_range_safe",
+          "span": [
+            9,
+            9
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                44,
+                50
+              ],
+              "nonblank_lines": 7,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_region_runtime_safe",
+          "span": [
+            10,
+            12
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                52,
+                68
+              ],
+              "nonblank_lines": 17,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_regions_runtime_safe",
+          "span": [
+            13,
+            13
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                70,
+                77
+              ],
+              "nonblank_lines": 8,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_runtime_memory_layout",
+          "span": [
+            14,
+            14
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_runtime.c",
+              "span": [
+                79,
+                84
+              ],
+              "nonblank_lines": 6,
+              "sha256": "3447e5ab9f50baff55d3d16a48c987b5423ca85a0a464a90476637233fbe867a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_call_frames_lower_range",
+          "ending": "Qed",
+          "span": [
+            15,
+            16
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spill_list_lower_range",
+          "ending": "Qed",
+          "span": [
+            17,
+            18
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spill_frames_lower_range",
+          "ending": "Qed",
+          "span": [
+            19,
+            20
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spills_before_range_safe",
+          "ending": "Qed",
+          "span": [
+            21,
+            22
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                2074,
+                2075
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_frame_range",
+          "ending": "Qed",
+          "span": [
+            23,
+            31
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_region_safe",
+          "ending": "Qed",
+          "span": [
+            32,
+            68
+          ],
+          "nonblank_lines": 37,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                3099,
+                3100
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Theorem",
+          "name": "cm_runtime_stack_memory_layout",
+          "ending": "Qed",
+          "span": [
+            69,
+            76
+          ],
+          "nonblank_lines": 8,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                3150,
+                3151
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_regions_migration_lib.v",
+      "sha256": "426902cf934521a5fccee6b7def9b70381ec501e5f2a95da70d892d872901d59",
+      "counts": {
+        "definitions": 2,
+        "lemmas": 21,
+        "definition_lines": 4,
+        "lemma_lines": 94,
+        "decision_proof_lines": 0,
+        "automation_declarations": 3,
+        "automation_lines": 4,
+        "proof_lines": 98
+      },
+      "declarations": [
+        {
+          "kind": "Definition",
+          "name": "cm_regions_before",
+          "span": [
+            6,
+            6
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                211,
+                213
+              ],
+              "nonblank_lines": 3,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_task_regions_before",
+          "span": [
+            7,
+            9
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_nil",
+          "ending": "Qed",
+          "span": [
+            10,
+            11
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_cons",
+          "ending": "Qed",
+          "span": [
+            12,
+            16
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1122,
+                1123
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_app",
+          "ending": "Qed",
+          "span": [
+            17,
+            18
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_mono",
+          "ending": "Qed",
+          "span": [
+            19,
+            20
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2261,
+                2262
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_incl",
+          "ending": "Qed",
+          "span": [
+            21,
+            25
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_restore_regions_before",
+          "ending": "Qed",
+          "span": [
+            26,
+            31
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1221,
+                1222
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_for_slots_before",
+          "ending": "Qed",
+          "span": [
+            32,
+            38
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2192,
+                2193
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_global_regions_before",
+          "ending": "Qed",
+          "span": [
+            39,
+            45
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_string_regions_before",
+          "ending": "Qed",
+          "span": [
+            46,
+            52
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_static_regions_before",
+          "ending": "Qed",
+          "span": [
+            53,
+            58
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_initial_regions_before",
+          "ending": "Qed",
+          "span": [
+            59,
+            60
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_enter_call_regions_before",
+          "ending": "Qed",
+          "span": [
+            61,
+            66
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_activate_local_regions_before",
+          "ending": "Qed",
+          "span": [
+            67,
+            68
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_restore_call_regions_before",
+          "ending": "Qed",
+          "span": [
+            69,
+            70
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_before_reduce",
+          "span": [
+            71,
+            71
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_before_cases",
+          "span": [
+            72,
+            72
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_before_finish",
+          "span": [
+            73,
+            74
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_r_regions_before",
+          "ending": "Qed",
+          "span": [
+            75,
+            79
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_l_regions_before",
+          "ending": "Qed",
+          "span": [
+            80,
+            81
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_s_regions_before",
+          "ending": "Qed",
+          "span": [
+            82,
+            83
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_v_regions_before",
+          "ending": "Qed",
+          "span": [
+            84,
+            88
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_c_regions_before",
+          "ending": "Qed",
+          "span": [
+            89,
+            90
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_task_regions_before_step",
+          "ending": "Qed",
+          "span": [
+            91,
+            101
+          ],
+          "nonblank_lines": 11,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_start_iter_regions_before",
+          "ending": "Qed",
+          "span": [
+            102,
+            107
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_stack_migration_lib.v",
+      "sha256": "9a496f84cbc1d9e1bb45ffd70cf5ba8183afd302bc19fd4b1dc6be32cccab97d",
+      "counts": {
+        "definitions": 16,
+        "lemmas": 18,
+        "definition_lines": 45,
+        "lemma_lines": 121,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 121
+      },
+      "declarations": [
+        {
+          "kind": "Definition",
+          "name": "cm_phase_is_halt",
+          "span": [
+            7,
+            7
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                20,
+                64
+              ],
+              "nonblank_lines": 45,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_phase_is_scope",
+          "span": [
+            8,
+            8
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                66,
+                116
+              ],
+              "nonblank_lines": 51,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_phase_oldfp",
+          "span": [
+            9,
+            9
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                119,
+                163
+              ],
+              "nonblank_lines": 45,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_phase_caller",
+          "span": [
+            10,
+            10
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_code.c",
+              "span": [
+                181,
+                205
+              ],
+              "nonblank_lines": 25,
+              "sha256": "16a45b74dc2a694c77d2df17aecbe44b89f275088ce3ece50eeecb885c5e7363"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_phase_oldregions",
+          "span": [
+            11,
+            11
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                165,
+                209
+              ],
+              "nonblank_lines": 45,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_region_frame_safe",
+          "span": [
+            12,
+            15
+          ],
+          "nonblank_lines": 4,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                215,
+                226
+              ],
+              "nonblank_lines": 12,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_region_prefix_safe",
+          "span": [
+            16,
+            17
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                228,
+                239
+              ],
+              "nonblank_lines": 12,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_region_dead_prefix",
+          "span": [
+            18,
+            19
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                241,
+                251
+              ],
+              "nonblank_lines": 11,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_static_regions_layout",
+          "span": [
+            20,
+            21
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                253,
+                264
+              ],
+              "nonblank_lines": 12,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_frame_segment",
+          "span": [
+            22,
+            25
+          ],
+          "nonblank_lines": 4,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                266,
+                275
+              ],
+              "nonblank_lines": 10,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_spills_within_frame",
+          "span": [
+            26,
+            28
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                277,
+                288
+              ],
+              "nonblank_lines": 12,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_call_frames_lower",
+          "span": [
+            29,
+            29
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                291,
+                299
+              ],
+              "nonblank_lines": 9,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_spill_list_lower",
+          "span": [
+            30,
+            30
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                301,
+                310
+              ],
+              "nonblank_lines": 10,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_spill_frames_lower",
+          "span": [
+            31,
+            31
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                312,
+                322
+              ],
+              "nonblank_lines": 11,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Fixpoint",
+          "name": "cm_runtime_stack",
+          "span": [
+            32,
+            47
+          ],
+          "nonblank_lines": 16,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                323,
+                375
+              ],
+              "nonblank_lines": 53,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_task_runtime_invariant",
+          "span": [
+            48,
+            51
+          ],
+          "nonblank_lines": 4,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                377,
+                434
+              ],
+              "nonblank_lines": 58,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_safe_refl",
+          "ending": "Qed",
+          "span": [
+            52,
+            53
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_frame.c",
+              "span": [
+                758,
+                759
+              ],
+              "nonblank_lines": 2,
+              "sha256": "b52eab464982eca53ab54ec02e85668d39dc9c676957e56b13cfa728255a630a"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_dead_prefix_refl",
+          "ending": "Qed",
+          "span": [
+            54,
+            55
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                63,
+                64
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_member",
+          "ending": "Qed",
+          "span": [
+            56,
+            62
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                522,
+                523
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_dead_member",
+          "ending": "Qed",
+          "span": [
+            63,
+            69
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_restore_regions_dead_prefix",
+          "ending": "Qed",
+          "span": [
+            70,
+            76
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                343,
+                344
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_frame_segment_bounds",
+          "ending": "Qed",
+          "span": [
+            77,
+            78
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_call_frames_lower_mono",
+          "ending": "Qed",
+          "span": [
+            79,
+            80
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                650,
+                651
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spill_list_lower_mono",
+          "ending": "Qed",
+          "span": [
+            81,
+            82
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                700,
+                701
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spill_frames_lower_mono",
+          "ending": "Qed",
+          "span": [
+            83,
+            84
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                750,
+                751
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spills_within_lower",
+          "ending": "Qed",
+          "span": [
+            85,
+            86
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                808,
+                809
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_fp_bounds",
+          "ending": "Qed",
+          "span": [
+            87,
+            95
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                1409,
+                1410
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_lower",
+          "ending": "Qed",
+          "span": [
+            96,
+            112
+          ],
+          "nonblank_lines": 17,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                1245,
+                1246
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_nonempty",
+          "ending": "Qed",
+          "span": [
+            113,
+            114
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_task_runtime_initial",
+          "ending": "Qed",
+          "span": [
+            115,
+            116
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                22,
+                23
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_frame_ceiling",
+          "ending": "Qed",
+          "span": [
+            117,
+            124
+          ],
+          "nonblank_lines": 8,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                1554,
+                1555
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_region_bounds",
+          "ending": "Qed",
+          "span": [
+            125,
+            150
+          ],
+          "nonblank_lines": 26,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                1992,
+                1993
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_spills_within_temp_lower",
+          "ending": "Qed",
+          "span": [
+            151,
+            152
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                2115,
+                2116
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_current_machine_lower",
+          "ending": "Qed",
+          "span": [
+            153,
+            172
+          ],
+          "nonblank_lines": 20,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant.c",
+              "span": [
+                2364,
+                2365
+              ],
+              "nonblank_lines": 2,
+              "sha256": "ae9459076320ff0d2ca95b03455403a36ac68b4fd7a39137393da6adc7952ca3"
+            }
+          ]
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_start_step_migration_lib.v",
+      "sha256": "774f3309c840c0d25a162389ee6424fe11331be0c0ce4d4ce4d61bbe44d9c599",
+      "counts": {
+        "definitions": 0,
+        "lemmas": 5,
+        "definition_lines": 0,
+        "lemma_lines": 25,
+        "decision_proof_lines": 0,
+        "automation_declarations": 6,
+        "automation_lines": 22,
+        "proof_lines": 47
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_local_slot_ok_bounds",
+          "ending": "Qed",
+          "span": [
+            5,
+            6
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_reduce",
+          "span": [
+            7,
+            9
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_bool",
+          "span": [
+            10,
+            10
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_cases",
+          "span": [
+            11,
+            11
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_task",
+          "span": [
+            12,
+            18
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_atom",
+          "span": [
+            19,
+            27
+          ],
+          "nonblank_lines": 9,
+          "source_declarations": []
+        },
+        {
+          "kind": "Ltac",
+          "name": "cm_rt_finish",
+          "span": [
+            28,
+            28
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_r_runtime_step",
+          "ending": "Qed",
+          "span": [
+            29,
+            34
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_l_runtime_step",
+          "ending": "Qed",
+          "span": [
+            35,
+            37
+          ],
+          "nonblank_lines": 3,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_s_runtime_step",
+          "ending": "Qed",
+          "span": [
+            38,
+            44
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_start_step",
+          "ending": "Qed",
+          "span": [
+            45,
+            51
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_static_geometry_migration_lib.v",
+      "sha256": "b4ef7e2b83b960cae6db686e36d088b755953c160cd52a5a7884a0c684495ac8",
+      "counts": {
+        "definitions": 1,
+        "lemmas": 16,
+        "definition_lines": 1,
+        "lemma_lines": 100,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 100
+      },
+      "declarations": [
+        {
+          "kind": "Fixpoint",
+          "name": "cm_region_generations_unique",
+          "span": [
+            5,
+            5
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2352,
+                2360
+              ],
+              "nonblank_lines": 9,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_global_regions_generation_bounds",
+          "ending": "Qed",
+          "span": [
+            6,
+            12
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2454,
+                2455
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_string_regions_generation_bounds",
+          "ending": "Qed",
+          "span": [
+            13,
+            19
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2558,
+                2559
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_global_regions_generations_unique",
+          "ending": "Qed",
+          "span": [
+            20,
+            24
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2617,
+                2618
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_string_regions_generations_unique",
+          "ending": "Qed",
+          "span": [
+            25,
+            29
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2679,
+                2680
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_generations_unique_append",
+          "ending": "Qed",
+          "span": [
+            30,
+            35
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2789,
+                2790
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_static_regions_generations_unique",
+          "ending": "Qed",
+          "span": [
+            36,
+            40
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2849,
+                2850
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_base_member_unique",
+          "ending": "Qed",
+          "span": [
+            41,
+            47
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2927,
+                2928
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_static_region_base_member",
+          "ending": "Qed",
+          "span": [
+            48,
+            49
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2949,
+                2950
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_typed_globals_nonnegative",
+          "ending": "Qed",
+          "span": [
+            50,
+            56
+          ],
+          "nonblank_lines": 7,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_globals_size_nonnegative_from_members",
+          "ending": "Qed",
+          "span": [
+            57,
+            58
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_strings_size_nonnegative",
+          "ending": "Qed",
+          "span": [
+            59,
+            60
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                3347,
+                3348
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_globals_prefix_cell_bounds_nat",
+          "ending": "Qed",
+          "span": [
+            61,
+            70
+          ],
+          "nonblank_lines": 10,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_strings_prefix_cell_bounds_nat",
+          "ending": "Qed",
+          "span": [
+            71,
+            80
+          ],
+          "nonblank_lines": 10,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_global_region_member_index_nat",
+          "ending": "Qed",
+          "span": [
+            81,
+            86
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_string_region_member_index_nat",
+          "ending": "Qed",
+          "span": [
+            87,
+            92
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Theorem",
+          "name": "cm_typed_static_regions_layout",
+          "ending": "Qed",
+          "span": [
+            93,
+            105
+          ],
+          "nonblank_lines": 13,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                4085,
+                4086
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    },
+    {
+      "file": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/target/cmc_runtime_transport_migration_lib.v",
+      "sha256": "185e2b002b85f5554fa89d5a3b8f447dacf23f70a19f35d409602a4240cb1c29",
+      "counts": {
+        "definitions": 1,
+        "lemmas": 20,
+        "definition_lines": 1,
+        "lemma_lines": 98,
+        "decision_proof_lines": 0,
+        "automation_declarations": 0,
+        "automation_lines": 0,
+        "proof_lines": 98
+      },
+      "declarations": [
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_suffix_incl",
+          "ending": "Qed",
+          "span": [
+            5,
+            10
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_dead_suffix_incl",
+          "ending": "Qed",
+          "span": [
+            11,
+            16
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_prefix_suffix",
+          "ending": "Qed",
+          "span": [
+            17,
+            18
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1302,
+                1303
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_regions_before_dead_suffix",
+          "ending": "Qed",
+          "span": [
+            19,
+            20
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1369,
+                1370
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_frame_safe_below_bases",
+          "ending": "Qed",
+          "span": [
+            21,
+            22
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1403,
+                1404
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_safe_below_bases",
+          "ending": "Qed",
+          "span": [
+            23,
+            27
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1494,
+                1495
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_static_regions_layout_below_bases",
+          "ending": "Qed",
+          "span": [
+            28,
+            29
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1539,
+                1540
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_below_bases",
+          "ending": "Qed",
+          "span": [
+            30,
+            46
+          ],
+          "nonblank_lines": 17,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                1769,
+                1770
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Definition",
+          "name": "cm_region_bases_equal",
+          "span": [
+            47,
+            47
+          ],
+          "nonblank_lines": 1,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                46,
+                50
+              ],
+              "nonblank_lines": 5,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_frame_safe_bases",
+          "ending": "Qed",
+          "span": [
+            48,
+            49
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                496,
+                497
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_safe_bases",
+          "ending": "Qed",
+          "span": [
+            50,
+            51
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                573,
+                574
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_static_regions_layout_bases",
+          "ending": "Qed",
+          "span": [
+            52,
+            53
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                610,
+                611
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_bases",
+          "ending": "Qed",
+          "span": [
+            54,
+            67
+          ],
+          "nonblank_lines": 14,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                808,
+                809
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_dead_prefix_cons",
+          "ending": "Qed",
+          "span": [
+            68,
+            69
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                85,
+                86
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_prefix_dead_cons",
+          "ending": "Qed",
+          "span": [
+            70,
+            71
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                110,
+                111
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_dead_prefix_trans",
+          "ending": "Qed",
+          "span": [
+            72,
+            77
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                180,
+                181
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_region_dead_prefix_safe_trans",
+          "ending": "Qed",
+          "span": [
+            78,
+            83
+          ],
+          "nonblank_lines": 6,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                258,
+                259
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_dead_prefix",
+          "ending": "Qed",
+          "span": [
+            84,
+            94
+          ],
+          "nonblank_lines": 11,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                965,
+                966
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_restore_incl",
+          "ending": "Qed",
+          "span": [
+            95,
+            99
+          ],
+          "nonblank_lines": 5,
+          "source_declarations": []
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_regions_for_slots",
+          "ending": "Qed",
+          "span": [
+            100,
+            101
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": [
+            {
+              "file": "cmc_preservation_invariant_step.c",
+              "span": [
+                2349,
+                2350
+              ],
+              "nonblank_lines": 2,
+              "sha256": "bec956b475a36b74f8ba407a5da03f12b1157353084f8ed472cb975374585d84"
+            }
+          ]
+        },
+        {
+          "kind": "Lemma",
+          "name": "cm_runtime_stack_fresh_region",
+          "ending": "Qed",
+          "span": [
+            102,
+            103
+          ],
+          "nonblank_lines": 2,
+          "source_declarations": []
+        }
+      ],
+      "compiled": true,
+      "used_by_top_level_case": false
+    }
+  ],
+  "totals": {
+    "definitions": 30,
+    "lemmas": 134,
+    "definition_lines": 66,
+    "lemma_lines": 825,
+    "decision_proof_lines": 0,
+    "automation_declarations": 13,
+    "automation_lines": 37,
+    "proof_lines": 862
+  },
+  "expected_assumption_audits": 134,
+  "counting_note": "Nonblank non-comment physical lines. Definitions/datatype/record declarations separate; lemma lines include statement and Proof/Qed; constructive equality decision proof bodies and Ltac automation counted separately and included in proof_lines. Generated audit and tooling excluded. All helpers counted, including currently unused ones. Source links are matched declarations, NOT the completed preservation dependency closure.",
+  "final_source_dependency_proof_cost": null,
+  "final_top_level_cost": null,
+  "source_historical_development_time": null,
+  "human_active_time": null,
+  "tool_seconds": 403.17652874699996,
+  "development_attempts": 48,
+  "development_failures": 33,
+  "publication_tool_seconds": 20.946554332999998
+}

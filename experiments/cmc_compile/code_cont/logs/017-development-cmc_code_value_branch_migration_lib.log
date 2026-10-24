@@ -1,0 +1,85 @@
+Chars 0 - 79 [Require~Export~~~SimpleC.EE.QC...] 1.288 secs (1.197u,0.076s)
+Chars 80 - 125 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 126 - 161 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 162 - 183 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 184 - 209 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 210 - 440 [Ltac~~cm_code_layout_lengths~:...] 0. secs (0.u,0.s)
+Chars 441 - 760 [Ltac~~cm_code_layout_equal~COD...] 0. secs (0.u,0.s)
+Chars 761 - 1324 [Lemma~cm_v_while_guard_layout_...] 0. secs (0.u,0.s)
+Chars 1325 - 1331 [Proof.] 0. secs (0.u,0.s)
+Chars 1333 - 1527 [(cbn~zeta;~intros~[CODE~[SITES...] 0.05 secs (0.048u,0.001s)
+Chars 1529 - 1530 [-] 0. secs (0.u,0.s)
+Chars 1531 - 1648 [(repeat~rewrite~<-~app_assoc~i...] 0.043 secs (0.039u,0.003s)
+Chars 1650 - 1651 [-] 0. secs (0.u,0.s)
+Chars 1652 - 1671 [exact~(proj2~SITES).] 0. secs (0.u,0.s)
+Chars 1672 - 1676 [Qed.] 0.058 secs (0.056u,0.001s)
+Chars 1677 - 2131 [Lemma~cm_v_if_layout_step~sp~a...] 0. secs (0.u,0.s)
+Chars 2132 - 2138 [Proof.] 0. secs (0.u,0.s)
+Chars 2140 - 2267 [(cbn~zeta;~intros~[CODE~[_~SAV...] 0.005 secs (0.005u,0.s)
+Chars 2269 - 2270 [-] 0. secs (0.u,0.s)
+Chars 2271 - 2356 [(pose~proof~CODE~as~END;~apply...] 0.014 secs (0.014u,0.s)
+Chars 2360 - 2423 [(split;~[~~|~split;~[~right;~c...] 0.002 secs (0.002u,0.s)
+Chars 2427 - 2493 [(repeat~rewrite~<-~app_assoc~i...] 0. secs (0.u,0.s)
+Chars 2497 - 2551 [(fold~app~in~CODE;~cbn[app]~in...] 0. secs (0.u,0.s)
+Chars 2555 - 2731 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 2735 - 2818 [(apply~cm_code_at_append_left~...] 0. secs (0.u,0.s)
+Chars 2820 - 2821 [-] 0. secs (0.u,0.s)
+Chars 2822 - 2982 [(repeat~rewrite~<-~app_assoc~i...] 0.013 secs (0.013u,0.s)
+Chars 2986 - 3026 [(split;~[~~|~split;~[~now~left...] 0. secs (0.u,0.s)
+Chars 3027 - 3072 [(rewrite~Z.add_0_r;~cm_code_la...] 0.002 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_cont/build/Rocq/examples/QCP_demos_human/cmc_code_value_branch_migration_lib.v", line 30, characters 63-88:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+v : cm_value
+st : cm_src_state
+yes, no : cm_stmt
+pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes + 1)
+    (cm_emit_stmt (cm_source_function_policy sp) p fid
+       (pc + 2 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes)
+       owner ob oc no ++
+     cm_cursor_code sp p fid
+       (pc +
+        (Z.succ 0 +
+         (cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+          (Z.succ 0 +
+           cm_stmt_code_count (cm_source_function_policy sp) p fid no))))
+       owner true tail)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid tail calls
+TRUTH : cm_truth st v = false
+The term "CODE" has type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes + 1)
+    (cm_emit_stmt (cm_source_function_policy sp) p fid
+       (pc + 2 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes)
+       owner ob oc no ++
+     cm_cursor_code sp p fid
+       (pc +
+        (Z.succ 0 +
+         (cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+          (Z.succ 0 +
+           cm_stmt_code_count (cm_source_function_policy sp) p fid no))))
+       owner true tail)" while it is expected to have type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes + 1)
+    (cm_emit_stmt (cm_source_function_policy sp) p fid
+       (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+        1) owner ob oc no ++
+     [] ++
+     cm_cursor_code sp p fid
+       (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+        1 + cm_stmt_code_count (cm_source_function_policy sp) p fid no) owner
+       true tail)".
+

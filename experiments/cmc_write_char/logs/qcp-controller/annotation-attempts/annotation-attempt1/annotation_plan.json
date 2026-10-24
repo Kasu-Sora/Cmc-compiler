@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "byte-call",
+      "location": "cmc_write_char: cmc_write_byte call after unsigned cast and remainder",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= cursor and cursor + 1 <= capacity <= 2147483647 imply cursor < capacity",
+        "char_value is any signed long long; the unsigned cast has value char_value mod 2^64",
+        "the unsigned-byte cast of the nonnegative remainder equals tower_u8(char_value) via the existing byte-encoding lemma at k=0"
+      ],
+      "resources": [
+        "UCharArray::seg(data, 0, cursor, prefix)",
+        "UCharArray::undef_seg(data, cursor, capacity)",
+        "live parameter, bits, and byte local stores preserved by symbolic execution"
+      ],
+      "mathematical_state": "The next emitted byte is the Euclidean low byte of char_value. The exact helper contract extends the initialized prefix by this byte and advances the uninitialized suffix by one.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

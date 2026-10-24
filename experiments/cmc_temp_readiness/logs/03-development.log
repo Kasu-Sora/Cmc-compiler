@@ -1,0 +1,19 @@
+1 goal
+  
+  policy : cm_lookup_policy
+  p : cm_program
+  fid : Z
+  He :
+    forall e : cm_expr,
+    In e [] ->
+    cm_expr_counts_representable policy p fid e ->
+    cm_rep_expr_temps_safe e /\
+    cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+    cm_rtemps e <= cm_rvalue_code_count policy p fid e
+  Hrep : cm_args_counts_representable policy p fid []
+  ============================
+  (cm_rep_apair_safe {| cm_acount := 0; cm_adepth := 0 |} /\ True) /\
+  cm_args_temps [] <= 1
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_temp_readiness/build/Rocq/examples/QCP_demos_human/cmc_temp_ready_migration_lib.v", line 42, characters 75-88:
+Error: Tactic failure:  Cannot find witness.
+

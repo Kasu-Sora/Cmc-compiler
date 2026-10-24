@@ -1,0 +1,142 @@
+[
+  {
+    "opcode": "TVMPushOp",
+    "source_body": "(if ilength (tvm_stack st) < 65536i\n        then TVMStepState\n          (tvm_next_state st\n            ((tower_wrap64 imm) :: tvm_stack st)\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (Zlength (tvm_stack st) <? 65536)\n        then TVMStepState\n          (tvm_next_state st\n            ((tower_wrap64 imm) :: tvm_stack st)\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMPopOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st (TL (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (tl (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMDupOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st) &&\n           ilength (tvm_stack st) < 65536i\n        then TVMStepState\n          (tvm_next_state st\n            (HD (tvm_stack st) :: tvm_stack st)\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st)) &&\n           (Zlength (tvm_stack st) <? 65536)\n        then TVMStepState\n          (tvm_next_state st\n            (hd 0 (tvm_stack st) :: tvm_stack st)\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMSwapOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (HD (TL (tvm_stack st)) :: HD (tvm_stack st) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (hd 0 (tl (tvm_stack st)) :: hd 0 (tvm_stack st) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMLoadOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st) &&\n           tower_word_valid (HD (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_getw (tvm_mem st) (HD (tvm_stack st)) ::\n              TL (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st)) &&\n           tower_word_validb (hd 0 (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_getw (tvm_mem st) (hd 0 (tvm_stack st)) ::\n              tl (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMStoreOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st) &&\n           tower_word_valid (HD (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (TL (TL (tvm_stack st)))\n            (tvm_calls st)\n            (tower_setw (tvm_mem st) (HD (tvm_stack st))\n              (HD (TL (tvm_stack st))))\n            (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st)) &&\n           tower_word_validb (hd 0 (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (tl (tl (tvm_stack st)))\n            (tvm_calls st)\n            (tower_setw (tvm_mem st) (hd 0 (tvm_stack st))\n              (hd 0 (tl (tvm_stack st))))\n            (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMLoadBOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st) &&\n           tower_addr_valid (HD (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_getb (tvm_mem st) (HD (tvm_stack st)) ::\n              TL (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st)) &&\n           tower_addr_validb (hd 0 (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_getb (tvm_mem st) (hd 0 (tvm_stack st)) ::\n              tl (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMStoreBOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st) &&\n           tower_addr_valid (HD (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (TL (TL (tvm_stack st)))\n            (tvm_calls st)\n            (tower_setb (tvm_mem st) (HD (tvm_stack st))\n              (HD (TL (tvm_stack st))))\n            (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st)) &&\n           tower_addr_validb (hd 0 (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (tl (tl (tvm_stack st)))\n            (tvm_calls st)\n            (tower_setb (tvm_mem st) (hd 0 (tvm_stack st))\n              (hd 0 (tl (tvm_stack st))))\n            (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMAddOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_add (HD (TL (tvm_stack st))) (HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_add (hd 0 (tl (tvm_stack st))) (hd 0 (tvm_stack st)) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMSubOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_sub (HD (TL (tvm_stack st))) (HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_sub (hd 0 (tl (tvm_stack st))) (hd 0 (tvm_stack st)) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMMulOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_mul (HD (TL (tvm_stack st))) (HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_mul (hd 0 (tl (tvm_stack st))) (hd 0 (tvm_stack st)) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMDivOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st) &&\n           ~(HD (tvm_stack st) == 0i)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_div (HD (TL (tvm_stack st))) (HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st)) &&\n           negb ((hd 0 (tvm_stack st) =? 0))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_div (hd 0 (tl (tvm_stack st))) (hd 0 (tvm_stack st)) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMModOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st) &&\n           ~(HD (tvm_stack st) == 0i)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_mod (HD (TL (tvm_stack st))) (HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st)) &&\n           negb ((hd 0 (tvm_stack st) =? 0))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_mod (hd 0 (tl (tvm_stack st))) (hd 0 (tvm_stack st)) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMEqOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (HD (TL (tvm_stack st)) == HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              ((hd 0 (tl (tvm_stack st)) =? hd 0 (tvm_stack st))) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMNeOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (~(HD (TL (tvm_stack st)) == HD (tvm_stack st))) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (negb ((hd 0 (tl (tvm_stack st)) =? hd 0 (tvm_stack st)))) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMLtOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (HD (TL (tvm_stack st)) < HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              ((hd 0 (tl (tvm_stack st)) <? hd 0 (tvm_stack st))) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMLeOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (HD (TL (tvm_stack st)) <= HD (tvm_stack st)) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              ((hd 0 (tl (tvm_stack st)) <=? hd 0 (tvm_stack st))) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMGtOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (HD (tvm_stack st) < HD (TL (tvm_stack st))) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              ((hd 0 (tvm_stack st) <? hd 0 (tl (tvm_stack st)))) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMGeOp",
+    "source_body": "(if 2i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              (HD (tvm_stack st) <= HD (TL (tvm_stack st))) ::\n              TL (TL (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (2 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st\n            (tower_bool\n              ((hd 0 (tvm_stack st) <=? hd 0 (tl (tvm_stack st)))) ::\n              tl (tl (tvm_stack st)))\n            (tvm_calls st) (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMJmpOp",
+    "source_body": "(if tvm_target_valid code imm\n        then TVMStepState\n          (tvm_jump_state st imm (tvm_stack st) (tvm_calls st)\n            (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if tvm_target_validb code imm\n        then TVMStepState\n          (tvm_jump_state st imm (tvm_stack st) (tvm_calls st)\n            (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMJzOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st)\n        then if HD (tvm_stack st) == 0i\n             then if tvm_target_valid code imm\n                  then TVMStepState\n                    (tvm_jump_state st imm (TL (tvm_stack st))\n                      (tvm_calls st) (tvm_mem st) (tvm_input st)\n                      (tvm_output st))\n                  else TVMStepError st\n             else TVMStepState\n               (tvm_next_state st (TL (tvm_stack st))\n                 (tvm_calls st) (tvm_mem st) (tvm_input st)\n                 (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st))\n        then if (hd 0 (tvm_stack st) =? 0)\n             then if tvm_target_validb code imm\n                  then TVMStepState\n                    (tvm_jump_state st imm (tl (tvm_stack st))\n                      (tvm_calls st) (tvm_mem st) (tvm_input st)\n                      (tvm_output st))\n                  else TVMStepError st\n             else TVMStepState\n               (tvm_next_state st (tl (tvm_stack st))\n                 (tvm_calls st) (tvm_mem st) (tvm_input st)\n                 (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMJnzOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st)\n        then if ~(HD (tvm_stack st) == 0i)\n             then if tvm_target_valid code imm\n                  then TVMStepState\n                    (tvm_jump_state st imm (TL (tvm_stack st))\n                      (tvm_calls st) (tvm_mem st) (tvm_input st)\n                      (tvm_output st))\n                  else TVMStepError st\n             else TVMStepState\n               (tvm_next_state st (TL (tvm_stack st))\n                 (tvm_calls st) (tvm_mem st) (tvm_input st)\n                 (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st))\n        then if negb ((hd 0 (tvm_stack st) =? 0))\n             then if tvm_target_validb code imm\n                  then TVMStepState\n                    (tvm_jump_state st imm (tl (tvm_stack st))\n                      (tvm_calls st) (tvm_mem st) (tvm_input st)\n                      (tvm_output st))\n                  else TVMStepError st\n             else TVMStepState\n               (tvm_next_state st (tl (tvm_stack st))\n                 (tvm_calls st) (tvm_mem st) (tvm_input st)\n                 (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMCallOp",
+    "source_body": "(if tvm_target_valid code imm &&\n           ilength (tvm_calls st) < 65536i\n        then TVMStepState\n          (tvm_jump_state st imm (tvm_stack st)\n            ((tvm_pc st + 1i) :: tvm_calls st)\n            (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if tvm_target_validb code imm &&\n           (Zlength (tvm_calls st) <? 65536)\n        then TVMStepState\n          (tvm_jump_state st imm (tvm_stack st)\n            ((tvm_pc st + 1) :: tvm_calls st)\n            (tvm_mem st) (tvm_input st) (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMRetOp",
+    "source_body": "(if 1i <= ilength (tvm_calls st)\n        then TVMStepState\n          (tvm_jump_state st (HD (tvm_calls st)) (tvm_stack st)\n            (TL (tvm_calls st)) (tvm_mem st) (tvm_input st)\n            (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_calls st))\n        then TVMStepState\n          (tvm_jump_state st (hd 0 (tvm_calls st)) (tvm_stack st)\n            (tl (tvm_calls st)) (tvm_mem st) (tvm_input st)\n            (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMGetcOp",
+    "source_body": "(if ilength (tvm_stack st) < 65536i\n        then if tvm_input st == []\n             then TVMStepState\n               (tvm_next_state st ((--1i) :: tvm_stack st)\n                 (tvm_calls st) (tvm_mem st) (tvm_input st)\n                 (tvm_output st))\n             else TVMStepState\n               (tvm_next_state st\n                 (tower_u8 (HD (tvm_input st)) :: tvm_stack st)\n                 (tvm_calls st) (tvm_mem st) (TL (tvm_input st))\n                 (tvm_output st))\n        else TVMStepError st)",
+    "target_body": "(if (Zlength (tvm_stack st) <? 65536)\n        then if list_empty (tvm_input st)\n             then TVMStepState\n               (tvm_next_state st ((-1) :: tvm_stack st)\n                 (tvm_calls st) (tvm_mem st) (tvm_input st)\n                 (tvm_output st))\n             else TVMStepState\n               (tvm_next_state st\n                 (tower_u8 (hd 0 (tvm_input st)) :: tvm_stack st)\n                 (tvm_calls st) (tvm_mem st) (tl (tvm_input st))\n                 (tvm_output st))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMPutcOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st (TL (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st)\n            (tvm_output st ++ [tower_u8 (HD (tvm_stack st))]))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (tl (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st)\n            (tvm_output st ++ [tower_u8 (hd 0 (tvm_stack st))]))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMPutiOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st)\n        then TVMStepState\n          (tvm_next_state st (TL (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st)\n            (tvm_output st ++ tower_decimal (HD (tvm_stack st))))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st))\n        then TVMStepState\n          (tvm_next_state st (tl (tvm_stack st))\n            (tvm_calls st) (tvm_mem st) (tvm_input st)\n            (tvm_output st ++ tower_decimal (hd 0 (tvm_stack st))))\n        else TVMStepError st)"
+  },
+  {
+    "opcode": "TVMHaltOp",
+    "source_body": "(if 1i <= ilength (tvm_stack st) &&\n           tower_byte_value (HD (tvm_stack st))\n        then TVMStepHalt\n          (TVMState (tvm_pc st) (TL (tvm_stack st)) (tvm_calls st)\n            (tvm_mem st) (tvm_input st) (tvm_output st))\n          (HD (tvm_stack st))\n        else TVMStepError st)",
+    "target_body": "(if (1 <=? Zlength (tvm_stack st)) &&\n           tower_byte_valueb (hd 0 (tvm_stack st))\n        then TVMStepHalt\n          (TVMState (tvm_pc st) (tl (tvm_stack st)) (tvm_calls st)\n            (tvm_mem st) (tvm_input st) (tvm_output st))\n          (hd 0 (tvm_stack st))\n        else TVMStepError st)"
+  }
+]

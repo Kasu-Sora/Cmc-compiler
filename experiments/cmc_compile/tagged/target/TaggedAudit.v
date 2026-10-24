@@ -1,0 +1,153 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_allocation_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_allocation_migration_lib.cm_activate_live_old". exact I. Qed.
+Check cmc_tagged_allocation_migration_lib.cm_activate_live_old.
+Print Assumptions cmc_tagged_allocation_migration_lib.cm_activate_live_old.
+Goal True. idtac "AUDIT cmc_tagged_allocation_migration_lib.cm_activate_live_old_or_local". exact I. Qed.
+Check cmc_tagged_allocation_migration_lib.cm_activate_live_old_or_local.
+Print Assumptions cmc_tagged_allocation_migration_lib.cm_activate_live_old_or_local.
+Goal True. idtac "AUDIT cmc_tagged_allocation_migration_lib.cm_tagged_span_activate_local". exact I. Qed.
+Check cmc_tagged_allocation_migration_lib.cm_tagged_span_activate_local.
+Print Assumptions cmc_tagged_allocation_migration_lib.cm_tagged_span_activate_local.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_call_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_call_migration_lib.cm_slots_prefix_zero". exact I. Qed.
+Check cmc_tagged_call_migration_lib.cm_slots_prefix_zero.
+Print Assumptions cmc_tagged_call_migration_lib.cm_slots_prefix_zero.
+Goal True. idtac "AUDIT cmc_tagged_call_migration_lib.cm_tagged_span_enter_call". exact I. Qed.
+Check cmc_tagged_call_migration_lib.cm_tagged_span_enter_call.
+Print Assumptions cmc_tagged_call_migration_lib.cm_tagged_span_enter_call.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_invariant_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_invariant_migration_lib.cm_task_tagged_step_support". exact I. Qed.
+Check cmc_tagged_invariant_migration_lib.cm_task_tagged_step_support.
+Print Assumptions cmc_tagged_invariant_migration_lib.cm_task_tagged_step_support.
+Goal True. idtac "AUDIT cmc_tagged_invariant_migration_lib.cm_tagged_support_initial". exact I. Qed.
+Check cmc_tagged_invariant_migration_lib.cm_tagged_support_initial.
+Print Assumptions cmc_tagged_invariant_migration_lib.cm_tagged_support_initial.
+Goal True. idtac "AUDIT cmc_tagged_invariant_migration_lib.cm_tagged_support_step". exact I. Qed.
+Check cmc_tagged_invariant_migration_lib.cm_tagged_support_step.
+Print Assumptions cmc_tagged_invariant_migration_lib.cm_tagged_support_step.
+Goal True. idtac "AUDIT cmc_tagged_invariant_migration_lib.cm_tagged_support_iter". exact I. Qed.
+Check cmc_tagged_invariant_migration_lib.cm_tagged_support_iter.
+Print Assumptions cmc_tagged_invariant_migration_lib.cm_tagged_support_iter.
+Goal True. idtac "AUDIT cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_invariants". exact I. Qed.
+Check cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_invariants.
+Print Assumptions cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_invariants.
+Goal True. idtac "AUDIT cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_valid". exact I. Qed.
+Check cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_valid.
+Print Assumptions cmc_tagged_invariant_migration_lib.cm_source_termination_tagged_valid.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_param_geometry_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member_nat". exact I. Qed.
+Check cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member_nat.
+Print Assumptions cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member_nat.
+Goal True. idtac "AUDIT cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member". exact I. Qed.
+Check cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member.
+Print Assumptions cmc_tagged_param_geometry_migration_lib.cm_regions_for_slots_member.
+Goal True. idtac "AUDIT cmc_tagged_param_geometry_migration_lib.cm_param_slot_store_width". exact I. Qed.
+Check cmc_tagged_param_geometry_migration_lib.cm_param_slot_store_width.
+Print Assumptions cmc_tagged_param_geometry_migration_lib.cm_param_slot_store_width.
+Goal True. idtac "AUDIT cmc_tagged_param_geometry_migration_lib.cm_call_param_geometry". exact I. Qed.
+Check cmc_tagged_param_geometry_migration_lib.cm_call_param_geometry.
+Print Assumptions cmc_tagged_param_geometry_migration_lib.cm_call_param_geometry.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_param_iteration_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_param_iteration_migration_lib.cm_store_params_tagged_except". exact I. Qed.
+Check cmc_tagged_param_iteration_migration_lib.cm_store_params_tagged_except.
+Print Assumptions cmc_tagged_param_iteration_migration_lib.cm_store_params_tagged_except.
+Goal True. idtac "AUDIT cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor_nat". exact I. Qed.
+Check cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor_nat.
+Print Assumptions cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor_nat.
+Goal True. idtac "AUDIT cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor". exact I. Qed.
+Check cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor.
+Print Assumptions cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_successor.
+Goal True. idtac "AUDIT cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_length". exact I. Qed.
+Check cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_length.
+Print Assumptions cmc_tagged_param_iteration_migration_lib.cm_slots_prefix_length.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_partial_params_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_empty". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_empty.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_empty.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_full". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_full.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_full.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_extension". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_extension.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_extension.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_store". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_store.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_tagged_span_except_store.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_call_base_live_old". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_call_base_live_old.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_call_base_live_old.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_call_base_live_old_or_param". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_call_base_live_old_or_param.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_call_base_live_old_or_param.
+Goal True. idtac "AUDIT cmc_tagged_partial_params_migration_lib.cm_tagged_span_call_base_except". exact I. Qed.
+Check cmc_tagged_partial_params_migration_lib.cm_tagged_span_call_base_except.
+Print Assumptions cmc_tagged_partial_params_migration_lib.cm_tagged_span_call_base_except.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_restore_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_restore_regions_old_incl". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_restore_regions_old_incl.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_restore_regions_old_incl.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_restore_regions_live_old". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_restore_regions_live_old.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_restore_regions_live_old.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_restore_tagged_old". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_restore_tagged_old.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_restore_tagged_old.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_restore_tagged_live_member". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_restore_tagged_live_member.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_restore_tagged_live_member.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_restore_call_live_old". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_restore_call_live_old.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_restore_call_live_old.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_tagged_span_restore_call". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_tagged_span_restore_call.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_tagged_span_restore_call.
+Goal True. idtac "AUDIT cmc_tagged_restore_migration_lib.cm_tagged_span_restore_scope". exact I. Qed.
+Check cmc_tagged_restore_migration_lib.cm_tagged_span_restore_scope.
+Print Assumptions cmc_tagged_restore_migration_lib.cm_tagged_span_restore_scope.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_step_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_runtime_core_scope_incl". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_runtime_core_scope_incl.
+Print Assumptions cmc_tagged_step_migration_lib.cm_runtime_core_scope_incl.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_runtime_core_call_incl". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_runtime_core_call_incl.
+Print Assumptions cmc_tagged_step_migration_lib.cm_runtime_core_call_incl.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_r_tagged_step". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_r_tagged_step.
+Print Assumptions cmc_tagged_step_migration_lib.cm_r_tagged_step.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_l_tagged_step". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_l_tagged_step.
+Print Assumptions cmc_tagged_step_migration_lib.cm_l_tagged_step.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_s_tagged_step". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_s_tagged_step.
+Print Assumptions cmc_tagged_step_migration_lib.cm_s_tagged_step.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_v_tagged_step". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_v_tagged_step.
+Print Assumptions cmc_tagged_step_migration_lib.cm_v_tagged_step.
+Goal True. idtac "AUDIT cmc_tagged_step_migration_lib.cm_c_tagged_step". exact I. Qed.
+Check cmc_tagged_step_migration_lib.cm_c_tagged_step.
+Print Assumptions cmc_tagged_step_migration_lib.cm_c_tagged_step.
+Require Import SimpleC.EE.QCP_demos_human.cmc_tagged_store_migration_lib.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_pointer_store_width". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_pointer_store_width.
+Print Assumptions cmc_tagged_store_migration_lib.cm_pointer_store_width.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_pointer_region_witness". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_pointer_region_witness.
+Print Assumptions cmc_tagged_store_migration_lib.cm_pointer_region_witness.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_runtime_store_live_span". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_runtime_store_live_span.
+Print Assumptions cmc_tagged_store_migration_lib.cm_runtime_store_live_span.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_store". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_tagged_span_store.
+Print Assumptions cmc_tagged_store_migration_lib.cm_tagged_span_store.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_initial". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_tagged_span_initial.
+Print Assumptions cmc_tagged_store_migration_lib.cm_tagged_span_initial.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_io". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_tagged_span_io.
+Print Assumptions cmc_tagged_store_migration_lib.cm_tagged_span_io.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_live_span_forward". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_live_span_forward.
+Print Assumptions cmc_tagged_store_migration_lib.cm_live_span_forward.
+Goal True. idtac "AUDIT cmc_tagged_store_migration_lib.cm_tagged_span_clear_extension". exact I. Qed.
+Check cmc_tagged_store_migration_lib.cm_tagged_span_clear_extension.
+Print Assumptions cmc_tagged_store_migration_lib.cm_tagged_span_clear_extension.

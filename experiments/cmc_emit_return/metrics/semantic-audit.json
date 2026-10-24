@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cm_emit_return_epilogue_plan",
+      "target_contract_sha256": "5ffe44845b9ef386d4ce86fcf71b6ae1b53fa1900540fd73b98b93f69753ba78",
+      "status": "reviewed",
+      "review": "Same arbitrary p/done/tail/out/capacity plan-to-plan contract; existing arbitrary policy parameter preserved. No additional pure preconditions; exact six-instruction output suffix and arbitrary tail retained."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_return_epilogue",
+      "kind": "Definition",
+      "span": [
+        7,
+        10
+      ],
+      "sha256": "21d5162afbd13695de11c6e834dde5777a4b9e4095481610c3d45b2df67de0b0",
+      "nonblank_lines": 4
+    }
+  ],
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "model_review": "Exact ordered six TVMInst constructors and immediates match the HOL definition; existing plan and resolved emitter models imported unchanged. This verifies emission, not execution of RET.",
+  "final_review": "final-library-review.json"
+}

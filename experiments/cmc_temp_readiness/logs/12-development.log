@@ -1,0 +1,54 @@
+2 goals
+  
+  policy : cm_lookup_policy
+  slot : Z
+  e : cm_expr
+  p : cm_program
+  fid : Z
+  H :
+    cm_type_code_wf
+      (cm_slot_ty
+         (cm_slot_at slot
+            (cm_function_locals
+               (cm_function_at policy fid (cm_program_functions p)))))
+  H1 :
+    0 <=
+    cm_char_normalize_count
+      (cm_function_ret (cm_function_at policy fid (cm_program_functions p)))
+  H2 :
+    0 <=
+    cm_rvalue_code_count policy p fid e +
+    cm_char_normalize_count
+      (cm_slot_ty
+         (cm_slot_at slot
+            (cm_function_locals
+               (cm_function_at policy fid (cm_program_functions p))))) + 5
+  H3 :
+    cm_rvalue_code_count policy p fid e +
+    cm_char_normalize_count
+      (cm_slot_ty
+         (cm_slot_at slot
+            (cm_function_locals
+               (cm_function_at policy fid (cm_program_functions p))))) + 5 <=
+    2147483647
+  H4 : cm_rep_expr_temps_safe e
+  H6 : 0 <= cm_ltemps e
+  H7 : 0 <= cm_rtemps e
+  H0 : cm_ltemps e <= cm_lvalue_code_count policy p fid e
+  H8 : cm_rtemps e <= cm_rvalue_code_count policy p fid e
+  ============================
+  cm_rtemps e <= 2147483647
+
+goal 2 is:
+ cm_rtemps e <=
+ cm_rvalue_code_count policy p fid e +
+ cm_char_normalize_count
+   (cm_slot_ty
+      (cm_slot_at slot
+         (cm_function_locals
+            (cm_function_at policy fid (cm_program_functions p))))) + 5
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_temp_readiness/build/Rocq/examples/QCP_demos_human/cmc_temp_ready_migration_lib.v", line 157, characters 0-4:
+Error:
+ (in proof cm_stmt_temps_ready_with_bound): Attempt to save an incomplete proof
+(there are remaining open goals).
+

@@ -1,0 +1,691 @@
+{
+  "generation": 56,
+  "run_id": "cmc_emit_data_migration-20261016132808",
+  "case": "cmc_emit_data_migration",
+  "phase": "done",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_emit_data_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal_check.v",
+    "case_name": "cmc_emit_data_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/public_helper_lemma_lib.v",
+    "sha256": "d1dd6612ab2c2ca4fcb706e953f0d05ed1e858e7308c8a5d8dce3d87c228be6d",
+    "declaration_count": 0,
+    "helper_count": 0
+  },
+  "problem_context": {
+    "problem_statement": "Migrate the complete runtime function cmc_emit_data from C*/HOL to QCP/Rocq, preserving exact source contract and runtime tokens. Source: /Users/nizitong/cmc/cmc_concrete_emit_data.c and .h. Baseline and prior verified helper snapshots: /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_data/baseline.\nOriginal Require AND Ensure both retain all seven pure conditions: cm_rep_globals_safe globals; cm_data_globals_wf structs globals; cm_rep_strings_safe strings; 0<=cm_rep_globals_size globals; 0<=cm_rep_strings_size strings; (8+globals_size)+strings_size<=capacity; capacity<=2147483647. Preserve both list representations including owned string byte arrays. Require empty initialized prefix at 0 and undef entire capacity. Ensure precise initialized bytes ((ireplicate 8 0 ++ cm_globals_bytes structs globals) ++ cm_strings_bytes strings), exact cursor (8+globals_size)+strings_size and remaining undef suffix. Do not omit postcondition pure facts even if derivable. No new nonnull or wf premise, and no runtime edits.\nReuse verified globals and strings case pure libraries, layout/counts/copy/word models. All needed semantic models already exist; prefer import-only new case lib if possible. The zeros definition already used by cmc_write_zeroes represents ireplicate. Three helper contracts cmc_write_zeroes, cmc_emit_globals and cmc_emit_strings must be copied exactly from their existing verified C files up to whitespace/binders; do not repeat their implementation proofs, import previous auto/manual, or edit frozen dependencies/ABI.\nThis is composition of reserved eight zero bytes, globals emission and strings emission. Do not equate to full cm_model_data_bytes or program codegen beyond this original contract, and do not introduce readiness/TVM parameters. Preserve exact grouping of byte concatenation or prove the required equality.\nAnnotation owner records checks, failures and revisions in ordinary owner output for effort measurement. Main audits source/target contracts and dependencies, counts final annotation/proof and public incremental cost, and updates skill only after controller done."
+  },
+  "formal_case_lib_policy": "create",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-16T05:28:08.337952Z"
+  },
+  "symexec_profile": {
+    "name": "recursive-large",
+    "timeout_seconds": 7200,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 12,
+  "max_parallel_group_workers": 3,
+  "dune_preparation": {
+    "status": "passed",
+    "build_mode": "makefile",
+    "target": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal_check.vo",
+    "build_root": ".",
+    "make_executable": "/usr/bin/make",
+    "coqc_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqc",
+    "coqdep_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqdep",
+    "run_makefile": "verification_runs/cmc_emit_data_migration-20261016132808/Makefile",
+    "run_makefile_sha256": "292329d1b0b992891d5ef8767ee702ffe552f17336825c0ef28a59f2e1ed43c2",
+    "snapshot": "verification_runs/cmc_emit_data_migration-20261016132808/makefile_dependency_snapshot.json",
+    "snapshot_sha256": "fbf4c11f56c468729eac94902e37c518e85a982d8e751d64127e196f9f9da6a7",
+    "dependency_digest": "f51b9cf36b3bd3b932b440bbd2096772bf31471c1e424472d77f1415a4bf6bed",
+    "source_digest": "d223972e004f3ecbb07debbfb07048fd260944f3a87fa5d2b3db25af1f53c99b",
+    "artifact_digest": "89c3febcf4dbfa43862e8b095c246c6ada0a5ff7639600b4c870c544f6903845",
+    "configuration_digest": "83db48906dfbb7805fb46e0b33b5cfb55e4c16ae9c74fd38557d6ef3f04e0d98",
+    "base_artifact_count": 149,
+    "current_source_count": 5,
+    "rebuilt_count": 0,
+    "dependency_metrics": {
+      "status": "resolved",
+      "strategy": "breadth-batched-coqdep",
+      "batch_count": 6,
+      "coqdep_process_count": 6,
+      "node_count": 154,
+      "source_count": 154,
+      "elapsed_seconds": 6.899436
+    },
+    "current_cleanup": {
+      "status": "passed",
+      "removed_count": 0,
+      "first_removed": null
+    },
+    "make_seconds": 0.008123,
+    "returncode": 0,
+    "elapsed_seconds": 7.08429
+  },
+  "rounds": {
+    "cmc_emit_data_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_emit_data_migration-annotation-r1-attempt-1"
+    },
+    "cmc_emit_data_migration-vc-checking-r1": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_emit_data_migration-vc-checking-r1-attempt-1"
+    },
+    "cmc_emit_data_migration-vc-proving-r1": {
+      "phase": "vc-proving-preparing",
+      "current_attempt": "cmc_emit_data_migration-vc-proving-r1"
+    }
+  },
+  "attempts": {
+    "cmc_emit_data_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_emit_data_migration-annotation-r1-attempt-1",
+      "round": "cmc_emit_data_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_emit_data_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-16T05:28:15.760263Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "01659279ee8141ab5e3869a96f8f9b65ee49d4be953744b2f22ca6bf551f8433",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "input_sha256": "f02d4fcdc886d29878ba90d2925d4cb073b9ea8600db20db4579980b4b417c4a",
+      "owner": "annotation/cmc_emit_data_migration-20261016132808",
+      "started_at": "2026-10-16T05:28:24.639765Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_data_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_emit_data_migration-20261016132808",
+        "claimed_at": "2026-10-16T05:28:24.639765Z",
+        "finalized_at": "2026-10-16T05:32:57.170191Z"
+      },
+      "timing": {
+        "formal-case-lib-design-coq-check": [
+          {
+            "started_at": "2026-10-16T05:30:09.908483Z",
+            "finished_at": "2026-10-16T05:30:11.349908Z",
+            "elapsed_seconds": 1.441425
+          },
+          {
+            "started_at": "2026-10-16T05:30:46.070580Z",
+            "finished_at": "2026-10-16T05:30:46.136436Z",
+            "elapsed_seconds": 0.065856
+          },
+          {
+            "started_at": "2026-10-16T05:31:16.729975Z",
+            "finished_at": "2026-10-16T05:31:16.796063Z",
+            "elapsed_seconds": 0.066088
+          }
+        ],
+        "owner-generation": [
+          {
+            "started_at": "2026-10-16T05:30:23.100692Z",
+            "finished_at": "2026-10-16T05:30:23.127692Z",
+            "elapsed_seconds": 0.027
+          },
+          {
+            "started_at": "2026-10-16T05:30:51.327793Z",
+            "finished_at": "2026-10-16T05:30:51.350793Z",
+            "elapsed_seconds": 0.023
+          },
+          {
+            "started_at": "2026-10-16T05:31:23.388856Z",
+            "finished_at": "2026-10-16T05:31:23.469856Z",
+            "elapsed_seconds": 0.081
+          }
+        ],
+        "formal-case-lib-coq-check": [
+          {
+            "started_at": "2026-10-16T05:31:41.978090Z",
+            "finished_at": "2026-10-16T05:31:42.045913Z",
+            "elapsed_seconds": 0.067823
+          },
+          {
+            "started_at": "2026-10-16T05:33:28.314117Z",
+            "finished_at": "2026-10-16T05:33:28.380553Z",
+            "elapsed_seconds": 0.066436
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-16T05:32:57.152710Z",
+            "finished_at": "2026-10-16T05:32:57.213826Z",
+            "elapsed_seconds": 0.057548
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-16T05:33:28.384154Z",
+            "finished_at": "2026-10-16T05:33:28.476154Z",
+            "elapsed_seconds": 0.092
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-16T05:33:11.445018Z",
+            "finished_at": "2026-10-16T05:33:28.489111Z",
+            "elapsed_seconds": 17.03877
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-16T05:33:48.953703Z",
+            "finished_at": "2026-10-16T05:33:56.090118Z",
+            "elapsed_seconds": 7.130989
+          }
+        ]
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-16T05:30:23.127685Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "8630d296e959463c57fdb9b0a2ebb90f8c641f117a2f18533c798d38a8668ae6",
+          "elapsed_seconds": 0.027,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 2,
+          "recorded_at": "2026-10-16T05:30:51.350787Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "72b4054f7257325236f07d9381bf4bd0b7d8c8512020296cdf5a1c9d8ecbc37c",
+          "elapsed_seconds": 0.023,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 3,
+          "recorded_at": "2026-10-16T05:31:23.468779Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "0a2cf6434d5ee3e879c3faa561272acde375e0c37b87718b171ddbb57aeff75a",
+          "elapsed_seconds": 0.081,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_emit_data_migration-annotation-r1-attempt-1",
+        "round": "cmc_emit_data_migration-annotation-r1",
+        "formal_input_digest": "0a2cf6434d5ee3e879c3faa561272acde375e0c37b87718b171ddbb57aeff75a",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_emit_data_migration.c": "9c8bf0577d0975606b3d09afdcab14c2e2e760f16b9e570503781043c7ff3364",
+          "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063",
+          "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal.v": "651d2ae7c716eaed565b87ef0f7258f213e31305858a2db00893952df2d115e6",
+          "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_auto.v": "353d47988da4ec0a4620ea2651c7df170388a914db9415b4f79ad39defcb4d80",
+          "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v": "7d32da1ed43a96614622cb1d41fc65dbabdbe3c99a46baff231e471db4c2f431",
+          "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal_check.v": "34b959a811f561a799a2234657769dabcbaeed88213e2a799814a99ec57b4e25"
+        },
+        "performance_profile": "recursive-large",
+        "timeout_seconds": 7200.0,
+        "elapsed_seconds": 0.081,
+        "recorded_at": "2026-10-16T05:31:23.469851Z"
+      },
+      "returned_at": "2026-10-16T05:32:57.170191Z",
+      "artifact_sha256": {
+        "report": "5bdc4bb3ad85eaa994ae27ea899eaf219ba54b9a9f598282dcc0f2fecc6b7514",
+        "plan": "640d9bdcd8ce9395cc093d76c9b52c5e436bf6fc2f3f4e90567c62988ee7122a",
+        "output": "f73f778deec07e2f5044c0266a84686c8b53775468bd8e99fcc2b7c12d1f89ef"
+      },
+      "after_snapshot": {
+        "digest": "2d98a98093188bba79277cbaacf972aad8ab2412297d2fbca67149607689b7c0",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_emit_data_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_goal_check.v"
+      ],
+      "annotation_activity": "spec-and-annotation",
+      "finished_at": "2026-10-16T05:33:56.090118Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 0,
+          "provable_count": 0,
+          "statements": []
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-16T05:31:23.469851Z",
+            "performance_profile": "recursive-large",
+            "timeout_seconds": 7200.0,
+            "elapsed_seconds": 0.081
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": false,
+          "errors": []
+        },
+        "formal_case_lib_dune": {
+          "status": "passed",
+          "build_mode": "makefile",
+          "target": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.vo",
+          "returncode": 0,
+          "base_artifact_count": 149,
+          "current_source_count": 1,
+          "rebuilt_count": 0,
+          "dependency_metrics": {
+            "status": "resolved",
+            "strategy": "breadth-batched-coqdep",
+            "batch_count": 7,
+            "coqdep_process_count": 7,
+            "node_count": 150,
+            "source_count": 150,
+            "elapsed_seconds": 8.1732
+          },
+          "current_cleanup": {
+            "status": "passed",
+            "removed_count": 0,
+            "first_removed": null
+          },
+          "make_seconds": 0.009288,
+          "elapsed_seconds": 8.35671
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      }
+    },
+    "cmc_emit_data_migration-vc-checking-r1-attempt-1": {
+      "attempt_id": "cmc_emit_data_migration-vc-checking-r1-attempt-1",
+      "round": "cmc_emit_data_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-checking-r1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-checking-r1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-checking-r1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-checking-r1/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-16T05:34:19.116674Z",
+      "owner": "vc-checking/cmc_emit_data_migration-vc-checking-r1-attempt-1",
+      "started_at": "2026-10-16T05:34:27.806081Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_data_migration-vc-checking-r1-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_emit_data_migration-vc-checking-r1-attempt-1",
+        "claimed_at": "2026-10-16T05:34:27.806081Z",
+        "finalized_at": "2026-10-16T05:39:39.629177Z"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-16T05:36:09.448397Z",
+            "finished_at": "2026-10-16T05:36:09.483842Z",
+            "elapsed_seconds": 0.029532
+          },
+          {
+            "started_at": "2026-10-16T05:39:39.604795Z",
+            "finished_at": "2026-10-16T05:39:39.662157Z",
+            "elapsed_seconds": 0.049805
+          }
+        ],
+        "post-vc-checking-symexec": [
+          {
+            "started_at": "2026-10-16T05:39:59.989368Z",
+            "finished_at": "2026-10-16T05:40:00.077368Z",
+            "elapsed_seconds": 0.088
+          }
+        ],
+        "controller-plan-check": [
+          {
+            "started_at": "2026-10-16T05:39:59.959355Z",
+            "finished_at": "2026-10-16T05:40:00.101048Z",
+            "elapsed_seconds": 0.134788
+          }
+        ]
+      },
+      "returned_at": "2026-10-16T05:39:39.629177Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "output": "dcbba481ee320f032ee9d6624b60d1c666d2aba357544382bcf53f0f4065cd0a"
+      },
+      "agent_output_metrics": {
+        "bytes": 4165,
+        "lines": 50,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 4,
+        "structural_no_split_checked_first": 0,
+        "structural_definite_blockers": 0
+      },
+      "finished_at": "2026-10-16T05:40:00.101048Z",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "a41680583b66eec887d94665362c7ae425604a470f681f1f77599b737c9e34e5",
+      "main_check": {
+        "manual_refresh": {
+          "status": "passed",
+          "returncode": 0,
+          "timeout_seconds": 7200.0,
+          "elapsed_seconds": 0.088,
+          "performance_profile": "recursive-large"
+        }
+      }
+    },
+    "cmc_emit_data_migration-vc-proving-r1": {
+      "attempt_id": "cmc_emit_data_migration-vc-proving-r1",
+      "round": "cmc_emit_data_migration-vc-proving-r1",
+      "phase": "vc-proving-preparing",
+      "status": "verified",
+      "directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/cmc_emit_data_migration-vc-proving-r1",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-proving-r1",
+      "base_manifest": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/cmc_emit_data_migration-vc-proving-r1/base_manifest.json",
+      "group_workers_manifest": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-proving-r1/group_workers_manifest.json",
+      "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-proving-r1/proving_merged_result.json",
+      "groups": {
+        "buffer-composition": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_data_migration-vc-proving-r1/buffer-composition",
+          "started_at": "2026-10-16T05:40:23.412608Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_data_migration-vc-proving-r1-buffer-composition",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_data_migration-vc-proving-r1/buffer-composition",
+            "claimed_at": "2026-10-16T05:40:23.412608Z",
+            "finalized_at": "2026-10-16T05:43:23.960774Z"
+          },
+          "timing_interval_index": 0,
+          "returned_at": "2026-10-16T05:43:23.960774Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5dad6c22742596b4dfc3c60c3925b00a5a055c00e146fd51207c15d53a159cd0",
+            "group_worker_lib": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063",
+            "output": "e7a71471cc0cc327caf179051af4cfa8cd10ff81b14d65c9738f41b003a8ebbb"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "5dad6c22742596b4dfc3c60c3925b00a5a055c00e146fd51207c15d53a159cd0",
+            "group_worker_lib": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063"
+          },
+          "accepted_at": "2026-10-16T05:43:25.783760Z"
+        },
+        "helper-call-pure": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_data_migration-vc-proving-r1/helper-call-pure",
+          "started_at": "2026-10-16T05:40:45.173546Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_data_migration-vc-proving-r1-helper-call-pure",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_data_migration-vc-proving-r1/helper-call-pure",
+            "claimed_at": "2026-10-16T05:40:45.173546Z",
+            "finalized_at": "2026-10-16T05:42:39.100416Z"
+          },
+          "timing_interval_index": 1,
+          "returned_at": "2026-10-16T05:42:39.100416Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "9fd3f5608659f4376b06381b294a599d775a274f47e6e5b83116c6c1f2668b49",
+            "group_worker_lib": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063",
+            "output": "0d6e90dcc47e65e95287194db916140c7c729fa099ca8bdaef5a5fa8e4f37e7e"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "9fd3f5608659f4376b06381b294a599d775a274f47e6e5b83116c6c1f2668b49",
+            "group_worker_lib": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063"
+          },
+          "accepted_at": "2026-10-16T05:42:42.122254Z"
+        }
+      },
+      "priority_group_ids": [],
+      "previous_proving_round": null,
+      "max_parallel_group_workers": 3,
+      "created_at": "2026-10-16T05:40:07.465930Z",
+      "base_manifest_sha256": "25ce59c2431e88b150e77852cb129ca582ed6343878d03aa012a508ccb1c8968",
+      "group_workers_manifest_sha256": "9284a08e4e9d42e5def6f2238a4c0c83b9ffc2499c35483e0f236ab5a53f5a38",
+      "timing": {
+        "preparing": [
+          {
+            "started_at": "2026-10-16T05:40:15.595199Z",
+            "finished_at": "2026-10-16T05:40:15.660176Z",
+            "elapsed_seconds": 0.057419
+          }
+        ],
+        "group-work": [
+          {
+            "started_at": "2026-10-16T05:40:23.412608Z",
+            "finished_at": "2026-10-16T05:43:23.960774Z",
+            "elapsed_seconds": 180.548166
+          },
+          {
+            "started_at": "2026-10-16T05:40:45.173546Z",
+            "finished_at": "2026-10-16T05:42:39.100416Z",
+            "elapsed_seconds": 113.92687
+          }
+        ],
+        "group-development-check": [
+          {
+            "started_at": "2026-10-16T05:41:27.607239Z",
+            "finished_at": "2026-10-16T05:41:33.038990Z",
+            "elapsed_seconds": 5.431751
+          },
+          {
+            "started_at": "2026-10-16T05:41:46.501686Z",
+            "finished_at": "2026-10-16T05:41:48.358714Z",
+            "elapsed_seconds": 1.857028
+          },
+          {
+            "started_at": "2026-10-16T05:41:48.513999Z",
+            "finished_at": "2026-10-16T05:41:50.960648Z",
+            "elapsed_seconds": 2.446649
+          },
+          {
+            "started_at": "2026-10-16T05:42:03.633530Z",
+            "finished_at": "2026-10-16T05:42:06.653868Z",
+            "elapsed_seconds": 3.020338
+          },
+          {
+            "started_at": "2026-10-16T05:42:07.420895Z",
+            "finished_at": "2026-10-16T05:42:09.879527Z",
+            "elapsed_seconds": 2.458632
+          }
+        ],
+        "group-validation": [
+          {
+            "started_at": "2026-10-16T05:42:39.076625Z",
+            "finished_at": "2026-10-16T05:42:42.143246Z",
+            "elapsed_seconds": 3.059065
+          },
+          {
+            "started_at": "2026-10-16T05:43:23.936361Z",
+            "finished_at": "2026-10-16T05:43:25.812175Z",
+            "elapsed_seconds": 1.86832
+          }
+        ],
+        "group-coq-check": [
+          {
+            "started_at": "2026-10-16T05:42:48.700356Z",
+            "finished_at": "2026-10-16T05:42:54.107879Z",
+            "elapsed_seconds": 5.407523
+          }
+        ],
+        "parent-verify": [
+          {
+            "started_at": "2026-10-16T05:44:04.441282Z",
+            "finished_at": "2026-10-16T05:44:09.248006Z",
+            "elapsed_seconds": 4.798399
+          }
+        ]
+      },
+      "finished_at": "2026-10-16T05:44:09.248006Z",
+      "verified_result_sha256": "4f996bf1ccdd5f06774802ece2cbd99b272ddb0edf763eff3dc920e7fb58e1ae"
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_emit_data_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_emit_data_migration-annotation-r1-attempt-1",
+    "iteration_count": 1,
+    "owner": "annotation/cmc_emit_data_migration-20261016132808"
+  },
+  "accepted_rounds": {
+    "annotation": {
+      "round": "cmc_emit_data_migration-annotation-r1",
+      "attempt_id": "cmc_emit_data_migration-annotation-r1-attempt-1",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/annotation_history/annotation-attempt1"
+    },
+    "vc-checking": {
+      "round": "cmc_emit_data_migration-vc-checking-r1",
+      "attempt_id": "cmc_emit_data_migration-vc-checking-r1-attempt-1",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "a41680583b66eec887d94665362c7ae425604a470f681f1f77599b737c9e34e5",
+      "proof_manual_sha256": "7d32da1ed43a96614622cb1d41fc65dbabdbe3c99a46baff231e471db4c2f431",
+      "agent_output_metrics": {
+        "bytes": 4165,
+        "lines": 50,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 4,
+        "structural_no_split_checked_first": 0,
+        "structural_definite_blockers": 0
+      }
+    },
+    "vc-proving-preparing": {
+      "round": "cmc_emit_data_migration-vc-proving-r1",
+      "attempt_id": "cmc_emit_data_migration-vc-proving-r1",
+      "result_sha256": "4f996bf1ccdd5f06774802ece2cbd99b272ddb0edf763eff3dc920e7fb58e1ae"
+    }
+  },
+  "next_actions": [],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": {
+    "round": "cmc_emit_data_migration-vc-proving-r1",
+    "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/rounds/cmc_emit_data_migration-vc-proving-r1/proving_merged_result.json",
+    "result_sha256": "4f996bf1ccdd5f06774802ece2cbd99b272ddb0edf763eff3dc920e7fb58e1ae",
+    "proof_manual_sha256": "0170d4454fe60add0d7f49ecd07d66536278a196acae32db71b968e9de002646",
+    "proving_merged_lib_sha256": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063"
+  },
+  "final_apply": {
+    "status": "passed",
+    "transaction_id": "a53e55e69b694f178ddc94d71f3df9cc",
+    "applied_at": "2026-10-16T05:44:48.369407Z"
+  },
+  "final_check": {
+    "status": "passed",
+    "checked_at": "2026-10-16T05:45:07.797607Z",
+    "cleanup_removed_count": 0
+  },
+  "created_at": "2026-10-16T05:28:08.337958Z",
+  "updated_at": "2026-10-16T05:45:07.804602Z",
+  "final_apply_transaction": {
+    "transaction_id": "a53e55e69b694f178ddc94d71f3df9cc",
+    "status": "completed",
+    "records": [
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/cmc_emit_data_migration-vc-proving-r1/proving_merged/cmc_emit_data_migration_proof_manual.v",
+        "source_sha256": "0170d4454fe60add0d7f49ecd07d66536278a196acae32db71b968e9de002646",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v",
+        "existed": true,
+        "before_sha256": "7d32da1ed43a96614622cb1d41fc65dbabdbe3c99a46baff231e471db4c2f431",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/final-check/backup/a53e55e69b694f178ddc94d71f3df9cc/Rocq/examples/QCP_demos_human/cmc_emit_data_migration_proof_manual.v"
+      },
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_data_migration-20261016132808/cmc_emit_data_migration-vc-proving-r1/proving_merged/cmc_emit_data_migration_lib.v",
+        "source_sha256": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v",
+        "existed": true,
+        "before_sha256": "ca7841495e4a3d1d108e683f95c6996a482b1d6eb364a6824994d84cea754063",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_data_migration-20261016132808/final-check/backup/a53e55e69b694f178ddc94d71f3df9cc/Rocq/examples/QCP_demos_human/cmc_emit_data_migration_lib.v"
+      }
+    ],
+    "prepared_at": "2026-10-16T05:44:48.348838Z",
+    "backed_up_at": "2026-10-16T05:44:48.360803Z",
+    "completed_at": "2026-10-16T05:44:48.369405Z"
+  },
+  "finished_at": "2026-10-16T05:45:07.797607Z"
+}

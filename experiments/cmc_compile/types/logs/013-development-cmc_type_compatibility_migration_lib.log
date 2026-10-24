@@ -1,0 +1,70 @@
+Chars 0 - 73 [Require~Export~SimpleC.EE.QCP_...] 1.296 secs (1.219u,0.071s)
+Chars 74 - 119 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 120 - 141 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 142 - 167 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 168 - 237 [Lemma~cm_value_type_scalar~v~:...] 0. secs (0.u,0.s)
+Chars 238 - 244 [Proof.] 0. secs (0.u,0.s)
+Chars 245 - 354 [(destruct~v;~~~cbv~beta~iota~~...] 0.378 secs (0.372u,0.005s)
+Chars 355 - 359 [Qed.] 0. secs (0.u,0.s)
+Chars 360 - 450 [Lemma~cm_compatible_scalar~v~t...] 0. secs (0.u,0.s)
+Chars 451 - 457 [Proof.] 0. secs (0.u,0.s)
+Chars 458 - 516 [(intros~[<-|~[_~P]];~[~apply~c...] 0. secs (0.u,0.s)
+Chars 517 - 521 [Qed.] 0. secs (0.u,0.s)
+Chars 522 - 646 [Lemma~cm_compatible_integer~v~...] 0. secs (0.u,0.s)
+Chars 647 - 653 [Proof.] 0. secs (0.u,0.s)
+Chars 654 - 780 [(intros~[<-|~[->~P]]~I;~~~[~ex...] 0.001 secs (0.001u,0.s)
+Chars 781 - 785 [Qed.] 0. secs (0.u,0.s)
+Chars 786 - 906 [Lemma~cm_compatible_pointer~v~...] 0. secs (0.u,0.s)
+Chars 907 - 913 [Proof.] 0. secs (0.u,0.s)
+Chars 914 - 954 [(intros~[<-|~[->~P]]~H;~[~exac...] 0. secs (0.u,0.s)
+Chars 955 - 959 [Qed.] 0. secs (0.u,0.s)
+Chars 960 - 1094 [Lemma~cm_compatible_convertibl...] 0. secs (0.u,0.s)
+Chars 1095 - 1101 [Proof.] 0. secs (0.u,0.s)
+Chars 1103 - 1142 [(intros~[<-|~[->~PTR]]~CONV;~[...] 0. secs (0.u,0.s)
+Chars 1143 - 1148 [left.] 0. secs (0.u,0.s)
+Chars 1150 - 1289 [(destruct~from,~to;~~~cbv~beta...] 0.198 secs (0.196u,0.s)
+Chars 1290 - 1294 [Qed.] 0.027 secs (0.026u,0.s)
+Chars 1295 - 1434 [Lemma~cm_expr_value_convertibl...] 0. secs (0.u,0.s)
+Chars 1435 - 1441 [Proof.] 0. secs (0.u,0.s)
+Chars 1443 - 1569 [(intros~[COMP~ZERO]~[CONV|~[PT...] 0. secs (0.u,0.s)
+Chars 1570 - 1574 [Qed.] 0. secs (0.u,0.s)
+Chars 1575 - 1726 [Lemma~cm_convert_value_type~st...] 0. secs (0.u,0.s)
+Chars 1727 - 1733 [Proof.] 0. secs (0.u,0.s)
+Chars 1735 - 1794 [(destruct~ty;~intros~SC~CONV;~...] 0. secs (0.u,0.s)
+Chars 1796 - 1797 [-] 0. secs (0.u,0.s)
+Chars 1798 - 1885 [(unfold~cm_scalar_expr_type,~c...] 0. secs (0.u,0.s)
+Chars 1887 - 1888 [-] 0. secs (0.u,0.s)
+Chars 1889 - 2183 [(destruct~v;~~~unfold~cm_value...] 0. secs (0.u,0.s)
+Chars 2187 - 2188 [+] 0. secs (0.u,0.s)
+Chars 2189 - 2263 [(match~goal~with~~|~n:Z~|-~_~=...] 0.002 secs (0.002u,0.s)
+Chars 2269 - 2355 [(assert~(W~:~tower_wrap64~0~=~...] 0.001 secs (0.u,0.s)
+1 goal
+  
+  st : cm_src_state
+  ty : cm_type
+  n : Z
+  SC : cm_scalar_expr_type (CMPtrTy ty)
+  CONV :
+    ~ False /\
+    ~ False /\
+    (CMIntTy = CMPtrTy ty \/
+     (CMIntTy = CMIntTy \/ CMIntTy = CMCharTy) /\
+     (CMPtrTy ty = CMIntTy \/ CMPtrTy ty = CMCharTy) \/
+     False /\
+     True /\ (CMIntTy = CMPtrTy CMCharTy \/ CMPtrTy ty = CMPtrTy CMCharTy)) \/
+    CMIntV n = CMIntV 0 /\ True
+  H : n = 0
+  W : tower_wrap64 0 = 0
+  ============================
+  match (if tower_wrap64 n =? 0 then CMNullV else CMIntV n) with
+  | CMIntV _ => CMIntTy
+  | CMCharV _ => CMCharTy
+  | CMNullV => CMPtrTy CMCharTy
+  | CMPtrV _ _ _ _ ty0 => CMPtrTy ty0
+  end = CMPtrTy ty \/
+  (if tower_wrap64 n =? 0 then CMNullV else CMIntV n) = CMNullV /\ True
+Chars 2361 - 2366 [Show.] 0.001 secs (0.u,0.s)
+Chars 2370 - 2371 [+] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_compatibility_migration_lib.v", line 32, characters 3-4:
+Error: [Focus] Wrong bullet +: Current bullet + is not finished.
+

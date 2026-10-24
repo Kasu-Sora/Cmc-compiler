@@ -1,0 +1,640 @@
+{
+  "generation": 53,
+  "run_id": "cmc_write_zeroes_migration-20261015180614",
+  "case": "cmc_write_zeroes_migration",
+  "phase": "done",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_write_zeroes_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal_check.v",
+    "case_name": "cmc_write_zeroes_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/public_helper_lemma_lib.v",
+    "sha256": "f501377e78c27a2a28a64817e1d534bf3bd5268e2b99efb218f818fbbe392490",
+    "declaration_count": 2,
+    "helper_count": 1
+  },
+  "problem_context": {
+    "problem_statement": "Migrate exactly cmc_write_zeroes from C*/HOL to QCP/Rocq. Immutable source snapshot: /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_write_zeroes/baseline/cmc_concrete_emit_zeroes.c and .h. Shared source definitions/proofs: baseline/userlib/pure_lists.c, baseline/cmc_rep.c and baseline/userlib/array.c.\nPreserve the original runtime signature and body: int index=0; while(index != count) { data[cursor+index]=0; index=index+1; }. The original DOES NOT call cmc_write_byte; do not replace its direct store with a call.\nLogical parameter prefix:list Z. Precondition: 0<=cursor; 0<=count; cursor+count<=capacity; capacity<=2147483647; separating ownership of initialized unsigned-byte prefix data[0..cursor) with exact content prefix and uninitialized unsigned-byte suffix data[cursor..capacity). Postcondition: initialized prefix data[0..cursor+count) with exact content prefix ++ ireplicate(count,0), and uninitialized suffix data[cursor+count..capacity). Preserve zero count and zero capacity admissible cases, including cursor=count=capacity=0. Do not add full-array initialization, positive count, nonnull data for empty footprints, or extra upper bounds to simplify proof. Do not weaken the exact output list or residual ownership.\nThe previous byte case verified existing UCharArray::seg / UCharArray::undef_seg as suitable mappings, at QCP_examples/QCP_demos_human/cmc_write_byte_migration.c. Reuse existing QCP/Rocq repeat/zeros/list lemmas where semantically equivalent. Source ireplicate uses an integer count; inspect its definition and bridge nonnegative counts correctly to nat repeats. Keep any newly required common definitions and helper lemmas distinct from case annotation/proofs for separate effort accounting. If no new public models/lemmas are needed, report zero rather than duplicating existing libraries.\nThe QCP formal contract is to be authored by annotation owner from these source semantics (no existing frozen QCP text). Follow controller-owned role boundaries. No new Axiom or Admitted in handwritten manual or case lib; report existing QCP automatic trusted admissions explicitly. This case is a C* -> QCP migration, not whole CMC/TVM proof completion; do not use the deprecated arr_sum reverse experiment as a proof template. Preserve metrics and failures.",
+    "target_function": "cmc_write_zeroes"
+  },
+  "formal_case_lib_policy": "create",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-15T10:06:14.547362Z"
+  },
+  "symexec_profile": {
+    "name": "standard",
+    "timeout_seconds": 3600,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 12,
+  "max_parallel_group_workers": 2,
+  "dune_preparation": {
+    "status": "passed",
+    "build_mode": "makefile",
+    "target": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal_check.vo",
+    "build_root": ".",
+    "make_executable": "/usr/bin/make",
+    "coqc_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqc",
+    "coqdep_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqdep",
+    "run_makefile": "verification_runs/cmc_write_zeroes_migration-20261015180614/Makefile",
+    "run_makefile_sha256": "eeb4edff539db1dc6d50fbbd8bb8baf6a15e0a92355f3d2c6ec48fd31b2ff116",
+    "snapshot": "verification_runs/cmc_write_zeroes_migration-20261015180614/makefile_dependency_snapshot.json",
+    "snapshot_sha256": "83f5b71f34e393c516ada3e744346fae52133bf15e9f750f5b20da11ded3dd48",
+    "dependency_digest": "eb9fe9b7f121523db047f9b30de4551b4206b93d946396a738efb0627dd501ff",
+    "source_digest": "c3527ddb4e650150c0fad38e1a34b32b073dcee3b33eafbe18509875403de0ea",
+    "artifact_digest": "fe2d0f081a6e277110299fce79caae0b7ca558aa70253110927df6d6848b1537",
+    "configuration_digest": "83db48906dfbb7805fb46e0b33b5cfb55e4c16ae9c74fd38557d6ef3f04e0d98",
+    "base_artifact_count": 143,
+    "current_source_count": 4,
+    "rebuilt_count": 0,
+    "dependency_metrics": {
+      "status": "resolved",
+      "strategy": "breadth-batched-coqdep",
+      "batch_count": 6,
+      "coqdep_process_count": 6,
+      "node_count": 147,
+      "source_count": 147,
+      "elapsed_seconds": 6.943294
+    },
+    "current_cleanup": {
+      "status": "passed",
+      "removed_count": 0,
+      "first_removed": null
+    },
+    "make_seconds": 0.00804,
+    "returncode": 0,
+    "elapsed_seconds": 7.157151
+  },
+  "rounds": {
+    "cmc_write_zeroes_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_write_zeroes_migration-annotation-r1-attempt-1"
+    },
+    "cmc_write_zeroes_migration-vc-checking-r1": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_write_zeroes_migration-vc-checking-r1-attempt-1"
+    },
+    "cmc_write_zeroes_migration-vc-proving-r1": {
+      "phase": "vc-proving-preparing",
+      "current_attempt": "cmc_write_zeroes_migration-vc-proving-r1"
+    }
+  },
+  "attempts": {
+    "cmc_write_zeroes_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_write_zeroes_migration-annotation-r1-attempt-1",
+      "round": "cmc_write_zeroes_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_write_zeroes_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-15T10:06:24.033810Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "20d0d73a5f0f008ffbcd421460c7b675a1a942a15b5310bc3cac220b761dd23e",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "input_sha256": "c826c4d1360c5d566ca7d8b4497198a0ebbcfa9e951a03f3cb702981e64b17c4",
+      "owner": "annotation/cmc_write_zeroes_migration-20261015180614",
+      "started_at": "2026-10-15T10:06:32.008215Z",
+      "delivery": {
+        "action_id": "spawn-cmc_write_zeroes_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_write_zeroes_migration-20261015180614",
+        "claimed_at": "2026-10-15T10:06:32.008215Z",
+        "finalized_at": "2026-10-15T10:10:39.220147Z"
+      },
+      "timing": {
+        "formal-case-lib-design-coq-check": [
+          {
+            "started_at": "2026-10-15T10:08:58.259044Z",
+            "finished_at": "2026-10-15T10:08:58.591562Z",
+            "elapsed_seconds": 0.332518
+          }
+        ],
+        "owner-generation": [
+          {
+            "started_at": "2026-10-15T10:09:07.640338Z",
+            "finished_at": "2026-10-15T10:09:07.687338Z",
+            "elapsed_seconds": 0.047
+          }
+        ],
+        "formal-case-lib-coq-check": [
+          {
+            "started_at": "2026-10-15T10:09:15.282156Z",
+            "finished_at": "2026-10-15T10:09:15.287724Z",
+            "elapsed_seconds": 0.005568
+          },
+          {
+            "started_at": "2026-10-15T10:10:57.314492Z",
+            "finished_at": "2026-10-15T10:10:57.319252Z",
+            "elapsed_seconds": 0.00476
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-15T10:10:39.201952Z",
+            "finished_at": "2026-10-15T10:10:39.265894Z",
+            "elapsed_seconds": 0.05999
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-15T10:10:57.322659Z",
+            "finished_at": "2026-10-15T10:10:57.374659Z",
+            "elapsed_seconds": 0.052
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-15T10:10:55.081235Z",
+            "finished_at": "2026-10-15T10:10:57.386223Z",
+            "elapsed_seconds": 2.299834
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-15T10:11:31.494065Z",
+            "finished_at": "2026-10-15T10:11:38.703073Z",
+            "elapsed_seconds": 7.20368
+          }
+        ]
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-15T10:09:07.686246Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "af48b201a84f18a936143a2afae31902b5201c312a066ef0533e48b02afc8410",
+          "elapsed_seconds": 0.047,
+          "performance_profile": "standard",
+          "timeout_seconds": 3600.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_write_zeroes_migration-annotation-r1-attempt-1",
+        "round": "cmc_write_zeroes_migration-annotation-r1",
+        "formal_input_digest": "af48b201a84f18a936143a2afae31902b5201c312a066ef0533e48b02afc8410",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_write_zeroes_migration.c": "e0ae20697022a4ddf9e838f5574c2daaa212083ca6c4173ca317b2e172f5527d",
+          "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.v": "1f8a54afaa392924392567aef82ee5ba89cdf1a63d87dffd441a01e206123963",
+          "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal.v": "a9a924239311090969fd5cd7a9c043d9366da35d0e8c76517881e8151506a8fd",
+          "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_auto.v": "a0f11c622adcc45cca9ee414564bcd868aa4e5c6d14785091a71a235952ca55b",
+          "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v": "700e7ddf9fa774bfac58790e46380e8213543e3c6acd1cc95f0b3c04e525c5c9",
+          "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal_check.v": "e437a322e8af234a7617501a1e4946666a65b213926c7e772f4c0a71d6285d30"
+        },
+        "performance_profile": "standard",
+        "timeout_seconds": 3600.0,
+        "elapsed_seconds": 0.047,
+        "recorded_at": "2026-10-15T10:09:07.687334Z"
+      },
+      "returned_at": "2026-10-15T10:10:39.220147Z",
+      "artifact_sha256": {
+        "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+        "plan": "da8b1224f9765e2adf3759fd6992346494d6c8108aaf322173d4fb1dbdae3853",
+        "output": "69bf4f2cb9286e4e316000c95c13bf59ab51c8035f6d81c3b3fb21feec177d46"
+      },
+      "after_snapshot": {
+        "digest": "96ba5f5dbdf88c4fb613ad6fae0d12b17db8d0a8886cb08f1ab7d0272993291a",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_write_zeroes_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_goal_check.v"
+      ],
+      "annotation_activity": "spec-and-annotation",
+      "finished_at": "2026-10-15T10:11:38.703073Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 0,
+          "provable_count": 0,
+          "statements": []
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-15T10:09:07.687334Z",
+            "performance_profile": "standard",
+            "timeout_seconds": 3600.0,
+            "elapsed_seconds": 0.047
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": false,
+          "errors": []
+        },
+        "formal_case_lib_dune": {
+          "status": "passed",
+          "build_mode": "makefile",
+          "target": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.vo",
+          "returncode": 0,
+          "base_artifact_count": 0,
+          "current_source_count": 1,
+          "rebuilt_count": 0,
+          "dependency_metrics": {
+            "status": "resolved",
+            "strategy": "breadth-batched-coqdep",
+            "batch_count": 1,
+            "coqdep_process_count": 1,
+            "node_count": 1,
+            "source_count": 1,
+            "elapsed_seconds": 1.089787
+          },
+          "current_cleanup": {
+            "status": "passed",
+            "removed_count": 0,
+            "first_removed": null
+          },
+          "make_seconds": 0.006407,
+          "elapsed_seconds": 1.101853
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      }
+    },
+    "cmc_write_zeroes_migration-vc-checking-r1-attempt-1": {
+      "attempt_id": "cmc_write_zeroes_migration-vc-checking-r1-attempt-1",
+      "round": "cmc_write_zeroes_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-checking-r1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-checking-r1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-checking-r1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-checking-r1/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-15T10:11:55.033372Z",
+      "owner": "vc-checking/cmc_write_zeroes_migration-vc-checking-r1-attempt-1",
+      "started_at": "2026-10-15T10:12:02.216963Z",
+      "delivery": {
+        "action_id": "spawn-cmc_write_zeroes_migration-vc-checking-r1-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_write_zeroes_migration-vc-checking-r1-attempt-1",
+        "claimed_at": "2026-10-15T10:12:02.216963Z",
+        "finalized_at": "2026-10-15T10:16:18.573891Z"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-15T10:14:21.440681Z",
+            "finished_at": "2026-10-15T10:14:21.478165Z",
+            "elapsed_seconds": 0.031274
+          },
+          {
+            "started_at": "2026-10-15T10:15:00.606859Z",
+            "finished_at": "2026-10-15T10:15:00.643470Z",
+            "elapsed_seconds": 0.030559
+          },
+          {
+            "started_at": "2026-10-15T10:16:18.549197Z",
+            "finished_at": "2026-10-15T10:16:18.607536Z",
+            "elapsed_seconds": 0.051945
+          }
+        ],
+        "post-vc-checking-symexec": [
+          {
+            "started_at": "2026-10-15T10:18:52.201585Z",
+            "finished_at": "2026-10-15T10:18:52.248585Z",
+            "elapsed_seconds": 0.047
+          }
+        ],
+        "controller-plan-check": [
+          {
+            "started_at": "2026-10-15T10:18:52.170189Z",
+            "finished_at": "2026-10-15T10:18:52.272483Z",
+            "elapsed_seconds": 0.094131
+          }
+        ]
+      },
+      "returned_at": "2026-10-15T10:16:18.573891Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "output": "4c03b6b1092e299a03b32dfc865572632232104931e4c45423cd78563e3f9717"
+      },
+      "agent_output_metrics": {
+        "bytes": 4952,
+        "lines": 51,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 3,
+        "structural_no_split_checked_first": 0,
+        "structural_definite_blockers": 0
+      },
+      "finished_at": "2026-10-15T10:18:52.272483Z",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "889e5ffb4a854ebfef91732fa35673285891eeae2d3fde43b5b0f14b35a7b9e8",
+      "main_check": {
+        "manual_refresh": {
+          "status": "passed",
+          "returncode": 0,
+          "timeout_seconds": 3600.0,
+          "elapsed_seconds": 0.047,
+          "performance_profile": "standard"
+        }
+      }
+    },
+    "cmc_write_zeroes_migration-vc-proving-r1": {
+      "attempt_id": "cmc_write_zeroes_migration-vc-proving-r1",
+      "round": "cmc_write_zeroes_migration-vc-proving-r1",
+      "phase": "vc-proving-preparing",
+      "status": "verified",
+      "directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/cmc_write_zeroes_migration-vc-proving-r1",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-proving-r1",
+      "base_manifest": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/cmc_write_zeroes_migration-vc-proving-r1/base_manifest.json",
+      "group_workers_manifest": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-proving-r1/group_workers_manifest.json",
+      "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-proving-r1/proving_merged_result.json",
+      "groups": {
+        "zero_step": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_write_zeroes_migration-vc-proving-r1/zero_step",
+          "started_at": "2026-10-15T10:19:10.334741Z",
+          "delivery": {
+            "action_id": "spawn-cmc_write_zeroes_migration-vc-proving-r1-zero_step",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_write_zeroes_migration-vc-proving-r1/zero_step",
+            "claimed_at": "2026-10-15T10:19:10.334741Z",
+            "finalized_at": "2026-10-15T10:22:20.802381Z"
+          },
+          "timing_interval_index": 0,
+          "returned_at": "2026-10-15T10:22:20.802381Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "23a6192ad243e714eb17ad79c51e94b8abb089dc16eec81fbdcc9547c4d44e85",
+            "group_worker_lib": "7a5e42b78460cfdf83888c734ff9ec8e26df8c10a185887a145cb3d0b7017a05"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 2,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "23a6192ad243e714eb17ad79c51e94b8abb089dc16eec81fbdcc9547c4d44e85",
+            "group_worker_lib": "7a5e42b78460cfdf83888c734ff9ec8e26df8c10a185887a145cb3d0b7017a05"
+          },
+          "accepted_at": "2026-10-15T10:22:22.430364Z"
+        },
+        "boundary_rewrites": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_write_zeroes_migration-vc-proving-r1/boundary_rewrites",
+          "started_at": "2026-10-15T10:19:25.419971Z",
+          "delivery": {
+            "action_id": "spawn-cmc_write_zeroes_migration-vc-proving-r1-boundary_rewrites",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_write_zeroes_migration-vc-proving-r1/boundary_rewrites",
+            "claimed_at": "2026-10-15T10:19:25.419971Z",
+            "finalized_at": "2026-10-15T10:21:04.635886Z"
+          },
+          "timing_interval_index": 1,
+          "returned_at": "2026-10-15T10:21:04.635886Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "72628c2542e881eed96a24f76560a26c6f65e7c4ce6da9659cc09b45c105b861",
+            "group_worker_lib": "1f8a54afaa392924392567aef82ee5ba89cdf1a63d87dffd441a01e206123963"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "72628c2542e881eed96a24f76560a26c6f65e7c4ce6da9659cc09b45c105b861",
+            "group_worker_lib": "1f8a54afaa392924392567aef82ee5ba89cdf1a63d87dffd441a01e206123963"
+          },
+          "accepted_at": "2026-10-15T10:21:06.249916Z"
+        }
+      },
+      "priority_group_ids": [],
+      "previous_proving_round": null,
+      "max_parallel_group_workers": 2,
+      "created_at": "2026-10-15T10:18:57.645105Z",
+      "base_manifest_sha256": "94daea099e86c54a03b43ba58ca65c530cd48700550180282350b695b05e68eb",
+      "group_workers_manifest_sha256": "3da3d2a2f2117085f4e4eff0a6b60515e207de718db3ef559ec00295009a72b4",
+      "timing": {
+        "preparing": [
+          {
+            "started_at": "2026-10-15T10:19:03.821813Z",
+            "finished_at": "2026-10-15T10:19:03.884710Z",
+            "elapsed_seconds": 0.055337
+          }
+        ],
+        "group-work": [
+          {
+            "started_at": "2026-10-15T10:19:10.334741Z",
+            "finished_at": "2026-10-15T10:22:20.802381Z",
+            "elapsed_seconds": 190.46764
+          },
+          {
+            "started_at": "2026-10-15T10:19:25.419971Z",
+            "finished_at": "2026-10-15T10:21:04.635886Z",
+            "elapsed_seconds": 99.215915
+          }
+        ],
+        "group-coq-check": [
+          {
+            "started_at": "2026-10-15T10:20:33.053165Z",
+            "finished_at": "2026-10-15T10:20:41.233477Z",
+            "elapsed_seconds": 8.180312
+          },
+          {
+            "started_at": "2026-10-15T10:21:33.725706Z",
+            "finished_at": "2026-10-15T10:21:38.169274Z",
+            "elapsed_seconds": 4.443568
+          }
+        ],
+        "group-development-check": [
+          {
+            "started_at": "2026-10-15T10:20:46.323926Z",
+            "finished_at": "2026-10-15T10:20:46.323926Z",
+            "elapsed_seconds": 0.0
+          },
+          {
+            "started_at": "2026-10-15T10:21:07.447233Z",
+            "finished_at": "2026-10-15T10:21:09.221122Z",
+            "elapsed_seconds": 1.773889
+          }
+        ],
+        "group-validation": [
+          {
+            "started_at": "2026-10-15T10:21:04.613083Z",
+            "finished_at": "2026-10-15T10:21:06.271342Z",
+            "elapsed_seconds": 1.650282
+          },
+          {
+            "started_at": "2026-10-15T10:22:20.780770Z",
+            "finished_at": "2026-10-15T10:22:22.458490Z",
+            "elapsed_seconds": 1.670485
+          }
+        ],
+        "parent-verify": [
+          {
+            "started_at": "2026-10-15T10:22:44.564961Z",
+            "finished_at": "2026-10-15T10:22:47.746321Z",
+            "elapsed_seconds": 3.173325
+          }
+        ]
+      },
+      "finished_at": "2026-10-15T10:22:47.746321Z",
+      "verified_result_sha256": "2180ddb5b2d4d897a352170e0ce5ada0c13edec05a0247c6d49e1a5a496cb2c2"
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_write_zeroes_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_write_zeroes_migration-annotation-r1-attempt-1",
+    "iteration_count": 1,
+    "owner": "annotation/cmc_write_zeroes_migration-20261015180614"
+  },
+  "accepted_rounds": {
+    "annotation": {
+      "round": "cmc_write_zeroes_migration-annotation-r1",
+      "attempt_id": "cmc_write_zeroes_migration-annotation-r1-attempt-1",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/annotation_history/annotation-attempt1"
+    },
+    "vc-checking": {
+      "round": "cmc_write_zeroes_migration-vc-checking-r1",
+      "attempt_id": "cmc_write_zeroes_migration-vc-checking-r1-attempt-1",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "889e5ffb4a854ebfef91732fa35673285891eeae2d3fde43b5b0f14b35a7b9e8",
+      "proof_manual_sha256": "700e7ddf9fa774bfac58790e46380e8213543e3c6acd1cc95f0b3c04e525c5c9",
+      "agent_output_metrics": {
+        "bytes": 4952,
+        "lines": 51,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 3,
+        "structural_no_split_checked_first": 0,
+        "structural_definite_blockers": 0
+      }
+    },
+    "vc-proving-preparing": {
+      "round": "cmc_write_zeroes_migration-vc-proving-r1",
+      "attempt_id": "cmc_write_zeroes_migration-vc-proving-r1",
+      "result_sha256": "2180ddb5b2d4d897a352170e0ce5ada0c13edec05a0247c6d49e1a5a496cb2c2"
+    }
+  },
+  "next_actions": [],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": {
+    "round": "cmc_write_zeroes_migration-vc-proving-r1",
+    "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/rounds/cmc_write_zeroes_migration-vc-proving-r1/proving_merged_result.json",
+    "result_sha256": "2180ddb5b2d4d897a352170e0ce5ada0c13edec05a0247c6d49e1a5a496cb2c2",
+    "proof_manual_sha256": "5c3763777f36190b5eb2fa3edb37db651a38fcf8ca5b2f59adf974c05c01f70a",
+    "proving_merged_lib_sha256": "fb9c7f1784382517367ae91f4212e226911f192a0ffb052c6744ff070d90c538"
+  },
+  "final_apply": {
+    "status": "passed",
+    "transaction_id": "a4002dba475a479ab6ba6d055a4387c6",
+    "applied_at": "2026-10-15T10:23:01.272601Z"
+  },
+  "final_check": {
+    "status": "passed",
+    "checked_at": "2026-10-15T10:23:14.687675Z",
+    "cleanup_removed_count": 0
+  },
+  "created_at": "2026-10-15T10:06:14.547366Z",
+  "updated_at": "2026-10-15T10:23:14.694597Z",
+  "final_apply_transaction": {
+    "transaction_id": "a4002dba475a479ab6ba6d055a4387c6",
+    "status": "completed",
+    "records": [
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/cmc_write_zeroes_migration-vc-proving-r1/proving_merged/cmc_write_zeroes_migration_proof_manual.v",
+        "source_sha256": "5c3763777f36190b5eb2fa3edb37db651a38fcf8ca5b2f59adf974c05c01f70a",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v",
+        "existed": true,
+        "before_sha256": "700e7ddf9fa774bfac58790e46380e8213543e3c6acd1cc95f0b3c04e525c5c9",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/final-check/backup/a4002dba475a479ab6ba6d055a4387c6/Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_proof_manual.v"
+      },
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_write_zeroes_migration-20261015180614/cmc_write_zeroes_migration-vc-proving-r1/proving_merged/cmc_write_zeroes_migration_lib.v",
+        "source_sha256": "fb9c7f1784382517367ae91f4212e226911f192a0ffb052c6744ff070d90c538",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.v",
+        "existed": true,
+        "before_sha256": "1f8a54afaa392924392567aef82ee5ba89cdf1a63d87dffd441a01e206123963",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_write_zeroes_migration-20261015180614/final-check/backup/a4002dba475a479ab6ba6d055a4387c6/Rocq/examples/QCP_demos_human/cmc_write_zeroes_migration_lib.v"
+      }
+    ],
+    "prepared_at": "2026-10-15T10:23:01.251839Z",
+    "backed_up_at": "2026-10-15T10:23:01.263909Z",
+    "completed_at": "2026-10-15T10:23:01.272597Z"
+  },
+  "finished_at": "2026-10-15T10:23:14.687675Z"
+}

@@ -1,0 +1,6 @@
+From SimpleC.EE.QCP_demos_human Require Import cmc_count_context_migration_goal cmc_count_context_migration_proof_auto cmc_count_context_migration_proof_manual.
+
+Module VC_Correctness : VC_Correct.
+  Include cmc_count_context_migration_proof_auto.
+  Include cmc_count_context_migration_proof_manual.
+End VC_Correctness.

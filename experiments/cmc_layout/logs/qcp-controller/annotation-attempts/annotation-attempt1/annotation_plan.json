@@ -1,0 +1,925 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "cmc_members_size-cut-1",
+      "location": "cmc_members_size: nonnull descriptor-list branch (C line 205)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      member == member@pre",
+        "member != 0",
+        "members == cons(head, tail)",
+        "cm_rep_members_safe(members)",
+        "cm_rep_members_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(member->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(member->count), int, cm_slot_count(head))",
+        "data_at(&(member->next), struct cm_member *, nextp)",
+        "cm_member_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_struct_size_at-cut-1",
+      "location": "cmc_struct_size_at: nonnull descriptor-list branch (C line 235)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_struct_d) (tail : list cm_struct_d) (nextp : Z) (memberp : Z),\n      item == item@pre",
+        "item != 0",
+        "structs == cons(head, tail)",
+        "sid == sid@pre",
+        "0 <= sid",
+        "cm_rep_structs_safe(structs)",
+        "cm_rep_structs_safe(tail)",
+        "cm_rep_members_safe(cm_struct_members(head))"
+      ],
+      "resources": [
+        "data_at(&(item->members), struct cm_member *, memberp)",
+        "cm_member_list_rep(memberp, cm_struct_members(head))",
+        "data_at(&(item->next), struct cm_struct *, nextp)",
+        "cm_struct_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_global_array_at-cut-1",
+      "location": "cmc_global_array_at: nonnull descriptor-list branch (C line 284)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_global_d) (tail : list cm_global_d) (nextp : Z),\n      item == item@pre",
+        "item != 0",
+        "globals == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index"
+      ],
+      "resources": [
+        "data_at(&(item->ty), int, cm_type_encode(cm_global_ty(head)))",
+        "data_at(&(item->count), int, cm_global_count(head))",
+        "data_at(&(item->has_init), int, cm_rep_bool(cm_global_has_init(head)))",
+        "data_at(&(item->init), long long, cm_global_init(head))",
+        "data_at(&(item->next), struct cm_global *, nextp)",
+        "cm_global_list_rep(nextp, tail)",
+        "undef_data_at(&result, int)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_slot_array_at-cut-1",
+      "location": "cmc_slot_array_at: nonnull descriptor-list branch (C line 318)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      item == item@pre",
+        "item != 0",
+        "slots == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index"
+      ],
+      "resources": [
+        "data_at(&(item->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(item->count), int, cm_slot_count(head))",
+        "data_at(&(item->next), struct cm_slot *, nextp)",
+        "cm_slot_list_rep(nextp, tail)",
+        "undef_data_at(&result, int)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_slot_type_at-cut-1",
+      "location": "cmc_slot_type_at: nonnull descriptor-list branch (C line 350)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      item == item@pre",
+        "item != 0",
+        "slots == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index"
+      ],
+      "resources": [
+        "data_at(&(item->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(item->count), int, cm_slot_count(head))",
+        "data_at(&(item->next), struct cm_slot *, nextp)",
+        "cm_slot_list_rep(nextp, tail)",
+        "undef_data_at(&result, int)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_member_array_at-cut-1",
+      "location": "cmc_member_array_at: nonnull descriptor-list branch (C line 382)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      item == item@pre",
+        "item != 0",
+        "members == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index"
+      ],
+      "resources": [
+        "data_at(&(item->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(item->count), int, cm_slot_count(head))",
+        "data_at(&(item->next), struct cm_member *, nextp)",
+        "cm_member_list_rep(nextp, tail)",
+        "undef_data_at(&result, int)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_slots_size-cut-1",
+      "location": "cmc_slots_size: nonnull descriptor-list branch (C line 433)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      slot == slot@pre",
+        "slot != 0",
+        "slots == cons(head, tail)",
+        "cm_rep_members_safe(slots)",
+        "cm_rep_members_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(slot->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(slot->count), int, cm_slot_count(head))",
+        "data_at(&(slot->next), struct cm_slot *, nextp)",
+        "cm_slot_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_slots_prefix-cut-1",
+      "location": "cmc_slots_prefix: nonnull descriptor-list branch (C line 463)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      slot == slot@pre",
+        "slot != 0",
+        "slots == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index",
+        "cm_rep_members_safe(slots)",
+        "cm_rep_members_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(slot->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(slot->count), int, cm_slot_count(head))",
+        "data_at(&(slot->next), struct cm_slot *, nextp)",
+        "cm_slot_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_members_prefix-cut-1",
+      "location": "cmc_members_prefix: nonnull descriptor-list branch (C line 499)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_slot_d) (tail : list cm_slot_d) (nextp : Z),\n      node == node@pre",
+        "node != 0",
+        "members == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index",
+        "cm_rep_members_safe(members)",
+        "cm_rep_members_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(node->ty), int, cm_type_encode(cm_slot_ty(head)))",
+        "data_at(&(node->count), int, cm_slot_count(head))",
+        "data_at(&(node->next), struct cm_member *, nextp)",
+        "cm_member_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_member_offset_at-cut-1",
+      "location": "cmc_member_offset_at: nonnull descriptor-list branch (C line 536)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_struct_d) (tail : list cm_struct_d) (nextp : Z) (memberp : Z),\n      item == item@pre",
+        "item != 0",
+        "structs == cons(head, tail)",
+        "sid == sid@pre",
+        "0 <= sid",
+        "index == index@pre",
+        "0 <= index",
+        "cm_rep_structs_safe(structs)",
+        "cm_rep_structs_safe(tail)",
+        "cm_rep_members_safe(cm_struct_members(head))"
+      ],
+      "resources": [
+        "data_at(&(item->members), struct cm_member *, memberp)",
+        "cm_member_list_rep(memberp, cm_struct_members(head))",
+        "data_at(&(item->next), struct cm_struct *, nextp)",
+        "cm_struct_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_struct_member_array_at-cut-1",
+      "location": "cmc_struct_member_array_at: nonnull descriptor-list branch (C line 574)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_struct_d) (tail : list cm_struct_d) (nextp : Z) (memberp : Z),\n      item == item@pre",
+        "item != 0",
+        "structs == cons(head, tail)",
+        "sid == sid@pre",
+        "0 <= sid",
+        "index == index@pre",
+        "0 <= index",
+        "cm_rep_structs_safe(structs)",
+        "cm_rep_structs_safe(tail)",
+        "cm_rep_members_safe(cm_struct_members(head))"
+      ],
+      "resources": [
+        "data_at(&(item->members), struct cm_member *, memberp)",
+        "cm_member_list_rep(memberp, cm_struct_members(head))",
+        "data_at(&(item->next), struct cm_struct *, nextp)",
+        "cm_struct_list_rep(nextp, tail)",
+        "undef_data_at(&result, int)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_globals_size-cut-1",
+      "location": "cmc_globals_size: nonnull descriptor-list branch (C line 611)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_global_d) (tail : list cm_global_d) (nextp : Z),\n      node == node@pre",
+        "node != 0",
+        "globals == cons(head, tail)",
+        "cm_rep_globals_safe(globals)",
+        "cm_rep_globals_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(node->ty), int, cm_type_encode(cm_global_ty(head)))",
+        "data_at(&(node->count), int, cm_global_count(head))",
+        "data_at(&(node->has_init), int, cm_rep_bool(cm_global_has_init(head)))",
+        "data_at(&(node->init), long long, cm_global_init(head))",
+        "data_at(&(node->next), struct cm_global *, nextp)",
+        "cm_global_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_globals_prefix-cut-1",
+      "location": "cmc_globals_prefix: nonnull descriptor-list branch (C line 643)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_global_d) (tail : list cm_global_d) (nextp : Z),\n      node == node@pre",
+        "node != 0",
+        "globals == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index",
+        "cm_rep_globals_safe(globals)",
+        "cm_rep_globals_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(node->ty), int, cm_type_encode(cm_global_ty(head)))",
+        "data_at(&(node->count), int, cm_global_count(head))",
+        "data_at(&(node->has_init), int, cm_rep_bool(cm_global_has_init(head)))",
+        "data_at(&(node->init), long long, cm_global_init(head))",
+        "data_at(&(node->next), struct cm_global *, nextp)",
+        "cm_global_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_strings_size-cut-1",
+      "location": "cmc_strings_size: nonnull descriptor-list branch (C line 681)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_string_d) (tail : list cm_string_d) (nextp : Z) (bytesp : Z),\n      node == node@pre",
+        "node != 0",
+        "strings == cons(head, tail)",
+        "cm_rep_strings_safe(strings)",
+        "cm_rep_strings_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(node->bytes), unsigned char *, bytesp)",
+        "data_at(&(node->length), int, cm_rep_string_length(head))",
+        "cm_uint8_buffer(bytesp, cm_string_bytes(head))",
+        "data_at(&(node->next), struct cm_string *, nextp)",
+        "cm_string_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_strings_prefix-cut-1",
+      "location": "cmc_strings_prefix: nonnull descriptor-list branch (C line 713)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_string_d) (tail : list cm_string_d) (nextp : Z) (bytesp : Z),\n      node == node@pre",
+        "node != 0",
+        "strings == cons(head, tail)",
+        "index == index@pre",
+        "0 <= index",
+        "cm_rep_strings_safe(strings)",
+        "cm_rep_strings_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(node->bytes), unsigned char *, bytesp)",
+        "data_at(&(node->length), int, cm_rep_string_length(head))",
+        "cm_uint8_buffer(bytesp, cm_string_bytes(head))",
+        "data_at(&(node->next), struct cm_string *, nextp)",
+        "cm_string_list_rep(nextp, tail)",
+        "undef_data_at(&total, long long)"
+      ],
+      "mathematical_state": "The original descriptor list is head :: tail. Exact field encodings, original safety constraints and tail ownership expose the recursive call inputs; the head contribution plus the tail result determines the original total, prefix or selected model.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_args_length-cut-1",
+      "location": "cm_args_length: nonnull argument-list branch (C line 840)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_expr) (tail : list cm_expr) (ep : Z) (np : Z),\n      arg == arg@pre",
+        "arg != 0",
+        "args == cons(head, tail)",
+        "cm_rep_args_safe(args)",
+        "cm_rep_args_safe(tail)"
+      ],
+      "resources": [
+        "data_at(&(arg->expr), struct cm_expr *, ep)",
+        "data_at(&(arg->next), struct cm_arg *, np)",
+        "cm_expr_rep(ep, head)",
+        "cm_arg_list_rep(np, tail)",
+        "undef_data_at(&count, int)"
+      ],
+      "mathematical_state": "The original argument list is head :: tail; its exact head expression and tail ownership are exposed, with the original safety conditions needed by recursive calls.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_args_tpair-cut-1",
+      "location": "cmc_args_tpair: nonnull argument-list branch (C line 866)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (head : cm_expr) (tail : list cm_expr) (ep : Z) (np : Z),\n      arg == arg@pre",
+        "arg != 0",
+        "args == cons(head, tail)",
+        "cm_rep_args_temps_safe(args)",
+        "cm_rep_args_temps_safe(tail)",
+        "count == count@pre",
+        "depth == depth@pre",
+        "cm_rep_expr_temps_safe(head)"
+      ],
+      "resources": [
+        "data_at(&(arg->expr), struct cm_expr *, ep)",
+        "data_at(&(arg->next), struct cm_arg *, np)",
+        "cm_expr_rep(ep, head)",
+        "cm_arg_list_rep(np, tail)",
+        "undef_data_at(count, int)",
+        "undef_data_at(depth, int)"
+      ],
+      "mathematical_state": "The original argument list is head :: tail; its exact head expression and tail ownership are exposed, with the original safety conditions needed by recursive calls.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-1",
+      "location": "cm_expr_temps: entry before reading the syntax tag (C line 900)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z),\n    expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_payload(e, pa, pb, pargs)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The owned abstract syntax tree exposes its original tag, metadata and child pointers, while the payload keeps the exact recursive ownership.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-2",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_ASSIGN) { child-call boundary (C line 920)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (x : cm_expr) (y : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMAssignE(x, y, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "cm_rep_expr_temps_safe(y)",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "cm_expr_rep(pb, y)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-3",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_BINARY) { child-call boundary (C line 952)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (op : Z) (x : cm_expr) (y : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMBinaryE(op, x, y, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "cm_rep_expr_temps_safe(y)",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "cm_expr_rep(pb, y)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-4",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_UNARY) { child-call boundary (C line 990)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (op : Z) (x : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMUnaryE(op, x, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pa != 0",
+        "pb == 0",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-5",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_INDEX) { child-call boundary (C line 1026)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (x : cm_expr) (y : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMIndexE(x, y, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "cm_rep_expr_temps_safe(y)",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "cm_expr_rep(pb, y)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-6",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_MEMBER) { child-call boundary (C line 1059)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (x : cm_expr) (mid : Z) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMMemberE(x, mid, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pa != 0",
+        "pb == 0",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-7",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_CALL) { child-call boundary (C line 1089)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (fid : Z) (eargs : list cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMCallE(fid, eargs, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_args_temps_safe(eargs)",
+        "pa == 0",
+        "pb == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_arg_list_rep(pargs, eargs)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-8",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_PUTC) { child-call boundary (C line 1117)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (x : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMPutcE(x, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pa != 0",
+        "pb == 0",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-9",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_PUTI) { child-call boundary (C line 1146)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (x : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMPutiE(x, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pa != 0",
+        "pb == 0",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cm_expr_temps-cut-10",
+      "location": "cm_expr_temps: if (expr->kind == CMC_EXPR_EXIT) { child-call boundary (C line 1175)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pa : Z) (pb : Z) (pargs : Z) (x : cm_expr) (t : cm_type),\n      expr == expr@pre",
+        "lvalue == lvalue@pre",
+        "rvalue == rvalue@pre",
+        "expr != 0",
+        "cm_rep_expr_temps_safe(e)",
+        "e == CMExitE(x, t)",
+        "out_lvalue == 0",
+        "out_rvalue == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pa != 0",
+        "pb == 0",
+        "pargs == 0"
+      ],
+      "resources": [
+        "data_at(&(expr->kind), int, cm_rep_expr_kind(e))",
+        "data_at(&(expr->op), int, cm_rep_expr_op(e))",
+        "data_at(&(expr->ty), int, cm_type_encode(cm_expr_type(e)))",
+        "data_at(&(expr->value), long long, cm_rep_expr_value(e))",
+        "data_at(&(expr->a), struct cm_expr *, pa)",
+        "data_at(&(expr->b), struct cm_expr *, pb)",
+        "data_at(&(expr->args), struct cm_arg *, pargs)",
+        "cm_expr_rep(pa, x)",
+        "undef_data_at(lvalue, int)",
+        "undef_data_at(rvalue, int)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-1",
+      "location": "cmc_stmt_temps: entry before reading the syntax tag (C line 1232)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z),\n    stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_stmt_payload(s, pe, pa, pb)"
+      ],
+      "mathematical_state": "The owned abstract syntax tree exposes its original tag, metadata and child pointers, while the payload keeps the exact recursive ownership.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-2",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_EXPR) { child-call boundary (C line 1245)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (x : cm_expr),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMExprS(x)",
+        "result == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pe != 0",
+        "pa == 0",
+        "pb == 0"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_expr_rep(pe, x)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-3",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_INIT) { child-call boundary (C line 1264)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (slotid : Z) (x : cm_expr),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMInitS(slotid, x)",
+        "result == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pe != 0",
+        "pa == 0",
+        "pb == 0"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_expr_rep(pe, x)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-4",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_RETURN) { child-call boundary (C line 1283)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (x : cm_expr),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMReturnS(x)",
+        "result == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "pe != 0",
+        "pa == 0",
+        "pb == 0"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_expr_rep(pe, x)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-5",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_SEQ) { child-call boundary (C line 1302)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (x : cm_stmt) (y : cm_stmt),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMSeqS(x, y)",
+        "result == 0",
+        "cm_rep_stmt_temps_safe(x)",
+        "cm_rep_stmt_temps_safe(y)",
+        "pe == 0"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_stmt_rep(pa, x)",
+        "cm_stmt_rep(pb, y)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-6",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_BLOCK) { child-call boundary (C line 1323)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (x : cm_stmt),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMBlockS(x)",
+        "result == 0",
+        "cm_rep_stmt_temps_safe(x)",
+        "pe == 0",
+        "pa != 0",
+        "pb == 0"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_stmt_rep(pa, x)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-7",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_IF) { child-call boundary (C line 1342)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (x : cm_expr) (y : cm_stmt) (z : cm_stmt),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMIfS(x, y, z)",
+        "result == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "cm_rep_stmt_temps_safe(y)",
+        "cm_rep_stmt_temps_safe(z)"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_expr_rep(pe, x)",
+        "cm_stmt_rep(pa, y)",
+        "cm_stmt_rep(pb, z)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "cmc_stmt_temps-cut-8",
+      "location": "cmc_stmt_temps: if (stmt->kind == CMC_STMT_WHILE) { child-call boundary (C line 1366)",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "exists (pe : Z) (pa : Z) (pb : Z) (x : cm_expr) (y : cm_stmt),\n      stmt == stmt@pre",
+        "stmt != 0",
+        "cm_rep_stmt_temps_safe(s)",
+        "s == CMWhileS(x, y)",
+        "result == 0",
+        "cm_rep_expr_temps_safe(x)",
+        "cm_rep_stmt_temps_safe(y)",
+        "pe != 0",
+        "pa != 0",
+        "pb == 0"
+      ],
+      "resources": [
+        "data_at(&(stmt->kind), int, cm_rep_stmt_kind(s))",
+        "data_at(&(stmt->slot), int, cm_rep_stmt_slot(s))",
+        "data_at(&(stmt->expr), struct cm_expr *, pe)",
+        "data_at(&(stmt->a), struct cm_stmt *, pa)",
+        "data_at(&(stmt->b), struct cm_stmt *, pb)",
+        "cm_expr_rep(pe, x)",
+        "cm_stmt_rep(pa, y)"
+      ],
+      "mathematical_state": "The tested tag determines the source syntax constructor; the original recursive safety predicate supplies child safety and arithmetic bounds. Every unvisited child and metadata field remains owned.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

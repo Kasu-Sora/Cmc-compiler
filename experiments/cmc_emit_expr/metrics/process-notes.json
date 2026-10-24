@@ -1,0 +1,259 @@
+{
+  "status": "done; 40/40 groups accepted; merged parent verify, final apply and final check passed",
+  "source_replay": {
+    "calls": 1,
+    "failed": 0
+  },
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "observed_annotation_repairs": [
+    {
+      "issue": "Combined Extern type/value block rejected",
+      "repair": "Split type and value declarations",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Unused inherited namespaced declarations misclassified",
+      "repair": "Remove two unused IntArray declarations",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Existential name unavailable in later partial annotation",
+      "repair": "Combine constructor and child open/close entailments under one quantifier; infer dispatcher simple binding",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Pure constructor rewriting broke syntactic resource match",
+      "repair": "Introduce transparent cm_expr_shape equality wrapper and equivalent two-sided bounds",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Partial annotation rejected short-circuit disjunction",
+      "repair": "Use equivalent integer interval 0 <= op <= 1",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Attempted redundant-fact removal dropped local cells",
+      "repair": "Reverted simplification; restore full cell-preserving consequents",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Concrete branch immediate differed syntactically from cm_short_value",
+      "repair": "Add equivalent two-sided equality bounds at call boundary",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Runtime op field differed syntactically from constructor op_",
+      "repair": "Bind root op field directly to constructor parameter in opening/closing annotations",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    },
+    {
+      "issue": "Dispatcher simple-code conversion dropped pc/temp cells",
+      "repair": "Preserve pc==pc@pre and temp==temp@pre across conversions",
+      "verification_status": "accepted annotation round 2 and full final proof passed"
+    }
+  ],
+  "annotation_owner_checks": {
+    "design": {
+      "calls": 3,
+      "failed": 0
+    },
+    "symexec": {
+      "calls": 10,
+      "failed": 9,
+      "last_success_seconds": 97.433
+    },
+    "post_library": {
+      "calls": 1,
+      "failed": 0
+    },
+    "malformed_launch_before_controller": 1,
+    "scope": "round 1"
+  },
+  "dependency_preparation": {
+    "base_artifacts": 160,
+    "current_sources": 5,
+    "rebuilt": 0,
+    "coqdep_batches": 13,
+    "elapsed_seconds": 15.548637
+  },
+  "main_dispatch_corrections": [
+    "Initial VC checker spawn duplicated one clause; exact handoff immediately resent before work."
+  ],
+  "vc_checking_rounds": [
+    {
+      "round": 1,
+      "outcome": "annotation-gap",
+      "debug_calls": 0,
+      "check_calls": 0,
+      "vcs": [
+        "proof_of_cm_emit_expr_which_implies_wit_2",
+        "proof_of_cm_emit_expr_which_implies_wit_4",
+        "proof_of_cm_emit_expr_which_implies_wit_6",
+        "proof_of_cm_emit_expr_which_implies_wit_19",
+        "proof_of_cm_emit_expr_which_implies_wit_21"
+      ],
+      "reason": "Local entailment requests pc=pc_pre and temp=temp_pre without carrying either pre-state variable in antecedent; preserve the actual entry facts through conversion.",
+      "report_finalize_rejections": 1,
+      "report_repair_reason": "Required Structural Blocker Scan status/count/definite-blocker fields not recognized; same owner repairs report format.",
+      "report_repair_resolution": "Owner docs omitted literal markdown keys. Main read only parser lines 1230-1385 to resolve report-schema diagnostic; no controller code or formal files changed. Exact labels sent to same owner."
+    },
+    {
+      "round": 2,
+      "outcome": "accepted",
+      "top_level_scanned": 176,
+      "no_split_checked_first": 12,
+      "split_goals_reviewed": 333,
+      "groups_planned": 40,
+      "aggressive_parents": 164,
+      "whole_goal_parents": 12,
+      "public_helpers_planned": 6,
+      "debug_calls": 0,
+      "check_calls": 0,
+      "failures": 0
+    }
+  ],
+  "tooling_documentation_gaps": [
+    {
+      "issue": "VC comparison statement digest algorithm not documented in owner workflow",
+      "resolution": "Narrow read-only inspection of lemma_statement_hash and lexical digest functions; algorithm relayed without importing/executing internal modules",
+      "detail": "Top-level manual Lemma references goal constant, so identity hash alone does not detect changed goal Definition; owner instructed to compare actual old/new goal text and fact sources. Sealed full files and subsequent proof validation remain required."
+    }
+  ],
+  "annotation_round_2": {
+    "design": {
+      "calls": 1,
+      "failed": 0
+    },
+    "symexec": {
+      "calls": 1,
+      "failed": 0,
+      "last_success_seconds": 96.91
+    },
+    "repair": "Carry pc==pc@pre and temp==temp@pre in five local entailment antecedents, not just consequents; old false equality targets normalize away. Relevant establishing partial_solve 2/5/8/28/31 retain entry storage cells.",
+    "status": "accepted; all 5 comparisons accepted",
+    "post_library": {
+      "calls": 1,
+      "failed": 0
+    },
+    "report_finalize_rejections": 1,
+    "report_repair_reason": "Added-fact entries must exactly match fact-source identifiers; semantic sources existed but narrative strings differed.",
+    "inspection_failures": 1,
+    "inspection_failure_detail": "Read of generated manual during transactional regeneration raised FileNotFoundError; retried after generation completed; not a verification call."
+  },
+  "dependency_preparation_round_2": {
+    "base_artifacts": 160,
+    "current_sources": 5,
+    "rebuilt": 0,
+    "coqdep_batches": 13,
+    "elapsed_seconds": 15.734391
+  },
+  "accepted_annotation_output": {
+    "manual_top_level": 176,
+    "manual_splits": 333,
+    "automatic_witnesses_admitted": 449,
+    "manual_proof_status": "all 176 top-level and 333 split obligations proved and final checked"
+  },
+  "group_proving": {
+    "simple_view_conversion": {
+      "development": {
+        "calls": 3,
+        "failed": 2
+      },
+      "debug": {
+        "calls": 2,
+        "failed": 0
+      },
+      "owner_exact": {
+        "calls": 1,
+        "failed": 0
+      },
+      "new_helpers": 0,
+      "status": "accepted",
+      "repairs": [
+        "Expose exact general/simple code at lvalue branch before spatial cancellation"
+      ],
+      "controller_finalize": {
+        "calls": 1,
+        "failed": 0
+      }
+    },
+    "constructor_facts_b": {
+      "development": {
+        "calls": 2,
+        "failed": 1
+      },
+      "debug": {
+        "calls": 0,
+        "failed": 0
+      },
+      "owner_exact": {
+        "calls": 1,
+        "failed": 0
+      },
+      "controller_finalize": {
+        "calls": 1,
+        "failed": 0
+      },
+      "new_helpers": 1,
+      "status": "accepted",
+      "repairs": [
+        "Initial assigned top-level placeholders replaced before development check; no mathematical premise repair"
+      ]
+    }
+  },
+  "controller_infrastructure_retries": [
+    {
+      "action": "finalize intrinsic_results",
+      "failure": "controller state changed during this command; refusing a stale whole-state write",
+      "exit_code": 1,
+      "recovery": "Fresh step returned same finalize-delivery action; rerunning exact invocation, no manual state edit",
+      "result": "retry exit 0; accepted"
+    },
+    {
+      "action": "finalize binary_short_results",
+      "failure": "controller state changed during this command; refusing a stale whole-state write",
+      "exit_code": 1,
+      "recovery": "Fresh step returned same finalize action; exact invocation rerun without editing state",
+      "result": "retry exit 0; accepted"
+    },
+    {
+      "action": "finalize simple_results",
+      "failure": "controller state changed during this command; refusing a stale whole-state write",
+      "exit_code": 1,
+      "recovery": "Fresh step; exact main-owned finalize invocation rerun; no state or formal edits",
+      "result": "retry exit 0; accepted"
+    },
+    {
+      "action": "finalize unary_shapes",
+      "failure": "controller state changed during this command; refusing a stale whole-state write",
+      "exit_code": 1,
+      "recovery": "Fresh step; exact finalize invocation rerun without state/formal edits",
+      "result": "retry exit 0; accepted"
+    },
+    {
+      "action": "owner exact binary_emit_constants_a",
+      "failure": "controller state changed during this command; refusing a stale whole-state write",
+      "exit_code": 1,
+      "recovery": "Owner reran unchanged controller group-check",
+      "result": "retry passed; included in owner exact_failed counts, not a proof diagnostic"
+    }
+  ],
+  "completion_date_local": "2026-10-19",
+  "all_group_effort": "group-effort.json",
+  "final_checks": {
+    "parent_verify": {
+      "calls": 1,
+      "failed": 0
+    },
+    "final_apply": {
+      "calls": 1,
+      "failed": 0
+    },
+    "final_check": {
+      "calls": 1,
+      "failed": 0
+    }
+  }
+}

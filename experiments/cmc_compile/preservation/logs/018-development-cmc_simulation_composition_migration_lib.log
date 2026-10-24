@@ -1,0 +1,32 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/build/Rocq/examples/QCP_demos_human/cmc_simulation_composition_migration_lib.v", line 37, characters 8-38:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+input : list Z
+st : cm_src_state
+ctl : cm_control
+status : Z
+Inv : cm_astate -> Prop
+Hinit : Inv (cm_annotated_start (cm_source_function_policy sp) p input)
+Hstep : forall ast : cm_astate, Inv ast -> Inv (cm_annotated_step sp ap ast)
+Hsim :
+  forall ast : cm_astate,
+  Inv ast -> cm_astate_sim (cm_source_function_policy sp) p ast
+Hexec : cm_exec sp (CMStartTask p input) (CMOutcome st ctl status)
+n : nat
+Hdone :
+  cm_astate_task
+    (cm_annotated_iter sp ap n
+       (cm_annotated_start (cm_source_function_policy sp) p input)) =
+  CMDoneTask st ctl status
+Unable to unify
+ "exists vm : tvm_state,
+    tvm_exec (cm_astate_target ?M2534) (TVMOutcome vm ?M2537 0) /\
+    tvm_output vm = cm_state_output ?M2535" with
+ "exists vm : tvm_state,
+    tvm_exec
+      (TVMBoot (cm_compile_model (cm_source_function_policy sp) p) input)
+      (TVMOutcome vm status 0) /\ tvm_output vm = cm_state_output st".
+

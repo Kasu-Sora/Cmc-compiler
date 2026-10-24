@@ -1,0 +1,55 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cm_emit_leaf_expr",
+      "source_contract_sha256": "4c9b452c228e8e04ea5176c8305a19a953140f380f2c937fc9b4d69ee1ffdfdb",
+      "target_contract_sha256": "4de30ecdf2b8d172cf7cfa7323a403704f5a814e17a94a4e66c119b231070109",
+      "checks": [
+        "All original pure conditions retained: lvalue bounds, leaf, wf/typed program, total f lookup, expr wf/counts, structs/globals/strings safe and aggregate size bound",
+        "All original program/function/expression resources retained; exact consumed/appended code and arbitrary tail",
+        "Leaf logical witness has proved coverage and uniqueness, preserving the source leaf domain",
+        "Four verified helper BODY contracts retained; their premises are derived rather than added as input requirements"
+      ]
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_dispatch_leaf",
+      "kind": "Definition",
+      "nonblank_lines": 3,
+      "sha256": "5bfb9a41a8234fd766a4b13031378cd420f06aaaa598281fc04df7a439165df9",
+      "source_declaration": "cmc_concrete_defs.c cm_leaf_expr_def: kind = 0 or 1 or 9 or 10"
+    }
+  ],
+  "model_review": [
+    "cm_dispatch_leaf\u9010\u9879\u5bf9\u5e94\u539fkind\u6790\u53d6\uff1b\u76ee\u6807\u5df2\u6709cm_leaf_expr\u662f\u72ec\u7acb\u7c7b\u578b\uff0c\u56e0\u6b64\u4f7f\u7528\u4e0d\u540c\u8c13\u8bcd\u540d\u79f0\u3002",
+    "\u539fe\u4e0eleaf\u8868\u793a\u89c1\u8bc1\u901a\u8fc7e=cm_leaf_source_expr leaf\u76f8\u8fde\uff1bcoverage\u53cc\u5411\u8bc1\u660e\u8986\u76d6\u539fleaf\u6761\u4ef6\uff0cunique\u4fdd\u8bc1\u8868\u793a\u552f\u4e00\u3002",
+    "cm_leaf_code_for\u590d\u7528\u56db\u6761\u5df2\u5ba1\u8ba1\u6e90\u65b9\u7a0b\u53calvalue\u9009\u62e9\uff0c\u672a\u4e3a\u975eleaf\u6784\u9020\u5b50\u7f16\u9020\u8f93\u51fa\u3002pc/temp\u5728\u8fd9\u4e9b\u65b9\u7a0b\u4e2d\u4e0d\u5f71\u54cd\u4ee3\u7801\uff0cC\u53c2\u6570\u4ecd\u4fdd\u7559\u3002",
+    "\u5e38\u91cftype_code_wf\u53ef\u7531\u539fcounts\u63a8\u51fa\uff1b\u6700\u7ec8\u624b\u5de5\u8bc1\u660e\u4f7f\u7528\u539fexpr_wf\u7684\u6574\u6570\u7c7b\u578b\u6761\u4ef6\u3002\u5b57\u7b26\u4e32sid\u8303\u56f4\u6765\u81eacounts\uff0csizeof asked\u5408\u6cd5\u6027\u6765\u81eaexpr_wf\uff1b\u5b8c\u6574\u7eaf\u4e8b\u5b9e\u4e0e\u7a7a\u95f4\u8d44\u6e90\u4fdd\u7559\u3002",
+    "\u65e2\u6709wf_program\u4e0e\u56db\u9879codegen obligations\u53c2\u6570\u4fdd\u6301\uff0c\u56db\u6761helper\u5951\u7ea6\u89c4\u8303\u5316\u4e00\u81f4\uff1b\u672a\u5bfc\u5165\u65e7manual/auto\u3002"
+  ],
+  "adaptations": [
+    "Explicit leaf-view witness with proved source-domain coverage",
+    "Existing policy/codegen-obligation parameter boundary",
+    "Four verified leaf body helper contracts reused"
+  ],
+  "scope_boundary": "\u4ec5\u9a8c\u8bc1\u53f6\u5b50\u8868\u8fbe\u5f0f\u5206\u6d3e\u5b9e\u73b0\uff1b\u5b8c\u6574\u9012\u5f52\u8868\u8fbe\u5f0f\u3001TVM\u8bed\u4e49\u548c\u7f16\u8bd1\u4fdd\u6301\u6027\u672a\u5168\u91cf\u8fc1\u79fb\u3002",
+  "review_method": "Manual source/target contract and model correspondence review; later hashes only guard drift.",
+  "final_manual_review": "Final const proof derives type-code validity from original expr_wf (integer types), while counts also entails it; string bounds from counts, sizeof facts from wf. No altered domain.",
+  "final_verification": {
+    "run_id": "cmc_emit_expr_dispatch_migration-20261017164114",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 1
+  },
+  "proof_audit": {
+    "manual_top_level": 13,
+    "proved_splits": 8,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 28,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

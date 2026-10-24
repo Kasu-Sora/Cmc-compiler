@@ -1,0 +1,1028 @@
+Chars 0 - 73 [Require~Export~SimpleC.EE.QCP_...] 1.474 secs (1.197u,0.116s)
+Chars 74 - 119 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 120 - 141 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 142 - 167 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 168 - 602 [Lemma~cm_r_var_type_ready_step...] 0.001 secs (0.u,0.s)
+Chars 603 - 609 [Proof.] 0. secs (0.u,0.s)
+Chars 611 - 678 [(intros~WF~H;~pose~proof~H~as~...] 0.001 secs (0.u,0.s)
+Chars 679 - 704 [(pose~proof~EW~as~[BV~TY]).] 0. secs (0.u,0.s)
+Chars 706 - 761 [(pose~proof~(cm_typed_function...] 0. secs (0.u,0.s)
+Chars 763 - 836 [(pose~proof~(cm_binding_output...] 0. secs (0.u,0.s)
+Chars 838 - 943 [(pose~proof~~~(cm_nonzero_curs...] 0. secs (0.u,0.s)
+Chars 945 - 1053 [(cbn[cm_rstart~cm_update_r~cm_...] 0. secs (0.u,0.s)
+Chars 1055 - 1056 [-] 0. secs (0.u,0.s)
+Chars 1057 - 1120 [(destruct~(cm_binding_address_...] 0. secs (0.u,0.s)
+Chars 1124 - 1125 [+] 0. secs (0.u,0.s)
+Chars 1126 - 1174 [(eapply~cm_r_type_yield;~[~exa...] 0. secs (0.u,0.s)
+Chars 1175 - 1221 [(apply~cm_expr_not_zero_ready;...] 0. secs (0.u,0.s)
+Chars 1222 - 1227 [left.] 0. secs (0.u,0.s)
+Chars 1233 - 1323 [(rewrite~(cm_binding_pointer_t...] 0. secs (0.u,0.s)
+Chars 1327 - 1328 [+] 0. secs (0.u,0.s)
+Chars 1329 - 1359 [(apply~cm_type_error;~exact~CT).] 0. secs (0.u,0.s)
+Chars 1361 - 1362 [-] 0. secs (0.u,0.s)
+Chars 1363 - 1376 [cm_ty_reduce.] 0. secs (0.u,0.s)
+1 goal
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  nilslot : cm_slot_d
+  p : cm_program
+  fid, scope, slot : Z
+  ty : cm_type
+  st : cm_src_state
+  ks : list cm_frame
+  ann : cm_annotation
+  WF : cm_typed_program (cm_source_function_policy sp) p
+  H :
+    p = p /\
+    0 <= fid /\
+    fid < Zlength (cm_program_functions p) /\
+    cm_expr_wf (cm_source_function_policy sp) p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p)) (CMVarE scope slot ty) /\
+    cm_scalar_expr_type (cm_expr_type (CMVarE scope slot ty)) /\
+    (fix cm_cursors_type_ready
+       (policy : cm_lookup_policy) (nilslot : cm_slot_d) 
+       (p : cm_program) (fid : Z) (cursors : list cm_acursor) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | c :: rest =>
+           match match c with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CALoadP ty => cm_scalar_expr_type ty
+           | CAAssignLP src ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) src /\
+               cm_expr_convertible src ty /\ cm_scalar_expr_type ty
+           | CAAssignRP ptr ty =>
+               cm_value_type_compatible ptr (CMPtrTy ty) /\
+               cm_scalar_expr_type ty
+           | CABinLP op lhs rhs ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p))
+                 (CMBinaryE op lhs rhs ty)
+           | CABinRP op lhs rhs v ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p))
+                 (CMBinaryE op lhs rhs ty) /\
+               cm_value_type_compatible v (cm_expr_type lhs)
+           | CAUnaryP op => op = 0 \/ op = 1
+           | CAIndexLP index ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) index /\
+               cm_integer_type (cm_expr_type index) /\
+               cm_type_refs (cm_program_structs p) ty
+           | CAIndexRP base ty =>
+               cm_value_type_compatible base (CMPtrTy ty) /\
+               cm_type_refs (cm_program_structs p) ty
+           | CAMemberP mid ty => cm_member_valid p ty mid
+           | CAInitP slot =>
+               0 <= slot /\
+               slot <
+               Zlength
+                 (cm_function_locals
+                    (cm_function_at policy fid (cm_program_functions p))) /\
+               cm_slot_count
+                 (cm_slot_at slot
+                    (cm_function_locals
+                       (cm_function_at policy fid (cm_program_functions p)))) =
+               0 /\
+               cm_scalar_type (cm_program_structs p)
+                 (cm_slot_ty
+                    (cm_slot_at slot
+                       (cm_function_locals
+                          (cm_function_at policy fid (cm_program_functions p)))))
+           | CASeqP second =>
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true
+                 second
+           | CAIfP yes no =>
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true
+                 yes /\
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true no
+           | CAWhileGuardP guard body _ _ |
+             CAWhileBodyP guard body _ _ _ _ =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) guard /\
+               cm_scalar_expr_type (cm_expr_type guard) /\
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true
+                 body
+           | CAArgP callee rest0 values ret all_args _ _ _ =>
+               0 <= callee /\
+               callee < Zlength (cm_program_functions p) /\
+               cm_exprs_type_ready policy p
+                 (cm_function_at policy fid (cm_program_functions p)) rest0 /\
+               cm_args_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p))
+                 all_args
+                 (cm_function_params
+                    (cm_function_at policy callee (cm_program_functions p))) /\
+               cm_arg_progress_type_ready nilslot all_args
+                 (cm_function_params
+                    (cm_function_at policy callee (cm_program_functions p)))
+                 (rev values) rest0 /\
+               ret =
+               cm_function_ret
+                 (cm_function_at policy callee (cm_program_functions p))
+           | CACallP caller _ _ _ ret =>
+               0 <= fid /\
+               fid < Zlength (cm_program_functions p) /\
+               (caller = -1 \/ 0 <= caller < Zlength (cm_program_functions p)) /\
+               ret =
+               cm_function_ret
+                 (cm_function_at policy fid (cm_program_functions p))
+           | _ => True
+           end /\
+           match match c with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CAHaltP => rest = []
+           | CABinLP _ _ _ ty | CABinRP _ _ _ _ ty =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs0 _ _ => ty = cm_expr_type lhs0
+                   | CABinRP _ _ rhs0 _ _ => ty = cm_expr_type rhs0
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       ty = CMPtrTy ty0
+                   | CAMemberP _ ty0 => ty = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type ty
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ty
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CAIndexLP _ ty | CAIndexRP _ ty =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => CMPtrTy ty = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => CMPtrTy ty = cm_expr_type rhs
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       CMPtrTy ty = CMPtrTy ty0
+                   | CAMemberP _ ty0 => CMPtrTy ty = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type (CMPtrTy ty)
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ =>
+                       cm_scalar_expr_type (CMPtrTy ty)
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CAMemberP mid ty =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ =>
+                       cm_member_lvalue_type p ty mid = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ =>
+                       cm_member_lvalue_type p ty mid = cm_expr_type rhs
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       cm_member_lvalue_type p ty mid = CMPtrTy ty0
+                   | CAMemberP _ ty0 => cm_member_lvalue_type p ty mid = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type (cm_member_lvalue_type p ty mid)
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ =>
+                       cm_scalar_expr_type (cm_member_lvalue_type p ty mid)
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CAUnaryP _ | CAPutcP | CAPutiP =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => CMIntTy = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => CMIntTy = cm_expr_type rhs
+                   | CALoadP ty | CAAssignLP _ ty | CAIndexLP _ ty =>
+                       CMIntTy = CMPtrTy ty
+                   | CAMemberP _ ty => CMIntTy = ty
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type CMIntTy
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type CMIntTy
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CALoadP ty | CAAssignLP _ ty | CAAssignRP _ ty |
+             CAArgP _ _ _ ty _ _ _ _ =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => ty = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => ty = cm_expr_type rhs
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       ty = CMPtrTy ty0
+                   | CAMemberP _ ty0 => ty = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type ty
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ty
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CACallP _ _ _ _ ret =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => ret = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => ret = cm_expr_type rhs
+                   | CALoadP ty | CAAssignLP _ ty | CAIndexLP _ ty =>
+                       ret = CMPtrTy ty
+                   | CAMemberP _ ty => ret = ty
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type ret
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ret
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | _ => True
+           end /\
+           (forall (result : cm_type) (v : cm_value),
+            match match c with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CAIndexLP _ ty | CAIndexRP _ ty => result = CMPtrTy ty
+            | CAMemberP mid ty => result = cm_member_lvalue_type p ty mid
+            | CAUnaryP _ | CAPutcP | CAPutiP => result = CMIntTy
+            | CALoadP ty | CAAssignLP _ ty | CAAssignRP _ ty |
+              CABinLP _ _ _ ty | CABinRP _ _ _ _ ty |
+              CAArgP _ _ _ ty _ _ _ _ | CACallP _ _ _ _ ty => 
+                result = ty
+            | _ => False
+            end ->
+            cm_value_type_compatible v result ->
+            cm_cursor_head_value_type_ready policy nilslot p
+              match match c with
+                    | CMACursor phase _ _ _ => phase
+                    end with
+              | CACallP caller _ _ _ _ => caller
+              | _ => fid
+              end v rest) /\
+           cm_cursors_type_ready policy nilslot p
+             match match c with
+                   | CMACursor phase _ _ _ => phase
+                   end with
+             | CACallP caller _ _ _ _ => caller
+             | _ => fid
+             end rest
+       end) (cm_source_function_policy sp) nilslot p fid
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end /\
+    match match ann with
+          | CMAnnotation _ _ _ _ cs _ _ _ => cs
+          end with
+    | [] => False
+    | c :: _ =>
+        match match c with
+              | CMACursor phase _ _ _ => phase
+              end with
+        | CABinLP _ lhs _ _ =>
+            cm_expr_type (CMVarE scope slot ty) = cm_expr_type lhs
+        | CABinRP _ _ rhs _ _ =>
+            cm_expr_type (CMVarE scope slot ty) = cm_expr_type rhs
+        | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+            cm_expr_type (CMVarE scope slot ty) = CMPtrTy ty0
+        | CAMemberP _ ty0 => cm_expr_type (CMVarE scope slot ty) = ty0
+        | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+            cm_integer_type (cm_expr_type (CMVarE scope slot ty))
+        | CAPutcP | CAExprStmtP | CAIfP _ _ | CAWhileGuardP _ _ _ _ =>
+            cm_scalar_expr_type (cm_expr_type (CMVarE scope slot ty))
+        | CABlockP _ _ _ _ | CASeqP _ | CAWhileBodyP _ _ _ _ _ _ |
+          CACallP _ _ _ _ _ => False
+        | _ => True
+        end
+    end /\
+    cm_cursor_expr_values_type_ready (cm_source_function_policy sp) nilslot p
+      fid (CMVarE scope slot ty)
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end
+  FL : 0 <= fid
+  FU : fid < Zlength (cm_program_functions p)
+  EW :
+    cm_expr_wf (cm_source_function_policy sp) p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p)) (CMVarE scope slot ty)
+  SC : cm_scalar_expr_type (cm_expr_type (CMVarE scope slot ty))
+  CT :
+    (fix cm_cursors_type_ready
+       (policy : cm_lookup_policy) (nilslot : cm_slot_d) 
+       (p : cm_program) (fid : Z) (cursors : list cm_acursor) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | c :: rest =>
+           match match c with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CALoadP ty => cm_scalar_expr_type ty
+           | CAAssignLP src ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) src /\
+               cm_expr_convertible src ty /\ cm_scalar_expr_type ty
+           | CAAssignRP ptr ty =>
+               cm_value_type_compatible ptr (CMPtrTy ty) /\
+               cm_scalar_expr_type ty
+           | CABinLP op lhs rhs ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p))
+                 (CMBinaryE op lhs rhs ty)
+           | CABinRP op lhs rhs v ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p))
+                 (CMBinaryE op lhs rhs ty) /\
+               cm_value_type_compatible v (cm_expr_type lhs)
+           | CAUnaryP op => op = 0 \/ op = 1
+           | CAIndexLP index ty =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) index /\
+               cm_integer_type (cm_expr_type index) /\
+               cm_type_refs (cm_program_structs p) ty
+           | CAIndexRP base ty =>
+               cm_value_type_compatible base (CMPtrTy ty) /\
+               cm_type_refs (cm_program_structs p) ty
+           | CAMemberP mid ty => cm_member_valid p ty mid
+           | CAInitP slot =>
+               0 <= slot /\
+               slot <
+               Zlength
+                 (cm_function_locals
+                    (cm_function_at policy fid (cm_program_functions p))) /\
+               cm_slot_count
+                 (cm_slot_at slot
+                    (cm_function_locals
+                       (cm_function_at policy fid (cm_program_functions p)))) =
+               0 /\
+               cm_scalar_type (cm_program_structs p)
+                 (cm_slot_ty
+                    (cm_slot_at slot
+                       (cm_function_locals
+                          (cm_function_at policy fid (cm_program_functions p)))))
+           | CASeqP second =>
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true
+                 second
+           | CAIfP yes no =>
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true
+                 yes /\
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true no
+           | CAWhileGuardP guard body _ _ |
+             CAWhileBodyP guard body _ _ _ _ =>
+               cm_expr_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) guard /\
+               cm_scalar_expr_type (cm_expr_type guard) /\
+               cm_stmt_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p)) true
+                 body
+           | CAArgP callee rest0 values ret all_args _ _ _ =>
+               0 <= callee /\
+               callee < Zlength (cm_program_functions p) /\
+               cm_exprs_type_ready policy p
+                 (cm_function_at policy fid (cm_program_functions p)) rest0 /\
+               cm_args_wf policy p
+                 (cm_function_at policy fid (cm_program_functions p))
+                 all_args
+                 (cm_function_params
+                    (cm_function_at policy callee (cm_program_functions p))) /\
+               cm_arg_progress_type_ready nilslot all_args
+                 (cm_function_params
+                    (cm_function_at policy callee (cm_program_functions p)))
+                 (rev values) rest0 /\
+               ret =
+               cm_function_ret
+                 (cm_function_at policy callee (cm_program_functions p))
+           | CACallP caller _ _ _ ret =>
+               0 <= fid /\
+               fid < Zlength (cm_program_functions p) /\
+               (caller = -1 \/ 0 <= caller < Zlength (cm_program_functions p)) /\
+               ret =
+               cm_function_ret
+                 (cm_function_at policy fid (cm_program_functions p))
+           | _ => True
+           end /\
+           match match c with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CAHaltP => rest = []
+           | CABinLP _ _ _ ty | CABinRP _ _ _ _ ty =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs0 _ _ => ty = cm_expr_type lhs0
+                   | CABinRP _ _ rhs0 _ _ => ty = cm_expr_type rhs0
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       ty = CMPtrTy ty0
+                   | CAMemberP _ ty0 => ty = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type ty
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ty
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CAIndexLP _ ty | CAIndexRP _ ty =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => CMPtrTy ty = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => CMPtrTy ty = cm_expr_type rhs
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       CMPtrTy ty = CMPtrTy ty0
+                   | CAMemberP _ ty0 => CMPtrTy ty = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type (CMPtrTy ty)
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ =>
+                       cm_scalar_expr_type (CMPtrTy ty)
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CAMemberP mid ty =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ =>
+                       cm_member_lvalue_type p ty mid = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ =>
+                       cm_member_lvalue_type p ty mid = cm_expr_type rhs
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       cm_member_lvalue_type p ty mid = CMPtrTy ty0
+                   | CAMemberP _ ty0 => cm_member_lvalue_type p ty mid = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type (cm_member_lvalue_type p ty mid)
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ =>
+                       cm_scalar_expr_type (cm_member_lvalue_type p ty mid)
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CAUnaryP _ | CAPutcP | CAPutiP =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => CMIntTy = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => CMIntTy = cm_expr_type rhs
+                   | CALoadP ty | CAAssignLP _ ty | CAIndexLP _ ty =>
+                       CMIntTy = CMPtrTy ty
+                   | CAMemberP _ ty => CMIntTy = ty
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type CMIntTy
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type CMIntTy
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CALoadP ty | CAAssignLP _ ty | CAAssignRP _ ty |
+             CAArgP _ _ _ ty _ _ _ _ =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => ty = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => ty = cm_expr_type rhs
+                   | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                       ty = CMPtrTy ty0
+                   | CAMemberP _ ty0 => ty = ty0
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type ty
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ty
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | CACallP _ _ _ _ ret =>
+               match rest with
+               | [] => False
+               | c0 :: _ =>
+                   match
+                     match c0 with
+                     | CMACursor phase _ _ _ => phase
+                     end
+                   with
+                   | CABinLP _ lhs _ _ => ret = cm_expr_type lhs
+                   | CABinRP _ _ rhs _ _ => ret = cm_expr_type rhs
+                   | CALoadP ty | CAAssignLP _ ty | CAIndexLP _ ty =>
+                       ret = CMPtrTy ty
+                   | CAMemberP _ ty => ret = ty
+                   | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                       cm_integer_type ret
+                   | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                     CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ret
+                   | CABlockP _ _ _ _ | CASeqP _ | 
+                     CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                   | _ => True
+                   end
+               end
+           | _ => True
+           end /\
+           (forall (result : cm_type) (v : cm_value),
+            match match c with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CAIndexLP _ ty | CAIndexRP _ ty => result = CMPtrTy ty
+            | CAMemberP mid ty => result = cm_member_lvalue_type p ty mid
+            | CAUnaryP _ | CAPutcP | CAPutiP => result = CMIntTy
+            | CALoadP ty | CAAssignLP _ ty | CAAssignRP _ ty |
+              CABinLP _ _ _ ty | CABinRP _ _ _ _ ty |
+              CAArgP _ _ _ ty _ _ _ _ | CACallP _ _ _ _ ty => 
+                result = ty
+            | _ => False
+            end ->
+            cm_value_type_compatible v result ->
+            cm_cursor_head_value_type_ready policy nilslot p
+              match match c with
+                    | CMACursor phase _ _ _ => phase
+                    end with
+              | CACallP caller _ _ _ _ => caller
+              | _ => fid
+              end v rest) /\
+           cm_cursors_type_ready policy nilslot p
+             match match c with
+                   | CMACursor phase _ _ _ => phase
+                   end with
+             | CACallP caller _ _ _ _ => caller
+             | _ => fid
+             end rest
+       end) (cm_source_function_policy sp) nilslot p fid
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end
+  IN :
+    match match ann with
+          | CMAnnotation _ _ _ _ cs _ _ _ => cs
+          end with
+    | [] => False
+    | c :: _ =>
+        match match c with
+              | CMACursor phase _ _ _ => phase
+              end with
+        | CABinLP _ lhs _ _ =>
+            cm_expr_type (CMVarE scope slot ty) = cm_expr_type lhs
+        | CABinRP _ _ rhs _ _ =>
+            cm_expr_type (CMVarE scope slot ty) = cm_expr_type rhs
+        | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+            cm_expr_type (CMVarE scope slot ty) = CMPtrTy ty0
+        | CAMemberP _ ty0 => cm_expr_type (CMVarE scope slot ty) = ty0
+        | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+            cm_integer_type (cm_expr_type (CMVarE scope slot ty))
+        | CAPutcP | CAExprStmtP | CAIfP _ _ | CAWhileGuardP _ _ _ _ =>
+            cm_scalar_expr_type (cm_expr_type (CMVarE scope slot ty))
+        | CABlockP _ _ _ _ | CASeqP _ | CAWhileBodyP _ _ _ _ _ _ |
+          CACallP _ _ _ _ _ => False
+        | _ => True
+        end
+    end
+  VAL :
+    cm_cursor_expr_values_type_ready (cm_source_function_policy sp) nilslot p
+      fid (CMVarE scope slot ty)
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end
+  BV :
+    cm_binding_valid p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p)) scope slot
+  TY :
+    ty =
+    cm_binding_type p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p)) scope slot
+  FW :
+    cm_function_wf (cm_source_function_policy sp) p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))
+  ARRAY : cm_binding_array sp p fid scope slot = false
+  OUT :
+    cm_lvalue_output_type p (cm_source_function_at sp fid p)
+      (CMVarE scope slot ty) =
+    CMPtrTy (cm_binding_type p (cm_source_function_at sp fid p) scope slot)
+  RESULT :
+    forall v : cm_value,
+    cm_value_type_compatible v (cm_expr_type (CMVarE scope slot ty)) ->
+    cm_cursor_head_value_type_ready (cm_source_function_policy sp) nilslot p
+      fid v match ann with
+            | CMAnnotation _ _ _ _ cs _ _ _ => cs
+            end
+  ============================
+  p = p /\
+  0 <= fid /\
+  fid < Zlength (cm_program_functions p) /\
+  cm_expr_wf (cm_source_function_policy sp) p
+    (cm_function_at (cm_source_function_policy sp) fid
+       (cm_program_functions p)) (CMVarE scope slot ty) /\
+  cm_lvalue (CMVarE scope slot ty) /\
+  (cm_scalar_expr_type ty /\
+   match match ann with
+         | CMAnnotation _ _ _ _ cs _ _ _ => cs
+         end with
+   | [] => False
+   | c :: _ =>
+       match match c with
+             | CMACursor phase _ _ _ => phase
+             end with
+       | CABinLP _ lhs _ _ => ty = cm_expr_type lhs
+       | CABinRP _ _ rhs _ _ => ty = cm_expr_type rhs
+       | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 => ty = CMPtrTy ty0
+       | CAMemberP _ ty0 => ty = ty0
+       | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP => cm_integer_type ty
+       | CAPutcP | CAExprStmtP | CAIfP _ _ | CAWhileGuardP _ _ _ _ =>
+           cm_scalar_expr_type ty
+       | CABlockP _ _ _ _ | CASeqP _ | CAWhileBodyP _ _ _ _ _ _ |
+         CACallP _ _ _ _ _ => False
+       | _ => True
+       end
+   end /\
+   (forall (result : cm_type) (v : cm_value),
+    result = ty ->
+    cm_value_type_compatible v result ->
+    cm_cursor_head_value_type_ready (cm_source_function_policy sp) nilslot p
+      fid v match ann with
+            | CMAnnotation _ _ _ _ cs _ _ _ => cs
+            end) /\
+   (fix cm_cursors_type_ready
+      (policy : cm_lookup_policy) (nilslot0 : cm_slot_d) 
+      (p0 : cm_program) (fid0 : Z) (cursors : list cm_acursor) {struct
+       cursors} : Prop :=
+      match cursors with
+      | [] => True
+      | c :: rest =>
+          match match c with
+                | CMACursor phase _ _ _ => phase
+                end with
+          | CALoadP ty0 => cm_scalar_expr_type ty0
+          | CAAssignLP src ty0 =>
+              cm_expr_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) src /\
+              cm_expr_convertible src ty0 /\ cm_scalar_expr_type ty0
+          | CAAssignRP ptr ty0 =>
+              cm_value_type_compatible ptr (CMPtrTy ty0) /\
+              cm_scalar_expr_type ty0
+          | CABinLP op lhs rhs ty0 =>
+              cm_expr_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0))
+                (CMBinaryE op lhs rhs ty0)
+          | CABinRP op lhs rhs v ty0 =>
+              cm_expr_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0))
+                (CMBinaryE op lhs rhs ty0) /\
+              cm_value_type_compatible v (cm_expr_type lhs)
+          | CAUnaryP op => op = 0 \/ op = 1
+          | CAIndexLP index ty0 =>
+              cm_expr_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) index /\
+              cm_integer_type (cm_expr_type index) /\
+              cm_type_refs (cm_program_structs p0) ty0
+          | CAIndexRP base ty0 =>
+              cm_value_type_compatible base (CMPtrTy ty0) /\
+              cm_type_refs (cm_program_structs p0) ty0
+          | CAMemberP mid ty0 => cm_member_valid p0 ty0 mid
+          | CAInitP slot0 =>
+              0 <= slot0 /\
+              slot0 <
+              Zlength
+                (cm_function_locals
+                   (cm_function_at policy fid0 (cm_program_functions p0))) /\
+              cm_slot_count
+                (cm_slot_at slot0
+                   (cm_function_locals
+                      (cm_function_at policy fid0 (cm_program_functions p0)))) =
+              0 /\
+              cm_scalar_type (cm_program_structs p0)
+                (cm_slot_ty
+                   (cm_slot_at slot0
+                      (cm_function_locals
+                         (cm_function_at policy fid0
+                            (cm_program_functions p0)))))
+          | CASeqP second =>
+              cm_stmt_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) true
+                second
+          | CAIfP yes no =>
+              cm_stmt_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) true
+                yes /\
+              cm_stmt_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) true
+                no
+          | CAWhileGuardP guard body _ _ | CAWhileBodyP guard body _ _ _ _ =>
+              cm_expr_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) guard /\
+              cm_scalar_expr_type (cm_expr_type guard) /\
+              cm_stmt_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) true
+                body
+          | CAArgP callee rest0 values ret all_args _ _ _ =>
+              0 <= callee /\
+              callee < Zlength (cm_program_functions p0) /\
+              cm_exprs_type_ready policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0)) rest0 /\
+              cm_args_wf policy p0
+                (cm_function_at policy fid0 (cm_program_functions p0))
+                all_args
+                (cm_function_params
+                   (cm_function_at policy callee (cm_program_functions p0))) /\
+              cm_arg_progress_type_ready nilslot0 all_args
+                (cm_function_params
+                   (cm_function_at policy callee (cm_program_functions p0)))
+                (rev values) rest0 /\
+              ret =
+              cm_function_ret
+                (cm_function_at policy callee (cm_program_functions p0))
+          | CACallP caller _ _ _ ret =>
+              0 <= fid0 /\
+              fid0 < Zlength (cm_program_functions p0) /\
+              (caller = -1 \/ 0 <= caller < Zlength (cm_program_functions p0)) /\
+              ret =
+              cm_function_ret
+                (cm_function_at policy fid0 (cm_program_functions p0))
+          | _ => True
+          end /\
+          match match c with
+                | CMACursor phase _ _ _ => phase
+                end with
+          | CAHaltP => rest = []
+          | CABinLP _ _ _ ty0 | CABinRP _ _ _ _ ty0 =>
+              match rest with
+              | [] => False
+              | c0 :: _ =>
+                  match
+                    match c0 with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CABinLP _ lhs0 _ _ => ty0 = cm_expr_type lhs0
+                  | CABinRP _ _ rhs0 _ _ => ty0 = cm_expr_type rhs0
+                  | CALoadP ty1 | CAAssignLP _ ty1 | CAIndexLP _ ty1 =>
+                      ty0 = CMPtrTy ty1
+                  | CAMemberP _ ty1 => ty0 = ty1
+                  | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                      cm_integer_type ty0
+                  | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                    CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ty0
+                  | CABlockP _ _ _ _ | CASeqP _ | 
+                    CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                  | _ => True
+                  end
+              end
+          | CAIndexLP _ ty0 | CAIndexRP _ ty0 =>
+              match rest with
+              | [] => False
+              | c0 :: _ =>
+                  match
+                    match c0 with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CABinLP _ lhs _ _ => CMPtrTy ty0 = cm_expr_type lhs
+                  | CABinRP _ _ rhs _ _ => CMPtrTy ty0 = cm_expr_type rhs
+                  | CALoadP ty1 | CAAssignLP _ ty1 | CAIndexLP _ ty1 =>
+                      CMPtrTy ty0 = CMPtrTy ty1
+                  | CAMemberP _ ty1 => CMPtrTy ty0 = ty1
+                  | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                      cm_integer_type (CMPtrTy ty0)
+                  | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                    CAWhileGuardP _ _ _ _ =>
+                      cm_scalar_expr_type (CMPtrTy ty0)
+                  | CABlockP _ _ _ _ | CASeqP _ | 
+                    CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                  | _ => True
+                  end
+              end
+          | CAMemberP mid ty0 =>
+              match rest with
+              | [] => False
+              | c0 :: _ =>
+                  match
+                    match c0 with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CABinLP _ lhs _ _ =>
+                      cm_member_lvalue_type p0 ty0 mid = cm_expr_type lhs
+                  | CABinRP _ _ rhs _ _ =>
+                      cm_member_lvalue_type p0 ty0 mid = cm_expr_type rhs
+                  | CALoadP ty1 | CAAssignLP _ ty1 | CAIndexLP _ ty1 =>
+                      cm_member_lvalue_type p0 ty0 mid = CMPtrTy ty1
+                  | CAMemberP _ ty1 => cm_member_lvalue_type p0 ty0 mid = ty1
+                  | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                      cm_integer_type (cm_member_lvalue_type p0 ty0 mid)
+                  | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                    CAWhileGuardP _ _ _ _ =>
+                      cm_scalar_expr_type (cm_member_lvalue_type p0 ty0 mid)
+                  | CABlockP _ _ _ _ | CASeqP _ | 
+                    CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                  | _ => True
+                  end
+              end
+          | CAUnaryP _ | CAPutcP | CAPutiP =>
+              match rest with
+              | [] => False
+              | c0 :: _ =>
+                  match
+                    match c0 with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CABinLP _ lhs _ _ => CMIntTy = cm_expr_type lhs
+                  | CABinRP _ _ rhs _ _ => CMIntTy = cm_expr_type rhs
+                  | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                      CMIntTy = CMPtrTy ty0
+                  | CAMemberP _ ty0 => CMIntTy = ty0
+                  | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                      cm_integer_type CMIntTy
+                  | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                    CAWhileGuardP _ _ _ _ => cm_scalar_expr_type CMIntTy
+                  | CABlockP _ _ _ _ | CASeqP _ | 
+                    CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                  | _ => True
+                  end
+              end
+          | CALoadP ty0 | CAAssignLP _ ty0 | CAAssignRP _ ty0 |
+            CAArgP _ _ _ ty0 _ _ _ _ =>
+              match rest with
+              | [] => False
+              | c0 :: _ =>
+                  match
+                    match c0 with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CABinLP _ lhs _ _ => ty0 = cm_expr_type lhs
+                  | CABinRP _ _ rhs _ _ => ty0 = cm_expr_type rhs
+                  | CALoadP ty1 | CAAssignLP _ ty1 | CAIndexLP _ ty1 =>
+                      ty0 = CMPtrTy ty1
+                  | CAMemberP _ ty1 => ty0 = ty1
+                  | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                      cm_integer_type ty0
+                  | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                    CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ty0
+                  | CABlockP _ _ _ _ | CASeqP _ | 
+                    CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                  | _ => True
+                  end
+              end
+          | CACallP _ _ _ _ ret =>
+              match rest with
+              | [] => False
+              | c0 :: _ =>
+                  match
+                    match c0 with
+                    | CMACursor phase _ _ _ => phase
+                    end
+                  with
+                  | CABinLP _ lhs _ _ => ret = cm_expr_type lhs
+                  | CABinRP _ _ rhs _ _ => ret = cm_expr_type rhs
+                  | CALoadP ty0 | CAAssignLP _ ty0 | CAIndexLP _ ty0 =>
+                      ret = CMPtrTy ty0
+                  | CAMemberP _ ty0 => ret = ty0
+                  | CAUnaryP _ | CAIndexRP _ _ | CAPutiP | CAExitP =>
+                      cm_integer_type ret
+                  | CAPutcP | CAExprStmtP | CAIfP _ _ |
+                    CAWhileGuardP _ _ _ _ => cm_scalar_expr_type ret
+                  | CABlockP _ _ _ _ | CASeqP _ | 
+                    CAWhileBodyP _ _ _ _ _ _ | CACallP _ _ _ _ _ => False
+                  | _ => True
+                  end
+              end
+          | _ => True
+          end /\
+          (forall (result : cm_type) (v : cm_value),
+           match match c with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CAIndexLP _ ty0 | CAIndexRP _ ty0 => result = CMPtrTy ty0
+           | CAMemberP mid ty0 => result = cm_member_lvalue_type p0 ty0 mid
+           | CAUnaryP _ | CAPutcP | CAPutiP => result = CMIntTy
+           | CALoadP ty0 | CAAssignLP _ ty0 | CAAssignRP _ ty0 |
+             CABinLP _ _ _ ty0 | CABinRP _ _ _ _ ty0 |
+             CAArgP _ _ _ ty0 _ _ _ _ | CACallP _ _ _ _ ty0 => 
+               result = ty0
+           | _ => False
+           end ->
+           cm_value_type_compatible v result ->
+           cm_cursor_head_value_type_ready policy nilslot0 p0
+             match match c with
+                   | CMACursor phase _ _ _ => phase
+                   end with
+             | CACallP caller _ _ _ _ => caller
+             | _ => fid0
+             end v rest) /\
+          cm_cursors_type_ready policy nilslot0 p0
+            match match c with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CACallP caller _ _ _ _ => caller
+            | _ => fid0
+            end rest
+      end) (cm_source_function_policy sp) nilslot p fid
+     match ann with
+     | CMAnnotation _ _ _ _ cs _ _ _ => cs
+     end) /\
+  cm_lvalue_output_type p
+    (cm_function_at (cm_source_function_policy sp) fid
+       (cm_program_functions p)) (CMVarE scope slot ty) = 
+  CMPtrTy ty /\
+  cm_cursor_head_lvalue_type_ready (cm_source_function_policy sp) nilslot p
+    fid
+    (cm_lvalue_output_type p
+       (cm_function_at (cm_source_function_policy sp) fid
+          (cm_program_functions p)) (CMVarE scope slot ty))
+    (CMACursor (CALoadP ty) (cm_ann_temp ann) (cm_ann_break ann)
+       (cm_ann_continue ann)
+     :: match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end)
+Chars 1377 - 1382 [Show.] 0.029 secs (0.028u,0.s)
+Chars 1383 - 1400 [(rewrite~OUT,~<-~TY).] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_expr_access_migration_lib.v", line 19, characters 23-39:
+Error: Found no subterm matching
+"cm_lvalue_output_type p (cm_source_function_at sp fid p)
+   (CMVarE scope slot ty)" in the current goal.
+

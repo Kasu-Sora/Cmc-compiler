@@ -1,0 +1,106 @@
+cm_function_pcs_current
+:
+forall (policy : cm_lookup_policy) (functions : list cm_function_d)
+  (p : cm_program) (fid : Z),
+cm_function_pcs_representable policy p functions fid ->
+cm_i32_code_count (cm_function_pc policy p fid)
+     : forall (policy : cm_lookup_policy) (functions : list cm_function_d)
+         (p : cm_program) (fid : Z),
+       cm_function_pcs_representable policy p functions fid ->
+       cm_i32_code_count (cm_function_pc policy p fid)
+cm_function_id_ready_from_wf
+:
+forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+  (p : cm_program) (fid : Z),
+cm_wf_program policy cg p ->
+0 <= fid ->
+fid < Zlength (cm_program_functions p) -> cm_i32_code_count (fid + 1)
+     : forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+         (p : cm_program) (fid : Z),
+       cm_wf_program policy cg p ->
+       0 <= fid ->
+       fid < Zlength (cm_program_functions p) -> cm_i32_code_count (fid + 1)
+cm_concrete_function_ready_from_wf
+:
+forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+  (p : cm_program) (fid : Z) (f : cm_function_d),
+cm_wf_program policy cg p ->
+0 <= fid ->
+fid < Zlength (cm_program_functions p) ->
+cm_function_counts_representable policy p fid f ->
+cm_i32_code_count (cm_function_pc policy p fid) ->
+cm_i32_code_count (cm_function_pc policy p (fid + 1)) ->
+cm_concrete_function_ready policy p fid f
+     : forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+         (p : cm_program) (fid : Z) (f : cm_function_d),
+       cm_wf_program policy cg p ->
+       0 <= fid ->
+       fid < Zlength (cm_program_functions p) ->
+       cm_function_counts_representable policy p fid f ->
+       cm_i32_code_count (cm_function_pc policy p fid) ->
+       cm_i32_code_count (cm_function_pc policy p (fid + 1)) ->
+       cm_concrete_function_ready policy p fid f
+cm_concrete_functions_suffix_ready
+:
+forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+  (functions : list cm_function_d) (p : cm_program) 
+  (fid : Z),
+cm_wf_program policy cg p ->
+0 <= fid ->
+fid + Zlength functions = Zlength (cm_program_functions p) ->
+cm_functions_counts_representable policy p functions fid ->
+cm_function_pcs_representable policy p functions fid ->
+cm_concrete_functions_ready policy p fid functions
+     : forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+         (functions : list cm_function_d) (p : cm_program) 
+         (fid : Z),
+       cm_wf_program policy cg p ->
+       0 <= fid ->
+       fid + Zlength functions = Zlength (cm_program_functions p) ->
+       cm_functions_counts_representable policy p functions fid ->
+       cm_function_pcs_representable policy p functions fid ->
+       cm_concrete_functions_ready policy p fid functions
+cm_concrete_functions_ready_from_wf
+:
+forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+  (p : cm_program),
+cm_wf_program policy cg p ->
+cm_concrete_functions_ready policy p 0 (cm_program_functions p)
+     : forall (policy : cm_lookup_policy) (cg : cm_codegen_obligations)
+         (p : cm_program),
+       cm_wf_program policy cg p ->
+       cm_concrete_functions_ready policy p 0 (cm_program_functions p)
+cm_function_prefix_step
+:
+forall (policy : cm_lookup_policy) (functions : list cm_function_d)
+  (p : cm_program) (index : Z),
+0 <= index < Zlength functions ->
+cm_function_prefix policy p functions (index + 1) =
+cm_function_prefix policy p functions index +
+cm_function_code_count policy p
+  (Zlength (cm_program_functions p) - Zlength functions + index)
+     : forall (policy : cm_lookup_policy) (functions : list cm_function_d)
+         (p : cm_program) (index : Z),
+       0 <= index < Zlength functions ->
+       cm_function_prefix policy p functions (index + 1) =
+       cm_function_prefix policy p functions index +
+       cm_function_code_count policy p
+         (Zlength (cm_program_functions p) - Zlength functions + index)
+cm_function_pc_step
+:
+forall (policy : cm_lookup_policy) (p : cm_program) (fid : Z),
+0 <= fid < Zlength (cm_program_functions p) ->
+cm_function_pc policy p (fid + 1) =
+cm_function_pc policy p fid + cm_function_code_count policy p fid
+     : forall (policy : cm_lookup_policy) (p : cm_program) (fid : Z),
+       0 <= fid < Zlength (cm_program_functions p) ->
+       cm_function_pc policy p (fid + 1) =
+       cm_function_pc policy p fid + cm_function_code_count policy p fid
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context

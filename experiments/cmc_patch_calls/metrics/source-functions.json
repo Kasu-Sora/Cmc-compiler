@@ -1,0 +1,115 @@
+[
+  {
+    "name": "cmc_patch_code_arrays",
+    "prototype": false,
+    "source_span": [
+      179,
+      444
+    ],
+    "specification": [
+      [
+        181,
+        182
+      ],
+      [
+        183,
+        191
+      ],
+      [
+        192,
+        201
+      ]
+    ],
+    "annotation": [
+      [
+        376,
+        376
+      ],
+      [
+        377,
+        378
+      ],
+      [
+        379,
+        379
+      ],
+      [
+        405,
+        405
+      ],
+      [
+        406,
+        407
+      ],
+      [
+        408,
+        408
+      ]
+    ],
+    "inline_proof": [
+      [
+        204,
+        232
+      ],
+      [
+        236,
+        316
+      ],
+      [
+        323,
+        341
+      ],
+      [
+        345,
+        375
+      ],
+      [
+        383,
+        404
+      ],
+      [
+        413,
+        443
+      ]
+    ],
+    "runtime": "static void cmc_patch_code_arrays(\n    struct cm_program *program, int *ops, long long *imms, int length)\n{\n  if (length == 0) {\n    return;\n  };\n  int op = *ops;\n  long long immediate = *imms;\n  int *remaining_ops = ops + 1;\n  long long *remaining_imms = imms + 1;\n  int remaining_length = length - 1;\n  if (op == CMC_OP_CALL) {\n    int pc = cmc_function_pc_total(program, immediate);\n    *imms = pc;\n    cmc_patch_code_arrays(\n        program, remaining_ops, remaining_imms, remaining_length);\n  } else {\n    cmc_patch_code_arrays(\n        program, remaining_ops, remaining_imms, remaining_length);\n  };\n}\n"
+  },
+  {
+    "name": "cmc_patch_resolved_calls",
+    "prototype": false,
+    "source_span": [
+      446,
+      574
+    ],
+    "specification": [
+      [
+        448,
+        449
+      ],
+      [
+        450,
+        455
+      ],
+      [
+        456,
+        462
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        464,
+        480
+      ],
+      [
+        487,
+        509
+      ],
+      [
+        513,
+        573
+      ]
+    ],
+    "runtime": "void cmc_patch_resolved_calls(struct cm_program *program,\n                              struct cm_emitter *emitter)\n{\n  struct cm_output *output = emitter->output;\n  int length = emitter->pc;\n  int *ops = output->ops;\n  long long *imms = output->imms;\n  cmc_patch_code_arrays(program, ops, imms, length);\n}\n"
+  }
+]

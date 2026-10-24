@@ -1,0 +1,74 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "prefix-head-call",
+      "location": "cmc_function_prefix_total: after both early returns, before cmc_function_code_count",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program/fn/index/target @pre bridges",
+        "fn != 0; index != target; index >= 0",
+        "index = length(program functions) - length(functions)",
+        "index + length(functions) <= INT_MAX; index + 1 representable"
+      ],
+      "resources": [
+        "program context",
+        "head function context and statement representation",
+        "tail function list"
+      ],
+      "mathematical_state": "The nonempty suffix decomposes into a ready head and a ready tail, both with their original counts-representability facts; the helper computes the exact head contribution.",
+      "internal_predicates": []
+    },
+    {
+      "id": "prefix-tail-call",
+      "location": "cmc_function_prefix_total: after head count, before next_fn field read and recursive call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "all argument @pre bridges",
+        "head_count equals function code count and is representable",
+        "fn is nonnull; next field points to tail",
+        "arbitrary target retained; no target bounds"
+      ],
+      "resources": [
+        "program context",
+        "head function fields, parameter/local lists and statement",
+        "tail function list"
+      ],
+      "mathematical_state": "The head contribution is computed while the unchanged tail retains readiness and count bounds for index + 1. The sum is the original suffix prefix for target - index.",
+      "internal_predicates": []
+    },
+    {
+      "id": "pc-prefix-call",
+      "location": "cmc_function_pc_total: entry before program->functions read and prefix call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program and target @pre bridges; program != 0",
+        "total function length <= INT_MAX, derived from well-formed code length"
+      ],
+      "resources": [
+        "program fields and structural/global/string lists",
+        "complete function list"
+      ],
+      "mathematical_state": "Code readiness yields full-list readiness at index zero. The prefix for any target is bounded by total code size; adding 11 yields cm_function_pc.",
+      "internal_predicates": []
+    },
+    {
+      "id": "pc-prefix-fold",
+      "location": "cmc_function_pc_total: after program->functions read, before prefix call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program/target @pre bridges; fn = functions_ptr; program != 0",
+        "function length <= INT_MAX"
+      ],
+      "resources": [
+        "folded program context",
+        "complete function list"
+      ],
+      "mathematical_state": "The full-list readiness and representability facts remain unchanged while program ownership is refolded into the recursive helper interface.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

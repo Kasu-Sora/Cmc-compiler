@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+"""Freeze main's completed manual contract/model review; hashes only detect drift."""
+from pathlib import Path
+import json,re,hashlib
+from audit_syntax import c_functions,coq_regions,coq_mask
+R=Path(__file__).resolve().parent;Q=Path('/Users/nizitong/QCP/qcp-binary-democases')
+c=(Q/'QCP_examples/QCP_demos_human/cmc_emit_strings_migration.c').read_text()
+src=(R/'baseline/cmc_concrete_emit_strings.c').read_text().splitlines();fs=json.loads((R/'metrics/source-functions.json').read_text())
+expected={f['name']for f in fs if not f['prototype']};assert expected=={'cmc_emit_strings'}
+rows=[];sources=[]
+for f in c_functions(c):
+ if f['prototype']:continue
+ n=f['name'];a=next(x for x in fs if x['name']==n);source='\n'.join('\n'.join(src[a-1:b])for a,b in a['specification']);target='\n'.join(re.findall(r'/\*@.*?\*/',c[f['start']:f['body_start']],re.S))
+ sources.append({'function':n,'contract':source})
+ rows.append({'function':n,'source_contract_sha256':hashlib.sha256(source.encode()).hexdigest(),'target_contract_sha256':hashlib.sha256(target.encode()).hexdigest(),'checks':['Original strings safety retained and restored','Same nonnegative cursor, capacity bound and total output-space requirement','String-list ownership including every source byte buffer preserved','Original initialized prefix followed by exact cm_strings_bytes, with same undefined remainder','Exact returned cursor+representation size','No added nonnull data, nonempty string or string-wf precondition; empty list and empty strings remain valid'],'adaptation':'Existing UCharArray segment predicates represent source initialized and undefined byte regions; same verified string models and ABI reused.'})
+assert {x['function']for x in rows}==expected
+lib=(Q/'Rocq/examples/QCP_demos_human/cmc_emit_strings_migration_lib.v').read_text();regs=coq_regions(lib);models=[];baseline=[]
+for x in regs:
+ fragment=lib[x['start']:x['end']];item=dict(name=x.get('name'),kind=x['kind'],nonblank_lines=sum(bool(l.strip())for l in coq_mask(fragment,False).splitlines()),sha256=hashlib.sha256(fragment.encode()).hexdigest());baseline.append(item)
+ if x['kind']in ['Definition','Fixpoint','Record','Inductive']:models.append(item)
+assert not models,'Additional models require explicit review.'
+audit={'status':'Original strings emitter contract and source-buffer ownership reviewed; final verification pending','contracts':rows,'annotation_stage_model_declarations':models,'inherited_model_boundary':'Immutable verified counts/layout/copy-bytes models; this case uses only concrete string bytes, sizes, safety and representation, and introduces no codegen or TVM assumptions.','review_method':'Manual comparison of source/target pre/post resources and definition conjuncts; hashes are drift checks, not an automatic equivalence proof.','buffer_bridge_review':'Existing string representation retains the source conditional buffer ownership (emp for empty bytes); conversion to copy helper full-buffer plus conditional nonnullness must be proved for empty and nonempty bytes. No new source nonnull premise.'}
+previous=R/'metrics/semantic-audit.json'
+if previous.exists():assert json.loads(previous.read_text())['contracts']==rows,'Contract changed: re-review explicitly.'
+previous.write_text(json.dumps(audit,indent=2)+'\n');(R/'metrics/source-contracts.json').write_text(json.dumps(sources,indent=2)+'\n');(R/'metrics/annotation-library-baseline.json').write_text(json.dumps(baseline,indent=2)+'\n')
+print('Reviewed emitter contract and new model recorded.')

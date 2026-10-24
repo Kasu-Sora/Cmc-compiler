@@ -1,0 +1,247 @@
+{
+  "groups": [
+    {
+      "id": "constant_value",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_const_immediate_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_const_immediate_return_wit_1_split_goal_1": "Pure equality: destruct model_ty; the CMCharTy case contradicts ty_pre <> 1 and its encoding equality, and every other constructor makes cm_const_immediate the identity."
+          }
+        },
+        {
+          "name": "proof_of_cmc_const_immediate_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_const_immediate_return_wit_2_split_goal_1": "Pure equality: obtain model_ty = CMCharTy using cm_type_encode_char_iff__typed_branches and the supplied well-formedness/encoding facts. Unfold cm_const_immediate, tower_u8 and unsigned_last_nbits; reduce nested modulo 256 and modulo 2^64 using 256 dividing 2^64 and Z.mod_mod. No heap or existential."
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaf_const",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_const_expr_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_const_expr_entail_wit_1_split_goal_1": "Substitute e by its leaf constructor. Unfold cm_expr_rep and cm_expr_node only in the expression resource; extract expr_pre <> 0 while retaining the program/function/emitter frame.",
+            "proof_of_cm_emit_const_expr_entail_wit_1_split_goal_spatial": "Substitute the leaf equation for e. Unfold cm_expr_rep/cm_expr_node; eliminate a,b,args witnesses, use the leaf payload equalities a=b=args=0 and emp. Cancel the unchanged program/function/emitter frame and all seven node fields; value is n."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_const_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_const_expr_return_wit_1_split_goal_spatial": "Substitute lvalue_pre = 0 and the retval equation; unfold cm_leaf_code_for and cm_leaf_rvalue so the emitter done-list matches its appended singleton. Fold cm_expr_rep for the leaf constructor with witnesses a=b=args=0, its empty payload and expr_pre <> 0; cancel unchanged program/function resources and the matching emitter plan. No array transformation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_const_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_const_expr_return_wit_2_split_goal_spatial": "Use lvalue_pre <> 0 to reduce cm_leaf_code_for to []; simplify [] ++ tail and done ++ []. Fold cm_expr_rep for the leaf constructor with witnesses a=b=args=0, its empty payload and expr_pre <> 0; cancel unchanged program/function resources and the matching emitter plan. No array transformation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_const_expr_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_const_expr_which_implies_wit_1_split_goal_1": "The conclusion is the pure fact tvm_opcode_code TVMPushOp <> 22. Reduce the opcode definition to 0 and discharge arithmetic under the untouched emitter resource.",
+            "proof_of_cm_emit_const_expr_which_implies_wit_1_split_goal_2": "The conclusion is the pure fact tvm_opcode_code TVMPushOp = 0. Reduce the opcode definition and introduce the resulting reflexive pure assertion under the emitter resource.",
+            "proof_of_cm_emit_const_expr_which_implies_wit_1_split_goal_spatial": "Derive lvalue = 0 from its two bounds. Unfold cm_leaf_code_for/cm_leaf_rvalue and simplify singleton append; the two emitter-plan resources then coincide, so cancel them. No existential or state mutation is needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaf_string",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_string_expr_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_string_expr_entail_wit_1_split_goal_1": "Substitute e by its leaf constructor. Unfold cm_expr_rep and cm_expr_node only in the expression resource; extract expr_pre <> 0 while retaining the program/function/emitter frame.",
+            "proof_of_cm_emit_string_expr_entail_wit_1_split_goal_spatial": "Substitute the leaf equation for e. Unfold cm_expr_rep/cm_expr_node; eliminate a,b,args witnesses, use the leaf payload equalities a=b=args=0 and emp. Cancel the unchanged program/function/emitter frame and all seven node fields; value is sid."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_string_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_string_expr_return_wit_1_split_goal_spatial": "Substitute lvalue_pre = 0 and the retval equation; unfold cm_leaf_code_for and cm_leaf_rvalue so the emitter done-list matches its appended singleton. Rewrite cm_rep_string_address_matches using cm_typed_program policy p. Fold cm_program_context_rep with existing sp,gp,tp and program_pre <> 0. Fold cm_expr_rep for the leaf constructor with witnesses a=b=args=0, its empty payload and expr_pre <> 0; cancel unchanged program/function resources and the matching emitter plan. No array transformation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_string_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_string_expr_return_wit_2_split_goal_spatial": "Use lvalue_pre <> 0 to reduce cm_leaf_code_for to []; simplify [] ++ tail and done ++ []. Fold cm_expr_rep for the leaf constructor with witnesses a=b=args=0, its empty payload and expr_pre <> 0; cancel unchanged program/function resources and the matching emitter plan. No array transformation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_string_expr_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the left disjunct. Unfold cm_program_context_rep, extract its nonzero root fact and s,g,t witnesses. Instantiate the goal existentials in tp,gp,sp order with t,g,s, and cancel the five fields and the three list resources; no scalar or pointer bridge is missing."
+        },
+        {
+          "name": "proof_of_cm_emit_string_expr_which_implies_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_string_expr_which_implies_wit_2_split_goal_1": "The conclusion is the pure fact tvm_opcode_code TVMPushOp <> 22. Reduce the opcode definition to 0 and discharge arithmetic under the untouched emitter resource.",
+            "proof_of_cm_emit_string_expr_which_implies_wit_2_split_goal_2": "The conclusion is the pure fact tvm_opcode_code TVMPushOp = 0. Reduce the opcode definition and introduce the resulting reflexive pure assertion under the emitter resource.",
+            "proof_of_cm_emit_string_expr_which_implies_wit_2_split_goal_spatial": "Derive lvalue = 0 from its two bounds. Unfold cm_leaf_code_for/cm_leaf_rvalue and simplify singleton append; rewrite cm_rep_string_address_matches using the supplied typed-program premise; the two emitter-plan resources then coincide, so cancel them. No existential or state mutation is needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaf_getc",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_getc_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_getc_expr_return_wit_1_split_goal_spatial": "Substitute lvalue_pre = 0; unfold the leaf code into [TVMInst TVMGetcOp 0]. Cancel the matching emitter-plan resource and the unchanged program, function and opaque expression resources. No node opening or existential is necessary."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_getc_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_getc_expr_return_wit_2_split_goal_spatial": "Use lvalue_pre <> 0 to unfold the leaf code into []; rewrite app_nil_r and simplify [] ++ tail. Cancel the matching emitter-plan resource and the unchanged program, function and opaque expression resources. No node opening or existential is necessary."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_getc_expr_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_getc_expr_which_implies_wit_1_split_goal_1": "Reduce tvm_opcode_code TVMGetcOp to 24 and prove 24 <> 22 as a pure assertion under the emitter frame.",
+            "proof_of_cm_emit_getc_expr_which_implies_wit_1_split_goal_2": "Reduce tvm_opcode_code TVMGetcOp to 24 and introduce the reflexive pure equality under the emitter frame.",
+            "proof_of_cm_emit_getc_expr_which_implies_wit_1_split_goal_spatial": "Derive lvalue=0 from the bounds, unfold the getc leaf code to its singleton, simplify singleton append, and cancel the identical emitter plans."
+          }
+        }
+      ]
+    },
+    {
+      "id": "sizeof_value",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_sizeof_value_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_sizeof_value_return_wit_1_split_goal_1": "Pure equality: destruct asked. The non-pointer constructors contradict code_pre >= 1024 using code_pre=cm_type_encode asked and cm_type_code_wf asked (struct id is in [0,1022)); the pointer constructor has cm_type_size = 8 by definition."
+          }
+        },
+        {
+          "name": "proof_of_cm_sizeof_value_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_sizeof_value_return_wit_2_split_goal_1": "Substitute retval. Apply cm_rep_type_size_matches with the supplied cm_type_code_wf and cm_type_refs; obtain its universal struct-well-formedness premise from the first conjunct of cm_typed_program. Lift the resulting equality to a pure assertion; heap resources are irrelevant to this split.",
+            "proof_of_cm_sizeof_value_return_wit_2_split_goal_spatial": "Fold cm_program_context_rep, instantiate its s,g,t with the existing sp,gp,tp, establish program_pre <> 0 from the premise, and cancel all five program fields and the three list resources after reordering the struct-list frame."
+          }
+        },
+        {
+          "name": "proof_of_cm_sizeof_value_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_sizeof_value_which_implies_wit_1_split_goal_1": "Substitute code; unfold cm_type_encode and combine cm_type_depth_nonnegative__expression_assignment_safety with cm_type_base_bounds__expression_assignment_safety (using cm_type_code_wf asked). Linear arithmetic proves nonnegativity."
+          }
+        },
+        {
+          "name": "proof_of_cm_sizeof_value_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the left disjunct. Unfold cm_program_context_rep, extract its nonzero root fact and s,g,t witnesses. Instantiate the goal existentials in tp,gp,sp order with t,g,s, and cancel the five fields and the three list resources; no scalar or pointer bridge is missing."
+        }
+      ]
+    },
+    {
+      "id": "leaf_sizeof",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_sizeof_expr_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_sizeof_expr_entail_wit_1_split_goal_1": "Substitute e by its leaf constructor. Unfold cm_expr_rep and cm_expr_node only in the expression resource; extract expr_pre <> 0 while retaining the program/function/emitter frame.",
+            "proof_of_cm_emit_sizeof_expr_entail_wit_1_split_goal_spatial": "Substitute the leaf equation for e. Unfold cm_expr_rep/cm_expr_node; eliminate a,b,args witnesses, use the leaf payload equalities a=b=args=0 and emp. Cancel the unchanged program/function/emitter frame and all seven node fields; value is cm_type_encode asked."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_sizeof_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_sizeof_expr_return_wit_1_split_goal_spatial": "Substitute lvalue_pre = 0 and the retval equation; unfold cm_leaf_code_for and cm_leaf_rvalue so the emitter done-list matches its appended singleton. Fold cm_expr_rep for the leaf constructor with witnesses a=b=args=0, its empty payload and expr_pre <> 0; cancel unchanged program/function resources and the matching emitter plan. No array transformation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_sizeof_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_sizeof_expr_return_wit_2_split_goal_spatial": "Use lvalue_pre <> 0 to reduce cm_leaf_code_for to []; simplify [] ++ tail and done ++ []. Fold cm_expr_rep for the leaf constructor with witnesses a=b=args=0, its empty payload and expr_pre <> 0; cancel unchanged program/function resources and the matching emitter plan. No array transformation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_sizeof_expr_which_implies_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_sizeof_expr_which_implies_wit_1_split_goal_1": "The conclusion is the pure fact tvm_opcode_code TVMPushOp <> 22. Reduce the opcode definition to 0 and discharge arithmetic under the untouched emitter resource.",
+            "proof_of_cm_emit_sizeof_expr_which_implies_wit_1_split_goal_2": "The conclusion is the pure fact tvm_opcode_code TVMPushOp = 0. Reduce the opcode definition and introduce the resulting reflexive pure assertion under the emitter resource.",
+            "proof_of_cm_emit_sizeof_expr_which_implies_wit_1_split_goal_spatial": "Derive lvalue = 0 from its two bounds. Unfold cm_leaf_code_for/cm_leaf_rvalue and simplify singleton append; the two emitter-plan resources then coincide, so cancel them. No existential or state mutation is needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "member_context",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_member_array_value_context_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the left disjunct. Unfold cm_member_valid to force base=CMPtrTy (CMStructTy sid); extract the nonnegative mid and sid bounds. cm_type_code_wf gives sid<1022, so base_ty_pre=1024+(sid+2), its lower bound and the modulo identity follow using Z.mod_small; cm_i32_code_count gives the upper INT_MAX bound. Unfold cm_program_context_rep, extract program_pre<>0 and existing s,g,t; instantiate goal tp,gp,sp with t,g,s. Preserve the supplied pure model facts and cancel all five fields and three list resources."
+        },
+        {
+          "name": "proof_of_cm_member_offset_value_context_safety_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_member_offset_value_context_safety_wit_1_split_goal_1": "Use Z.mod_pos_bound retval 1024 to get retval mod 1024 < 1024; unfold INT_MAX and prove the subtraction upper bound by linear arithmetic. Introduce this pure assertion under the entire stack/program/list frame.",
+            "proof_of_cm_member_offset_value_context_safety_wit_1_split_goal_2": "Use Z.mod_pos_bound retval 1024 to get 0 <= retval mod 1024; unfold INT_MIN and prove the subtraction lower bound by linear arithmetic. Introduce this pure assertion under the unchanged frame."
+          }
+        },
+        {
+          "name": "proof_of_cm_member_offset_value_context_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the left disjunct. Unfold cm_member_valid to force base=CMPtrTy (CMStructTy sid); extract the nonnegative mid and sid bounds. cm_type_code_wf gives sid<1022, so base_ty_pre=1024+(sid+2), its lower bound and the modulo identity follow using Z.mod_small; cm_i32_code_count gives the upper INT_MAX bound. Unfold cm_program_context_rep, extract program_pre<>0 and existing s,g,t; instantiate goal tp,gp,sp with t,g,s. Preserve the supplied pure model facts and cancel all five fields and three list resources."
+        }
+      ]
+    },
+    {
+      "id": "member_results",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_member_array_value_context_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_member_array_value_context_return_wit_1_split_goal_spatial": "Fold cm_program_context_rep with witnesses sp,gp,tp and the supplied program_pre <> 0; cancel the five program fields and struct/global/string list resources, reordering the struct list."
+          }
+        },
+        {
+          "name": "proof_of_cm_member_offset_value_context_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_member_offset_value_context_return_wit_1_split_goal_1": "Substitute retval, retval_2 and base_ty_pre. Unfold cm_member_valid to force base=CMPtrTy (CMStructTy sid), obtaining sid and mid bounds; cm_type_code_wf gives 0<=sid<1022. Reduce the encoded pointee modulo 1024 to sid with Z.mod_small. Apply cm_rep_struct_member_prefix_matches; obtain cm_slots_wf from cm_struct_wf at sid, the first typed-program conjunct and the valid sid bound. Lift the resulting scalar equality under the untouched program/list resources.",
+            "proof_of_cm_member_offset_value_context_return_wit_1_split_goal_spatial": "Fold cm_program_context_rep with existing sp,gp,tp and program_pre <> 0; cancel the five program fields and all three list resources after reordering the struct-list frame."
+          }
+        }
+      ]
+    }
+  ]
+}

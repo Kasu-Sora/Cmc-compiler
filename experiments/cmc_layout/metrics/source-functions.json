@@ -1,0 +1,1820 @@
+[
+  {
+    "name": "cm_max",
+    "prototype": false,
+    "source_span": [
+      6,
+      31
+    ],
+    "specification": [
+      [
+        7,
+        7
+      ],
+      [
+        8,
+        8
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        13,
+        19
+      ],
+      [
+        22,
+        28
+      ]
+    ],
+    "runtime": "static int cm_max(int a, int b)\n{\n  int result;\n  if (a <= b) {\n    result = b;\n  } else {\n    result = a;\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_is_pointer",
+    "prototype": false,
+    "source_span": [
+      33,
+      59
+    ],
+    "specification": [
+      [
+        34,
+        34
+      ],
+      [
+        35,
+        36
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        41,
+        47
+      ],
+      [
+        50,
+        56
+      ]
+    ],
+    "runtime": "int cmc_is_pointer(int ty)\n{\n  int result;\n  if (ty >= 1024) {\n    result = 1;\n  } else {\n    result = 0;\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_is_pointer_value",
+    "prototype": false,
+    "source_span": [
+      61,
+      72
+    ],
+    "specification": [
+      [
+        62,
+        62
+      ],
+      [
+        63,
+        64
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        67,
+        70
+      ]
+    ],
+    "runtime": "void cmc_is_pointer_value(int ty, int *pointer)\n{\n  int result = cmc_is_pointer(ty);\n  *pointer = result;\n}\n"
+  },
+  {
+    "name": "cmc_pointee",
+    "prototype": false,
+    "source_span": [
+      74,
+      80
+    ],
+    "specification": [
+      [
+        75,
+        76
+      ],
+      [
+        77,
+        77
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [],
+    "runtime": "int cmc_pointee(int ty)\n{\n  return ty - 1024;\n}\n"
+  },
+  {
+    "name": "cmc_leaf_size",
+    "prototype": false,
+    "source_span": [
+      82,
+      130
+    ],
+    "specification": [
+      [
+        83,
+        83
+      ],
+      [
+        84,
+        84
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        89,
+        95
+      ],
+      [
+        98,
+        105
+      ],
+      [
+        108,
+        116
+      ],
+      [
+        119,
+        127
+      ]
+    ],
+    "runtime": "static int cmc_leaf_size(int ty)\n{\n  int result;\n  if (ty >= 1024) {\n    result = 8;\n  } else if (ty == CMC_TYPE_INT) {\n    result = 8;\n  } else if (ty == CMC_TYPE_CHAR) {\n    result = 1;\n  } else {\n    result = 0;\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_code_slot_size",
+    "prototype": false,
+    "source_span": [
+      132,
+      215
+    ],
+    "specification": [
+      [
+        133,
+        133
+      ],
+      [
+        134,
+        135
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        137,
+        140
+      ],
+      [
+        145,
+        156
+      ],
+      [
+        158,
+        197
+      ],
+      [
+        199,
+        212
+      ]
+    ],
+    "runtime": "long long cmc_code_slot_size(int code, int count)\n{\n  int leaf = cmc_leaf_size(code);\n  long long result;\n  if (count == 0) {\n    result = leaf;\n  } else {\n    result = (long long)count * leaf;\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_members_size",
+    "prototype": false,
+    "source_span": [
+      217,
+      330
+    ],
+    "specification": [
+      [
+        218,
+        218
+      ],
+      [
+        219,
+        220
+      ],
+      [
+        221,
+        223
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        227,
+        244
+      ],
+      [
+        247,
+        253
+      ],
+      [
+        254,
+        280
+      ],
+      [
+        282,
+        297
+      ],
+      [
+        300,
+        304
+      ],
+      [
+        306,
+        327
+      ]
+    ],
+    "runtime": "static long long cmc_members_size(struct cm_member *member)\n{\n  long long total;\n  if (member == 0) {\n    total = 0;\n  } else {\n    long long size = cmc_code_slot_size(member->ty, member->count);\n    struct cm_member *next = member->next;\n    long long rest_size = cmc_members_size(next);\n    total = size + rest_size;\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_struct_size_at",
+    "prototype": false,
+    "source_span": [
+      332,
+      443
+    ],
+    "specification": [
+      [
+        333,
+        333
+      ],
+      [
+        334,
+        336
+      ],
+      [
+        337,
+        340
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        344,
+        362
+      ],
+      [
+        365,
+        380
+      ],
+      [
+        383,
+        407
+      ],
+      [
+        410,
+        413
+      ],
+      [
+        415,
+        439
+      ]
+    ],
+    "runtime": "static long long cmc_struct_size_at(struct cm_struct *item, int sid)\n{\n  long long total;\n  if (item == 0) {\n    total = 0;\n  } else {\n    if (sid == 0) {\n      total = cmc_members_size(item->members);\n    } else {\n      struct cm_struct *next = item->next;\n      total = cmc_struct_size_at(next, sid - 1);\n    }\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_nonzero",
+    "prototype": false,
+    "source_span": [
+      445,
+      468
+    ],
+    "specification": [
+      [
+        446,
+        446
+      ],
+      [
+        447,
+        447
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        452,
+        457
+      ],
+      [
+        460,
+        465
+      ]
+    ],
+    "runtime": "static int cmc_nonzero(int n)\n{\n  int result;\n  if (n == 0) {\n    result = 0;\n  } else {\n    result = 1;\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_global_array_at",
+    "prototype": false,
+    "source_span": [
+      469,
+      569
+    ],
+    "specification": [
+      [
+        470,
+        470
+      ],
+      [
+        471,
+        472
+      ],
+      [
+        473,
+        475
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        479,
+        496
+      ],
+      [
+        499,
+        505
+      ],
+      [
+        508,
+        533
+      ],
+      [
+        536,
+        539
+      ],
+      [
+        541,
+        565
+      ]
+    ],
+    "runtime": "static int cmc_global_array_at(struct cm_global *item, int index)\n{\n  int result;\n  if (item == 0) {\n    result = 0;\n  } else {\n    if (index == 0) {\n      result = cmc_nonzero(item->count);\n    } else {\n      struct cm_global *next = item->next;\n      result = cmc_global_array_at(next, index - 1);\n    }\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_slot_array_at",
+    "prototype": false,
+    "source_span": [
+      572,
+      670
+    ],
+    "specification": [
+      [
+        573,
+        573
+      ],
+      [
+        574,
+        575
+      ],
+      [
+        576,
+        578
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        582,
+        599
+      ],
+      [
+        602,
+        608
+      ],
+      [
+        611,
+        634
+      ],
+      [
+        637,
+        640
+      ],
+      [
+        642,
+        666
+      ]
+    ],
+    "runtime": "static int cmc_slot_array_at(struct cm_slot *item, int index)\n{\n  int result;\n  if (item == 0) {\n    result = 0;\n  } else {\n    if (index == 0) {\n      result = cmc_nonzero(item->count);\n    } else {\n      struct cm_slot *next = item->next;\n      result = cmc_slot_array_at(next, index - 1);\n    }\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_slot_type_at",
+    "prototype": false,
+    "source_span": [
+      672,
+      768
+    ],
+    "specification": [
+      [
+        673,
+        673
+      ],
+      [
+        674,
+        675
+      ],
+      [
+        676,
+        678
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        682,
+        699
+      ],
+      [
+        702,
+        708
+      ],
+      [
+        711,
+        732
+      ],
+      [
+        735,
+        738
+      ],
+      [
+        740,
+        764
+      ]
+    ],
+    "runtime": "int cmc_slot_type_at(struct cm_slot *item, int index)\n{\n  int result;\n  if (item == 0) {\n    result = 0;\n  } else {\n    if (index == 0) {\n      result = item->ty;\n    } else {\n      struct cm_slot *next = item->next;\n      result = cmc_slot_type_at(next, index - 1);\n    }\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_member_array_at",
+    "prototype": false,
+    "source_span": [
+      770,
+      868
+    ],
+    "specification": [
+      [
+        771,
+        771
+      ],
+      [
+        772,
+        773
+      ],
+      [
+        774,
+        776
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        780,
+        797
+      ],
+      [
+        800,
+        806
+      ],
+      [
+        809,
+        832
+      ],
+      [
+        835,
+        838
+      ],
+      [
+        840,
+        864
+      ]
+    ],
+    "runtime": "static int cmc_member_array_at(struct cm_member *item, int index)\n{\n  int result;\n  if (item == 0) {\n    result = 0;\n  } else {\n    if (index == 0) {\n      result = cmc_nonzero(item->count);\n    } else {\n      struct cm_member *next = item->next;\n      result = cmc_member_array_at(next, index - 1);\n    }\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_type_size_at",
+    "prototype": false,
+    "source_span": [
+      873,
+      947
+    ],
+    "specification": [
+      [
+        874,
+        874
+      ],
+      [
+        875,
+        877
+      ],
+      [
+        878,
+        881
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        886,
+        894
+      ],
+      [
+        897,
+        906
+      ],
+      [
+        909,
+        919
+      ],
+      [
+        921,
+        923
+      ],
+      [
+        925,
+        944
+      ]
+    ],
+    "runtime": "long long cmc_type_size_at(struct cm_struct *items, int ty)\n{\n  long long result;\n  if (ty >= 1024) {\n    result = 8;\n  } else if (ty == CMC_TYPE_INT) {\n    result = 8;\n  } else if (ty == CMC_TYPE_CHAR) {\n    result = 1;\n  } else {\n    result = cmc_struct_size_at(items, ty - 2);\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_slots_size",
+    "prototype": false,
+    "source_span": [
+      949,
+      1059
+    ],
+    "specification": [
+      [
+        950,
+        950
+      ],
+      [
+        951,
+        952
+      ],
+      [
+        953,
+        957
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        961,
+        977
+      ],
+      [
+        980,
+        1011
+      ],
+      [
+        1013,
+        1027
+      ],
+      [
+        1030,
+        1034
+      ],
+      [
+        1036,
+        1056
+      ]
+    ],
+    "runtime": "static long long cmc_slots_size(struct cm_slot *slot)\n{\n  long long total;\n  if (slot == 0) {\n    total = 0;\n  } else {\n    long long size = cmc_code_slot_size(slot->ty, slot->count);\n    struct cm_slot *next = slot->next;\n    long long rest_size = cmc_slots_size(next);\n    total = size + rest_size;\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_slots_prefix",
+    "prototype": false,
+    "source_span": [
+      1061,
+      1311
+    ],
+    "specification": [
+      [
+        1062,
+        1062
+      ],
+      [
+        1063,
+        1065
+      ],
+      [
+        1066,
+        1073
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        1077,
+        1108
+      ],
+      [
+        1111,
+        1142
+      ],
+      [
+        1145,
+        1190
+      ],
+      [
+        1193,
+        1204
+      ],
+      [
+        1206,
+        1209
+      ],
+      [
+        1211,
+        1252
+      ],
+      [
+        1254,
+        1307
+      ]
+    ],
+    "runtime": "static long long cmc_slots_prefix(struct cm_slot *slot, int index)\n{\n  long long total;\n  if (slot == 0) {\n    total = 0;\n  } else {\n    if (index == 0) {\n      total = 0;\n    } else {\n      long long size = cmc_code_slot_size(slot->ty, slot->count);\n      struct cm_slot *next = slot->next;\n      long long rest_size = cmc_slots_prefix(next, index - 1);\n      total = size + rest_size;\n    }\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_members_prefix",
+    "prototype": false,
+    "source_span": [
+      1313,
+      1558
+    ],
+    "specification": [
+      [
+        1314,
+        1314
+      ],
+      [
+        1315,
+        1317
+      ],
+      [
+        1318,
+        1324
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        1328,
+        1359
+      ],
+      [
+        1362,
+        1393
+      ],
+      [
+        1396,
+        1436
+      ],
+      [
+        1439,
+        1450
+      ],
+      [
+        1452,
+        1455
+      ],
+      [
+        1457,
+        1499
+      ],
+      [
+        1501,
+        1554
+      ]
+    ],
+    "runtime": "static long long cmc_members_prefix(struct cm_member *node, int index)\n{\n  long long total;\n  if (node == 0) {\n    total = 0;\n  } else {\n    if (index == 0) {\n      total = 0;\n    } else {\n      long long size = cmc_code_slot_size(node->ty, node->count);\n      struct cm_member *next = node->next;\n      long long rest_size = cmc_members_prefix(next, index - 1);\n      total = size + rest_size;\n    }\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_member_offset_at",
+    "prototype": false,
+    "source_span": [
+      1559,
+      1689
+    ],
+    "specification": [
+      [
+        1561,
+        1561
+      ],
+      [
+        1562,
+        1564
+      ],
+      [
+        1565,
+        1570
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        1574,
+        1592
+      ],
+      [
+        1595,
+        1610
+      ],
+      [
+        1613,
+        1645
+      ],
+      [
+        1648,
+        1651
+      ],
+      [
+        1653,
+        1685
+      ]
+    ],
+    "runtime": "long long cmc_member_offset_at(struct cm_struct *item,\n                                      int sid, int index)\n{\n  long long total;\n  if (item == 0) {\n    total = 0;\n  } else {\n    if (sid == 0) {\n      total = cmc_members_prefix(item->members, index);\n    } else {\n      struct cm_struct *next = item->next;\n      total = cmc_member_offset_at(next, sid - 1, index);\n    }\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_struct_member_array_at",
+    "prototype": false,
+    "source_span": [
+      1691,
+      1812
+    ],
+    "specification": [
+      [
+        1693,
+        1693
+      ],
+      [
+        1694,
+        1696
+      ],
+      [
+        1697,
+        1701
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        1705,
+        1723
+      ],
+      [
+        1726,
+        1741
+      ],
+      [
+        1744,
+        1772
+      ],
+      [
+        1775,
+        1778
+      ],
+      [
+        1780,
+        1808
+      ]
+    ],
+    "runtime": "static int cmc_struct_member_array_at(struct cm_struct *item,\n                                      int sid, int index)\n{\n  int result;\n  if (item == 0) {\n    result = 0;\n  } else {\n    if (sid == 0) {\n      result = cmc_member_array_at(item->members, index);\n    } else {\n      struct cm_struct *next = item->next;\n      result = cmc_struct_member_array_at(next, sid - 1, index);\n    }\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_globals_size",
+    "prototype": false,
+    "source_span": [
+      1814,
+      1928
+    ],
+    "specification": [
+      [
+        1815,
+        1815
+      ],
+      [
+        1816,
+        1817
+      ],
+      [
+        1818,
+        1821
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        1825,
+        1842
+      ],
+      [
+        1845,
+        1851
+      ],
+      [
+        1852,
+        1878
+      ],
+      [
+        1880,
+        1895
+      ],
+      [
+        1898,
+        1902
+      ],
+      [
+        1904,
+        1925
+      ]
+    ],
+    "runtime": "long long cmc_globals_size(struct cm_global *node)\n{\n  long long total;\n  if (node == 0) {\n    total = 0;\n  } else {\n    long long size = cmc_code_slot_size(node->ty, node->count);\n    struct cm_global *next = node->next;\n    long long rest_size = cmc_globals_size(next);\n    total = size + rest_size;\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_globals_prefix",
+    "prototype": false,
+    "source_span": [
+      1930,
+      2175
+    ],
+    "specification": [
+      [
+        1931,
+        1931
+      ],
+      [
+        1932,
+        1934
+      ],
+      [
+        1935,
+        1941
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        1945,
+        1976
+      ],
+      [
+        1979,
+        2010
+      ],
+      [
+        2013,
+        2053
+      ],
+      [
+        2056,
+        2067
+      ],
+      [
+        2069,
+        2072
+      ],
+      [
+        2074,
+        2116
+      ],
+      [
+        2118,
+        2171
+      ]
+    ],
+    "runtime": "static long long cmc_globals_prefix(struct cm_global *node, int index)\n{\n  long long total;\n  if (node == 0) {\n    total = 0;\n  } else {\n    if (index == 0) {\n      total = 0;\n    } else {\n      long long size = cmc_code_slot_size(node->ty, node->count);\n      struct cm_global *next = node->next;\n      long long rest_size = cmc_globals_prefix(next, index - 1);\n      total = size + rest_size;\n    }\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_strings_size",
+    "prototype": false,
+    "source_span": [
+      2178,
+      2292
+    ],
+    "specification": [
+      [
+        2179,
+        2179
+      ],
+      [
+        2180,
+        2181
+      ],
+      [
+        2182,
+        2185
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        2189,
+        2206
+      ],
+      [
+        2209,
+        2249
+      ],
+      [
+        2252,
+        2260
+      ],
+      [
+        2263,
+        2267
+      ],
+      [
+        2269,
+        2289
+      ]
+    ],
+    "runtime": "long long cmc_strings_size(struct cm_string *node)\n{\n  long long total;\n  if (node == 0) {\n    total = 0;\n  } else {\n    long long size = node->length;\n    size = size + 1;\n    struct cm_string *next = node->next;\n    long long rest_size = cmc_strings_size(next);\n    total = size + rest_size;\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_strings_prefix",
+    "prototype": false,
+    "source_span": [
+      2294,
+      2551
+    ],
+    "specification": [
+      [
+        2295,
+        2295
+      ],
+      [
+        2296,
+        2298
+      ],
+      [
+        2299,
+        2305
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        2309,
+        2340
+      ],
+      [
+        2343,
+        2388
+      ],
+      [
+        2391,
+        2431
+      ],
+      [
+        2435,
+        2443
+      ],
+      [
+        2445,
+        2448
+      ],
+      [
+        2450,
+        2492
+      ],
+      [
+        2494,
+        2547
+      ]
+    ],
+    "runtime": "static long long cmc_strings_prefix(struct cm_string *node, int index)\n{\n  long long total;\n  if (node == 0) {\n    total = 0;\n  } else {\n    if (index == 0) {\n      total = 0;\n    } else {\n      long long size = node->length;\n      size = size + 1;\n      struct cm_string *next = node->next;\n      long long rest_size = cmc_strings_prefix(next, index - 1);\n      total = size + rest_size;\n    }\n  }\n  return total;\n}\n"
+  },
+  {
+    "name": "cmc_global_address",
+    "prototype": false,
+    "source_span": [
+      2553,
+      2586
+    ],
+    "specification": [
+      [
+        2554,
+        2554
+      ],
+      [
+        2555,
+        2557
+      ],
+      [
+        2558,
+        2562
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        2565,
+        2570
+      ],
+      [
+        2572,
+        2584
+      ]
+    ],
+    "runtime": "long long cmc_global_address(struct cm_global *globals, int index)\n{\n  long long prefix = cmc_globals_prefix(globals, index);\n  long long address = 16LL + prefix;\n  return address;\n}\n"
+  },
+  {
+    "name": "cmc_string_address",
+    "prototype": false,
+    "source_span": [
+      2588,
+      2666
+    ],
+    "specification": [
+      [
+        2590,
+        2591
+      ],
+      [
+        2592,
+        2598
+      ],
+      [
+        2599,
+        2608
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        2611,
+        2616
+      ],
+      [
+        2618,
+        2647
+      ],
+      [
+        2650,
+        2664
+      ]
+    ],
+    "runtime": "long long cmc_string_address(struct cm_global *globals,\n                                    struct cm_string *strings, int index)\n{\n  long long global_size = cmc_globals_size(globals);\n  long long prefix = cmc_strings_prefix(strings, index);\n  long long address = 16LL + global_size;\n  address = address + prefix;\n  return address;\n}\n"
+  },
+  {
+    "name": "cmc_binding_array_value",
+    "prototype": false,
+    "source_span": [
+      2897,
+      3005
+    ],
+    "specification": [
+      [
+        2900,
+        2902
+      ],
+      [
+        2903,
+        2913
+      ],
+      [
+        2914,
+        2925
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        2930,
+        2944
+      ],
+      [
+        2947,
+        2963
+      ],
+      [
+        2966,
+        2978
+      ],
+      [
+        2980,
+        3003
+      ]
+    ],
+    "runtime": "void cmc_binding_array_value(struct cm_program *program, int fid,\n                                    struct cm_function *fn,\n                                    int scope, int slot, int *array)\n{\n  int result;\n  if (scope == CMC_BIND_GLOBAL) {\n    result = cmc_global_array_at(program->globals, slot);\n  } else if (scope == CMC_BIND_LOCAL) {\n    result = cmc_slot_array_at(fn->locals, slot);\n  } else {\n    result = 0;\n  }\n  *array = result;\n}\n"
+  },
+  {
+    "name": "cmc_binding_array",
+    "prototype": false,
+    "source_span": [
+      3007,
+      3045
+    ],
+    "specification": [
+      [
+        3010,
+        3012
+      ],
+      [
+        3013,
+        3022
+      ],
+      [
+        3023,
+        3034
+      ]
+    ],
+    "annotation": [
+      [
+        3037,
+        3037
+      ],
+      [
+        3038,
+        3038
+      ],
+      [
+        3039,
+        3039
+      ],
+      [
+        3040,
+        3040
+      ],
+      [
+        3041,
+        3041
+      ],
+      [
+        3042,
+        3042
+      ]
+    ],
+    "inline_proof": [],
+    "runtime": "int cmc_binding_array(struct cm_program *program, int fid,\n                             struct cm_function *fn,\n                             int scope, int slot)\n{\n  int result;\n  cmc_binding_array_value(program, fid, fn, scope, slot, &result);\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_member_array",
+    "prototype": false,
+    "source_span": [
+      3213,
+      3296
+    ],
+    "specification": [
+      [
+        3214,
+        3215
+      ],
+      [
+        3216,
+        3227
+      ],
+      [
+        3228,
+        3240
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        3243,
+        3259
+      ],
+      [
+        3262,
+        3278
+      ],
+      [
+        3279,
+        3294
+      ]
+    ],
+    "runtime": "int cmc_member_array(struct cm_program *program, int base_ty, int mid)\n{\n  int pointee = cmc_pointee(base_ty);\n  int sid = (pointee % 1024) - 2;\n  int result = cmc_struct_member_array_at(program->structs, sid, mid);\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_member_array_value",
+    "prototype": false,
+    "source_span": [
+      3298,
+      3343
+    ],
+    "specification": [
+      [
+        3300,
+        3301
+      ],
+      [
+        3302,
+        3314
+      ],
+      [
+        3315,
+        3328
+      ]
+    ],
+    "annotation": [
+      [
+        3331,
+        3331
+      ],
+      [
+        3332,
+        3332
+      ],
+      [
+        3333,
+        3333
+      ],
+      [
+        3334,
+        3334
+      ]
+    ],
+    "inline_proof": [
+      [
+        3336,
+        3341
+      ]
+    ],
+    "runtime": "void cmc_member_array_value(struct cm_program *program,\n                                   int base_ty, int mid, int *array)\n{\n  int result;\n  result = cmc_member_array(program, base_ty, mid);\n  *array = result;\n}\n"
+  },
+  {
+    "name": "cm_expr_temps",
+    "prototype": true,
+    "source_span": [
+      3345,
+      3357
+    ],
+    "specification": [
+      [
+        3347,
+        3347
+      ],
+      [
+        3348,
+        3352
+      ],
+      [
+        3353,
+        3357
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [],
+    "runtime": "static void cm_expr_temps(struct cm_expr *expr,\n                          int *lvalue, int *rvalue)\n    ;\n"
+  },
+  {
+    "name": "cm_args_length",
+    "prototype": false,
+    "source_span": [
+      3358,
+      3459
+    ],
+    "specification": [
+      [
+        3359,
+        3359
+      ],
+      [
+        3360,
+        3361
+      ],
+      [
+        3362,
+        3364
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        3368,
+        3387
+      ],
+      [
+        3390,
+        3408
+      ],
+      [
+        3411,
+        3456
+      ]
+    ],
+    "runtime": "int cm_args_length(struct cm_arg *arg)\n{\n  int count;\n  if (arg == 0) {\n    count = 0;\n  } else {\n    count = cm_args_length(arg->next);\n    count = count + 1;\n  }\n  return count;\n}\n"
+  },
+  {
+    "name": "cmc_args_tpair",
+    "prototype": false,
+    "source_span": [
+      3462,
+      3603
+    ],
+    "specification": [
+      [
+        3463,
+        3463
+      ],
+      [
+        3464,
+        3468
+      ],
+      [
+        3469,
+        3473
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        3476,
+        3500
+      ],
+      [
+        3504,
+        3528
+      ],
+      [
+        3538,
+        3579
+      ],
+      [
+        3582,
+        3601
+      ]
+    ],
+    "runtime": "static void cmc_args_tpair(struct cm_arg *arg, int *count, int *depth)\n{\n  if (arg == 0) {\n    *count = 0;\n    *depth = 0;\n  } else {\n    struct cm_expr *child = arg->expr;\n    int child_lvalue;\n    int child_rvalue;\n    cm_expr_temps(child, &child_lvalue, &child_rvalue);\n    int rest_count;\n    int rest_depth;\n    cmc_args_tpair(arg->next, &rest_count, &rest_depth);\n    int new_count = rest_count + 1;\n    int new_depth = cm_max(child_rvalue, rest_depth);\n    *count = new_count;\n    *depth = new_depth;\n  }\n}\n"
+  },
+  {
+    "name": "cm_expr_temps",
+    "prototype": false,
+    "source_span": [
+      3605,
+      4908
+    ],
+    "specification": [
+      [
+        3607,
+        3607
+      ],
+      [
+        3608,
+        3612
+      ],
+      [
+        3613,
+        3617
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        3619,
+        3623
+      ],
+      [
+        3627,
+        3671
+      ],
+      [
+        3678,
+        3700
+      ],
+      [
+        3702,
+        3760
+      ],
+      [
+        3762,
+        3806
+      ],
+      [
+        3813,
+        3824
+      ],
+      [
+        3827,
+        3855
+      ],
+      [
+        3858,
+        3886
+      ],
+      [
+        3888,
+        3911
+      ],
+      [
+        3913,
+        3946
+      ],
+      [
+        3948,
+        3972
+      ],
+      [
+        3974,
+        4006
+      ],
+      [
+        4013,
+        4040
+      ],
+      [
+        4043,
+        4070
+      ],
+      [
+        4073,
+        4101
+      ],
+      [
+        4103,
+        4130
+      ],
+      [
+        4132,
+        4176
+      ],
+      [
+        4183,
+        4206
+      ],
+      [
+        4209,
+        4276
+      ],
+      [
+        4278,
+        4310
+      ],
+      [
+        4316,
+        4365
+      ],
+      [
+        4367,
+        4399
+      ],
+      [
+        4403,
+        4419
+      ],
+      [
+        4421,
+        4469
+      ],
+      [
+        4471,
+        4501
+      ],
+      [
+        4506,
+        4552
+      ],
+      [
+        4554,
+        4584
+      ],
+      [
+        4589,
+        4635
+      ],
+      [
+        4637,
+        4667
+      ],
+      [
+        4672,
+        4718
+      ],
+      [
+        4720,
+        4745
+      ],
+      [
+        4747,
+        4772
+      ],
+      [
+        4774,
+        4799
+      ],
+      [
+        4801,
+        4826
+      ],
+      [
+        4828,
+        4853
+      ],
+      [
+        4855,
+        4899
+      ],
+      [
+        4903,
+        4907
+      ]
+    ],
+    "runtime": "static void cm_expr_temps(struct cm_expr *expr,\n                          int *lvalue, int *rvalue)\n{\n  int out_lvalue = 0;\n  int out_rvalue = 0;\n  if (expr->kind == CMC_EXPR_ASSIGN) {\n    int left_lvalue;\n    int left_rvalue;\n    int right_lvalue;\n    int right_rvalue;\n    cm_expr_temps(expr->a, &left_lvalue, &left_rvalue);\n    cm_expr_temps(expr->b, &right_lvalue, &right_rvalue);\n    out_rvalue = cm_max(left_lvalue, 1 + right_rvalue);\n  } else if (expr->kind == CMC_EXPR_BINARY) {\n    int left_lvalue;\n    int left_rvalue;\n    int right_lvalue;\n    int right_rvalue;\n    cm_expr_temps(expr->a, &left_lvalue, &left_rvalue);\n    cm_expr_temps(expr->b, &right_lvalue, &right_rvalue);\n    if (expr->op == CMC_BIN_OR) {\n      out_rvalue = cm_max(left_rvalue, right_rvalue);\n    } else if (expr->op == CMC_BIN_AND) {\n      out_rvalue = cm_max(left_rvalue, right_rvalue);\n    } else {\n      out_rvalue = cm_max(left_rvalue, 1 + right_rvalue);\n    }\n  } else if (expr->kind == CMC_EXPR_UNARY) {\n    int child_lvalue;\n    int child_rvalue;\n    cm_expr_temps(expr->a, &child_lvalue, &child_rvalue);\n    if (expr->op == CMC_UN_DEREF) {\n      out_lvalue = child_rvalue;\n      out_rvalue = child_rvalue;\n    } else if (expr->op == CMC_UN_ADDR) {\n      out_rvalue = child_lvalue;\n    } else {\n      out_rvalue = child_rvalue;\n    }\n  } else if (expr->kind == CMC_EXPR_INDEX) {\n    int base_lvalue;\n    int base_rvalue;\n    int index_lvalue;\n    int index_rvalue;\n    cm_expr_temps(expr->a, &base_lvalue, &base_rvalue);\n    cm_expr_temps(expr->b, &index_lvalue, &index_rvalue);\n    out_lvalue = cm_max(base_rvalue, 1 + index_rvalue);\n    out_rvalue = out_lvalue;\n  } else if (expr->kind == CMC_EXPR_MEMBER) {\n    int base_lvalue;\n    int base_rvalue;\n    cm_expr_temps(expr->a, &base_lvalue, &base_rvalue);\n    out_lvalue = base_rvalue;\n    out_rvalue = base_rvalue;\n  } else if (expr->kind == CMC_EXPR_CALL) {\n    int count;\n    int depth;\n    cmc_args_tpair(expr->args, &count, &depth);\n    out_rvalue = count + depth;\n  } else if (expr->kind == CMC_EXPR_PUTC) {\n    int child_lvalue;\n    int child_rvalue;\n    cm_expr_temps(expr->a, &child_lvalue, &child_rvalue);\n    out_rvalue = child_rvalue;\n  } else if (expr->kind == CMC_EXPR_PUTI) {\n    int child_lvalue;\n    int child_rvalue;\n    cm_expr_temps(expr->a, &child_lvalue, &child_rvalue);\n    out_rvalue = child_rvalue;\n  } else if (expr->kind == CMC_EXPR_EXIT) {\n    int child_lvalue;\n    int child_rvalue;\n    cm_expr_temps(expr->a, &child_lvalue, &child_rvalue);\n    out_rvalue = child_rvalue;\n  } else if (expr->kind == CMC_EXPR_CONST) {\n  } else if (expr->kind == CMC_EXPR_STRING) {\n  } else if (expr->kind == CMC_EXPR_VAR) {\n  } else if (expr->kind == CMC_EXPR_SIZEOF) {\n  } else if (expr->kind == CMC_EXPR_GETC) {\n  } else {\n  }\n  *lvalue = out_lvalue;\n  *rvalue = out_rvalue;\n}\n"
+  },
+  {
+    "name": "cm_expr_rtemps",
+    "prototype": false,
+    "source_span": [
+      4911,
+      4925
+    ],
+    "specification": [
+      [
+        4912,
+        4912
+      ],
+      [
+        4913,
+        4915
+      ],
+      [
+        4916,
+        4919
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [],
+    "runtime": "static int cm_expr_rtemps(struct cm_expr *expr)\n{\n  int lvalue;\n  int rvalue;\n  cm_expr_temps(expr, &lvalue, &rvalue);\n  return rvalue;\n}\n"
+  },
+  {
+    "name": "cmc_stmt_temps",
+    "prototype": false,
+    "source_span": [
+      4927,
+      5587
+    ],
+    "specification": [
+      [
+        4928,
+        4928
+      ],
+      [
+        4929,
+        4931
+      ],
+      [
+        4932,
+        4937
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        4939,
+        4943
+      ],
+      [
+        4946,
+        4967
+      ],
+      [
+        4969,
+        5001
+      ],
+      [
+        5003,
+        5026
+      ],
+      [
+        5028,
+        5061
+      ],
+      [
+        5063,
+        5085
+      ],
+      [
+        5087,
+        5120
+      ],
+      [
+        5122,
+        5161
+      ],
+      [
+        5165,
+        5207
+      ],
+      [
+        5209,
+        5237
+      ],
+      [
+        5239,
+        5275
+      ],
+      [
+        5277,
+        5322
+      ],
+      [
+        5328,
+        5382
+      ],
+      [
+        5384,
+        5419
+      ],
+      [
+        5423,
+        5474
+      ],
+      [
+        5477,
+        5490
+      ],
+      [
+        5493,
+        5507
+      ],
+      [
+        5510,
+        5523
+      ],
+      [
+        5526,
+        5539
+      ],
+      [
+        5542,
+        5574
+      ],
+      [
+        5576,
+        5585
+      ]
+    ],
+    "runtime": "int cmc_stmt_temps(struct cm_stmt *stmt)\n{\n  int result = 0;\n  if (stmt->kind == CMC_STMT_EXPR) {\n    result = cm_expr_rtemps(stmt->expr);\n  } else if (stmt->kind == CMC_STMT_INIT) {\n    result = cm_expr_rtemps(stmt->expr);\n  } else if (stmt->kind == CMC_STMT_RETURN) {\n    result = cm_expr_rtemps(stmt->expr);\n  } else if (stmt->kind == CMC_STMT_SEQ) {\n    int first_temps = cmc_stmt_temps(stmt->a);\n    int second_temps = cmc_stmt_temps(stmt->b);\n    result = cm_max(first_temps, second_temps);\n  } else if (stmt->kind == CMC_STMT_BLOCK) {\n    result = cmc_stmt_temps(stmt->a);\n  } else if (stmt->kind == CMC_STMT_IF) {\n    int guard_temps = cm_expr_rtemps(stmt->expr);\n    int yes_temps = cmc_stmt_temps(stmt->a);\n    int no_temps = cmc_stmt_temps(stmt->b);\n    int branch_temps = cm_max(yes_temps, no_temps);\n    result = cm_max(guard_temps, branch_temps);\n  } else if (stmt->kind == CMC_STMT_WHILE) {\n    int guard_temps = cm_expr_rtemps(stmt->expr);\n    int body_temps = cmc_stmt_temps(stmt->a);\n    result = cm_max(guard_temps, body_temps);\n  } else if (stmt->kind == CMC_STMT_SKIP) {\n    result = 0;\n  } else if (stmt->kind == CMC_STMT_DECL) {\n    result = 0;\n  } else if (stmt->kind == CMC_STMT_BREAK) {\n    result = 0;\n  } else if (stmt->kind == CMC_STMT_CONTINUE) {\n    result = 0;\n  } else {\n    result = 0;\n  }\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_frame_size",
+    "prototype": false,
+    "source_span": [
+      5589,
+      5662
+    ],
+    "specification": [
+      [
+        5590,
+        5592
+      ],
+      [
+        5593,
+        5605
+      ],
+      [
+        5606,
+        5620
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        5623,
+        5627
+      ],
+      [
+        5629,
+        5633
+      ],
+      [
+        5635,
+        5660
+      ]
+    ],
+    "runtime": "long long cmc_frame_size(struct cm_function *fn)\n{\n  long long params_size = cmc_slots_size(fn->params);\n  long long locals_size = cmc_slots_size(fn->locals);\n  int temps = cmc_stmt_temps(fn->body);\n  return 8 + params_size + locals_size + 8LL * temps;\n}\n"
+  },
+  {
+    "name": "cmc_param_offset",
+    "prototype": false,
+    "source_span": [
+      5664,
+      5693
+    ],
+    "specification": [
+      [
+        5665,
+        5665
+      ],
+      [
+        5666,
+        5670
+      ],
+      [
+        5671,
+        5676
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        5679,
+        5691
+      ]
+    ],
+    "runtime": "long long cmc_param_offset(struct cm_function *fn, int slot)\n{\n  long long prefix = cmc_slots_prefix(fn->params, slot);\n  return 8 + prefix;\n}\n"
+  },
+  {
+    "name": "cmc_local_offset",
+    "prototype": false,
+    "source_span": [
+      5695,
+      5744
+    ],
+    "specification": [
+      [
+        5696,
+        5697
+      ],
+      [
+        5698,
+        5705
+      ],
+      [
+        5706,
+        5715
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        5718,
+        5722
+      ],
+      [
+        5724,
+        5742
+      ]
+    ],
+    "runtime": "long long cmc_local_offset(struct cm_function *fn, int slot)\n{\n  long long params_size = cmc_slots_size(fn->params);\n  long long prefix = cmc_slots_prefix(fn->locals, slot);\n  return 8 + params_size + prefix;\n}\n"
+  },
+  {
+    "name": "cmc_temp_offset",
+    "prototype": false,
+    "source_span": [
+      5746,
+      5806
+    ],
+    "specification": [
+      [
+        5747,
+        5748
+      ],
+      [
+        5749,
+        5758
+      ],
+      [
+        5759,
+        5770
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        5773,
+        5777
+      ],
+      [
+        5779,
+        5804
+      ]
+    ],
+    "runtime": "long long cmc_temp_offset(struct cm_function *fn, int temp)\n{\n  long long params_size = cmc_slots_size(fn->params);\n  long long locals_size = cmc_slots_size(fn->locals);\n  return 8 + params_size + locals_size + 8LL * temp;\n}\n"
+  },
+  {
+    "name": "cm_normalize_count",
+    "prototype": false,
+    "source_span": [
+      5808,
+      5832
+    ],
+    "specification": [
+      [
+        5809,
+        5809
+      ],
+      [
+        5810,
+        5811
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        5816,
+        5821
+      ],
+      [
+        5824,
+        5829
+      ]
+    ],
+    "runtime": "int cm_normalize_count(int ty)\n{\n  int result;\n  if (ty == CMC_TYPE_CHAR) {\n    result = 6;\n  } else {\n    result = 0;\n  }\n  return result;\n}\n"
+  }
+]

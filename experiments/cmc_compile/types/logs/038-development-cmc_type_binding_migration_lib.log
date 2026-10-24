@@ -1,0 +1,46 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.345 secs (1.189u,0.081s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 124 - 145 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 146 - 171 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 172 - 299 [Lemma~cm_source_global_at_vali...] 0.001 secs (0.u,0.s)
+Chars 300 - 306 [Proof.] 0. secs (0.u,0.s)
+Chars 307 - 454 [(intros~[L~U];~unfold~cm_sourc...] 0.001 secs (0.001u,0.s)
+Chars 455 - 459 [Qed.] 0. secs (0.u,0.s)
+Chars 460 - 587 [Lemma~cm_source_struct_at_vali...] 0. secs (0.u,0.s)
+Chars 588 - 594 [Proof.] 0. secs (0.u,0.s)
+Chars 595 - 742 [(intros~[L~U];~unfold~cm_sourc...] 0. secs (0.u,0.s)
+Chars 743 - 747 [Qed.] 0. secs (0.u,0.s)
+Chars 748 - 1100 [Lemma~cm_binding_pointer_type~...] 0. secs (0.u,0.s)
+Chars 1101 - 1107 [Proof.] 0. secs (0.u,0.s)
+Chars 1109 - 1250 [(intros~B~OK;~unfold~cm_bindin...] 0.003 secs (0.003u,0.s)
+Chars 1252 - 1443 [(destruct~B~as~[[->~B]|~[[->~B...] 0.022 secs (0.022u,0.s)
+Chars 1444 - 1448 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 1449 - 1922 [Lemma~cm_binding_output_array~...] 0. secs (0.u,0.s)
+Chars 1923 - 1929 [Proof.] 0. secs (0.u,0.s)
+Chars 1931 - 2228 [(intros~[_~[[_~PARAMS]~_]]~B;~...] 0.002 secs (0.002u,0.s)
+Chars 2230 - 2231 [-] 0. secs (0.u,0.s)
+Chars 2232 - 2318 [(destruct~(cm_global_count~(cm...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_binding_migration_lib.v", line 26, characters 77-88:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid, slot : Z
+ty : cm_type
+PARAMS :
+  forall i : Z,
+  0 <= i < Zlength (cm_function_params (cm_source_function_at sp fid p)) ->
+  cm_slot_count
+    (cm_slot_at i (cm_function_params (cm_source_function_at sp fid p))) = 0
+B : 0 <= slot < Zlength (cm_program_globals p)
+Unable to unify
+ "if
+   negb
+     match cm_global_count (cm_global_at slot (cm_program_globals p)) with
+     | 0 => true
+     | _ => false
+     end
+  then cm_global_ty (cm_global_at slot (cm_program_globals p))
+  else CMPtrTy (cm_global_ty (cm_global_at slot (cm_program_globals p)))"
+with "CMPtrTy (cm_global_ty (cm_global_at slot (cm_program_globals p)))".
+

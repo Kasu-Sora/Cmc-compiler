@@ -1,0 +1,52 @@
+{
+  "groups": [
+    {
+      "id": "copy-step",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_copy_bytes_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_copy_bytes_entail_wit_2_split_goal_spatial": "The sole resource on each side is the initialized destination segment. From PreH1, PreH3 and PreH5 obtain 0 <= index < Zlength bytes. Apply standard sublist concatenation and singleton-sublist facts to show sublist 0 (index+1) bytes = sublist 0 index bytes ++ [Znth index bytes 0]. Normalize list append associativity and (cursor_pre+index)+1 = cursor_pre+(index+1), then close the identical segment entailment by reflexivity/cancellation. There are no existential witnesses or extra heap resources; no new helper is expected."
+          }
+        }
+      ]
+    },
+    {
+      "id": "copy-entry",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_copy_bytes_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_copy_bytes_entail_wit_1_split_goal_1": "Introduce the quantified premises. Unfold cmc_uint8_buffer_nonnull in PreH7. Its bytes=[] branch contradicts Zlength bytes=length_pre and length_pre<>0 (PreH3 and PreH1); its other branch supplies source_pre<>0. Lift this pure consequence under the existing destination segment using the separation-logic pure-introduction rule. No spatial resource must be constructed and there are no existential witnesses.",
+            "proof_of_cmc_copy_bytes_entail_wit_1_split_goal_spatial": "Both sides contain only the destination prefix segment. Rewrite sublist 0 0 bytes to [], append with [] to prefix, and cursor_pre+0 to cursor_pre; close the identical-resource entailment. No additional premises, heap splitting, or existential instantiations are needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "copy-returns",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_copy_bytes_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_copy_bytes_return_wit_1_split_goal_spatial": "From length_pre=0 and Zlength bytes=length_pre (PreH1 and PreH3), derive bytes=[] using the standard zero-length fact, or list case analysis with nonnegative tail length. Substitute length_pre and bytes, normalize prefix++[] and cursor_pre+0, then cancel the identical destination prefix segment. No existential or other spatial resource appears."
+          }
+        },
+        {
+          "name": "proof_of_cmc_copy_bytes_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_copy_bytes_return_wit_2_split_goal_1": "Unfold cmc_uint8_buffer_nonnull, choose its source_pre<>0 disjunct supplied by PreH4, and introduce that pure fact under the destination segment. There is no existential witness and no resource transformation.",
+            "proof_of_cmc_copy_bytes_return_wit_2_split_goal_spatial": "PreH1 and PreH6 imply index=length_pre. Combine this with PreH3 to rewrite sublist 0 index bytes as the full list bytes. Substitute the equal endpoints and cancel the identical destination segment. No source-buffer or suffix resource needs reconstruction in this split goal, and there are no existential witnesses."
+          }
+        }
+      ]
+    }
+  ]
+}

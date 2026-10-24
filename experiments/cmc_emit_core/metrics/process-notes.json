@@ -1,0 +1,246 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_source_effort": "unknown; no invented historical hours",
+  "public_reuse": "Frozen layout/counts/copy/function-pc-total libraries; new emitter models and lemmas counted separately",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "annotation_development": {
+    "attempts": 1,
+    "design_checks": 2,
+    "design_checks_passed": 2,
+    "symexec_checks": 2,
+    "symexec_failed": 0,
+    "post_symexec_library_checks": 2,
+    "post_symexec_library_checks_passed": 2,
+    "public_definitions_at_annotation": 16,
+    "public_lemmas_at_annotation": 0,
+    "repairs": [
+      "Read-only generated-VC review found loss of char/nonchar model facts at full Assert boundaries; preserve these derived facts explicitly without changing function contracts"
+    ],
+    "owner_report": "annotation-attempts/annotation-attempt1/agent_output.md"
+  },
+  "annotation_acceptance": {
+    "status": "accepted",
+    "checks": {
+      "vc_comparisons": {
+        "status": "passed",
+        "comparison_count": 0,
+        "provable_count": 0,
+        "statements": []
+      },
+      "pre_symexec_formal_case_lib_coqc": {
+        "status": "passed",
+        "returncode": 0
+      },
+      "symexec": {
+        "status": "passed",
+        "returncode": 0,
+        "reused_owner_generation": true,
+        "owner_generation_receipt": {
+          "recorded_at": "2026-10-16T06:22:25.373473Z",
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "elapsed_seconds": 0.311
+        }
+      },
+      "formal_case_lib_contract": {
+        "status": "passed",
+        "skipped": false,
+        "errors": []
+      },
+      "formal_case_lib_dune": {
+        "status": "passed",
+        "build_mode": "makefile",
+        "target": "Rocq/examples/QCP_demos_human/cmc_emit_core_migration_lib.vo",
+        "returncode": 0,
+        "base_artifact_count": 149,
+        "current_source_count": 1,
+        "rebuilt_count": 0,
+        "dependency_metrics": {
+          "status": "resolved",
+          "strategy": "breadth-batched-coqdep",
+          "batch_count": 5,
+          "coqdep_process_count": 5,
+          "node_count": 150,
+          "source_count": 150,
+          "elapsed_seconds": 7.760831
+        },
+        "current_cleanup": {
+          "status": "passed",
+          "removed_count": 0,
+          "first_removed": null
+        },
+        "make_seconds": 0.00899,
+        "elapsed_seconds": 7.97591
+      },
+      "formal_case_lib_coqc": {
+        "status": "passed",
+        "returncode": 0
+      },
+      "clean_output_freshness": {
+        "status": "passed",
+        "interrupted_output_recovery": {
+          "status": "not-needed",
+          "removed_entry_count": 0,
+          "removed_zero_byte_temp_count": 0
+        }
+      }
+    }
+  },
+  "vc_checking": {
+    "top_level_vcs": 50,
+    "no_split_vcs": 3,
+    "generated_splits": 54,
+    "structural_blockers": 0,
+    "status": "accepted",
+    "transport_interruptions": 2,
+    "recovery": "Resume same claimed owner; no formal state edits or new attempt",
+    "groups": 11,
+    "aggressive_parents": 47,
+    "whole_goal_parents": 3,
+    "report_format_repairs": 0,
+    "planned_public_helpers": 4
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 11,
+    "planned_groups": 11,
+    "status": "complete"
+  },
+  "proof_development": {
+    "group_development_checks": {
+      "raw_emitter": {
+        "development_checks": 5,
+        "development_failed": 4,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "new_helpers": 0
+      },
+      "typed_branches": {
+        "development_checks": 0,
+        "exact_checks": 3,
+        "exact_failed": 2,
+        "exact_passed": 1,
+        "debug_checks": 2,
+        "new_helpers": 1
+      },
+      "temp_context": {
+        "development_checks": 5,
+        "development_failed": 4,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "new_helpers": 3
+      },
+      "emit_plan": {
+        "development_checks": 3,
+        "development_failed": 2,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "debug_checks": 1,
+        "new_helpers": 0,
+        "repairs": [
+          "Remove redundant tactics after spatial preprocessing",
+          "Reorder Goal_apply branches",
+          "Use length_map instead of deprecated map_length"
+        ]
+      },
+      "typed_results": {
+        "development_checks": 5,
+        "development_failed": 4,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "debug_checks": 3,
+        "new_helpers": 0,
+        "repairs": [
+          "Cancellation arguments",
+          "Non-character fragment reduction",
+          "Explicit load/store unfolding"
+        ]
+      },
+      "fp_address": {
+        "development_checks": 0,
+        "exact_checks": 3,
+        "exact_failed": 2,
+        "exact_passed": 1,
+        "debug_checks": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Remove redundant tactics after preprocessing had closed goals"
+        ]
+      },
+      "normalize_constants": {
+        "development_checks": 0,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "exact_failed": 0,
+        "debug_checks": 0,
+        "new_helpers": 0
+      },
+      "binary_comparisons": {
+        "development_checks": 0,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "exact_failed": 0,
+        "debug_checks": 0,
+        "new_helpers": 0
+      },
+      "binary_arithmetic": {
+        "development_checks": 0,
+        "exact_checks": 1,
+        "exact_passed": 1,
+        "exact_failed": 0,
+        "debug_checks": 0,
+        "new_helpers": 0
+      },
+      "temp_results": {
+        "development_checks": 1,
+        "development_passed": 1,
+        "development_failed": 0,
+        "exact_checks": 0,
+        "debug_checks": 0,
+        "new_helpers": 0
+      },
+      "memory_constants": {
+        "development_checks": 1,
+        "development_passed": 1,
+        "development_failed": 0,
+        "exact_checks": 0,
+        "debug_checks": 0,
+        "new_helpers": 0
+      }
+    },
+    "owner_check_totals": {
+      "development_checks": 20,
+      "development_failed": 14,
+      "exact_checks": 13,
+      "exact_failed": 4,
+      "debug_checks": 6,
+      "new_helpers": 4
+    },
+    "accounting_source": "Owner messages/reports; exact controller acceptance checks counted separately",
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 11,
+    "accepted_group_attempts": {
+      "temp_context": 1,
+      "raw_emitter": 1,
+      "typed_branches": 1,
+      "emit_plan": 1,
+      "typed_results": 1,
+      "temp_results": 1,
+      "fp_address": 1,
+      "normalize_constants": 1,
+      "memory_constants": 1,
+      "binary_comparisons": 1,
+      "binary_arithmetic": 1
+    }
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T05:08:53.824059Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-17T05:08:53.831314Z"
+  }
+}

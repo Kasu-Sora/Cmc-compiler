@@ -1,0 +1,148 @@
+[
+  {
+    "name": "cm_emit_binding_address",
+    "prototype": false,
+    "source_span": [
+      95,
+      257
+    ],
+    "specification": [
+      [
+        99,
+        103
+      ],
+      [
+        104,
+        120
+      ],
+      [
+        121,
+        135
+      ]
+    ],
+    "annotation": [
+      [
+        153,
+        153
+      ],
+      [
+        172,
+        172
+      ],
+      [
+        172,
+        172
+      ],
+      [
+        188,
+        188
+      ],
+      [
+        189,
+        189
+      ],
+      [
+        209,
+        209
+      ],
+      [
+        224,
+        224
+      ],
+      [
+        242,
+        242
+      ]
+    ],
+    "inline_proof": [
+      [
+        137,
+        147
+      ],
+      [
+        149,
+        152
+      ],
+      [
+        155,
+        171
+      ],
+      [
+        174,
+        186
+      ],
+      [
+        191,
+        208
+      ],
+      [
+        211,
+        222
+      ],
+      [
+        226,
+        241
+      ],
+      [
+        244,
+        255
+      ]
+    ],
+    "runtime": "void cm_emit_binding_address(struct cm_program *program,\n                             struct cm_function *fn,\n                             int scope, int slot,\n                             struct cm_emitter *emitter)\n{\n  if (scope == CMC_BIND_GLOBAL) {\n    long long address = cmc_global_address(program->globals, slot);\n    cm_emit_resolved(emitter, CMC_OP_PUSH, address);\n  } else if (scope == CMC_BIND_LOCAL) {\n    long long offset = cmc_local_offset(fn, slot);\n    cm_emit_resolved_fp_address(emitter, offset);\n  } else {\n    long long offset = cmc_param_offset(fn, slot);\n    cm_emit_resolved_fp_address(emitter, offset);\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_binding_address_plan",
+    "prototype": false,
+    "source_span": [
+      259,
+      316
+    ],
+    "specification": [
+      [
+        263,
+        268
+      ],
+      [
+        269,
+        283
+      ],
+      [
+        284,
+        298
+      ]
+    ],
+    "annotation": [
+      [
+        305,
+        305
+      ],
+      [
+        306,
+        306
+      ],
+      [
+        307,
+        307
+      ],
+      [
+        308,
+        308
+      ],
+      [
+        309,
+        309
+      ]
+    ],
+    "inline_proof": [
+      [
+        300,
+        304
+      ],
+      [
+        311,
+        315
+      ]
+    ],
+    "runtime": "void cm_emit_binding_address_plan(struct cm_program *program,\n                                  struct cm_function *fn,\n                                  int scope, int slot,\n                                  struct cm_emitter *emitter)\n{\n  cm_emit_binding_address(program, fn, scope, slot, emitter);\n}\n"
+  }
+]

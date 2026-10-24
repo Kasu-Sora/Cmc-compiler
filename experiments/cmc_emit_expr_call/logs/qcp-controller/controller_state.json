@@ -1,0 +1,1223 @@
+{
+  "generation": 132,
+  "run_id": "cmc_emit_expr_call_migration-20261018170809",
+  "case": "cmc_emit_expr_call_migration",
+  "phase": "done",
+  "main_root": "/Users/nizitong/QCP/qcp-binary-democases",
+  "run_root": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809",
+  "report_root": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809",
+  "target_files": {
+    "c_file": "QCP_examples/QCP_demos_human/cmc_emit_expr_call_migration.c",
+    "formal_directory": "Rocq/examples/QCP_demos_human",
+    "formal_case_lib": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v",
+    "goal_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal.v",
+    "proof_auto_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_auto.v",
+    "proof_manual_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v",
+    "goal_check_file": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal_check.v",
+    "case_name": "cmc_emit_expr_call_migration",
+    "active_case_theory": "SimpleC.EE.QCP_demos_human"
+  },
+  "public_helper_lemma_lib": {
+    "path": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/public_helper_lemma_lib.v",
+    "sha256": "b1d31fddd8496bd3295535368ad88653df39afb6fa43239403873002298cde82",
+    "declaration_count": 5,
+    "helper_count": 5
+  },
+  "problem_context": {
+    "problem_statement": "Migrate ENTIRE runtime file /Users/nizitong/cmc/cmc_concrete_emit_expr_call.c C*/HOL -> QCP/Rocq. Exactly 3 runtime bodies: static cm_emit_args_reload_plan, static cm_emit_args_store_plan, cm_emit_call_expr; 46 runtime physical lines. Frozen source, extracted runtime and reused dependency snapshots: /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_expr_call/baseline. Read full original .c/.h plus exact source model definitions. No user QCP formal spec supplied. Preserve runtime tokens and ABI and every original pure fact/resource in pre/post. Never change earlier verified files, strengthen inputs or weaken postconditions.\n\nPreserve all source bounds including slot, scratch, temp, temp_limit, code pc/end, temp_offset; wf/typed/count facts; total function lookup with existing cm_lookup_policy/cm_codegen_obligations; slots/member/struct/global/string safety and global size; exact code prefix consumption/append with arbitrary tail; full program/function/expression/argument resources. call covers source kind8 and both lvalue branches including empty code for lvalue. No added fid range or restriction to simple argument expressions. Inspect all three exact source contracts, source call header's cm_emit_expr prototype and .c/.h agreement.\n\nReuse prior layout/counts/count-context/plan/ast/leaf/var/simple models and lemmas wherever applicable. Reproduce used previously verified helpers' BODY contracts (not possibly weaker headers), preserve transitive libs unchanged; no imports of previous manual/auto. New general expression code equations may be necessary: current libs do NOT implement general cm_emit_expr_pair/cm_expr_code_for. Translate required mathematical source semantics faithfully (including recursive argument store/reload), not uninterpreted emitter outputs, dummy values or new axioms. If full model closure is necessary include and measure it explicitly. Source .c uses an external cm_emit_expr prototype whose implementation is not yet migrated: retain this EXACT original module dependency and explicitly report it as a pending implementation proof, not a freshly verified helper. This modular contract assumption already exists in source and must not be expanded. The requested file's three bodies must actually be verified; do not pretend the general recursive emitter implementation was verified.\n\nCreate precise source-to-target model/contract mapping and identify all new shared definitions/lemmas vs source-private proof helpers. Preserve existing lookup/codegen parameterization without adding arbitrary codegen assumptions. Logical alternative views must have exact domain coverage. No Admitted/Axiom/Parameter in new handwritten model/proof. Record design/symexec/post-library attempts and repairs in agent_output. Annotation owner controls C/lib/plan; manual read-only. Main replays C*, audits semantic equivalence and measures final artifacts, updates skill only after controller done. QCP main must use controller actions and role boundaries."
+  },
+  "formal_case_lib_policy": "create",
+  "spec_freeze": null,
+  "run_control": {
+    "status": "active",
+    "pause_count": 0,
+    "updated_at": "2026-10-18T09:08:09.706880Z"
+  },
+  "symexec_profile": {
+    "name": "recursive-large",
+    "timeout_seconds": 7200,
+    "heartbeat_seconds": 30,
+    "poll_interval_seconds": 5
+  },
+  "max_compact_attempts": 3,
+  "max_witnesses_per_group": 12,
+  "max_parallel_group_workers": 3,
+  "dune_preparation": {
+    "status": "passed",
+    "build_mode": "makefile",
+    "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal_check.vo",
+    "build_root": ".",
+    "make_executable": "/usr/bin/make",
+    "coqc_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqc",
+    "coqdep_executable": "/Users/nizitong/.opam/qcp-8.20.1/bin/coqdep",
+    "run_makefile": "verification_runs/cmc_emit_expr_call_migration-20261018170809/Makefile",
+    "run_makefile_sha256": "b44c06e87024983501e8e6a48c4afa1f096a625c406887010c8af7b94eeb1d19",
+    "snapshot": "verification_runs/cmc_emit_expr_call_migration-20261018170809/makefile_dependency_snapshot.json",
+    "snapshot_sha256": "90f46bfdf224771d9d5b73048372adfcae85886c53fa6953207cba384ef7a468",
+    "dependency_digest": "28dca1c703f119a9bcd55eedb4784eff16e1220bcfe8186ee01d9403088f9971",
+    "source_digest": "c249c9a3f27b935f00cbf7e9b022b15d55589e49d3b43544465986fc68e3712d",
+    "artifact_digest": "d0d7c139a869c24c3f6e2ba12471e0bbfd991ce8dba371919cb45a7f901beabb",
+    "configuration_digest": "83db48906dfbb7805fb46e0b33b5cfb55e4c16ae9c74fd38557d6ef3f04e0d98",
+    "base_artifact_count": 158,
+    "current_source_count": 5,
+    "rebuilt_count": 0,
+    "dependency_metrics": {
+      "status": "resolved",
+      "strategy": "breadth-batched-coqdep",
+      "batch_count": 11,
+      "coqdep_process_count": 11,
+      "node_count": 163,
+      "source_count": 163,
+      "elapsed_seconds": 12.693878
+    },
+    "current_cleanup": {
+      "status": "passed",
+      "removed_count": 0,
+      "first_removed": null
+    },
+    "make_seconds": 0.007805,
+    "returncode": 0,
+    "elapsed_seconds": 12.882447
+  },
+  "rounds": {
+    "cmc_emit_expr_call_migration-annotation-r1": {
+      "phase": "annotation",
+      "current_attempt": "cmc_emit_expr_call_migration-annotation-r1-attempt-1"
+    },
+    "cmc_emit_expr_call_migration-vc-checking-r1": {
+      "phase": "vc-checking",
+      "current_attempt": "cmc_emit_expr_call_migration-vc-checking-r1-attempt-1"
+    },
+    "cmc_emit_expr_call_migration-vc-proving-r1": {
+      "phase": "vc-proving-preparing",
+      "current_attempt": "cmc_emit_expr_call_migration-vc-proving-r1"
+    }
+  },
+  "attempts": {
+    "cmc_emit_expr_call_migration-annotation-r1-attempt-1": {
+      "attempt_id": "cmc_emit_expr_call_migration-annotation-r1-attempt-1",
+      "round": "cmc_emit_expr_call_migration-annotation-r1",
+      "phase": "annotation",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/annotation-attempts/annotation-attempt1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/annotation-attempts/annotation-attempt1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/annotation-attempts/annotation-attempt1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/annotation-attempts/annotation-attempt1/agent_output.md",
+      "allowed_write_paths": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_call_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal_check.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-18T09:08:25.204694Z",
+      "plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/annotation-attempts/annotation-attempt1/annotation_plan.json",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/annotation_history/annotation-attempt1",
+      "annotation_iteration": 1,
+      "failed_vcs": [],
+      "feedback_sources": [],
+      "retry_reason": null,
+      "before_snapshot": {
+        "digest": "3a2f157d26f672e654904dc02a1ab5debace49854c83aa6d4ae3b14b205969ba",
+        "file_count": 2,
+        "missing_count": 4
+      },
+      "input_sha256": "a2bbc89d8ec46ad878e1ea5189f200a9eda67e786154c6792fa1a69b1f22b600",
+      "owner": "annotation/cmc_emit_expr_call_migration-20261018170809",
+      "started_at": "2026-10-18T09:08:38.271698Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_call_migration-annotation-r1-attempt-1",
+        "kind": "spawn-annotation-agent",
+        "owner": "annotation/cmc_emit_expr_call_migration-20261018170809",
+        "claimed_at": "2026-10-18T09:08:38.271698Z",
+        "finalized_at": "2026-10-18T09:33:19.034639Z"
+      },
+      "timing": {
+        "formal-case-lib-design-coq-check": [
+          {
+            "started_at": "2026-10-18T09:12:09.201115Z",
+            "finished_at": "2026-10-18T09:12:10.680451Z",
+            "elapsed_seconds": 1.479336
+          },
+          {
+            "started_at": "2026-10-18T09:14:10.086653Z",
+            "finished_at": "2026-10-18T09:14:11.601286Z",
+            "elapsed_seconds": 1.514633
+          },
+          {
+            "started_at": "2026-10-18T09:21:30.309614Z",
+            "finished_at": "2026-10-18T09:21:31.954763Z",
+            "elapsed_seconds": 1.645149
+          },
+          {
+            "started_at": "2026-10-18T09:22:24.858490Z",
+            "finished_at": "2026-10-18T09:22:26.406520Z",
+            "elapsed_seconds": 1.54803
+          },
+          {
+            "started_at": "2026-10-18T09:23:50.852080Z",
+            "finished_at": "2026-10-18T09:23:52.403340Z",
+            "elapsed_seconds": 1.55126
+          },
+          {
+            "started_at": "2026-10-18T09:24:34.752068Z",
+            "finished_at": "2026-10-18T09:24:36.271144Z",
+            "elapsed_seconds": 1.519076
+          },
+          {
+            "started_at": "2026-10-18T09:25:32.390146Z",
+            "finished_at": "2026-10-18T09:25:33.968275Z",
+            "elapsed_seconds": 1.578129
+          },
+          {
+            "started_at": "2026-10-18T09:26:12.514105Z",
+            "finished_at": "2026-10-18T09:26:13.994625Z",
+            "elapsed_seconds": 1.48052
+          },
+          {
+            "started_at": "2026-10-18T09:27:37.350463Z",
+            "finished_at": "2026-10-18T09:27:38.936439Z",
+            "elapsed_seconds": 1.585976
+          },
+          {
+            "started_at": "2026-10-18T09:28:33.800386Z",
+            "finished_at": "2026-10-18T09:28:35.347126Z",
+            "elapsed_seconds": 1.54674
+          }
+        ],
+        "owner-generation": [
+          {
+            "started_at": "2026-10-18T09:14:29.290062Z",
+            "finished_at": "2026-10-18T09:14:29.305062Z",
+            "elapsed_seconds": 0.015
+          },
+          {
+            "started_at": "2026-10-18T09:14:47.192859Z",
+            "finished_at": "2026-10-18T09:14:47.204859Z",
+            "elapsed_seconds": 0.012
+          },
+          {
+            "started_at": "2026-10-18T09:15:28.647007Z",
+            "finished_at": "2026-10-18T09:15:28.665007Z",
+            "elapsed_seconds": 0.018
+          },
+          {
+            "started_at": "2026-10-18T09:15:58.060153Z",
+            "finished_at": "2026-10-18T09:15:58.085153Z",
+            "elapsed_seconds": 0.025
+          },
+          {
+            "started_at": "2026-10-18T09:17:10.254761Z",
+            "finished_at": "2026-10-18T09:17:11.823761Z",
+            "elapsed_seconds": 1.569
+          },
+          {
+            "started_at": "2026-10-18T09:18:20.538700Z",
+            "finished_at": "2026-10-18T09:18:22.937700Z",
+            "elapsed_seconds": 2.399
+          },
+          {
+            "started_at": "2026-10-18T09:20:00.627690Z",
+            "finished_at": "2026-10-18T09:20:04.934690Z",
+            "elapsed_seconds": 4.307
+          },
+          {
+            "started_at": "2026-10-18T09:29:28.600716Z",
+            "finished_at": "2026-10-18T09:29:32.891716Z",
+            "elapsed_seconds": 4.291
+          }
+        ],
+        "formal-case-lib-coq-check": [
+          {
+            "started_at": "2026-10-18T09:30:15.791892Z",
+            "finished_at": "2026-10-18T09:30:15.861927Z",
+            "elapsed_seconds": 0.070035
+          },
+          {
+            "started_at": "2026-10-18T09:34:19.107388Z",
+            "finished_at": "2026-10-18T09:34:19.176870Z",
+            "elapsed_seconds": 0.069482
+          }
+        ],
+        "controller-validation": [
+          {
+            "started_at": "2026-10-18T09:33:19.011826Z",
+            "finished_at": "2026-10-18T09:33:19.079331Z",
+            "elapsed_seconds": 0.063926
+          }
+        ],
+        "clean-replay": [
+          {
+            "started_at": "2026-10-18T09:34:19.182054Z",
+            "finished_at": "2026-10-18T09:34:23.565054Z",
+            "elapsed_seconds": 4.383
+          }
+        ],
+        "controller-acceptance-check": [
+          {
+            "started_at": "2026-10-18T09:33:57.782287Z",
+            "finished_at": "2026-10-18T09:34:23.581859Z",
+            "elapsed_seconds": 25.794205
+          }
+        ],
+        "dune-build": [
+          {
+            "started_at": "2026-10-18T09:34:54.380063Z",
+            "finished_at": "2026-10-18T09:35:07.316458Z",
+            "elapsed_seconds": 12.930798
+          }
+        ]
+      },
+      "owner_symexec_invocations": [
+        {
+          "sequence": 1,
+          "recorded_at": "2026-10-18T09:14:29.305055Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "6493df52261cfe366e835d3e1fe46d3235ddfc931bc6d4c5c7265a1ece840cd2",
+          "elapsed_seconds": 0.015,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 2,
+          "recorded_at": "2026-10-18T09:14:47.204849Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "158888e684e75cc9da39e664e0f7465cd9680c5aac7faf94043ee230dad66a04",
+          "elapsed_seconds": 0.012,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 3,
+          "recorded_at": "2026-10-18T09:15:28.664999Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "fd383e8f6f6d4d9e54b0206859b94c19cea652bf23721c696f0638513ef56ece",
+          "elapsed_seconds": 0.018,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 4,
+          "recorded_at": "2026-10-18T09:15:58.085141Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "f7bb6cd1e6e7fd75e615d9d167c8f09d1c3c48aba2408b6c2646cfbc108ec092",
+          "elapsed_seconds": 0.025,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 5,
+          "recorded_at": "2026-10-18T09:17:11.823753Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "5ec5dfcd19e5de4fb1baf68bd71b39d6a7e807964257e701e6314e7efcdfd1f2",
+          "elapsed_seconds": 1.569,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 6,
+          "recorded_at": "2026-10-18T09:18:22.937693Z",
+          "status": "failed",
+          "returncode": 1,
+          "formal_input_digest": "79383afd9fe2723beb28cbca9761c7e32e26f7ba57339401632f9ef856920977",
+          "elapsed_seconds": 2.399,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "failure_category": "symbolic-execution",
+          "failure_kind": "symexec-error"
+        },
+        {
+          "sequence": 7,
+          "recorded_at": "2026-10-18T09:20:04.933605Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "a3934a41cf9cd009bb6dceb7238cc840e452e7a37c29627a06c3e9de448fc328",
+          "elapsed_seconds": 4.307,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0
+        },
+        {
+          "sequence": 8,
+          "recorded_at": "2026-10-18T09:29:32.890606Z",
+          "status": "passed",
+          "returncode": 0,
+          "formal_input_digest": "784d6ebda3c2df16524f057dc7eaeb78b3243d750bb4f01e4a517d23e883d832",
+          "elapsed_seconds": 4.291,
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0
+        }
+      ],
+      "owner_generation_receipt": {
+        "status": "passed",
+        "attempt_id": "cmc_emit_expr_call_migration-annotation-r1-attempt-1",
+        "round": "cmc_emit_expr_call_migration-annotation-r1",
+        "formal_input_digest": "784d6ebda3c2df16524f057dc7eaeb78b3243d750bb4f01e4a517d23e883d832",
+        "target_digests": {
+          "QCP_examples/QCP_demos_human/cmc_emit_expr_call_migration.c": "046de5dc22ba734b1e6b8b5fb85ff27bb555b1b57ad935e0fc82e253a317a5d1",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal.v": "305dbdcca1f4459bb7591b50e79f6576f91fb0c691599e752de67b57f32c66d4",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_auto.v": "328725f738b3c3a78007256bced00450a65c7e86381a1bbd510fea5cd95019a9",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v": "c6ba8e1cf22fc81e841813e9f22dc37303560875e034c6d9b23c528933723e0d",
+          "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal_check.v": "b17e211e13440ac38abba73c148ee0fdf2ea1b6659ed0f86dc8592ec3f8fab52"
+        },
+        "performance_profile": "recursive-large",
+        "timeout_seconds": 7200.0,
+        "elapsed_seconds": 4.291,
+        "recorded_at": "2026-10-18T09:29:32.891712Z"
+      },
+      "returned_at": "2026-10-18T09:33:19.034639Z",
+      "artifact_sha256": {
+        "report": "5bdc4bb3ad85eaa994ae27ea899eaf219ba54b9a9f598282dcc0f2fecc6b7514",
+        "plan": "bb4fbca3b6484870d78ecf06c685582c92f294025846c72874686bc0f7a00df5",
+        "output": "90bd6c1ba43e2281163fc5bdfdc1efa22e0dd806017263f6b1a611ae34783c21"
+      },
+      "after_snapshot": {
+        "digest": "ccf63a88af203d77014b5c90d7fabd5f80b572723a8165e590b3824da71735f1",
+        "file_count": 6,
+        "missing_count": 0
+      },
+      "changed_files": [
+        "QCP_examples/QCP_demos_human/cmc_emit_expr_call_migration.c",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_auto.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v",
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_goal_check.v"
+      ],
+      "annotation_activity": "spec-and-annotation",
+      "finished_at": "2026-10-18T09:35:07.316458Z",
+      "main_check": {
+        "vc_comparisons": {
+          "status": "passed",
+          "comparison_count": 0,
+          "provable_count": 0,
+          "statements": []
+        },
+        "pre_symexec_formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "symexec": {
+          "status": "passed",
+          "returncode": 0,
+          "reused_owner_generation": true,
+          "owner_generation_receipt": {
+            "recorded_at": "2026-10-18T09:29:32.891712Z",
+            "performance_profile": "recursive-large",
+            "timeout_seconds": 7200.0,
+            "elapsed_seconds": 4.291
+          }
+        },
+        "formal_case_lib_contract": {
+          "status": "passed",
+          "skipped": false,
+          "errors": []
+        },
+        "formal_case_lib_dune": {
+          "status": "passed",
+          "build_mode": "makefile",
+          "target": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.vo",
+          "returncode": 0,
+          "base_artifact_count": 158,
+          "current_source_count": 1,
+          "rebuilt_count": 0,
+          "dependency_metrics": {
+            "status": "resolved",
+            "strategy": "breadth-batched-coqdep",
+            "batch_count": 9,
+            "coqdep_process_count": 9,
+            "node_count": 159,
+            "source_count": 159,
+            "elapsed_seconds": 10.483224
+          },
+          "current_cleanup": {
+            "status": "passed",
+            "removed_count": 0,
+            "first_removed": null
+          },
+          "make_seconds": 0.007967,
+          "elapsed_seconds": 10.668809
+        },
+        "formal_case_lib_coqc": {
+          "status": "passed",
+          "returncode": 0
+        },
+        "clean_output_freshness": {
+          "status": "passed",
+          "interrupted_output_recovery": {
+            "status": "not-needed",
+            "removed_entry_count": 0,
+            "removed_zero_byte_temp_count": 0
+          }
+        }
+      }
+    },
+    "cmc_emit_expr_call_migration-vc-checking-r1-attempt-1": {
+      "attempt_id": "cmc_emit_expr_call_migration-vc-checking-r1-attempt-1",
+      "round": "cmc_emit_expr_call_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-checking-r1",
+      "input": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-checking-r1/agent_input.md",
+      "report": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-checking-r1/agent_report.json",
+      "output": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-checking-r1/agent_output.md",
+      "allowed_write_paths": [
+        "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v"
+      ],
+      "compact_attempt_index": 1,
+      "created_at": "2026-10-18T09:35:33.415754Z",
+      "owner": "vc-checking/cmc_emit_expr_call_migration-vc-checking-r1-attempt-1",
+      "started_at": "2026-10-18T09:35:45.126881Z",
+      "delivery": {
+        "action_id": "spawn-cmc_emit_expr_call_migration-vc-checking-r1-attempt-1",
+        "kind": "spawn-attempt",
+        "owner": "vc-checking/cmc_emit_expr_call_migration-vc-checking-r1-attempt-1",
+        "claimed_at": "2026-10-18T09:35:45.126881Z",
+        "finalized_at": "2026-10-18T09:50:12.640219Z"
+      },
+      "timing": {
+        "controller-validation": [
+          {
+            "started_at": "2026-10-18T09:48:32.395100Z",
+            "finished_at": "2026-10-18T09:48:32.435487Z",
+            "elapsed_seconds": 0.034485
+          },
+          {
+            "started_at": "2026-10-18T09:49:17.522144Z",
+            "finished_at": "2026-10-18T09:49:17.562102Z",
+            "elapsed_seconds": 0.034341
+          },
+          {
+            "started_at": "2026-10-18T09:50:12.606800Z",
+            "finished_at": "2026-10-18T09:50:12.672811Z",
+            "elapsed_seconds": 0.060153
+          }
+        ],
+        "post-vc-checking-symexec": [
+          {
+            "started_at": "2026-10-18T09:50:31.519628Z",
+            "finished_at": "2026-10-18T09:50:35.775628Z",
+            "elapsed_seconds": 4.256
+          }
+        ],
+        "controller-plan-check": [
+          {
+            "started_at": "2026-10-18T09:50:31.481288Z",
+            "finished_at": "2026-10-18T09:50:35.806712Z",
+            "elapsed_seconds": 4.318385
+          }
+        ]
+      },
+      "returned_at": "2026-10-18T09:50:12.640219Z",
+      "artifact_sha256": {
+        "report": "7e4bbc62958a345654f4c4829ca3fcca953e2849e384b084db51ebe710215a30",
+        "output": "c58ac178a50b93c4aeab25beef0d1f7e3c52c8198caefbb1314876d5459920e6"
+      },
+      "agent_output_metrics": {
+        "bytes": 10289,
+        "lines": 102,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 21,
+        "structural_no_split_checked_first": 3,
+        "structural_definite_blockers": 0
+      },
+      "finished_at": "2026-10-18T09:50:35.806712Z",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "66ba6546b25923d7512b57af037c854065ac930fefc97cdfcf79d9df6516858b",
+      "main_check": {
+        "manual_refresh": {
+          "status": "passed",
+          "returncode": 0,
+          "timeout_seconds": 7200.0,
+          "elapsed_seconds": 4.256,
+          "performance_profile": "recursive-large"
+        }
+      }
+    },
+    "cmc_emit_expr_call_migration-vc-proving-r1": {
+      "attempt_id": "cmc_emit_expr_call_migration-vc-proving-r1",
+      "round": "cmc_emit_expr_call_migration-vc-proving-r1",
+      "phase": "vc-proving-preparing",
+      "status": "verified",
+      "directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/cmc_emit_expr_call_migration-vc-proving-r1",
+      "report_directory": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-proving-r1",
+      "base_manifest": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/cmc_emit_expr_call_migration-vc-proving-r1/base_manifest.json",
+      "group_workers_manifest": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-proving-r1/group_workers_manifest.json",
+      "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-proving-r1/proving_merged_result.json",
+      "groups": {
+        "store_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/store_bounds",
+          "started_at": "2026-10-18T09:51:12.936722Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-store_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/store_bounds",
+            "claimed_at": "2026-10-18T09:51:12.936722Z",
+            "finalized_at": "2026-10-18T09:58:31.255874Z"
+          },
+          "timing_interval_index": 0,
+          "returned_at": "2026-10-18T09:58:31.255874Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d646885c807caa8b86c65d31a617f6eb5d450aca1f2d1559706cc5eb590bfdf3",
+            "group_worker_lib": "54e667d7f6535426695a358962de8ebcf1211309299e5e40b356d984a785b3b6",
+            "output": "f50cf409fe32b763ab220d0447ac5f8e46eceeb8800d80328c630a2df29e0f90"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 2,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "d646885c807caa8b86c65d31a617f6eb5d450aca1f2d1559706cc5eb590bfdf3",
+            "group_worker_lib": "54e667d7f6535426695a358962de8ebcf1211309299e5e40b356d984a785b3b6"
+          },
+          "accepted_at": "2026-10-18T09:58:33.383076Z"
+        },
+        "call_bounds": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/call_bounds",
+          "started_at": "2026-10-18T09:51:13.047093Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-call_bounds",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/call_bounds",
+            "claimed_at": "2026-10-18T09:51:13.047093Z",
+            "finalized_at": "2026-10-18T09:55:53.196326Z"
+          },
+          "timing_interval_index": 1,
+          "returned_at": "2026-10-18T09:55:53.196326Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3dd54131e8b66596e68eb55be1e20d00ef8b14a1a081aaf4f2ec79d6a92451d8",
+            "group_worker_lib": "c3a4c4c0c4da223d011ca1d1475b31bcdbe4c0139559329f7ca42c9dca47820d"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "appended",
+            "appended_count": 3,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3dd54131e8b66596e68eb55be1e20d00ef8b14a1a081aaf4f2ec79d6a92451d8",
+            "group_worker_lib": "c3a4c4c0c4da223d011ca1d1475b31bcdbe4c0139559329f7ca42c9dca47820d"
+          },
+          "accepted_at": "2026-10-18T09:55:55.315174Z"
+        },
+        "reload_equations": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/reload_equations",
+          "started_at": "2026-10-18T09:56:21.043234Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-reload_equations",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/reload_equations",
+            "claimed_at": "2026-10-18T09:56:21.043234Z",
+            "finalized_at": "2026-10-18T09:59:29.634228Z"
+          },
+          "timing_interval_index": 3,
+          "returned_at": "2026-10-18T09:59:29.634228Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "364787771703cf9dc43771b3b4880bf1c8550c89098180e456f9f385cd6aa2c1",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "364787771703cf9dc43771b3b4880bf1c8550c89098180e456f9f385cd6aa2c1",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "accepted_at": "2026-10-18T09:59:31.461445Z"
+        },
+        "reload_representation": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/reload_representation",
+          "started_at": "2026-10-18T10:02:23.979201Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-reload_representation",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/reload_representation",
+            "claimed_at": "2026-10-18T10:02:23.979201Z",
+            "finalized_at": "2026-10-18T10:06:20.841037Z"
+          },
+          "timing_interval_index": 6,
+          "returned_at": "2026-10-18T10:06:20.841037Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7afb275bf44f625126b71b23d2c5f307dcdc5ba7ddf0330a8d8d054fa201ec7c",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "7afb275bf44f625126b71b23d2c5f307dcdc5ba7ddf0330a8d8d054fa201ec7c",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "accepted_at": "2026-10-18T10:06:23.246233Z"
+        },
+        "store_representation": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/store_representation",
+          "started_at": "2026-10-18T10:01:54.097222Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-store_representation",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/store_representation",
+            "claimed_at": "2026-10-18T10:01:54.097222Z",
+            "finalized_at": "2026-10-18T10:05:46.799912Z"
+          },
+          "timing_interval_index": 4,
+          "returned_at": "2026-10-18T10:05:46.799912Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3a123cb223cfed886c87c019cfb68358f9dd59d3d28602f55a882653a976025e",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "3a123cb223cfed886c87c019cfb68358f9dd59d3d28602f55a882653a976025e",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "accepted_at": "2026-10-18T10:05:48.677887Z"
+        },
+        "store_equations": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/store_equations",
+          "started_at": "2026-10-18T10:02:08.941809Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-store_equations",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/store_equations",
+            "claimed_at": "2026-10-18T10:02:08.941809Z",
+            "finalized_at": "2026-10-18T10:06:04.065875Z"
+          },
+          "timing_interval_index": 5,
+          "returned_at": "2026-10-18T10:06:04.065875Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "dbc3bc7afc10867b8079a6dfc57269c4bb703a099620e00c946b60c347470473",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "dbc3bc7afc10867b8079a6dfc57269c4bb703a099620e00c946b60c347470473",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "accepted_at": "2026-10-18T10:06:06.042708Z"
+        },
+        "call_equations": {
+          "status": "accepted",
+          "attempt_index": 1,
+          "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/call_equations",
+          "started_at": "2026-10-18T09:51:13.157976Z",
+          "delivery": {
+            "action_id": "spawn-cmc_emit_expr_call_migration-vc-proving-r1-call_equations",
+            "kind": "spawn-group-worker",
+            "owner": "group-worker/cmc_emit_expr_call_migration-vc-proving-r1/call_equations",
+            "claimed_at": "2026-10-18T09:51:13.157976Z",
+            "finalized_at": "2026-10-18T09:59:03.757770Z"
+          },
+          "timing_interval_index": 2,
+          "returned_at": "2026-10-18T09:59:03.757770Z",
+          "artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "b607b84ceb7a95d65fffdd7feb42fc27419c638df974350b5de3fedf1e4eb618",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "group_check": {
+            "status": "passed",
+            "returncode": 0
+          },
+          "public_helper_promotion": {
+            "status": "unchanged",
+            "appended_count": 0,
+            "skipped_count": 0,
+            "conflict_count": 0
+          },
+          "accepted_artifact_sha256": {
+            "report": "0cb87b61f0afab118ac222a0af92bc06c579959aeea208461294d16becf11b39",
+            "proof_manual": "b607b84ceb7a95d65fffdd7feb42fc27419c638df974350b5de3fedf1e4eb618",
+            "group_worker_lib": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da"
+          },
+          "accepted_at": "2026-10-18T09:59:05.618023Z"
+        }
+      },
+      "priority_group_ids": [],
+      "previous_proving_round": null,
+      "max_parallel_group_workers": 3,
+      "created_at": "2026-10-18T09:50:48.187090Z",
+      "base_manifest_sha256": "1aa6f07e5de381a0589f574a447b2b52175c2888ece401c9ca29486123aee94b",
+      "group_workers_manifest_sha256": "8c16db76b711549ac5ea2131e9200fae56a7829a61206d39c0b99b779c429edb",
+      "timing": {
+        "preparing": [
+          {
+            "started_at": "2026-10-18T09:50:58.311663Z",
+            "finished_at": "2026-10-18T09:50:58.402372Z",
+            "elapsed_seconds": 0.08317
+          }
+        ],
+        "group-work": [
+          {
+            "started_at": "2026-10-18T09:51:12.936722Z",
+            "finished_at": "2026-10-18T09:58:31.255874Z",
+            "elapsed_seconds": 438.319152
+          },
+          {
+            "started_at": "2026-10-18T09:51:13.047093Z",
+            "finished_at": "2026-10-18T09:55:53.196326Z",
+            "elapsed_seconds": 280.149233
+          },
+          {
+            "started_at": "2026-10-18T09:51:13.157976Z",
+            "finished_at": "2026-10-18T09:59:03.757770Z",
+            "elapsed_seconds": 470.599794
+          },
+          {
+            "started_at": "2026-10-18T09:56:21.043234Z",
+            "finished_at": "2026-10-18T09:59:29.634228Z",
+            "elapsed_seconds": 188.590994
+          },
+          {
+            "started_at": "2026-10-18T10:01:54.097222Z",
+            "finished_at": "2026-10-18T10:05:46.799912Z",
+            "elapsed_seconds": 232.70269
+          },
+          {
+            "started_at": "2026-10-18T10:02:08.941809Z",
+            "finished_at": "2026-10-18T10:06:04.065875Z",
+            "elapsed_seconds": 235.124066
+          },
+          {
+            "started_at": "2026-10-18T10:02:23.979201Z",
+            "finished_at": "2026-10-18T10:06:20.841037Z",
+            "elapsed_seconds": 236.861836
+          }
+        ],
+        "group-development-check": [
+          {
+            "started_at": "2026-10-18T09:53:20.467609Z",
+            "finished_at": "2026-10-18T09:53:28.117471Z",
+            "elapsed_seconds": 7.649862
+          },
+          {
+            "started_at": "2026-10-18T09:53:45.566707Z",
+            "finished_at": "2026-10-18T09:53:49.142566Z",
+            "elapsed_seconds": 3.575859
+          },
+          {
+            "started_at": "2026-10-18T09:53:41.167818Z",
+            "finished_at": "2026-10-18T09:53:49.861197Z",
+            "elapsed_seconds": 8.693379
+          },
+          {
+            "started_at": "2026-10-18T09:54:01.807842Z",
+            "finished_at": "2026-10-18T09:54:04.952867Z",
+            "elapsed_seconds": 3.145025
+          },
+          {
+            "started_at": "2026-10-18T09:54:03.939786Z",
+            "finished_at": "2026-10-18T09:54:05.826336Z",
+            "elapsed_seconds": 1.88655
+          },
+          {
+            "started_at": "2026-10-18T09:54:20.220350Z",
+            "finished_at": "2026-10-18T09:54:23.309423Z",
+            "elapsed_seconds": 3.089073
+          },
+          {
+            "started_at": "2026-10-18T09:54:25.006754Z",
+            "finished_at": "2026-10-18T09:54:26.803041Z",
+            "elapsed_seconds": 1.796287
+          },
+          {
+            "started_at": "2026-10-18T09:54:41.301656Z",
+            "finished_at": "2026-10-18T09:54:44.637305Z",
+            "elapsed_seconds": 3.335649
+          },
+          {
+            "started_at": "2026-10-18T09:54:46.025208Z",
+            "finished_at": "2026-10-18T09:54:47.839667Z",
+            "elapsed_seconds": 1.814459
+          },
+          {
+            "started_at": "2026-10-18T09:55:00.622515Z",
+            "finished_at": "2026-10-18T09:55:04.052924Z",
+            "elapsed_seconds": 3.430409
+          },
+          {
+            "started_at": "2026-10-18T09:55:17.288562Z",
+            "finished_at": "2026-10-18T09:55:20.971678Z",
+            "elapsed_seconds": 3.683116
+          },
+          {
+            "started_at": "2026-10-18T09:55:38.563694Z",
+            "finished_at": "2026-10-18T09:55:41.679453Z",
+            "elapsed_seconds": 3.115759
+          },
+          {
+            "started_at": "2026-10-18T09:56:13.582024Z",
+            "finished_at": "2026-10-18T09:56:16.934920Z",
+            "elapsed_seconds": 3.352896
+          },
+          {
+            "started_at": "2026-10-18T09:56:31.711550Z",
+            "finished_at": "2026-10-18T09:56:33.466460Z",
+            "elapsed_seconds": 1.75491
+          },
+          {
+            "started_at": "2026-10-18T09:56:34.326618Z",
+            "finished_at": "2026-10-18T09:56:37.588372Z",
+            "elapsed_seconds": 3.261754
+          },
+          {
+            "started_at": "2026-10-18T09:57:10.138113Z",
+            "finished_at": "2026-10-18T09:57:13.485981Z",
+            "elapsed_seconds": 3.347868
+          },
+          {
+            "started_at": "2026-10-18T09:57:13.077588Z",
+            "finished_at": "2026-10-18T09:57:14.985902Z",
+            "elapsed_seconds": 1.908314
+          },
+          {
+            "started_at": "2026-10-18T09:57:35.143000Z",
+            "finished_at": "2026-10-18T09:57:38.783376Z",
+            "elapsed_seconds": 3.640376
+          },
+          {
+            "started_at": "2026-10-18T09:57:40.762822Z",
+            "finished_at": "2026-10-18T09:57:43.843957Z",
+            "elapsed_seconds": 3.081135
+          },
+          {
+            "started_at": "2026-10-18T09:57:55.417481Z",
+            "finished_at": "2026-10-18T09:57:57.322411Z",
+            "elapsed_seconds": 1.90493
+          },
+          {
+            "started_at": "2026-10-18T09:57:59.081964Z",
+            "finished_at": "2026-10-18T09:58:02.785030Z",
+            "elapsed_seconds": 3.703066
+          },
+          {
+            "started_at": "2026-10-18T09:58:18.147285Z",
+            "finished_at": "2026-10-18T09:58:22.541851Z",
+            "elapsed_seconds": 4.394566
+          },
+          {
+            "started_at": "2026-10-18T09:58:39.245204Z",
+            "finished_at": "2026-10-18T09:58:41.669044Z",
+            "elapsed_seconds": 2.42384
+          },
+          {
+            "started_at": "2026-10-18T10:03:21.610351Z",
+            "finished_at": "2026-10-18T10:03:23.438793Z",
+            "elapsed_seconds": 1.828442
+          },
+          {
+            "started_at": "2026-10-18T10:03:39.450620Z",
+            "finished_at": "2026-10-18T10:03:41.794297Z",
+            "elapsed_seconds": 2.343677
+          },
+          {
+            "started_at": "2026-10-18T10:03:40.683651Z",
+            "finished_at": "2026-10-18T10:03:42.803746Z",
+            "elapsed_seconds": 2.120095
+          },
+          {
+            "started_at": "2026-10-18T10:04:00.660779Z",
+            "finished_at": "2026-10-18T10:04:02.601061Z",
+            "elapsed_seconds": 1.940282
+          },
+          {
+            "started_at": "2026-10-18T10:04:01.504080Z",
+            "finished_at": "2026-10-18T10:04:03.483513Z",
+            "elapsed_seconds": 1.979433
+          },
+          {
+            "started_at": "2026-10-18T10:04:17.956660Z",
+            "finished_at": "2026-10-18T10:04:20.619174Z",
+            "elapsed_seconds": 2.662514
+          },
+          {
+            "started_at": "2026-10-18T10:04:32.270623Z",
+            "finished_at": "2026-10-18T10:04:34.786909Z",
+            "elapsed_seconds": 2.516286
+          },
+          {
+            "started_at": "2026-10-18T10:04:36.825028Z",
+            "finished_at": "2026-10-18T10:04:39.244144Z",
+            "elapsed_seconds": 2.419116
+          },
+          {
+            "started_at": "2026-10-18T10:04:52.810834Z",
+            "finished_at": "2026-10-18T10:04:55.060230Z",
+            "elapsed_seconds": 2.249396
+          },
+          {
+            "started_at": "2026-10-18T10:05:05.256262Z",
+            "finished_at": "2026-10-18T10:05:08.323352Z",
+            "elapsed_seconds": 3.06709
+          },
+          {
+            "started_at": "2026-10-18T10:05:18.111047Z",
+            "finished_at": "2026-10-18T10:05:21.481262Z",
+            "elapsed_seconds": 3.370215
+          },
+          {
+            "started_at": "2026-10-18T10:05:22.405144Z",
+            "finished_at": "2026-10-18T10:05:25.620170Z",
+            "elapsed_seconds": 3.215026
+          }
+        ],
+        "group-coq-check": [
+          {
+            "started_at": "2026-10-18T09:55:12.187767Z",
+            "finished_at": "2026-10-18T09:55:18.055912Z",
+            "elapsed_seconds": 5.868145
+          },
+          {
+            "started_at": "2026-10-18T09:57:56.356233Z",
+            "finished_at": "2026-10-18T09:57:59.391759Z",
+            "elapsed_seconds": 3.035526
+          },
+          {
+            "started_at": "2026-10-18T09:58:31.328816Z",
+            "finished_at": "2026-10-18T09:58:34.387339Z",
+            "elapsed_seconds": 3.058523
+          },
+          {
+            "started_at": "2026-10-18T09:58:52.545229Z",
+            "finished_at": "2026-10-18T09:58:55.364018Z",
+            "elapsed_seconds": 2.818789
+          },
+          {
+            "started_at": "2026-10-18T10:05:18.571942Z",
+            "finished_at": "2026-10-18T10:05:21.980066Z",
+            "elapsed_seconds": 3.408124
+          },
+          {
+            "started_at": "2026-10-18T10:05:30.969704Z",
+            "finished_at": "2026-10-18T10:05:33.945864Z",
+            "elapsed_seconds": 2.97616
+          },
+          {
+            "started_at": "2026-10-18T10:05:41.717676Z",
+            "finished_at": "2026-10-18T10:05:44.577036Z",
+            "elapsed_seconds": 2.85936
+          }
+        ],
+        "group-validation": [
+          {
+            "started_at": "2026-10-18T09:55:53.169028Z",
+            "finished_at": "2026-10-18T09:55:55.343771Z",
+            "elapsed_seconds": 2.166576
+          },
+          {
+            "started_at": "2026-10-18T09:58:31.227637Z",
+            "finished_at": "2026-10-18T09:58:33.414568Z",
+            "elapsed_seconds": 2.178699
+          },
+          {
+            "started_at": "2026-10-18T09:59:03.729001Z",
+            "finished_at": "2026-10-18T09:59:05.650779Z",
+            "elapsed_seconds": 1.913847
+          },
+          {
+            "started_at": "2026-10-18T09:59:29.606867Z",
+            "finished_at": "2026-10-18T09:59:31.496281Z",
+            "elapsed_seconds": 1.881621
+          },
+          {
+            "started_at": "2026-10-18T10:05:46.772926Z",
+            "finished_at": "2026-10-18T10:05:48.716166Z",
+            "elapsed_seconds": 1.935228
+          },
+          {
+            "started_at": "2026-10-18T10:06:04.038502Z",
+            "finished_at": "2026-10-18T10:06:06.083424Z",
+            "elapsed_seconds": 2.036992
+          },
+          {
+            "started_at": "2026-10-18T10:06:20.811537Z",
+            "finished_at": "2026-10-18T10:06:23.319186Z",
+            "elapsed_seconds": 2.497107
+          }
+        ],
+        "parent-verify": [
+          {
+            "started_at": "2026-10-18T10:06:41.885359Z",
+            "finished_at": "2026-10-18T10:06:58.674911Z",
+            "elapsed_seconds": 16.780695
+          }
+        ]
+      },
+      "finished_at": "2026-10-18T10:06:58.674911Z",
+      "verified_result_sha256": "89921031ef3cf9c98e25265a59a472bad75a21d35d3ddf9ce63459fbd9290cb5"
+    }
+  },
+  "annotation_session": {
+    "session_id": "cmc_emit_expr_call_migration-annotation-agent",
+    "status": "idle",
+    "current_attempt": "cmc_emit_expr_call_migration-annotation-r1-attempt-1",
+    "iteration_count": 1,
+    "owner": "annotation/cmc_emit_expr_call_migration-20261018170809"
+  },
+  "accepted_rounds": {
+    "annotation": {
+      "round": "cmc_emit_expr_call_migration-annotation-r1",
+      "attempt_id": "cmc_emit_expr_call_migration-annotation-r1-attempt-1",
+      "annotation_history_directory": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/annotation_history/annotation-attempt1"
+    },
+    "vc-checking": {
+      "round": "cmc_emit_expr_call_migration-vc-checking-r1",
+      "attempt_id": "cmc_emit_expr_call_migration-vc-checking-r1-attempt-1",
+      "group_plan": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-checking-r1/group_plan.json",
+      "group_plan_sha256": "66ba6546b25923d7512b57af037c854065ac930fefc97cdfcf79d9df6516858b",
+      "proof_manual_sha256": "c6ba8e1cf22fc81e841813e9f22dc37303560875e034c6d9b23c528933723e0d",
+      "agent_output_metrics": {
+        "bytes": 10289,
+        "lines": 102,
+        "common_pattern_count": 0,
+        "vc_delta_count": 0,
+        "structural_scan_present": 1,
+        "structural_status": "passed",
+        "structural_top_level_scanned": 21,
+        "structural_no_split_checked_first": 3,
+        "structural_definite_blockers": 0
+      }
+    },
+    "vc-proving-preparing": {
+      "round": "cmc_emit_expr_call_migration-vc-proving-r1",
+      "attempt_id": "cmc_emit_expr_call_migration-vc-proving-r1",
+      "result_sha256": "89921031ef3cf9c98e25265a59a472bad75a21d35d3ddf9ce63459fbd9290cb5"
+    }
+  },
+  "next_actions": [],
+  "waiting_for": [],
+  "current_blockers": [],
+  "final_candidate": {
+    "round": "cmc_emit_expr_call_migration-vc-proving-r1",
+    "proving_merged_result": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/rounds/cmc_emit_expr_call_migration-vc-proving-r1/proving_merged_result.json",
+    "result_sha256": "89921031ef3cf9c98e25265a59a472bad75a21d35d3ddf9ce63459fbd9290cb5",
+    "proof_manual_sha256": "ca521990d8a1f70ad6d05db8662bf916791ba472f557ecb9be4eb019e97fe849",
+    "proving_merged_lib_sha256": "b6277bf7f6eb7a1ad97856836ce575c7cb01a465edd7e4114f5d1a38694e2017"
+  },
+  "final_apply": {
+    "status": "passed",
+    "transaction_id": "0bd01f52460143efbbabe010cbb9a8e6",
+    "applied_at": "2026-10-18T10:07:19.290840Z"
+  },
+  "final_check": {
+    "status": "passed",
+    "checked_at": "2026-10-18T10:07:43.392707Z",
+    "cleanup_removed_count": 0
+  },
+  "created_at": "2026-10-18T09:08:09.706888Z",
+  "updated_at": "2026-10-18T10:07:43.400292Z",
+  "final_apply_transaction": {
+    "transaction_id": "0bd01f52460143efbbabe010cbb9a8e6",
+    "status": "completed",
+    "records": [
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/cmc_emit_expr_call_migration-vc-proving-r1/proving_merged/cmc_emit_expr_call_migration_proof_manual.v",
+        "source_sha256": "ca521990d8a1f70ad6d05db8662bf916791ba472f557ecb9be4eb019e97fe849",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v",
+        "existed": true,
+        "before_sha256": "c6ba8e1cf22fc81e841813e9f22dc37303560875e034c6d9b23c528933723e0d",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/final-check/backup/0bd01f52460143efbbabe010cbb9a8e6/Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_proof_manual.v"
+      },
+      {
+        "source": "/Users/nizitong/QCP/qcp-binary-democases/verification_runs/cmc_emit_expr_call_migration-20261018170809/cmc_emit_expr_call_migration-vc-proving-r1/proving_merged/cmc_emit_expr_call_migration_lib.v",
+        "source_sha256": "b6277bf7f6eb7a1ad97856836ce575c7cb01a465edd7e4114f5d1a38694e2017",
+        "target": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v",
+        "relative_path": "Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v",
+        "existed": true,
+        "before_sha256": "fedc5cfc75a80744432204f0d3c3012c278af8e0f9ad571e55e08c1b449428da",
+        "backup": "/Users/nizitong/QCP/qcp-binary-democases/reports/cmc_emit_expr_call_migration-20261018170809/final-check/backup/0bd01f52460143efbbabe010cbb9a8e6/Rocq/examples/QCP_demos_human/cmc_emit_expr_call_migration_lib.v"
+      }
+    ],
+    "prepared_at": "2026-10-18T10:07:19.268864Z",
+    "backed_up_at": "2026-10-18T10:07:19.280938Z",
+    "completed_at": "2026-10-18T10:07:19.290836Z"
+  },
+  "finished_at": "2026-10-18T10:07:43.392707Z"
+}

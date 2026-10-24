@@ -1,0 +1,2116 @@
+{
+  "note": "Transitive #require load closure only; may include examples and unused theorem declarations. Not incremental proof cost.",
+  "files": [
+    {
+      "file": "cmc.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_compile_ready.c",
+        "cmc_concrete_emit_code.c",
+        "cmc_concrete_patch_calls.c",
+        "cmc_concrete_emit_data.c",
+        "cmc_correct.c"
+      ]
+    },
+    {
+      "file": "cmc_abi.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "cmc_annotate.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_annotate_preservation.c"
+      ]
+    },
+    {
+      "file": "cmc_annotate_erasure.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_annotate_model.c"
+      ]
+    },
+    {
+      "file": "cmc_annotate_model.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_sim.c"
+      ]
+    },
+    {
+      "file": "cmc_annotate_preservation.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_annotate_erasure.c"
+      ]
+    },
+    {
+      "file": "cmc_codegen.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_lang.c",
+        "tvm_model.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_code_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_program_ready.c",
+        "cmc_concrete_counts.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_compile_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_function_ready.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_copy_bytes.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_bytes.c",
+        "userlib/array.c",
+        "userlib/pure_lists.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_count_context.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_counts.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_counts.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_local_syntax.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_data_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_lang.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_defs.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/operational.c",
+        "cmc_rep.c",
+        "cmc_temp_algebra.c",
+        "cmc_stack_annotations.c",
+        "cmc_stack_local_core.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_ast.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "cmc_concrete_emit_binary_finish.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_count_context.c",
+        "cmc_concrete_layout.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_bytes.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_defs.c",
+        "userlib/pure_lists.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_char.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_word.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_code.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_prelude.c",
+        "cmc_stack_local_syntax.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_data.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_globals.c",
+        "cmc_concrete_emit_strings.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_expr.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_expr_simple.c",
+        "cmc_concrete_count_context.c",
+        "cmc_concrete_emit_plan.c",
+        "cmc_concrete_emit_binary_finish.c",
+        "cmc_concrete_emit_expr_call.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_expr_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_plan.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_expr_dispatch.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_expr_leaf.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_expr_leaf.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_plan.c",
+        "cmc_concrete_emit_word.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_expr_simple.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_expr_dispatch.c",
+        "cmc_concrete_emit_expr_var.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_expr_var.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_ast.c",
+        "cmc_concrete_emit_plan.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_function.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_stmt.c",
+        "cmc_concrete_emit_return.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_functions.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_function.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_globals.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_data_ready.c",
+        "cmc_concrete_emit_char.c",
+        "cmc_concrete_emit_zeroes.c",
+        "cmc_concrete_layout.c",
+        "cmc_codegen.c",
+        "cmc_list_selectors.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_plan.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_resolved.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_prelude.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_functions.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_resolved.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "cmc_concrete_emit_return.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_plan.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_stmt.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_expr.c",
+        "cmc_concrete_emit_return.c",
+        "cmc_concrete_emit_ast.c",
+        "cmc_concrete_emit_stmt_proof.c",
+        "cmc_concrete_count_context.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_stmt_proof.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_counts.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_strings.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_list_selectors.c",
+        "cmc_concrete_copy_bytes.c",
+        "userlib/pure_lists.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_word.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_bytes.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_emit_zeroes.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_emit_bytes.c",
+        "userlib/pure_lists.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_function_pc_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_local_syntax.c",
+        "cmc_concrete_compile_ready.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_function_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_code_ready.c",
+        "cmc_concrete_temp_ready.c",
+        "cmc_stack_local_syntax.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_layout.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "cmc_concrete_patch_calls.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_function_pc_total.c",
+        "userlib/array.c",
+        "userlib/pure_lists.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_program_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_data_ready.c",
+        "cmc_concrete_defs.c",
+        "cmc_codegen.c"
+      ]
+    },
+    {
+      "file": "cmc_concrete_temp_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_counts.c"
+      ]
+    },
+    {
+      "file": "cmc_correct.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_total_iter.c",
+        "cmc_examples.c",
+        "cmc_examples_calls.c",
+        "cmc_examples_conversion.c",
+        "cmc_examples_struct.c"
+      ]
+    },
+    {
+      "file": "cmc_examples.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_sim.c",
+        "cmc_stack.c"
+      ]
+    },
+    {
+      "file": "cmc_examples_calls.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_examples.c"
+      ]
+    },
+    {
+      "file": "cmc_examples_conversion.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_examples.c"
+      ]
+    },
+    {
+      "file": "cmc_examples_struct.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_examples.c"
+      ]
+    },
+    {
+      "file": "cmc_lang.c",
+      "exists": true,
+      "direct_requires": [
+        "tower_base.c"
+      ]
+    },
+    {
+      "file": "cmc_list_selectors.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "cmc_preservation_binding_numeric.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_frame.c",
+        "cmc_codegen.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_arith.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_temp_algebra.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_control.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_budget_defs.c",
+        "cmc_preservation_generation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_defs.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation.c",
+        "cmc_temp_algebra.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_budget_defs.c",
+        "cmc_preservation_ready_coordinate.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_temp_algebra.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_start.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_budget_defs.c",
+        "cmc_preservation_budget_arith.c",
+        "cmc_annotate_erasure.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_step.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_budget_defs.c",
+        "cmc_preservation_budget_start.c",
+        "cmc_preservation_budget_value.c",
+        "cmc_preservation_budget_control.c",
+        "cmc_preservation_type_ready.c",
+        "cmc_preservation_ready_coordinate.c",
+        "cmc_preservation_generation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_budget_value.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_budget_defs.c",
+        "cmc_preservation_budget_arith.c",
+        "cmc_preservation_ready_coordinate.c",
+        "cmc_preservation_type_ready.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_clear.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_finish.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_finish.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_param.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_param.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_pending.c",
+        "cmc_preservation_store_semantic.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_params_complete.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_clear.c",
+        "cmc_preservation_call_params_permute.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_params_order.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_finish.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_params_permute.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_params_order.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_pending.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_value.c",
+        "cmc_preservation_invariant_frame.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_pending_live.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_transport.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_pending_machine.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_pending_memory.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_pending_memory.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_pending_live.c",
+        "cmc_preservation_machine_store.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_transport.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_pending.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_call_value.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_step.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tvm.c",
+        "cmc_preservation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_control.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value_total.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_expr.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_stmt.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_expr.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_control.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_value.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value_total.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_value_branch.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value_flow.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_value_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value_branch.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_value_flow.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value_linear.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_value_linear.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_stmt.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_code_value_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value_call.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_fid.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_fid_apply.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_fid_start.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_fid_start.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_fid.c",
+        "cmc_preservation_generation_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_fid_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_fid_apply.c",
+        "cmc_preservation_type_ready.c",
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_generation_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_transport.c",
+        "cmc_preservation_spill_semantic.c",
+        "cmc_preservation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_annotation.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_annotation_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_annotation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_annotation_transition.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_annotation_step.c",
+        "cmc_preservation_generation_limit.c",
+        "cmc_preservation_generation_step_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_frame.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_limit.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_step_start.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_state.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_static_apply.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_static_start.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_static_start.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_syntax.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_static_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_static_apply.c",
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_step_apply.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_step_start.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_step_start.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_state.c",
+        "cmc_preservation_generation_frame.c",
+        "cmc_preservation_generation_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_step_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_step_apply.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_syntax.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_annotation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_generation_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_runtime.c",
+        "cmc_preservation_code.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_control.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_value.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_frame.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_step.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_runtime.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_frame.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant.c",
+        "cmc_preservation_code_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_control.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_transition.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_runtime.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_invariant_value.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_transition.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_layout.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_machine.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_machine_io.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine_ops.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_machine_load.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine_ops.c",
+        "cmc_sim_ops.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_machine_ops.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine_stack.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_machine_stack.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_machine_store.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_store_metadata.c",
+        "cmc_annotate_model.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_memory.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_codegen.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_ready_context.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_annotate_model.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_ready_coordinate.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_ready_semantic.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_ready_coordinate.c",
+        "cmc_preservation_ready_context.c",
+        "cmc_preservation_source_conditions.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_runtime.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine_store.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_runtime_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_source_ready.c",
+        "cmc_preservation_budget_ready.c",
+        "cmc_preservation_fid.c",
+        "cmc_preservation_type_ready.c",
+        "cmc_preservation_code_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_short_bases.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant_transition.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_short_control.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_short_value.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_short_defs.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_call_value.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_short_start.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_short_defs.c",
+        "cmc_preservation_short_bases.c",
+        "cmc_preservation_generation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_short_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_short_control.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_short_value.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_short_start.c",
+        "cmc_preservation_call_value.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_source.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_source_conditions.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_source_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_short_step.c",
+        "cmc_preservation_source_conditions.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_spill_holds_safety.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant.c",
+        "cmc_sim.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_spill_safety.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_invariant.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_spill_semantic.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code.c",
+        "cmc_preservation_code_value.c",
+        "cmc_sim.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_spill_transition.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_spill_semantic.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_spill_update.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_annotate_erasure.c",
+        "cmc_preservation_spill_transition.c",
+        "cmc_preservation_ready_coordinate.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_state.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_annotate.c",
+        "cmc_sim_ops.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_static_bases.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_generation_static_task.c",
+        "cmc_preservation_invariant_step.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_static_bases_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_static_bases.c",
+        "cmc_preservation_call_value.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_store_memory.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine_load.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_store_metadata.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_store_provenance.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_store_provenance.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_store_memory.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_store_semantic.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_runtime.c",
+        "cmc_preservation_store_provenance.c",
+        "cmc_preservation_type_value.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_store_semantic.c",
+        "cmc_preservation_invariant.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_allocation.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged.c",
+        "cmc_preservation_invariant_step.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_apply.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_start.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_allocation.c",
+        "cmc_preservation_call_pending_live.c",
+        "cmc_preservation_target_call_params.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_call_enter.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_call_ready.c",
+        "cmc_preservation_call_params_complete.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_call_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_call.c",
+        "cmc_preservation_target_call_params.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_restore.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_restore_list.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_restore_list.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_sim.c",
+        "cmc_preservation_invariant_step.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_start.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_transition.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_apply.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_call_enter.c",
+        "cmc_preservation_tagged_restore.c",
+        "cmc_preservation_invariant_task.c",
+        "cmc_preservation_generation_step_apply.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tagged_transition.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_tagged_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_access.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_runtime.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_address.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code.c",
+        "cmc_preservation_target_machine.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_complete.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_params_complete.c",
+        "cmc_preservation_target_call_pending.c",
+        "cmc_preservation_target_call_params.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_fp.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_call_setup.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_frame.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_call_jump.c",
+        "cmc_preservation_machine_store.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_jump.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_machine.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_params.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_param.c",
+        "cmc_preservation_code_stmt.c",
+        "cmc_preservation_target_address.c",
+        "cmc_preservation_target_convert.c",
+        "cmc_preservation_target_store.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_pending.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_call_pending_machine.c",
+        "cmc_preservation_target_call_fp.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_call_setup.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_call_frame.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_control_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_return_machine.c",
+        "cmc_preservation_target_convert.c",
+        "cmc_preservation_target_ready.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_generation_step_apply.c",
+        "cmc_preservation_tagged_restore.c",
+        "cmc_preservation_type_ready.c",
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_code_control.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_control_halt.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_generation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_control_regular.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_code_control.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_control_scope.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_restore.c",
+        "cmc_preservation_target_jump_valid.c",
+        "cmc_preservation_generation_step_apply.c",
+        "cmc_preservation_code_control.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_code_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_control_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_control_halt.c",
+        "cmc_preservation_target_control_scope.c",
+        "cmc_preservation_target_control_regular.c",
+        "cmc_preservation_target_control_call.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_convert.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_machine.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_expr.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code.c",
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_target_address.c",
+        "cmc_preservation_target_call_complete.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_expr_total.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_target_expr.c",
+        "cmc_preservation_target_ready.c",
+        "cmc_preservation_static_bases.c",
+        "cmc_preservation_tagged_task.c",
+        "cmc_preservation_code_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_jump_valid.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_machine.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_runtime.c",
+        "cmc_preservation_machine_io.c",
+        "cmc_preservation_tvm.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_call_complete.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_spill_safety.c",
+        "cmc_preservation_binding_numeric.c",
+        "cmc_stack_bound.c",
+        "cmc_preservation_generation_step_apply.c",
+        "userlib/proof_patterns.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_restore.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_invariant_step.c",
+        "cmc_preservation_tagged_restore_list.c",
+        "cmc_preservation_call_transport.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_return_machine.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_target_restore.c",
+        "cmc_preservation_machine_store.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_spill.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code.c",
+        "cmc_preservation_target_machine.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_spill_runtime.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_spill.c",
+        "cmc_preservation_spill_safety.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_start.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_target_call_complete.c",
+        "cmc_preservation_target_ready.c",
+        "cmc_preservation_invariant_step.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_generation_state.c",
+        "cmc_preservation_tagged.c",
+        "cmc_preservation_memory.c",
+        "cmc_preservation_machine_store.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_state.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_tagged_allocation.c",
+        "cmc_preservation_call_transport.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_stmt.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_target_state.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_binding_numeric.c",
+        "cmc_preservation_invariant_transition.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_store.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_machine_store.c",
+        "cmc_preservation_runtime.c",
+        "cmc_preservation_target_machine.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_task.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_start.c",
+        "cmc_preservation_target_expr_total.c",
+        "cmc_preservation_target_stmt.c",
+        "cmc_preservation_target_value_total.c",
+        "cmc_preservation_target_control_total.c",
+        "cmc_preservation_target_control_halt.c",
+        "cmc_preservation_source.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value.c",
+        "cmc_preservation_target_machine.c",
+        "cmc_preservation_target_spill_runtime.c",
+        "cmc_preservation_target_convert.c",
+        "cmc_preservation_target_spill.c",
+        "cmc_preservation_target_store.c",
+        "cmc_preservation_store_semantic.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_arg.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_init.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_args.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_arg.c",
+        "cmc_preservation_spill_safety.c",
+        "cmc_preservation_spill_semantic.c",
+        "cmc_preservation_invariant_runtime.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_binary.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value.c",
+        "cmc_preservation_code_value_flow.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_binary_finish.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_binary.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_binary_pointer.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_binary.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_binary_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_defs.c",
+        "cmc_preservation_target_value_binary.c",
+        "cmc_preservation_target_value_binary_finish.c",
+        "cmc_preservation_target_value_binary_pointer.c",
+        "cmc_preservation_target_value_code_ready.c",
+        "cmc_preservation_target_value_context.c",
+        "cmc_preservation_spill_safety.c",
+        "cmc_preservation_spill_holds_safety.c",
+        "cmc_preservation_type_value.c",
+        "cmc_preservation_type_source_v_total.c",
+        "cmc_sim_ops.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_branch.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_control.c",
+        "cmc_preservation_code_value_branch.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_call_complete.c",
+        "cmc_preservation_target_value_args.c",
+        "cmc_preservation_code_value_call.c",
+        "cmc_preservation_invariant_transition.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_call_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_arg.c",
+        "cmc_preservation_target_value_call.c",
+        "cmc_preservation_target_value_context.c",
+        "cmc_preservation_target_ready.c",
+        "userlib/proof_patterns.c",
+        "cmc_preservation_generation_annotation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_code_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_code_value.c",
+        "cmc_preservation_layout.c",
+        "cmc_preservation_type_ready.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_context.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_preservation_target_access.c",
+        "cmc_preservation_fid.c",
+        "cmc_preservation_type_source_v_support.c",
+        "cmc_preservation_spill_semantic.c",
+        "cmc_preservation_invariant_transition.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_tagged_task.c",
+        "cmc_preservation_invariant.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_control.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_io.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_control_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_branch.c",
+        "cmc_preservation_target_value_context.c",
+        "cmc_preservation_target_jump_valid.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_index.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_binary.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_init.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_return.c",
+        "cmc_preservation_target_address.c",
+        "cmc_preservation_target_store.c",
+        "cmc_preservation_store_semantic.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_io.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_member.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_member.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_index.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_pointer_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_defs.c",
+        "cmc_preservation_target_value_context.c",
+        "cmc_preservation_target_value_index.c",
+        "cmc_preservation_target_value_member.c",
+        "cmc_preservation_spill_safety.c",
+        "cmc_preservation_spill_holds_safety.c",
+        "cmc_preservation_type_facts.c",
+        "cmc_preservation_type_value.c",
+        "cmc_preservation_invariant_frame.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_return.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_branch.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_scalar_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_context.c",
+        "cmc_preservation_target_value_init.c",
+        "cmc_preservation_target_value.c",
+        "cmc_preservation_target_value_unary.c",
+        "cmc_preservation_target_value_io.c",
+        "cmc_preservation_target_value_control.c",
+        "cmc_preservation_target_value_return.c",
+        "cmc_preservation_target_access.c",
+        "cmc_preservation_spill_safety.c",
+        "cmc_preservation_spill_holds_safety.c",
+        "cmc_preservation_binding_numeric.c",
+        "cmc_preservation_type_facts.c",
+        "cmc_sim.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_scalar_total.c",
+        "cmc_preservation_target_value_binary_total.c",
+        "cmc_preservation_target_value_pointer_total.c",
+        "cmc_preservation_target_value_control_total.c",
+        "cmc_preservation_target_value_call_total.c",
+        "cmc_preservation_type_source_v_total.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_target_value_unary.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_target_value_binary.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_total.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof_patterns.c",
+        "cmc_annotate_preservation.c",
+        "cmc_preservation_ready_coordinate.c",
+        "cmc_preservation_ready_context.c",
+        "cmc_preservation_invariant_step.c",
+        "cmc_preservation_type_ready.c",
+        "cmc_preservation_fid.c",
+        "cmc_preservation_spill_semantic.c",
+        "cmc_preservation_generation.c",
+        "cmc_preservation_generation_task.c",
+        "cmc_preservation_static_bases.c",
+        "cmc_preservation_tagged_task.c",
+        "cmc_preservation_budget_defs.c",
+        "cmc_preservation_short_defs.c",
+        "cmc_preservation_code.c",
+        "cmc_preservation_code_task.c",
+        "cmc_preservation_state.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_total_iter.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_total_step.c",
+        "cmc_annotate_preservation.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_total_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_total.c",
+        "cmc_preservation_runtime_ready.c",
+        "cmc_preservation_target_task.c",
+        "cmc_preservation_ready_semantic.c",
+        "cmc_preservation_invariant_task.c",
+        "cmc_preservation_type_step.c",
+        "cmc_preservation_fid_step.c",
+        "cmc_preservation_spill_update.c",
+        "cmc_preservation_generation_annotation_transition.c",
+        "cmc_preservation_generation_static_task.c",
+        "cmc_preservation_static_bases_step.c",
+        "cmc_preservation_tagged_step.c",
+        "cmc_preservation_budget_step.c",
+        "cmc_preservation_short_step.c",
+        "cmc_preservation_code_task.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_tvm.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_layout.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_args.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_value.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_cursor.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_phase.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_facts.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_ready.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_lvalue.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_args.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_phase.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_facts.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_ready.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_ready_coordinate.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_c_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_c_struct.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_c_regular.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_c_support.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_c_struct.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_c_regular.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_c_support.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_total.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_c_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_c_call.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_l.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_concrete_defs.c",
+        "cmc_preservation_type_facts.c",
+        "cmc_preservation_type_cursor.c",
+        "cmc_preservation_type_lvalue.c",
+        "cmc_preservation_source_conditions.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_r_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_r_struct.c",
+        "cmc_preservation_source_conditions.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_r_leaf.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_cursor.c",
+        "cmc_preservation_type_value.c",
+        "cmc_preservation_source_conditions.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_r_struct.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_r_var.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_r_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_r_leaf.c",
+        "cmc_preservation_type_source_r_call.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_r_var.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_cursor.c",
+        "cmc_preservation_type_lvalue.c",
+        "cmc_preservation_source_conditions.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_s.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_s_support.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_s_support.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_r_total.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_binary.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_scalar.c",
+        "cmc_preservation_type_source_r_struct.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_call.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_control.c",
+        "cmc_preservation_type_args.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_control.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_pointer.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_pointer.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_binary.c",
+        "cmc_preservation_type_lvalue.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_scalar.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_support.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_support.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_value.c",
+        "cmc_preservation_type_cursor.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_source_v_total.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_v_call.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_step.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_source_r_total.c",
+        "cmc_preservation_type_source_l.c",
+        "cmc_preservation_type_source_s.c",
+        "cmc_preservation_type_source_c_total.c",
+        "cmc_preservation_fid.c"
+      ]
+    },
+    {
+      "file": "cmc_preservation_type_value.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_preservation_type_facts.c"
+      ]
+    },
+    {
+      "file": "cmc_rep.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof.c",
+        "userlib/array.c",
+        "cmc_abi.c",
+        "cmc_codegen.c"
+      ]
+    },
+    {
+      "file": "cmc_sim.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_codegen.c"
+      ]
+    },
+    {
+      "file": "cmc_sim_ops.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_sim.c"
+      ]
+    },
+    {
+      "file": "cmc_stack.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_trace.c"
+      ]
+    },
+    {
+      "file": "cmc_stack_annotations.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_codegen.c"
+      ]
+    },
+    {
+      "file": "cmc_stack_bound.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_local.c"
+      ]
+    },
+    {
+      "file": "cmc_stack_local.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_local_syntax.c"
+      ]
+    },
+    {
+      "file": "cmc_stack_local_core.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_annotations.c"
+      ]
+    },
+    {
+      "file": "cmc_stack_local_syntax.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_local_core.c"
+      ]
+    },
+    {
+      "file": "cmc_stack_trace.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_stack_bound.c"
+      ]
+    },
+    {
+      "file": "cmc_temp_algebra.c",
+      "exists": true,
+      "direct_requires": [
+        "cmc_lang.c"
+      ]
+    },
+    {
+      "file": "tower_base.c",
+      "exists": true,
+      "direct_requires": [
+        "userlib/proof.c"
+      ]
+    },
+    {
+      "file": "tvm_model.c",
+      "exists": true,
+      "direct_requires": [
+        "tower_base.c"
+      ]
+    },
+    {
+      "file": "userlib/array.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "userlib/operational.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "userlib/proof.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "userlib/proof_patterns.c",
+      "exists": true,
+      "direct_requires": []
+    },
+    {
+      "file": "userlib/pure_lists.c",
+      "exists": true,
+      "direct_requires": []
+    }
+  ]
+}

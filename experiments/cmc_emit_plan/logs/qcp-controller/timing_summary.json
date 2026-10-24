@@ -1,0 +1,180 @@
+{
+  "run": {
+    "status": "completed",
+    "phase": "done",
+    "created_at": "2026-10-17T05:51:54.972390Z",
+    "finished_at": "2026-10-17T06:11:20.686974Z",
+    "elapsed_seconds": 1165.714584
+  },
+  "annotation_metrics": {
+    "attempt_count": 1,
+    "annotation_repair_count": 0,
+    "validation_only_attempt_count": 0,
+    "owner_generation_invocation_count": 1,
+    "tool_failure_invocation_count": 0,
+    "controller_tool_failure_invocation_count": 0,
+    "same_attempt_tool_retry_count": 0,
+    "same_attempt_controller_tool_retry_count": 0,
+    "controller_acceptance_run_count": 1,
+    "controller_acceptance_rerun_count": 0,
+    "owner_generation_seconds": 0.18,
+    "controller_main_refresh_seconds": 0,
+    "clean_replay_seconds": 0.179,
+    "wasted_timeout_seconds": 0,
+    "legacy_unclassified_symexec_seconds": 0
+  },
+  "annotation_attempts": [
+    {
+      "attempt": "annotation-attempt1",
+      "round": "cmc_emit_plan_migration-annotation-r1",
+      "activity": "spec-and-annotation",
+      "owner_generation_invocations": 1,
+      "tool_failure_invocations": 0,
+      "same_attempt_tool_retries": 0,
+      "controller_acceptance_runs": 1,
+      "controller_tool_failure_invocations": 0,
+      "same_attempt_controller_tool_retries": 0,
+      "status": "accepted",
+      "created_at": "2026-10-17T05:51:59.799771Z",
+      "finished_at": "2026-10-17T05:57:42.111006Z",
+      "elapsed_seconds": 342.311235,
+      "stages": [
+        {
+          "name": "annotation-work",
+          "started_at": "2026-10-17T05:52:04.376517Z",
+          "finished_at": "2026-10-17T05:56:31.112773Z",
+          "elapsed_seconds": 266.736256
+        },
+        {
+          "name": "formal-case-lib-design-coq-check",
+          "started_at": "2026-10-17T05:54:19.555065Z",
+          "finished_at": "2026-10-17T05:54:21.241312Z",
+          "elapsed_seconds": 1.686247
+        },
+        {
+          "name": "owner-generation",
+          "started_at": "2026-10-17T05:54:28.217967Z",
+          "finished_at": "2026-10-17T05:54:28.397967Z",
+          "elapsed_seconds": 0.18
+        },
+        {
+          "name": "clean-replay",
+          "started_at": "2026-10-17T05:57:04.836883Z",
+          "finished_at": "2026-10-17T05:57:05.015883Z",
+          "elapsed_seconds": 0.179
+        },
+        {
+          "name": "formal-case-lib-coq-check",
+          "started_at": "2026-10-17T05:54:40.869833Z",
+          "calls": 2,
+          "finished_at": "2026-10-17T05:57:04.833034Z",
+          "elapsed_seconds": 0.132885
+        },
+        {
+          "name": "controller-validation",
+          "started_at": "2026-10-17T05:56:31.091956Z",
+          "finished_at": "2026-10-17T05:56:31.155977Z",
+          "elapsed_seconds": 0.060446
+        },
+        {
+          "name": "controller-acceptance-check",
+          "started_at": "2026-10-17T05:56:52.795594Z",
+          "finished_at": "2026-10-17T05:57:05.030632Z",
+          "elapsed_seconds": 12.229613
+        },
+        {
+          "name": "dune-build",
+          "started_at": "2026-10-17T05:57:33.944740Z",
+          "finished_at": "2026-10-17T05:57:42.111006Z",
+          "elapsed_seconds": 8.160946
+        }
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "round": "cmc_emit_plan_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "created_at": "2026-10-17T05:57:58.678095Z",
+      "finished_at": "2026-10-17T06:02:05.329172Z",
+      "elapsed_seconds": 246.651077,
+      "stages": [
+        {
+          "name": "witness-analysis",
+          "started_at": "2026-10-17T05:58:04.898446Z",
+          "finished_at": "2026-10-17T06:01:47.887748Z",
+          "elapsed_seconds": 222.989302
+        },
+        {
+          "name": "controller-validation",
+          "started_at": "2026-10-17T06:01:47.858262Z",
+          "finished_at": "2026-10-17T06:01:47.920706Z",
+          "elapsed_seconds": 0.056249
+        },
+        {
+          "name": "controller-plan-check",
+          "started_at": "2026-10-17T06:02:05.096380Z",
+          "finished_at": "2026-10-17T06:02:05.329172Z",
+          "elapsed_seconds": 0.225884
+        }
+      ]
+    },
+    {
+      "round": "cmc_emit_plan_migration-vc-proving-r1",
+      "phase": "vc-proving",
+      "status": "verified",
+      "created_at": "2026-10-17T06:02:16.341115Z",
+      "finished_at": "2026-10-17T06:10:09.859779Z",
+      "elapsed_seconds": 473.518664,
+      "stages": [
+        {
+          "name": "group-work",
+          "started_at": "2026-10-17T06:02:34.754318Z",
+          "finished_at": "2026-10-17T06:09:45.555693Z",
+          "elapsed_seconds": 430.801375
+        },
+        {
+          "name": "preparing",
+          "started_at": "2026-10-17T06:02:27.028378Z",
+          "finished_at": "2026-10-17T06:02:27.105967Z",
+          "elapsed_seconds": 0.069798
+        },
+        {
+          "name": "group-development-check",
+          "started_at": "2026-10-17T06:04:14.362686Z",
+          "calls": 13,
+          "finished_at": "2026-10-17T06:09:05.280030Z",
+          "elapsed_seconds": 32.032413
+        },
+        {
+          "name": "group-coq-check",
+          "started_at": "2026-10-17T06:05:15.404728Z",
+          "calls": 4,
+          "finished_at": "2026-10-17T06:09:18.437810Z",
+          "elapsed_seconds": 12.081156
+        },
+        {
+          "name": "group-validation",
+          "started_at": "2026-10-17T06:05:52.789123Z",
+          "calls": 4,
+          "finished_at": "2026-10-17T06:09:47.492474Z",
+          "elapsed_seconds": 7.434231
+        },
+        {
+          "name": "parent-verify",
+          "started_at": "2026-10-17T06:10:05.235971Z",
+          "finished_at": "2026-10-17T06:10:09.859779Z",
+          "elapsed_seconds": 4.61518
+        }
+      ]
+    }
+  ],
+  "finalization": {
+    "status": "passed",
+    "started_at": "2026-10-17T06:10:09.859779Z",
+    "applied_at": "2026-10-17T06:10:38.715281Z",
+    "finished_at": "2026-10-17T06:11:20.686974Z",
+    "elapsed_seconds": 70.827195
+  }
+}

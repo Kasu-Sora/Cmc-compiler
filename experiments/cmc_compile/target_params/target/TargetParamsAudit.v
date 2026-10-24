@@ -1,0 +1,89 @@
+Require Import SimpleC.EE.QCP_demos_human.cmc_param_pending_complete_migration_lib.
+Goal True. idtac "AUDIT cmc_param_pending_complete_migration_lib.cm_store_params_pending_eq". exact I. Qed.
+Check cmc_param_pending_complete_migration_lib.cm_store_params_pending_eq.
+Print Assumptions cmc_param_pending_complete_migration_lib.cm_store_params_pending_eq.
+Goal True. idtac "AUDIT cmc_param_pending_complete_migration_lib.cm_call_base_pending_eq". exact I. Qed.
+Check cmc_param_pending_complete_migration_lib.cm_call_base_pending_eq.
+Print Assumptions cmc_param_pending_complete_migration_lib.cm_call_base_pending_eq.
+Goal True. idtac "AUDIT cmc_param_pending_complete_migration_lib.cm_call_params_pending_complete". exact I. Qed.
+Check cmc_param_pending_complete_migration_lib.cm_call_params_pending_complete.
+Print Assumptions cmc_param_pending_complete_migration_lib.cm_call_params_pending_complete.
+Goal True. idtac "AUDIT cmc_param_pending_complete_migration_lib.cm_call_params_reverse_complete". exact I. Qed.
+Check cmc_param_pending_complete_migration_lib.cm_call_params_reverse_complete.
+Print Assumptions cmc_param_pending_complete_migration_lib.cm_call_params_reverse_complete.
+Require Import SimpleC.EE.QCP_demos_human.cmc_param_pending_relation_migration_lib.
+Goal True. idtac "AUDIT cmc_param_pending_relation_migration_lib.cm_pending_eq_number". exact I. Qed.
+Check cmc_param_pending_relation_migration_lib.cm_pending_eq_number.
+Print Assumptions cmc_param_pending_relation_migration_lib.cm_pending_eq_number.
+Goal True. idtac "AUDIT cmc_param_pending_relation_migration_lib.cm_pending_eq_convert". exact I. Qed.
+Check cmc_param_pending_relation_migration_lib.cm_pending_eq_convert.
+Print Assumptions cmc_param_pending_relation_migration_lib.cm_pending_eq_convert.
+Goal True. idtac "AUDIT cmc_param_pending_relation_migration_lib.cm_pending_eq_complete". exact I. Qed.
+Check cmc_param_pending_relation_migration_lib.cm_pending_eq_complete.
+Print Assumptions cmc_param_pending_relation_migration_lib.cm_pending_eq_complete.
+Goal True. idtac "AUDIT cmc_param_pending_relation_migration_lib.cm_pending_eq_store". exact I. Qed.
+Check cmc_param_pending_relation_migration_lib.cm_pending_eq_store.
+Print Assumptions cmc_param_pending_relation_migration_lib.cm_pending_eq_store.
+Require Import SimpleC.EE.QCP_demos_human.cmc_param_store_fields_migration_lib.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_tags_write_commutes". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_tags_write_commutes.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_tags_write_commutes.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_boolean_writes_commute". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_boolean_writes_commute.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_boolean_writes_commute.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_tagged_write_commutes". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_tagged_write_commutes.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_tagged_write_commutes.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_convert_store". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_convert_store.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_convert_store.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_state_store_mem". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_state_store_mem.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_state_store_mem.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_state_store_init". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_state_store_init.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_state_store_init.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_state_store_tags". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_state_store_tags.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_state_store_tags.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_state_store_tagged". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_state_store_tagged.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_state_store_tagged.
+Goal True. idtac "AUDIT cmc_param_store_fields_migration_lib.cm_state_store_commutes". exact I. Qed.
+Check cmc_param_store_fields_migration_lib.cm_state_store_commutes.
+Print Assumptions cmc_param_store_fields_migration_lib.cm_state_store_commutes.
+Require Import SimpleC.EE.QCP_demos_human.cmc_param_store_geometry_migration_lib.
+Goal True. idtac "AUDIT cmc_param_store_geometry_migration_lib.cm_address_monotone_nat". exact I. Qed.
+Check cmc_param_store_geometry_migration_lib.cm_address_monotone_nat.
+Print Assumptions cmc_param_store_geometry_migration_lib.cm_address_monotone_nat.
+Goal True. idtac "AUDIT cmc_param_store_geometry_migration_lib.cm_address_monotone". exact I. Qed.
+Check cmc_param_store_geometry_migration_lib.cm_address_monotone.
+Print Assumptions cmc_param_store_geometry_migration_lib.cm_address_monotone.
+Goal True. idtac "AUDIT cmc_param_store_geometry_migration_lib.cm_call_parameter_disjoint". exact I. Qed.
+Check cmc_param_store_geometry_migration_lib.cm_call_parameter_disjoint.
+Print Assumptions cmc_param_store_geometry_migration_lib.cm_call_parameter_disjoint.
+Goal True. idtac "AUDIT cmc_param_store_geometry_migration_lib.cm_call_pending_numeric". exact I. Qed.
+Check cmc_param_store_geometry_migration_lib.cm_call_pending_numeric.
+Print Assumptions cmc_param_store_geometry_migration_lib.cm_call_pending_numeric.
+Goal True. idtac "AUDIT cmc_param_store_geometry_migration_lib.cm_call_params_reverse_forward". exact I. Qed.
+Check cmc_param_store_geometry_migration_lib.cm_call_params_reverse_forward.
+Print Assumptions cmc_param_store_geometry_migration_lib.cm_call_params_reverse_forward.
+Require Import SimpleC.EE.QCP_demos_human.cmc_param_store_order_migration_lib.
+Goal True. idtac "AUDIT cmc_param_store_order_migration_lib.cm_store_params_env". exact I. Qed.
+Check cmc_param_store_order_migration_lib.cm_store_params_env.
+Print Assumptions cmc_param_store_order_migration_lib.cm_store_params_env.
+Goal True. idtac "AUDIT cmc_param_store_order_migration_lib.cm_store_params_value_number". exact I. Qed.
+Check cmc_param_store_order_migration_lib.cm_store_params_value_number.
+Print Assumptions cmc_param_store_order_migration_lib.cm_store_params_value_number.
+Goal True. idtac "AUDIT cmc_param_store_order_migration_lib.cm_parameter_store_pointwise". exact I. Qed.
+Check cmc_param_store_order_migration_lib.cm_parameter_store_pointwise.
+Print Assumptions cmc_param_store_order_migration_lib.cm_parameter_store_pointwise.
+Goal True. idtac "AUDIT cmc_param_store_order_migration_lib.cm_params_pointwise". exact I. Qed.
+Check cmc_param_store_order_migration_lib.cm_params_pointwise.
+Print Assumptions cmc_param_store_order_migration_lib.cm_params_pointwise.
+Goal True. idtac "AUDIT cmc_param_store_order_migration_lib.cm_store_params_push_disjoint". exact I. Qed.
+Check cmc_param_store_order_migration_lib.cm_store_params_push_disjoint.
+Print Assumptions cmc_param_store_order_migration_lib.cm_store_params_push_disjoint.
+Goal True. idtac "AUDIT cmc_param_store_order_migration_lib.cm_store_params_reverse_forward_disjoint". exact I. Qed.
+Check cmc_param_store_order_migration_lib.cm_store_params_reverse_forward_disjoint.
+Print Assumptions cmc_param_store_order_migration_lib.cm_store_params_reverse_forward_disjoint.

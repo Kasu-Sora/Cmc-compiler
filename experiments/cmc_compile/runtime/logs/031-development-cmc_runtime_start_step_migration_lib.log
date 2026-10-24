@@ -1,0 +1,52 @@
+Chars 0 - 73 [Require~Export~SimpleC.EE.QCP_...] 1.253 secs (1.179u,0.069s)
+Chars 74 - 119 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 120 - 141 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 142 - 167 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 168 - 447 [Ltac~~cm_rt_reduce~:=~~~cbv[cm...] 0. secs (0.u,0.s)
+Chars 448 - 570 [Ltac~~cm_rt_cases~:=~~~cm_rt_r...] 0. secs (0.u,0.s)
+Chars 571 - 1370 [Ltac~~cm_rt_task~:=~~~lazymatc...] 0. secs (0.u,0.s)
+Chars 1371 - 2278 [Ltac~~cm_rt_atom~:=~~~lazymatc...] 0. secs (0.u,0.s)
+Chars 2279 - 2368 [Ltac~~cm_rt_finish~:=~~~repeat...] 0. secs (0.u,0.s)
+Chars 2369 - 2731 [Lemma~cm_r_runtime_step~sp~ap~...] 0. secs (0.u,0.s)
+Chars 2732 - 2738 [Proof.] 0. secs (0.u,0.s)
+Chars 2740 - 2798 [(destruct~expr;~intros~WF~R;~c...] 0.026 secs (0.025u,0.s)
+Chars 2800 - 2912 [all:~~(match~goal~with~~~|~|-~...] 0.002 secs (0.002u,0.s)
+3 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, fid0 : Z
+  ty : cm_type
+  st : cm_src_state
+  ann : cm_annotation
+  WF : cm_typed_program (cm_source_function_policy sp) p
+  R : cm_runtime_core (cm_source_function_policy sp) ap p fid st ann
+  Heqb :
+    (if cm_call_ok sp p fid0 [] st
+     then cm_call_depth (cm_cursor_frames (cm_ann_cursors ann)) <? 65536
+     else false) = true
+  Heqb0 : true = true
+  ============================
+  cm_runtime_core (cm_source_function_policy sp) ap p fid0
+    (cm_enter_call sp p fid0 [] st)
+    (cm_ann_enter_call sp p fid fid0 st ty (cm_ann_pc ann + 1)
+       (cm_ann_temp ann) (cm_ann_break ann) (cm_ann_continue ann)
+       (cm_ann_cursors ann) (cm_ann_spills ann) (cm_ann_saved ann)
+       (cm_ann_calls ann))
+
+goal 2 is:
+ cm_runtime_core (cm_source_function_policy sp) ap p fid st
+   (cm_ann_enter_call sp p fid fid0 st ty (cm_ann_pc ann + 1)
+      (cm_ann_temp ann) (cm_ann_break ann) (cm_ann_continue ann)
+      (cm_ann_cursors ann) (cm_ann_spills ann) (cm_ann_saved ann)
+      (cm_ann_calls ann))
+goal 3 is:
+ cm_runtime_core (cm_source_function_policy sp) ap p fid0
+   (cm_enter_call sp p fid0 [] st) ann
+Chars 2914 - 2919 [Show.] 0. secs (0.u,0.s)
+Chars 2920 - 2924 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/build/Rocq/examples/QCP_demos_human/cmc_runtime_start_step_migration_lib.v", line 32, characters 0-4:
+Error:  (in proof cm_r_runtime_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

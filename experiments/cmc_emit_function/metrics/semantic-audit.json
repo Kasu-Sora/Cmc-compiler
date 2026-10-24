@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cmc_emit_param_stores_from",
+      "target_contract_sha256": "1287dc9d275a820372fb3eb6151c58463766354ef6c3416d6468b88336c9430d",
+      "source_contract_sha256": "68e3d63b32ee336f231504265ab00ccd3cfed6763f9498545058bc384c558379",
+      "status": "reviewed",
+      "review": "All original pure facts, parameter-prefix/offset or frame/PC constraints and full resources retained in pre/post; exact output code, arbitrary done/tail and existing policy/cg boundary preserved."
+    },
+    {
+      "function": "cmc_emit_prologue",
+      "target_contract_sha256": "aacd8ad4f7b3ae5e5857cd1c028a8b123cebfadf1a4a2557689fe98534c0f954",
+      "source_contract_sha256": "ba87fe9fb597d32f77401f645b211d07c9a9fd7c84f08efc195429c6e2d1a803",
+      "status": "reviewed",
+      "review": "All original pure facts, parameter-prefix/offset or frame/PC constraints and full resources retained in pre/post; exact output code, arbitrary done/tail and existing policy/cg boundary preserved."
+    },
+    {
+      "function": "cmc_emit_function",
+      "target_contract_sha256": "428cdd26ff073c19427c91a8be742f32f3b01230c3460bcaf7a0f7dd29ddb99d",
+      "source_contract_sha256": "7c0ae4667df837ac79988db8c25dc697278a6534fecd7896f41d7881a4f82429",
+      "status": "reviewed",
+      "review": "All original pure facts, parameter-prefix/offset or frame/PC constraints and full resources retained in pre/post; exact output code, arbitrary done/tail and existing policy/cg boundary preserved."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_emit_param_stores",
+      "kind": "Fixpoint",
+      "span": [
+        7,
+        14
+      ],
+      "sha256": "52a4cdfa98f08446578512b9a91b18067453a5d6b03bb28e17e75d2afa7a0f67",
+      "nonblank_lines": 8
+    },
+    {
+      "name": "cm_emit_prologue",
+      "kind": "Definition",
+      "span": [
+        15,
+        23
+      ],
+      "sha256": "bcdfef40546a9f2bb813e706d5ec0d8c4a941345058fa20b783b1756f0c95198",
+      "nonblank_lines": 9
+    },
+    {
+      "name": "cm_emit_function",
+      "kind": "Definition",
+      "span": [
+        24,
+        28
+      ],
+      "sha256": "ed615e5c82d4ab6b400285d47488c539bf19e6489eb216f859e72a5855b202dc",
+      "nonblank_lines": 5
+    },
+    {
+      "name": "cm_emit_params_head",
+      "kind": "Definition",
+      "span": [
+        30,
+        30
+      ],
+      "sha256": "6b494b979dc77076b7918405e8c615353032d40cbcafdafcb824d6026f24a2fe",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_emit_params_tail",
+      "kind": "Definition",
+      "span": [
+        31,
+        31
+      ],
+      "sha256": "42b0f33d7ac72436948c4fc004f6e3453c158e0b32f2808796f0581fa4f63dcc",
+      "nonblank_lines": 1
+    }
+  ],
+  "annotation_stage_model_review": {
+    "cm_emit_param_stores": "Exact nil/cons equations; recurse on tail at slot+1 first, then normalize head, original parameter-prefix FP address, and store. No input restriction.",
+    "cm_emit_prologue": "Exact 14 instructions and immediates, mathematical frame size at total function lookup, followed by parameter stores at slot 0.",
+    "cm_emit_function": "Exact prologue ++ statement body at function-PC+prologue-count with temp/break/continue 0 ++ PUSH 0 ++ return epilogue.",
+    "cm_emit_params_head": "Transparent existing cm_slot_at 0 lookup. Used under nonempty shape; empty default does not restrict BODY inputs or alter emission equations.",
+    "cm_emit_params_tail": "Transparent list tail, used under matching list shape; no heap or operational assumption."
+  },
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "source_model": "baseline/cmc_codegen.c:981",
+  "model_review": "Three instruction-list equations independently compared with source; two total observations used only through constructor facts. Final merged declarations and proofs require separate review.",
+  "final_library_review": "final-library-review.json",
+  "final_model_hashes_unchanged": true,
+  "new_assumptions": false
+}

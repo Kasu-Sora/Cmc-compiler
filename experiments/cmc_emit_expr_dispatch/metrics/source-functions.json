@@ -1,0 +1,97 @@
+[
+  {
+    "name": "cm_emit_leaf_expr",
+    "prototype": false,
+    "source_span": [
+      6,
+      132
+    ],
+    "specification": [
+      [
+        10,
+        13
+      ],
+      [
+        14,
+        31
+      ],
+      [
+        32,
+        49
+      ]
+    ],
+    "annotation": [
+      [
+        65,
+        65
+      ],
+      [
+        65,
+        65
+      ],
+      [
+        66,
+        66
+      ],
+      [
+        81,
+        81
+      ],
+      [
+        81,
+        81
+      ],
+      [
+        82,
+        82
+      ],
+      [
+        103,
+        103
+      ],
+      [
+        103,
+        103
+      ],
+      [
+        104,
+        104
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        129,
+        129
+      ]
+    ],
+    "inline_proof": [
+      [
+        51,
+        51
+      ],
+      [
+        53,
+        64
+      ],
+      [
+        69,
+        80
+      ],
+      [
+        85,
+        102
+      ],
+      [
+        107,
+        127
+      ]
+    ],
+    "runtime": "void cm_emit_leaf_expr(struct cm_program *program, int fid,\n                       struct cm_function *fn, int pc, int temp,\n                       struct cm_expr *expr, int lvalue,\n                       struct cm_emitter *emitter)\n{\n  if (expr->kind == CMC_EXPR_CONST) {\n    cm_emit_const_expr(program, fid, fn, pc, temp, expr, lvalue, emitter);\n  } else if (expr->kind == CMC_EXPR_STRING) {\n    cm_emit_string_expr(program, fid, fn, pc, temp, expr, lvalue, emitter);\n  } else if (expr->kind == CMC_EXPR_SIZEOF) {\n    cm_emit_sizeof_expr(program, fid, fn, pc, temp, expr, lvalue, emitter);\n  } else {\n    cm_emit_getc_expr(program, fid, fn, pc, temp, expr, lvalue, emitter);\n  }\n}\n"
+  }
+]

@@ -1,0 +1,17 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_data_readiness/build/Rocq/examples/QCP_demos_human/cmc_program_ready_migration_lib.v", line 55, characters 8-10:
+Error:
+In environment
+structs : list cm_struct_d
+h : cm_global_d
+t : list cm_global_d
+IH :
+  cm_data_globals_wf structs t ->
+  cm_rep_globals_size t <= 1048560 -> cm_rep_globals_safe t
+Hsize : 0 < cm_global_size structs h <= 1048576
+Ht : cm_data_globals_wf structs t
+Hbound : cm_rep_global_size h + cm_rep_globals_size t <= 1048560
+Htail : 0 <= cm_rep_globals_size t
+Hmatch : cm_rep_global_size h = cm_global_size structs h
+Unable to unify "cm_rep_globals_safe t" with
+ "cm_rep_globals_size (h :: t) <= 1048560".
+

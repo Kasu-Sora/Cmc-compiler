@@ -1,0 +1,102 @@
+[
+  {
+    "name": "cmc_function_prefix_total",
+    "prototype": false,
+    "source_span": [
+      149,
+      448
+    ],
+    "specification": [
+      [
+        152,
+        153
+      ],
+      [
+        154,
+        165
+      ],
+      [
+        166,
+        180
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        183,
+        199
+      ],
+      [
+        204,
+        217
+      ],
+      [
+        221,
+        276
+      ],
+      [
+        279,
+        290
+      ],
+      [
+        293,
+        302
+      ],
+      [
+        304,
+        341
+      ],
+      [
+        345,
+        426
+      ],
+      [
+        428,
+        446
+      ]
+    ],
+    "runtime": "static int cmc_function_prefix_total(\n    struct cm_program *program, struct cm_function *fn,\n    int index, long long target)\n{\n  if (fn == 0) {\n    return 0;\n  };\n  if (index == target) {\n    return 0;\n  };\n  int head_count = cmc_function_code_count(program, index, fn);\n  struct cm_function *next_fn;\n  next_fn = fn->next;\n  int tail_count = cmc_function_prefix_total(\n      program, next_fn, index + 1, target);\n  int result = head_count + tail_count;\n  return result;\n}\n"
+  },
+  {
+    "name": "cmc_function_pc_total",
+    "prototype": false,
+    "source_span": [
+      450,
+      587
+    ],
+    "specification": [
+      [
+        451,
+        451
+      ],
+      [
+        452,
+        456
+      ],
+      [
+        457,
+        463
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        465,
+        491
+      ],
+      [
+        493,
+        520
+      ],
+      [
+        522,
+        565
+      ],
+      [
+        567,
+        585
+      ]
+    ],
+    "runtime": "int cmc_function_pc_total(struct cm_program *program, long long target)\n{\n  struct cm_function *fn = program->functions;\n  int prefix = cmc_function_prefix_total(program, fn, 0, target);\n  int result = 11 + prefix;\n  return result;\n}\n"
+  }
+]

@@ -1,0 +1,683 @@
+1 goal
+  
+  sp : cm_source_lookup_policy
+  p : cm_program
+  fid, fid0 : Z
+  c : cm_expr
+  args : list cm_expr
+  ty : cm_type
+  st : cm_src_state
+  ks : list cm_frame
+  WF : cm_typed_program (cm_source_function_policy sp) p
+  H : 0 <= fid0
+  H3 : fid0 < Zlength (cm_program_functions p)
+  H1 :
+    (fix cm_expr_static_valid
+       (p : cm_program) (f : cm_function_d) (e : cm_expr) {struct e} :
+         Prop :=
+       match e with
+       | CMStringE sid _ => 0 <= sid < Zlength (cm_program_strings p)
+       | CMVarE scope slot _ => cm_binding_valid p f scope slot
+       | CMAssignE a b _ | CMBinaryE _ a b _ | CMIndexE a b _ =>
+           cm_expr_static_valid p f a /\ cm_expr_static_valid p f b
+       | CMCallE callee args _ =>
+           0 <= callee < Zlength (cm_program_functions p) /\
+           (fix all (xs : list cm_expr) : Prop :=
+              match xs with
+              | [] => True
+              | a :: rest => cm_expr_static_valid p f a /\ all rest
+              end) args
+       | CMUnaryE _ a _ | CMMemberE a _ _ | CMPutcE a _ | 
+         CMPutiE a _ | CMExitE a _ => cm_expr_static_valid p f a
+       | _ => True
+       end) p
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p)) c
+  H2 :
+    (fix all (xs : list cm_expr) : Prop :=
+       match xs with
+       | [] => True
+       | a :: rest =>
+           (fix cm_expr_static_valid
+              (p : cm_program) (f : cm_function_d) (e : cm_expr) {struct e} :
+                Prop :=
+              match e with
+              | CMStringE sid _ => 0 <= sid < Zlength (cm_program_strings p)
+              | CMVarE scope slot _ => cm_binding_valid p f scope slot
+              | CMAssignE a0 b _ | CMBinaryE _ a0 b _ | CMIndexE a0 b _ =>
+                  cm_expr_static_valid p f a0 /\ cm_expr_static_valid p f b
+              | CMCallE callee args _ =>
+                  0 <= callee < Zlength (cm_program_functions p) /\
+                  (fix all0 (xs0 : list cm_expr) : Prop :=
+                     match xs0 with
+                     | [] => True
+                     | a0 :: rest0 =>
+                         cm_expr_static_valid p f a0 /\ all0 rest0
+                     end) args
+              | CMUnaryE _ a0 _ | CMMemberE a0 _ _ | 
+                CMPutcE a0 _ | CMPutiE a0 _ | CMExitE a0 _ =>
+                  cm_expr_static_valid p f a0
+              | _ => True
+              end) p
+             (cm_function_at (cm_source_function_policy sp) fid
+                (cm_program_functions p)) a /\ all rest
+       end) args
+  H0 :
+    (fix cm_frames_static_valid
+       (policy : cm_lookup_policy) (p : cm_program) 
+       (fid : Z) (frames : list cm_frame) {struct frames} : Prop :=
+       match frames with
+       | [] => True
+       | frame :: rest =>
+           match frame with
+           | CMAssignLK e _ | CMBinLK _ e _ | CMIndexLK e _ =>
+               (fix cm_expr_static_valid
+                  (p0 : cm_program) (f : cm_function_d) 
+                  (e0 : cm_expr) {struct e0} : Prop :=
+                  match e0 with
+                  | CMStringE sid _ =>
+                      0 <= sid < Zlength (cm_program_strings p0)
+                  | CMVarE scope slot _ => cm_binding_valid p0 f scope slot
+                  | CMAssignE a b _ | CMBinaryE _ a b _ | CMIndexE a b _ =>
+                      cm_expr_static_valid p0 f a /\
+                      cm_expr_static_valid p0 f b
+                  | CMCallE callee args _ =>
+                      0 <= callee < Zlength (cm_program_functions p0) /\
+                      (fix all (xs : list cm_expr) : Prop :=
+                         match xs with
+                         | [] => True
+                         | a :: rest0 =>
+                             cm_expr_static_valid p0 f a /\ all rest0
+                         end) args
+                  | CMUnaryE _ a _ | CMMemberE a _ _ | 
+                    CMPutcE a _ | CMPutiE a _ | CMExitE a _ =>
+                      cm_expr_static_valid p0 f a
+                  | _ => True
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 e
+           | CMSeqK s =>
+               (fix cm_stmt_static_valid
+                  (p0 : cm_program) (f : cm_function_d) 
+                  (stmt : cm_stmt) {struct stmt} : Prop :=
+                  match stmt with
+                  | CMInitS _ e =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot0 _ =>
+                             cm_binding_valid p1 f0 scope slot0
+                         | CMAssignE a b _ | CMBinaryE _ a b _ |
+                           CMIndexE a b _ =>
+                             cm_expr_static_valid p1 f0 a /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a /\ all rest0
+                                end) args
+                         | CMUnaryE _ a _ | CMMemberE a _ _ | 
+                           CMPutcE a _ | CMPutiE a _ | 
+                           CMExitE a _ => cm_expr_static_valid p1 f0 a
+                         | _ => True
+                         end) p0 f e
+                  | CMSeqS a b =>
+                      cm_stmt_static_valid p0 f a /\
+                      cm_stmt_static_valid p0 f b
+                  | CMBlockS a => cm_stmt_static_valid p0 f a
+                  | CMIfS e a b =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b0 _ | CMBinaryE _ a0 b0 _ |
+                           CMIndexE a0 b0 _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e /\
+                      cm_stmt_static_valid p0 f a /\
+                      cm_stmt_static_valid p0 f b
+                  | CMWhileS e a =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b _ | CMBinaryE _ a0 b _ |
+                           CMIndexE a0 b _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e /\ cm_stmt_static_valid p0 f a
+                  | CMExprS e | CMReturnS e =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a b _ | CMBinaryE _ a b _ |
+                           CMIndexE a b _ =>
+                             cm_expr_static_valid p1 f0 a /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a /\ all rest0
+                                end) args
+                         | CMUnaryE _ a _ | CMMemberE a _ _ | 
+                           CMPutcE a _ | CMPutiE a _ | 
+                           CMExitE a _ => cm_expr_static_valid p1 f0 a
+                         | _ => True
+                         end) p0 f e
+                  | _ => True
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 s
+           | CMIfK a b =>
+               (fix cm_stmt_static_valid
+                  (p0 : cm_program) (f : cm_function_d) 
+                  (stmt : cm_stmt) {struct stmt} : Prop :=
+                  match stmt with
+                  | CMInitS _ e =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot0 _ =>
+                             cm_binding_valid p1 f0 scope slot0
+                         | CMAssignE a0 b0 _ | CMBinaryE _ a0 b0 _ |
+                           CMIndexE a0 b0 _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e
+                  | CMSeqS a0 b0 =>
+                      cm_stmt_static_valid p0 f a0 /\
+                      cm_stmt_static_valid p0 f b0
+                  | CMBlockS a0 => cm_stmt_static_valid p0 f a0
+                  | CMIfS e a0 b0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a1 b1 _ | CMBinaryE _ a1 b1 _ |
+                           CMIndexE a1 b1 _ =>
+                             cm_expr_static_valid p1 f0 a1 /\
+                             cm_expr_static_valid p1 f0 b1
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a1 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a1 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a1 _ | CMMemberE a1 _ _ |
+                           CMPutcE a1 _ | CMPutiE a1 _ | 
+                           CMExitE a1 _ => cm_expr_static_valid p1 f0 a1
+                         | _ => True
+                         end) p0 f e /\
+                      cm_stmt_static_valid p0 f a0 /\
+                      cm_stmt_static_valid p0 f b0
+                  | CMWhileS e a0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a1 b0 _ | CMBinaryE _ a1 b0 _ |
+                           CMIndexE a1 b0 _ =>
+                             cm_expr_static_valid p1 f0 a1 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a1 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a1 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a1 _ | CMMemberE a1 _ _ |
+                           CMPutcE a1 _ | CMPutiE a1 _ | 
+                           CMExitE a1 _ => cm_expr_static_valid p1 f0 a1
+                         | _ => True
+                         end) p0 f e /\ cm_stmt_static_valid p0 f a0
+                  | CMExprS e | CMReturnS e =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b0 _ | CMBinaryE _ a0 b0 _ |
+                           CMIndexE a0 b0 _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e
+                  | _ => True
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 a /\
+               (fix cm_stmt_static_valid
+                  (p0 : cm_program) (f : cm_function_d) 
+                  (stmt : cm_stmt) {struct stmt} : Prop :=
+                  match stmt with
+                  | CMInitS _ e =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot0 _ =>
+                             cm_binding_valid p1 f0 scope slot0
+                         | CMAssignE a0 b0 _ | CMBinaryE _ a0 b0 _ |
+                           CMIndexE a0 b0 _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e
+                  | CMSeqS a0 b0 =>
+                      cm_stmt_static_valid p0 f a0 /\
+                      cm_stmt_static_valid p0 f b0
+                  | CMBlockS a0 => cm_stmt_static_valid p0 f a0
+                  | CMIfS e a0 b0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a1 b1 _ | CMBinaryE _ a1 b1 _ |
+                           CMIndexE a1 b1 _ =>
+                             cm_expr_static_valid p1 f0 a1 /\
+                             cm_expr_static_valid p1 f0 b1
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a1 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a1 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a1 _ | CMMemberE a1 _ _ |
+                           CMPutcE a1 _ | CMPutiE a1 _ | 
+                           CMExitE a1 _ => cm_expr_static_valid p1 f0 a1
+                         | _ => True
+                         end) p0 f e /\
+                      cm_stmt_static_valid p0 f a0 /\
+                      cm_stmt_static_valid p0 f b0
+                  | CMWhileS e a0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a1 b0 _ | CMBinaryE _ a1 b0 _ |
+                           CMIndexE a1 b0 _ =>
+                             cm_expr_static_valid p1 f0 a1 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a1 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a1 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a1 _ | CMMemberE a1 _ _ |
+                           CMPutcE a1 _ | CMPutiE a1 _ | 
+                           CMExitE a1 _ => cm_expr_static_valid p1 f0 a1
+                         | _ => True
+                         end) p0 f e /\ cm_stmt_static_valid p0 f a0
+                  | CMExprS e | CMReturnS e =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e0 : cm_expr) {struct e0} : Prop :=
+                         match e0 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b0 _ | CMBinaryE _ a0 b0 _ |
+                           CMIndexE a0 b0 _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e
+                  | _ => True
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 b
+           | CMWhileGuardK e s | CMWhileBodyK e s _ _ =>
+               (fix cm_expr_static_valid
+                  (p0 : cm_program) (f : cm_function_d) 
+                  (e0 : cm_expr) {struct e0} : Prop :=
+                  match e0 with
+                  | CMStringE sid _ =>
+                      0 <= sid < Zlength (cm_program_strings p0)
+                  | CMVarE scope slot _ => cm_binding_valid p0 f scope slot
+                  | CMAssignE a b _ | CMBinaryE _ a b _ | CMIndexE a b _ =>
+                      cm_expr_static_valid p0 f a /\
+                      cm_expr_static_valid p0 f b
+                  | CMCallE callee args _ =>
+                      0 <= callee < Zlength (cm_program_functions p0) /\
+                      (fix all (xs : list cm_expr) : Prop :=
+                         match xs with
+                         | [] => True
+                         | a :: rest0 =>
+                             cm_expr_static_valid p0 f a /\ all rest0
+                         end) args
+                  | CMUnaryE _ a _ | CMMemberE a _ _ | 
+                    CMPutcE a _ | CMPutiE a _ | CMExitE a _ =>
+                      cm_expr_static_valid p0 f a
+                  | _ => True
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 e /\
+               (fix cm_stmt_static_valid
+                  (p0 : cm_program) (f : cm_function_d) 
+                  (stmt : cm_stmt) {struct stmt} : Prop :=
+                  match stmt with
+                  | CMInitS _ e0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e1 : cm_expr) {struct e1} : Prop :=
+                         match e1 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot0 _ =>
+                             cm_binding_valid p1 f0 scope slot0
+                         | CMAssignE a b _ | CMBinaryE _ a b _ |
+                           CMIndexE a b _ =>
+                             cm_expr_static_valid p1 f0 a /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a /\ all rest0
+                                end) args
+                         | CMUnaryE _ a _ | CMMemberE a _ _ | 
+                           CMPutcE a _ | CMPutiE a _ | 
+                           CMExitE a _ => cm_expr_static_valid p1 f0 a
+                         | _ => True
+                         end) p0 f e0
+                  | CMSeqS a b =>
+                      cm_stmt_static_valid p0 f a /\
+                      cm_stmt_static_valid p0 f b
+                  | CMBlockS a => cm_stmt_static_valid p0 f a
+                  | CMIfS e0 a b =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e1 : cm_expr) {struct e1} : Prop :=
+                         match e1 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b0 _ | CMBinaryE _ a0 b0 _ |
+                           CMIndexE a0 b0 _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b0
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e0 /\
+                      cm_stmt_static_valid p0 f a /\
+                      cm_stmt_static_valid p0 f b
+                  | CMWhileS e0 a =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e1 : cm_expr) {struct e1} : Prop :=
+                         match e1 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b _ | CMBinaryE _ a0 b _ |
+                           CMIndexE a0 b _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest0
+                                end) args
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f e0 /\ cm_stmt_static_valid p0 f a
+                  | CMExprS e0 | CMReturnS e0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d)
+                         (e1 : cm_expr) {struct e1} : Prop :=
+                         match e1 with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a b _ | CMBinaryE _ a b _ |
+                           CMIndexE a b _ =>
+                             cm_expr_static_valid p1 f0 a /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee args _ =>
+                             0 <= callee < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a :: rest0 =>
+                                    cm_expr_static_valid p1 f0 a /\ all rest0
+                                end) args
+                         | CMUnaryE _ a _ | CMMemberE a _ _ | 
+                           CMPutcE a _ | CMPutiE a _ | 
+                           CMExitE a _ => cm_expr_static_valid p1 f0 a
+                         | _ => True
+                         end) p0 f e0
+                  | _ => True
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 s
+           | CMArgK callee args _ _ =>
+               0 <= callee < Zlength (cm_program_functions p) /\
+               (fix cm_args_static_valid
+                  (p0 : cm_program) (f : cm_function_d)
+                  (args0 : list cm_expr) {struct args0} : Prop :=
+                  match args0 with
+                  | [] => True
+                  | a :: rest0 =>
+                      (fix cm_expr_static_valid
+                         (p1 : cm_program) (f0 : cm_function_d) 
+                         (e : cm_expr) {struct e} : Prop :=
+                         match e with
+                         | CMStringE sid _ =>
+                             0 <= sid < Zlength (cm_program_strings p1)
+                         | CMVarE scope slot _ =>
+                             cm_binding_valid p1 f0 scope slot
+                         | CMAssignE a0 b _ | CMBinaryE _ a0 b _ |
+                           CMIndexE a0 b _ =>
+                             cm_expr_static_valid p1 f0 a0 /\
+                             cm_expr_static_valid p1 f0 b
+                         | CMCallE callee0 args1 _ =>
+                             0 <= callee0 < Zlength (cm_program_functions p1) /\
+                             (fix all (xs : list cm_expr) : Prop :=
+                                match xs with
+                                | [] => True
+                                | a0 :: rest1 =>
+                                    cm_expr_static_valid p1 f0 a0 /\
+                                    all rest1
+                                end) args1
+                         | CMUnaryE _ a0 _ | CMMemberE a0 _ _ |
+                           CMPutcE a0 _ | CMPutiE a0 _ | 
+                           CMExitE a0 _ => cm_expr_static_valid p1 f0 a0
+                         | _ => True
+                         end) p0 f a /\ cm_args_static_valid p0 f rest0
+                  end) p (cm_function_at policy fid (cm_program_functions p))
+                 args
+           | _ => True
+           end /\
+           cm_frames_static_valid policy p
+             match frame with
+             | CMCallK caller _ _ _ _ => caller
+             | _ => fid
+             end rest
+       end) (cm_source_function_policy sp) p fid ks
+  ============================
+  (fix cm_args_static_valid
+     (p0 : cm_program) (f : cm_function_d) (args0 : list cm_expr) {struct
+      args0} : Prop :=
+     match args0 with
+     | [] => True
+     | a :: rest =>
+         (fix cm_expr_static_valid
+            (p1 : cm_program) (f0 : cm_function_d) (e : cm_expr) {struct e} :
+              Prop :=
+            match e with
+            | CMStringE sid _ => 0 <= sid < Zlength (cm_program_strings p1)
+            | CMVarE scope slot _ => cm_binding_valid p1 f0 scope slot
+            | CMAssignE a0 b _ | CMBinaryE _ a0 b _ | CMIndexE a0 b _ =>
+                cm_expr_static_valid p1 f0 a0 /\ cm_expr_static_valid p1 f0 b
+            | CMCallE callee args1 _ =>
+                0 <= callee < Zlength (cm_program_functions p1) /\
+                (fix all (xs : list cm_expr) : Prop :=
+                   match xs with
+                   | [] => True
+                   | a0 :: rest0 =>
+                       cm_expr_static_valid p1 f0 a0 /\ all rest0
+                   end) args1
+            | CMUnaryE _ a0 _ | CMMemberE a0 _ _ | 
+              CMPutcE a0 _ | CMPutiE a0 _ | CMExitE a0 _ =>
+                cm_expr_static_valid p1 f0 a0
+            | _ => True
+            end) p0 f a /\ cm_args_static_valid p0 f rest
+     end) p
+    (cm_function_at (cm_source_function_policy sp) fid
+       (cm_program_functions p)) args
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_static_migration_lib.v", line 67, characters 0-4:
+Error:  (in proof cm_r_static_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

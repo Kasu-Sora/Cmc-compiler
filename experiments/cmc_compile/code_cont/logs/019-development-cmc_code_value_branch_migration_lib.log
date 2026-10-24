@@ -1,0 +1,80 @@
+Chars 0 - 79 [Require~Export~~~SimpleC.EE.QC...] 1.282 secs (1.192u,0.075s)
+Chars 80 - 125 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 126 - 161 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 162 - 183 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 184 - 209 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 210 - 440 [Ltac~~cm_code_layout_lengths~:...] 0. secs (0.u,0.s)
+Chars 441 - 800 [Ltac~~cm_code_layout_equal~COD...] 0. secs (0.u,0.s)
+Chars 801 - 1364 [Lemma~cm_v_while_guard_layout_...] 0. secs (0.u,0.s)
+Chars 1365 - 1371 [Proof.] 0. secs (0.u,0.s)
+Chars 1373 - 1567 [(cbn~zeta;~intros~[CODE~[SITES...] 0.054 secs (0.05u,0.003s)
+Chars 1569 - 1570 [-] 0. secs (0.u,0.s)
+Chars 1571 - 1688 [(repeat~rewrite~<-~app_assoc~i...] 0.047 secs (0.04u,0.005s)
+Chars 1690 - 1691 [-] 0. secs (0.u,0.s)
+Chars 1692 - 1711 [exact~(proj2~SITES).] 0. secs (0.u,0.s)
+Chars 1712 - 1716 [Qed.] 0.059 secs (0.056u,0.002s)
+Chars 1717 - 2171 [Lemma~cm_v_if_layout_step~sp~a...] 0. secs (0.u,0.s)
+Chars 2172 - 2178 [Proof.] 0. secs (0.u,0.s)
+Chars 2180 - 2307 [(cbn~zeta;~intros~[CODE~[_~SAV...] 0.005 secs (0.005u,0.s)
+Chars 2309 - 2310 [-] 0. secs (0.u,0.s)
+Chars 2311 - 2396 [(pose~proof~CODE~as~END;~apply...] 0.014 secs (0.014u,0.s)
+Chars 2400 - 2463 [(split;~[~~|~split;~[~right;~c...] 0.001 secs (0.001u,0.s)
+Chars 2467 - 2533 [(repeat~rewrite~<-~app_assoc~i...] 0. secs (0.u,0.s)
+Chars 2537 - 2591 [(fold~app~in~CODE;~cbn[app]~in...] 0. secs (0.u,0.s)
+Chars 2595 - 2771 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 2775 - 2858 [(apply~cm_code_at_append_left~...] 0. secs (0.u,0.s)
+Chars 2860 - 2861 [-] 0. secs (0.u,0.s)
+Chars 2862 - 3022 [(repeat~rewrite~<-~app_assoc~i...] 0.013 secs (0.013u,0.s)
+Chars 3026 - 3066 [(split;~[~~|~split;~[~now~left...] 0. secs (0.u,0.s)
+Chars 3067 - 3112 [(rewrite~Z.add_0_r;~cm_code_la...] 0.002 secs (0.002u,0.s)
+1 goal
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  v : cm_value
+  st : cm_src_state
+  yes, no : cm_stmt
+  pc, temp, b, c, owner, ob, oc : Z
+  tail : list cm_acursor
+  spills : list cm_spill
+  saved : list cm_spill_frame
+  calls : list cm_call_sim_frame
+  CODE :
+    cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+      (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+       1)
+      (cm_emit_stmt (cm_source_function_policy sp) p fid
+         (pc + 2 +
+          cm_stmt_code_count (cm_source_function_policy sp) p fid yes) owner
+         ob oc no ++
+       cm_cursor_code sp p fid
+         (pc +
+          (Z.succ 0 +
+           (cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+            (Z.succ 0 +
+             cm_stmt_code_count (cm_source_function_policy sp) p fid no))))
+         owner true tail)
+  SAVED :
+    cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+      fid tail calls
+  TRUTH : cm_truth st v = false
+  ============================
+  cm_cursor_code sp p fid
+    (pc +
+     (Z.succ 0 +
+      (cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+       (Z.succ 0 + cm_stmt_code_count (cm_source_function_policy sp) p fid no))))
+    owner true tail =
+  [] ++
+  cm_cursor_code sp p fid
+    (pc + 1 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes + 1 +
+     cm_stmt_code_count (cm_source_function_policy sp) p fid no) owner true
+    tail
+Chars 3113 - 3118 [Show.] 0. secs (0.u,0.s)
+Chars 3119 - 3123 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_cont/build/Rocq/examples/QCP_demos_human/cmc_code_value_branch_migration_lib.v", line 32, characters 0-4:
+Error:  (in proof cm_v_if_layout_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

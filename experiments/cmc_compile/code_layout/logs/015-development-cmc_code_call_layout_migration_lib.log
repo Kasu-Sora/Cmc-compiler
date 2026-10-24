@@ -1,0 +1,32 @@
+Chars 0 - 80 [Require~Export~~~SimpleC.EE.QC...] 1.321 secs (1.219u,0.086s)
+Chars 81 - 126 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 127 - 162 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 163 - 184 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 185 - 210 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 211 - 935 [Lemma~cm_layout_enter_call~sp~...] 0. secs (0.u,0.s)
+Chars 936 - 942 [Proof.] 0. secs (0.u,0.s)
+Chars 944 - 966 [(intros~B~RETURN~SAVED).] 0. secs (0.u,0.s)
+Chars 968 - 1028 [(pose~proof~(cm_model_function...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_layout/build/Rocq/examples/QCP_demos_human/cmc_code_call_layout_migration_lib.v", line 14, characters 44-45:
+Error: Cannot infer this placeholder of type "cm_lookup_policy" in
+environment:
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+caller, callee : Z
+st : cm_src_state
+values : list cm_value
+ret : cm_type
+returnpc, temp, breakpc, continuepc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+B : 0 <= callee < Zlength (cm_program_functions p)
+RETURN :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) returnpc
+    (cm_cont_code sp p caller returnpc temp tail)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    caller tail calls
+

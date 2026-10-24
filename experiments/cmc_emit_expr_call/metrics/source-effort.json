@@ -1,0 +1,615 @@
+{
+  "source_sha256": "5517421976483e0c70b0a5a86472489faa0c9c5977c2b716c682f4d07f7f6756",
+  "function_counts": [
+    {
+      "function": "cm_emit_args_reload_plan",
+      "source_span": [
+        282,
+        473
+      ],
+      "specification": 38,
+      "annotation": 8,
+      "inline_proof": 134
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "source_span": [
+        610,
+        1007
+      ],
+      "specification": 76,
+      "annotation": 20,
+      "inline_proof": 283
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "source_span": [
+        1103,
+        1288
+      ],
+      "specification": 66,
+      "annotation": 7,
+      "inline_proof": 98
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_args_tail_def",
+      "kind": "model",
+      "span": [
+        8,
+        9
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_args_tail_def = new_fun_definition(\n    `cm_args_tail (args:(cm_expr)list) : (cm_expr)list = TL args`);",
+      "dependencies": [],
+      "category": "source_case_model"
+    },
+    {
+      "name": "_e_cm_args_tail",
+      "kind": "export_scaffolding",
+      "span": [
+        10,
+        11
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static int _e_cm_args_tail =\n    cst_add_const_to_header(`cm_args_tail`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "cm_args_head_def",
+      "kind": "model",
+      "span": [
+        13,
+        14
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_args_head_def = new_fun_definition(\n    `cm_args_head (args:(cm_expr)list) : cm_expr = HD args`);",
+      "dependencies": [],
+      "category": "source_case_model"
+    },
+    {
+      "name": "_e_cm_args_head",
+      "kind": "export_scaffolding",
+      "span": [
+        15,
+        16
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static int _e_cm_args_head =\n    cst_add_const_to_header(`cm_args_head`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "cm_call_slots_tail_def",
+      "kind": "model",
+      "span": [
+        18,
+        20
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF static thm cm_call_slots_tail_def = new_fun_definition(\n    `cm_call_slots_tail (slots:(cm_slot_d)list) :\n       (cm_slot_d)list = TL slots`);",
+      "dependencies": [],
+      "category": "source_case_model"
+    },
+    {
+      "name": "_e_cm_call_slots_tail",
+      "kind": "export_scaffolding",
+      "span": [
+        21,
+        22
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static int _e_cm_call_slots_tail =\n    cst_add_const_to_header(`cm_call_slots_tail`);",
+      "dependencies": [],
+      "category": "export_scaffolding"
+    },
+    {
+      "name": "cm_prove_rep_args_length_matches_length",
+      "kind": "proof",
+      "span": [
+        25,
+        43
+      ],
+      "nonblank_lines": 19,
+      "text": "PROOF static thm cm_prove_rep_args_length_matches_length(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(args:(cm_expr)list).\n         cm_rep_args_length args == ilength args`);\n  gnode_list cases = INDUCT_TAC(root, `args:(cm_expr)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_args_length_def(),\n        get_theorem_by_name(\"ILENGTH_DEF\"))));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    CONV_WITH_ASMP_TAC(leaf, reduce_rewrite_conv, THM_LIST(\n        get_cm_rep_args_length_def(),\n        get_theorem_by_name(\"ILENGTH_DEF\")));\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_rep_args_length_matches_length",
+      "kind": "proof",
+      "span": [
+        44,
+        45
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_rep_args_length_matches_length =\n    cm_prove_rep_args_length_matches_length();",
+      "dependencies": [
+        "cm_prove_rep_args_length_matches_length"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_args_depth_nonnegative",
+      "kind": "proof",
+      "span": [
+        47,
+        73
+      ],
+      "nonblank_lines": 27,
+      "text": "PROOF static thm cm_prove_args_depth_nonnegative(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(args:(cm_expr)list).\n         0i <= cm_adepth (cm_args_apair args)`);\n  gnode_list cases = INDUCT_TAC(root, `args:(cm_expr)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_expr_tpair_def(), get_cm_adepth_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm head_nonnegative = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_rtemps_def())), conjunct2_rule(spec_rule(\n          `a0:cm_expr`, cm_expr_temps_nonnegative)));\n    thm bound = specl_rule(TERM_LIST(\n        `cm_tright (cm_expr_tpair (a0:cm_expr))`,\n        `cm_adepth (cm_args_apair (a1:(cm_expr)list))`),\n        cm_imax_left_bound);\n    gnode reduced = CONV_TAC(leaf, rewrite_conv(THM_LIST(\n        get_cm_expr_tpair_def(), get_cm_adepth_def())));\n    ACCEPT_TAC(reduced, mp_rule(int_arith_rule(mk_imp(\n        mk_conj(concl(head_nonnegative), concl(bound)),\n        goal_ccl(reduced->g))), conj_rule(head_nonnegative, bound)));\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_args_depth_nonnegative",
+      "kind": "proof",
+      "span": [
+        74,
+        75
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_args_depth_nonnegative =\n    cm_prove_args_depth_nonnegative();",
+      "dependencies": [
+        "cm_prove_args_depth_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_rep_args_safe_from_length",
+      "kind": "proof",
+      "span": [
+        77,
+        113
+      ],
+      "nonblank_lines": 37,
+      "text": "PROOF static thm cm_prove_rep_args_safe_from_length(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(args:(cm_expr)list).\n         ilength args <= 2147483647i ==>\n         cm_rep_args_safe args`);\n  gnode_list cases = INDUCT_TAC(root, `args:(cm_expr)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_args_safe_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm tail_nonnegative = ispec_rule(\n        `a1:(cm_expr)list`, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n    thm cons_bound = conv_rule(rewrite_conv(THM_LIST(\n        get_theorem_by_name(\"ILENGTH_DEF\"))),\n        assume_rule(\n          `ilength ((a0:cm_expr) :: (a1:(cm_expr)list)) <=\n           2147483647i`));\n    thm tail_bound = mp_rule(int_arith_rule(\n        `1i + ilength (a1:(cm_expr)list) <= 2147483647i ==>\n         ilength a1 <= 2147483647i`), cons_bound);\n    thm ih = mp_rule(assume_rule(\n        `ilength (a1:(cm_expr)list) <= 2147483647i ==>\n         cm_rep_args_safe a1`), tail_bound);\n    gnode reduced = CONV_TAC(leaf, rewrite_conv(THM_LIST(\n        get_cm_rep_args_safe_def(),\n        cm_rep_args_length_matches_length)));\n    thm facts = conj_rule(tail_nonnegative,\n        conj_rule(mp_rule(int_arith_rule(\n            `1i + ilength (a1:(cm_expr)list) <= 2147483647i ==>\n             ilength a1 < 2147483647i`), cons_bound), ih));\n    ACCEPT_TAC(reduced, facts);\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [
+        "cm_rep_args_length_matches_length"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_rep_args_safe_from_length",
+      "kind": "proof",
+      "span": [
+        114,
+        115
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_rep_args_safe_from_length =\n    cm_prove_rep_args_safe_from_length();",
+      "dependencies": [
+        "cm_prove_rep_args_safe_from_length"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_call_rep_members_size_nonnegative",
+      "kind": "proof",
+      "span": [
+        117,
+        143
+      ],
+      "nonblank_lines": 27,
+      "text": "PROOF static thm cm_prove_call_rep_members_size_nonnegative(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(members:(cm_slot_d)list).\n         cm_rep_members_safe members ==>\n         0i <= cm_rep_members_size members`);\n  gnode_list cases = INDUCT_TAC(root, `members:(cm_slot_d)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm safe = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_rep_members_safe_def())),\n        assume_rule(\n          `cm_rep_members_safe\n            ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`));\n    gnode reduced = CONV_TAC(leaf, rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())));\n    thm inputs = conj_rule(conjunct1_rule(safe),\n        conjunct1_rule(conjunct2_rule(safe)));\n    ACCEPT_TAC(reduced, mp_rule(int_arith_rule(mk_imp(\n        concl(inputs), goal_ccl(reduced->g))), inputs));\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_rep_members_size_nonnegative",
+      "kind": "proof",
+      "span": [
+        144,
+        145
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_call_rep_members_size_nonnegative =\n    cm_prove_call_rep_members_size_nonnegative();",
+      "dependencies": [
+        "cm_prove_call_rep_members_size_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_add_temp_limit_facts_st",
+      "kind": "proof",
+      "span": [
+        147,
+        209
+      ],
+      "nonblank_lines": 63,
+      "text": "PROOF static void cm_call_add_temp_limit_facts_st(void) {\n  term params = `cm_function_params (f:cm_function_d)`;\n  term locals = `cm_function_locals (f:cm_function_d)`;\n  thm params_safe = from_state_bool(\n      `cm_rep_members_safe\n        (cm_function_params (f:cm_function_d))`);\n  thm locals_safe = from_state_bool(\n      `cm_rep_members_safe\n        (cm_function_locals (f:cm_function_d))`);\n  thm params_rep_nonnegative = mp_rule(\n      spec_rule(params, cm_call_rep_members_size_nonnegative),\n      params_safe);\n  thm locals_rep_nonnegative = mp_rule(\n      spec_rule(locals, cm_call_rep_members_size_nonnegative),\n      locals_safe);\n  thm params_match = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`, params),\n      cm_rep_members_size_matches), from_state_bool(\n        `cm_slots_wf (cm_program_structs (p:cm_program))\n          (cm_function_params (f:cm_function_d))`));\n  thm locals_match = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`, locals),\n      cm_rep_members_size_matches), from_state_bool(\n        `cm_slots_wf (cm_program_structs (p:cm_program))\n          (cm_function_locals (f:cm_function_d))`));\n  thm params_nonnegative = by_rewrite(\n      `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n        (cm_function_params (f:cm_function_d))`,\n      THM_LIST(sym_rule(params_match), params_rep_nonnegative));\n  thm locals_nonnegative = by_rewrite(\n      `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n        (cm_function_locals (f:cm_function_d))`,\n      THM_LIST(sym_rule(locals_match), locals_rep_nonnegative));\n  thm params_at_fid = conv_rule(rewrite_conv(THM_LIST(\n      assume_rule(\n        `(f:cm_function_d) ==\n         inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n      params_nonnegative);\n  thm locals_at_fid = conv_rule(rewrite_conv(THM_LIST(\n      assume_rule(\n        `(f:cm_function_d) ==\n         inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n      locals_nonnegative);\n  thm offset_bound = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_temp_offset_def())), assume_rule(\n        `cm_temp_offset (p:cm_program) (fid__pre:int)\n          (temp_limit__pre:int) <= 2147483647i`));\n  thm limit_upper = by_defs_arith(\n      `(temp_limit__pre:int) <= 2147483647i`,\n      THM_LIST(get_cm_temp_offset_def()),\n      THM_LIST(params_at_fid, locals_at_fid, offset_bound));\n  thm limit_nonnegative = mp_rule(mp_rule(int_arith_rule(\n      `0i <= (temp__pre:int) ==>\n       temp__pre <= (temp_limit__pre:int) ==>\n       0i <= temp_limit__pre`),\n      assume_rule(`0i <= (temp__pre:int)`)),\n      assume_rule(`(temp__pre:int) <= (temp_limit__pre:int)`));\n  add_fact_st(limit_nonnegative);\n  add_fact_st(limit_upper);\n  add_fact_st(mp_rule(mp_rule(spec_rule(\n      `temp_limit__pre:int`, cm_nonnegative_i32_cast),\n      limit_nonnegative), limit_upper));\n}",
+      "dependencies": [
+        "cm_call_rep_members_size_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_add_temp_offset_bound_st",
+      "kind": "proof",
+      "span": [
+        211,
+        229
+      ],
+      "nonblank_lines": 19,
+      "text": "PROOF static void cm_call_add_temp_offset_bound_st(const term at) {\n  term at_le_limit = subst(TERM_PAIR_LIST(\n      (term_pair){at, `at_:int`}),\n      `(at_:int) <= (temp_limit__pre:int)`);\n  thm monotone = mp_rule(specl_rule(TERM_LIST(\n      `p:cm_program`, `fid:int`, at, `temp_limit__pre:int`),\n      cm_temp_offset_mono), assume_rule(at_le_limit));\n  term ceiling = `cm_temp_offset (p:cm_program) (fid:int)\n      (temp_limit__pre:int) <= 2147483647i`;\n  term target = subst(TERM_PAIR_LIST(\n      (term_pair){at, `at_:int`}),\n      `cm_temp_offset (p:cm_program) (fid:int)\n         (at_:int) <= 2147483647i`);\n  thm result = mp_rule(mp_rule(\n      int_arith_rule(mk_imp(concl(monotone),\n        mk_imp(ceiling, target))), monotone),\n      assume_rule(ceiling));\n  add_fact_st(result);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_code_shape",
+      "kind": "proof",
+      "span": [
+        231,
+        251
+      ],
+      "nonblank_lines": 21,
+      "text": "PROOF static thm cm_call_code_shape(const thm shape,\n                                    const thm lvalue_case,\n                                    const term code) {\n  thm selected = by_rewrite(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       (if lvalue__pre == 0i\n        then cm_rcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e)\n        else cm_lcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e))`,\n      THM_LIST(cm_expr_code_for_def, lvalue_case,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def()));\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code), THM_LIST(\n        shape, get_cm_emit_expr_pair_def(), get_cm_rcode_of_def(),\n        get_cm_lcode_of_def(), cm_expr_code_for_def,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def(),\n        lvalue_case, eqf_intro_rule(int_arith_rule(`~(1i == 0i)`)),\n        get_theorem_by_name(\"APPEND_NIL\"))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_open_call_payload_st",
+      "kind": "proof",
+      "span": [
+        253,
+        262
+      ],
+      "nonblank_lines": 10,
+      "text": "PROOF static void cm_open_call_payload_st(const thm shape) {\n  thm payload_view = by_rewrite(\n      `cm_expr_payload (e:cm_expr)\n         (za:int) (zb:int) (zargs:int) -|-\n       fact(za == 0i && zb == 0i) **\n       cm_arg_list_rep zargs (args_:(cm_expr)list)`,\n      THM_LIST(shape, get_cm_expr_payload_def(),\n        get_cm_arg_list_rep_def()));\n  apply_hconv_st(eq2ent(payload_view));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_close_call_payload_st",
+      "kind": "proof",
+      "span": [
+        264,
+        280
+      ],
+      "nonblank_lines": 17,
+      "text": "PROOF static void cm_close_call_payload_st(const thm shape) {\n  thm payload_view = by_rewrite(\n      `cm_expr_payload (e:cm_expr)\n         (za:int) (zb:int) (zargs:int) -|-\n       fact(za == 0i && zb == 0i) **\n       cm_arg_list_rep zargs (args_:(cm_expr)list)`,\n      THM_LIST(shape, get_cm_expr_payload_def(),\n        get_cm_arg_list_rep_def()));\n  thm payload_facts = conj_rule(\n      assume_rule(`(za:int) == 0i`),\n      assume_rule(`(zb:int) == 0i`));\n  thm payload_intro = frame_right_slrule(\n      add_fact_hconv(payload_facts),\n      `cm_arg_list_rep (zargs:int) (args_:(cm_expr)list)`);\n  apply_hconv_st(trans_slrule(payload_intro,\n      eq2ent(sym_rule(payload_view))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_rvalue_code_length_at",
+      "kind": "proof",
+      "span": [
+        475,
+        493
+      ],
+      "nonblank_lines": 19,
+      "text": "PROOF static thm cm_call_rvalue_code_length_at(\n    const term expr, const term pc, const term temp) {\n  thm lengths = conjunct2_rule(\n      spec_rule(expr, get_cm_expr_code_lengths()));\n  thm result = specl_rule(TERM_LIST(\n      `p:cm_program`, `fid__pre:int`, pc, temp), lengths);\n  term selection_target = subst(TERM_PAIR_LIST(\n      (term_pair){expr, `expr_:cm_expr`},\n      (term_pair){pc, `pc_:int`},\n      (term_pair){temp, `temp_:int`}),\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc_:int) (temp_:int) (expr_:cm_expr) 0i ==\n       cm_emit_rvalue p fid__pre pc_ temp_ expr_`);\n  thm selection = by_rewrite(selection_target, THM_LIST(\n      cm_expr_code_for_def,\n      eqt_intro_rule(int_arith_rule(`0i == 0i`))));\n  return conv_rule(rewrite_conv(THM_LIST(gsym_rule(selection))),\n      result);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_add_store_pc_facts",
+      "kind": "proof",
+      "span": [
+        495,
+        608
+      ],
+      "nonblank_lines": 114,
+      "text": "PROOF static void cm_call_add_store_pc_facts(\n    const thm code_shape) {\n  term head_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (scratch__pre:int) (arg_:cm_expr) 0i`;\n  term rest_code =\n      `cm_emit_args_store (p:cm_program) (fid__pre:int)\n         ((pc__pre:int) +\n           cm_rvalue_code_count p fid__pre (arg_:cm_expr) + 5i)\n         ((slot__pre:int) + 1i) (scratch__pre:int)\n         (rest_:(cm_expr)list)`;\n  term after_head =\n      `cm_temp_store_code (p:cm_program) (fid__pre:int)\n         (slot__pre:int) ++\n       cm_emit_args_store p fid__pre\n         (pc__pre +\n           cm_rvalue_code_count p fid__pre (arg_:cm_expr) + 5i)\n         (slot__pre + 1i) scratch__pre\n         (rest_:(cm_expr)list)`;\n  thm parent_pc = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count (pc__pre:int) <=> true`)));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count\n          ((pc__pre:int) + ilength\n            (cm_emit_args_store (p:cm_program) (fid__pre:int)\n              pc__pre (slot__pre:int) (scratch__pre:int)\n              (args:(cm_expr)list))) <=> true`)));\n  thm head_length = cm_call_rvalue_code_length_at(\n      `arg_:cm_expr`, `pc__pre:int`, `scratch__pre:int`);\n  thm after_head_nonnegative = ispec_rule(\n      after_head, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm rest_nonnegative = ispec_rule(\n      rest_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm head_nonnegative = ispec_rule(\n      head_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm_list rules = THM_LIST(\n      get_cm_i32_code_count_def(), code_shape,\n      get_theorem_by_name(\"ILENGTH_APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"),\n      get_cm_temp_store_code_def(),\n      get_cm_fp_relative_address_code_def(), head_length);\n  thm parent_end_shape =\n      conv_rule(rewrite_conv(rules), parent_end);\n  thm after_head_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), after_head_nonnegative);\n  thm rest_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), rest_nonnegative);\n  thm head_end = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) + ilength\n          (cm_expr_code_for (p:cm_program) (fid__pre:int)\n            pc__pre (scratch__pre:int) (arg_:cm_expr) 0i))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        after_head_nonnegative_shape, head_nonnegative,\n        head_length));\n  thm next_start = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n          cm_rvalue_code_count (p:cm_program)\n            (fid__pre:int) (arg_:cm_expr) + 5i)`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        rest_nonnegative_shape, head_nonnegative, head_length));\n  thm next_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      next_start);\n  thm partial = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n          cm_rvalue_code_count (p:cm_program)\n            (fid__pre:int) (arg_:cm_expr))`,\n      rules, THM_LIST(parent_pc, next_bounds,\n        head_nonnegative, head_length));\n  thm partial_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      partial);\n  thm tail_end = by_defs_arith(\n      `cm_i32_code_count\n        (((pc__pre:int) +\n           cm_rvalue_code_count (p:cm_program)\n             (fid__pre:int) (arg_:cm_expr) + 5i) +\n         ilength\n           (cm_emit_args_store p fid__pre\n             (pc__pre +\n               cm_rvalue_code_count p fid__pre arg_ + 5i)\n             (slot__pre + 1i) (scratch__pre:int)\n             (rest_:(cm_expr)list)))`,\n      rules, THM_LIST(parent_pc, next_bounds,\n        parent_end_shape, rest_nonnegative_shape,\n        head_nonnegative, head_length));\n  add_fact_st(eqt_intro_rule(head_end));\n  add_fact_st(eqt_intro_rule(next_start));\n  add_fact_st(eqt_intro_rule(partial));\n  add_fact_st(eqt_intro_rule(tail_end));\n  add_fact_st(conjunct1_rule(partial_bounds));\n  add_fact_st(conjunct2_rule(partial_bounds));\n  add_fact_st(conjunct1_rule(next_bounds));\n  add_fact_st(conjunct2_rule(next_bounds));\n  add_fact_st(mp_rule(mp_rule(spec_rule(\n      `(pc__pre:int) +\n        cm_rvalue_code_count (p:cm_program)\n          (fid__pre:int) (arg_:cm_expr)`,\n      cm_nonnegative_i32_cast), conjunct1_rule(partial_bounds)),\n      conjunct2_rule(partial_bounds)));\n  add_fact_st(mp_rule(mp_rule(spec_rule(\n      `(pc__pre:int) +\n        cm_rvalue_code_count (p:cm_program)\n          (fid__pre:int) (arg_:cm_expr) + 5i`,\n      cm_nonnegative_i32_cast), conjunct1_rule(next_bounds)),\n      conjunct2_rule(next_bounds)));\n}",
+      "dependencies": [
+        "cm_call_rvalue_code_length_at"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_add_initial_store_end_st",
+      "kind": "proof",
+      "span": [
+        1009,
+        1048
+      ],
+      "nonblank_lines": 40,
+      "text": "PROOF static void cm_call_add_initial_store_end_st(\n    const thm code_shape) {\n  thm parent_start = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      from_state_bool(`cm_i32_code_count (pc__pre:int)`));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(code_shape,\n        get_cm_i32_code_count_def(),\n        get_theorem_by_name(\"ILENGTH_APPEND\"),\n        get_theorem_by_name(\"ILENGTH_DEF\"))),\n      from_state_bool(\n        `cm_i32_code_count\n           ((pc__pre:int) +\n            ilength\n              (cm_expr_code_for (p:cm_program) (fid__pre:int)\n                pc__pre (temp__pre:int) (e:cm_expr)\n                (lvalue__pre:int)))`));\n  thm store_nonnegative = ispec_rule(\n      `cm_emit_args_store (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int)\n         (temp__pre + ilength (args_:(cm_expr)list)) args_`,\n      get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm reload_nonnegative = ispec_rule(\n      `cm_emit_args_reload (p:cm_program) (fid__pre:int)\n         (temp__pre:int) (args_:(cm_expr)list)`,\n      get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm result = by_defs_arith(\n      `cm_i32_code_count\n         ((pc__pre:int) +\n          ilength\n            (cm_emit_args_store (p:cm_program) (fid__pre:int)\n              pc__pre (temp__pre:int)\n              (temp__pre + ilength (args_:(cm_expr)list)) args_))`,\n      THM_LIST(get_cm_i32_code_count_def(),\n        get_theorem_by_name(\"ILENGTH_APPEND\"),\n        get_theorem_by_name(\"ILENGTH_DEF\")),\n      THM_LIST(parent_start, parent_end,\n        store_nonnegative, reload_nonnegative));\n  add_fact_st(eqt_intro_rule(result));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_call_add_rvalue_temp_facts_st",
+      "kind": "proof",
+      "span": [
+        1050,
+        1101
+      ],
+      "nonblank_lines": 52,
+      "text": "PROOF static void cm_call_add_rvalue_temp_facts_st(\n    const thm shape, const thm lvalue_case) {\n  thm temp_bound = conv_rule(rewrite_conv(THM_LIST(\n      shape, lvalue_case, cm_expr_temps_for_def,\n      get_cm_rtemps_def(), get_cm_expr_tpair_def(),\n      get_cm_tright_def(), cm_args_count_matches_length)),\n      assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  thm length_nonnegative = ispec_rule(\n      `args_:(cm_expr)list`,\n      get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm depth_nonnegative = spec_rule(\n      `args_:(cm_expr)list`, cm_args_depth_nonnegative);\n  thm limit_upper = assume_rule(\n      `(temp_limit__pre:int) <= 2147483647i`);\n  thm facts = conj_rule(\n      assume_rule(`0i <= (temp__pre:int)`),\n      conj_rule(length_nonnegative,\n        conj_rule(depth_nonnegative,\n          conj_rule(temp_bound, limit_upper))));\n  thm scratch_nonnegative = mp_rule(int_arith_rule(mk_imp(\n      concl(facts),\n      `0i <= (temp__pre:int) +\n         ilength (args_:(cm_expr)list)`)), facts);\n  thm scratch_bound = mp_rule(int_arith_rule(mk_imp(\n      concl(facts),\n      `(temp__pre:int) + ilength (args_:(cm_expr)list) <=\n       (temp_limit__pre:int)`)), facts);\n  thm length_upper = mp_rule(int_arith_rule(mk_imp(\n      concl(facts),\n      `ilength (args_:(cm_expr)list) <= 2147483647i`)),\n      facts);\n  thm scratch_upper = mp_rule(int_arith_rule(mk_imp(\n      concl(facts),\n      `(temp__pre:int) + ilength (args_:(cm_expr)list) <=\n       2147483647i`)), facts);\n  thm safe = mp_rule(spec_rule(\n      `args_:(cm_expr)list`, cm_rep_args_safe_from_length),\n      length_upper);\n  add_fact_st(temp_bound);\n  add_fact_st(scratch_nonnegative);\n  add_fact_st(scratch_bound);\n  add_fact_st(length_upper);\n  add_fact_st(scratch_upper);\n  add_fact_st(eqt_intro_rule(safe));\n  add_fact_st(mp_rule(mp_rule(spec_rule(\n      `(temp__pre:int) + ilength (args_:(cm_expr)list)`,\n      cm_nonnegative_i32_cast), scratch_nonnegative),\n      scratch_upper));\n}",
+      "dependencies": [
+        "cm_args_depth_nonnegative",
+        "cm_rep_args_safe_from_length"
+      ],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 180,
+    "annotation": 35,
+    "inline_proof": 515,
+    "export_scaffolding": 6,
+    "private_case_proof_support": 473,
+    "source_case_model": 7,
+    "case_proof": 988,
+    "proof_including_shared": 988
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        421,
+        421
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        422,
+        422
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        423,
+        423
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        424,
+        424
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        426,
+        426
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        427,
+        427
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        428,
+        428
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_reload_plan",
+      "kind": "where",
+      "span": [
+        429,
+        429
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        772,
+        772
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        773,
+        773
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        896,
+        896
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        897,
+        897
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        898,
+        898
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        901,
+        901
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        902,
+        902
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        903,
+        903
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        904,
+        904
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        933,
+        933
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        934,
+        934
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        935,
+        939
+      ],
+      "nonblank_lines": 5
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        940,
+        940
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        941,
+        941
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_args_store_plan",
+      "kind": "where",
+      "span": [
+        942,
+        943
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1226,
+        1226
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1227,
+        1227
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1228,
+        1228
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1240,
+        1240
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1241,
+        1241
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1242,
+        1242
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_expr",
+      "kind": "where",
+      "span": [
+        1250,
+        1250
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines deduplicated per function/category; body contracts counted once; forward/header duplicates excluded. Same-file private proof support and source model definitions are classified separately; header duplicate contracts excluded."
+}

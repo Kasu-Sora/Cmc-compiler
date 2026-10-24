@@ -1,0 +1,111 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-inputs",
+      "location": "cmc_compile: entry before cmc_model_code_length",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program/output equal @pre",
+        "non-null program/output",
+        "capacities in signed-int nonnegative range"
+      ],
+      "resources": [
+        "full program context/function representations",
+        "all output field ownership",
+        "three whole uninitialized buffers"
+      ],
+      "mathematical_state": "Original well-formedness, specialized with actual codegen obligations, entails code/data readiness needed by both length helpers.",
+      "internal_predicates": []
+    },
+    {
+      "id": "capacity-passed",
+      "location": "cmc_compile: after both capacity tests, before local emitter declaration",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "both measured lengths equal model lengths",
+        "both lengths are nonnegative and fit capacities",
+        "buffer pointers are nonzero since model lengths are positive"
+      ],
+      "resources": [
+        "unchanged program heap",
+        "output lengths set and entry=-1",
+        "each buffer split into empty written prefix and full uninitialized tail"
+      ],
+      "mathematical_state": "Both capacity conditions now hold and buffers can enter the emitter/data contracts.",
+      "internal_predicates": []
+    },
+    {
+      "id": "begin-code",
+      "location": "cmc_compile: before cmc_emit_code",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter local address live",
+        "emitter pc=0 represented by empty prefix",
+        "both length/capacity inequalities"
+      ],
+      "resources": [
+        "program context/function resources",
+        "resolved emitter plan with empty prefix and complete code as remaining plan",
+        "all remaining output fields and data buffer"
+      ],
+      "mathematical_state": "No instruction has been written and the full compiled code model remains to be emitted.",
+      "internal_predicates": []
+    },
+    {
+      "id": "begin-patch",
+      "location": "cmc_compile: between cmc_emit_code and cmc_patch_resolved_calls",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "same program/output/capacities",
+        "code model length equals measured code length"
+      ],
+      "resources": [
+        "program context/function resources",
+        "resolved emitter resource for complete code",
+        "data buffer and untouched output fields"
+      ],
+      "mathematical_state": "Emission has finished; raw physical CALL operands resolve to exactly the model code, ready for physical patching.",
+      "internal_predicates": []
+    },
+    {
+      "id": "begin-data",
+      "location": "cmc_compile: after patching and before globals/strings/data reads",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program/output @pre bridges",
+        "model lengths and capacity inequalities",
+        "data length equals globals/string sizes plus eight"
+      ],
+      "resources": [
+        "program fields opened for actual reads",
+        "all list resources",
+        "patched emitter buffers",
+        "data pointer/capacity fields and data buffer"
+      ],
+      "mathematical_state": "The instruction arrays now equal the code model; the original global/string representations supply exact data emission.",
+      "internal_predicates": []
+    },
+    {
+      "id": "finish-data",
+      "location": "cmc_compile: after cmc_emit_data and before setting entry=0",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "emitted_data=data_length=model data length",
+        "code/data fit capacities",
+        "all live locals including globals/strings retained"
+      ],
+      "resources": [
+        "folded complete program representation resources",
+        "all output fields",
+        "exact code/data prefixes and all uninitialized tails",
+        "explicit local emitter output/pc stores"
+      ],
+      "mathematical_state": "Finish the length/content bridge for all buffers and expose emitter local stores for scope reclamation. Shared success bridge supplies full decoded-object semantic preservation when folding cm_output_ok.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

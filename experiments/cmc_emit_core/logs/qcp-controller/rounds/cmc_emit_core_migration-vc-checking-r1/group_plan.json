@@ -1,0 +1,445 @@
+{
+  "groups": [
+    {
+      "id": "temp_context",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_temp_store_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "CONTEXT: use cm_slots_wf for params and locals and f=cm_function_at policy fid ... to establish the size/offset bridge. Unfold cm_function_context_rep to obtain nonzero fn and existing pp/lp, frame the entire emitter plan, and expose exactly the five fields and two slot lists. After cmc_temp_offset, retval equality and the established bridge retarget the fragment; refold context using the same pp/lp and normalize app associativity. All pure premises are explicit VC hypotheses or come from the unfolded representation. Choose the first whole-goal disjunct; all current/pre arguments already agree."
+        },
+        {
+          "name": "proof_of_cm_emit_temp_store_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_store_entail_wit_2_split_goal_spatial": "CONTEXT: use cm_slots_wf for params and locals and f=cm_function_at policy fid ... to establish the size/offset bridge. Unfold cm_function_context_rep to obtain nonzero fn and existing pp/lp, frame the entire emitter plan, and expose exactly the five fields and two slot lists. After cmc_temp_offset, retval equality and the established bridge retarget the fragment; refold context using the same pp/lp and normalize app associativity. All pure premises are explicit VC hypotheses or come from the unfolded representation."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_load_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "CONTEXT: use cm_slots_wf for params and locals and f=cm_function_at policy fid ... to establish the size/offset bridge. Unfold cm_function_context_rep to obtain nonzero fn and existing pp/lp, frame the entire emitter plan, and expose exactly the five fields and two slot lists. After cmc_temp_offset, retval equality and the established bridge retarget the fragment; refold context using the same pp/lp and normalize app associativity. All pure premises are explicit VC hypotheses or come from the unfolded representation. Choose the first whole-goal disjunct; all current/pre arguments already agree."
+        },
+        {
+          "name": "proof_of_cm_emit_temp_load_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_load_entail_wit_2_split_goal_spatial": "CONTEXT: use cm_slots_wf for params and locals and f=cm_function_at policy fid ... to establish the size/offset bridge. Unfold cm_function_context_rep to obtain nonzero fn and existing pp/lp, frame the entire emitter plan, and expose exactly the five fields and two slot lists. After cmc_temp_offset, retval equality and the established bridge retarget the fragment; refold context using the same pp/lp and normalize app associativity. All pure premises are explicit VC hypotheses or come from the unfolded representation."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_slot_size_matches__temp_context",
+          "visibility": "public",
+          "strategy": "For all structs s, cm_slot_wf structs s implies cm_rep_member_size s = cm_slot_size structs s. Extract scalar typing, unfold both count branches, and use cm_scalar_rep_leaf_size."
+        },
+        {
+          "name": "cm_slots_size_matches__temp_context",
+          "visibility": "public",
+          "strategy": "For all structs slots, cm_slots_wf structs slots implies cm_rep_members_size slots = cm_slots_size structs slots. Induct on slots; obtain head wellformedness at index 0 and tail wellformedness by shifting each valid index by 1, then apply the scalar slot equality and induction."
+        },
+        {
+          "name": "cm_temp_offset_matches__temp_context",
+          "visibility": "public",
+          "strategy": "For all policy p fid temp f, f=cm_function_at policy fid (cm_program_functions p), cm_slots_wf (cm_program_structs p) (cm_function_params f), and the analogous locals condition imply 8+cm_rep_members_size(params)+cm_rep_members_size(locals)+8*temp=cm_temp_offset policy p fid temp. Unfold cm_temp_offset and rewrite both list size equalities; no fid range premise."
+        }
+      ]
+    },
+    {
+      "id": "raw_emitter",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_raw_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "RAW: unfold cm_emitter_rep, preserve the five field cells and both initialized/undefined array pairs; instantiate its ops/imms witnesses from the existing cells. At entry derive capacity <= INT_MAX from the owned Int cell, retaining the same cell. At return use Zlength_app and singleton lengths to fold the new prefixes; equality of old lengths and strict capacity provide the new bounds. Choose the first whole-goal disjunct; all current/pre arguments already agree."
+        },
+        {
+          "name": "proof_of_cm_emit_raw_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_raw_return_wit_1_split_goal_spatial": "RAW: unfold cm_emitter_rep, preserve the five field cells and both initialized/undefined array pairs; instantiate its ops/imms witnesses from the existing cells. At entry derive capacity <= INT_MAX from the owned Int cell, retaining the same cell. At return use Zlength_app and singleton lengths to fold the new prefixes; equality of old lengths and strict capacity provide the new bounds. Delta: return folds the two prefixes with appended op_pre/immediate_pre."
+          }
+        }
+      ]
+    },
+    {
+      "id": "typed_branches",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_normalize_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_entail_wit_1_split_goal_1": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: prove the type discriminator.",
+            "proof_of_cm_emit_normalize_entail_wit_1_split_goal_spatial": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: rewrite the fragment to the branch instruction sequence and cancel the plan."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_load_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_entail_wit_1_split_goal_1": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: prove the type discriminator.",
+            "proof_of_cm_emit_load_entail_wit_1_split_goal_spatial": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: rewrite the fragment to the branch instruction sequence and cancel the plan."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_load_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_entail_wit_2_split_goal_1": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: prove the type discriminator.",
+            "proof_of_cm_emit_load_entail_wit_2_split_goal_spatial": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: rewrite the fragment to the branch instruction sequence and cancel the plan."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_entail_wit_1_split_goal_1": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: prove the type discriminator.",
+            "proof_of_cm_emit_store_entail_wit_1_split_goal_spatial": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: rewrite the fragment to the branch instruction sequence and cancel the plan."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_entail_wit_2_split_goal_1": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: prove the type discriminator.",
+            "proof_of_cm_emit_store_entail_wit_2_split_goal_spatial": "BRANCH: branch equality/inequality, ty=cm_type_encode model_ty, and cm_type_code_wf establish the char discriminator. For equality use the public char-encoding lemma planned in this group; for inequality contradict the encoding of CMCharTy. Rewrite the selected fragment, leaving the identical emitter plan as the spatial frame. Delta: rewrite the fragment to the branch instruction sequence and cancel the plan."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_type_encode_char_iff__typed_branches",
+          "visibility": "public",
+          "strategy": "For all ty, cm_type_code_wf ty implies (cm_type_encode ty=1 <-> ty=CMCharTy). Destruct ty, use existing nonnegative depth and base bounds for pointer cases, and the wf struct-id range for the struct case; arithmetic closes the non-char cases."
+        }
+      ]
+    },
+    {
+      "id": "emit_plan",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_entail_wit_1_split_goal_1": "EMIT: unfold only cm_emitter_plan_rep, exposing its total-length bound and framing the emitter representation. cm_rep_ops/imms are maps: map length supplies Zlength done; map_app and singleton computation align the post-write prefixes with done ++ [instruction]. Nonnegative tail length proves one free cell. Delta: prove strict free capacity using map length and nonnegative tail length.",
+            "proof_of_cm_emit_entail_wit_1_split_goal_2": "EMIT: unfold only cm_emitter_plan_rep, exposing its total-length bound and framing the emitter representation. cm_rep_ops/imms are maps: map length supplies Zlength done; map_app and singleton computation align the post-write prefixes with done ++ [instruction]. Nonnegative tail length proves one free cell. Delta: reduce the todo cons length to done length + 1 + tail length.",
+            "proof_of_cm_emit_entail_wit_1_split_goal_spatial": "EMIT: unfold only cm_emitter_plan_rep, exposing its total-length bound and framing the emitter representation. cm_rep_ops/imms are maps: map length supplies Zlength done; map_app and singleton computation align the post-write prefixes with done ++ [instruction]. Nonnegative tail length proves one free cell. Delta: discard only the pure plan bound and retain its emitter predicate."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_return_wit_1_split_goal_spatial": "EMIT: unfold only cm_emitter_plan_rep, exposing its total-length bound and framing the emitter representation. cm_rep_ops/imms are maps: map length supplies Zlength done; map_app and singleton computation align the post-write prefixes with done ++ [instruction]. Nonnegative tail length proves one free cell."
+          }
+        }
+      ]
+    },
+    {
+      "id": "typed_results",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_normalize_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_return_wit_1_split_goal_spatial": "RESULT: use the model-type equality/inequality already supplied by the branch (normalize non-char instead has ty<>1 plus its encoding equality). Destruct the type only as needed, reduce the fragment, normalize app associativity or app_nil_r, then cancel the unchanged plan. No new spatial witnesses."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_return_wit_2_split_goal_spatial": "RESULT: use the model-type equality/inequality already supplied by the branch (normalize non-char instead has ty<>1 plus its encoding equality). Destruct the type only as needed, reduce the fragment, normalize app associativity or app_nil_r, then cancel the unchanged plan. No new spatial witnesses."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_load_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_return_wit_1_split_goal_spatial": "RESULT: use the model-type equality/inequality already supplied by the branch (normalize non-char instead has ty<>1 plus its encoding equality). Destruct the type only as needed, reduce the fragment, normalize app associativity or app_nil_r, then cancel the unchanged plan. No new spatial witnesses."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_load_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_return_wit_2_split_goal_spatial": "RESULT: use the model-type equality/inequality already supplied by the branch (normalize non-char instead has ty<>1 plus its encoding equality). Destruct the type only as needed, reduce the fragment, normalize app associativity or app_nil_r, then cancel the unchanged plan. No new spatial witnesses."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_return_wit_1_split_goal_spatial": "RESULT: use the model-type equality/inequality already supplied by the branch (normalize non-char instead has ty<>1 plus its encoding equality). Destruct the type only as needed, reduce the fragment, normalize app associativity or app_nil_r, then cancel the unchanged plan. No new spatial witnesses."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_return_wit_2_split_goal_spatial": "RESULT: use the model-type equality/inequality already supplied by the branch (normalize non-char instead has ty<>1 plus its encoding equality). Destruct the type only as needed, reduce the fragment, normalize app associativity or app_nil_r, then cancel the unchanged plan. No new spatial witnesses."
+          }
+        }
+      ]
+    },
+    {
+      "id": "temp_results",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_temp_store_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_store_return_wit_1_split_goal_spatial": "TEMP-RESULT: substitute offset=cm_temp_offset from the explicit premise; unfold the appropriate temp fragment, reassociate append, and commute/cancel the function-context frame. No size lemma or context opening is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_store_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_store_partial_solve_wit_3_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: STORE=5."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_load_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_load_return_wit_1_split_goal_spatial": "TEMP-RESULT: substitute offset=cm_temp_offset from the explicit premise; unfold the appropriate temp fragment, reassociate append, and commute/cancel the function-context frame. No size lemma or context opening is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_load_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_load_partial_solve_wit_3_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: LOAD=4."
+          }
+        }
+      ]
+    },
+    {
+      "id": "fp_address",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_fp_address_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_entail_wit_1_split_goal_spatial": "FP: reduce cm_fp_relative_address_code. Entry is an identical plan after list reduction; return reassociates four singleton appends into done ++ fragment. All resources remain framed, with no existential or additional bounds."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_return_wit_1_split_goal_spatial": "FP: reduce cm_fp_relative_address_code. Entry is an identical plan after list reduction; return reassociates four singleton appends into done ++ fragment. All resources remain framed, with no existential or additional bounds."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_partial_solve_wit_1_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: fixed opcode for fp instruction 1."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_partial_solve_wit_2_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: fixed opcode for fp instruction 2."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_partial_solve_wit_3_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: fixed opcode for fp instruction 3."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_partial_solve_wit_4_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_partial_solve_wit_4_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: fixed opcode for fp instruction 4."
+          }
+        }
+      ]
+    },
+    {
+      "id": "normalize_constants",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_normalize_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_partial_solve_wit_1_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_normalize_partial_solve_wit_1_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_partial_solve_wit_2_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_normalize_partial_solve_wit_2_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_partial_solve_wit_3_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_normalize_partial_solve_wit_3_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_partial_solve_wit_4_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_partial_solve_wit_4_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_normalize_partial_solve_wit_4_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_partial_solve_wit_5_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_partial_solve_wit_5_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_normalize_partial_solve_wit_5_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_partial_solve_wit_6_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_partial_solve_wit_6_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_normalize_partial_solve_wit_6_pure uses its literal opcode constructor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "memory_constants",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_load_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_partial_solve_wit_1_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_load_partial_solve_wit_1_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_load_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_partial_solve_wit_2_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_load_partial_solve_wit_2_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_partial_solve_wit_1_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_store_partial_solve_wit_1_pure uses its literal opcode constructor."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_partial_solve_wit_2_pure_split_goal_1": "CONSTANT: compute tvm_opcode_code for the fixed constructor, introduce the reflexive pure equality under the unchanged spatial assertion. Local cells and emitter/function predicates impose no further premises. Delta: cm_emit_store_partial_solve_wit_2_pure uses its literal opcode constructor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary_comparisons",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_1_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 1 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_2_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 2 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_3_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 3 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_4_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 4 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_5_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 5 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_6_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 6 computes its concrete comparison/arithmetic opcode."
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary_arithmetic",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_7_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 7 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_8",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_8_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 8 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_9",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_9_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 9 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_10",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_10_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: branch 10 computes its concrete comparison/arithmetic opcode."
+          }
+        },
+        {
+          "name": "proof_of_cmc_binary_opcode_return_wit_11",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binary_opcode_return_wit_11_split_goal_1": "BINARY: unfold cm_binary_opcode and tvm_opcode_code. Concrete equality branches compute immediately; the default branch uses all ten explicit op<>2,...,11 premises to rewrite Z.eqb tests false. The selected split is purely mathematical and has no spatial resource. Delta: default MOD=12 under ten disequalities."
+          }
+        }
+      ]
+    }
+  ]
+}

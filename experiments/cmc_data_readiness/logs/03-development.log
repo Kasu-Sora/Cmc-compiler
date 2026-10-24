@@ -1,0 +1,26 @@
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_data_readiness/build/Rocq/examples/QCP_demos_human/cmc_program_ready_migration_lib.v", line 134, characters 4-15:
+Error:
+In environment
+policy : cm_lookup_policy
+p : cm_program
+Htyped : cm_typed_program policy p
+Hindexed :
+  forall i : Z,
+  0 <= i < Zlength (cm_program_globals p) ->
+  cm_global_wf (cm_program_structs p) (cm_global_at i (cm_program_globals p))
+Hstatic :
+  16 + cm_rep_globals_size (cm_program_globals p) +
+  cm_rep_strings_size (cm_program_strings p) <= 1048576
+Hglobals : cm_data_globals_wf (cm_program_structs p) (cm_program_globals p)
+Hgpos : 0 <= cm_rep_globals_size (cm_program_globals p)
+Hspos : 0 <= cm_rep_strings_size (cm_program_strings p)
+Hmatch :
+  cm_rep_globals_size (cm_program_globals p) =
+  cm_globals_size (cm_program_structs p) (cm_program_globals p)
+Unable to unify
+ "8 + cm_rep_globals_size (cm_program_globals p) +
+  cm_rep_strings_size (cm_program_strings p)" with
+ "Zlength (repeat 0 8) +
+  (cm_rep_globals_size (cm_program_globals p) +
+   cm_rep_strings_size (cm_program_strings p))".
+

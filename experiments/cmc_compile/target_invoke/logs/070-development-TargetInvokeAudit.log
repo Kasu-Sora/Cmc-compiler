@@ -1,0 +1,1122 @@
+Chars 0 - 82 [Require~Import~~~SimpleC.EE.QC...] 1.326 secs (1.23u,0.094s)
+Chars 83 - 93 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_preservation_complete_migration_lib.cm_full_support_original_invariant
+Chars 94 - 183 [idtac~~"AUDIT~cmc_preservation...] 0. secs (0.u,0.s)
+Chars 184 - 192 [exact~I.] 0. secs (0.u,0.s)
+Chars 193 - 197 [Qed.] 0. secs (0.u,0.s)
+cm_full_support_original_invariant
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (ast : cm_astate),
+       cm_full_support_invariants sp ap nilslot p ast ->
+       cm_preservation_invariant sp ap nilslot p ast
+Chars 198 - 279 [Check~~~cmc_preservation_compl...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 280 - 373 [Print~Assumptions~cmc_preserva...] 0.878 secs (0.858u,0.014s)
+Chars 374 - 384 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_preservation_complete_migration_lib.cm_preservation_initial
+Chars 385 - 463 [idtac~"AUDIT~cmc_preservation_...] 0. secs (0.u,0.s)
+Chars 464 - 472 [exact~I.] 0. secs (0.u,0.s)
+Chars 473 - 477 [Qed.] 0. secs (0.u,0.s)
+cm_preservation_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_preservation_invariant sp ap nilslot p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Chars 478 - 548 [Check~cmc_preservation_complet...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 549 - 631 [Print~Assumptions~cmc_preserva...] 0.89 secs (0.881u,0.006s)
+Chars 632 - 642 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_preservation_complete_migration_lib.cm_preservation_reachable
+Chars 643 - 723 [idtac~~"AUDIT~cmc_preservation...] 0. secs (0.u,0.s)
+Chars 724 - 732 [exact~I.] 0. secs (0.u,0.s)
+Chars 733 - 737 [Qed.] 0. secs (0.u,0.s)
+cm_preservation_reachable
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (input : list BinNums.Z)
+         (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_preservation_invariant sp ap nilslot p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Chars 738 - 810 [Check~cmc_preservation_complet...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 811 - 895 [Print~Assumptions~cmc_preserva...] 7.654 secs (7.5u,0.052s)
+Chars 896 - 906 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_preservation_complete_migration_lib.cmc_preservation
+Chars 907 - 978 [idtac~"AUDIT~cmc_preservation_...] 0. secs (0.u,0.s)
+Chars 979 - 987 [exact~I.] 0. secs (0.u,0.s)
+Chars 988 - 992 [Qed.] 0. secs (0.u,0.s)
+cmc_preservation
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (input output : list BinNums.Z) (status : BinNums.Z),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       tvm_terminates (cm_compile_model (cm_source_function_policy sp) p)
+         input output status
+Chars 993 - 1056 [Check~cmc_preservation_complet...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1057 - 1132 [Print~Assumptions~cmc_preserva...] 7.195 secs (7.157u,0.034s)
+Chars 1133 - 1143 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_preservation_complete_migration_lib.cmc_compile_success_bridge
+Chars 1144 - 1225 [idtac~~"AUDIT~cmc_preservation...] 0. secs (0.u,0.s)
+Chars 1226 - 1234 [exact~I.] 0. secs (0.u,0.s)
+Chars 1235 - 1239 [Qed.] 0. secs (0.u,0.s)
+cmc_compile_success_bridge
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (obj : tvm_object) (input output : list BinNums.Z)
+         (status : BinNums.Z),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_output_decodes BinNums.Z0
+         (cm_rep_ops (cm_model_code (cm_source_function_policy sp) p))
+         (cm_rep_imms (cm_model_code (cm_source_function_policy sp) p))
+         (cm_model_data_bytes p) obj ->
+       tvm_terminates obj input output status
+Chars 1240 - 1313 [Check~cmc_preservation_complet...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1314 - 1399 [Print~Assumptions~cmc_preserva...] 7.187 secs (7.142u,0.04s)
+Chars 1400 - 1476 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 1477 - 1487 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_arg_call_migration_lib.cm_target_v_arg_nil_step
+Chars 1488 - 1561 [idtac~"AUDIT~cmc_target_arg_ca...] 0. secs (0.u,0.s)
+Chars 1562 - 1570 [exact~I.] 0. secs (0.u,0.s)
+Chars 1571 - 1575 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_arg_nil_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid callee : BinNums.Z) 
+         (values : list cm_value) (ty : cm_type) (all_args : list cm_expr)
+         (base current scratch : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (pc temp b c owner ob oc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame)
+         (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c
+           (CMACursor
+              (CAArgP callee nil values ty all_args base current scratch)
+              owner ob oc :: tail) spills saved calls in
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       cm_tagged_span_valid st ->
+       BinInt.Z.le BinNums.Z0 (cm_state_nextgen st) ->
+       cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st) ->
+       cm_spill_frames_generation_below (cm_state_nextgen st)
+         (cm_active_spill_frames fid st ann) ->
+       cm_values_generation_below (cm_state_nextgen st) (v :: values) ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 base ->
+       current = BinInt.Z.add base (Zcomplements.Zlength values) ->
+       BinInt.Z.le BinNums.Z0 current /\
+       BinInt.Z.lt current (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       Zcomplements.Zlength all_args = Zcomplements.Zlength (v :: values) ->
+       cm_staged_spills base values spills ->
+       cm_call_ok sp p callee (List.rev (v :: values)) st = true ->
+       BinInt.Z.lt (cm_call_depth (cm_cursor_frames tail))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO (BinNums.xO (...))))))))))))))) ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 1576 - 1641 [Check~cmc_target_arg_call_migr...] 0.001 secs (0.001u,0.s)
+Closed under the global context
+Chars 1642 - 1719 [Print~Assumptions~cmc_target_a...] 0.148 secs (0.147u,0.s)
+Chars 1720 - 1799 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 1800 - 1810 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_args_reload_migration_lib.cm_tvm_fp_load_stack
+Chars 1811 - 1883 [idtac~"AUDIT~cmc_target_args_r...] 0. secs (0.u,0.s)
+Chars 1884 - 1892 [exact~I.] 0. secs (0.u,0.s)
+Chars 1893 - 1897 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_fp_load_stack
+     : forall (obj : tvm_object) (pc : BinNums.Z)
+         (stack calls : list BinNums.Z) (mem : BinNums.Z -> BinNums.Z)
+         (input output : list BinNums.Z) (offset : BinNums.Z)
+         (rest : list tvm_inst),
+       BinInt.Z.lt
+         (BinInt.Z.add (Zcomplements.Zlength stack) (BinNums.Zpos BinNums.xH))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       tower_word_valid
+         (BinInt.Z.add
+            (tower_getw mem
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))) offset) ->
+       cm_code_at (tvm_object_code obj) pc
+         (cm_fp_relative_address_code offset ++
+          TVMInst TVMLoadOp BinNums.Z0 :: rest) ->
+       tvm_iter 5 (TVMRunTask obj (TVMState pc stack calls mem input output)) =
+       TVMRunTask obj
+         (TVMState
+            (BinInt.Z.add pc
+               (BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH))))
+            (tower_getw mem
+               (BinInt.Z.add
+                  (tower_getw mem
+                     (BinNums.Zpos
+                        (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+                  offset) :: stack) calls mem input output)
+Chars 1898 - 1962 [Check~cmc_target_args_reload_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1963 - 2039 [Print~Assumptions~cmc_target_a...] 0.093 secs (0.092u,0.s)
+Chars 2040 - 2050 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_args_reload_migration_lib.cm_args_reload_app
+Chars 2051 - 2121 [idtac~"AUDIT~cmc_target_args_r...] 0. secs (0.u,0.s)
+Chars 2122 - 2130 [exact~I.] 0. secs (0.u,0.s)
+Chars 2131 - 2135 [Qed.] 0. secs (0.u,0.s)
+cm_args_reload_app
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid base : BinNums.Z) (left right : list cm_expr),
+       cm_emit_args_reload policy p fid base (left ++ right) =
+       (cm_emit_args_reload policy p fid base left ++
+        cm_emit_args_reload policy p fid
+          (BinInt.Z.add base (Zcomplements.Zlength left)) right)%list
+Chars 2136 - 2198 [Check~cmc_target_args_reload_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2199 - 2273 [Print~Assumptions~cmc_target_a...] 0.089 secs (0.089u,0.s)
+Chars 2274 - 2284 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_args_reload_migration_lib.cm_args_reload_snoc
+Chars 2285 - 2356 [idtac~"AUDIT~cmc_target_args_r...] 0. secs (0.u,0.s)
+Chars 2357 - 2365 [exact~I.] 0. secs (0.u,0.s)
+Chars 2366 - 2370 [Qed.] 0. secs (0.u,0.s)
+cm_args_reload_snoc
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid base : BinNums.Z) (args : list cm_expr) 
+         (a : cm_expr),
+       cm_emit_args_reload policy p fid base (args ++ a :: nil) =
+       (cm_emit_args_reload policy p fid base args ++
+        cm_temp_load_code policy p fid
+          (BinInt.Z.add base (Zcomplements.Zlength args)))%list
+Chars 2371 - 2434 [Check~cmc_target_args_reload_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2435 - 2510 [Print~Assumptions~cmc_target_a...] 0.089 secs (0.088u,0.s)
+Chars 2511 - 2521 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_args_reload_migration_lib.cm_tvm_reload_staged
+Chars 2522 - 2594 [idtac~"AUDIT~cmc_target_args_r...] 0. secs (0.u,0.s)
+Chars 2595 - 2603 [exact~I.] 0. secs (0.u,0.s)
+Chars 2604 - 2608 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_reload_staged
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (st : cm_src_state) (vm : tvm_state)
+         (spills : list cm_spill) (base : BinNums.Z) 
+         (args : list cm_expr) (values : list cm_value)
+         (held : list BinNums.Z) (pc : BinNums.Z) 
+         (rest : list tvm_inst),
+       Zcomplements.Zlength args = Zcomplements.Zlength values ->
+       BinInt.Z.le BinNums.Z0 base ->
+       BinInt.Z.le (BinInt.Z.add base (Zcomplements.Zlength args))
+         (cm_temp_slots (cm_function_at policy fid (cm_program_functions p))) ->
+       BinInt.Z.lt
+         (BinInt.Z.add
+            (BinInt.Z.add (Zcomplements.Zlength values)
+               (Zcomplements.Zlength held)) (BinNums.Zpos BinNums.xH))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       (forall slot : BinNums.Z,
+        BinInt.Z.le base slot /\
+        BinInt.Z.lt slot (BinInt.Z.add base (Zcomplements.Zlength args)) ->
+        tower_word_valid
+          (BinInt.Z.add
+             (tower_getw (tvm_mem vm)
+                (BinNums.Zpos
+                   (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+             (cm_temp_offset policy p fid slot))) ->
+       cm_spill_list_sim policy p st (tvm_mem vm) fid
+         (tower_getw (tvm_mem vm)
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+         spills ->
+       cm_staged_spills base values spills ->
+       cm_code_at (tvm_object_code (cm_compile_model policy p)) pc
+         (cm_emit_args_reload policy p fid base args ++ rest) ->
+       tvm_iter (cm_code_steps (cm_emit_args_reload policy p fid base args))
+         (TVMRunTask (cm_compile_model policy p)
+            (TVMState pc held (tvm_calls vm) (tvm_mem vm) 
+               (tvm_input vm) (tvm_output vm))) =
+       TVMRunTask (cm_compile_model policy p)
+         (TVMState
+            (BinInt.Z.add pc
+               (Zcomplements.Zlength
+                  (cm_emit_args_reload policy p fid base args)))
+            (cm_encode_values st values ++ held) (tvm_calls vm) 
+            (tvm_mem vm) (tvm_input vm) (tvm_output vm))
+Chars 2609 - 2673 [Check~cmc_target_args_reload_m...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2674 - 2750 [Print~Assumptions~cmc_target_a...] 0.095 secs (0.094u,0.s)
+Chars 2751 - 2829 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 2830 - 2840 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_args_stack_migration_lib.cm_target_reload_staged
+Chars 2841 - 2915 [idtac~"AUDIT~cmc_target_args_s...] 0. secs (0.u,0.s)
+Chars 2916 - 2924 [exact~I.] 0. secs (0.u,0.s)
+Chars 2925 - 2929 [Qed.] 0. secs (0.u,0.s)
+cm_target_reload_staged
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (st : cm_src_state)
+         (ann : cm_annotation) (target : tvm_task) 
+         (base : BinNums.Z) (args : list cm_expr) 
+         (values : list cm_value) (rest : list tvm_inst),
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       BinInt.Z.le BinNums.Z0 base ->
+       BinInt.Z.le (BinInt.Z.add base (Zcomplements.Zlength args))
+         (cm_temp_slots (cm_source_function_at sp fid p)) ->
+       Zcomplements.Zlength args = Zcomplements.Zlength values ->
+       BinInt.Z.lt
+         (BinInt.Z.add (Zcomplements.Zlength values)
+            (BinNums.Zpos BinNums.xH))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       cm_staged_spills base values (cm_ann_spills ann) ->
+       cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+         (cm_ann_pc ann)
+         (cm_emit_args_reload (cm_source_function_policy sp) p fid base args ++
+          rest) ->
+       cm_running_target_sim (cm_source_function_policy sp) p fid st nil ann
+         target ->
+       cm_running_target_sim (cm_source_function_policy sp) p fid st values
+         (cm_ann_linear
+            (cm_emit_args_reload (cm_source_function_policy sp) p fid base
+               args) ann)
+         (tvm_iter
+            (cm_code_steps
+               (cm_emit_args_reload (cm_source_function_policy sp) p fid base
+                  args)) target)
+Chars 2930 - 2996 [Check~cmc_target_args_stack_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2997 - 3075 [Print~Assumptions~cmc_target_a...] 0.099 secs (0.098u,0.s)
+Chars 3076 - 3148 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 3149 - 3159 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_boot_migration_lib.cm_model_prelude_at
+Chars 3160 - 3224 [idtac~"AUDIT~cmc_target_boot_m...] 0. secs (0.u,0.s)
+Chars 3225 - 3233 [exact~I.] 0. secs (0.u,0.s)
+Chars 3234 - 3238 [Qed.] 0. secs (0.u,0.s)
+cm_model_prelude_at
+     : forall (policy : cm_lookup_policy) (p : cm_program),
+       cm_code_at (cm_model_code policy p) BinNums.Z0
+         (cm_emit_prelude policy p)
+Chars 3239 - 3295 [Check~cmc_target_boot_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3296 - 3364 [Print~Assumptions~cmc_target_b...] 0. secs (0.u,0.s)
+Chars 3365 - 3375 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_boot_migration_lib.cm_tvm_prelude_prefix
+Chars 3376 - 3442 [idtac~"AUDIT~cmc_target_boot_m...] 0. secs (0.u,0.s)
+Chars 3443 - 3451 [exact~I.] 0. secs (0.u,0.s)
+Chars 3452 - 3456 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_prelude_prefix
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z),
+       cm_semantic_wf_program policy p ->
+       tvm_iter 4 (TVMBoot (cm_compile_model policy p) input) =
+       TVMRunTask (cm_compile_model policy p)
+         (TVMState (BinNums.Zpos (BinNums.xI BinNums.xH)) nil nil
+            (tower_setw
+               (tvm_mem (tvm_initial_state (cm_compile_model policy p) input))
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+               (BinNums.Zpos
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO (...)))))))))))))))))))))
+            input nil)
+Chars 3457 - 3515 [Check~cmc_target_boot_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3516 - 3586 [Print~Assumptions~cmc_target_b...] 0.094 secs (0.094u,0.s)
+Chars 3587 - 3597 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_boot_migration_lib.cm_initial_machine_sim
+Chars 3598 - 3665 [idtac~"AUDIT~cmc_target_boot_m...] 0. secs (0.u,0.s)
+Chars 3666 - 3674 [exact~I.] 0. secs (0.u,0.s)
+Chars 3675 - 3679 [Qed.] 0. secs (0.u,0.s)
+cm_initial_machine_sim
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z) (pc : BinNums.Z),
+       cm_machine_state_sim (cm_source_function_policy sp) p
+         (cm_initial_state sp p input)
+         (TVMState pc nil nil
+            (tower_setw
+               (tvm_mem
+                  (tvm_initial_state
+                     (cm_compile_model (cm_source_function_policy sp) p)
+                     input))
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+               (BinNums.Zpos
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO (...))))))))))))))))))))))
+            input nil) nil
+         (CMSpillFrame (BinNums.Zneg BinNums.xH)
+            (BinNums.Zpos
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH)))))))))))))))))))))
+            nil :: nil) nil nil
+Chars 3680 - 3739 [Check~cmc_target_boot_migratio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3740 - 3811 [Print~Assumptions~cmc_target_b...] 0.1 secs (0.099u,0.s)
+Chars 3812 - 3890 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 3891 - 3901 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_depth_migration_lib.cm_call_sim_length
+Chars 3902 - 3971 [idtac~"AUDIT~cmc_target_call_d...] 0. secs (0.u,0.s)
+Chars 3972 - 3980 [exact~I.] 0. secs (0.u,0.s)
+Chars 3981 - 3985 [Qed.] 0. secs (0.u,0.s)
+cm_call_sim_length
+     : forall (mem : BinNums.Z -> BinNums.Z)
+         (frames : list cm_call_sim_frame) (calls : list BinNums.Z),
+       cm_call_frames_sim mem frames calls ->
+       Zcomplements.Zlength frames = Zcomplements.Zlength calls
+Chars 3986 - 4047 [Check~cmc_target_call_depth_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4048 - 4121 [Print~Assumptions~cmc_target_c...] 0.089 secs (0.089u,0.s)
+Chars 4122 - 4132 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_depth_migration_lib.cm_saved_layout_call_depth
+Chars 4133 - 4210 [idtac~"AUDIT~cmc_target_call_d...] 0. secs (0.u,0.s)
+Chars 4211 - 4219 [exact~I.] 0. secs (0.u,0.s)
+Chars 4220 - 4224 [Qed.] 0. secs (0.u,0.s)
+cm_saved_layout_call_depth
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (code : list tvm_inst) (fid : BinNums.Z)
+         (cursors : list cm_acursor) (calls : list cm_call_sim_frame),
+       cm_saved_layout sp ap p code fid cursors calls ->
+       Zcomplements.Zlength calls = cm_call_depth (cm_cursor_frames cursors)
+Chars 4225 - 4294 [Check~cmc_target_call_depth_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4295 - 4376 [Print~Assumptions~cmc_target_c...] 0.089 secs (0.089u,0.s)
+Chars 4377 - 4459 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 4460 - 4470 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_execution_migration_lib.cm_tvm_call_step
+Chars 4471 - 4542 [idtac~"AUDIT~cmc_target_call_e...] 0. secs (0.u,0.s)
+Chars 4543 - 4551 [exact~I.] 0. secs (0.u,0.s)
+Chars 4552 - 4556 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_call_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (dest : BinNums.Z) (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) (tvm_pc st)
+         (TVMInst TVMCallOp dest :: rest) ->
+       tvm_target_valid (tvm_object_code obj) dest ->
+       BinInt.Z.lt (Zcomplements.Zlength (tvm_calls st))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       tvm_step (TVMRunTask obj st) =
+       TVMRunTask obj
+         (tvm_jump_state st dest (tvm_stack st)
+            (BinInt.Z.add (tvm_pc st) (BinNums.Zpos BinNums.xH)
+             :: tvm_calls st) (tvm_mem st) (tvm_input st) 
+            (tvm_output st))
+Chars 4557 - 4620 [Check~cmc_target_call_executio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4621 - 4696 [Print~Assumptions~cmc_target_c...] 0.089 secs (0.089u,0.s)
+Chars 4697 - 4707 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_execution_migration_lib.cm_call_ok_arity
+Chars 4708 - 4779 [idtac~"AUDIT~cmc_target_call_e...] 0. secs (0.u,0.s)
+Chars 4780 - 4788 [exact~I.] 0. secs (0.u,0.s)
+Chars 4789 - 4793 [Qed.] 0. secs (0.u,0.s)
+cm_call_ok_arity
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (values : list cm_value) 
+         (st : cm_src_state),
+       cm_call_ok sp p fid values st = true ->
+       Zcomplements.Zlength values =
+       Zcomplements.Zlength
+         (cm_function_params (cm_source_function_at sp fid p))
+Chars 4794 - 4857 [Check~cmc_target_call_executio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4858 - 4933 [Print~Assumptions~cmc_target_c...] 0. secs (0.u,0.s)
+Chars 4934 - 4944 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_execution_migration_lib.cm_prologue_target_valid
+Chars 4945 - 5024 [idtac~~"AUDIT~cmc_target_call_...] 0. secs (0.u,0.s)
+Chars 5025 - 5033 [exact~I.] 0. secs (0.u,0.s)
+Chars 5034 - 5038 [Qed.] 0. secs (0.u,0.s)
+cm_prologue_target_valid
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (obj : tvm_object) (pc : BinNums.Z)
+         (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) pc
+         (cm_emit_prologue policy p fid ++ rest) ->
+       tvm_target_valid (tvm_object_code obj) pc
+Chars 5039 - 5110 [Check~cmc_target_call_executio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5111 - 5194 [Print~Assumptions~cmc_target_c...] 0.087 secs (0.086u,0.s)
+Chars 5195 - 5205 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_execution_migration_lib.cm_tvm_invoke_function
+Chars 5206 - 5283 [idtac~"AUDIT~cmc_target_call_e...] 0. secs (0.u,0.s)
+Chars 5284 - 5292 [exact~I.] 0. secs (0.u,0.s)
+Chars 5293 - 5297 [Qed.] 0. secs (0.u,0.s)
+cm_tvm_invoke_function
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (caller callee : BinNums.Z) 
+         (st : cm_src_state) (values : list cm_value) 
+         (ann : cm_annotation) (obj : tvm_object) 
+         (vm : tvm_state) (callrest bodyrest : list tvm_inst),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_call_ok sp p callee values st = true ->
+       cm_runtime_core (cm_source_function_policy sp) ap p caller st ann ->
+       cm_tagged_span_valid st ->
+       BinInt.Z.le BinNums.Z0 (cm_state_nextgen st) ->
+       cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st) ->
+       cm_spill_frames_generation_below (cm_state_nextgen st)
+         (CMSpillFrame caller (cm_state_fp st) (cm_ann_spills ann)
+          :: cm_ann_saved ann) ->
+       cm_values_generation_below (cm_state_nextgen st) values ->
+       BinInt.Z.lt (Zcomplements.Zlength (tvm_calls vm))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       cm_machine_state_sim (cm_source_function_policy sp) p st vm
+         (cm_ann_calls ann)
+         (CMSpillFrame caller (cm_state_fp st) (cm_ann_spills ann)
+          :: cm_ann_saved ann) (List.rev values) nil ->
+       cm_code_at (tvm_object_code obj) (tvm_pc vm)
+         (TVMInst TVMCallOp
+            (cm_function_pc (cm_source_function_policy sp) p callee)
+          :: callrest) ->
+       cm_code_at (tvm_object_code obj)
+         (cm_function_pc (cm_source_function_policy sp) p callee)
+         (cm_emit_prologue (cm_source_function_policy sp) p callee ++
+          bodyrest) ->
+       exists next : tvm_state,
+         tvm_iter
+           (S
+              (cm_code_steps
+                 (cm_emit_prologue (cm_source_function_policy sp) p callee)))
+           (TVMRunTask obj vm) = TVMRunTask obj next /\
+         tvm_pc next = cm_call_body_pc sp p callee /\
+         cm_machine_state_sim (cm_source_function_policy sp) p
+           (cm_enter_call sp p callee values st) next
+           (CMCallSimFrame (cm_state_fp (cm_call_base_state sp p callee st))
+              (cm_state_fp st)
+              (BinInt.Z.add (tvm_pc vm) (BinNums.Zpos BinNums.xH))
+            :: cm_ann_calls ann)
+           (CMSpillFrame callee
+              (cm_state_fp (cm_call_base_state sp p callee st)) nil
+            :: CMSpillFrame caller (cm_state_fp st) (cm_ann_spills ann)
+               :: cm_ann_saved ann) nil nil
+Chars 5298 - 5367 [Check~cmc_target_call_executio...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5368 - 5449 [Print~Assumptions~cmc_target_c...] 0.131 secs (0.13u,0.s)
+Chars 5450 - 5528 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 5529 - 5539 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_frame_migration_lib.cm_machine_save_call_frame
+Chars 5540 - 5617 [idtac~"AUDIT~cmc_target_call_f...] 0. secs (0.u,0.s)
+Chars 5618 - 5626 [exact~I.] 0. secs (0.u,0.s)
+Chars 5627 - 5631 [Qed.] 0. secs (0.u,0.s)
+cm_machine_save_call_frame
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (st : cm_src_state) (vm : tvm_state)
+         (calls : list cm_call_sim_frame) (frames : list cm_spill_frame)
+         (values : list cm_value) (base returnpc pc : BinNums.Z),
+       cm_tagged_span_valid st ->
+       (forall a : BinNums.Z,
+        cm_live_address st a ->
+        BinInt.Z.lt a base \/
+        BinInt.Z.le
+          (BinInt.Z.add base
+             (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+          a) ->
+       cm_machine_range_safe policy p base
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         calls frames ->
+       tower_signed64 (cm_state_fp st) ->
+       cm_machine_state_sim policy p st vm calls frames values nil ->
+       cm_machine_state_sim policy p st
+         (TVMState pc (cm_encode_values st values) 
+            (returnpc :: tvm_calls vm)
+            (tower_setw (tvm_mem vm) base (cm_state_fp st)) 
+            (tvm_input vm) (tvm_output vm))
+         (CMCallSimFrame base (cm_state_fp st) returnpc :: calls) frames
+         values nil
+Chars 5632 - 5701 [Check~cmc_target_call_frame_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5702 - 5783 [Print~Assumptions~cmc_target_c...] 0.095 secs (0.094u,0.s)
+Chars 5784 - 5794 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_frame_migration_lib.cm_machine_prologue_pending
+Chars 5795 - 5873 [idtac~"AUDIT~cmc_target_call_f...] 0. secs (0.u,0.s)
+Chars 5874 - 5882 [exact~I.] 0. secs (0.u,0.s)
+Chars 5883 - 5887 [Qed.] 0. secs (0.u,0.s)
+cm_machine_prologue_pending
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid : BinNums.Z) (st : cm_src_state) (vm : tvm_state)
+         (calls : list cm_call_sim_frame) (frames : list cm_spill_frame)
+         (values : list cm_value) (returnpc pc : BinNums.Z),
+       let base := cm_state_fp (cm_call_base_state sp p fid st) in
+       cm_function_wf (cm_source_function_policy sp) p
+         (cm_source_function_at sp fid p) ->
+       cm_regions_before (cm_state_regions st) (cm_state_nextgen st) ->
+       cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st) ->
+       cm_spill_frames_generation_below (cm_state_nextgen st) frames ->
+       cm_tagged_span_valid st ->
+       (forall a : BinNums.Z,
+        cm_live_address st a ->
+        BinInt.Z.lt a base \/
+        BinInt.Z.le
+          (BinInt.Z.add base
+             (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+          a) ->
+       (forall a : BinNums.Z,
+        cm_live_address st a ->
+        BinInt.Z.lt a
+          (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) \/
+        BinInt.Z.le
+          (BinNums.Zpos
+             (BinNums.xO (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+          a) ->
+       cm_machine_range_safe (cm_source_function_policy sp) p base
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         calls frames ->
+       cm_call_frames_range_safe
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         calls ->
+       cm_spill_frames_range_safe (cm_source_function_policy sp) p
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         frames ->
+       tower_signed64 base ->
+       tower_signed64 (cm_state_fp st) ->
+       cm_machine_state_sim (cm_source_function_policy sp) p st vm calls
+         frames values nil ->
+       cm_machine_state_sim (cm_source_function_policy sp) p
+         (cm_call_pending_base sp p fid st)
+         (TVMState pc
+            (cm_encode_values (cm_call_pending_base sp p fid st) values)
+            (returnpc :: tvm_calls vm)
+            (tower_setw (tower_setw (tvm_mem vm) base (cm_state_fp st))
+               (BinNums.Zpos
+                  (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))) base)
+            (tvm_input vm) (tvm_output vm))
+         (CMCallSimFrame base (cm_state_fp st) returnpc :: calls)
+         (CMSpillFrame fid base nil :: frames) values nil
+Chars 5888 - 5958 [Check~cmc_target_call_frame_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5959 - 6041 [Print~Assumptions~cmc_target_c...] 0.096 secs (0.095u,0.s)
+Chars 6042 - 6122 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 6123 - 6133 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_runtime_migration_lib.cm_runtime_new_frame_range
+Chars 6134 - 6213 [idtac~~"AUDIT~cmc_target_call_...] 0. secs (0.u,0.s)
+Chars 6214 - 6222 [exact~I.] 0. secs (0.u,0.s)
+Chars 6223 - 6227 [Qed.] 0. secs (0.u,0.s)
+cm_runtime_new_frame_range
+     : forall (policy : cm_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (st : cm_src_state) (caller : BinNums.Z)
+         (ann : cm_annotation) (base : BinNums.Z),
+       cm_runtime_core policy ap p caller st ann ->
+       BinInt.Z.le (cm_static_size p) base ->
+       BinInt.Z.le
+         (BinInt.Z.add base
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+         (cm_state_fp st) ->
+       (forall a : BinNums.Z,
+        cm_live_address st a ->
+        BinInt.Z.lt a base \/
+        BinInt.Z.le
+          (BinInt.Z.add base
+             (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+          a) /\
+       cm_machine_range_safe policy p base
+         (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH))))
+         (cm_ann_calls ann)
+         (CMSpillFrame caller (cm_state_fp st) (cm_ann_spills ann)
+          :: cm_ann_saved ann)
+Chars 6228 - 6299 [Check~cmc_target_call_runtime_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6300 - 6383 [Print~Assumptions~cmc_target_c...] 0.094 secs (0.093u,0.s)
+Chars 6384 - 6394 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_call_runtime_migration_lib.cm_call_pending_runtime
+Chars 6395 - 6471 [idtac~"AUDIT~cmc_target_call_r...] 0. secs (0.u,0.s)
+Chars 6472 - 6480 [exact~I.] 0. secs (0.u,0.s)
+Chars 6481 - 6485 [Qed.] 0. secs (0.u,0.s)
+cm_call_pending_runtime
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (caller callee : BinNums.Z) 
+         (st : cm_src_state) (values : list cm_value) 
+         (ann : cm_annotation) (returnpc : BinNums.Z),
+       cm_typed_program (cm_source_function_policy sp) p ->
+       cm_call_ok sp p callee values st = true ->
+       cm_runtime_core (cm_source_function_policy sp) ap p caller st ann ->
+       cm_runtime_memory_layout (cm_source_function_policy sp) p
+         (cm_call_pending_base sp p callee st)
+         (CMCallSimFrame (cm_state_fp (cm_call_base_state sp p callee st))
+            (cm_state_fp st) returnpc :: cm_ann_calls ann)
+         (CMSpillFrame callee
+            (cm_state_fp (cm_call_base_state sp p callee st)) nil
+          :: CMSpillFrame caller (cm_state_fp st) (cm_ann_spills ann)
+             :: cm_ann_saved ann)
+Chars 6486 - 6554 [Check~cmc_target_call_runtime_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6555 - 6635 [Print~Assumptions~cmc_target_c...] 0.099 secs (0.098u,0.s)
+Chars 6636 - 6714 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 6715 - 6725 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_empty_call_migration_lib.cm_target_r_empty_call_step
+Chars 6726 - 6804 [idtac~"AUDIT~cmc_target_empty_...] 0. secs (0.u,0.s)
+Chars 6805 - 6813 [exact~I.] 0. secs (0.u,0.s)
+Chars 6814 - 6818 [Qed.] 0. secs (0.u,0.s)
+cm_target_r_empty_call_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid callee : BinNums.Z) 
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (target : tvm_task) (ann : cm_annotation),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       cm_tagged_span_valid st ->
+       BinInt.Z.le BinNums.Z0 (cm_state_nextgen st) ->
+       cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st) ->
+       cm_spill_frames_generation_below (cm_state_nextgen st)
+         (cm_active_spill_frames fid st ann) ->
+       cm_call_ok sp p callee nil st = true ->
+       BinInt.Z.lt (cm_call_depth ks)
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       BinInt.Z.lt (cm_call_depth (cm_cursor_frames (cm_ann_cursors ann)))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       cm_task_layout sp ap p (CMRTask p fid (CMCallE callee nil ty) st ks)
+         ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMRTask p fid (CMCallE callee nil ty) st ks) target ann ->
+       cm_target_step_result sp ap p
+         (CMRTask p fid (CMCallE callee nil ty) st ks) target ann
+Chars 6819 - 6889 [Check~cmc_target_empty_call_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6890 - 6972 [Print~Assumptions~cmc_target_e...] 0.141 secs (0.14u,0.001s)
+Chars 6973 - 7048 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 7049 - 7059 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_r_total_migration_lib.cm_target_r_task_step
+Chars 7060 - 7129 [idtac~"AUDIT~cmc_target_r_tota...] 0. secs (0.u,0.s)
+Chars 7130 - 7138 [exact~I.] 0. secs (0.u,0.s)
+Chars 7139 - 7143 [Qed.] 0. secs (0.u,0.s)
+cm_target_r_task_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (target : tvm_task) (ann : cm_annotation),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_expr_wf (cm_source_function_policy sp) p
+         (cm_source_function_at sp fid p) expr ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       cm_tagged_span_valid st ->
+       BinInt.Z.le BinNums.Z0 (cm_state_nextgen st) ->
+       cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st) ->
+       cm_spill_frames_generation_below (cm_state_nextgen st)
+         (cm_active_spill_frames fid st ann) ->
+       cm_r_layout_ready sp p fid expr st ks ann ->
+       cm_task_static_bases p (CMRTask p fid expr st ks) ->
+       cm_task_layout sp ap p (CMRTask p fid expr st ks) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMRTask p fid expr st ks) target ann ->
+       cm_target_step_result sp ap p (CMRTask p fid expr st ks) target ann
+Chars 7144 - 7205 [Check~cmc_target_r_total_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7206 - 7279 [Print~Assumptions~cmc_target_r...] 0.144 secs (0.143u,0.001s)
+Chars 7280 - 7290 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_r_total_migration_lib.cm_code_support_r_target_step
+Chars 7291 - 7368 [idtac~"AUDIT~cmc_target_r_tota...] 0. secs (0.u,0.s)
+Chars 7369 - 7377 [exact~I.] 0. secs (0.u,0.s)
+Chars 7378 - 7382 [Qed.] 0. secs (0.u,0.s)
+cm_code_support_r_target_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (expr : cm_expr) (st : cm_src_state) (ks : list cm_frame)
+         (target : tvm_task) (ann : cm_annotation),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_code_support_invariants sp ap nilslot p
+         (CMAState (CMRTask p fid expr st ks) target ann) ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMRTask p fid expr st ks) target ann ->
+       cm_target_step_result sp ap p (CMRTask p fid expr st ks) target ann
+Chars 7383 - 7452 [Check~cmc_target_r_total_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7453 - 7534 [Print~Assumptions~cmc_target_r...] 0.564 secs (0.56u,0.004s)
+Chars 7535 - 7608 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 7609 - 7619 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_start_migration_lib.cm_target_start_step
+Chars 7620 - 7686 [idtac~"AUDIT~cmc_target_start_...] 0. secs (0.u,0.s)
+Chars 7687 - 7695 [exact~I.] 0. secs (0.u,0.s)
+Chars 7696 - 7700 [Qed.] 0. secs (0.u,0.s)
+cm_target_start_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_call_ok sp p (cm_program_main p) nil (cm_initial_state sp p input) =
+       true ->
+       cm_target_step_result sp ap p (CMStartTask p input)
+         (TVMBoot (cm_compile_model (cm_source_function_policy sp) p) input)
+         cm_initial_annotation
+Chars 7701 - 7759 [Check~cmc_target_start_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7760 - 7830 [Print~Assumptions~cmc_target_s...] 0.148 secs (0.147u,0.001s)
+Chars 7831 - 7904 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 7905 - 7915 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_total_migration_lib.cm_code_support_target_step
+Chars 7916 - 7989 [idtac~"AUDIT~cmc_target_total_...] 0. secs (0.u,0.s)
+Chars 7990 - 7998 [exact~I.] 0. secs (0.u,0.s)
+Chars 7999 - 8003 [Qed.] 0. secs (0.u,0.s)
+cm_code_support_target_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (task : cm_task)
+         (target : tvm_task) (ann : cm_annotation),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_code_support_invariants sp ap nilslot p (CMAState task target ann) ->
+       cm_task_target_sim (cm_source_function_policy sp) p task target ann ->
+       cm_target_step_result sp ap p task target ann
+Chars 8004 - 8069 [Check~cmc_target_total_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8070 - 8147 [Print~Assumptions~cmc_target_t...] 0.609 secs (0.603u,0.005s)
+Chars 8148 - 8158 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_total_migration_lib.cm_full_support_initial
+Chars 8159 - 8228 [idtac~"AUDIT~cmc_target_total_...] 0. secs (0.u,0.s)
+Chars 8229 - 8237 [exact~I.] 0. secs (0.u,0.s)
+Chars 8238 - 8242 [Qed.] 0. secs (0.u,0.s)
+cm_full_support_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (input : list BinNums.Z),
+       cm_task_succeeds sp (CMStartTask p input) ->
+       cm_full_support_invariants sp ap nilslot p
+         (cm_annotated_start (cm_source_function_policy sp) p input)
+Chars 8243 - 8304 [Check~cmc_target_total_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8305 - 8378 [Print~Assumptions~cmc_target_t...] 0.003 secs (0.003u,0.s)
+Chars 8379 - 8389 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_total_migration_lib.cm_full_support_step
+Chars 8390 - 8456 [idtac~"AUDIT~cmc_target_total_...] 0. secs (0.u,0.s)
+Chars 8457 - 8465 [exact~I.] 0. secs (0.u,0.s)
+Chars 8466 - 8470 [Qed.] 0. secs (0.u,0.s)
+cm_full_support_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_full_support_invariants sp ap nilslot p ast ->
+       cm_full_support_invariants sp ap nilslot p
+         (cm_annotated_step sp ap ast)
+Chars 8471 - 8529 [Check~cmc_target_total_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8530 - 8600 [Print~Assumptions~cmc_target_t...] 7.152 secs (7.1u,0.043s)
+Chars 8601 - 8611 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_total_migration_lib.cm_full_support_iter
+Chars 8612 - 8678 [idtac~"AUDIT~cmc_target_total_...] 0. secs (0.u,0.s)
+Chars 8679 - 8687 [exact~I.] 0. secs (0.u,0.s)
+Chars 8688 - 8692 [Qed.] 0. secs (0.u,0.s)
+cm_full_support_iter
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (n : nat) 
+         (ast : cm_astate),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_full_support_invariants sp ap nilslot p ast ->
+       cm_full_support_invariants sp ap nilslot p
+         (cm_annotated_iter sp ap n ast)
+Chars 8693 - 8751 [Check~cmc_target_total_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8752 - 8822 [Print~Assumptions~cmc_target_t...] 7.193 secs (7.149u,0.035s)
+Chars 8823 - 8833 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_total_migration_lib.cm_source_termination_target_invariant
+Chars 8834 - 8918 [idtac~~"AUDIT~cmc_target_total...] 0. secs (0.u,0.s)
+Chars 8919 - 8927 [exact~I.] 0. secs (0.u,0.s)
+Chars 8928 - 8932 [Qed.] 0. secs (0.u,0.s)
+cm_source_termination_target_invariant
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy),
+       cm_slot_d ->
+       forall (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (n : nat),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_source_terminates sp p input output status ->
+       cm_astate_sim (cm_source_function_policy sp) p
+         (cm_annotated_iter sp ap n
+            (cm_annotated_start (cm_source_function_policy sp) p input))
+Chars 8933 - 9009 [Check~cmc_target_total_migrati...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9010 - 9098 [Print~Assumptions~cmc_target_t...] 7.173 secs (7.128u,0.035s)
+Chars 9099 - 9174 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 9175 - 9185 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_v_phase_migration_lib.cm_target_v_phase_step
+Chars 9186 - 9256 [idtac~"AUDIT~cmc_target_v_phas...] 0. secs (0.u,0.s)
+Chars 9257 - 9265 [exact~I.] 0. secs (0.u,0.s)
+Chars 9266 - 9270 [Qed.] 0. secs (0.u,0.s)
+cm_target_v_phase_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (phase : cm_aphase) (v : cm_value) (st : cm_src_state)
+         (pc temp b c owner ob oc : BinNums.Z) (tail : list cm_acursor)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame) (target : tvm_task),
+       let ann :=
+         CMAnnotation pc temp b c (CMACursor phase owner ob oc :: tail)
+           spills saved calls in
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_task_succeeds sp
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames tail)) ->
+       cm_runtime_core (cm_source_function_policy sp) ap p fid st ann ->
+       cm_tagged_span_valid st ->
+       cm_state_generation_below (cm_source_function_policy sp) p fid st ->
+       cm_value_generation_below (cm_state_nextgen st) v ->
+       cm_frame_generation_below (cm_source_function_policy sp) p fid
+         (cm_state_nextgen st) (cm_phase_frame phase) ->
+       cm_spill_frames_generation_below (cm_state_nextgen st)
+         (cm_active_spill_frames fid st ann) ->
+       cm_frame_fid_ready p fid (cm_phase_frame phase) ->
+       cm_phase_budget (cm_source_function_policy sp) p fid phase owner ->
+       cm_phase_spill_consistent temp owner phase spills ->
+       cm_frame_short_ready st (cm_phase_frame phase) ->
+       cm_phase_static_type_ready (cm_source_function_policy sp) nilslot p
+         fid phase ->
+       cm_phase_value_type_ready (cm_source_function_policy sp) nilslot p fid
+         phase v ->
+       temp = cm_phase_child_temp phase owner ->
+       cm_v_phase_ready sp p v st ann phase ->
+       cm_task_layout sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann ->
+       cm_target_step_result sp ap p
+         (CMVTask p fid v st (cm_cursor_frames (cm_ann_cursors ann))) target
+         ann
+Chars 9271 - 9333 [Check~cmc_target_v_phase_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9334 - 9408 [Print~Assumptions~cmc_target_v...] 0.178 secs (0.176u,0.001s)
+Chars 9409 - 9484 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.002u,0.s)
+Chars 9485 - 9495 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_v_total_migration_lib.cm_code_support_v_target_step
+Chars 9496 - 9573 [idtac~"AUDIT~cmc_target_v_tota...] 0. secs (0.u,0.s)
+Chars 9574 - 9582 [exact~I.] 0. secs (0.u,0.s)
+Chars 9583 - 9587 [Qed.] 0. secs (0.u,0.s)
+cm_code_support_v_target_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (nilslot : cm_slot_d) (p : cm_program) (fid : BinNums.Z)
+         (v : cm_value) (st : cm_src_state) (ks : list cm_frame)
+         (target : tvm_task) (ann : cm_annotation),
+       cm_semantic_wf_program (cm_source_function_policy sp) p ->
+       cm_code_support_invariants sp ap nilslot p
+         (CMAState (CMVTask p fid v st ks) target ann) ->
+       cm_task_target_sim (cm_source_function_policy sp) p
+         (CMVTask p fid v st ks) target ann ->
+       cm_target_step_result sp ap p (CMVTask p fid v st ks) target ann
+Chars 9588 - 9657 [Check~cmc_target_v_total_migra...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 9658 - 9739 [Print~Assumptions~cmc_target_v...] 0.625 secs (0.609u,0.005s)
+Chars 9740 - 9821 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 9822 - 9832 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_value_support_migration_lib.cm_spill_within_holds_bounds
+Chars 9833 - 9915 [idtac~~"AUDIT~cmc_target_value...] 0. secs (0.u,0.s)
+Chars 9916 - 9924 [exact~I.] 0. secs (0.u,0.s)
+Chars 9925 - 9929 [Qed.] 0. secs (0.u,0.s)
+cm_spill_within_holds_bounds
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid fp oldfp : BinNums.Z) (spills : list cm_spill)
+         (slot : BinNums.Z) (value : cm_value),
+       cm_frame_segment policy p fid fp oldfp ->
+       cm_spills_within_frame policy p fid fp oldfp spills ->
+       cm_spill_holds slot value spills ->
+       BinInt.Z.le BinNums.Z0 slot /\
+       BinInt.Z.lt slot
+         (cm_temp_slots (cm_function_at policy fid (cm_program_functions p)))
+Chars 9930 - 10004 [Check~cmc_target_value_support...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10005 - 10091 [Print~Assumptions~cmc_target_v...] 0.09 secs (0.089u,0.s)
+Chars 10092 - 10102 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_value_support_migration_lib.cm_runtime_held_slot_bounds
+Chars 10103 - 10184 [idtac~~"AUDIT~cmc_target_value...] 0. secs (0.u,0.s)
+Chars 10185 - 10193 [exact~I.] 0. secs (0.u,0.s)
+Chars 10194 - 10198 [Qed.] 0. secs (0.u,0.s)
+cm_runtime_held_slot_bounds
+     : forall (policy : cm_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (all : list cm_region) (cursors : list cm_acursor)
+         (fid fp : BinNums.Z) (active : list cm_region)
+         (spills : list cm_spill) (saved : list cm_spill_frame)
+         (calls : list cm_call_sim_frame) (slot : BinNums.Z)
+         (value : cm_value),
+       cm_runtime_stack policy ap p all fid fp active cursors spills saved
+         calls ->
+       BinInt.Z.le BinNums.Z0 fid ->
+       cm_spill_holds slot value spills ->
+       BinInt.Z.le BinNums.Z0 slot /\
+       BinInt.Z.lt slot
+         (cm_temp_slots (cm_function_at policy fid (cm_program_functions p)))
+Chars 10199 - 10272 [Check~cmc_target_value_support...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10273 - 10358 [Print~Assumptions~cmc_target_v...] 0.091 secs (0.09u,0.001s)
+Chars 10359 - 10369 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_target_value_support_migration_lib.cm_init_succeeds_ready
+Chars 10370 - 10446 [idtac~"AUDIT~cmc_target_value_...] 0. secs (0.u,0.s)
+Chars 10447 - 10455 [exact~I.] 0. secs (0.u,0.s)
+Chars 10456 - 10460 [Qed.] 0. secs (0.u,0.s)
+cm_init_succeeds_ready
+     : forall (sp : cm_source_lookup_policy) (p : cm_program)
+         (fid slot : BinNums.Z) (v : cm_value) (st : cm_src_state)
+         (ks : list cm_frame),
+       cm_task_succeeds sp (cm_vapply sp p fid (CMInitK slot) v st ks) ->
+       cm_binding_address_ok sp p fid (BinNums.Zpos BinNums.xH) slot st =
+       true /\
+       cm_store_ok
+         (cm_slot_ty
+            (cm_source_slot_at sp slot
+               (cm_function_locals (cm_source_function_at sp fid p))))
+         (cm_state_env st (BinNums.Zpos BinNums.xH) slot) st = true
+Chars 10461 - 10529 [Check~cmc_target_value_support...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 10530 - 10610 [Print~Assumptions~cmc_target_v...] 0.094 secs (0.093u,0.s)

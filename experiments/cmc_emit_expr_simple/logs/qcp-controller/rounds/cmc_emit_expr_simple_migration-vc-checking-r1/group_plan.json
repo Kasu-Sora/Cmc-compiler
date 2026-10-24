@@ -1,0 +1,65 @@
+{
+  "groups": [
+    {
+      "id": "branch_selection",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_simple_expr_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and introduce its parameters and facts. Substitute e using the simple-source equality and destruct simple. A leaf view contradicts kind = 2 by destructing its leaf constructor and reducing the source/kind functions. For CMSimpleVar scope slot ty instantiate the three existentials with these constructor fields. Project binding_valid from cm_expr_wf; project type-code-wf from cm_expr_count_node_representable and slot bounds from cm_expr_counts_representable/cm_i32_code_count. Retain the original wf/counts/simple facts. Reduce cm_simple_code_for on the variable constructor so the emitter plan with its same done/tail and addresses cancels. No new lemma or resource is required."
+        },
+        {
+          "name": "proof_of_cm_emit_simple_expr_which_implies_wit_4",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and introduce parameters and facts. Substitute e from its simple-source equality and destruct simple. CMSimpleVar contradicts kind <> 2. For CMSimpleLeaf leaf instantiate the existential with leaf; retain wf/counts/simple facts and establish cm_dispatch_leaf by destructing leaf and reducing its kind predicate (or its existing coverage equivalence). Reduce cm_simple_code_for on CMSimpleLeaf; both sides then have the same emitter plan at identical emitter/out/capacity and done/tail. Cancel that resource and discharge the pure constructor equalities."
+        }
+      ]
+    },
+    {
+      "id": "expression_representation",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_simple_expr_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Rewrite cm_expr_rep with the current cm_expr_rep_node equation, unfold cm_expr_node, and open its nonzero fact and a/b/args existentials. Instantiate the target existentials in generated xargs, xb, xa order with the corresponding opened args, b, a. The seven scalar/pointer field resources and cm_expr_payload are identical; cancel them and retain expr <> 0. Do not destruct payload or recursive expressions."
+        },
+        {
+          "name": "proof_of_cm_emit_simple_expr_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_simple_expr_which_implies_wit_3_split_goal_spatial": "Introduce parameters and pure bounds/nonzero premises. Rewrite the target using cm_expr_rep_node and unfold cm_expr_node. Instantiate its a, b, args existentials with xa, xb, xargs from the antecedent. Reassemble the seven unchanged field resources and identical cm_expr_payload by cancellation; use expr <> 0 for the node fact. Numeric bounds require no strengthening and recursive payload remains opaque."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_simple_expr_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_simple_expr_which_implies_wit_5_split_goal_spatial": "Introduce parameters and pure bounds/nonzero premises. Rewrite the target using cm_expr_rep_node and unfold cm_expr_node. Instantiate a, b, args with xa, xb, xargs; cancel the seven unchanged field resources and identical payload. Supply expr <> 0. This is the leaf-branch closure of the same general representation shape; no expression constructor assumption is needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "return_plans",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_simple_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_simple_expr_return_wit_1_split_goal_spatial": "Introduce the split parameters and hypotheses. Use the explicit simple = CMSimpleVar scope slot ty premise to rewrite cm_simple_code_for to cm_var_code_for. The program context, function context, expression representation, and emitter plan now match exactly, including append(done, code), tail, all resource addresses and capacity. Cancel the four resources; no plan associativity or existential construction is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_simple_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_simple_expr_return_wit_2_split_goal_spatial": "Introduce the split parameters and hypotheses. Rewrite simple with the explicit simple = CMSimpleLeaf leaf premise and reduce cm_simple_code_for to cm_leaf_code_for. Cancel the unchanged program/function/expression context and emitter plan, whose done-append and tail now coincide exactly. No new arithmetic or spatial facts are needed."
+          }
+        }
+      ]
+    }
+  ]
+}

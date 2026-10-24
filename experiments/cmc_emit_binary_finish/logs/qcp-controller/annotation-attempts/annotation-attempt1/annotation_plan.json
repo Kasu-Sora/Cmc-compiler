@@ -1,0 +1,146 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "scale-type",
+      "location": "cm_pointer_scale_value: encoded pointee and size calls",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "type_code is the expression type encoding; pointer type has encoded value >= 1024 and <= INT_MAX"
+      ],
+      "resources": [
+        "full program and expression representations; initialized type_code local"
+      ],
+      "mathematical_state": "The encoded pointee denotes the mathematical pointee; size is the source pointer scale.",
+      "internal_predicates": []
+    },
+    {
+      "id": "generic-emission",
+      "location": "cm_emit_binary_generic_fragment: temp-load and instruction calls",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "temp >= 0; temp offset <= INT_MAX; arbitrary int op"
+      ],
+      "resources": [
+        "function context and emitter plan; done prefix and arbitrary tail"
+      ],
+      "mathematical_state": "Consume exactly temp-load, swap, and the total binary opcode; append exactly that prefix to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "right-add",
+      "location": "cm_emit_binary_finish_plan: right-add branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op == 8; right pointer flag != 0",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; push right scale; mul; swap; add. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "left-add",
+      "location": "cm_emit_binary_finish_plan: left-add branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op == 8; left pointer flag != 0; right pointer flag == 0",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; swap; push left scale; mul; add. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "pointer-difference",
+      "location": "cm_emit_binary_finish_plan: pointer-difference branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op == 9; left and right pointer flags != 0",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; swap; sub; push left scale; div. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "pointer-subtract",
+      "location": "cm_emit_binary_finish_plan: pointer-subtract branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op == 9; left pointer flag != 0; right pointer flag == 0",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; swap; push left scale; mul; sub. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "generic-add",
+      "location": "cm_emit_binary_finish_plan: generic-add branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op == 8; both pointer flags == 0",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; swap; binary opcode. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "generic-sub",
+      "location": "cm_emit_binary_finish_plan: generic-sub branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op == 9; left pointer flag == 0",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; swap; binary opcode. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    },
+    {
+      "id": "generic-other",
+      "location": "cm_emit_binary_finish_plan: generic-other branch before first emission call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op != 8 and op != 9, including default opcode mapping",
+        "left_type and right_type are exact expression type encodings; runtime pointer flags are cm_rep_is_pointer_code of those encodings",
+        "both type encodings satisfy cm_type_code_wf; any scale local equals the corresponding cm_pointer_scale result"
+      ],
+      "resources": [
+        "emitter plan owns done and the selected remaining instruction prefix plus arbitrary tail",
+        "program context, function context, both complete expression representations and all local stores remain framed"
+      ],
+      "mathematical_state": "The branch conditions identify cm_binary_finish_code with load; swap; binary opcode. The equivalence annotation changes list presentation only; each call consumes its exact prefix and appends it to done.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

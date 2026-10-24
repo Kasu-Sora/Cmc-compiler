@@ -1,0 +1,150 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "source_verification": "isolated unchanged C* replay passed",
+  "annotation_development": {
+    "candidate": "one ordinary Assert; two helper instantiation hints; existing models imported",
+    "semantic_decisions": [
+      "Retain empty strings, empty list and conditional source nonnullness",
+      "Preserve exact zero-terminated byte list and source-byte ownership",
+      "Reuse string models and helper contracts without new semantic definitions"
+    ],
+    "final_owner_checks": "design, symexec and post-symexec library all passed",
+    "failed_machine_checks_reported": 0,
+    "substantive_post_check_revisions_reported": 0,
+    "public_definitions_at_annotation": 0,
+    "public_lemmas_at_annotation": 0,
+    "ordinary_asserts": 1,
+    "owner_report": "annotation-attempts/annotation-attempt1/agent_output.md"
+  },
+  "proof_development": {
+    "group_development_checks": {
+      "string-node-opening": {
+        "checks": 7,
+        "failed": 5,
+        "passed": 2,
+        "passed_temporary_abort_diagnostic": 1,
+        "passed_complete_qed": 1,
+        "repairs": [
+          "Remove redundant Intros_p after pure fact already consumed",
+          "Iterated separation cancellation",
+          "Normalize pure capacity with explicit Zlength_nil rather than early simpl"
+        ],
+        "controller_final_group_check": "accepted"
+      },
+      "string-final-return": {
+        "checks": 6,
+        "failed": 5,
+        "passed": 1,
+        "coq_debug_calls": 4,
+        "repairs": [
+          "Unfold representation string size before arithmetic",
+          "Extract pure facts from empty full array",
+          "Explicit resource cancellation",
+          "Apply spatial split before pure split at top-level",
+          "Introduce representation existentials before null-node contradiction"
+        ],
+        "controller_final_group_check": "accepted"
+      }
+    },
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 2,
+    "accepted_group_attempts": {
+      "string-node-opening": 1,
+      "string-final-return": 1
+    }
+  },
+  "annotation_acceptance": {
+    "status": "accepted",
+    "checks": {
+      "vc_comparisons": {
+        "status": "passed",
+        "comparison_count": 0,
+        "provable_count": 0,
+        "statements": []
+      },
+      "pre_symexec_formal_case_lib_coqc": {
+        "status": "passed",
+        "returncode": 0
+      },
+      "symexec": {
+        "status": "passed",
+        "returncode": 0,
+        "reused_owner_generation": true,
+        "owner_generation_receipt": {
+          "recorded_at": "2026-10-16T05:10:04.366412Z",
+          "performance_profile": "recursive-large",
+          "timeout_seconds": 7200.0,
+          "elapsed_seconds": 0.142
+        }
+      },
+      "formal_case_lib_contract": {
+        "status": "passed",
+        "skipped": false,
+        "errors": []
+      },
+      "formal_case_lib_dune": {
+        "status": "passed",
+        "build_mode": "makefile",
+        "target": "Rocq/examples/QCP_demos_human/cmc_emit_strings_migration_lib.vo",
+        "returncode": 0,
+        "base_artifact_count": 146,
+        "current_source_count": 1,
+        "rebuilt_count": 0,
+        "dependency_metrics": {
+          "status": "resolved",
+          "strategy": "breadth-batched-coqdep",
+          "batch_count": 6,
+          "coqdep_process_count": 6,
+          "node_count": 147,
+          "source_count": 147,
+          "elapsed_seconds": 7.246622
+        },
+        "current_cleanup": {
+          "status": "passed",
+          "removed_count": 0,
+          "first_removed": null
+        },
+        "make_seconds": 0.007728,
+        "elapsed_seconds": 7.425226
+      },
+      "formal_case_lib_coqc": {
+        "status": "passed",
+        "returncode": 0
+      },
+      "clean_output_freshness": {
+        "status": "passed",
+        "interrupted_output_recovery": {
+          "status": "not-needed",
+          "removed_entry_count": 0,
+          "removed_zero_byte_temp_count": 0
+        }
+      }
+    }
+  },
+  "vc_checking": {
+    "top_level_vcs": 3,
+    "no_split_vcs": 1,
+    "generated_splits": 4,
+    "groups": 2,
+    "structural_blockers": 0,
+    "report_format_repairs": 0,
+    "planned_additional_public_lemmas": 0
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 2,
+    "planned_groups": 2,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-16T05:21:58.728799Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-16T05:21:58.735958Z"
+  }
+}

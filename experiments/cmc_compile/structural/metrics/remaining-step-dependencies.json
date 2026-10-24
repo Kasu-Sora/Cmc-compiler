@@ -1,0 +1,80 @@
+{
+  "source": "/Users/nizitong/cmc/cmc_preservation_total_step.c",
+  "source_sha256": "6048b5e83f1eaf6fd025cd1fb4f08f2a0e4b76b63e0e73d557b46fc5b6956d8c",
+  "source_lines": [
+    118,
+    159
+  ],
+  "dependencies": {
+    "cm_invariants_runtime_step_ready": [
+      "typed",
+      "type_ready",
+      "coordinate",
+      "ready",
+      "budget",
+      "fid_ready",
+      "succeeds",
+      "erases",
+      "short_ready"
+    ],
+    "cm_task_ready_step": [
+      "typed",
+      "erases",
+      "rooted",
+      "coordinate",
+      "runtime",
+      "ready",
+      "context",
+      "succeeds"
+    ],
+    "cm_task_runtime_step": [
+      "typed",
+      "erases",
+      "runtime_ready",
+      "runtime"
+    ],
+    "cm_task_type_ready_step": [
+      "typed",
+      "erases",
+      "ready",
+      "type_ready",
+      "fid_ready",
+      "succeeds"
+    ],
+    "cm_task_tagged_step": [
+      "typed",
+      "erases",
+      "runtime",
+      "generation_below",
+      "tagged"
+    ],
+    "cm_task_short_step": [
+      "generation",
+      "erases",
+      "runtime",
+      "short_ready"
+    ],
+    "cm_task_layout_step": [
+      "erases",
+      "ready",
+      "layout"
+    ],
+    "cm_target_task_step": [
+      "wf",
+      "succeeds",
+      "static_valid",
+      "static_bases",
+      "runtime_ready",
+      "runtime",
+      "type_ready",
+      "fid_ready",
+      "spill",
+      "generation",
+      "tagged",
+      "erases",
+      "layout",
+      "simulation"
+    ]
+  },
+  "note": "Source theorem-application dependency graph, not proved target lemmas. Runtime readiness, layout readiness, type and short-circuit invariants are coupled; proving one in isolation by assuming the others does not complete preservation. Local refinements may provide another proved route, but all initial and step premises must be discharged before top-level verification."
+}

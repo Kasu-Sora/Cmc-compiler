@@ -1,0 +1,94 @@
+Chars 0 - 79 [Require~Export~~~SimpleC.EE.QC...] 1.186 secs (1.085u,0.087s)
+Chars 80 - 115 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 116 - 161 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 162 - 183 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 184 - 209 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 210 - 1025 [Lemma~cm_target_reload_staged~...] 0. secs (0.u,0.s)
+Chars 1026 - 1032 [Proof.] 0. secs (0.u,0.s)
+Chars 1034 - 1096 [(intros~RT~FID~BASE~BOUND~LEN~...] 0. secs (0.u,0.s)
+Chars 1098 - 1138 [(pose~proof~SIM~as~[_~[_~[FP~[...] 0. secs (0.u,0.s)
+Chars 1140 - 1324 [(pose~proof~~~(cm_tvm_reload_s...] 0.001 secs (0.u,0.s)
+Chars 1326 - 1480 [(assert~~~(VALID~:~~~~forall~s...] 0. secs (0.u,0.s)
+Chars 1482 - 1483 [{] 0. secs (0.u,0.s)
+Chars 1484 - 1792 [(intros~slot~B;~rewrite~FP;~ex...] 0.001 secs (0.u,0.s)
+Chars 1793 - 1794 [}] 0. secs (0.u,0.s)
+Chars 1796 - 1858 [specialize~(EXEC~VALID~ltac:((...] 0. secs (0.u,0.s)
+Chars 1860 - 1954 [(assert~~~(V~:~~~~vm~=~~~~TVMS...] 0. secs (0.u,0.s)
+Chars 1956 - 1957 [{] 0. secs (0.u,0.s)
+Chars 1958 - 2052 [(pose~proof~SIM~as~[_~[_~[_~[_...] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/build/Rocq/examples/QCP_demos_human/cmc_target_args_stack_migration_lib.v", line 22, characters 85-96:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+ann : cm_annotation
+base : Z
+args : list cm_expr
+values : list cm_value
+rest : list tvm_inst
+RT : cm_runtime_core (cm_source_function_policy sp) ap p fid st ann
+FID : 0 <= fid
+BASE : 0 <= base
+BOUND : base + Zlength args <= cm_temp_slots (cm_source_function_at sp fid p)
+LEN : Zlength args = Zlength values
+CAP : Zlength values + 1 < 65536
+STAGED : cm_staged_spills base values (cm_ann_spills ann)
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p) 
+    (cm_ann_pc ann)
+    (cm_emit_args_reload (cm_source_function_policy sp) p fid base args ++
+     rest)
+stack, calls : list Z
+mem : Z -> Z
+input, output : list Z
+VALID :
+  forall slot : Z,
+  base <= slot < base + Zlength args ->
+  tower_word_valid
+    (tower_getw
+       (tvm_mem (TVMState (cm_ann_pc ann) stack calls mem input output)) 8 +
+     cm_temp_offset (cm_source_function_policy sp) p fid slot)
+EXEC :
+  tvm_iter
+    (cm_code_steps
+       (cm_emit_args_reload (cm_source_function_policy sp) p fid base args))
+    (TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+       (TVMState (cm_ann_pc ann) []
+          (tvm_calls (TVMState (cm_ann_pc ann) stack calls mem input output))
+          (tvm_mem (TVMState (cm_ann_pc ann) stack calls mem input output))
+          (tvm_input (TVMState (cm_ann_pc ann) stack calls mem input output))
+          (tvm_output (TVMState (cm_ann_pc ann) stack calls mem input output)))) =
+  TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+    (TVMState
+       (cm_ann_pc ann +
+        Zlength
+          (cm_emit_args_reload (cm_source_function_policy sp) p fid base args))
+       (cm_encode_values st values ++ [])
+       (tvm_calls (TVMState (cm_ann_pc ann) stack calls mem input output))
+       (tvm_mem (TVMState (cm_ann_pc ann) stack calls mem input output))
+       (tvm_input (TVMState (cm_ann_pc ann) stack calls mem input output))
+       (tvm_output (TVMState (cm_ann_pc ann) stack calls mem input output)))
+SP :
+  cm_spill_list_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState (cm_ann_pc ann) stack calls mem input output))
+    (cm_spill_frame_fid
+       (CMSpillFrame fid (cm_state_fp st) (cm_ann_spills ann)))
+    (cm_spill_frame_fp
+       (CMSpillFrame fid (cm_state_fp st) (cm_ann_spills ann)))
+    (cm_spill_frame_spills
+       (CMSpillFrame fid (cm_state_fp st) (cm_ann_spills ann)))
+FP :
+  tower_getw
+    (tvm_mem (TVMState (cm_ann_pc ann) stack calls mem input output)) 8 =
+  cm_state_fp st
+SIM :
+  cm_machine_state_sim (cm_source_function_policy sp) p st
+    (TVMState (cm_ann_pc ann) stack calls mem input output)
+    (cm_ann_calls ann) (cm_active_spill_frames fid st ann) [] []
+STACK : cm_operand_suffix_sim st [] [] stack
+Unable to unify "TVMState (cm_ann_pc ann) [] calls mem input output" with
+ "TVMState (cm_ann_pc ann) stack calls mem input output".
+

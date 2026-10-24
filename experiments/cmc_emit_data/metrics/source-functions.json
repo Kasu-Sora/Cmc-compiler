@@ -1,0 +1,69 @@
+[
+  {
+    "name": "cmc_emit_data",
+    "prototype": false,
+    "source_span": [
+      5,
+      120
+    ],
+    "specification": [
+      [
+        8,
+        10
+      ],
+      [
+        11,
+        23
+      ],
+      [
+        24,
+        47
+      ]
+    ],
+    "annotation": [
+      [
+        70,
+        70
+      ],
+      [
+        77,
+        77
+      ],
+      [
+        78,
+        78
+      ],
+      [
+        79,
+        79
+      ],
+      [
+        101,
+        101
+      ],
+      [
+        102,
+        105
+      ]
+    ],
+    "inline_proof": [
+      [
+        49,
+        69
+      ],
+      [
+        72,
+        75
+      ],
+      [
+        82,
+        99
+      ],
+      [
+        108,
+        118
+      ]
+    ],
+    "runtime": "int cmc_emit_data(struct cm_global *global_node,\n                  struct cm_string *string_node,\n                  unsigned char *data, int capacity)\n{\n  cmc_write_zeroes(data, capacity, 0, 8);\n  int globals_cursor =\n      cmc_emit_globals(global_node, data, capacity, 8);\n  int final_cursor =\n      cmc_emit_strings(string_node, data, capacity, globals_cursor);\n  return final_cursor;\n}\n"
+  }
+]

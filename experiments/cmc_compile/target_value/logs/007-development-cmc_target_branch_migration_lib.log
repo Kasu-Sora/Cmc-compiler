@@ -1,0 +1,127 @@
+Chars 0 - 72 [Require~Export~SimpleC.EE.QCP_...] 1.297 secs (1.234u,0.061s)
+Chars 73 - 118 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 119 - 140 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 141 - 166 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 167 - 755 [Lemma~cm_target_v_if_step~sp~a...] 0. secs (0.u,0.s)
+Chars 756 - 762 [Proof.] 0. secs (0.u,0.s)
+Chars 764 - 843 [(cbn~zeta;~intros~WF~[CODE~SAV...] 0. secs (0.u,0.s)
+Chars 845 - 936 [(destruct~vm~as~[vpc~stack~vca...] 0. secs (0.u,0.s)
+Chars 938 - 1047 [(destruct~SIM~as~[M~[P~[F~[C~[...] 0. secs (0.u,0.s)
+Chars 1049 - 1281 [(pose~proof~~~(cm_tvm_jz~(cm_c...] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_value/build/Rocq/examples/QCP_demos_human/cmc_target_branch_migration_lib.v", line 15, characters 220-224:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+v : cm_value
+st : cm_src_state
+yes, no : cm_stmt
+pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+WF : cm_semantic_wf_program (cm_source_function_policy sp) p
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (cm_ann_pc
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+    (cm_task_code sp p
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor (CAIfP yes no) owner ob oc :: tail) spills
+                   saved calls))))
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    (cm_task_fid
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor (CAIfP yes no) owner ob oc :: tail) spills
+                   saved calls)))))
+    (cm_ann_cursors
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+vcalls : list Z
+mem : Z -> Z
+input, output : list Z
+O :
+  tvm_output (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_output st
+I :
+  tvm_input (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_input st
+S :
+  cm_spill_frames_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+C :
+  cm_call_frames_sim
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+    (tvm_calls (TVMState pc [cm_value_number st v] vcalls mem input output))
+F :
+  tower_getw
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output)) 8 =
+  cm_state_fp st
+P :
+  cm_stored_provenance_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+M :
+  cm_initialized_bytes_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+OLD :
+  cm_machine_state_sim (cm_source_function_policy sp) p st
+    (TVMState pc [cm_value_number st v] vcalls mem input output)
+    (cm_ann_calls
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+    [v] []
+The term "CODE" has type
+ "cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (cm_ann_pc
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))
+    (cm_task_code sp p
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor (CAIfP yes no) owner ob oc :: tail) spills
+                   saved calls))))
+       (CMAnnotation pc temp b c
+          (CMACursor (CAIfP yes no) owner ob oc :: tail) spills saved calls))"
+while it is expected to have type
+ "cm_code_at
+    (tvm_object_code (cm_compile_model (cm_source_function_policy sp) p)) pc
+    (TVMInst TVMJzOp
+       (pc + 2 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes)
+     :: ?rest)"
+(cannot unify "TVMInst TVMJzOp
+                 (cm_ann_pc
+                    (CMAnnotation pc temp b c
+                       (CMACursor (CAIfP yes no) owner ob oc :: tail) spills
+                       saved calls) + 1 +
+                  cm_stmt_code_count (cm_source_function_policy sp) p fid yes +
+                  1)" and
+"TVMInst TVMJzOp
+   (pc + 2 + cm_stmt_code_count (cm_source_function_policy sp) p fid yes)").
+

@@ -1,0 +1,1600 @@
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CAAssignLP expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CAAssignLP expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CAAssignLP expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CAAssignLP expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CABinLP op expr1 expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CABinLP op expr1 expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CABinLP op expr1 expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CABinLP op expr1 expr2 ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CALoadP ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CALoadP ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CALoadP ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor (CALoadP ty)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         (match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end + Zlength (c :: args))
+         match ann with
+         | CMAnnotation _ _ b _ _ _ _ _ => b
+         end match ann with
+             | CMAnnotation _ _ _ c _ _ _ _ => c
+             end
+         (CMACursor
+            (CAArgP fid0 args [] ty (c :: args)
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               (match ann with
+                | CMAnnotation _ temp _ _ _ _ _ _ => temp
+                end + Zlength (c :: args)))
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         (match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end + Zlength (c :: args))
+         match ann with
+         | CMAnnotation _ _ b _ _ _ _ _ => b
+         end match ann with
+             | CMAnnotation _ _ _ c _ _ _ _ => c
+             end
+         (CMACursor
+            (CAArgP fid0 args [] ty (c :: args)
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               (match ann with
+                | CMAnnotation _ temp _ _ _ _ _ _ => temp
+                end + Zlength (c :: args)))
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         (match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end + Zlength (c :: args))
+         match ann with
+         | CMAnnotation _ _ b _ _ _ _ _ => b
+         end match ann with
+             | CMAnnotation _ _ _ c _ _ _ _ => c
+             end
+         (CMACursor
+            (CAArgP fid0 args [] ty (c :: args)
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               (match ann with
+                | CMAnnotation _ temp _ _ _ _ _ _ => temp
+                end + Zlength (c :: args)))
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         (match ann with
+          | CMAnnotation _ temp _ _ _ _ _ _ => temp
+          end + Zlength (c :: args))
+         match ann with
+         | CMAnnotation _ _ b _ _ _ _ _ => b
+         end match ann with
+             | CMAnnotation _ _ _ c _ _ _ _ => c
+             end
+         (CMACursor
+            (CAArgP fid0 args [] ty (c :: args)
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end
+               (match ann with
+                | CMAnnotation _ temp _ _ _ _ _ _ => temp
+                end + Zlength (c :: args)))
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+match
+  match cm_state_input st with
+  | [] =>
+      CMVTask p fid (CMIntV (-1)) st
+        ((fix map (l : list cm_acursor) : list cm_frame :=
+            match l with
+            | [] => []
+            | a :: t =>
+                match match a with
+                      | CMACursor phase _ _ _ => phase
+                      end with
+                | CAHaltP => CMHaltK
+                | CALoadP ty => CMLoadK ty
+                | CAAssignLP e ty => CMAssignLK e ty
+                | CAAssignRP v ty => CMAssignRK v ty
+                | CABinLP op _ rhs ty => CMBinLK op rhs ty
+                | CABinRP op _ _ v ty => CMBinRK op v ty
+                | CAUnaryP op => CMUnaryK op
+                | CAIndexLP e ty => CMIndexLK e ty
+                | CAIndexRP v ty => CMIndexRK v ty
+                | CAMemberP mid _ => CMMemberK mid
+                | CAPutcP => CMPutcK
+                | CAPutiP => CMPutiK
+                | CAExitP => CMExitK
+                | CAExprStmtP => CMExprStmtK
+                | CAInitP slot => CMInitK slot
+                | CABlockP env regions _ _ => CMBlockK env regions
+                | CASeqP s => CMSeqK s
+                | CAIfP yes no => CMIfK yes no
+                | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                | CAWhileBodyP guard body env regions _ _ =>
+                    CMWhileBodyK guard body env regions
+                | CAReturnP => CMReturnK
+                | CAArgP callee rest values ret _ _ _ _ =>
+                    CMArgK callee rest values ret
+                | CACallP caller env fp regions ret =>
+                    CMCallK caller env fp regions ret
+                end :: map t
+            end) match ann with
+                 | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                 end)
+  | byte :: rest =>
+      if tower_byte_valueb byte
+      then
+       CMVTask p fid (CMIntV byte) (cm_state_io st rest (cm_state_output st))
+         ((fix map (l : list cm_acursor) : list cm_frame :=
+             match l with
+             | [] => []
+             | a :: t =>
+                 match match a with
+                       | CMACursor phase _ _ _ => phase
+                       end with
+                 | CAHaltP => CMHaltK
+                 | CALoadP ty => CMLoadK ty
+                 | CAAssignLP e ty => CMAssignLK e ty
+                 | CAAssignRP v ty => CMAssignRK v ty
+                 | CABinLP op _ rhs ty => CMBinLK op rhs ty
+                 | CABinRP op _ _ v ty => CMBinRK op v ty
+                 | CAUnaryP op => CMUnaryK op
+                 | CAIndexLP e ty => CMIndexLK e ty
+                 | CAIndexRP v ty => CMIndexRK v ty
+                 | CAMemberP mid _ => CMMemberK mid
+                 | CAPutcP => CMPutcK
+                 | CAPutiP => CMPutiK
+                 | CAExitP => CMExitK
+                 | CAExprStmtP => CMExprStmtK
+                 | CAInitP slot => CMInitK slot
+                 | CABlockP env regions _ _ => CMBlockK env regions
+                 | CASeqP s => CMSeqK s
+                 | CAIfP yes no => CMIfK yes no
+                 | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                 | CAWhileBodyP guard body env regions _ _ =>
+                     CMWhileBodyK guard body env regions
+                 | CAReturnP => CMReturnK
+                 | CAArgP callee rest0 values ret _ _ _ _ =>
+                     CMArgK callee rest0 values ret
+                 | CACallP caller env fp regions ret =>
+                     CMCallK caller env fp regions ret
+                 end :: map t
+             end) match ann with
+                  | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                  end)
+      else
+       CMCTask p fid (CMError 1) st
+         ((fix map (l : list cm_acursor) : list cm_frame :=
+             match l with
+             | [] => []
+             | a :: t =>
+                 match match a with
+                       | CMACursor phase _ _ _ => phase
+                       end with
+                 | CAHaltP => CMHaltK
+                 | CALoadP ty => CMLoadK ty
+                 | CAAssignLP e ty => CMAssignLK e ty
+                 | CAAssignRP v ty => CMAssignRK v ty
+                 | CABinLP op _ rhs ty => CMBinLK op rhs ty
+                 | CABinRP op _ _ v ty => CMBinRK op v ty
+                 | CAUnaryP op => CMUnaryK op
+                 | CAIndexLP e ty => CMIndexLK e ty
+                 | CAIndexRP v ty => CMIndexRK v ty
+                 | CAMemberP mid _ => CMMemberK mid
+                 | CAPutcP => CMPutcK
+                 | CAPutiP => CMPutiK
+                 | CAExitP => CMExitK
+                 | CAExprStmtP => CMExprStmtK
+                 | CAInitP slot => CMInitK slot
+                 | CABlockP env regions _ _ => CMBlockK env regions
+                 | CASeqP s => CMSeqK s
+                 | CAIfP yes no => CMIfK yes no
+                 | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+                 | CAWhileBodyP guard body env regions _ _ =>
+                     CMWhileBodyK guard body env regions
+                 | CAReturnP => CMReturnK
+                 | CAArgP callee rest0 values ret _ _ _ _ =>
+                     CMArgK callee rest0 values ret
+                 | CACallP caller env fp regions ret =>
+                     CMCallK caller env fp regions ret
+                 end :: map t
+             end) match ann with
+                  | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                  end)
+  end
+with
+| CMStartTask q _ =>
+    q = p /\
+    CMAnnotation
+      (match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end + 1) match ann with
+                | CMAnnotation _ temp _ _ _ _ _ _ => temp
+                end match ann with
+                    | CMAnnotation _ _ b _ _ _ _ _ => b
+                    end
+      match ann with
+      | CMAnnotation _ _ _ c _ _ _ _ => c
+      end match ann with
+          | CMAnnotation _ _ _ _ cs _ _ _ => cs
+          end match ann with
+              | CMAnnotation _ _ _ _ _ ss _ _ => ss
+              end match ann with
+                  | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                  end
+      match ann with
+      | CMAnnotation _ _ _ _ _ _ _ cs => cs
+      end = cm_initial_annotation
+| CMRTask q fid _ _ _ | CMLTask q fid _ _ _ | CMSTask q fid _ _ _ |
+  CMVTask q fid _ _ _ =>
+    q = p /\
+    (fix cm_cursors_coordinate
+       (policy : cm_lookup_policy) (p : cm_program)
+       (fid0 temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           temp =
+           match cm_cursor_phase cursor with
+           | CABinRP op _ _ _ _ =>
+               if if op =? 0 then true else op =? 1
+               then cm_cursor_temp cursor
+               else cm_cursor_temp cursor + 1
+           | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+           | CAArgP _ _ _ _ _ _ _ scratch => scratch
+           | CACallP _ _ _ _ _ => 0
+           | _ => cm_cursor_temp cursor
+           end /\
+           (match cm_cursor_phase cursor with
+            | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+              CACallP _ _ _ _ _ => false
+            | _ => true
+            end = true ->
+            breakpc = cm_cursor_break cursor /\
+            continuepc = cm_cursor_continue cursor) /\
+           match cm_cursor_phase cursor with
+           | CAWhileGuardP guard body start finish =>
+               finish =
+               start + cm_rvalue_code_count policy p fid0 guard + 1 +
+               cm_stmt_code_count policy p fid0 body + 1
+           | CAWhileBodyP guard body _ _ start finish =>
+               breakpc = finish /\
+               continuepc = start /\
+               finish =
+               start + cm_rvalue_code_count policy p fid0 guard + 1 +
+               cm_stmt_code_count policy p fid0 body + 1
+           | _ => True
+           end /\
+           cm_cursors_coordinate policy p
+             match cm_cursor_phase cursor with
+             | CACallP caller _ _ _ _ => caller
+             | _ => fid0
+             end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+             (cm_cursor_continue cursor) rest
+       end) (cm_source_function_policy sp) p fid
+      (cm_ann_temp
+         (CMAnnotation
+            (match ann with
+             | CMAnnotation pc _ _ _ _ _ _ _ => pc
+             end + 1)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ cs _ _ _ => cs
+            end match ann with
+                | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                end match ann with
+                    | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end))
+      (cm_ann_break
+         (CMAnnotation
+            (match ann with
+             | CMAnnotation pc _ _ _ _ _ _ _ => pc
+             end + 1)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ cs _ _ _ => cs
+            end match ann with
+                | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                end match ann with
+                    | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end))
+      (cm_ann_continue
+         (CMAnnotation
+            (match ann with
+             | CMAnnotation pc _ _ _ _ _ _ _ => pc
+             end + 1)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ cs _ _ _ => cs
+            end match ann with
+                | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                end match ann with
+                    | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end))
+      (cm_ann_cursors
+         (CMAnnotation
+            (match ann with
+             | CMAnnotation pc _ _ _ _ _ _ _ => pc
+             end + 1)
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ cs _ _ _ => cs
+            end match ann with
+                | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                end match ann with
+                    | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                    end
+            match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end))
+| CMCTask q fid ctl _ _ =>
+    q = p /\
+    (match ctl with
+     | CMNormal => 0
+     | CMBreak => 1
+     | CMContinue => 2
+     | CMReturn _ => 3
+     | CMExit _ => 4
+     | CMError _ => 5
+     end = 5 \/
+     (fix cm_cursors_coordinate
+        (policy : cm_lookup_policy) (p : cm_program)
+        (fid0 temp breakpc continuepc : Z) (cursors : list cm_acursor)
+        {struct cursors} : Prop :=
+        match cursors with
+        | [] => True
+        | cursor :: rest =>
+            temp =
+            match cm_cursor_phase cursor with
+            | CABinRP op _ _ _ _ =>
+                if if op =? 0 then true else op =? 1
+                then cm_cursor_temp cursor
+                else cm_cursor_temp cursor + 1
+            | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+            | CAArgP _ _ _ _ _ _ _ scratch => scratch
+            | CACallP _ _ _ _ _ => 0
+            | _ => cm_cursor_temp cursor
+            end /\
+            (match cm_cursor_phase cursor with
+             | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+               CACallP _ _ _ _ _ => false
+             | _ => true
+             end = true ->
+             breakpc = cm_cursor_break cursor /\
+             continuepc = cm_cursor_continue cursor) /\
+            match cm_cursor_phase cursor with
+            | CAWhileGuardP guard body start finish =>
+                finish =
+                start + cm_rvalue_code_count policy p fid0 guard + 1 +
+                cm_stmt_code_count policy p fid0 body + 1
+            | CAWhileBodyP guard body _ _ start finish =>
+                breakpc = finish /\
+                continuepc = start /\
+                finish =
+                start + cm_rvalue_code_count policy p fid0 guard + 1 +
+                cm_stmt_code_count policy p fid0 body + 1
+            | _ => True
+            end /\
+            cm_cursors_coordinate policy p
+              match cm_cursor_phase cursor with
+              | CACallP caller _ _ _ _ => caller
+              | _ => fid0
+              end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+              (cm_cursor_continue cursor) rest
+        end) (cm_source_function_policy sp) p fid
+       (cm_ann_temp
+          (CMAnnotation
+             (match ann with
+              | CMAnnotation pc _ _ _ _ _ _ _ => pc
+              end + 1)
+             match ann with
+             | CMAnnotation _ temp _ _ _ _ _ _ => temp
+             end match ann with
+                 | CMAnnotation _ _ b _ _ _ _ _ => b
+                 end match ann with
+                     | CMAnnotation _ _ _ c _ _ _ _ => c
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end match ann with
+                 | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                 end match ann with
+                     | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+       (cm_ann_break
+          (CMAnnotation
+             (match ann with
+              | CMAnnotation pc _ _ _ _ _ _ _ => pc
+              end + 1)
+             match ann with
+             | CMAnnotation _ temp _ _ _ _ _ _ => temp
+             end match ann with
+                 | CMAnnotation _ _ b _ _ _ _ _ => b
+                 end match ann with
+                     | CMAnnotation _ _ _ c _ _ _ _ => c
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end match ann with
+                 | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                 end match ann with
+                     | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+       (cm_ann_continue
+          (CMAnnotation
+             (match ann with
+              | CMAnnotation pc _ _ _ _ _ _ _ => pc
+              end + 1)
+             match ann with
+             | CMAnnotation _ temp _ _ _ _ _ _ => temp
+             end match ann with
+                 | CMAnnotation _ _ b _ _ _ _ _ => b
+                 end match ann with
+                     | CMAnnotation _ _ _ c _ _ _ _ => c
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end match ann with
+                 | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                 end match ann with
+                     | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+       (cm_ann_cursors
+          (CMAnnotation
+             (match ann with
+              | CMAnnotation pc _ _ _ _ _ _ _ => pc
+              end + 1)
+             match ann with
+             | CMAnnotation _ temp _ _ _ _ _ _ => temp
+             end match ann with
+                 | CMAnnotation _ _ b _ _ _ _ _ => b
+                 end match ann with
+                     | CMAnnotation _ _ _ c _ _ _ _ => c
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end match ann with
+                 | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                 end match ann with
+                     | CMAnnotation _ _ _ _ _ _ ss _ => ss
+                     end
+             match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+| CMDoneTask _ _ _ => True
+end
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutcP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutcP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutcP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutcP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutiP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutiP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutiP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAPutiP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+((fix cm_cursors_coordinate
+    (policy : cm_lookup_policy) (p : cm_program)
+    (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+     cursors} : Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest =>
+        temp =
+        match cm_cursor_phase cursor with
+        | CABinRP op _ _ _ _ =>
+            if if op =? 0 then true else op =? 1
+            then cm_cursor_temp cursor
+            else cm_cursor_temp cursor + 1
+        | CAAssignRP _ _ | CAIndexRP _ _ => cm_cursor_temp cursor + 1
+        | CAArgP _ _ _ _ _ _ _ scratch => scratch
+        | CACallP _ _ _ _ _ => 0
+        | _ => cm_cursor_temp cursor
+        end /\
+        (match cm_cursor_phase cursor with
+         | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+           CACallP _ _ _ _ _ => false
+         | _ => true
+         end = true ->
+         breakpc = cm_cursor_break cursor /\
+         continuepc = cm_cursor_continue cursor) /\
+        match cm_cursor_phase cursor with
+        | CAWhileGuardP guard body start finish =>
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | CAWhileBodyP guard body _ _ start finish =>
+            breakpc = finish /\
+            continuepc = start /\
+            finish =
+            start + cm_rvalue_code_count policy p fid guard + 1 +
+            cm_stmt_code_count policy p fid body + 1
+        | _ => True
+        end /\
+        cm_cursors_coordinate policy p
+          match cm_cursor_phase cursor with
+          | CACallP caller _ _ _ _ => caller
+          | _ => fid
+          end (cm_cursor_temp cursor) (cm_cursor_break cursor)
+          (cm_cursor_continue cursor) rest
+    end) (cm_source_function_policy sp) p fid
+   (cm_ann_temp
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAExitP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_break
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAExitP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_continue
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAExitP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end))
+   (cm_ann_cursors
+      (CMAnnotation match ann with
+                    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+                    end
+         match ann with
+         | CMAnnotation _ temp _ _ _ _ _ _ => temp
+         end match ann with
+             | CMAnnotation _ _ b _ _ _ _ _ => b
+             end match ann with
+                 | CMAnnotation _ _ _ c _ _ _ _ => c
+                 end
+         (CMACursor CAExitP
+            match ann with
+            | CMAnnotation _ temp _ _ _ _ _ _ => temp
+            end match ann with
+                | CMAnnotation _ _ b _ _ _ _ _ => b
+                end match ann with
+                    | CMAnnotation _ _ _ c _ _ _ _ => c
+                    end
+          :: match ann with
+             | CMAnnotation _ _ _ _ cs _ _ _ => cs
+             end) match ann with
+                  | CMAnnotation _ _ _ _ _ ss _ _ => ss
+                  end
+         match ann with
+         | CMAnnotation _ _ _ _ _ _ ss _ => ss
+         end match ann with
+             | CMAnnotation _ _ _ _ _ _ _ cs => cs
+             end)))
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/preservation/build/Rocq/examples/QCP_demos_human/cmc_simulation_coordinate_migration_lib.v", line 46, characters 1-121:
+Error: No matching clauses for match.
+

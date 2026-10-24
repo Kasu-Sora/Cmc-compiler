@@ -1,0 +1,19 @@
+{
+  "groups": [
+    {
+      "id": "char-byte-conversion",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_char_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_char_partial_solve_wit_1_pure_split_goal_1": "Introduce quantified values and pure premises, then discharge the pure consequent without transforming the antecedent's six local cells and two array segments. Unfold unsigned_last_nbits; note that the printed % denotes Z.rem. Specialize the already imported tower_machine_rem_byte__byte_encoding at char_value_pre and k = 0, discharge 0 <= 0 <= 7 by lia, simplify 256^0 and Z.quot by 1, and unfold tower_encode_byte at index 0 to obtain exactly the equality with tower_u8. There are no existential witnesses, array transformations, or new helpers.",
+            "proof_of_cmc_write_char_partial_solve_wit_1_pure_split_goal_2": "Introduce quantified values and premises and reduce the entailment to its pure consequent, leaving the six local cells and two array segments as irrelevant antecedent resources. Unfold tower_u8 and use the lower-bound component of Z.mod_pos_bound char_value_pre 256, with 0 < 256 discharged arithmetically. No existential or resource transformation is required.",
+            "proof_of_cmc_write_char_partial_solve_wit_1_pure_split_goal_3": "Use the same pure-consequent pattern as split goal 2, but take the strict upper-bound component of Z.mod_pos_bound char_value_pre 256 after unfolding tower_u8. The positive constant modulus supplies the only arithmetic premise; the antecedent heap needs no transformation and there are no existential witnesses."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+From SimpleC.EE.QCP_demos_human Require Import cmc_write_word_migration_goal cmc_write_word_migration_proof_auto cmc_write_word_migration_proof_manual.
+
+Module VC_Correctness : VC_Correct.
+  Include cmc_write_word_migration_proof_auto.
+  Include cmc_write_word_migration_proof_manual.
+End VC_Correctness.

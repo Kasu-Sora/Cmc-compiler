@@ -1,0 +1,245 @@
+{
+  "source_sha256": "5cc5b36dc7756a7541d137284004e7421ec867c731b3a52ca31dbe804f402c48",
+  "function_counts": [
+    {
+      "function": "cm_emit_binding_address",
+      "source_span": [
+        95,
+        257
+      ],
+      "specification": 37,
+      "annotation": 8,
+      "inline_proof": 103
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "source_span": [
+        259,
+        316
+      ],
+      "specification": 36,
+      "annotation": 5,
+      "inline_proof": 10
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_ast_open_fragment",
+      "kind": "proof",
+      "span": [
+        5,
+        11
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static void cm_ast_open_fragment(const thm code_shape) {\n  thm capacity_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         ilength (done:(tvm_inst)list) + ilength code <= (capacity:int)`,\n      code_shape));\n  substitute_st(capacity_shape);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_ast_close_fragment",
+      "kind": "proof",
+      "span": [
+        13,
+        19
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static void cm_ast_close_fragment(const thm code_shape) {\n  thm done_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         (done:(tvm_inst)list) ++ code`,\n      sym_rule(code_shape)));\n  substitute_st(done_shape);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_ast_typed_program",
+      "kind": "proof",
+      "span": [
+        21,
+        29
+      ],
+      "nonblank_lines": 9,
+      "text": "PROOF static thm cm_ast_typed_program(void) {\n  thm wf = eqt_elim_rule(assume_rule(\n      `cm_wf_program (p:cm_program) <=> true`));\n  thm admissible = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_wf_program_def())), wf);\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_codegen_admissible_def())), admissible);\n  return conjunct1_rule(opened);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_ast_globals_wf",
+      "kind": "proof",
+      "span": [
+        31,
+        36
+      ],
+      "nonblank_lines": 6,
+      "text": "PROOF static thm cm_ast_globals_wf(void) {\n  thm typed = cm_ast_typed_program();\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  return conjunct1_rule(conjunct2_rule(opened));\n}",
+      "dependencies": [
+        "cm_ast_typed_program"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_ast_global_address_bridge",
+      "kind": "proof",
+      "span": [
+        38,
+        49
+      ],
+      "nonblank_lines": 12,
+      "text": "PROOF static thm cm_ast_global_address_bridge(void) {\n  thm prefix = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`,\n      `cm_program_globals (p:cm_program)`, `slot__pre:int`),\n      cm_rep_globals_prefix_matches), cm_ast_globals_wf());\n  return by_rewrite(\n      `cm_rep_global_address (cm_program_globals (p:cm_program))\n         (slot__pre:int) ==\n       cm_global_address p slot__pre`,\n      THM_LIST(get_cm_rep_global_address_def(),\n        get_cm_global_address_def(), prefix));\n}",
+      "dependencies": [
+        "cm_ast_globals_wf"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_ast_local_offset_bridge",
+      "kind": "proof",
+      "span": [
+        51,
+        74
+      ],
+      "nonblank_lines": 24,
+      "text": "PROOF static thm cm_ast_local_offset_bridge(void) {\n  thm params = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_params (f:cm_function_d)`),\n      cm_rep_members_size_matches), eqt_elim_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (cm_function_params (f:cm_function_d)) <=> true`)));\n  thm locals = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_locals (f:cm_function_d)`, `slot__pre:int`),\n      cm_rep_member_prefix_matches), eqt_elim_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (cm_function_locals (f:cm_function_d)) <=> true`)));\n  return by_rewrite(\n      `8i + cm_rep_members_size (cm_function_params (f:cm_function_d)) +\n         cm_rep_member_prefix (cm_function_locals f) (slot__pre:int) ==\n       cm_local_offset (p:cm_program) (fid:int) slot__pre`,\n      THM_LIST(get_cm_local_offset_def(), params, locals,\n        assume_rule(\n          `structs == cm_program_structs (p:cm_program)`),\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid:int) (cm_program_functions p)`)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_ast_param_offset_bridge",
+      "kind": "proof",
+      "span": [
+        76,
+        93
+      ],
+      "nonblank_lines": 18,
+      "text": "PROOF static thm cm_ast_param_offset_bridge(void) {\n  thm params = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_params (f:cm_function_d)`, `slot__pre:int`),\n      cm_rep_member_prefix_matches), eqt_elim_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (cm_function_params (f:cm_function_d)) <=> true`)));\n  return by_rewrite(\n      `8i + cm_rep_member_prefix\n         (cm_function_params (f:cm_function_d)) (slot__pre:int) ==\n       cm_param_offset (p:cm_program) (fid:int) slot__pre`,\n      THM_LIST(get_cm_param_offset_def(), params,\n        assume_rule(\n          `structs == cm_program_structs (p:cm_program)`),\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid:int) (cm_program_functions p)`)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 73,
+    "annotation": 13,
+    "inline_proof": 113,
+    "private_case_proof_support": 83,
+    "case_proof": 196,
+    "proof_including_shared": 196
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        153,
+        153
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        172,
+        172
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        172,
+        172
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        188,
+        188
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        189,
+        189
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        209,
+        209
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        224,
+        224
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "kind": "where",
+      "span": [
+        242,
+        242
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "kind": "where",
+      "span": [
+        305,
+        305
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "kind": "where",
+      "span": [
+        306,
+        306
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "kind": "where",
+      "span": [
+        307,
+        307
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "kind": "where",
+      "span": [
+        308,
+        308
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "kind": "where",
+      "span": [
+        309,
+        309
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; header duplicates excluded. Seven same-file static PROOF helpers are private case proof support; semantic address definitions and incremental public prefix bridge closure separately inventoried."
+}

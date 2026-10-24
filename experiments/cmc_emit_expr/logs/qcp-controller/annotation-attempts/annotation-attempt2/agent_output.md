@@ -1,0 +1,86 @@
+# Annotation attempt 2
+
+The only formal-source changes add `pc == pc@pre && temp == temp@pre` to the premises of the five dispatcher simple-view conversions (CONST, STRING, VAR, SIZEOF, GETC). The C conclusions, all BODY/helper contracts, runtime tokens and the entire case library are unchanged against sealed attempt 1. No proofs, axioms, or new mathematical definitions were added.
+
+## Checks and effort
+
+- Design check: 1 invocation, passed with exit 0 and JSON status passed.
+- Symbolic execution: 1 invocation, passed with exit 0 and JSON status passed; elapsed 96.91 seconds.
+- Post-lib check: 1 invocation, passed with exit 0 and JSON status passed.
+- Controller-command failures: 0. No raw Coq/Make/Dune commands were used.
+- One ordinary read-only inspection attempted to read the generated manual while the controller was regenerating it and received FileNotFoundError; this was not a verification invocation and changed no file. Inspection resumed after successful generation.
+
+## Exact-statement comparison method
+
+The current generated manual is byte-identical to sealed attempt 1 (sha256 `a68575ed7dd343cf981d1c20edf4b265ab263993441f51d589ad00a4edee1161`), because these five Lemma declarations only reference goal constants. The controller statement digest hashes normalized Lemma tokens, so the old/current declaration hashes are correctly equal. This does not mean the expanded obligations are unchanged. Each old and current goal Definition was read and compared directly: removing the independent `(temp: Z) (pc: Z)` binders, substituting the entry values in the antecedent code arguments, and simplifying the two consequent reflexive equalities accounts for the exact full definition delta in both disjuncts.
+
+The establishing `partial_solve_wit_2/5/8/28/31` pure/aux/wrapper definitions are unchanged. Each pure antecedent explicitly owns `pc -> pc_pre` and `temp -> temp_pre`; its sole pure conclusion is the same kind equality already present as PreH1. Therefore the added premise equalities are justified by unchanged local bindings and normalize to reflexivity, with no new unrelated scalar equality obligation. The generated automatic placeholders are not claimed as kernel-checked proofs. The only additional goal changes are removal of the two reflexive equality hypotheses from the immediately following `partial_solve_wit_3/6/9/29/32` pure/aux goals (with hypothesis renumbering). No goal names were added or removed.
+
+## VC comparison
+
+### proof_of_cm_emit_expr_which_implies_wit_2 (CONST)
+
+- Current VC: proof_of_cm_emit_expr_which_implies_wit_2; declaration digest d72cb18d2dc69df10f5eed63abb9d9f7caf169636f2b206643b82d25e8ef08fd
+- Old gap: Both disjuncts quantified independent pc/temp and pc_pre/temp_pre but required their equalities only in the conclusion; the antecedent placed no constraint on the entry scalars.
+- Premises added: The C which-implies premise now carries pc == pc@pre and temp == temp@pre. In the generated whole VC those equalities substitute pc_pre/temp_pre for pc/temp and eliminate the independent current scalar binders; the original constructor-kind guard is unchanged.
+- Premises removed: none
+- Resources changed: No ownership is added or removed. In the antecedent emitter plan, the general code arguments pc/temp are replaced by pc_pre/temp_pre under the added premise equalities; the existing done/tail and all emitter parameters are unchanged.
+- Conclusion changed: The C conclusion is unchanged. In the normalized generated goal, pc = pc_pre and temp = temp_pre disappear after the premise substitution because both become reflexive; the existential simple, exact source-expression identity, simple-expression classification and emitter plan are unchanged.
+- Sources of new facts: Current cm_emit_expr program state before the CONST branch call: pc and temp have never been assigned. The generated cm_emit_expr_partial_solve_wit_2_pure antecedent owns local pc -> pc_pre and temp -> temp_pre; its conclusion is only the already-assumed kind = 0. Its pure/aux/wrapper definitions are byte-identical to sealed attempt 1, so the equalities normalize to reflexivity at the establishing site and create no new proof obligation. These generated automatic witnesses are inspected as source-state evidence, not cited as completed proofs or manual related VCs. The existing transparent cm_rep_expr_kind, cm_simple_source_expr, cm_simple_expr, cm_expr_code_for and cm_simple_code_for definitions: destruct e using the kind guard, choose CMSimpleLeaf (CMLeafConst n ty), and unfold the corresponding constructor code equations (the same Z.eqb lvalue 0 choice on both sides).
+- Judgement: provable
+- Reason: Both whole-VC disjuncts now have the same valid shape: kind 0 plus the emitter plan at entry pc/temp entails the simple-view plan. Constructor discrimination leaves exactly the CONST constructor, whose witness is CMSimpleLeaf (CMLeafConst n ty); source identity and classification follow by definition, while the two code lists reduce identically for arbitrary lvalue. The only new C premises follow reflexively from unchanged local stores, as confirmed by unchanged establishing goals. The old countermodel is excluded by those premises, not moved into another obligation.
+- Related VCs: none in current manual; unchanged generated establishing automatic goals are discussed above as direct source-state evidence
+
+### proof_of_cm_emit_expr_which_implies_wit_4 (STRING)
+
+- Current VC: proof_of_cm_emit_expr_which_implies_wit_4; declaration digest 06ba10e35e7c9b70ef895b2eeceddf9bc433152419b9a0a8ee1ad23335c50403
+- Old gap: Both disjuncts quantified independent pc/temp and pc_pre/temp_pre but required their equalities only in the conclusion; the antecedent placed no constraint on the entry scalars.
+- Premises added: The C which-implies premise now carries pc == pc@pre and temp == temp@pre. In the generated whole VC those equalities substitute pc_pre/temp_pre for pc/temp and eliminate the independent current scalar binders; the original constructor-kind guard is unchanged.
+- Premises removed: none
+- Resources changed: No ownership is added or removed. In the antecedent emitter plan, the general code arguments pc/temp are replaced by pc_pre/temp_pre under the added premise equalities; the existing done/tail and all emitter parameters are unchanged.
+- Conclusion changed: The C conclusion is unchanged. In the normalized generated goal, pc = pc_pre and temp = temp_pre disappear after the premise substitution because both become reflexive; the existential simple, exact source-expression identity, simple-expression classification and emitter plan are unchanged.
+- Sources of new facts: Current cm_emit_expr program state before the STRING branch call: pc and temp have never been assigned. The generated cm_emit_expr_partial_solve_wit_5_pure antecedent owns local pc -> pc_pre and temp -> temp_pre; its conclusion is only the already-assumed kind = 1. Its pure/aux/wrapper definitions are byte-identical to sealed attempt 1, so the equalities normalize to reflexivity at the establishing site and create no new proof obligation. These generated automatic witnesses are inspected as source-state evidence, not cited as completed proofs or manual related VCs. The existing transparent cm_rep_expr_kind, cm_simple_source_expr, cm_simple_expr, cm_expr_code_for and cm_simple_code_for definitions: destruct e using the kind guard, choose CMSimpleLeaf (CMLeafString sid ty), and unfold the corresponding constructor code equations (the same Z.eqb lvalue 0 choice on both sides).
+- Judgement: provable
+- Reason: Both whole-VC disjuncts now have the same valid shape: kind 1 plus the emitter plan at entry pc/temp entails the simple-view plan. Constructor discrimination leaves exactly the STRING constructor, whose witness is CMSimpleLeaf (CMLeafString sid ty); source identity and classification follow by definition, while the two code lists reduce identically for arbitrary lvalue. The only new C premises follow reflexively from unchanged local stores, as confirmed by unchanged establishing goals. The old countermodel is excluded by those premises, not moved into another obligation.
+- Related VCs: none in current manual; unchanged generated establishing automatic goals are discussed above as direct source-state evidence
+
+### proof_of_cm_emit_expr_which_implies_wit_6 (VAR)
+
+- Current VC: proof_of_cm_emit_expr_which_implies_wit_6; declaration digest 757b9b9b7a932b94f22b0a9a904dbb183113e9db20249664a9a10ca43a9c8c22
+- Old gap: Both disjuncts quantified independent pc/temp and pc_pre/temp_pre but required their equalities only in the conclusion; the antecedent placed no constraint on the entry scalars.
+- Premises added: The C which-implies premise now carries pc == pc@pre and temp == temp@pre. In the generated whole VC those equalities substitute pc_pre/temp_pre for pc/temp and eliminate the independent current scalar binders; the original constructor-kind guard is unchanged.
+- Premises removed: none
+- Resources changed: No ownership is added or removed. In the antecedent emitter plan, the general code arguments pc/temp are replaced by pc_pre/temp_pre under the added premise equalities; the existing done/tail and all emitter parameters are unchanged.
+- Conclusion changed: The C conclusion is unchanged. In the normalized generated goal, pc = pc_pre and temp = temp_pre disappear after the premise substitution because both become reflexive; the existential simple, exact source-expression identity, simple-expression classification and emitter plan are unchanged.
+- Sources of new facts: Current cm_emit_expr program state before the VAR branch call: pc and temp have never been assigned. The generated cm_emit_expr_partial_solve_wit_8_pure antecedent owns local pc -> pc_pre and temp -> temp_pre; its conclusion is only the already-assumed kind = 2. Its pure/aux/wrapper definitions are byte-identical to sealed attempt 1, so the equalities normalize to reflexivity at the establishing site and create no new proof obligation. These generated automatic witnesses are inspected as source-state evidence, not cited as completed proofs or manual related VCs. The existing transparent cm_rep_expr_kind, cm_simple_source_expr, cm_simple_expr, cm_expr_code_for and cm_simple_code_for definitions: destruct e using the kind guard, choose CMSimpleVar scope slot ty, and unfold the corresponding constructor code equations (the same Z.eqb lvalue 0 choice on both sides).
+- Judgement: provable
+- Reason: Both whole-VC disjuncts now have the same valid shape: kind 2 plus the emitter plan at entry pc/temp entails the simple-view plan. Constructor discrimination leaves exactly the VAR constructor, whose witness is CMSimpleVar scope slot ty; source identity and classification follow by definition, while the two code lists reduce identically for arbitrary lvalue. The only new C premises follow reflexively from unchanged local stores, as confirmed by unchanged establishing goals. The old countermodel is excluded by those premises, not moved into another obligation.
+- Related VCs: none in current manual; unchanged generated establishing automatic goals are discussed above as direct source-state evidence
+
+### proof_of_cm_emit_expr_which_implies_wit_19 (SIZEOF)
+
+- Current VC: proof_of_cm_emit_expr_which_implies_wit_19; declaration digest fcc3977581a42b72f3d664d327768ca1b32751849a33a9d723003e5a4faa5403
+- Old gap: Both disjuncts quantified independent pc/temp and pc_pre/temp_pre but required their equalities only in the conclusion; the antecedent placed no constraint on the entry scalars.
+- Premises added: The C which-implies premise now carries pc == pc@pre and temp == temp@pre. In the generated whole VC those equalities substitute pc_pre/temp_pre for pc/temp and eliminate the independent current scalar binders; the original constructor-kind guard is unchanged.
+- Premises removed: none
+- Resources changed: No ownership is added or removed. In the antecedent emitter plan, the general code arguments pc/temp are replaced by pc_pre/temp_pre under the added premise equalities; the existing done/tail and all emitter parameters are unchanged.
+- Conclusion changed: The C conclusion is unchanged. In the normalized generated goal, pc = pc_pre and temp = temp_pre disappear after the premise substitution because both become reflexive; the existential simple, exact source-expression identity, simple-expression classification and emitter plan are unchanged.
+- Sources of new facts: Current cm_emit_expr program state before the SIZEOF branch call: pc and temp have never been assigned. The generated cm_emit_expr_partial_solve_wit_28_pure antecedent owns local pc -> pc_pre and temp -> temp_pre; its conclusion is only the already-assumed kind = 9. Its pure/aux/wrapper definitions are byte-identical to sealed attempt 1, so the equalities normalize to reflexivity at the establishing site and create no new proof obligation. These generated automatic witnesses are inspected as source-state evidence, not cited as completed proofs or manual related VCs. The existing transparent cm_rep_expr_kind, cm_simple_source_expr, cm_simple_expr, cm_expr_code_for and cm_simple_code_for definitions: destruct e using the kind guard, choose CMSimpleLeaf (CMLeafSizeof asked ty), and unfold the corresponding constructor code equations (the same Z.eqb lvalue 0 choice on both sides).
+- Judgement: provable
+- Reason: Both whole-VC disjuncts now have the same valid shape: kind 9 plus the emitter plan at entry pc/temp entails the simple-view plan. Constructor discrimination leaves exactly the SIZEOF constructor, whose witness is CMSimpleLeaf (CMLeafSizeof asked ty); source identity and classification follow by definition, while the two code lists reduce identically for arbitrary lvalue. The only new C premises follow reflexively from unchanged local stores, as confirmed by unchanged establishing goals. The old countermodel is excluded by those premises, not moved into another obligation.
+- Related VCs: none in current manual; unchanged generated establishing automatic goals are discussed above as direct source-state evidence
+
+### proof_of_cm_emit_expr_which_implies_wit_21 (GETC)
+
+- Current VC: proof_of_cm_emit_expr_which_implies_wit_21; declaration digest 59176f1d7a2a805c1dbabc511237c4d2c9ddb1d918e14a64f41e6aa67b967d9b
+- Old gap: Both disjuncts quantified independent pc/temp and pc_pre/temp_pre but required their equalities only in the conclusion; the antecedent placed no constraint on the entry scalars.
+- Premises added: The C which-implies premise now carries pc == pc@pre and temp == temp@pre. In the generated whole VC those equalities substitute pc_pre/temp_pre for pc/temp and eliminate the independent current scalar binders; the original constructor-kind guard is unchanged.
+- Premises removed: none
+- Resources changed: No ownership is added or removed. In the antecedent emitter plan, the general code arguments pc/temp are replaced by pc_pre/temp_pre under the added premise equalities; the existing done/tail and all emitter parameters are unchanged.
+- Conclusion changed: The C conclusion is unchanged. In the normalized generated goal, pc = pc_pre and temp = temp_pre disappear after the premise substitution because both become reflexive; the existential simple, exact source-expression identity, simple-expression classification and emitter plan are unchanged.
+- Sources of new facts: Current cm_emit_expr program state before the GETC branch call: pc and temp have never been assigned. The generated cm_emit_expr_partial_solve_wit_31_pure antecedent owns local pc -> pc_pre and temp -> temp_pre; its conclusion is only the already-assumed kind = 10. Its pure/aux/wrapper definitions are byte-identical to sealed attempt 1, so the equalities normalize to reflexivity at the establishing site and create no new proof obligation. These generated automatic witnesses are inspected as source-state evidence, not cited as completed proofs or manual related VCs. The existing transparent cm_rep_expr_kind, cm_simple_source_expr, cm_simple_expr, cm_expr_code_for and cm_simple_code_for definitions: destruct e using the kind guard, choose CMSimpleLeaf (CMLeafGetc ty), and unfold the corresponding constructor code equations (the same Z.eqb lvalue 0 choice on both sides).
+- Judgement: provable
+- Reason: Both whole-VC disjuncts now have the same valid shape: kind 10 plus the emitter plan at entry pc/temp entails the simple-view plan. Constructor discrimination leaves exactly the GETC constructor, whose witness is CMSimpleLeaf (CMLeafGetc ty); source identity and classification follow by definition, while the two code lists reduce identically for arbitrary lvalue. The only new C premises follow reflexively from unchanged local stores, as confirmed by unchanged establishing goals. The old countermodel is excluded by those premises, not moved into another obligation.
+- Related VCs: none in current manual; unchanged generated establishing automatic goals are discussed above as direct source-state evidence
+
+This is an annotation-gap repair judgement for the five handed-off VCs. It is not a claim that all generated manual obligations have been proved; controller acceptance and subsequent VC checking/proving remain separate.

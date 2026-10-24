@@ -1,0 +1,71 @@
+Chars 0 - 82 [Require~Export~~~SimpleC.EE.QC...] 1.306 secs (1.232u,0.073s)
+Chars 83 - 128 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 129 - 150 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 151 - 176 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 177 - 923 [Lemma~cm_v_runtime_step~sp~ap~...] 0. secs (0.u,0.s)
+Chars 924 - 930 [Proof.] 0. secs (0.u,0.s)
+Chars 932 - 992 [(intros~WF~CUR~F~B~COORD~S~R;~...] 0. secs (0.u,0.s)
+Chars 994 - 1094 [(rewrite~CUR~in~B;~cbn[cm_curs...] 0. secs (0.u,0.s)
+Chars 1096 - 1261 [(unfold~cm_annotation_child_re...] 0. secs (0.u,0.s)
+Chars 1263 - 1464 [(destruct~phase;~~~cbn[cm_fram...] 0.097 secs (0.096u,0.001s)
+Chars 1466 - 1496 [all:~(try~(solve~[~exact~BEFOR...] 0. secs (0.u,0.s)
+Chars 1498 - 1499 [-] 0. secs (0.u,0.s)
+Chars 1500 - 1582 [(eapply~cm_runtime_core_enter_...] 0. secs (0.u,0.s)
+Chars 1584 - 1585 [-] 0. secs (0.u,0.s)
+1 goal
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, caller : Z
+  env : Z -> Z -> cm_value
+  fp : Z
+  regions : list cm_region
+  ret : cm_type
+  owner, ob, oc : Z
+  rest : list cm_acursor
+  v : cm_value
+  st : cm_src_state
+  ann : cm_annotation
+  WF : cm_typed_program (cm_source_function_policy sp) p
+  CUR :
+    cm_ann_cursors ann =
+    CMACursor (CACallP caller env fp regions ret) owner ob oc :: rest
+  bound : 0 <= fid
+  bound0 : fid < Zlength (cm_program_functions p)
+  B : True
+  BT :
+    cm_cursors_budget (cm_source_function_policy sp) p
+      (cm_frame_parent_fid (CMCallK caller env fp regions ret) fid) rest
+  TEMP : cm_ann_temp ann = 0
+  COORD :
+    (cm_phase_control_regular (CACallP caller env fp regions ret) = true ->
+     cm_ann_break ann =
+     cm_cursor_break
+       (CMACursor (CACallP caller env fp regions ret) owner ob oc) /\
+     cm_ann_continue ann =
+     cm_cursor_continue
+       (CMACursor (CACallP caller env fp regions ret) owner ob oc)) /\
+    cm_phase_code_ready_at (cm_source_function_policy sp) p fid
+      (cm_ann_break ann) (cm_ann_continue ann)
+      (CACallP caller env fp regions ret) /\
+    cm_cursors_coordinate (cm_source_function_policy sp) p
+      (cm_phase_next_fid fid (CACallP caller env fp regions ret)) owner
+      (cm_cursor_break
+         (CMACursor (CACallP caller env fp regions ret) owner ob oc))
+      (cm_cursor_continue
+         (CMACursor (CACallP caller env fp regions ret) owner ob oc)) rest
+  S :
+    cm_task_succeeds sp
+      (CMCTask p fid (CMError 1) st (cm_cursor_frames rest))
+  R : cm_runtime_core (cm_source_function_policy sp) ap p fid st ann
+  BEFORE : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+  ============================
+  cm_runtime_core (cm_source_function_policy sp) ap p fid st
+    (cm_ann_pop ap (cm_ann_pc ann) ann)
+Chars 1586 - 1591 [Show.] 0. secs (0.u,0.s)
+Chars 1592 - 1596 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/build/Rocq/examples/QCP_demos_human/cmc_runtime_apply_step_migration_lib.v", line 21, characters 0-4:
+Error:  (in proof cm_v_runtime_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

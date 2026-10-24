@@ -1,0 +1,45 @@
+Chars 0 - 75 [Require~Export~SimpleC.EE.QCP_...] 1.358 secs (1.204u,0.078s)
+Chars 76 - 121 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 122 - 143 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 144 - 169 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 170 - 1163 [Lemma~cm_type_enter_call~sp~ni...] 0.002 secs (0.u,0.s)
+Chars 1164 - 1170 [Proof.] 0. secs (0.u,0.s)
+Chars 1172 - 1217 [(intros~WF~[CL~CU]~CALLER~RET~...] 0. secs (0.u,0.s)
+Chars 1219 - 1316 [(pose~proof~(cm_typed_function...] 0. secs (0.u,0.s)
+Chars 1318 - 1392 [(cbv[cm_ann_enter_call~cm_ann_...] 0. secs (0.u,0.s)
+Chars 1394 - 1477 [(repeat~(first~~~[~assumption~...] 0.026 secs (0.025u,0.s)
+Chars 1479 - 1480 [-] 0. secs (0.u,0.s)
+Chars 1481 - 1531 [now~apply~cm_stmt_wf_loop_mono...] 0. secs (0.u,0.s)
+Chars 1533 - 1534 [-] 0. secs (0.u,0.s)
+Chars 1535 - 1574 [(intros~result~v~->~V;~now~app...] 0. secs (0.u,0.s)
+Chars 1575 - 1579 [Qed.] 0.01 secs (0.01u,0.s)
+Chars 1580 - 1872 [Lemma~cm_type_start_step~sp~ap...] 0. secs (0.u,0.s)
+Chars 1873 - 1879 [Proof.] 0. secs (0.u,0.s)
+Chars 1881 - 1939 [(intro~WF;~pose~proof~WF~as~[_...] 0. secs (0.u,0.s)
+Chars 1941 - 2049 [(cbv[cm_step~cm_annotation_ste...] 0. secs (0.u,0.s)
+Chars 2051 - 2167 [(destruct~~~(cm_call_ok~sp~p~(...] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_call_migration_lib.v", line 25, characters 91-114:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+nilslot : cm_slot_d
+p : cm_program
+input : list Z
+WF : cm_typed_program (cm_source_function_policy sp) p
+MAIN : 0 <= cm_program_main p < Zlength (cm_program_functions p)
+RET :
+  cm_function_ret
+    (cm_function_at (cm_source_function_policy sp) 
+       (cm_program_main p) (cm_program_functions p)) = CMIntTy
+The term "conj eq_refl (conj I I)" has type "p = p /\ True /\ True"
+while it is expected to have type
+ "cm_task_type_ready (cm_source_function_policy sp) nilslot p
+    (CMCTask p (-1) (CMError 1) (cm_initial_state sp p input) [CMHaltK])
+    (CMAnnotation 0 0 0 0 [CMACursor CAHaltP 0 0 0] [] [] [])"
+(cannot unify "True /\ True" and
+"cm_control_type_ready (cm_source_function_policy sp) p (-1) (CMError 1) /\
+ cm_cursors_type_ready (cm_source_function_policy sp) nilslot p 
+   (-1)
+   (cm_ann_cursors (CMAnnotation 0 0 0 0 [CMACursor CAHaltP 0 0 0] [] [] []))").
+

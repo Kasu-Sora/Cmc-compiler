@@ -1,0 +1,154 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "direction": "C*/HOL -> QCP/Rocq",
+  "run": "cmc_counts_migration-20261015235041",
+  "scope": {
+    "runtime_bodies": 15,
+    "forward_declarations": 1,
+    "whole_runtime_file": true,
+    "excluded_source_support": [
+      "cm_concrete_function_ready_def",
+      "cm_concrete_functions_ready_def",
+      "their getters/export registrations"
+    ],
+    "exclusion_reason": "These readiness predicates serve later emitters and are outside the runtime contract/proof dependency closure."
+  },
+  "reuse": [
+    "cmc_layout_migration_lib.v",
+    "cmc_copy_bytes_migration_lib.v",
+    "cmc_layout_migration_abi.h",
+    "verified layout helper contracts"
+  ],
+  "semantic_adaptations": [
+    "Same universally quantified cm_lookup_policy for total HOL function lookup, including off-domain indices.",
+    "Direct structural count, typing/scope, stack and data-byte models.",
+    "The four irrelevant emitter-field predicates retained as separately universally quantified record fields; no claim that TVM emitter models are ported, or that the conjunction reflexivity lemma is a complete cross-system equivalence theorem."
+  ],
+  "measurement": {
+    "unit": "nonblank region lines excluding pure comments",
+    "historical_cstar_active_seconds": null,
+    "human_active_seconds": null,
+    "model_active_seconds": null,
+    "dependency_install_seconds": null,
+    "note": "Final artifact size and observed migration run; not an independent from-scratch comparison."
+  },
+  "proof_development": {
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 44,
+    "accepted_group_attempts": {
+      "basic-projections": 1,
+      "argument-list": 1,
+      "expression-open-variable": 1,
+      "expression-open-binary": 1,
+      "expression-open-unary": 1,
+      "expression-call": 1,
+      "expression-member-safety": 1,
+      "expression-assignment-safety": 1,
+      "expression-logical-safety": 1,
+      "expression-add-safety": 1,
+      "expression-sub-safety": 1,
+      "expression-unary-index-safety": 1,
+      "expression-io-safety": 1,
+      "expression-leaf-results": 1,
+      "expression-variable-results": 1,
+      "expression-assignment-result": 1,
+      "expression-logical-results": 1,
+      "expression-add-results": 1,
+      "expression-sub-results": 1,
+      "expression-unary-results": 1,
+      "expression-index-result": 1,
+      "expression-member-results": 1,
+      "expression-io-results": 1,
+      "statement-open-expression": 1,
+      "statement-open-control": 1,
+      "statement-normalization-safety": 1,
+      "statement-sequence-if-safety": 1,
+      "statement-while-safety": 1,
+      "statement-leaf-results": 1,
+      "statement-expression-results": 1,
+      "statement-control-results": 1,
+      "parameter-stores": 1,
+      "function-prologue": 1,
+      "function-body-count": 1,
+      "prefix-open": 1,
+      "prefix-transition": 1,
+      "prefix-results": 1,
+      "function-pc": 1,
+      "functions-open": 1,
+      "functions-transition": 1,
+      "functions-results": 1,
+      "model-length-bound": 1,
+      "model-code-results": 1,
+      "model-data-results": 1
+    }
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-15T18:00:25.399330Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-15T18:00:25.407118Z"
+  },
+  "annotation_development": {
+    "controller_attempts_so_far": 1,
+    "design_checks": 10,
+    "design_failed": 6,
+    "design_passed": 4,
+    "symexec_annotation_failures": 3,
+    "non_controller_command_launch_typo": 1,
+    "final_symexec_seconds": 7.784,
+    "assert_entries": 33,
+    "where_entries": 37,
+    "manual_top_level_generated": 150,
+    "split_drafts_generated": 383,
+    "automatic_witnesses_generated": 184,
+    "evidence": "reports/cmc_counts_migration-20261015235041/annotation-attempts/annotation-attempt1/agent_output.md",
+    "note": "These are same-attempt development failures, not controller repair rounds; owner report recorded before final verification."
+  },
+  "authorized_follow_up": {
+    "request": "\u5f53\u8fd9\u6761\u8bc1\u660e\u5b8c\u6bd5\u540e\u81ea\u52a8\u63a8\u8fdb\u4e0b\u4e00\u6761",
+    "candidate": "cmc_concrete_count_context.c",
+    "reason": "Explicitly requires cmc_concrete_counts.c and wraps its verified counting contracts with program/function contexts.",
+    "scope": "Four runtime functions; start next case after counts verification, measurement and skill update complete.",
+    "status": "queued behind counts completion"
+  },
+  "annotation_acceptance": {
+    "main_check": "accepted",
+    "symexec_reused_owner_generation": true,
+    "meaning": "Controller checked sealed bytes, owner-generation receipt and output freshness; it did not rerun symexec in main acceptance. Formal library checks passed.",
+    "receipt_elapsed_seconds": 7.784
+  },
+  "vc_review_progress": {
+    "no_split_top_level": 31,
+    "generated_split_goals": 383,
+    "whole_goal_fallbacks_due_to_lost_heap_premise": 4,
+    "annotation_gap_reported_so_far": false,
+    "status": "controller accepted",
+    "groups": 44,
+    "aggressive_top_level": 115,
+    "whole_goal_top_level": 35,
+    "report_format_rejections": 2
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 44,
+    "planned_groups": 44,
+    "status": "complete"
+  },
+  "dispatch_notes": [
+    "expression-variable-results initial handoff report path had a transcription omission; main immediately resent the exact controller handoff to the same owner before delivery."
+  ],
+  "shared_reuse_limit": {
+    "constraint": "Group workers must use the round-start frozen public_helper_snapshot; no reading later promoted public pool or sibling outputs in this round.",
+    "effect": "Concurrent groups independently proved overlapping pointer/type-encoding bridges. Count all final declarations/proof bytes; no deduplication discount.",
+    "future_skill_lesson": "Prepare broad type-encoding bridges in the annotation library before snapshotting when their need is already known.",
+    "main_note": "Main suggested checking later public candidates; owner correctly identified the snapshot boundary, and main immediately withdrew that suggestion. No formal bytes outside the allowed boundary were requested or edited."
+  },
+  "orchestration_events": [
+    {
+      "stage": "statement-while-safety finalize",
+      "event": "Controller refused stale whole-state write while a different owner updated state; main refreshed step and retried the exact finalize action. No formal edits."
+    }
+  ]
+}

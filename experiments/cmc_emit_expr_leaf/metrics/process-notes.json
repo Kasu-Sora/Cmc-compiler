@@ -1,0 +1,196 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "public_reuse": "Existing layout/counts/word/core/resolved/plan/AST libraries; six exact helper contracts",
+  "source_baseline_note": "Verified C body contracts. cm_emit_const_expr header omits type_code_wf, recorded separately; other six public header contracts match.",
+  "annotation_development": {
+    "attempts": 1,
+    "formal_case_lib_design_checks": 6,
+    "design_failures": 1,
+    "symexec_runs": 5,
+    "symexec_failures": 4,
+    "post_symexec_library_checks": 1,
+    "post_symexec_library_failures": 0,
+    "main_annotation_check_rounds": 1,
+    "main_annotation_status": "accepted",
+    "repairs": [
+      "Fix sid+2 versus2+sid rewrite",
+      "Explicit leaf singleton call boundary",
+      "Use equivalent lvalue inequalities to prevent premature syntactic substitution during matching",
+      "String call boundary matches representation address; semantic equality remains proof obligation",
+      "Remove where binding to out-of-scope existential"
+    ],
+    "non_controller_failures": [
+      "Python launch omitted controller.py",
+      "Notes-writing script syntax error; no writes"
+    ]
+  },
+  "proof_development": {
+    "groups": {
+      "member_results": {
+        "development_runs": 2,
+        "development_failures": 2,
+        "debug_runs": 2,
+        "debug_failures": 0,
+        "exact_runs": 2,
+        "exact_failures": 1,
+        "new_helpers": 0,
+        "repairs": [
+          "Repeat cancellation",
+          "Z.rem_small under derived bounds",
+          "Aggressive spatial/pure branch order"
+        ]
+      },
+      "sizeof_value": {
+        "development_runs": 3,
+        "development_failures": 2,
+        "debug_runs": 3,
+        "debug_failures": 2,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Repeat cancellation",
+          "Explicit Intros names avoiding temporary collision",
+          "Aggressive spatial/pure branch order"
+        ]
+      },
+      "leaf_string": {
+        "development_runs": 7,
+        "development_failures": 7,
+        "debug_runs": 6,
+        "debug_failures": 0,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repair_details": "See sealed group_worker_output.md; local tactic repair only"
+      },
+      "constant_value": {
+        "development_runs": 3,
+        "development_failures": 2,
+        "debug_runs": 0,
+        "debug_failures": 0,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Replace unavailable mod lemma names with Z.mod_eq, Zminus_mod and Zmult_mod"
+        ]
+      },
+      "member_context": {
+        "development_runs": 5,
+        "development_failures": 4,
+        "debug_runs": 4,
+        "debug_failures": 0,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Use Z.rem_small and Z.rem_bound_pos for C remainder",
+          "Other local tactic repairs recorded in group_worker_output.md"
+        ]
+      },
+      "leaf_const": {
+        "development_runs": 8,
+        "development_failures": 8,
+        "debug_runs": 3,
+        "debug_failures": 0,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "repairs": [
+          "Intros auto extraction and payload conjunction",
+          "Spatial/pure branch order",
+          "Explicit leaf unfolding and emitter cancellation",
+          "Z.eqb scope",
+          "Remove redundant tactic after closed pure goal"
+        ]
+      },
+      "leaf_sizeof": {
+        "development_runs": 11,
+        "development_failures": 10,
+        "debug_runs": 0,
+        "debug_failures": 0,
+        "exact_runs": 1,
+        "exact_failures": 0,
+        "new_helpers": 0,
+        "development_diagnostic_show_runs": 3,
+        "repairs": [
+          "Intros auto extraction and payload conjunction",
+          "Spatial/pure branch order",
+          "Explicit leaf unfolding and sepcon association",
+          "Z.eqb scope",
+          "Remove redundant tactic after closed pure goal"
+        ]
+      },
+      "leaf_getc": {
+        "development_runs": 2,
+        "development_failures": 2,
+        "debug_runs": 2,
+        "debug_failures": 0,
+        "exact_runs": 2,
+        "exact_failures": 1,
+        "new_helpers": 0,
+        "repairs": [
+          "Use leaf source equation explicitly",
+          "Remove redundant tactic after closed pure goal",
+          "Spatial/pure branch order"
+        ]
+      }
+    },
+    "owner_command_totals": {
+      "development_runs": 41,
+      "development_failures": 37,
+      "debug_runs": 20,
+      "debug_failures": 2,
+      "exact_runs": 10,
+      "exact_failures": 2,
+      "new_helpers": 0
+    },
+    "counts_note": "Owner-reported command attempts, distinct from controller acceptance checks. Includes 3 Show diagnostic development failures; details in sealed group outputs.",
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 8,
+    "accepted_group_attempts": {
+      "constant_value": 1,
+      "leaf_const": 1,
+      "leaf_string": 1,
+      "leaf_getc": 1,
+      "sizeof_value": 1,
+      "leaf_sizeof": 1,
+      "member_context": 1,
+      "member_results": 1
+    }
+  },
+  "vc_checking": {
+    "attempts": 1,
+    "top_level_scanned": 27,
+    "no_split_checked_first": 4,
+    "splits_reviewed": 37,
+    "definite_blockers": 0,
+    "owner_debug_checks": 0,
+    "owner_coq_checks": 0,
+    "owner_failures": 0,
+    "groups": 8,
+    "aggressive_top_level": 23,
+    "llm_top_level": 4
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 8,
+    "planned_groups": 8,
+    "status": "complete"
+  },
+  "main_bookkeeping_failures": [
+    "Read guessed final-check workflow filename failed; actual referenced workflow read before action. No verification command failure."
+  ],
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T07:15:30.764661Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-17T07:15:30.771923Z"
+  }
+}

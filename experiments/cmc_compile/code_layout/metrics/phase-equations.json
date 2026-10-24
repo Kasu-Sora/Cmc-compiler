@@ -1,0 +1,696 @@
+{
+  "source": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/baseline/cstar_project/cmc_preservation_code.c",
+  "sha256": "16a45b74dc2a694c77d2df17aecbe44b89f275088ce3ece50eeecb885c5e7363",
+  "clauses": [
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_value_phase_code (p:cm_program) (fid:int) (pc:int)\n          (temp:int) (owner:int) (breakpc:int) (continuepc:int)\n          CAHaltP = cm_status_tail_code)",
+      "target_pattern": "CAHaltP",
+      "target_body": "cm_status_tail_code"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CALoadP (ty:cm_type)) = cm_load_code ty)",
+      "target_pattern": "(CALoadP ty)",
+      "target_body": "(cm_load_code ty)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc src ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAAssignLP (src:cm_expr) (ty:cm_type)) =\n        cm_temp_store_code p fid owner ++\n        cm_emit_rvalue p fid\n          (pc + ilength (cm_temp_store_code p fid owner))\n          (owner + 1i) src ++\n        cm_assign_tail_code p fid ty owner)",
+      "target_pattern": "(CAAssignLP src ty)",
+      "target_body": "((cm_temp_store_code (cm_source_function_policy sp) p fid owner) ++ ((cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + (Zlength (cm_temp_store_code (cm_source_function_policy sp) p fid owner))) (owner + 1) src) ++ (cm_assign_tail_code (cm_source_function_policy sp) p fid ty owner)))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc ptr ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAAssignRP (ptr:cm_value) (ty:cm_type)) =\n        cm_assign_tail_code p fid ty owner)",
+      "target_pattern": "(CAAssignRP ptr ty)",
+      "target_body": "(cm_assign_tail_code (cm_source_function_policy sp) p fid ty owner)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc op left right ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CABinLP (op:int) (left:cm_expr) (right:cm_expr)\n             (ty:cm_type)) =\n        (if op == 0i || op == 1i\n         then [TVMInst (if op == 0i then TVMJnzOp else TVMJzOp)\n                 (pc + cm_rvalue_code_count p fid right + 4i)] ++\n              cm_emit_rvalue p fid (pc + 1i) owner right ++\n              [TVMInst TVMPushOp 0i; TVMInst TVMNeOp 0i;\n               TVMInst TVMJmpOp\n                 (pc + cm_rvalue_code_count p fid right + 5i);\n               TVMInst TVMPushOp (if op == 0i then 1i else 0i)]\n         else cm_temp_store_code p fid owner ++\n              cm_emit_rvalue p fid\n                (pc + ilength (cm_temp_store_code p fid owner))\n                (owner + 1i) right ++\n              cm_binary_finish_code p fid op left right owner))",
+      "target_pattern": "(CABinLP op lhs rhs ty)",
+      "target_body": "(if ((op =? 0) || (op =? 1)) then ([(TVMInst (if (op =? 0) then TVMJnzOp else TVMJzOp) ((pc + (cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs)) + 4))] ++ ((cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + 1) owner rhs) ++ [(TVMInst TVMPushOp 0); (TVMInst TVMNeOp 0); (TVMInst TVMJmpOp ((pc + (cm_rvalue_code_count (cm_source_function_policy sp) p fid rhs)) + 5)); (TVMInst TVMPushOp (if (op =? 0) then 1 else 0))])) else ((cm_temp_store_code (cm_source_function_policy sp) p fid owner) ++ ((cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + (Zlength (cm_temp_store_code (cm_source_function_policy sp) p fid owner))) (owner + 1) rhs) ++ (cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs rhs owner))))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc op left right value ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CABinRP (op:int) (left:cm_expr) (right:cm_expr)\n             (value:cm_value) (ty:cm_type)) =\n        (if op == 0i || op == 1i\n         then [TVMInst TVMPushOp 0i; TVMInst TVMNeOp 0i;\n               TVMInst TVMJmpOp (pc + 4i);\n               TVMInst TVMPushOp (if op == 0i then 1i else 0i)]\n         else cm_binary_finish_code p fid op left right owner))",
+      "target_pattern": "(CABinRP op lhs rhs value ty)",
+      "target_body": "(if ((op =? 0) || (op =? 1)) then [(TVMInst TVMPushOp 0); (TVMInst TVMNeOp 0); (TVMInst TVMJmpOp (pc + 4)); (TVMInst TVMPushOp (if (op =? 0) then 1 else 0))] else (cm_binary_finish_code (cm_source_function_policy sp) p fid op lhs rhs owner))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc op.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAUnaryP (op:int)) =\n        [TVMInst TVMPushOp (if op == 0i then --1i else 0i);\n         TVMInst (if op == 0i then TVMMulOp else TVMEqOp) 0i])",
+      "target_pattern": "(CAUnaryP op)",
+      "target_body": "[(TVMInst TVMPushOp (if (op =? 0) then (- 1) else 0)); (TVMInst (if (op =? 0) then TVMMulOp else TVMEqOp) 0)]"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc index ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAIndexLP (index:cm_expr) (ty:cm_type)) =\n        cm_temp_store_code p fid owner ++\n        cm_emit_rvalue p fid\n          (pc + ilength (cm_temp_store_code p fid owner))\n          (owner + 1i) index ++\n        cm_index_tail_code p fid ty owner)",
+      "target_pattern": "(CAIndexLP index ty)",
+      "target_body": "((cm_temp_store_code (cm_source_function_policy sp) p fid owner) ++ ((cm_emit_rvalue (cm_source_function_policy sp) p fid (pc + (Zlength (cm_temp_store_code (cm_source_function_policy sp) p fid owner))) (owner + 1) index) ++ (cm_index_tail_code (cm_source_function_policy sp) p fid ty owner)))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc base ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAIndexRP (base:cm_value) (ty:cm_type)) =\n        cm_index_tail_code p fid ty owner)",
+      "target_pattern": "(CAIndexRP base ty)",
+      "target_body": "(cm_index_tail_code (cm_source_function_policy sp) p fid ty owner)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc mid base_ty.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAMemberP (mid:int) (base_ty:cm_type)) =\n        cm_member_tail_code p base_ty mid)",
+      "target_pattern": "(CAMemberP mid base_ty)",
+      "target_body": "(cm_member_tail_code p base_ty mid)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          CAPutcP = [TVMInst TVMDupOp 0i; TVMInst TVMPutcOp 0i])",
+      "target_pattern": "CAPutcP",
+      "target_body": "[(TVMInst TVMDupOp 0); (TVMInst TVMPutcOp 0)]"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          CAPutiP = [TVMInst TVMDupOp 0i; TVMInst TVMPutiOp 0i])",
+      "target_pattern": "CAPutiP",
+      "target_body": "[(TVMInst TVMDupOp 0); (TVMInst TVMPutiOp 0)]"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          CAExitP = cm_status_tail_code)",
+      "target_pattern": "CAExitP",
+      "target_body": "cm_status_tail_code"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          CAExprStmtP = [TVMInst TVMPopOp 0i])",
+      "target_pattern": "CAExprStmtP",
+      "target_body": "[(TVMInst TVMPopOp 0)]"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc slot.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAInitP (slot:int)) = cm_init_tail_code p fid slot)",
+      "target_pattern": "(CAInitP slot)",
+      "target_body": "(cm_init_tail_code sp p fid slot)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc env regions jump target.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CABlockP (env:int->int->cm_value) (regions:(cm_region)list)\n             (jump:bool) (target:int)) =\n        (if jump then [TVMInst TVMJmpOp target] else []))",
+      "target_pattern": "(CABlockP env regions jump target)",
+      "target_body": "(if jump then [(TVMInst TVMJmpOp target)] else [])"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc second.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CASeqP (second:cm_stmt)) =\n        cm_emit_stmt p fid pc owner breakpc continuepc second)",
+      "target_pattern": "(CASeqP second)",
+      "target_body": "(cm_emit_stmt (cm_source_function_policy sp) p fid pc owner breakpc continuepc second)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc yes no.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAIfP (yes:cm_stmt) (no:cm_stmt)) =\n        [TVMInst TVMJzOp\n           (pc + 1i + cm_stmt_code_count p fid yes + 1i)] ++\n        cm_emit_stmt p fid (pc + 1i) owner breakpc continuepc yes ++\n        [TVMInst TVMJmpOp\n           (pc + 2i + cm_stmt_code_count p fid yes +\n            cm_stmt_code_count p fid no)] ++\n        cm_emit_stmt p fid\n          (pc + 2i + cm_stmt_code_count p fid yes)\n          owner breakpc continuepc no)",
+      "target_pattern": "(CAIfP yes no)",
+      "target_body": "([(TVMInst TVMJzOp (((pc + 1) + (cm_stmt_code_count (cm_source_function_policy sp) p fid yes)) + 1))] ++ ((cm_emit_stmt (cm_source_function_policy sp) p fid (pc + 1) owner breakpc continuepc yes) ++ ([(TVMInst TVMJmpOp (((pc + 2) + (cm_stmt_code_count (cm_source_function_policy sp) p fid yes)) + (cm_stmt_code_count (cm_source_function_policy sp) p fid no)))] ++ (cm_emit_stmt (cm_source_function_policy sp) p fid ((pc + 2) + (cm_stmt_code_count (cm_source_function_policy sp) p fid yes)) owner breakpc continuepc no))))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc guard body\n         loop_start loop_end.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAWhileGuardP (guard:cm_expr) (body:cm_stmt)\n             (loop_start:int) (loop_end:int)) =\n        [TVMInst TVMJzOp loop_end] ++\n        cm_emit_stmt p fid (pc + 1i) owner loop_end loop_start body ++\n        [TVMInst TVMJmpOp loop_start])",
+      "target_pattern": "(CAWhileGuardP guard body loop_start loop_end)",
+      "target_body": "([(TVMInst TVMJzOp loop_end)] ++ ((cm_emit_stmt (cm_source_function_policy sp) p fid (pc + 1) owner loop_end loop_start body) ++ [(TVMInst TVMJmpOp loop_start)]))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc guard body env regions\n         loop_start loop_end.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAWhileBodyP (guard:cm_expr) (body:cm_stmt)\n             (env:int->int->cm_value) (regions:(cm_region)list)\n             (loop_start:int) (loop_end:int)) =\n        [TVMInst TVMJmpOp loop_start])",
+      "target_pattern": "(CAWhileBodyP guard body env regions loop_start loop_end)",
+      "target_body": "[(TVMInst TVMJmpOp loop_start)]"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          CAReturnP = cm_return_tail_code p fid)",
+      "target_pattern": "CAReturnP",
+      "target_body": "(cm_return_tail_code sp p fid)"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc callee rest values ret\n         all_args base_slot current_slot scratch.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CAArgP (callee:int) (rest:(cm_expr)list)\n             (values:(cm_value)list) (ret:cm_type)\n             (all_args:(cm_expr)list) (base_slot:int)\n             (current_slot:int) (scratch:int)) =\n        cm_temp_store_code p fid current_slot ++\n        cm_emit_args_store p fid\n          (pc + ilength (cm_temp_store_code p fid current_slot))\n          (current_slot + 1i) scratch rest ++\n        cm_emit_args_reload p fid base_slot all_args ++\n        [TVMInst TVMCallOp (cm_function_pc p callee)])",
+      "target_pattern": "(CAArgP callee rest values ret all_args base_slot current_slot scratch)",
+      "target_body": "((cm_temp_store_code (cm_source_function_policy sp) p fid current_slot) ++ ((cm_emit_args_store (cm_source_function_policy sp) p fid (pc + (Zlength (cm_temp_store_code (cm_source_function_policy sp) p fid current_slot))) (current_slot + 1) scratch rest) ++ ((cm_emit_args_reload (cm_source_function_policy sp) p fid base_slot all_args) ++ [(TVMInst TVMCallOp (cm_function_pc (cm_source_function_policy sp) p callee))])))"
+    },
+    {
+      "definition": "cm_value_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc caller env fp regions ret.\n        cm_value_phase_code p fid pc temp owner breakpc continuepc\n          (CACallP (caller:int) (env:int->int->cm_value) (fp:int)\n             (regions:(cm_region)list) (ret:cm_type)) =\n        cm_return_tail_code p fid)",
+      "target_pattern": "(CACallP caller env fp regions ret)",
+      "target_body": "(cm_return_tail_code sp p fid)"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(cm_phase_stops CAHaltP = T)",
+      "target_pattern": "CAHaltP",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!ty. cm_phase_stops (CALoadP (ty:cm_type)) = F)",
+      "target_pattern": "(CALoadP ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!src ty. cm_phase_stops (CAAssignLP (src:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CAAssignLP src ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!ptr ty. cm_phase_stops (CAAssignRP (ptr:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CAAssignRP ptr ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!op left right ty. cm_phase_stops (CABinLP (op:int) (left:cm_expr) (right:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CABinLP op lhs rhs ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!op left right value ty. cm_phase_stops (CABinRP (op:int) (left:cm_expr) (right:cm_expr) (value:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CABinRP op lhs rhs value ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!op. cm_phase_stops (CAUnaryP (op:int)) = F)",
+      "target_pattern": "(CAUnaryP op)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!index ty. cm_phase_stops (CAIndexLP (index:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CAIndexLP index ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!base ty. cm_phase_stops (CAIndexRP (base:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CAIndexRP base ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!mid base_ty. cm_phase_stops (CAMemberP (mid:int) (base_ty:cm_type)) = F)",
+      "target_pattern": "(CAMemberP mid base_ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(cm_phase_stops CAPutcP = F)",
+      "target_pattern": "CAPutcP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(cm_phase_stops CAPutiP = F)",
+      "target_pattern": "CAPutiP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(cm_phase_stops CAExitP = T)",
+      "target_pattern": "CAExitP",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(cm_phase_stops CAExprStmtP = F)",
+      "target_pattern": "CAExprStmtP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!slot. cm_phase_stops (CAInitP (slot:int)) = F)",
+      "target_pattern": "(CAInitP slot)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!env regions jump target. cm_phase_stops (CABlockP (env:int->int->cm_value) (regions:(cm_region)list) (jump:bool) (target:int)) = jump)",
+      "target_pattern": "(CABlockP env regions jump target)",
+      "target_body": "jump"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!second. cm_phase_stops (CASeqP (second:cm_stmt)) = F)",
+      "target_pattern": "(CASeqP second)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!yes no. cm_phase_stops (CAIfP (yes:cm_stmt) (no:cm_stmt)) = F)",
+      "target_pattern": "(CAIfP yes no)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!guard body loop_start loop_end. cm_phase_stops (CAWhileGuardP (guard:cm_expr) (body:cm_stmt) (loop_start:int) (loop_end:int)) = F)",
+      "target_pattern": "(CAWhileGuardP guard body loop_start loop_end)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!guard body env regions loop_start loop_end. cm_phase_stops (CAWhileBodyP (guard:cm_expr) (body:cm_stmt) (env:int->int->cm_value) (regions:(cm_region)list) (loop_start:int) (loop_end:int)) = F)",
+      "target_pattern": "(CAWhileBodyP guard body env regions loop_start loop_end)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(cm_phase_stops CAReturnP = T)",
+      "target_pattern": "CAReturnP",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!callee rest values ret all_args base_slot current_slot scratch. cm_phase_stops (CAArgP (callee:int) (rest:(cm_expr)list) (values:(cm_value)list) (ret:cm_type) (all_args:(cm_expr)list) (base_slot:int) (current_slot:int) (scratch:int)) = F)",
+      "target_pattern": "(CAArgP callee rest values ret all_args base_slot current_slot scratch)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_stops",
+      "source_clause": "(!caller env fp regions ret. cm_phase_stops (CACallP (caller:int) (env:int->int->cm_value) (fp:int) (regions:(cm_region)list) (ret:cm_type)) = T)",
+      "target_pattern": "(CACallP caller env fp regions ret)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(cm_phase_yields_normal CAHaltP = F)",
+      "target_pattern": "CAHaltP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!ty. cm_phase_yields_normal (CALoadP (ty:cm_type)) = F)",
+      "target_pattern": "(CALoadP ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!src ty. cm_phase_yields_normal (CAAssignLP (src:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CAAssignLP src ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!ptr ty. cm_phase_yields_normal (CAAssignRP (ptr:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CAAssignRP ptr ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!op left right ty. cm_phase_yields_normal (CABinLP (op:int) (left:cm_expr) (right:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CABinLP op lhs rhs ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!op left right value ty. cm_phase_yields_normal (CABinRP (op:int) (left:cm_expr) (right:cm_expr) (value:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CABinRP op lhs rhs value ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!op. cm_phase_yields_normal (CAUnaryP (op:int)) = F)",
+      "target_pattern": "(CAUnaryP op)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!index ty. cm_phase_yields_normal (CAIndexLP (index:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CAIndexLP index ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!base ty. cm_phase_yields_normal (CAIndexRP (base:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CAIndexRP base ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!mid base_ty. cm_phase_yields_normal (CAMemberP (mid:int) (base_ty:cm_type)) = F)",
+      "target_pattern": "(CAMemberP mid base_ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(cm_phase_yields_normal CAPutcP = F)",
+      "target_pattern": "CAPutcP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(cm_phase_yields_normal CAPutiP = F)",
+      "target_pattern": "CAPutiP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(cm_phase_yields_normal CAExitP = F)",
+      "target_pattern": "CAExitP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(cm_phase_yields_normal CAExprStmtP = T)",
+      "target_pattern": "CAExprStmtP",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!slot. cm_phase_yields_normal (CAInitP (slot:int)) = T)",
+      "target_pattern": "(CAInitP slot)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!env regions jump target. cm_phase_yields_normal (CABlockP (env:int->int->cm_value) (regions:(cm_region)list) (jump:bool) (target:int)) = T)",
+      "target_pattern": "(CABlockP env regions jump target)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!second. cm_phase_yields_normal (CASeqP (second:cm_stmt)) = T)",
+      "target_pattern": "(CASeqP second)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!yes no. cm_phase_yields_normal (CAIfP (yes:cm_stmt) (no:cm_stmt)) = T)",
+      "target_pattern": "(CAIfP yes no)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!guard body loop_start loop_end. cm_phase_yields_normal (CAWhileGuardP (guard:cm_expr) (body:cm_stmt) (loop_start:int) (loop_end:int)) = T)",
+      "target_pattern": "(CAWhileGuardP guard body loop_start loop_end)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!guard body env regions loop_start loop_end. cm_phase_yields_normal (CAWhileBodyP (guard:cm_expr) (body:cm_stmt) (env:int->int->cm_value) (regions:(cm_region)list) (loop_start:int) (loop_end:int)) = T)",
+      "target_pattern": "(CAWhileBodyP guard body env regions loop_start loop_end)",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(cm_phase_yields_normal CAReturnP = F)",
+      "target_pattern": "CAReturnP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!callee rest values ret all_args base_slot current_slot scratch. cm_phase_yields_normal (CAArgP (callee:int) (rest:(cm_expr)list) (values:(cm_value)list) (ret:cm_type) (all_args:(cm_expr)list) (base_slot:int) (current_slot:int) (scratch:int)) = F)",
+      "target_pattern": "(CAArgP callee rest values ret all_args base_slot current_slot scratch)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_phase_yields_normal",
+      "source_clause": "(!caller env fp regions ret. cm_phase_yields_normal (CACallP (caller:int) (env:int->int->cm_value) (fp:int) (regions:(cm_region)list) (ret:cm_type)) = F)",
+      "target_pattern": "(CACallP caller env fp regions ret)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc.\n        cm_normal_phase_code (p:cm_program) (fid:int) (pc:int)\n          (temp:int) (owner:int) (breakpc:int) (continuepc:int)\n          CAHaltP = [])",
+      "target_pattern": "CAHaltP",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CALoadP (ty:cm_type)) = [])",
+      "target_pattern": "(CALoadP ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc src ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAAssignLP (src:cm_expr) (ty:cm_type)) = [])",
+      "target_pattern": "(CAAssignLP src ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc ptr ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAAssignRP (ptr:cm_value) (ty:cm_type)) = [])",
+      "target_pattern": "(CAAssignRP ptr ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc op left right ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CABinLP (op:int) (left:cm_expr) (right:cm_expr) (ty:cm_type)) = [])",
+      "target_pattern": "(CABinLP op lhs rhs ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc op left right value ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CABinRP (op:int) (left:cm_expr) (right:cm_expr) (value:cm_value) (ty:cm_type)) = [])",
+      "target_pattern": "(CABinRP op lhs rhs value ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc op. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAUnaryP (op:int)) = [])",
+      "target_pattern": "(CAUnaryP op)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc index ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAIndexLP (index:cm_expr) (ty:cm_type)) = [])",
+      "target_pattern": "(CAIndexLP index ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc base ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAIndexRP (base:cm_value) (ty:cm_type)) = [])",
+      "target_pattern": "(CAIndexRP base ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc mid base_ty. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAMemberP (mid:int) (base_ty:cm_type)) = [])",
+      "target_pattern": "(CAMemberP mid base_ty)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc. cm_normal_phase_code p fid pc temp owner breakpc continuepc CAPutcP = [])",
+      "target_pattern": "CAPutcP",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc. cm_normal_phase_code p fid pc temp owner breakpc continuepc CAPutiP = [])",
+      "target_pattern": "CAPutiP",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc. cm_normal_phase_code p fid pc temp owner breakpc continuepc CAExitP = [])",
+      "target_pattern": "CAExitP",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc. cm_normal_phase_code p fid pc temp owner breakpc continuepc CAExprStmtP = [])",
+      "target_pattern": "CAExprStmtP",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc slot. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAInitP (slot:int)) = [])",
+      "target_pattern": "(CAInitP slot)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc env regions jump target.\n        cm_normal_phase_code p fid pc temp owner breakpc continuepc\n          (CABlockP (env:int->int->cm_value) (regions:(cm_region)list)\n            (jump:bool) (target:int)) =\n        (if jump then [TVMInst TVMJmpOp target] else []))",
+      "target_pattern": "(CABlockP env regions jump target)",
+      "target_body": "(if jump then [(TVMInst TVMJmpOp target)] else [])"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc second.\n        cm_normal_phase_code p fid pc temp owner breakpc continuepc\n          (CASeqP (second:cm_stmt)) =\n        cm_emit_stmt p fid pc owner breakpc continuepc second)",
+      "target_pattern": "(CASeqP second)",
+      "target_body": "(cm_emit_stmt (cm_source_function_policy sp) p fid pc owner breakpc continuepc second)"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc yes no. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAIfP (yes:cm_stmt) (no:cm_stmt)) = [])",
+      "target_pattern": "(CAIfP yes no)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc guard body loop_start loop_end. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAWhileGuardP (guard:cm_expr) (body:cm_stmt) (loop_start:int) (loop_end:int)) = [])",
+      "target_pattern": "(CAWhileGuardP guard body loop_start loop_end)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc guard body env regions loop_start loop_end.\n        cm_normal_phase_code p fid pc temp owner breakpc continuepc\n          (CAWhileBodyP (guard:cm_expr) (body:cm_stmt)\n            (env:int->int->cm_value) (regions:(cm_region)list)\n            (loop_start:int) (loop_end:int)) =\n        [TVMInst TVMJmpOp loop_start])",
+      "target_pattern": "(CAWhileBodyP guard body env regions loop_start loop_end)",
+      "target_body": "[(TVMInst TVMJmpOp loop_start)]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc. cm_normal_phase_code p fid pc temp owner breakpc continuepc CAReturnP = [])",
+      "target_pattern": "CAReturnP",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc callee rest values ret all_args base_slot current_slot scratch. cm_normal_phase_code p fid pc temp owner breakpc continuepc (CAArgP (callee:int) (rest:(cm_expr)list) (values:(cm_value)list) (ret:cm_type) (all_args:(cm_expr)list) (base_slot:int) (current_slot:int) (scratch:int)) = [])",
+      "target_pattern": "(CAArgP callee rest values ret all_args base_slot current_slot scratch)",
+      "target_body": "[]"
+    },
+    {
+      "definition": "cm_normal_phase_code",
+      "source_clause": "(!p fid pc temp owner breakpc continuepc caller env fp regions ret.\n        cm_normal_phase_code p fid pc temp owner breakpc continuepc\n          (CACallP (caller:int) (env:int->int->cm_value) (fp:int)\n            (regions:(cm_region)list) (ret:cm_type)) =\n        cm_fallthrough_tail_code)",
+      "target_pattern": "(CACallP caller env fp regions ret)",
+      "target_body": "cm_fallthrough_tail_code"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(cm_normal_phase_stops CAHaltP = T)",
+      "target_pattern": "CAHaltP",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!ty. cm_normal_phase_stops (CALoadP (ty:cm_type)) = F)",
+      "target_pattern": "(CALoadP ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!src ty. cm_normal_phase_stops (CAAssignLP (src:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CAAssignLP src ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!ptr ty. cm_normal_phase_stops (CAAssignRP (ptr:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CAAssignRP ptr ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!op left right ty. cm_normal_phase_stops (CABinLP (op:int) (left:cm_expr) (right:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CABinLP op lhs rhs ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!op left right value ty. cm_normal_phase_stops (CABinRP (op:int) (left:cm_expr) (right:cm_expr) (value:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CABinRP op lhs rhs value ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!op. cm_normal_phase_stops (CAUnaryP (op:int)) = F)",
+      "target_pattern": "(CAUnaryP op)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!index ty. cm_normal_phase_stops (CAIndexLP (index:cm_expr) (ty:cm_type)) = F)",
+      "target_pattern": "(CAIndexLP index ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!base ty. cm_normal_phase_stops (CAIndexRP (base:cm_value) (ty:cm_type)) = F)",
+      "target_pattern": "(CAIndexRP base ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!mid base_ty. cm_normal_phase_stops (CAMemberP (mid:int) (base_ty:cm_type)) = F)",
+      "target_pattern": "(CAMemberP mid base_ty)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(cm_normal_phase_stops CAPutcP = F)",
+      "target_pattern": "CAPutcP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(cm_normal_phase_stops CAPutiP = F)",
+      "target_pattern": "CAPutiP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(cm_normal_phase_stops CAExitP = T)",
+      "target_pattern": "CAExitP",
+      "target_body": "true"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(cm_normal_phase_stops CAExprStmtP = F)",
+      "target_pattern": "CAExprStmtP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!slot. cm_normal_phase_stops (CAInitP (slot:int)) = F)",
+      "target_pattern": "(CAInitP slot)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!env regions jump target. cm_normal_phase_stops (CABlockP (env:int->int->cm_value) (regions:(cm_region)list) (jump:bool) (target:int)) = jump)",
+      "target_pattern": "(CABlockP env regions jump target)",
+      "target_body": "jump"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!second. cm_normal_phase_stops (CASeqP (second:cm_stmt)) = F)",
+      "target_pattern": "(CASeqP second)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!yes no. cm_normal_phase_stops (CAIfP (yes:cm_stmt) (no:cm_stmt)) = F)",
+      "target_pattern": "(CAIfP yes no)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!guard body loop_start loop_end. cm_normal_phase_stops (CAWhileGuardP (guard:cm_expr) (body:cm_stmt) (loop_start:int) (loop_end:int)) = F)",
+      "target_pattern": "(CAWhileGuardP guard body loop_start loop_end)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!guard body env regions loop_start loop_end. cm_normal_phase_stops (CAWhileBodyP (guard:cm_expr) (body:cm_stmt) (env:int->int->cm_value) (regions:(cm_region)list) (loop_start:int) (loop_end:int)) = F)",
+      "target_pattern": "(CAWhileBodyP guard body env regions loop_start loop_end)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(cm_normal_phase_stops CAReturnP = F)",
+      "target_pattern": "CAReturnP",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!callee rest values ret all_args base_slot current_slot scratch. cm_normal_phase_stops (CAArgP (callee:int) (rest:(cm_expr)list) (values:(cm_value)list) (ret:cm_type) (all_args:(cm_expr)list) (base_slot:int) (current_slot:int) (scratch:int)) = F)",
+      "target_pattern": "(CAArgP callee rest values ret all_args base_slot current_slot scratch)",
+      "target_body": "false"
+    },
+    {
+      "definition": "cm_normal_phase_stops",
+      "source_clause": "(!caller env fp regions ret. cm_normal_phase_stops (CACallP (caller:int) (env:int->int->cm_value) (fp:int) (regions:(cm_region)list) (ret:cm_type)) = T)",
+      "target_pattern": "(CACallP caller env fp regions ret)",
+      "target_body": "true"
+    }
+  ]
+}

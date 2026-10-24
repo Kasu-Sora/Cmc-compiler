@@ -1,0 +1,92 @@
+{
+  "groups": [
+    {
+      "id": "initialized-emission",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_globals_entail_wit_2_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the full-resource left disjunct. From PreH9, PreH16 and the code=1 guard obtain the initialized-char size/bytes facts using cm_initialized_char_facts__initialized_emission. Instantiate head_2=head and tail=tail_2. Identify retval with cm_rep_global_size head definitionally; the supplied 0..1048560 bounds make signed_last_nbits retval 32 equal retval. Rewrite size to 1 and cm_global_bytes to the singleton tower_u8 byte. The output and undefined segments then match exactly; cancel the five node fields and tail list, and discharge copied pure facts/reflexive equalities. This joins the char-writer postcondition to the recursive-call assertion."
+        },
+        {
+          "name": "proof_of_cmc_emit_globals_entail_wit_2_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the full-resource left disjunct. Use PreH9, the nonzero initialization flag and code<>1 with cm_initialized_word_facts__initialized_emission to identify global size=8 and global bytes=tower_word_bytes(init). Instantiate head_2=head and tail=tail_2. The slot-size return equality identifies retval with global size; use its supplied 0..1048560 bounds to eliminate the signed 32-bit cast. Rewrite the two output segment endpoints and byte list, cancel all five node fields plus tail and buffer resources, and copy the pure facts. This joins the word-writer postcondition to the recursive-call assertion."
+        },
+        {
+          "name": "proof_of_cmc_emit_globals_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_globals_partial_solve_wit_2_pure_split_goal_1": "The goal is pure cursor_pre+1<=capacity_pre; retain arbitrary stack, node, tail and buffer resources as the antecedent. Apply cm_initialized_char_facts__initialized_emission with PreH25, PreH32 and PreH17, obtaining head size=1. Rewrite PreH31 and combine it with nonnegative tail size PreH30 by lia; introduce the resulting pure assertion. No existential or spatial reconstruction is required."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_globals_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_globals_partial_solve_wit_3_pure_split_goal_1": "The goal is pure cursor_pre+8<=capacity_pre. Apply cm_initialized_word_facts__initialized_emission with well-formed head PreH25, flag PreH32 and non-char code guard PreH17. Rewrite size=8 in capacity bound PreH31 and use nonnegative tail size PreH30 with lia. The stack, fields, tail and buffer antecedent needs no transformation."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_initialized_char_facts__initialized_emission",
+          "visibility": "public",
+          "strategy": "Prove forall structs g, cm_global_wf structs g -> cm_rep_bool (cm_global_has_init g)<>0 -> cm_type_encode (cm_global_ty g)=1 -> cm_rep_global_size g=1 and cm_global_bytes structs g=[tower_u8 (cm_global_init g)]. Decode the Boolean to true and obtain count=0 from cm_global_wf. Establish CMCharTy from code=1 by type cases: scalarity excludes structs; pointer depth nonnegativity and base bounds exclude pointer code=1. Reduce the char size; use existing cm_rep_global_size_matches, cm_global_init_bytes_char and cm_global_bytes_initialized, with singleton Zlength=1. All premises are exactly the branch guard, wf and flag in each assigned VC."
+        },
+        {
+          "name": "cm_initialized_word_facts__initialized_emission",
+          "visibility": "public",
+          "strategy": "Prove forall structs g, cm_global_wf structs g -> cm_rep_bool (cm_global_has_init g)<>0 -> cm_type_encode (cm_global_ty g)<>1 -> cm_rep_global_size g=8 and cm_global_bytes structs g=tower_word_bytes (cm_global_init g). Decode the flag to true and use wf for count=0 and scalarity. Type cases exclude char by the guard and structs by scalarity; int and pointer model sizes are 8. Use cm_rep_global_size_matches, cm_global_init_bytes_word, the eight-byte tower length, and cm_global_bytes_initialized. The exact wf, flag and guard premises are already present in each word-branch VC."
+        }
+      ]
+    },
+    {
+      "id": "zero-emission",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_globals_entail_wit_2_3",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the full-resource left disjunct and instantiate head_2=head, tail=tail_2. The slot-size return equality identifies retval with cm_rep_global_size head; bounds 0..1048560 eliminate signed_last_nbits retval 32. Decode cm_rep_bool(has_init)=0 to has_init=false. Apply cm_rep_global_size_matches using PreH8, then cm_global_bytes_zero using this flag and the nonnegative size PreH11, to rewrite global bytes as zeros of the cast size. Cancel unchanged five fields, tail list, defined buffer prefix and undefined suffix; copy all pure facts. This converts the zero-writer result to the recursive-call assertion."
+        },
+        {
+          "name": "proof_of_cmc_emit_globals_partial_solve_wit_4_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_globals_partial_solve_wit_4_pure_split_goal_1": "Identify retval with cm_rep_global_size head using PreH17 and the definition. Its bounds PreH27/PreH28 place it in signed 32-bit range, so eliminate signed_last_nbits retval 32 and use PreH27. Introduce the resulting pure nonnegativity assertion from the arbitrary stack/field/list/buffer antecedent; no existential or spatial transformation. Use the existing signed-cast range lemma or int_auto, without a new helper.",
+            "proof_of_cmc_emit_globals_partial_solve_wit_4_pure_split_goal_2": "Normalize the cast using PreH17 and head-size bounds PreH27/PreH28 as in the preceding split. Combine total capacity bound PreH30 with nonnegative tail size PreH29 by lia to prove cursor_pre+size<=capacity_pre. The goal is pure, so stack, node, tail and buffer resources require no reconstruction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "list-structure-and-return",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_globals_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the full-resource left disjunct and case split globals. For [], unfold cm_global_list_rep and extract node_pre=0, contradicting PreH1. For head::tail, unfold the list predicate once and extract its next pointer. Instantiate nextp with that pointer and head/tail with the constructor components. Unfold cm_rep_globals_safe and cm_data_globals_wf once to obtain tail safety/wf, head wf, nonnegative head/tail sizes and total size<=1048560; lia gives head size<=1048560. Rewrite the cons size in PreH5 and reassociate addition. Cancel all five field resources, tail list and the unchanged two buffer segments, supplying copied pure facts."
+        },
+        {
+          "name": "proof_of_cmc_emit_globals_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_globals_return_wit_1_split_goal_1": "The pure return equality follows from globals=head::tail (PreH13), size=cm_rep_global_size head (PreH30), and recursive return equality PreH11. Reduce cm_rep_globals_size on cons and reassociate Z addition with lia. Node fields, tail and buffer form an arbitrary antecedent; there is no existential or spatial transformation for this split.",
+            "proof_of_cmc_emit_globals_return_wit_1_split_goal_spatial": "Substitute globals=head::tail and size=cm_rep_global_size head. Reduce cm_rep_globals_size and cm_globals_bytes on cons, reassociate cursor addition, and rewrite list app associativity to match the recursive output prefix. Unfold the target cm_global_list_rep once, supply node_pre<>0 (PreH12) and existential nextp, then cancel the five node fields and recursive tail list; the defined/undefined buffer segments now cancel exactly. No new arithmetic/list helper is required."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_globals_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_globals_return_wit_2_split_goal_1": "Case split globals and unfold cm_global_list_rep once in the antecedent. A nonempty list yields node_pre<>0, contradicting PreH1. For [], cm_rep_globals_size is 0, so cursor equality is immediate by lia. Extracting the representation pure fact preserves the buffer frame; the conclusion is only a pure assertion.",
+            "proof_of_cmc_emit_globals_return_wit_2_split_goal_spatial": "Case split globals. A cons representation at node_pre=0 contradicts its nonzero pure fact. In the nil case, reduce globals size to 0 and globals bytes to []; rewrite Z.add_0_r and app_nil_r. Preserve/reconstruct the nil list representation and cancel the unchanged defined prefix and undefined suffix. There are no existential witnesses or new helpers."
+          }
+        }
+      ]
+    }
+  ]
+}

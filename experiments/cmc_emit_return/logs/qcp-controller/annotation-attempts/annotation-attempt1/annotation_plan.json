@@ -1,0 +1,113 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-return-plan",
+      "location": "cm_emit_return_epilogue_plan: entry Assert immediately before the first cm_emit_plan call",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "emitter == emitter@pre",
+        "tvm_opcode_code for Push, Load, Store, Ret is respectively 0, 4, 5, 23; each differs from 22"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep with the six explicit epilogue instructions followed by tail",
+        "live emitter parameter store preserved via emitter == emitter@pre"
+      ],
+      "mathematical_state": "The named return epilogue is the exact six-instruction list, exposing its first instruction and the remaining suffix so the verified one-instruction plan interface applies.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit-1-push",
+      "location": "cm_emit_return_epilogue_plan: cm_emit_plan call 1 (PUSH 8) where annotation",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Literal opcode equals tvm_opcode_code(TVMPushOp) and is not call opcode 22",
+        "Immediate 8 is in long long range; emitter stays equal to emitter@pre"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep for the original policy, program, emitter, output pointer and capacity, with the emitted prefix and remaining suffix",
+        "live emitter parameter store retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 0 instructions of the six-instruction return epilogue have been appended to done; the remaining 6 instructions followed by arbitrary tail remain in the plan. The call consumes exactly the next instruction.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit-2-load",
+      "location": "cm_emit_return_epilogue_plan: cm_emit_plan call 2 (LOAD 0) where annotation",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Literal opcode equals tvm_opcode_code(TVMLoadOp) and is not call opcode 22",
+        "Immediate 0 is in long long range; emitter stays equal to emitter@pre"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep for the original policy, program, emitter, output pointer and capacity, with the emitted prefix and remaining suffix",
+        "live emitter parameter store retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 1 instructions of the six-instruction return epilogue have been appended to done; the remaining 5 instructions followed by arbitrary tail remain in the plan. The call consumes exactly the next instruction.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit-3-load",
+      "location": "cm_emit_return_epilogue_plan: cm_emit_plan call 3 (LOAD 0) where annotation",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Literal opcode equals tvm_opcode_code(TVMLoadOp) and is not call opcode 22",
+        "Immediate 0 is in long long range; emitter stays equal to emitter@pre"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep for the original policy, program, emitter, output pointer and capacity, with the emitted prefix and remaining suffix",
+        "live emitter parameter store retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 2 instructions of the six-instruction return epilogue have been appended to done; the remaining 4 instructions followed by arbitrary tail remain in the plan. The call consumes exactly the next instruction.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit-4-push",
+      "location": "cm_emit_return_epilogue_plan: cm_emit_plan call 4 (PUSH 8) where annotation",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Literal opcode equals tvm_opcode_code(TVMPushOp) and is not call opcode 22",
+        "Immediate 8 is in long long range; emitter stays equal to emitter@pre"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep for the original policy, program, emitter, output pointer and capacity, with the emitted prefix and remaining suffix",
+        "live emitter parameter store retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 3 instructions of the six-instruction return epilogue have been appended to done; the remaining 3 instructions followed by arbitrary tail remain in the plan. The call consumes exactly the next instruction.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit-5-store",
+      "location": "cm_emit_return_epilogue_plan: cm_emit_plan call 5 (STORE 0) where annotation",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Literal opcode equals tvm_opcode_code(TVMStoreOp) and is not call opcode 22",
+        "Immediate 0 is in long long range; emitter stays equal to emitter@pre"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep for the original policy, program, emitter, output pointer and capacity, with the emitted prefix and remaining suffix",
+        "live emitter parameter store retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 4 instructions of the six-instruction return epilogue have been appended to done; the remaining 2 instructions followed by arbitrary tail remain in the plan. The call consumes exactly the next instruction.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit-6-ret",
+      "location": "cm_emit_return_epilogue_plan: cm_emit_plan call 6 (RET 0) where annotation",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Literal opcode equals tvm_opcode_code(TVMRetOp) and is not call opcode 22",
+        "Immediate 0 is in long long range; emitter stays equal to emitter@pre"
+      ],
+      "resources": [
+        "cm_resolved_emitter_plan_rep for the original policy, program, emitter, output pointer and capacity, with the emitted prefix and remaining suffix",
+        "live emitter parameter store retained by symbolic execution"
+      ],
+      "mathematical_state": "The first 5 instructions of the six-instruction return epilogue have been appended to done; the remaining 1 instructions followed by arbitrary tail remain in the plan. The call consumes exactly the next instruction.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

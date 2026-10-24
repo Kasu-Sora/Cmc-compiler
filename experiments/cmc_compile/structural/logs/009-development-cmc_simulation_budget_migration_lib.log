@@ -1,0 +1,210 @@
+8 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, op : Z
+  expr1, expr2 : cm_expr
+  ty : cm_type
+  st : cm_src_state
+  ann : cm_annotation
+  H : 0 <= match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end
+  H0 :
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end +
+    Z.max (cm_tright (cm_expr_tpair expr1))
+      (if (op =? 0) || (op =? 1)
+       then cm_tright (cm_expr_tpair expr2)
+       else 1 + cm_tright (cm_expr_tpair expr2)) <=
+    cm_temp_slots
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))
+  H1 :
+    (fix cm_cursors_budget
+       (policy : cm_lookup_policy) (p : cm_program) 
+       (fid : Z) (cursors : list cm_acursor) {struct cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CABinLP op _ rhs _ =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end +
+               (if if op =? 0 then true else op =? 1
+                then cm_tright (cm_expr_tpair rhs)
+                else 1 + cm_tright (cm_expr_tpair rhs)) <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAAssignLP src _ | CAIndexLP src _ =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + 1 + cm_tright (cm_expr_tpair src) <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CASeqP second =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps second <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAIfP yes no =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps yes <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p)) /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps no <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAWhileGuardP guard body _ _ |
+             CAWhileBodyP guard body _ _ _ _ =>
+               0 <= match cursor with
+                    | CMACursor _ temp _ _ => temp
+                    end /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_tright (cm_expr_tpair guard) <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p)) /\
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end + cm_stemps body <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | CAArgP _ rest0 _ _ _ base current scratch =>
+               0 <= base /\
+               0 <= current /\
+               0 <= scratch /\
+               current <
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p)) /\
+               current + 1 + Zlength rest0 = scratch /\
+               scratch + cm_adepth (cm_args_apair rest0) <=
+               cm_temp_slots
+                 (cm_function_at policy fid (cm_program_functions p))
+           | _ => True
+           end /\
+           cm_cursors_budget policy p
+             match
+               match
+                 match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end
+               with
+               | CAHaltP => CMHaltK
+               | CALoadP ty => CMLoadK ty
+               | CAAssignLP e ty => CMAssignLK e ty
+               | CAAssignRP v ty => CMAssignRK v ty
+               | CABinLP op _ rhs ty => CMBinLK op rhs ty
+               | CABinRP op _ _ v ty => CMBinRK op v ty
+               | CAUnaryP op => CMUnaryK op
+               | CAIndexLP e ty => CMIndexLK e ty
+               | CAIndexRP v ty => CMIndexRK v ty
+               | CAMemberP mid _ => CMMemberK mid
+               | CAPutcP => CMPutcK
+               | CAPutiP => CMPutiK
+               | CAExitP => CMExitK
+               | CAExprStmtP => CMExprStmtK
+               | CAInitP slot => CMInitK slot
+               | CABlockP env regions _ _ => CMBlockK env regions
+               | CASeqP s => CMSeqK s
+               | CAIfP yes no => CMIfK yes no
+               | CAWhileGuardP guard body _ _ => CMWhileGuardK guard body
+               | CAWhileBodyP guard body env regions _ _ =>
+                   CMWhileBodyK guard body env regions
+               | CAReturnP => CMReturnK
+               | CAArgP callee rest0 values ret _ _ _ _ =>
+                   CMArgK callee rest0 values ret
+               | CACallP caller env fp regions ret =>
+                   CMCallK caller env fp regions ret
+               end
+             with
+             | CMCallK caller _ _ _ _ => caller
+             | _ => fid
+             end rest
+       end) (cm_source_function_policy sp) p fid
+      match ann with
+      | CMAnnotation _ _ _ _ cs _ _ _ => cs
+      end
+  Heqb : (if op =? 0 then true else op =? 1) = true
+  ============================
+  match ann with
+  | CMAnnotation _ temp _ _ _ _ _ _ => temp
+  end + cm_tright (cm_expr_tpair expr2) <=
+  cm_temp_slots
+    (cm_function_at (cm_source_function_policy sp) fid
+       (cm_program_functions p))
+
+goal 2 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + (1 + cm_tright (cm_expr_tpair expr2)) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 3 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_tright (cm_expr_tpair expr) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 4 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_tleft (cm_expr_tpair expr) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 5 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + cm_tright (cm_expr_tpair expr) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 6 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Z.succ (Zlength args) + cm_tright (cm_expr_tpair c) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 7 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end <
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+goal 8 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Z.succ (Zlength args) + cm_adepth (cm_args_apair args) <=
+ cm_temp_slots
+   (cm_function_at (cm_source_function_policy sp) fid
+      (cm_program_functions p))
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_budget_migration_lib.v", line 54, characters 0-4:
+Error:  (in proof cm_r_budget_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

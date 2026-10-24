@@ -1,0 +1,158 @@
+[
+  {
+    "function": "cm_max",
+    "contract": "/*@ Require emp\n    Ensure __return == cm_imax(a, b) && emp\n*/"
+  },
+  {
+    "function": "cmc_is_pointer",
+    "contract": "/*@ Require emp\n    Ensure __return == cm_rep_is_pointer_code(ty) && emp\n*/"
+  },
+  {
+    "function": "cmc_is_pointer_value",
+    "contract": "/*@ Require undef_data_at(pointer, int)\n    Ensure data_at(pointer, int, cm_rep_is_pointer_code(ty))\n*/"
+  },
+  {
+    "function": "cmc_pointee",
+    "contract": "/*@ Require 1024 <= ty && ty <= 2147483647 && emp\n    Ensure __return == ty - 1024 && emp\n*/"
+  },
+  {
+    "function": "cmc_leaf_size",
+    "contract": "/*@ Require emp\n    Ensure __return == cm_rep_leaf_size(ty) && emp\n*/"
+  },
+  {
+    "function": "cmc_code_slot_size",
+    "contract": "/*@ Require emp\n    Ensure __return == cm_rep_code_slot_size(code, count) && emp\n*/"
+  },
+  {
+    "function": "cmc_members_size",
+    "contract": "/*@ With (members : list cm_slot_d)\n    Require cm_rep_members_safe(members) && cm_member_list_rep(member, members)\n    Ensure cm_rep_members_safe(members) && __return == cm_rep_members_size(members) && cm_member_list_rep(member, members)\n*/"
+  },
+  {
+    "function": "cmc_struct_size_at",
+    "contract": "/*@ With (structs : list cm_struct_d)\n    Require 0 <= sid && cm_rep_structs_safe(structs) && cm_struct_list_rep(item, structs)\n    Ensure 0 <= sid && cm_rep_structs_safe(structs) && __return == cm_rep_struct_size(structs, sid) && cm_struct_list_rep(item, structs)\n*/"
+  },
+  {
+    "function": "cmc_nonzero",
+    "contract": "/*@ Require emp\n    Ensure __return == cm_rep_nonzero(n) && emp\n*/"
+  },
+  {
+    "function": "cmc_global_array_at",
+    "contract": "/*@ With (globals : list cm_global_d)\n    Require 0 <= index && cm_global_list_rep(item, globals)\n    Ensure 0 <= index && __return == cm_rep_global_array(globals, index) && cm_global_list_rep(item, globals)\n*/"
+  },
+  {
+    "function": "cmc_slot_array_at",
+    "contract": "/*@ With (slots : list cm_slot_d)\n    Require 0 <= index && cm_slot_list_rep(item, slots)\n    Ensure 0 <= index && __return == cm_rep_member_array(slots, index) && cm_slot_list_rep(item, slots)\n*/"
+  },
+  {
+    "function": "cmc_slot_type_at",
+    "contract": "/*@ With (slots : list cm_slot_d)\n    Require 0 <= index && cm_slot_list_rep(item, slots)\n    Ensure 0 <= index && __return == cm_rep_slot_type(slots, index) && cm_slot_list_rep(item, slots)\n*/"
+  },
+  {
+    "function": "cmc_member_array_at",
+    "contract": "/*@ With (members : list cm_slot_d)\n    Require 0 <= index && cm_member_list_rep(item, members)\n    Ensure 0 <= index && __return == cm_rep_member_array(members, index) && cm_member_list_rep(item, members)\n*/"
+  },
+  {
+    "function": "cmc_type_size_at",
+    "contract": "/*@ With (structs : list cm_struct_d)\n    Require 0 <= ty && cm_rep_structs_safe(structs) && cm_struct_list_rep(items, structs)\n    Ensure 0 <= ty && cm_rep_structs_safe(structs) && __return == cm_rep_type_size(structs, ty) && cm_struct_list_rep(items, structs)\n*/"
+  },
+  {
+    "function": "cmc_slots_size",
+    "contract": "/*@ With (slots : list cm_slot_d)\n    Require cm_rep_members_safe(slots) && cm_slot_list_rep(slot, slots)\n    Ensure cm_rep_members_safe(slots) && __return == cm_rep_members_size(slots) && 0 <= __return && __return <= 1048576 && cm_slot_list_rep(slot, slots)\n*/"
+  },
+  {
+    "function": "cmc_slots_prefix",
+    "contract": "/*@ With (slots : list cm_slot_d)\n    Require 0 <= index && cm_rep_members_safe(slots) && cm_slot_list_rep(slot, slots)\n    Ensure 0 <= index && cm_rep_members_safe(slots) && __return == cm_rep_member_prefix(slots, index) && 0 <= __return && __return <= 1048576 && __return <= cm_rep_members_size(slots) && cm_slot_list_rep(slot, slots)\n*/"
+  },
+  {
+    "function": "cmc_members_prefix",
+    "contract": "/*@ With (members : list cm_slot_d)\n    Require 0 <= index && cm_rep_members_safe(members) && cm_member_list_rep(node, members)\n    Ensure 0 <= index && cm_rep_members_safe(members) && __return == cm_rep_member_prefix(members, index) && 0 <= __return && __return <= 1048576 && __return <= cm_rep_members_size(members) && cm_member_list_rep(node, members)\n*/"
+  },
+  {
+    "function": "cmc_member_offset_at",
+    "contract": "/*@ With (structs : list cm_struct_d)\n    Require 0 <= sid && 0 <= index && cm_rep_structs_safe(structs) && cm_struct_list_rep(item, structs)\n    Ensure 0 <= sid && 0 <= index && cm_rep_structs_safe(structs) && __return == cm_rep_struct_member_prefix(structs, sid, index) && 0 <= __return && __return <= 1048576 && cm_struct_list_rep(item, structs)\n*/"
+  },
+  {
+    "function": "cmc_struct_member_array_at",
+    "contract": "/*@ With (structs : list cm_struct_d)\n    Require 0 <= sid && 0 <= index && cm_rep_structs_safe(structs) && cm_struct_list_rep(item, structs)\n    Ensure 0 <= sid && 0 <= index && cm_rep_structs_safe(structs) && __return == cm_rep_struct_member_array(structs, sid, index) && cm_struct_list_rep(item, structs)\n*/"
+  },
+  {
+    "function": "cmc_globals_size",
+    "contract": "/*@ With (globals : list cm_global_d)\n    Require cm_rep_globals_safe(globals) && cm_global_list_rep(node, globals)\n    Ensure cm_rep_globals_safe(globals) && __return == cm_rep_globals_size(globals) && 0 <= __return && __return <= 1048560 && cm_global_list_rep(node, globals)\n*/"
+  },
+  {
+    "function": "cmc_globals_prefix",
+    "contract": "/*@ With (globals : list cm_global_d)\n    Require 0 <= index && cm_rep_globals_safe(globals) && cm_global_list_rep(node, globals)\n    Ensure 0 <= index && cm_rep_globals_safe(globals) && __return == cm_rep_globals_prefix(globals, index) && 0 <= __return && __return <= 1048560 && __return <= cm_rep_globals_size(globals) && cm_global_list_rep(node, globals)\n*/"
+  },
+  {
+    "function": "cmc_strings_size",
+    "contract": "/*@ With (strings : list cm_string_d)\n    Require cm_rep_strings_safe(strings) && cm_string_list_rep(node, strings)\n    Ensure cm_rep_strings_safe(strings) && __return == cm_rep_strings_size(strings) && 0 <= __return && __return <= 1048560 && cm_string_list_rep(node, strings)\n*/"
+  },
+  {
+    "function": "cmc_strings_prefix",
+    "contract": "/*@ With (strings : list cm_string_d)\n    Require 0 <= index && cm_rep_strings_safe(strings) && cm_string_list_rep(node, strings)\n    Ensure 0 <= index && cm_rep_strings_safe(strings) && __return == cm_rep_strings_prefix(strings, index) && 0 <= __return && __return <= 1048560 && __return <= cm_rep_strings_size(strings) && cm_string_list_rep(node, strings)\n*/"
+  },
+  {
+    "function": "cmc_global_address",
+    "contract": "/*@ With (items : list cm_global_d)\n    Require 0 <= index && cm_rep_globals_safe(items) && cm_global_list_rep(globals, items)\n    Ensure 0 <= index && cm_rep_globals_safe(items) && __return == cm_rep_global_address(items, index) && 16 <= __return && __return <= 1048576 && cm_global_list_rep(globals, items)\n*/"
+  },
+  {
+    "function": "cmc_string_address",
+    "contract": "/*@ With (global_items : list cm_global_d) (string_items : list cm_string_d)\n    Require 0 <= index && cm_rep_globals_safe(global_items) && cm_rep_strings_safe(string_items) && cm_rep_globals_size(global_items) + cm_rep_strings_size(string_items) <= 1048560 && cm_global_list_rep(globals, global_items) * cm_string_list_rep(strings, string_items)\n    Ensure 0 <= index && cm_rep_globals_safe(global_items) && cm_rep_strings_safe(string_items) && cm_rep_globals_size(global_items) + cm_rep_strings_size(string_items) <= 1048560 && __return == cm_rep_string_address(global_items, string_items, index) && 16 <= __return && __return <= 1048576 && cm_global_list_rep(globals, global_items) * cm_string_list_rep(strings, string_items)\n*/"
+  },
+  {
+    "function": "cmc_binding_array_value",
+    "contract": "/*@ With (policy : cm_lookup_policy) (p : cm_program) (f : cm_function_d) (globals : list cm_global_d) (locals : list cm_slot_d) (zg : Z) (zl : Z)\n    Require 0 <= slot && globals == cm_program_globals(p) && locals == cm_function_locals(f) && f == cm_function_at(policy, fid, cm_program_functions(p)) && cm_binding_valid(p, f, scope, slot) && data_at(&(program->globals), struct cm_global *, zg) * cm_global_list_rep(zg, globals) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals) * undef_data_at(array, int)\n    Ensure 0 <= slot && globals == cm_program_globals(p) && locals == cm_function_locals(f) && f == cm_function_at(policy, fid, cm_program_functions(p)) && cm_binding_valid(p, f, scope, slot) && data_at(&(program->globals), struct cm_global *, zg) * cm_global_list_rep(zg, globals) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals) * data_at(array, int, cm_binding_array_code(policy, p, fid, scope, slot))\n*/"
+  },
+  {
+    "function": "cmc_binding_array",
+    "contract": "/*@ With (policy : cm_lookup_policy) (p : cm_program) (f : cm_function_d) (globals : list cm_global_d) (locals : list cm_slot_d) (zg : Z) (zl : Z)\n    Require 0 <= slot && globals == cm_program_globals(p) && locals == cm_function_locals(f) && f == cm_function_at(policy, fid, cm_program_functions(p)) && cm_binding_valid(p, f, scope, slot) && data_at(&(program->globals), struct cm_global *, zg) * cm_global_list_rep(zg, globals) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals)\n    Ensure 0 <= slot && globals == cm_program_globals(p) && locals == cm_function_locals(f) && f == cm_function_at(policy, fid, cm_program_functions(p)) && cm_binding_valid(p, f, scope, slot) && __return == cm_binding_array_code(policy, p, fid, scope, slot) && data_at(&(program->globals), struct cm_global *, zg) * cm_global_list_rep(zg, globals) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals)\n*/"
+  },
+  {
+    "function": "cmc_member_array",
+    "contract": "/*@ With (p : cm_program) (base : cm_type) (structs : list cm_struct_d) (zs : Z)\n    Require 1024 <= base_ty && base_ty <= 2147483647 && 0 <= (base_ty - 1024) % 1024 - 2 && 0 <= mid && structs == cm_program_structs(p) && base_ty == cm_type_encode(base) && cm_type_code_wf(base) && cm_member_valid(p, base, mid) && cm_rep_structs_safe(structs) && data_at(&(program->structs), struct cm_struct *, zs) * cm_struct_list_rep(zs, structs)\n    Ensure 1024 <= base_ty && base_ty <= 2147483647 && 0 <= (base_ty - 1024) % 1024 - 2 && 0 <= mid && structs == cm_program_structs(p) && base_ty == cm_type_encode(base) && cm_type_code_wf(base) && cm_member_valid(p, base, mid) && cm_rep_structs_safe(structs) && __return == cm_member_array_code(p, base, mid) && data_at(&(program->structs), struct cm_struct *, zs) * cm_struct_list_rep(zs, structs)\n*/"
+  },
+  {
+    "function": "cmc_member_array_value",
+    "contract": "/*@ With (p : cm_program) (base : cm_type) (structs : list cm_struct_d) (zs : Z)\n    Require 1024 <= base_ty && base_ty <= 2147483647 && 0 <= (base_ty - 1024) % 1024 - 2 && 0 <= mid && structs == cm_program_structs(p) && base_ty == cm_type_encode(base) && cm_type_code_wf(base) && cm_member_valid(p, base, mid) && cm_rep_structs_safe(structs) && data_at(&(program->structs), struct cm_struct *, zs) * cm_struct_list_rep(zs, structs) * undef_data_at(array, int)\n    Ensure 1024 <= base_ty && base_ty <= 2147483647 && 0 <= (base_ty - 1024) % 1024 - 2 && 0 <= mid && structs == cm_program_structs(p) && base_ty == cm_type_encode(base) && cm_type_code_wf(base) && cm_member_valid(p, base, mid) && cm_rep_structs_safe(structs) && data_at(&(program->structs), struct cm_struct *, zs) * cm_struct_list_rep(zs, structs) * data_at(array, int, cm_member_array_code(p, base, mid))\n*/"
+  },
+  {
+    "function": "cm_args_length",
+    "contract": "/*@ With (args : list cm_expr)\n    Require cm_rep_args_safe(args) && cm_arg_list_rep(arg, args)\n    Ensure cm_rep_args_safe(args) && __return == cm_rep_args_length(args) && cm_arg_list_rep(arg, args)\n*/"
+  },
+  {
+    "function": "cmc_args_tpair",
+    "contract": "/*@ With (args : list cm_expr)\n    Require cm_rep_args_temps_safe(args) && cm_arg_list_rep(arg, args) * undef_data_at(count, int) * undef_data_at(depth, int)\n    Ensure cm_rep_args_temps_safe(args) && cm_arg_list_rep(arg, args) * data_at(count, int, cm_acount(cm_args_apair(args))) * data_at(depth, int, cm_adepth(cm_args_apair(args)))\n*/"
+  },
+  {
+    "function": "cm_expr_temps",
+    "contract": "/*@ With (e : cm_expr)\n    Require cm_rep_expr_temps_safe(e) && cm_expr_rep(expr, e) * undef_data_at(lvalue, int) * undef_data_at(rvalue, int)\n    Ensure cm_rep_expr_temps_safe(e) && cm_expr_rep(expr, e) * data_at(lvalue, int, cm_tleft(cm_expr_tpair(e))) * data_at(rvalue, int, cm_tright(cm_expr_tpair(e)))\n*/"
+  },
+  {
+    "function": "cm_expr_rtemps",
+    "contract": "/*@ With (e : cm_expr)\n    Require cm_rep_expr_temps_safe(e) && cm_expr_rep(expr, e)\n    Ensure cm_rep_expr_temps_safe(e) && __return == cm_tright(cm_expr_tpair(e)) && cm_expr_rep(expr, e)\n*/"
+  },
+  {
+    "function": "cmc_stmt_temps",
+    "contract": "/*@ With (s : cm_stmt)\n    Require cm_rep_stmt_temps_safe(s) && cm_stmt_rep(stmt, s)\n    Ensure cm_rep_stmt_temps_safe(s) && __return == cm_stemps(s) && 0 <= cm_stemps(s) && cm_stemps(s) <= 2147483647 && cm_stmt_rep(stmt, s)\n*/"
+  },
+  {
+    "function": "cmc_frame_size",
+    "contract": "/*@ With (params : list cm_slot_d) (zp : Z) (locals : list cm_slot_d) (zl : Z) (body : cm_stmt) (zb : Z)\n    Require cm_rep_members_safe(params) && cm_rep_members_safe(locals) && cm_rep_stmt_temps_safe(body) && 8 + cm_rep_members_size(params) + cm_rep_members_size(locals) + 8 * cm_stemps(body) <= 2147483647 && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals) * data_at(&(fn->body), struct cm_stmt *, zb) * cm_stmt_rep(zb, body)\n    Ensure cm_rep_members_safe(params) && cm_rep_members_safe(locals) && cm_rep_stmt_temps_safe(body) && 8 + cm_rep_members_size(params) + cm_rep_members_size(locals) + 8 * cm_stemps(body) <= 2147483647 && __return == 8 + cm_rep_members_size(params) + cm_rep_members_size(locals) + 8 * cm_stemps(body) && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals) * data_at(&(fn->body), struct cm_stmt *, zb) * cm_stmt_rep(zb, body)\n*/"
+  },
+  {
+    "function": "cmc_param_offset",
+    "contract": "/*@ With (params : list cm_slot_d) (zp : Z)\n    Require cm_rep_members_safe(params) && 0 <= slot && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params)\n    Ensure cm_rep_members_safe(params) && 0 <= slot && __return == 8 + cm_rep_member_prefix(params, slot) && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params)\n*/"
+  },
+  {
+    "function": "cmc_local_offset",
+    "contract": "/*@ With (params : list cm_slot_d) (zp : Z) (locals : list cm_slot_d) (zl : Z)\n    Require cm_rep_members_safe(params) && cm_rep_members_safe(locals) && 0 <= slot && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals)\n    Ensure cm_rep_members_safe(params) && cm_rep_members_safe(locals) && 0 <= slot && __return == 8 + cm_rep_members_size(params) + cm_rep_member_prefix(locals, slot) && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals)\n*/"
+  },
+  {
+    "function": "cmc_temp_offset",
+    "contract": "/*@ With (params : list cm_slot_d) (zp : Z) (locals : list cm_slot_d) (zl : Z)\n    Require cm_rep_members_safe(params) && cm_rep_members_safe(locals) && 0 <= temp && 8 + cm_rep_members_size(params) + cm_rep_members_size(locals) + 8 * temp <= 2147483647 && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals)\n    Ensure cm_rep_members_safe(params) && cm_rep_members_safe(locals) && 0 <= temp && 8 + cm_rep_members_size(params) + cm_rep_members_size(locals) + 8 * temp <= 2147483647 && __return == 8 + cm_rep_members_size(params) + cm_rep_members_size(locals) + 8 * temp && data_at(&(fn->params), struct cm_slot *, zp) * cm_slot_list_rep(zp, params) * data_at(&(fn->locals), struct cm_slot *, zl) * cm_slot_list_rep(zl, locals)\n*/"
+  },
+  {
+    "function": "cm_normalize_count",
+    "contract": "/*@ Require emp\n    Ensure __return == cm_normalize_code_value(ty) && emp\n*/"
+  }
+]

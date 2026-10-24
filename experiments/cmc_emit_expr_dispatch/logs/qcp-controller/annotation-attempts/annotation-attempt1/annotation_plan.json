@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-node",
+      "location": "cm_emit_leaf_expr: before first expr->kind read",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "expr nonnull; all input facts remain framed"
+      ],
+      "resources": [
+        "All seven expression fields and payload; program/function/emitter framed"
+      ],
+      "mathematical_state": "Expression representation exposes the constructor discriminator without consuming any node field.",
+      "internal_predicates": []
+    },
+    {
+      "id": "const-call",
+      "location": "cm_emit_leaf_expr: const helper call boundary",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Discriminator guard determines constructor and leaf-view equality",
+        "Required callee facts derive from existing cm_expr_wf/counts; no additional input premise"
+      ],
+      "resources": [
+        "Full expression rep closed from seven fields and payload",
+        "Program/function context and exact remaining code plan"
+      ],
+      "mathematical_state": "The specialized helper consumes exactly the leaf plan, returning the same expression and all contexts.",
+      "internal_predicates": []
+    },
+    {
+      "id": "string-call",
+      "location": "cm_emit_leaf_expr: string helper call boundary",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Discriminator guard determines constructor and leaf-view equality",
+        "Required callee facts derive from existing cm_expr_wf/counts; no additional input premise"
+      ],
+      "resources": [
+        "Full expression rep closed from seven fields and payload",
+        "Program/function context and exact remaining code plan"
+      ],
+      "mathematical_state": "The specialized helper consumes exactly the leaf plan, returning the same expression and all contexts.",
+      "internal_predicates": []
+    },
+    {
+      "id": "sizeof-call",
+      "location": "cm_emit_leaf_expr: sizeof helper call boundary",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Discriminator guard determines constructor and leaf-view equality",
+        "Required callee facts derive from existing cm_expr_wf/counts; no additional input premise"
+      ],
+      "resources": [
+        "Full expression rep closed from seven fields and payload",
+        "Program/function context and exact remaining code plan"
+      ],
+      "mathematical_state": "The specialized helper consumes exactly the leaf plan, returning the same expression and all contexts.",
+      "internal_predicates": []
+    },
+    {
+      "id": "getc-call",
+      "location": "cm_emit_leaf_expr: getc helper call boundary",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Discriminator guard determines constructor and leaf-view equality",
+        "Required callee facts derive from existing cm_expr_wf/counts; no additional input premise"
+      ],
+      "resources": [
+        "Full expression rep closed from seven fields and payload",
+        "Program/function context and exact remaining code plan"
+      ],
+      "mathematical_state": "The specialized helper consumes exactly the leaf plan, returning the same expression and all contexts.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

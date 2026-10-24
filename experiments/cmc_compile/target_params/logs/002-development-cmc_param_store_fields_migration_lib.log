@@ -1,0 +1,50 @@
+Chars 0 - 83 [Require~Export~~~SimpleC.EE.QC...] 1.497 secs (1.268u,0.075s)
+Chars 84 - 129 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 130 - 151 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 152 - 177 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 178 - 308 [Definition~cm_tags_write~(flag...] 0.001 secs (0.u,0.s)
+Chars 309 - 457 [Definition~cm_tagged_write~(fl...] 0. secs (0.u,0.s)
+Chars 458 - 622 [Lemma~cm_tags_write_commutes~f...] 0. secs (0.u,0.s)
+Chars 623 - 629 [Proof.] 0. secs (0.u,0.s)
+Chars 631 - 749 [(intro~NE;~unfold~cm_tags_writ...] 0.001 secs (0.001u,0.s)
+Chars 750 - 754 [Qed.] 0. secs (0.u,0.s)
+Chars 755 - 903 [Lemma~cm_boolean_writes_commut...] 0. secs (0.u,0.s)
+Chars 904 - 910 [Proof.] 0. secs (0.u,0.s)
+Chars 911 - 963 [(destruct~old,~ca,~cb,~ka,~kb;...] 0.026 secs (0.026u,0.s)
+Chars 964 - 968 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 969 - 1224 [Lemma~cm_tagged_write_commutes...] 0. secs (0.u,0.s)
+Chars 1225 - 1231 [Proof.] 0. secs (0.u,0.s)
+Chars 1233 - 1321 [(intros~WA~WB~DIS;~unfold~cm_t...] 0. secs (0.u,0.s)
+Chars 1323 - 1324 [-] 0. secs (0.u,0.s)
+Chars 1325 - 1492 [(intro~CREATE;~apply~andb_true...] 0. secs (0.u,0.s)
+Chars 1496 - 1673 [(apply~negb_true_iff;~apply~no...] 0.003 secs (0.002u,0.s)
+Chars 1675 - 1676 [-] 0. secs (0.u,0.s)
+Chars 1677 - 1844 [(intro~CREATE;~apply~andb_true...] 0. secs (0.u,0.s)
+Chars 1848 - 2025 [(apply~negb_true_iff;~apply~no...] 0.001 secs (0.001u,0.s)
+Chars 2026 - 2030 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 2031 - 2155 [Lemma~cm_convert_store~ty~ptr~...] 0. secs (0.u,0.s)
+Chars 2156 - 2162 [Proof.] 0. secs (0.u,0.s)
+Chars 2163 - 2250 [(destruct~other;~cbn[cm_conver...] 0. secs (0.u,0.s)
+Chars 2251 - 2255 [Qed.] 0. secs (0.u,0.s)
+Chars 2256 - 2438 [Lemma~cm_state_store_mem~ty~pt...] 0. secs (0.u,0.s)
+Chars 2439 - 2445 [Proof.] 0. secs (0.u,0.s)
+Chars 2446 - 2458 [reflexivity.] 0. secs (0.u,0.s)
+Chars 2459 - 2463 [Qed.] 0. secs (0.u,0.s)
+Chars 2464 - 2619 [Lemma~cm_state_store_init~ty~p...] 0. secs (0.u,0.s)
+Chars 2620 - 2626 [Proof.] 0. secs (0.u,0.s)
+Chars 2627 - 2639 [reflexivity.] 0. secs (0.u,0.s)
+Chars 2640 - 2644 [Qed.] 0. secs (0.u,0.s)
+Chars 2645 - 2827 [Lemma~cm_state_store_tags~ty~p...] 0. secs (0.u,0.s)
+Chars 2828 - 2834 [Proof.] 0. secs (0.u,0.s)
+Chars 2835 - 2847 [reflexivity.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_params/build/Rocq/examples/QCP_demos_human/cmc_param_store_fields_migration_lib.v", line 32, characters 7-18:
+Error:
+In environment
+ty : cm_type
+ptr, v : cm_value
+st : cm_src_state
+Unable to unify
+ "cm_tags_write (cm_is_pointerb ty) (cm_value_number st ptr)
+    (cm_convert_value st ty v) (cm_state_tags st)" with
+ "cm_state_tags (cm_state_store ty ptr v st)".
+

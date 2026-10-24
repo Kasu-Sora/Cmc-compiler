@@ -1,0 +1,1313 @@
+{
+  "groups": [
+    {
+      "id": "lookup_bridge",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_binding_array_value_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binding_array_value_return_wit_1_split_goal_1": "Binding guards select global/local/default code; cm_binding_valid supplies the corresponding slot bound, and f equals the policy-selected function with no fid restriction. For member lookup destruct base under cm_member_valid to obtain CMPtrTy (CMStructTy sid); encoding/well-formedness gives ((encode-1024) mod 1024)-2=sid and member_valid gives both list bounds. Use the owner public nth helpers and rewrite the recursive return. Exact target: (retval = (cm_binding_array_code (policy) (p) (fid_pre) (0) (slot_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_binding_array_value_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binding_array_value_return_wit_2_split_goal_1": "Binding guards select global/local/default code; cm_binding_valid supplies the corresponding slot bound, and f equals the policy-selected function with no fid restriction. For member lookup destruct base under cm_member_valid to obtain CMPtrTy (CMStructTy sid); encoding/well-formedness gives ((encode-1024) mod 1024)-2=sid and member_valid gives both list bounds. Use the owner public nth helpers and rewrite the recursive return. Exact target: (retval = (cm_binding_array_code (policy) (p) (fid_pre) (1) (slot_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_binding_array_value_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_binding_array_value_return_wit_3_split_goal_1": "Binding guards select global/local/default code; cm_binding_valid supplies the corresponding slot bound, and f equals the policy-selected function with no fid restriction. For member lookup destruct base under cm_member_valid to obtain CMPtrTy (CMStructTy sid); encoding/well-formedness gives ((encode-1024) mod 1024)-2=sid and member_valid gives both list bounds. Use the owner public nth helpers and rewrite the recursive return. Exact target: (0 = (cm_binding_array_code (policy) (p) (fid_pre) (scope_pre) (slot_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_member_array_safety_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_member_array_safety_wit_1_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c (((retval % ( 1024 ) ) - 2 ) <= INT_MAX) \u201d",
+            "proof_of_cmc_member_array_safety_wit_1_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= ((retval % ( 1024 ) ) - 2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_member_array_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_member_array_return_wit_1_split_goal_1": "Binding guards select global/local/default code; cm_binding_valid supplies the corresponding slot bound, and f equals the policy-selected function with no fid restriction. For member lookup destruct base under cm_member_valid to obtain CMPtrTy (CMStructTy sid); encoding/well-formedness gives ((encode-1024) mod 1024)-2=sid and member_valid gives both list bounds. Use the owner public nth helpers and rewrite the recursive return. Exact target: ((cm_rep_struct_member_array (structs) ((((base_ty_pre - 1024 ) % ( 1024 ) ) - 2 )) (mid_pre)) = (cm_member_array_code (p) (base) (mid_pre)))"
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_rep_global_array_nth__lookup_bridge",
+          "strategy": "Prove forall l i, 0 <= i < Zlength l -> cm_rep_global_array l i = cm_rep_nonzero (cm_global_count (cm_global_at i l)). Induct on l and split i=0. For positive i convert Z.to_nat i to S (Z.to_nat (i-1)), derive tail bound from Zlength_cons and apply IH. Premise comes from cm_binding_valid at scope=0.",
+          "visibility": "public"
+        },
+        {
+          "name": "cm_rep_member_array_nth__lookup_bridge",
+          "strategy": "Prove forall l i, 0 <= i < Zlength l -> cm_rep_member_array l i = cm_rep_nonzero (cm_slot_count (cm_slot_at i l)). Induct on l and split zero/positive i using Z.to_nat successor conversion. Current valid local/member index supplies the bound.",
+          "visibility": "public"
+        },
+        {
+          "name": "cm_rep_struct_member_array_nth__lookup_bridge",
+          "strategy": "Prove forall l sid mid, 0 <= sid < Zlength l -> 0 <= mid < Zlength (cm_struct_members (cm_struct_at sid l)) -> cm_rep_struct_member_array l sid mid = cm_rep_nonzero (cm_slot_count (cm_slot_at mid (cm_struct_members (cm_struct_at sid l)))). Induct on l, split sid=0/positive, convert Z.to_nat and use the member-array nth lemma at zero. Both bounds come from cm_member_valid.",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "scalar_guards",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_max_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_max_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (b_pre = (cm_imax (a_pre) (b_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cm_max_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_max_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (a_pre = (cm_imax (a_pre) (b_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_is_pointer_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_is_pointer_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (1 = (cm_rep_is_pointer_code (ty_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_is_pointer_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_is_pointer_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (0 = (cm_rep_is_pointer_code (ty_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_nonzero_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_nonzero_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (0 = (cm_rep_nonzero (0)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_nonzero_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_nonzero_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (1 = (cm_rep_nonzero (n_pre)))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaf_slot_size",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_leaf_size_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_leaf_size_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (8 = (cm_rep_leaf_size (ty_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_leaf_size_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_leaf_size_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (8 = (cm_rep_leaf_size (0)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_leaf_size_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_leaf_size_return_wit_3_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (1 = (cm_rep_leaf_size (1)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_leaf_size_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_leaf_size_return_wit_4_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (0 = (cm_rep_leaf_size (ty_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_code_slot_size_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_code_slot_size_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (retval = (cm_rep_code_slot_size (code_pre) (0)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_code_slot_size_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_code_slot_size_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: ((count_pre * retval ) = (cm_rep_code_slot_size (code_pre) (count_pre)))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type_and_normalize",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_type_size_at_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_type_size_at_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (8 = (cm_rep_type_size (structs) (ty_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_type_size_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_type_size_at_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (8 = (cm_rep_type_size (structs) (0)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_type_size_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_type_size_at_return_wit_3_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (1 = (cm_rep_type_size (structs) (1)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_type_size_at_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_type_size_at_return_wit_4_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (retval = (cm_rep_type_size (structs) (ty_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cm_normalize_count_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_normalize_count_return_wit_1_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (6 = (cm_normalize_code_value (1)))"
+          }
+        },
+        {
+          "name": "proof_of_cm_normalize_count_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_normalize_count_return_wit_2_split_goal_1": "Unfold the indicated boolean/model definition, substitute branch and returned-value equalities, resolve Z.eqb/Z.leb with the guard, and close by reflexivity or lia. No spatial or existential work remains. Exact target: (0 = (cm_normalize_code_value (ty_pre)))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "members_size",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_members_size_safety_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_members_size_safety_wit_3_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + retval_2 ) <= INT64_MAX) \u201d",
+            "proof_of_cmc_members_size_safety_wit_3_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT64_MIN) <= (retval + retval_2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_members_size_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_members_size_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_members_size_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_members_size_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_members_size_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_members_size_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) = (cm_rep_members_size (members))) \u201d",
+            "proof_of_cmc_members_size_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_member_list_rep member_pre members )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "struct_size_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_struct_size_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_struct_size_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_struct_size_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_struct_size_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_struct_size_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_struct_size_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_struct_size (structs) (0))) \u201d",
+            "proof_of_cmc_struct_size_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_struct_list_rep item_pre structs )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_struct_size_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_struct_size_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_struct_size (structs) (sid_pre))) \u201d",
+            "proof_of_cmc_struct_size_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_struct_list_rep item_pre structs )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "global_array_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_global_array_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_global_array_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_global_array_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_global_array_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_global_array_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_global_array_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_global_array (globals) (0))) \u201d",
+            "proof_of_cmc_global_array_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_global_list_rep item_pre globals )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_global_array_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_global_array_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_global_array (globals) (index_pre))) \u201d",
+            "proof_of_cmc_global_array_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_global_list_rep item_pre globals )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "slot_array_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_slot_array_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_slot_array_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slot_array_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_slot_array_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slot_array_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slot_array_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_member_array (slots) (0))) \u201d",
+            "proof_of_cmc_slot_array_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep item_pre slots )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_slot_array_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slot_array_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_member_array (slots) (index_pre))) \u201d",
+            "proof_of_cmc_slot_array_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep item_pre slots )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "slot_type_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_slot_type_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_slot_type_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slot_type_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_slot_type_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slot_type_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slot_type_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((cm_type_encode ((cm_slot_ty (head)))) = (cm_rep_slot_type (slots) (0))) \u201d",
+            "proof_of_cmc_slot_type_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep item_pre slots )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_slot_type_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slot_type_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_slot_type (slots) (index_pre))) \u201d",
+            "proof_of_cmc_slot_type_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep item_pre slots )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "member_array_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_member_array_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_member_array_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_member_array_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_member_array_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_member_array_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_member_array_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_member_array (members) (0))) \u201d",
+            "proof_of_cmc_member_array_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_member_list_rep item_pre members )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_member_array_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_member_array_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_member_array (members) (index_pre))) \u201d",
+            "proof_of_cmc_member_array_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_member_list_rep item_pre members )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "slots_size",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_slots_size_safety_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slots_size_safety_wit_3_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + retval_2 ) <= INT64_MAX) \u201d",
+            "proof_of_cmc_slots_size_safety_wit_3_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT64_MIN) <= (retval + retval_2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_slots_size_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_slots_size_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slots_size_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_slots_size_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slots_size_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slots_size_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= 1048576) \u201d",
+            "proof_of_cmc_slots_size_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (retval + retval_2 )) \u201d",
+            "proof_of_cmc_slots_size_return_wit_2_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) = (cm_rep_members_size (slots))) \u201d",
+            "proof_of_cmc_slots_size_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep slot_pre slots )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "slots_prefix",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_slots_prefix_safety_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slots_prefix_safety_wit_7_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + retval_2 ) <= INT64_MAX) \u201d",
+            "proof_of_cmc_slots_prefix_safety_wit_7_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT64_MIN) <= (retval + retval_2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_slots_prefix_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_slots_prefix_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slots_prefix_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_slots_prefix_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_slots_prefix_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slots_prefix_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (cm_rep_members_size (slots))) \u201d",
+            "proof_of_cmc_slots_prefix_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 = (cm_rep_member_prefix (slots) (0))) \u201d",
+            "proof_of_cmc_slots_prefix_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep slot_pre slots )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_slots_prefix_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_slots_prefix_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= (cm_rep_members_size (slots))) \u201d",
+            "proof_of_cmc_slots_prefix_return_wit_3_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= 1048576) \u201d",
+            "proof_of_cmc_slots_prefix_return_wit_3_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (retval + retval_2 )) \u201d",
+            "proof_of_cmc_slots_prefix_return_wit_3_split_goal_4": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) = (cm_rep_member_prefix (slots) (index_pre))) \u201d",
+            "proof_of_cmc_slots_prefix_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_slot_list_rep slot_pre slots )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "members_prefix",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_members_prefix_safety_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_members_prefix_safety_wit_7_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + retval_2 ) <= INT64_MAX) \u201d",
+            "proof_of_cmc_members_prefix_safety_wit_7_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT64_MIN) <= (retval + retval_2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_members_prefix_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_members_prefix_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_members_prefix_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_members_prefix_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_members_prefix_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_members_prefix_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (cm_rep_members_size (members))) \u201d",
+            "proof_of_cmc_members_prefix_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 = (cm_rep_member_prefix (members) (0))) \u201d",
+            "proof_of_cmc_members_prefix_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_member_list_rep node_pre members )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_members_prefix_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_members_prefix_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= (cm_rep_members_size (members))) \u201d",
+            "proof_of_cmc_members_prefix_return_wit_3_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= 1048576) \u201d",
+            "proof_of_cmc_members_prefix_return_wit_3_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (retval + retval_2 )) \u201d",
+            "proof_of_cmc_members_prefix_return_wit_3_split_goal_4": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) = (cm_rep_member_prefix (members) (index_pre))) \u201d",
+            "proof_of_cmc_members_prefix_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_member_list_rep node_pre members )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "member_offset_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_member_offset_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_member_offset_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_member_offset_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_member_offset_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_member_offset_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_member_offset_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_struct_member_prefix (structs) (0) (index_pre))) \u201d",
+            "proof_of_cmc_member_offset_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_struct_list_rep item_pre structs )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_member_offset_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_member_offset_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_struct_member_prefix (structs) (sid_pre) (index_pre))) \u201d",
+            "proof_of_cmc_member_offset_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_struct_list_rep item_pre structs )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "struct_member_array_at",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_struct_member_array_at_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_struct_member_array_at_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_struct_member_array_at_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_struct_member_array_at_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_struct_member_array_at_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_struct_member_array_at_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_struct_member_array (structs) (0) (index_pre))) \u201d",
+            "proof_of_cmc_struct_member_array_at_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_struct_list_rep item_pre structs )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_struct_member_array_at_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_struct_member_array_at_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_rep_struct_member_array (structs) (sid_pre) (index_pre))) \u201d",
+            "proof_of_cmc_struct_member_array_at_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_struct_list_rep item_pre structs )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "globals_size",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_globals_size_safety_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_globals_size_safety_wit_3_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + retval_2 ) <= INT64_MAX) \u201d",
+            "proof_of_cmc_globals_size_safety_wit_3_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT64_MIN) <= (retval + retval_2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_globals_size_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_globals_size_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_globals_size_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_globals_size_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_globals_size_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_globals_size_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= 1048560) \u201d",
+            "proof_of_cmc_globals_size_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (retval + retval_2 )) \u201d",
+            "proof_of_cmc_globals_size_return_wit_2_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) = (cm_rep_globals_size (globals))) \u201d",
+            "proof_of_cmc_globals_size_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_global_list_rep node_pre globals )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "globals_prefix",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_globals_prefix_safety_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_globals_prefix_safety_wit_7_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + retval_2 ) <= INT64_MAX) \u201d",
+            "proof_of_cmc_globals_prefix_safety_wit_7_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT64_MIN) <= (retval + retval_2 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_globals_prefix_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_globals_prefix_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_globals_prefix_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_globals_prefix_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_globals_prefix_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_globals_prefix_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (cm_rep_globals_size (globals))) \u201d",
+            "proof_of_cmc_globals_prefix_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 = (cm_rep_globals_prefix (globals) (0))) \u201d",
+            "proof_of_cmc_globals_prefix_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_global_list_rep node_pre globals )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_globals_prefix_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_globals_prefix_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= (cm_rep_globals_size (globals))) \u201d",
+            "proof_of_cmc_globals_prefix_return_wit_3_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) <= 1048560) \u201d",
+            "proof_of_cmc_globals_prefix_return_wit_3_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (retval + retval_2 )) \u201d",
+            "proof_of_cmc_globals_prefix_return_wit_3_split_goal_4": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + retval_2 ) = (cm_rep_globals_prefix (globals) (index_pre))) \u201d",
+            "proof_of_cmc_globals_prefix_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_global_list_rep node_pre globals )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "strings_size",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_strings_size_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_strings_size_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_strings_size_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_strings_size_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_strings_size_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_strings_size_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((((cm_rep_string_length (head)) + 1 ) + retval ) <= 1048560) \u201d",
+            "proof_of_cmc_strings_size_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (((cm_rep_string_length (head)) + 1 ) + retval )) \u201d",
+            "proof_of_cmc_strings_size_return_wit_2_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((((cm_rep_string_length (head)) + 1 ) + retval ) = (cm_rep_strings_size (strings))) \u201d",
+            "proof_of_cmc_strings_size_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_string_list_rep node_pre strings )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "strings_prefix",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_strings_prefix_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_strings_prefix_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_strings_prefix_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_strings_prefix_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_strings_prefix_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_strings_prefix_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (cm_rep_strings_size (strings))) \u201d",
+            "proof_of_cmc_strings_prefix_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 = (cm_rep_strings_prefix (strings) (0))) \u201d",
+            "proof_of_cmc_strings_prefix_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_string_list_rep node_pre strings )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_strings_prefix_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_strings_prefix_return_wit_3_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((((cm_rep_string_length (head)) + 1 ) + retval ) <= (cm_rep_strings_size (strings))) \u201d",
+            "proof_of_cmc_strings_prefix_return_wit_3_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((((cm_rep_string_length (head)) + 1 ) + retval ) <= 1048560) \u201d",
+            "proof_of_cmc_strings_prefix_return_wit_3_split_goal_3": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (0 <= (((cm_rep_string_length (head)) + 1 ) + retval )) \u201d",
+            "proof_of_cmc_strings_prefix_return_wit_3_split_goal_4": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((((cm_rep_string_length (head)) + 1 ) + retval ) = (cm_rep_strings_prefix (strings) (index_pre))) \u201d",
+            "proof_of_cmc_strings_prefix_return_wit_3_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_string_list_rep node_pre strings )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "addresses",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_global_address_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_global_address_return_wit_1_split_goal_1": "Unfold cm_rep_global_address/cm_rep_string_address and substitute the recursive prefix/total result equations to obtain the addition equality. The split contains no spatial transformation. Exact target: ((16 + retval ) = (cm_rep_global_address (items) (index_pre)))"
+          }
+        },
+        {
+          "name": "proof_of_cmc_string_address_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_string_address_return_wit_1_split_goal_1": "Unfold cm_rep_global_address/cm_rep_string_address and substitute the recursive prefix/total result equations to obtain the addition equality. The split contains no spatial transformation. Exact target: (((16 + retval ) + retval_2 ) = (cm_rep_string_address (global_items) (string_items) (index_pre)))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "args_length",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_args_length_safety_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_args_length_safety_wit_3_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((retval + 1 ) <= INT_MAX) \u201d",
+            "proof_of_cm_args_length_safety_wit_3_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= (retval + 1 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cm_args_length_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cm_args_length_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cm_args_length_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cm_args_length_return_wit_1."
+        },
+        {
+          "name": "proof_of_cm_args_length_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_args_length_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c ((retval + 1 ) = (cm_rep_args_length (args))) \u201d",
+            "proof_of_cm_args_length_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_arg_list_rep arg_pre args )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "args_pair",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_args_tpair_safety_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_args_tpair_safety_wit_4_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c (((cm_acount ((cm_args_apair (tail)))) + 1 ) <= INT_MAX) \u201d",
+            "proof_of_cmc_args_tpair_safety_wit_4_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= ((cm_acount ((cm_args_apair (tail)))) + 1 )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cmc_args_tpair_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Nil contradicts the nonzero branch guard. Unfold one cons representation, extract its next and nested-payload address witnesses, instantiate head/tail and those addresses, project child safety from parent safety, then reorder/cancel identical fields and tail. Frame output cells and nested member/expression/buffer resources. Target: cmc_args_tpair_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_args_tpair_return_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct and destruct the represented list. Its cons case contradicts the representation nonnull fact at the known zero address. In the nil case simplify the model, retain safety/guard facts, and cancel the original representation and any output cells. This recovers the spatial information discarded by pure splitting. Target: cmc_args_tpair_return_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_args_tpair_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_args_tpair_return_wit_2_split_goal_1": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (((cm_acount ((cm_args_apair (tail)))) + 1 ) = (cm_acount ((cm_args_apair (args))))) \u201d",
+            "proof_of_cmc_args_tpair_return_wit_2_split_goal_2": "Use the supplied cons equality and recursive-result equation; unfold one model equation and its head-size abbreviation. Resolve the zero/nonzero index test with its guard. For bounds project head/tail nonnegativity and total upper bound from parent safe, combine with recursive prefix <= tail total, and use lia. The antecedent heap is framed. Exact target: \u201c (retval = (cm_adepth ((cm_args_apair (args))))) \u201d",
+            "proof_of_cmc_args_tpair_return_wit_2_split_goal_spatial": "Substitute the cons equality, unfold one representation layer, establish nonnull from the branch premise, instantiate the existing nextp and memberp/bytesp/ep as applicable, and cancel the fields, nested resource and tail. No resource/address is synthesized. Exact target: (cm_arg_list_rep arg_pre args )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_safety",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_safety_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_safety_wit_4_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((1 + (cm_tright ((cm_expr_tpair (y)))) ) <= INT_MAX) \u201d",
+            "proof_of_cm_expr_temps_safety_wit_4_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= (1 + (cm_tright ((cm_expr_tpair (y)))) )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_safety_wit_9",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_safety_wit_9_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((1 + (cm_tright ((cm_expr_tpair (y)))) ) <= INT_MAX) \u201d",
+            "proof_of_cm_expr_temps_safety_wit_9_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= (1 + (cm_tright ((cm_expr_tpair (y)))) )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_safety_wit_15",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_safety_wit_15_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((1 + (cm_tright ((cm_expr_tpair (y)))) ) <= INT_MAX) \u201d",
+            "proof_of_cm_expr_temps_safety_wit_15_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= (1 + (cm_tright ((cm_expr_tpair (y)))) )) \u201d"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_safety_wit_19",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_safety_wit_19_split_goal_1": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c (((cm_acount ((cm_args_apair (eargs)))) + (cm_adepth ((cm_args_apair (eargs)))) ) <= INT_MAX) \u201d",
+            "proof_of_cm_expr_temps_safety_wit_19_split_goal_2": "Use the standard pure entailment rule on the framed heap. Substitute result/model and constructor equalities; unfold the relevant safe predicate to obtain summand bounds. Use parent-total bounds or strict child bounds, expand machine limits and close by lia. For modulo use Z.mod_pos_bound with divisor 1024. Exact target: \u201c ((INT_MIN) <= ((cm_acount ((cm_args_apair (eargs)))) + (cm_adepth ((cm_args_apair (eargs)))) )) \u201d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_open_binary",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_2."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_3",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_3."
+        }
+      ]
+    },
+    {
+      "id": "expr_open_unary",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_4",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_4."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_6",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_6."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_8",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_8."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_9",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_9."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_10",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_10."
+        }
+      ]
+    },
+    {
+      "id": "expr_call",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_7",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_7."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_10",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_10_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_10_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (((cm_acount ((cm_args_apair (eargs)))) + (cm_adepth ((cm_args_apair (eargs)))) ) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_10_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_assign_index",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_entail_wit_5",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_expr_rep_node then cm_expr_node to expose pa,pb,pargs while framing output cells. Branches destruct e and use cm_rep_expr_kind to eliminate other constructors, instantiate its actual children/type/op/id/args and existing pointers, unfold cm_expr_payload and project child safety from cm_rep_expr_temps_safe (call uses cm_expr_safe_call); cancel unchanged fields and output resources. Target: cm_expr_temps_entail_wit_5."
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_1_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_1_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (retval = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_1_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_8",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_8_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (retval = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_8_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (retval = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_8_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_binary_results",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_2_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_2_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (retval = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_2_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_3_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_3_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (retval = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_3_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_4_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_4_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (retval = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_4_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_unary_results",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_5_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_5_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_5_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_6_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_6_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tleft ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_6_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_7_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_7_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_7_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_9",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_9_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_9_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_9_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_io_results",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_11",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_11_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_11_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_11_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_12",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_12_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_12_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_12_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_13",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_13_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_13_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c ((cm_tright ((cm_expr_tpair (x)))) = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_13_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_literal_results",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_14",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_14_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_14_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_14_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_15",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_15_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_15_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_15_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_16",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_16_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_16_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_16_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expr_other_results",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_17",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_17_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_17_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_17_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_18",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_18_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_18_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_18_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        },
+        {
+          "name": "proof_of_cm_expr_temps_return_wit_19",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_expr_temps_return_wit_19_split_goal_1": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tleft ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_19_split_goal_2": "Substitute the constructor equality, or destruct e under the kind guard; unfold cm_expr_tpair and its projection. Reduce cm_rep_expr_op and resolve its eqb tests using branch premises. Rewrite the supplied cm_imax result; call uses cm_expr_tpair_call/cm_args_temps. The excluded-all-tags route is contradictory. Heap resources are only framed. Exact target: \u201c (0 = (cm_tright ((cm_expr_tpair (e))))) \u201d",
+            "proof_of_cm_expr_temps_return_wit_19_split_goal_spatial": "Rewrite cm_expr_rep_node, unfold cm_expr_node, use expr_pre nonzero, and instantiate pa,pb,pargs. Substitute the constructor and unfold cm_expr_payload, whose child resources/null-pointer facts are precisely present. Reorder/cancel seven fields and payload. Leaf routes retain their existing payload; impossible-kind routes close by constructor contradiction. Exact target: (cm_expr_rep expr_pre e )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stmt_open_expression",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_1."
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_2."
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_3",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_3."
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_4",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_4."
+        }
+      ]
+    },
+    {
+      "id": "stmt_open_control",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_5",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_5."
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_6",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_6."
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_7",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_7."
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_entail_wit_8",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the whole-goal disjunct. Entry uses cm_stmt_rep_node to expose pe,pa,pb. Branches destruct s under its kind guard; unfold cm_stmt_payload and cm_rep_stmt_temps_safe/cm_rep_stmt_children_safe, instantiate actual children and current pointer witnesses, and cancel five fields together with the extracted child resources and safe projections. Target: cmc_stmt_temps_entail_wit_8."
+        }
+      ]
+    },
+    {
+      "id": "stmt_expression_results",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_1_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_1_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_1_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_1_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_2_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_2_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_2_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_2_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_3_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_3_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_3_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_3_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stmt_control_results",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_4_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_4_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_4_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_4_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_5_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_5_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_5_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_5_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_6_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_6_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_6_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_6_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_7_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_7_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_7_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (retval = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_7_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stmt_inert_results",
+      "estimated_difficulty": 3,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_8",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_8_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_8_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_8_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_8_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_9",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_9_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_9_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_9_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_9_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_10",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_10_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_10_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_10_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_10_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_11",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_11_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_11_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_11_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_11_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        },
+        {
+          "name": "proof_of_cmc_stmt_temps_return_wit_12",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_stmt_temps_return_wit_12_split_goal_1": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c ((cm_stemps (s)) <= INT_MAX) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_12_split_goal_2": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 <= (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_12_split_goal_3": "Bounds project 0 <= cm_stemps s <= 2147483647 from cm_rep_stmt_temps_safe and expand INT_MAX. Equality substitutes the constructor (or identifies it by kind), unfolds one cm_stemps equation and rewrites recursive-return/cm_imax equations. Excluded-all-tags is contradictory. Heap is framed. Exact target: \u201c (0 = (cm_stemps (s))) \u201d",
+            "proof_of_cmc_stmt_temps_return_wit_12_split_goal_spatial": "Rewrite cm_stmt_rep_node and unfold cm_stmt_node. Instantiate pe,pa,pb, using stmt_pre nonzero. Substitute the constructor, rebuild cm_stmt_payload with its existing zero/nonzero facts and children, then cancel five fields and payload. Inert branches already contain the payload. Exact target: (cm_stmt_rep stmt_pre s )"
+          }
+        }
+      ]
+    }
+  ]
+}

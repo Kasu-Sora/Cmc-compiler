@@ -1,0 +1,156 @@
+{
+  "groups": [
+    {
+      "id": "single_instruction",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. The todo is the head instruction cons tail. Rewrite Zlength_cons, Zlength_nil and Zlength_app for this singleton; use Zlength_nonneg tail and lia.The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. For fragment = [TVMInst opcode immediate_pre], rewrite Zlength_app, Zlength_cons and Zlength_nil to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH1, with done replaced by done ++ ([TVMInst opcode immediate_pre]). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_call_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. The todo is the head instruction cons tail. Rewrite Zlength_cons, Zlength_nil and Zlength_app for this singleton; use Zlength_nonneg tail and lia.The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_call_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. For fragment = [TVMInst TVMCallOp (cm_function_pc policy p function_id_pre)], rewrite Zlength_app, Zlength_cons and Zlength_nil to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_call_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_call_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_call_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH1, with done replaced by done ++ ([TVMInst TVMCallOp (cm_function_pc policy p function_id_pre)]). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        }
+      ]
+    },
+    {
+      "id": "general_fragments",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_normalize_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. The todo is fragment ++ tail. Use the existing cm_plan_fragment_capacity done fragment tail capacity with fragment = cm_char_normalize_code model_ty and its first projection (or Zlength_app, Zlength_nonneg tail and lia).The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_normalize_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. For fragment = cm_char_normalize_code model_ty, rewrite Zlength_app to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_normalize_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_normalize_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_normalize_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH1, with done replaced by done ++ (cm_char_normalize_code model_ty). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. The todo is fragment ++ tail. Use the existing cm_plan_fragment_capacity done fragment tail capacity with fragment = cm_fp_relative_address_code offset_pre and its first projection (or Zlength_app, Zlength_nonneg tail and lia).The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_fp_address_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. For fragment = cm_fp_relative_address_code offset_pre, rewrite Zlength_app to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_fp_address_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_fp_address_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_fp_address_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH1, with done replaced by done ++ (cm_fp_relative_address_code offset_pre). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        }
+      ]
+    },
+    {
+      "id": "typed_memory",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_load_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. The todo is fragment ++ tail. Use the existing cm_plan_fragment_capacity done fragment tail capacity with fragment = cm_load_code model_ty and its first projection (or Zlength_app, Zlength_nonneg tail and lia).The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_load_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. For fragment = cm_load_code model_ty, rewrite Zlength_app to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_load_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_load_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_load_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH1, with done replaced by done ++ (cm_load_code model_ty). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. The todo is fragment ++ tail. Use the existing cm_plan_fragment_capacity done fragment tail capacity with fragment = cm_store_code model_ty and its first projection (or Zlength_app, Zlength_nonneg tail and lia).The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_store_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. For fragment = cm_store_code model_ty, rewrite Zlength_app to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_store_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_store_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_store_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH1, with done replaced by done ++ (cm_store_code model_ty). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        }
+      ]
+    },
+    {
+      "id": "temp_context",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_temp_store_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_store_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. Extract the plan pure fact through the separating conjunction with cm_function_context_rep fn_pre f body next; keep this context opaque. The todo is fragment ++ tail. Use the existing cm_plan_fragment_capacity done fragment tail capacity with fragment = cm_temp_store_code policy p fid temp_pre and its first projection (or Zlength_app, Zlength_nonneg tail and lia).The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_temp_store_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. Extract the plan pure fact through the separating conjunction with cm_function_context_rep fn_pre f body next; keep this context opaque. For fragment = cm_temp_store_code policy p fid temp_pre, rewrite Zlength_app to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_temp_store_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. Frame and cancel the identical cm_function_context_rep fn_pre f body next on both sides. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_store_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_store_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH9, with done replaced by done ++ (cm_temp_store_code policy p fid temp_pre). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. Preserve the identical function-context frame at fn_pre; its contents and the slot/offset premises need no expansion. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_load_plan_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_load_plan_entail_wit_1_split_goal_1": "Unfold this split definition and cm_resolved_emitter_plan_rep to expose Zlength done + Zlength todo <= capacity. Extract the plan pure fact through the separating conjunction with cm_function_context_rep fn_pre f body next; keep this context opaque. The todo is fragment ++ tail. Use the existing cm_plan_fragment_capacity done fragment tail capacity with fragment = cm_temp_load_code policy p fid temp_pre and its first projection (or Zlength_app, Zlength_nonneg tail and lia).The conclusion is pure; no existential witnesses or emitter internals are needed.",
+            "proof_of_cm_emit_temp_load_plan_entail_wit_1_split_goal_2": "Unfold this split definition and cm_resolved_emitter_plan_rep, and extract its budget. Extract the plan pure fact through the separating conjunction with cm_function_context_rep fn_pre f body next; keep this context opaque. For fragment = cm_temp_load_code policy p fid temp_pre, rewrite Zlength_app to derive Zlength (done ++ fragment) + Zlength tail <= capacity by lia. This merely reassociates the existing total budget; no existential or underlying state transition is required.",
+            "proof_of_cm_emit_temp_load_plan_entail_wit_1_split_goal_spatial": "Unfold this split definition and only cm_resolved_emitter_plan_rep. Drop its pure budget conjunct and retain the identical cm_resolved_emitter_rep policy p emitter_pre out capacity done resource. Frame and cancel the identical cm_function_context_rep fn_pre f body next on both sides. No array splitting, address conversion, or existential instantiation is needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_temp_load_plan_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_temp_load_plan_return_wit_1_split_goal_spatial": "Unfold this split definition and the consequent cm_resolved_emitter_plan_rep. Supply its pure remaining-tail budget directly from PreH9, with done replaced by done ++ (cm_temp_load_code policy p fid temp_pre). Cancel the identical resolved emitter resource at emitter_pre, out and capacity. Preserve the identical function-context frame at fn_pre; its contents and the slot/offset premises need no expansion. The resolved callee postcondition already supplies the extended emitted list; this step packages it with tail, without new existentials."
+          }
+        }
+      ]
+    }
+  ]
+}

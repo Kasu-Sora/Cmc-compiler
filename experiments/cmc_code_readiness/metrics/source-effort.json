@@ -1,0 +1,265 @@
+{
+  "runtime_functions": 0,
+  "annotation": 0,
+  "specification": 0,
+  "source_top_level_proof_helpers": [
+    {
+      "name": "_cmc_code_ready_axioms_before",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        5,
+        6
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static size_t _cmc_code_ready_axioms_before =\n    vector_size(get_all_axioms());",
+      "sha256": "350541fb9d6296e7369126d65aaa2dad5409ffe4ed5138d27599641dc2fb59b7"
+    },
+    {
+      "name": "cm_concrete_structs_ready_def",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "definition",
+      "span": [
+        8,
+        10
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm cm_concrete_structs_ready_def = new_fun_definition(\n    `cm_concrete_structs_ready (p:cm_program) : bool =\n       cm_rep_structs_safe (cm_program_structs p)`);",
+      "sha256": "5b00af3831b47d2ff5de75b476837d580605e467fac252e936d4ae217054af51"
+    },
+    {
+      "name": "_e_cm_concrete_structs_ready",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        11,
+        12
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static int _e_cm_concrete_structs_ready =\n    cst_add_const_to_header(`cm_concrete_structs_ready`);",
+      "sha256": "303faf310e221786efb23bf6c58e028876d2d0fb6132eb1e554a23ca1f422752"
+    },
+    {
+      "name": "cm_slot_rep_positive",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        14,
+        24
+      ],
+      "nonblank_lines": 11,
+      "text": "PROOF static thm cm_slot_rep_positive(\n    const term structs, const term slot, const thm slot_wf) {\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_slot_wf_def())), slot_wf);\n  thm semantic_positive = conjunct1_rule(conjunct2_rule(\n      conjunct2_rule(opened)));\n  thm bridge = mp_rule(specl_rule(TERM_LIST(structs, slot),\n      cm_rep_member_size_matches), slot_wf);\n  return conv_rule(rewrite_conv(THM_LIST(sym_rule(bridge))),\n      semantic_positive);\n}",
+      "sha256": "52141d1fe14c97e553250f7f222b44813776e307bcf06376dc0f2bdfa0783034"
+    },
+    {
+      "name": "cm_prove_slots_nonnegative",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        26,
+        68
+      ],
+      "nonblank_lines": 43,
+      "text": "PROOF static thm cm_prove_slots_nonnegative(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(structs:(cm_struct_d)list) (slots:(cm_slot_d)list).\n         cm_slots_wf structs slots ==>\n         0i <= cm_rep_members_size slots`);\n  gnode with_structs = GEN_TAC(root, \"structs\");\n  gnode_list cases = INDUCT_TAC(with_structs,\n      `slots:(cm_slot_d)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm slots_wf = assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n          ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`);\n    thm head_wf = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`, `a0:cm_slot_d`,\n        `a1:(cm_slot_d)list`), cm_slots_wf_head), slots_wf);\n    thm tail_wf = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`, `a0:cm_slot_d`,\n        `a1:(cm_slot_d)list`), cm_slots_wf_tail), slots_wf);\n    thm head_positive = cm_slot_rep_positive(\n        `structs:(cm_struct_d)list`, `a0:cm_slot_d`, head_wf);\n    thm tail_nonnegative = mp_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (a1:(cm_slot_d)list) ==>\n         0i <= cm_rep_members_size a1`), tail_wf);\n    thm sum = mp_rule(mp_rule(int_arith_rule(\n        `0i < cm_rep_member_size (a0:cm_slot_d) ==>\n         0i <= cm_rep_members_size (a1:(cm_slot_d)list) ==>\n         0i <= cm_rep_member_size a0 + cm_rep_members_size a1`),\n        head_positive), tail_nonnegative);\n    thm view = apply_conversion(rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())),\n        `0i <= cm_rep_members_size\n          ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`);\n    ACCEPT_TAC(leaf, eq_mp_rule(sym_rule(view), sum));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "be3de86cf1910c3404a18ba3a16b066b5abd2eb98ce8d2c9654c640821c562a4"
+    },
+    {
+      "name": "cm_slots_nonnegative",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        69,
+        70
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_slots_nonnegative =\n    cm_prove_slots_nonnegative();",
+      "sha256": "7227e5f392f07750b25daf1f6531c6188d60dfd6f0b2897646a9df2caef9d9d6"
+    },
+    {
+      "name": "cm_prove_slots_safe",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        72,
+        131
+      ],
+      "nonblank_lines": 60,
+      "text": "PROOF static thm cm_prove_slots_safe(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(structs:(cm_struct_d)list) (slots:(cm_slot_d)list).\n         cm_slots_wf structs slots ==>\n         cm_rep_members_size slots <= 1048576i ==>\n         cm_rep_members_safe slots`);\n  gnode with_structs = GEN_TAC(root, \"structs\");\n  gnode_list cases = INDUCT_TAC(with_structs,\n      `slots:(cm_slot_d)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_members_safe_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm slots_wf = assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n          ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`);\n    thm full_bound = assume_rule(\n        `cm_rep_members_size\n          ((a0:cm_slot_d) :: (a1:(cm_slot_d)list)) <= 1048576i`);\n    thm head_wf = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`, `a0:cm_slot_d`,\n        `a1:(cm_slot_d)list`), cm_slots_wf_head), slots_wf);\n    thm tail_wf = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`, `a0:cm_slot_d`,\n        `a1:(cm_slot_d)list`), cm_slots_wf_tail), slots_wf);\n    thm head_positive = cm_slot_rep_positive(\n        `structs:(cm_struct_d)list`, `a0:cm_slot_d`, head_wf);\n    thm head_nonnegative = mp_rule(int_arith_rule(\n        `0i < cm_rep_member_size (a0:cm_slot_d) ==>\n         0i <= cm_rep_member_size a0`), head_positive);\n    thm tail_nonnegative = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`, `a1:(cm_slot_d)list`),\n        cm_slots_nonnegative), tail_wf);\n    thm unfolded_bound = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())), full_bound);\n    thm tail_bound = mp_rule(mp_rule(int_arith_rule(\n        `0i <= cm_rep_member_size (a0:cm_slot_d) ==>\n         cm_rep_member_size a0 +\n           cm_rep_members_size (a1:(cm_slot_d)list) <= 1048576i ==>\n         cm_rep_members_size a1 <= 1048576i`),\n        head_nonnegative), unfolded_bound);\n    thm tail_safe = mp_rule(mp_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (a1:(cm_slot_d)list) ==>\n         cm_rep_members_size a1 <= 1048576i ==>\n         cm_rep_members_safe a1`), tail_wf), tail_bound);\n    thm parts = conj_rule(head_nonnegative,\n        conj_rule(tail_nonnegative,\n          conj_rule(full_bound, tail_safe)));\n    thm view = apply_conversion(rewrite_conv(THM_LIST(\n        get_cm_rep_members_safe_def())),\n        `cm_rep_members_safe\n          ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`);\n    ACCEPT_TAC(leaf, eq_mp_rule(sym_rule(view), parts));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "46dd9860da0796a8949d26fb54a16b8d95276d5727813bf75698cdae2e8d3e43"
+    },
+    {
+      "name": "cm_slots_safe",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        132,
+        132
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_slots_safe = cm_prove_slots_safe();",
+      "sha256": "d9cbd87aa4729affb439fb4e0d2bfa085339018629e4a6755e6bab4bdfaa6eb9"
+    },
+    {
+      "name": "get_cm_slots_nonnegative",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "getter",
+      "span": [
+        133,
+        135
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cm_slots_nonnegative(void) {\n  return cm_slots_nonnegative;\n}",
+      "sha256": "700355fcd775b40b5b5a2643ac7305eb8cb88c1d1109fc61527872aea2838ab8"
+    },
+    {
+      "name": "get_cm_slots_safe",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "getter",
+      "span": [
+        136,
+        138
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cm_slots_safe(void) {\n  return cm_slots_safe;\n}",
+      "sha256": "855b3deb1a4cff95187ada17cb69cfd55d6cdfab4775ce0890fb944bd88ee864"
+    },
+    {
+      "name": "cm_prove_structs_wf_head",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        141,
+        169
+      ],
+      "nonblank_lines": 29,
+      "text": "PROOF static thm cm_prove_structs_wf_head(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(structs:(cm_struct_d)list) (head:cm_struct_d)\n          (tail:(cm_struct_d)list).\n         (!i. 0i <= i ==> i < ilength (head :: tail) ==>\n              cm_struct_wf structs (inth i (head :: tail))) ==>\n         cm_struct_wf structs head`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm all_wf = assume_rule(\n      `!i. 0i <= i ==>\n         i < ilength ((head:cm_struct_d) ::\n           (tail:(cm_struct_d)list)) ==>\n         cm_struct_wf (structs:(cm_struct_d)list)\n           (inth i (head :: tail))`);\n  thm tail_nonnegative = ispec_rule(\n      `tail:(cm_struct_d)list`, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm head_bound = by_defs_arith(\n      `0i < ilength\n        ((head:cm_struct_d) :: (tail:(cm_struct_d)list))`,\n      THM_LIST(get_theorem_by_name(\"ILENGTH_DEF\")),\n      THM_LIST(tail_nonnegative));\n  thm result = match_mp_rule(match_mp_rule(\n      spec_rule(`0i`, all_wf), int_arith_rule(`0i <= 0i`)),\n      head_bound);\n  ACCEPT_TAC(leaf, conv_rule(rewrite_conv(THM_LIST(\n      ispecl_rule(TERM_LIST(`head:cm_struct_d`,\n        `tail:(cm_struct_d)list`), cm_inth_zero_cons))), result));\n  return gnode_prove(root);\n}",
+      "sha256": "88501c4829ae1d18eab5533f35ed1570d84cfcf52ca25ac9ae11189ba78fac84"
+    },
+    {
+      "name": "cm_structs_wf_head",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        170,
+        170
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_structs_wf_head = cm_prove_structs_wf_head();",
+      "sha256": "7c62d88e723fbd0a96cd202f1f65492df903441435ce4c01a09b0df82c1d3592"
+    },
+    {
+      "name": "cm_prove_structs_wf_tail",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        172,
+        212
+      ],
+      "nonblank_lines": 41,
+      "text": "PROOF static thm cm_prove_structs_wf_tail(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(structs:(cm_struct_d)list) (head:cm_struct_d)\n          (tail:(cm_struct_d)list).\n         (!i. 0i <= i ==> i < ilength (head :: tail) ==>\n              cm_struct_wf structs (inth i (head :: tail))) ==>\n         (!i. 0i <= i ==> i < ilength tail ==>\n              cm_struct_wf structs (inth i tail))`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm all_wf = assume_rule(\n      `!i. 0i <= i ==>\n         i < ilength ((head:cm_struct_d) ::\n           (tail:(cm_struct_d)list)) ==>\n         cm_struct_wf (structs:(cm_struct_d)list)\n           (inth i (head :: tail))`);\n  thm lower = assume_rule(`0i <= (i:int)`);\n  thm upper = assume_rule(\n      `(i:int) < ilength (tail:(cm_struct_d)list)`);\n  thm full_lower = mp_rule(int_arith_rule(\n      `0i <= (i:int) ==> 0i <= i + 1i`), lower);\n  thm normalized_upper = mp_rule(int_arith_rule(mk_imp(\n      concl(upper),\n      `(i:int) + 1i < 1i + ilength (tail:(cm_struct_d)list)`)),\n      upper);\n  thm full_upper = eq_mp_rule(sym_rule(apply_conversion(\n      reduce_rewrite_conv(THM_LIST(get_theorem_by_name(\"ILENGTH_DEF\"))),\n      `(i:int) + 1i < ilength\n        ((head:cm_struct_d) :: (tail:(cm_struct_d)list))`)),\n      normalized_upper);\n  thm full_wf = match_mp_rule(match_mp_rule(\n      spec_rule(`(i:int) + 1i`, all_wf), full_lower), full_upper);\n  thm one = mp_rule(int_arith_rule(\n      `0i <= (i:int) ==> 1i <= i + 1i`), lower);\n  thm at_tail = mp_rule(ispecl_rule(TERM_LIST(\n      `head:cm_struct_d`, `tail:(cm_struct_d)list`,\n      `(i:int) + 1i`), cm_inth_cons_tail), one);\n  thm index_exact = int_arith_rule(`((i:int) + 1i) - 1i == i`);\n  ACCEPT_TAC(leaf, conv_rule(reduce_rewrite_conv(\n      THM_LIST(at_tail, index_exact)), full_wf));\n  return gnode_prove(root);\n}",
+      "sha256": "363a007379ee182fbdfccc46241f77f68ce7432ea1f6521cb25127c7bb71a63c"
+    },
+    {
+      "name": "cm_structs_wf_tail",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        213,
+        213
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_structs_wf_tail = cm_prove_structs_wf_tail();",
+      "sha256": "78d4a9ee27bb99be05baa6b9094cc3760940c1abc4b4e9b554837f59936cbffd"
+    },
+    {
+      "name": "cm_prove_structs_safe",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        215,
+        274
+      ],
+      "nonblank_lines": 60,
+      "text": "PROOF static thm cm_prove_structs_safe(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(structs:(cm_struct_d)list) (items:(cm_struct_d)list).\n         (!i. 0i <= i ==> i < ilength items ==>\n              cm_struct_wf structs (inth i items)) ==>\n         cm_rep_structs_safe items`);\n  gnode with_structs = GEN_TAC(root, \"structs\");\n  gnode_list cases = INDUCT_TAC(with_structs,\n      `items:(cm_struct_d)list`);\n  {\n    gnode base = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(base, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_structs_safe_def())));\n  }\n  {\n    gnode step = AUTO_INTROS_TAC(cases[1]);\n    thm all_wf = assume_rule(\n        `!i. 0i <= i ==>\n           i < ilength ((a0:cm_struct_d) ::\n             (a1:(cm_struct_d)list)) ==>\n           cm_struct_wf (structs:(cm_struct_d)list)\n             (inth i (a0 :: a1))`);\n    thm head_wf = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`,\n        `a0:cm_struct_d`, `a1:(cm_struct_d)list`),\n        cm_structs_wf_head), all_wf);\n    thm tail_wf = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`,\n        `a0:cm_struct_d`, `a1:(cm_struct_d)list`),\n        cm_structs_wf_tail), all_wf);\n    thm opened_head = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_struct_wf_def())), head_wf);\n    thm members_wf = conjunct1_rule(conjunct2_rule(opened_head));\n    thm members_upper = conjunct2_rule(conjunct2_rule(\n        conjunct2_rule(opened_head)));\n    thm members_bridge = mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`,\n        `cm_struct_members (a0:cm_struct_d)`),\n        cm_rep_struct_members_size_matches), members_wf);\n    thm concrete_upper = conv_rule(rewrite_conv(THM_LIST(\n        sym_rule(members_bridge))), members_upper);\n    thm members_safe = mp_rule(mp_rule(specl_rule(TERM_LIST(\n        `structs:(cm_struct_d)list`,\n        `cm_struct_members (a0:cm_struct_d)`), cm_slots_safe),\n        members_wf), concrete_upper);\n    thm tail_safe = mp_rule(assume_rule(\n        `(!i. 0i <= i ==>\n             i < ilength (a1:(cm_struct_d)list) ==>\n             cm_struct_wf (structs:(cm_struct_d)list)\n               (inth i a1)) ==>\n         cm_rep_structs_safe a1`), tail_wf);\n    thm parts = conj_rule(members_safe, tail_safe);\n    thm view = apply_conversion(rewrite_conv(THM_LIST(\n        get_cm_rep_structs_safe_def())),\n        `cm_rep_structs_safe\n          ((a0:cm_struct_d) :: (a1:(cm_struct_d)list))`);\n    ACCEPT_TAC(step, eq_mp_rule(sym_rule(view), parts));\n  }\n  return gnode_prove(root);\n}",
+      "sha256": "6ee66dacd577e7aaf734051a56d7e7cf43df918a67235e77247879e2d2203add"
+    },
+    {
+      "name": "cm_structs_safe",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        275,
+        275
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_structs_safe = cm_prove_structs_safe();",
+      "sha256": "dd86104be0f4e7ef6f2d53e97092f610830bb81e95fee9c980a866a478dcaa33"
+    },
+    {
+      "name": "cm_prove_structs_ready_from_typed",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        277,
+        298
+      ],
+      "nonblank_lines": 22,
+      "text": "PROOF static thm cm_prove_structs_ready_from_typed(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program).\n         cm_typed_program p ==> cm_concrete_structs_ready p`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm typed = assume_rule(`cm_typed_program (p:cm_program)`);\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  thm all_wf = mp_rule(taut_rule(mk_imp(concl(opened),\n      `!i. 0i <= i ==>\n         i < ilength (cm_program_structs (p:cm_program)) ==>\n         cm_struct_wf (cm_program_structs p)\n           (inth i (cm_program_structs p))`)), opened);\n  thm safe = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`,\n      `cm_program_structs (p:cm_program)`), cm_structs_safe), all_wf);\n  thm view = apply_conversion(rewrite_conv(THM_LIST(\n      cm_concrete_structs_ready_def)),\n      `cm_concrete_structs_ready (p:cm_program)`);\n  ACCEPT_TAC(leaf, eq_mp_rule(sym_rule(view), safe));\n  return gnode_prove(root);\n}",
+      "sha256": "3183c590a1a44829d12b600b309232e480cd1f19cf191750526b2d2c8308bc27"
+    },
+    {
+      "name": "cmc_structs_ready_from_typed",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "proof",
+      "span": [
+        299,
+        300
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cmc_structs_ready_from_typed =\n    cm_prove_structs_ready_from_typed();",
+      "sha256": "c846dcc85f90ad92e3e8bf53f192282bb9e467466940bf350cdd0036335bd9d0"
+    },
+    {
+      "name": "get_cm_concrete_structs_ready_def",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "getter",
+      "span": [
+        302,
+        304
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cm_concrete_structs_ready_def(void) {\n  return cm_concrete_structs_ready_def;\n}",
+      "sha256": "5873794b52f9d618dc4dedb88cc36e5c43fd0a198917923ad9336a66dfd79dfc"
+    },
+    {
+      "name": "get_cmc_structs_ready_from_typed",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "getter",
+      "span": [
+        305,
+        307
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF thm get_cmc_structs_ready_from_typed(void) {\n  return cmc_structs_ready_from_typed;\n}",
+      "sha256": "530ecc4f2b0615eea3da9848e96432907767c793a02472218f1d726898982d09"
+    },
+    {
+      "name": "_cmc_code_ready_no_axioms",
+      "file": "baseline/cmc_concrete_code_ready.c",
+      "kind": "framework_scaffolding",
+      "span": [
+        309,
+        311
+      ],
+      "nonblank_lines": 3,
+      "text": "PROOF static int _cmc_code_ready_no_axioms =\n    vector_size(get_all_axioms()) == _cmc_code_ready_axioms_before\n        ? 1 : (abort(), 0);",
+      "sha256": "e77d591dfbc899622e4a7494db396c03f45cd102a3f25edbdfc3cd273746a37f"
+    }
+  ],
+  "totals": {
+    "definition": 3,
+    "proof": 274,
+    "getter": 12,
+    "framework_scaffolding": 7
+  }
+}

@@ -1,0 +1,109 @@
+Chars 0 - 74 [Require~Export~SimpleC.EE.QCP_...] 1.328 secs (1.22u,0.088s)
+Chars 75 - 120 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 121 - 156 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 157 - 178 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 179 - 204 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 205 - 289 [Lemma~tower_wrap64_add_right~a...] 0. secs (0.u,0.s)
+Chars 290 - 296 [Proof.] 0. secs (0.u,0.s)
+Chars 298 - 407 [replace~(a~+~tower_wrap64~b)~w...] 0.001 secs (0.001u,0.s)
+Chars 409 - 410 [-] 0. secs (0.u,0.s)
+Chars 411 - 439 [(apply~tower_wrap64_periodic).] 0. secs (0.u,0.s)
+Chars 441 - 442 [-] 0. secs (0.u,0.s)
+Chars 443 - 547 [(unfold~tower_wrap64;~~~pose~p...] 0.003 secs (0.002u,0.s)
+Chars 548 - 552 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 553 - 871 [Lemma~cm_tvm_fp_address~obj~pc...] 0. secs (0.u,0.s)
+Chars 872 - 878 [Proof.] 0. secs (0.u,0.s)
+Chars 880 - 937 [(intro~CODE;~cbn[cm_fp_relativ...] 0. secs (0.u,0.s)
+Chars 939 - 1075 [(pose~proof~(cm_code_at_tail~_...] 0. secs (0.u,0.s)
+Chars 1077 - 1092 [(cbn[tvm_iter]).] 0. secs (0.u,0.s)
+Chars 1094 - 1175 [(rewrite~~~(cm_tvm_code_step~o...] 0. secs (0.u,0.s)
+Chars 1177 - 1358 [(cbv[tvm_inst_step~tvm_action_...] 0.215 secs (0.2u,0.014s)
+Chars 1360 - 1521 [(repeat~rewrite~Zlength_cons;~...] 1.273 secs (1.263u,0.009s)
+Chars 1523 - 1552 [(change~(tower_wrap64~8)~with~8).] 0. secs (0.u,0.s)
+Chars 1554 - 1638 [(rewrite~~~(cm_tvm_code_step~o...] 0. secs (0.u,0.s)
+Chars 1640 - 1868 [(cbv[tvm_inst_step~tvm_action_...] 0. secs (0.u,0.s)
+Chars 1870 - 2067 [(repeat~rewrite~Zlength_cons;~...] 0. secs (0.u,0.s)
+1 goal
+  
+  obj : tvm_object
+  pc : Z
+  calls : list Z
+  mem : Z -> Z
+  input, output : list Z
+  offset : Z
+  rest : list tvm_inst
+  CODE :
+    cm_code_at (tvm_object_code obj) pc
+      (TVMInst TVMPushOp 8
+       :: TVMInst TVMLoadOp 0
+          :: TVMInst TVMPushOp offset :: TVMInst TVMAddOp 0 :: rest)
+  C1 :
+    cm_code_at (tvm_object_code obj) (pc + 1)
+      (TVMInst TVMLoadOp 0
+       :: TVMInst TVMPushOp offset :: TVMInst TVMAddOp 0 :: rest)
+  C2 :
+    cm_code_at (tvm_object_code obj) (pc + 1 + 1)
+      (TVMInst TVMPushOp offset :: TVMInst TVMAddOp 0 :: rest)
+  C3 :
+    cm_code_at (tvm_object_code obj) (pc + 1 + 1 + 1)
+      (TVMInst TVMAddOp 0 :: rest)
+  ============================
+  tvm_step
+    (tvm_step
+       match
+         (if
+           if
+            match
+              match Z.succ 0 with
+              | Z.pos y' =>
+                  (fix compare_cont
+                     (r : comparison) (x y : positive) {struct y} :
+                       comparison :=
+                     match x with
+                     | (p~1)%positive =>
+                         match y with
+                         | (q~1)%positive => compare_cont r p q
+                         | (q~0)%positive => compare_cont Gt p q
+                         | 1%positive => Gt
+                         end
+                     | (p~0)%positive =>
+                         match y with
+                         | (q~1)%positive => compare_cont Lt p q
+                         | (q~0)%positive => compare_cont r p q
+                         | 1%positive => Gt
+                         end
+                     | 1%positive =>
+                         match y with
+                         | 1%positive => r
+                         | _ => Lt
+                         end
+                     end) Eq 1%positive y'
+              | _ => Gt
+              end
+            with
+            | Gt => false
+            | _ => true
+            end
+           then 8 + 7 <? 1048576
+           else false
+          then
+           TVMStepState
+             (TVMState (pc + 1 + 1) [tower_getw mem 8] calls mem input output)
+          else TVMStepError (TVMState (pc + 1) [8] calls mem input output))
+       with
+       | TVMStepState st => TVMRunTask obj st
+       | TVMStepHalt st status => TVMDoneTask st status 0
+       | TVMStepError st => TVMDoneTask st 2 1
+       end) =
+  TVMRunTask obj
+    (TVMState (pc + 4) [tower_wrap64 (tower_getw mem 8 + offset)] calls mem
+       input output)
+Chars 2069 - 2074 [Show.] 0. secs (0.u,0.s)
+Chars 2076 - 2177 [(rewrite~~~(cm_tvm_code_step~o...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_expr/build/Rocq/examples/QCP_demos_human/cmc_target_address_migration_lib.v", line 28, characters 1-101:
+Error: Found no subterm matching
+"tvm_step
+   (TVMRunTask obj
+      (TVMState (pc + 1 + 1) [tower_getw mem 8] calls mem input output))"
+in the current goal.
+

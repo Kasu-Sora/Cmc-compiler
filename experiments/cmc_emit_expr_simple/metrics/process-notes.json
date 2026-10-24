@@ -1,0 +1,108 @@
+{
+  "status": "completed; controller done and final-check passed",
+  "historical_cstar_active_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null,
+  "annotation_development": {
+    "attempts": 1,
+    "design_commands": 4,
+    "design_failed": 0,
+    "symexec_commands": 3,
+    "symexec_failed": 2,
+    "post_library_commands": 1,
+    "post_library_failed": 0,
+    "repairs": [
+      "Separate Extern type and term declarations",
+      "Preserve original wf/count facts on both sides of leaf plan bridge so fid local remains available to helper"
+    ],
+    "runtime_or_contract_domain_changes": false,
+    "main_annotation_acceptance": "passed"
+  },
+  "proof_development": {
+    "return_plans": {
+      "development_commands": 0,
+      "debug_commands": 0,
+      "exact_commands": 1,
+      "failed_commands": 0,
+      "new_helpers": 0
+    },
+    "branch_selection": {
+      "development_commands": 1,
+      "development_failed": 0,
+      "debug_commands": 1,
+      "debug_failed": 0,
+      "exact_commands": 0,
+      "new_helpers": 0,
+      "reused_helpers": [
+        "cm_dispatch_leaf_coverage"
+      ]
+    },
+    "expression_representation": {
+      "development_commands": 3,
+      "development_failed": 2,
+      "debug_commands": 1,
+      "debug_failed": 0,
+      "exact_commands": 1,
+      "exact_failed": 0,
+      "new_helpers": 0,
+      "reused_helpers": [
+        "cm_expr_rep_node"
+      ],
+      "repairs": [
+        "sepcon association normalization",
+        "Unavailable sepcon_assoc name; use existing sepcon_assoc_change"
+      ]
+    },
+    "owner_totals": {
+      "development_commands": 4,
+      "development_failed": 2,
+      "debug_commands": 2,
+      "debug_failed": 0,
+      "exact_commands": 2,
+      "exact_failed": 0,
+      "new_helpers": 0
+    },
+    "controller_group_repair_count": 0,
+    "controller_group_validation_count": 3,
+    "accepted_group_attempts": {
+      "branch_selection": 1,
+      "expression_representation": 1,
+      "return_plans": 1
+    }
+  },
+  "public_reuse": "Dispatch and var transitive closure; two verified helper body contracts",
+  "dependency_preparation": {
+    "status": "passed",
+    "backend": "makefile",
+    "base_artifact_count": 156,
+    "rebuilt_count": 0
+  },
+  "vc_checking": {
+    "attempts": 1,
+    "top_level": 7,
+    "no_split": 3,
+    "splits": 4,
+    "blockers": 0,
+    "planned_groups": 3,
+    "aggressive": 4,
+    "LLM": 3,
+    "owner_debug_commands": 0,
+    "owner_check_commands": 0,
+    "report_repairs": 0,
+    "main_acceptance": "passed"
+  },
+  "proof_progress_snapshot": {
+    "accepted_groups": 3,
+    "planned_groups": 3,
+    "status": "complete"
+  },
+  "final_verification": {
+    "phase": "done",
+    "final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-18T09:02:47.361174Z",
+      "cleanup_removed_count": 0
+    },
+    "controller_updated_at": "2026-10-18T09:02:47.368323Z"
+  }
+}

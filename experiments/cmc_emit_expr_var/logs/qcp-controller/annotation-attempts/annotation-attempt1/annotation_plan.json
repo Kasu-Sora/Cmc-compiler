@@ -1,0 +1,92 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-expression",
+      "location": "cm_emit_var_expr: before cmc_binding_array: open expression node",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Original parameter values retained by partial assertions",
+        "0 <= slot <= INT_MAX ensures exact narrowing; original lvalue bounds and branch guards retained"
+      ],
+      "resources": [
+        "all seven expression fields; emitter and both contexts frame"
+      ],
+      "mathematical_state": "The CMVarE constructor fixes kind=2, op=scope, value=slot, type=encode ty and null children.",
+      "internal_predicates": []
+    },
+    {
+      "id": "open-contexts",
+      "location": "cm_emit_var_expr: before cmc_binding_array: open program and function contexts",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Original parameter values retained by partial assertions",
+        "0 <= slot <= INT_MAX ensures exact narrowing; original lvalue bounds and branch guards retained"
+      ],
+      "resources": [
+        "all program/function header fields and struct/global/string/parameter/local lists"
+      ],
+      "mathematical_state": "Expose globals and locals consumed by the exact imported helper contract.",
+      "internal_predicates": []
+    },
+    {
+      "id": "close-contexts",
+      "location": "cm_emit_var_expr: after cmc_binding_array, before branch",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Original parameter values retained by partial assertions",
+        "0 <= slot <= INT_MAX ensures exact narrowing; original lvalue bounds and branch guards retained"
+      ],
+      "resources": [
+        "complete program/function ownership reconstructed; expression fields and emitter frame"
+      ],
+      "mathematical_state": "Array result equals the existing total cm_binding_array_code; restore contexts for address helper.",
+      "internal_predicates": []
+    },
+    {
+      "id": "scalar-plan",
+      "location": "cm_emit_var_expr: lvalue == 0 and array == 0, before address helper",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Original parameter values retained by partial assertions",
+        "0 <= slot <= INT_MAX ensures exact narrowing; original lvalue bounds and branch guards retained"
+      ],
+      "resources": [
+        "resolved emitter plan plus full contexts and expression fields"
+      ],
+      "mathematical_state": "Remaining plan splits into address, then load, then arbitrary tail.",
+      "internal_predicates": []
+    },
+    {
+      "id": "array-plan",
+      "location": "cm_emit_var_expr: lvalue == 0 and array != 0, before address helper",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Original parameter values retained by partial assertions",
+        "0 <= slot <= INT_MAX ensures exact narrowing; original lvalue bounds and branch guards retained"
+      ],
+      "resources": [
+        "resolved emitter plan plus full contexts and expression fields"
+      ],
+      "mathematical_state": "Remaining plan is address followed by arbitrary tail.",
+      "internal_predicates": []
+    },
+    {
+      "id": "lvalue-plan",
+      "location": "cm_emit_var_expr: lvalue != 0, before address helper",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "Original parameter values retained by partial assertions",
+        "0 <= slot <= INT_MAX ensures exact narrowing; original lvalue bounds and branch guards retained"
+      ],
+      "resources": [
+        "resolved emitter plan plus full contexts and expression fields"
+      ],
+      "mathematical_state": "Remaining plan is address followed by arbitrary tail regardless of array result.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

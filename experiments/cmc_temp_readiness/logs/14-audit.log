@@ -1,0 +1,165 @@
+cm_expr_temps_ready_from_counts
+:
+forall (policy : cm_lookup_policy) (e : cm_expr) (p : cm_program) (fid : Z),
+cm_expr_counts_representable policy p fid e ->
+cm_rep_expr_temps_safe e /\
+cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+cm_rtemps e <= cm_rvalue_code_count policy p fid e
+     : forall (policy : cm_lookup_policy) (e : cm_expr) 
+         (p : cm_program) (fid : Z),
+       cm_expr_counts_representable policy p fid e ->
+       cm_rep_expr_temps_safe e /\
+       cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+       cm_rtemps e <= cm_rvalue_code_count policy p fid e
+cm_args_temps_ready_from_counts
+:
+forall (policy : cm_lookup_policy) (args : list cm_expr) 
+  (p : cm_program) (fid : Z),
+cm_args_counts_representable policy p fid args ->
+cm_rep_args_temps_safe args /\
+cm_args_temps args <=
+cm_args_code_count_of (cm_args_code_counts policy p fid args)
+     : forall (policy : cm_lookup_policy) (args : list cm_expr)
+         (p : cm_program) (fid : Z),
+       cm_args_counts_representable policy p fid args ->
+       cm_rep_args_temps_safe args /\
+       cm_args_temps args <=
+       cm_args_code_count_of (cm_args_code_counts policy p fid args)
+cm_stmt_temps_ready_with_bound
+:
+forall (policy : cm_lookup_policy) (stmt : cm_stmt) 
+  (p : cm_program) (fid : Z),
+cm_stmt_counts_representable policy p fid stmt ->
+cm_rep_stmt_temps_safe stmt /\
+cm_stemps stmt <= cm_stmt_code_count policy p fid stmt
+     : forall (policy : cm_lookup_policy) (stmt : cm_stmt) 
+         (p : cm_program) (fid : Z),
+       cm_stmt_counts_representable policy p fid stmt ->
+       cm_rep_stmt_temps_safe stmt /\
+       cm_stemps stmt <= cm_stmt_code_count policy p fid stmt
+cm_stmt_temps_ready_from_counts
+:
+forall (policy : cm_lookup_policy) (stmt : cm_stmt) 
+  (p : cm_program) (fid : Z),
+cm_stmt_counts_representable policy p fid stmt -> cm_rep_stmt_temps_safe stmt
+     : forall (policy : cm_lookup_policy) (stmt : cm_stmt) 
+         (p : cm_program) (fid : Z),
+       cm_stmt_counts_representable policy p fid stmt ->
+       cm_rep_stmt_temps_safe stmt
+cm_temp_imax_upper : forall x y z : Z, cm_imax x y <= z <-> x <= z /\ y <= z
+     : forall x y z : Z, cm_imax x y <= z <-> x <= z /\ y <= z
+cm_temp_imax_add_upper
+:
+forall base x y z : Z,
+base + cm_imax x y <= z <-> base + x <= z /\ base + y <= z
+     : forall base x y z : Z,
+       base + cm_imax x y <= z <-> base + x <= z /\ base + y <= z
+cm_binary_tail_positive
+:
+forall (p : cm_program) (op : Z) (left right : cm_expr),
+1 <= cm_binary_tail_count p op left right
+     : forall (p : cm_program) (op : Z) (left right : cm_expr),
+       1 <= cm_binary_tail_count p op left right
+cm_expr_count_node_from_tree
+:
+forall (policy : cm_lookup_policy) (e : cm_expr) (p : cm_program) (fid : Z),
+cm_expr_counts_representable policy p fid e ->
+cm_expr_count_node_representable policy p fid e
+     : forall (policy : cm_lookup_policy) (e : cm_expr) 
+         (p : cm_program) (fid : Z),
+       cm_expr_counts_representable policy p fid e ->
+       cm_expr_count_node_representable policy p fid e
+cm_args_count_node_from_tree
+:
+forall (policy : cm_lookup_policy) (args : list cm_expr) 
+  (p : cm_program) (fid : Z),
+cm_args_counts_representable policy p fid args ->
+cm_i32_code_count
+  (cm_args_code_count_of (cm_args_code_counts policy p fid args))
+     : forall (policy : cm_lookup_policy) (args : list cm_expr)
+         (p : cm_program) (fid : Z),
+       cm_args_counts_representable policy p fid args ->
+       cm_i32_code_count
+         (cm_args_code_count_of (cm_args_code_counts policy p fid args))
+cm_args_temps_safe_pair
+:
+forall args : list cm_expr,
+cm_rep_args_temps_safe args -> cm_rep_apair_safe (cm_args_apair args)
+     : forall args : list cm_expr,
+       cm_rep_args_temps_safe args -> cm_rep_apair_safe (cm_args_apair args)
+cm_stmt_count_node_from_tree
+:
+forall (policy : cm_lookup_policy) (stmt : cm_stmt) 
+  (p : cm_program) (fid : Z),
+cm_stmt_counts_representable policy p fid stmt ->
+cm_i32_code_count (cm_stmt_code_count policy p fid stmt)
+     : forall (policy : cm_lookup_policy) (stmt : cm_stmt) 
+         (p : cm_program) (fid : Z),
+       cm_stmt_counts_representable policy p fid stmt ->
+       cm_i32_code_count (cm_stmt_code_count policy p fid stmt)
+cm_expr_and_args_temps_ready
+:
+forall policy : cm_lookup_policy,
+(forall (e : cm_expr) (p : cm_program) (fid : Z),
+ cm_expr_counts_representable policy p fid e ->
+ cm_rep_expr_temps_safe e /\
+ cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+ cm_rtemps e <= cm_rvalue_code_count policy p fid e) /\
+(forall (args : list cm_expr) (p : cm_program) (fid : Z),
+ cm_args_counts_representable policy p fid args ->
+ cm_rep_args_temps_safe args /\
+ cm_args_temps args <=
+ cm_args_code_count_of (cm_args_code_counts policy p fid args))
+     : forall policy : cm_lookup_policy,
+       (forall (e : cm_expr) (p : cm_program) (fid : Z),
+        cm_expr_counts_representable policy p fid e ->
+        cm_rep_expr_temps_safe e /\
+        cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+        cm_rtemps e <= cm_rvalue_code_count policy p fid e) /\
+       (forall (args : list cm_expr) (p : cm_program) (fid : Z),
+        cm_args_counts_representable policy p fid args ->
+        cm_rep_args_temps_safe args /\
+        cm_args_temps args <=
+        cm_args_code_count_of (cm_args_code_counts policy p fid args))
+cm_args_temps_ready_cons
+:
+forall (policy : cm_lookup_policy) (p : cm_program) 
+  (fid : Z) (a : cm_expr) (args : list cm_expr),
+cm_rep_expr_temps_safe a /\
+cm_ltemps a <= cm_lvalue_code_count policy p fid a /\
+cm_rtemps a <= cm_rvalue_code_count policy p fid a ->
+cm_rep_args_temps_safe args /\
+cm_args_temps args <=
+cm_args_code_count_of (cm_args_code_counts policy p fid args) ->
+cm_i32_code_count
+  (cm_args_code_count_of (cm_args_code_counts policy p fid (a :: args))) ->
+cm_rep_args_temps_safe (a :: args) /\
+cm_args_temps (a :: args) <=
+cm_args_code_count_of (cm_args_code_counts policy p fid (a :: args))
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : Z) (a : cm_expr) (args : list cm_expr),
+       cm_rep_expr_temps_safe a /\
+       cm_ltemps a <= cm_lvalue_code_count policy p fid a /\
+       cm_rtemps a <= cm_rvalue_code_count policy p fid a ->
+       cm_rep_args_temps_safe args /\
+       cm_args_temps args <=
+       cm_args_code_count_of (cm_args_code_counts policy p fid args) ->
+       cm_i32_code_count
+         (cm_args_code_count_of
+            (cm_args_code_counts policy p fid (a :: args))) ->
+       cm_rep_args_temps_safe (a :: args) /\
+       cm_args_temps (a :: args) <=
+       cm_args_code_count_of (cm_args_code_counts policy p fid (a :: args))
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context

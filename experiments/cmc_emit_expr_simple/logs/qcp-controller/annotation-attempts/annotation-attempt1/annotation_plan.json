@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "open-node",
+      "location": "cm_emit_simple_expr: before kind read",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "all original contract facts retained",
+        "expr kind equals logical kind"
+      ],
+      "resources": [
+        "cm_expr_rep opened to seven fields and payload; program/function/emitter framed"
+      ],
+      "mathematical_state": "Observe the expression discriminator while retaining complete node ownership",
+      "internal_predicates": []
+    },
+    {
+      "id": "var-boundary",
+      "location": "cm_emit_simple_expr: variable branch before cm_emit_var_expr",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "kind=2",
+        "original wf and representability imply binding validity, type code wf, slot i32 bounds"
+      ],
+      "resources": [
+        "node closed to cm_expr_rep; unchanged program/function contexts; var emitter plan"
+      ],
+      "mathematical_state": "The simple view is exactly a variable; its plan equals the existing variable code model",
+      "internal_predicates": []
+    },
+    {
+      "id": "leaf-boundary",
+      "location": "cm_emit_simple_expr: leaf branch before cm_emit_leaf_expr",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "kind<>2",
+        "simple domain implies leaf coverage"
+      ],
+      "resources": [
+        "node closed to cm_expr_rep; unchanged program/function contexts; leaf emitter plan"
+      ],
+      "mathematical_state": "The simple view is exactly an existing leaf; its plan equals the existing leaf model",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

@@ -1,0 +1,424 @@
+{
+  "groups": [
+    {
+      "id": "param-transition",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_which_implies_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_2_split_goal_1": "From params=head::tail and indexed cm_slots_wf derive cm_slot_wf of the head at index 0. Its scalar-type clause excludes struct values and supplies valid type encoding. Relate cm_rep_code_slot_size to cm_slot_size by cases on scalar type and count=0; rewrite the given member_size equation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_1": "Use indexed slots-wf at index 0 after the cons shape; project scalar-type code well-formedness for the head (also available from the parameter-count predicate).",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_2": "Unfold cm_param_counts_representable on the established cons and project its tail conjunct.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_3": "Unfold cm_rep_members_safe on the established cons and project its tail conjunct.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_4": "For every valid tail index i, apply whole-list slots-wf at i+1; use Zlength_cons and nth successor to identify the tail slot.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_5": "Rewrite params=head::tail and member_size=cm_slot_size structs head in the original total-size bound; unfold one cm_slots_size constructor and use associativity of addition.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_6": "Derive nonnegative tail size from its slots-wf by list induction (each slot has positive size); subtract it from the original cons-size upper bound after rewriting member_size.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_7": "The indexed head slots-wf supplies positive head size; combine it with offset>=0 and member_size=head size.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_8": "Rewrite the original slot+Zlength params bound using the cons shape and Zlength_cons; conclude the recursive bound by integer arithmetic.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_9": "Use the recursive length bound and Zlength tail>=0 to obtain slot+1<=INT_MAX.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_10": "Use offset=8+size prefix and member_size=size head with the stable snoc-size helper; integer reassociation proves the equality without requiring prefix well-formedness.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_11": "Rewrite slot=Zlength prefix, Zlength_app and singleton length; conclude by integer arithmetic.",
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_3_split_goal_12": "Rewrite full=prefix++params using the cons shape; app associativity identifies (prefix++[head])++tail."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_function_slots_size_snoc__param_transition",
+          "strategy": "For all structs,prefix,h, prove cm_slots_size structs (prefix++[h])=cm_slots_size structs prefix+cm_slot_size structs h by induction on prefix; no well-formedness premise. Used for recursive offset extension.",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "param-emission",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_4_split_goal_spatial": "Expand the remaining-code side of cm_emit_param_stores once using params=head::tail. Establish cm_param_offset policy p fid slot_pre=offset_pre using full=params_of_f=prefix++params, slot_pre=Zlength prefix, offset_pre=8+size prefix, and the stable slots-prefix-at-append-length helper. Reassociate list app; the emitter predicate becomes identical with unchanged policy/pointer/output/capacity/tail."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_5_split_goal_spatial": "Fold the completed-code side of cm_emit_param_stores once using params=head::tail. Establish cm_param_offset policy p fid slot_pre=offset_pre using full=params_of_f=prefix++params, slot_pre=Zlength prefix, offset_pre=8+size prefix, and the stable slots-prefix-at-append-length helper. Reassociate list app; the emitter predicate becomes identical with unchanged policy/pointer/output/capacity/tail."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_function_slots_prefix_app__param_emission",
+          "strategy": "For all structs,prefix,rest, prove cm_slots_prefix structs (prefix++rest) (Zlength prefix)=cm_slots_size structs prefix by induction on prefix. Nil computes index zero; cons uses positive Zlength, the nonzero branch and successor-minus-one arithmetic. No prefix wf needed. This identifies the current param offset for both emission transitions.",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "prologue-layout",
+      "estimated_difficulty": 4,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prologue_which_implies_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_which_implies_wit_2_split_goal_1": "The given frame_size equals 8+encoded sizes of params/locals+8*temps. The two indexed slots-wf facts imply each encoded member size equals semantic slot size; sum by list induction. Substitute s=cm_function_body f and unfold cm_frame_size/cm_temp_slots to obtain the equality."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_which_implies_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_which_implies_wit_4_split_goal_1": "Relate semantic slots size to encoded member size using parameter slots-wf. cm_rep_members_safe gives whole-list encoded size<=1048576 (nil case computes); adding 8 gives 1048584.",
+            "proof_of_cmc_emit_prologue_which_implies_wit_4_split_goal_2": "Use cm_param_counts_representable to bound cm_param_stores_count by INT_MAX. Prove length<=stores_count by list induction, since every parameter contributes nonnegative normalization count plus 5; include nil separately. Conclude 0+Zlength params<=INT_MAX."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_20_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_20_pure_split_goal_1": "Reduce sublist 0 0 params to nil; app_nil_l proves params=[]++params over the existing frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_20_pure_split_goal_2": "Reduce sublist 0 0 params to nil and Zlength_nil; conclude the pure zero-length equation.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_20_pure_split_goal_3": "Reduce sublist 0 0 params to nil and unfold the nil cm_slots_size equation; conclude 8=8+0."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "cm_function_param_count_length__prologue_layout",
+          "strategy": "For all params, prove Zlength params<=cm_param_stores_count params by induction; every normalization count is nonnegative by a type case split and each node adds 5. Combine this unconditional bound with cm_param_counts_representable on a nonempty list to discharge the i32 length conclusion.",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "param-observations",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_return_wit_2_split_goal_1": "Normalize repeated cm_emit_params_head/cm_emit_params_tail on cons, then rewrite the original params=head::tail equality once. The resulting parameter-count predicate is an explicit precondition; no heap or existential is needed.",
+            "proof_of_cmc_emit_param_stores_from_return_wit_2_split_goal_2": "Normalize repeated cm_emit_params_head/cm_emit_params_tail on cons, then rewrite the original params=head::tail equality once. The resulting member-safety predicate is an explicit precondition; no heap or existential is needed.",
+            "proof_of_cmc_emit_param_stores_from_return_wit_2_split_goal_3": "Normalize repeated cm_emit_params_head/cm_emit_params_tail on cons, then rewrite the original params=head::tail equality once. The resulting slots-wf predicate is an explicit precondition; no heap or existential is needed.",
+            "proof_of_cmc_emit_param_stores_from_return_wit_2_split_goal_4": "Normalize repeated cm_emit_params_head/cm_emit_params_tail on cons, then rewrite the original params=head::tail equality once. The resulting offset plus size upper bound is an explicit precondition; no heap or existential is needed.",
+            "proof_of_cmc_emit_param_stores_from_return_wit_2_split_goal_5": "Normalize repeated cm_emit_params_head/cm_emit_params_tail on cons, then rewrite the original params=head::tail equality once. The resulting full=prefix++params equality is an explicit precondition; no heap or existential is needed."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_partial_solve_wit_5_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_5_pure_split_goal_1": "Keep the current stack/slot/emitter resources as a pure-entailment frame. Rewrite params=head::tail and normalize head/tail observations; discharge full-prefix equality from the matching original pure premise (or computation for the shape equation).",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_5_pure_split_goal_2": "Keep the current stack/slot/emitter resources as a pure-entailment frame. Rewrite params=head::tail and normalize head/tail observations; discharge slots well-formedness from the matching original pure premise (or computation for the shape equation).",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_5_pure_split_goal_3": "Keep the current stack/slot/emitter resources as a pure-entailment frame. Rewrite params=head::tail and normalize head/tail observations; discharge member safety from the matching original pure premise (or computation for the shape equation).",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_5_pure_split_goal_4": "Keep the current stack/slot/emitter resources as a pure-entailment frame. Rewrite params=head::tail and normalize head/tail observations; discharge parameter-count representability from the matching original pure premise (or computation for the shape equation).",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_5_pure_split_goal_5": "Keep the current stack/slot/emitter resources as a pure-entailment frame. Rewrite params=head::tail and normalize head/tail observations; discharge head/tail reconstruction of a cons from the matching original pure premise (or computation for the shape equation)."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_partial_solve_wit_6_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_6_pure_split_goal_1": "Normalize all nested head/tail observations on cons. The remaining snoc size equality follows from the strengthened transition preconditions, substituting offset_pre=8+cm_slots_size structs prefix; leave all spatial resources unchanged and introduce the pure conclusion.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_6_pure_split_goal_2": "Normalize all nested head/tail observations on cons. The remaining nonnegative recursive offset follows from the strengthened transition preconditions, substituting offset_pre=8+cm_slots_size structs prefix; leave all spatial resources unchanged and introduce the pure conclusion.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_6_pure_split_goal_3": "Normalize all nested head/tail observations on cons. The remaining recursive offset plus tail size bound follows from the strengthened transition preconditions, substituting offset_pre=8+cm_slots_size structs prefix; leave all spatial resources unchanged and introduce the pure conclusion."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure_split_goal_1": "Normalize nested head/tail observations and use the original params reconstruction equality once. Recover full-prefix equality from preconditions or definitional computation; discard no needed facts when reducing the pure entailment over the emitter and slot-node frame.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure_split_goal_2": "Normalize nested head/tail observations and use the original params reconstruction equality once. Recover whole-list size bound from preconditions or definitional computation; discard no needed facts when reducing the pure entailment over the emitter and slot-node frame.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure_split_goal_3": "Normalize nested head/tail observations and use the original params reconstruction equality once. Recover slots well-formedness from preconditions or definitional computation; discard no needed facts when reducing the pure entailment over the emitter and slot-node frame.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure_split_goal_4": "Normalize nested head/tail observations and use the original params reconstruction equality once. Recover member safety from preconditions or definitional computation; discard no needed facts when reducing the pure entailment over the emitter and slot-node frame.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure_split_goal_5": "Normalize nested head/tail observations and use the original params reconstruction equality once. Recover parameter-count representability from preconditions or definitional computation; discard no needed facts when reducing the pure entailment over the emitter and slot-node frame.",
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_10_pure_split_goal_6": "Normalize nested head/tail observations and use the original params reconstruction equality once. Recover cons reconstruction equation from preconditions or definitional computation; discard no needed facts when reducing the pure entailment over the emitter and slot-node frame."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_partial_solve_wit_11_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_partial_solve_wit_11_pure_split_goal_1": "Compute cm_emit_params_head and cm_emit_params_tail on each syntactic cons from inside outward; the two reconstruction expressions are definitionally equal. Introduce the pure equality over the unchanged spatial frame."
+          }
+        }
+      ]
+    },
+    {
+      "id": "param-resources",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_return_wit_1_split_goal_spatial": "Use param_pre=0 and the full slot-list resource to case-split params: a cons exposes param_pre<>0 and is impossible; nil gives empty cm_emit_param_stores, app_nil_r on done, and identical slot/emitter resources. Preserve out/capacity/tail."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose the provable whole disjunct. Destruct params: nil unfolds cm_slot_list_rep to param=0, contradicting param<>0; cons unfolds the resource, introduces its next pointer np, computes head/tail observations and exports that same np with the three node fields and tail list, preserving param<>0."
+        },
+        {
+          "name": "proof_of_cmc_emit_param_stores_from_which_implies_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_param_stores_from_which_implies_wit_6_split_goal_spatial": "Rewrite the supplied params=head::tail shape once; unfold cm_slot_list_rep for the cons, insert the supplied param<>0 and instantiate the existential next pointer with np. Cancel the three node fields and unchanged tail-list resource."
+          }
+        }
+      ]
+    },
+    {
+      "id": "function-context",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prologue_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose a whole disjunct, unfold cm_function_context_rep and introduce its params/locals pointer witnesses and root nonzero fact. Export those same zp/zl in the required existential order and cancel the five function fields and the two slot-list resources. No statement-body resource is owned by this predicate."
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_which_implies_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_which_implies_wit_6_split_goal_spatial": "Unfold the target cm_function_context_rep, supply fn<>0, instantiate its params/locals pointers as zp/zl and cancel the five field cells and two slot-list resources already on the left."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_function_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose a whole disjunct, unfold cm_function_context_rep and introduce its params/locals pointer witnesses and root nonzero fact. Export those same zp/zl in the required existential order and cancel the five function fields and the two slot-list resources. No statement-body resource is owned by this predicate."
+        },
+        {
+          "name": "proof_of_cmc_emit_function_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_which_implies_wit_3_split_goal_spatial": "Unfold the target cm_function_context_rep, supply fn<>0, instantiate its params/locals pointers as zp/zl and cancel the five field cells and two slot-list resources already on the left."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prologue-emission",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prologue_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_which_implies_wit_3_split_goal_spatial": "Unfold cm_emit_prologue, rewrite the function lookup equality and frame_size equality; compute the 14-element list append to expose the next instruction and remaining params code. The same emitter predicate cancels with no resource splitting or new witnesses."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_which_implies_wit_5_split_goal_spatial": "Unfold cm_emit_prologue and substitute function/frame equalities. Reassociate the 14 nested singleton appends followed by parameter stores into done++prologue; preserve the remaining tail and cancel the identical emitter predicate."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prologue-opcodes-a",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_5_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_5_pure_split_goal_1": "Compute tvm_opcode_code TVMPushOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_5_pure_split_goal_2": "Compute tvm_opcode_code TVMPushOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_6_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_6_pure_split_goal_1": "Compute tvm_opcode_code TVMLoadOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_6_pure_split_goal_2": "Compute tvm_opcode_code TVMLoadOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_7_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_7_pure_split_goal_1": "Compute tvm_opcode_code TVMDupOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_7_pure_split_goal_2": "Compute tvm_opcode_code TVMDupOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_8_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_8_pure_split_goal_1": "Compute tvm_opcode_code TVMPushOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_8_pure_split_goal_2": "Compute tvm_opcode_code TVMPushOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_9_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_9_pure_split_goal_1": "Compute tvm_opcode_code TVMSubOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_9_pure_split_goal_2": "Compute tvm_opcode_code TVMSubOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prologue-opcodes-b",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_10_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_10_pure_split_goal_1": "Compute tvm_opcode_code TVMStoreOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_10_pure_split_goal_2": "Compute tvm_opcode_code TVMStoreOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_11_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_11_pure_split_goal_1": "Compute tvm_opcode_code TVMPushOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_11_pure_split_goal_2": "Compute tvm_opcode_code TVMPushOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_12_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_12_pure_split_goal_1": "Compute tvm_opcode_code TVMLoadOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_12_pure_split_goal_2": "Compute tvm_opcode_code TVMLoadOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_13_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_13_pure_split_goal_1": "Compute tvm_opcode_code TVMPushOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_13_pure_split_goal_2": "Compute tvm_opcode_code TVMPushOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_14_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_14_pure_split_goal_1": "Compute tvm_opcode_code TVMSubOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_14_pure_split_goal_2": "Compute tvm_opcode_code TVMSubOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prologue-opcodes-c",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_15_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_15_pure_split_goal_1": "Compute tvm_opcode_code TVMDupOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_15_pure_split_goal_2": "Compute tvm_opcode_code TVMDupOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_16_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_16_pure_split_goal_1": "Compute tvm_opcode_code TVMPushOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_16_pure_split_goal_2": "Compute tvm_opcode_code TVMPushOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_17_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_17_pure_split_goal_1": "Compute tvm_opcode_code TVMStoreOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_17_pure_split_goal_2": "Compute tvm_opcode_code TVMStoreOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_prologue_partial_solve_wit_18_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_prologue_partial_solve_wit_18_pure_split_goal_1": "Compute tvm_opcode_code TVMPopOp and establish the literal opcode equality as a pure entailment over the current frame.",
+            "proof_of_cmc_emit_prologue_partial_solve_wit_18_pure_split_goal_2": "Compute tvm_opcode_code TVMPopOp and prove its numeral differs from 22; the heap is only the frame for this pure entailment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "function-bounds",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_function_safety_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_safety_wit_1_split_goal_1": "Substitute function_pc_pre=cm_function_pc policy p fid_pre and project the upper bound from the explicit cm_i32_code_count of function_pc+prologue_count; introduce this pure fact over the frame.",
+            "proof_of_cmc_emit_function_safety_wit_1_split_goal_2": "Substitute function_pc_pre=cm_function_pc policy p fid_pre and project nonnegativity from the explicit cm_i32_code_count of the sum; INT_MIN<=0 yields the requested lower bound."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_function_partial_solve_wit_9_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_partial_solve_wit_9_pure_split_goal_1": "Unfold cm_i32_code_count at zero and prove both numeral bounds, retaining the current heap as a pure-entailment frame.",
+            "proof_of_cmc_emit_function_partial_solve_wit_9_pure_split_goal_2": "Unfold cm_i32_code_count at zero and prove both numeral bounds, retaining the current heap as a pure-entailment frame."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_function_partial_solve_wit_11_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_partial_solve_wit_11_pure_split_goal_1": "Compute tvm_opcode_code TVMPushOp=0 and introduce the literal equality over the frame.",
+            "proof_of_cmc_emit_function_partial_solve_wit_11_pure_split_goal_2": "Compute tvm_opcode_code TVMPushOp=0 and prove 0<>22 over the frame."
+          }
+        }
+      ]
+    },
+    {
+      "id": "function-emission",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_emit_function_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_which_implies_wit_5_split_goal_spatial": "Unfold cm_emit_function; substitute f from function_at, s from body and body_pc from function_pc+prologue_count. Reassociate remaining-code appends into prologue then body then PUSH 0 then epilogue then tail. The same emitter predicate cancels."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_function_which_implies_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_which_implies_wit_6_split_goal_spatial": "Compute singleton app for [TVMInst TVMPushOp 0]++(epilogue++tail); completed-code argument and all other emitter arguments are identical. Cancel the emitter predicate."
+          }
+        },
+        {
+          "name": "proof_of_cmc_emit_function_which_implies_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_emit_function_which_implies_wit_7_split_goal_spatial": "Unfold cm_emit_function and substitute lookup/body/body_pc equalities. Reassociate completed-code appends into done++function; cancel the emitter predicate, preserving the tail."
+          }
+        }
+      ]
+    }
+  ]
+}

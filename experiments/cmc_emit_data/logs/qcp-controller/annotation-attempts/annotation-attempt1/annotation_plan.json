@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "reserved-prefix",
+      "location": "cmc_emit_data: before cmc_write_zeroes",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "0 <= 8 <= capacity follows from the two nonnegative sizes and total capacity bound",
+        "capacity <= INT_MAX"
+      ],
+      "resources": [
+        "both input list representations",
+        "empty initialized data prefix and whole undefined data suffix"
+      ],
+      "mathematical_state": "The reserved header is eight zero bytes; the helper transforms the empty prefix into zeros(8).",
+      "internal_predicates": []
+    },
+    {
+      "id": "globals-call",
+      "location": "cmc_emit_data: Assert after cmc_write_zeroes before cmc_emit_globals",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "cursor is 8",
+        "8 + globals_size <= capacity follows by nonnegative strings_size",
+        "all four parameters equal their @pre values",
+        "both nonnegative sizes and original total capacity bound are preserved"
+      ],
+      "resources": [
+        "both input list representations",
+        "initialized zero header and undefined remainder"
+      ],
+      "mathematical_state": "The globals helper appends the exact global bytes while preserving string inputs and global representation.",
+      "internal_predicates": []
+    },
+    {
+      "id": "strings-call",
+      "location": "cmc_emit_data: before cmc_emit_strings",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "globals_cursor = 8 + globals_size",
+        "globals_cursor >= 0 and globals_cursor + strings_size <= capacity"
+      ],
+      "resources": [
+        "both input list representations",
+        "initialized zeros(8) ++ globals_bytes and undefined remainder"
+      ],
+      "mathematical_state": "The strings helper appends exact strings bytes; its cursor and byte grouping directly give the final contract.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "cmc_emit_strings",
+    "prototype": false,
+    "source_span": [
+      31,
+      295
+    ],
+    "specification": [
+      [
+        33,
+        33
+      ],
+      [
+        34,
+        42
+      ],
+      [
+        43,
+        53
+      ]
+    ],
+    "annotation": [
+      [
+        225,
+        226
+      ],
+      [
+        227,
+        229
+      ]
+    ],
+    "inline_proof": [
+      [
+        56,
+        92
+      ],
+      [
+        96,
+        173
+      ],
+      [
+        181,
+        199
+      ],
+      [
+        202,
+        223
+      ],
+      [
+        233,
+        293
+      ]
+    ],
+    "runtime": "int cmc_emit_strings(struct cm_string *node,\n                      unsigned char *data, int capacity, int cursor)\n{\n  if (node == 0) {\n    return cursor;\n  };\n  unsigned char *source = node->bytes;\n  int length = node->length;\n  struct cm_string *next = node->next;\n  cmc_copy_bytes(source, length, data, capacity, cursor);\n  cmc_write_byte(data, capacity,\n      cursor + length, (unsigned char)0);\n  int final_cursor = cmc_emit_strings(next, data, capacity,\n      cursor + length + 1);\n  return final_cursor;\n}\n"
+  }
+]

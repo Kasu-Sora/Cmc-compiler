@@ -1,0 +1,41 @@
+Chars 0 - 83 [Require~Export~~~SimpleC.EE.QC...] 1.371 secs (1.093u,0.12s)
+Chars 84 - 119 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 120 - 165 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 166 - 187 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 188 - 213 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 214 - 730 [Lemma~cm_store_params_pending_...] 0. secs (0.u,0.s)
+Chars 731 - 737 [Proof.] 0. secs (0.u,0.s)
+Chars 739 - 811 [(revert~index~a~b;~induction~v...] 0. secs (0.u,0.s)
+Chars 813 - 814 [-] 0. secs (0.u,0.s)
+Chars 815 - 854 [(rewrite~Zlength_nil,~Z.add_0_...] 0. secs (0.u,0.s)
+Chars 856 - 857 [-] 0. secs (0.u,0.s)
+Chars 858 - 942 [replace~(index~+~Zlength~(v~::...] 0.001 secs (0.u,0.s)
+Chars 946 - 976 [(cbn[cm_store_params];~apply~IH).] 0. secs (0.u,0.s)
+Chars 980 - 981 [+] 0. secs (0.u,0.s)
+Chars 982 - 1052 [(intros~j~J;~~~destruct~(FACT~...] 0. secs (0.u,0.s)
+Chars 1058 - 1109 [(split;~[~rewrite~cm_store_val...] 0. secs (0.u,0.s)
+Chars 1113 - 1114 [+] 0. secs (0.u,0.s)
+Chars 1115 - 1151 [(pose~proof~EQ~as~[_~[_~[_~[_~...] 0. secs (0.u,0.s)
+Chars 1157 - 1250 [(pose~proof~(Zlength_nonneg~vs...] 0. secs (0.u,0.s)
+Chars 1256 - 1318 [(rewrite~<-~(ENV~2~index),~<-~...] 0.001 secs (0.u,0.s)
+Chars 1319 - 1323 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 1324 - 1659 [Lemma~cm_call_base_pending_eq~...] 0. secs (0.u,0.s)
+Chars 1660 - 1666 [Proof.] 0. secs (0.u,0.s)
+Chars 1668 - 1731 [(unfold~cm_state_pending_eq;~r...] 0. secs (0.u,0.s)
+Chars 1733 - 1734 [-] 0. secs (0.u,0.s)
+Chars 1735 - 1815 [(cbn[cm_call_pending_base~cm_c...] 0. secs (0.u,0.s)
+Chars 1819 - 2047 [(assert~~~(K~:~~~~(cm_state_fp...] 0. secs (0.u,0.s)
+Chars 2051 - 2052 [{] 0. secs (0.u,0.s)
+Chars 2053 - 2132 [(apply~andb_false_iff;~destruc...] 0. secs (0.u,0.s)
+Chars 2133 - 2134 [}] 0. secs (0.u,0.s)
+Chars 2138 - 2176 [(rewrite~K;~cbn;~now~rewrite~a...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_params/build/Rocq/examples/QCP_demos_human/cmc_param_pending_complete_migration_lib.v", line 32, characters 3-12:
+Error: Found no subterm matching
+"(cm_state_fp st -
+  cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p) + 8 <=?
+  x) &&
+ (x <?
+  cm_state_fp st -
+  cm_frame_size (cm_program_structs p) (cm_source_function_at sp fid p) + 8 +
+  cm_call_param_span sp p fid)" in the current goal.
+

@@ -1,0 +1,46 @@
+Chars 0 - 71 [Require~Export~SimpleC.EE.QCP_...] 1.283 secs (1.192u,0.083s)
+Chars 72 - 117 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.011u,0.001s)
+Chars 118 - 153 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 154 - 175 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 176 - 201 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 202 - 445 [Lemma~cm_binding_array_code_ag...] 0.003 secs (0.u,0.s)
+Chars 446 - 452 [Proof.] 0. secs (0.u,0.s)
+Chars 454 - 766 [(intros~[[->~B]|~[[->~B]|~[->~...] 0.003 secs (0.002u,0.s)
+Chars 767 - 771 [Qed.] 0. secs (0.u,0.s)
+Chars 772 - 925 [Lemma~cm_member_array_code_agr...] 0. secs (0.u,0.s)
+Chars 926 - 932 [Proof.] 0. secs (0.u,0.s)
+Chars 934 - 1010 [(intros~[_~[_~[STRUCT~MEMBER]]...] 0. secs (0.u,0.s)
+Chars 1012 - 1102 [(rewrite~(cm_source_struct_at_...] 0. secs (0.u,0.s)
+Chars 1104 - 1232 [(unfold~cm_source_function_at,...] 0. secs (0.u,0.s)
+Chars 1233 - 1237 [Qed.] 0. secs (0.u,0.s)
+Chars 1238 - 1583 [Lemma~cm_l_var_layout_step~sp~...] 0. secs (0.u,0.s)
+Chars 1584 - 1590 [Proof.] 0. secs (0.u,0.s)
+Chars 1592 - 1666 [(intros~OK~H;~cbn[cm_lstart~cm...] 0. secs (0.u,0.s)
+Chars 1668 - 1751 [exact~~(cm_layout_lvalue_linea...] 0. secs (0.u,0.s)
+Chars 1752 - 1756 [Qed.] 0. secs (0.u,0.s)
+Chars 1757 - 2218 [Lemma~cm_r_var_layout_step~sp~...] 0. secs (0.u,0.s)
+Chars 2219 - 2225 [Proof.] 0. secs (0.u,0.s)
+Chars 2227 - 2315 [(intros~B~OK~H;~~~pose~proof~(...] 0. secs (0.u,0.s)
+Chars 2317 - 2372 [(destruct~(cm_binding_array~sp...] 0. secs (0.u,0.s)
+Chars 2374 - 2375 [-] 0. secs (0.u,0.s)
+Chars 2376 - 2472 [(specialize~(OK~eq_refl);~cbn[...] 0. secs (0.u,0.s)
+Chars 2476 - 2575 [(pose~proof~~~(cm_layout_rvalu...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_expr/build/Rocq/examples/QCP_demos_human/cmc_code_binding_migration_lib.v", line 31, characters 84-85:
+Error: Cannot infer this placeholder of type "cm_value" in
+environment:
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid, scope, slot : Z
+ty : cm_type
+st : cm_src_state
+ks : list cm_frame
+ann : cm_annotation
+B : cm_binding_valid p (cm_source_function_at sp fid p) scope slot
+AR : cm_binding_array sp p fid scope slot = true
+OK : cm_binding_address_ok sp p fid scope slot st = true
+H : cm_task_layout sp ap p (CMRTask p fid (CMVarE scope slot ty) st ks) ann
+ARRAY :
+  (cm_binding_array_code (cm_source_function_policy sp) p fid scope slot =? 0) =
+  negb true
+

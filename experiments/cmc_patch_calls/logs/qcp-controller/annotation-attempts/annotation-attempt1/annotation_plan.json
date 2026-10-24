@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "split-head-and-tail",
+      "location": "cmc_patch_code_arrays: positive length, before reading the first cells",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program, ops, imms and length equal @pre",
+        "1 <= length <= INT_MAX",
+        "length = Zlength raw and length - 1 = Zlength (cm_patch_tail raw)",
+        "raw = TVMInst opcode model_imm :: cm_patch_tail raw"
+      ],
+      "resources": [
+        "program context and complete function list",
+        "head int/int64 cells and cm_patch_arrays_rep at the two offset pointers; its definition is exactly the original two full arrays"
+      ],
+      "mathematical_state": "A nonempty instruction sequence separates into one instruction and the remaining sequence; recursive patching applies only to the latter while preserving head ownership.",
+      "internal_predicates": []
+    },
+    {
+      "id": "total-pc-call",
+      "location": "cmc_patch_code_arrays: CALL branch at cmc_function_pc_total",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "op = tvm_opcode_code opcode = 22",
+        "immediate = model_imm is arbitrary signed64",
+        "tail pointer offsets and remaining_length are computed from original inputs"
+      ],
+      "resources": [
+        "program context and complete function list passed to lookup",
+        "both head cells and tail arrays remain framed"
+      ],
+      "mathematical_state": "The total lookup produces the resolved CALL immediate with a signed32-safe code count, without requiring a valid function id.",
+      "internal_predicates": []
+    },
+    {
+      "id": "recursive-tail-call",
+      "location": "cmc_patch_code_arrays: both recursive calls",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "remaining_length = length - 1 = Zlength (cm_patch_tail raw)",
+        "0 <= remaining_length <= INT_MAX",
+        "CALL head immediate is returned PC; non-CALL head immediate is unchanged"
+      ],
+      "resources": [
+        "program context and complete function list",
+        "cm_patch_arrays_rep for the tail passed to recursion; updated or preserved head cells framed"
+      ],
+      "mathematical_state": "Patching the remaining raw sequence yields its resolved projection, allowing both full original arrays to be rebuilt by the return obligation.",
+      "internal_predicates": []
+    },
+    {
+      "id": "open-resolved-emitter",
+      "location": "cmc_patch_resolved_calls: entry before emitter field reads",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "program and emitter equal @pre",
+        "raw_prefix patches to resolved",
+        "Zlength raw_prefix <= capacity <= INT_MAX",
+        "out and array pointers are nonzero as required by the existing emitter representation"
+      ],
+      "resources": [
+        "all emitter/output fields including capacity",
+        "cm_patch_arrays_rep for initialized int/int64 prefixes and untouched undef suffixes",
+        "program context and complete function list"
+      ],
+      "mathematical_state": "The existing logical resolved representation hides a raw physical instruction sequence; expose that witness and array prefixes to materialize its patch without altering the unused capacity.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

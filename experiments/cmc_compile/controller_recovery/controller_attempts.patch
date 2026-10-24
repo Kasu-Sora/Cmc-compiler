@@ -1,0 +1,31 @@
+--- controller_attempts.before.py
++++ /Users/nizitong/QCP/qcp-binary-democases/.agents/scripts/verification-orchestrator/controller_attempts.py
+@@ -3739,6 +3739,11 @@
+     else:
+         source_attempt = _find_round_attempt(state, identifier)
+         if isinstance(source_attempt, dict) and source_attempt.get("phase") == "annotation":
++            # A dependency blocker may be reported before symexec creates any
++            # manual. Its sealed narrative remains the feedback evidence; there
++            # is no VC statement to hash or compare in that case.
++            if blocker.get("failure_class") == "dependency-gap" and blocker.get("vcs") == []:
++                return []
+             after = _validated_annotation_attempt_paths(state, source_attempt)["after"]
+             manual = fixed_path_under(
+                 after / str(state["target_files"]["proof_manual_file"]),
+@@ -4033,7 +4038,15 @@
+             annotation_gap_records,
+             feedback_failed_vcs,
+         ) = _feedback_sources_for_retry(state, args.previous_attempt)
+-        if not annotation_gap_records and not feedback_failed_vcs:
++        pre_vc_dependency_retry = (
++            args.reason == "annotation-blocked"
++            and retry_source.get("phase") == "annotation"
++            and len(feedback_payloads) == 1
++            and feedback_payloads[0].get("status") == "blocked"
++            and feedback_payloads[0].get("blocker", {}).get("failure_class") == "dependency-gap"
++            and feedback_payloads[0].get("blocker", {}).get("vcs") == []
++        )
++        if not annotation_gap_records and not feedback_failed_vcs and not pre_vc_dependency_retry:
+             raise SystemExit(
+                 "annotation retry requires an annotation gap from VC checking "
+                 "or VC proving"

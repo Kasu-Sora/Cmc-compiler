@@ -1,0 +1,5 @@
+- 组合 emitter 的原契约通常包含各子调用都需要的资源与纯事实。本例保留完整 wf/typed、functions readiness、表示安全及大小界，同时保留程序上下文和函数链表。不要因为 prelude helper 不要求这些事实就把它们从组合契约中移除。
+- 将 cm_model_code 保持为 prelude ++ functions-from-zero 的公共定义，在子调用边界展开一次并通过 append 结合律匹配计划。两个 helper 的 BODY 契约分别核对，特别是 functions helper 的 function_pc 等式和全链表资源。
+- PC-zero 是既有总 PC/前缀定义可推导的性质。本例把它作为内部断言产生证明义务，不把 11=cm_function_pc(policy,p,0) 加入调用者前置条件；无需只为复现源证明组织而强制新增公共 lemma。
+- 读取 program->functions 前打开程序上下文时，完整 Assert 保留未初始化的局部指针资源、整个函数链表和待发射计划；读取后恢复上下文并绑定 functions=functions_ptr。此模式沿用 prelude 已验证经验，本次标注检查首次通过。
+- 公共增量按依赖实际使用统计：源侧 PC-zero 定理及构造器单列，已经迁移的 prefix-zero 支持不重复计费；目标侧内联推导记在案例 proof。比较时同时给出案例+公共 proof 总量，避免仅因证明放置位置不同产生误判。

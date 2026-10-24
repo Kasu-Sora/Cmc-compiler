@@ -1,0 +1,710 @@
+111 goals
+  
+  sp : cm_source_lookup_policy
+  p : cm_program
+  fid, n : Z
+  ty : cm_type
+  st : cm_src_state
+  ks : list cm_frame
+  V : True
+  ST : cm_state_generation_below (cm_source_function_policy sp) p fid st
+  KS :
+    (fix cm_frames_generation_below
+       (policy : cm_lookup_policy) (p : cm_program) 
+       (fid limit : Z) (frames : list cm_frame) {struct frames} : Prop :=
+       match frames with
+       | [] => fid = -1
+       | f :: rest =>
+           match f with
+           | CMHaltK => fid = -1
+           | CMAssignRK v _ | CMBinRK _ v _ | CMIndexRK v _ =>
+               cm_value_generation_below limit v
+           | CMBlockK env _ | CMWhileBodyK _ _ env _ =>
+               cm_env_generation_below policy p fid limit env
+           | CMArgK _ _ values _ =>
+               (fix cm_values_generation_below
+                  (limit0 : Z) (values0 : list cm_value) {struct values0} :
+                    Prop :=
+                  match values0 with
+                  | [] => True
+                  | v :: rest1 =>
+                      cm_value_generation_below limit0 v /\
+                      cm_values_generation_below limit0 rest1
+                  end) limit values
+           | CMCallK caller env _ _ _ =>
+               cm_env_generation_below policy p caller limit env
+           | _ => True
+           end /\
+           cm_frames_generation_below policy p
+             match f with
+             | CMCallK caller _ _ _ _ => caller
+             | _ => fid
+             end limit rest
+       end) (cm_source_function_policy sp) p fid (cm_state_nextgen st) ks
+  ============================
+  cm_first_dynamic_generation p <= cm_state_nextgen st
+
+goal 2 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 3 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 4 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 5 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 6 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 7 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 8 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 9 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 10 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 11 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 12 is:
+ forall slot0 : Z,
+ 0 <= slot0 < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot0)
+goal 13 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot0)
+goal 14 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot0)
+goal 15 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 16 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 17 is:
+ forall slot0 : Z,
+ 0 <= slot0 < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot0)
+goal 18 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot0)
+goal 19 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot0)
+goal 20 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 21 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 22 is:
+ forall slot0 : Z,
+ 0 <= slot0 < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot0)
+goal 23 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot0)
+goal 24 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot0)
+goal 25 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 26 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 27 is:
+ forall slot0 : Z,
+ 0 <= slot0 < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot0)
+goal 28 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot0)
+goal 29 is:
+ forall slot0 : Z,
+ 0 <= slot0 <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot0)
+goal 30 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 31 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 32 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 33 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 34 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 35 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 36 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 37 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 38 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 39 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 40 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 41 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 42 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 43 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 44 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 45 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 46 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 47 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 48 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 49 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 50 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 51 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 52 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 53 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 54 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 55 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 56 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 57 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 58 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 59 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 60 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 61 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 62 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 63 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 64 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 65 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 66 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 67 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 68 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 69 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 70 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 71 is:
+ match cm_begin_call sp p fid fid0 [] st ty ks with
+ | CMStartTask q _ => q = p
+ | CMRTask q fid1 _ st0 ks0 | CMLTask q fid1 _ st0 ks0 |
+   CMSTask q fid1 _ st0 ks0 =>
+     q = p /\
+     cm_state_generation_below (cm_source_function_policy sp) p fid1 st0 /\
+     (fix cm_frames_generation_below
+        (policy : cm_lookup_policy) (p0 : cm_program) 
+        (fid2 limit : Z) (frames : list cm_frame) {struct frames} : Prop :=
+        match frames with
+        | [] => fid2 = -1
+        | f :: rest =>
+            match f with
+            | CMHaltK => fid2 = -1
+            | CMAssignRK v _ | CMBinRK _ v _ | CMIndexRK v _ =>
+                cm_value_generation_below limit v
+            | CMBlockK env _ | CMWhileBodyK _ _ env _ =>
+                cm_env_generation_below policy p0 fid2 limit env
+            | CMArgK _ _ values _ =>
+                (fix cm_values_generation_below
+                   (limit0 : Z) (values0 : list cm_value) {struct values0} :
+                     Prop :=
+                   match values0 with
+                   | [] => True
+                   | v :: rest1 =>
+                       cm_value_generation_below limit0 v /\
+                       cm_values_generation_below limit0 rest1
+                   end) limit values
+            | CMCallK caller env _ _ _ =>
+                cm_env_generation_below policy p0 caller limit env
+            | _ => True
+            end /\
+            cm_frames_generation_below policy p0
+              match f with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid2
+              end limit rest
+        end) (cm_source_function_policy sp) p fid1 
+       (cm_state_nextgen st0) ks0
+ | CMVTask q fid1 v st0 ks0 =>
+     q = p /\
+     cm_state_generation_below (cm_source_function_policy sp) p fid1 st0 /\
+     cm_value_generation_below (cm_state_nextgen st0) v /\
+     (fix cm_frames_generation_below
+        (policy : cm_lookup_policy) (p0 : cm_program) 
+        (fid2 limit : Z) (frames : list cm_frame) {struct frames} : Prop :=
+        match frames with
+        | [] => fid2 = -1
+        | f :: rest =>
+            match f with
+            | CMHaltK => fid2 = -1
+            | CMAssignRK v0 _ | CMBinRK _ v0 _ | CMIndexRK v0 _ =>
+                cm_value_generation_below limit v0
+            | CMBlockK env _ | CMWhileBodyK _ _ env _ =>
+                cm_env_generation_below policy p0 fid2 limit env
+            | CMArgK _ _ values _ =>
+                (fix cm_values_generation_below
+                   (limit0 : Z) (values0 : list cm_value) {struct values0} :
+                     Prop :=
+                   match values0 with
+                   | [] => True
+                   | v0 :: rest1 =>
+                       cm_value_generation_below limit0 v0 /\
+                       cm_values_generation_below limit0 rest1
+                   end) limit values
+            | CMCallK caller env _ _ _ =>
+                cm_env_generation_below policy p0 caller limit env
+            | _ => True
+            end /\
+            cm_frames_generation_below policy p0
+              match f with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid2
+              end limit rest
+        end) (cm_source_function_policy sp) p fid1 
+       (cm_state_nextgen st0) ks0
+ | CMCTask q fid1 ctl st0 ks0 =>
+     q = p /\
+     cm_state_generation_below (cm_source_function_policy sp) p fid1 st0 /\
+     match ctl with
+     | CMReturn v => cm_value_generation_below (cm_state_nextgen st0) v
+     | _ => True
+     end /\
+     (fix cm_frames_generation_below
+        (policy : cm_lookup_policy) (p0 : cm_program) 
+        (fid2 limit : Z) (frames : list cm_frame) {struct frames} : Prop :=
+        match frames with
+        | [] => fid2 = -1
+        | f :: rest =>
+            match f with
+            | CMHaltK => fid2 = -1
+            | CMAssignRK v _ | CMBinRK _ v _ | CMIndexRK v _ =>
+                cm_value_generation_below limit v
+            | CMBlockK env _ | CMWhileBodyK _ _ env _ =>
+                cm_env_generation_below policy p0 fid2 limit env
+            | CMArgK _ _ values _ =>
+                (fix cm_values_generation_below
+                   (limit0 : Z) (values0 : list cm_value) {struct values0} :
+                     Prop :=
+                   match values0 with
+                   | [] => True
+                   | v :: rest1 =>
+                       cm_value_generation_below limit0 v /\
+                       cm_values_generation_below limit0 rest1
+                   end) limit values
+            | CMCallK caller env _ _ _ =>
+                cm_env_generation_below policy p0 caller limit env
+            | _ => True
+            end /\
+            cm_frames_generation_below policy p0
+              match f with
+              | CMCallK caller _ _ _ _ => caller
+              | _ => fid2
+              end limit rest
+        end) (cm_source_function_policy sp) p fid1 
+       (cm_state_nextgen st0) ks0
+ | CMDoneTask st0 ctl _ =>
+     cm_first_dynamic_generation p <= cm_state_nextgen st0 /\
+     cm_tags_generation_below (cm_state_nextgen st0) (cm_state_tags st0) /\
+     match ctl with
+     | CMReturn v => cm_value_generation_below (cm_state_nextgen st0) v
+     | _ => True
+     end
+ end
+goal 72 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 73 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 74 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 75 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 76 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 77 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 78 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 79 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 80 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 81 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 82 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 83 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 84 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 85 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 86 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 87 is:
+ cm_first_dynamic_generation p <=
+ cm_state_nextgen (cm_state_io st l (cm_state_output st))
+goal 88 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below
+   (cm_state_nextgen (cm_state_io st l (cm_state_output st)))
+   (cm_state_env (cm_state_io st l (cm_state_output st)) 0 slot)
+goal 89 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below
+   (cm_state_nextgen (cm_state_io st l (cm_state_output st)))
+   (cm_state_env (cm_state_io st l (cm_state_output st)) 1 slot)
+goal 90 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below
+   (cm_state_nextgen (cm_state_io st l (cm_state_output st)))
+   (cm_state_env (cm_state_io st l (cm_state_output st)) 2 slot)
+goal 91 is:
+ cm_tags_generation_below
+   (cm_state_nextgen (cm_state_io st l (cm_state_output st)))
+   (cm_state_tags (cm_state_io st l (cm_state_output st)))
+goal 92 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 93 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 94 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 95 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 96 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 97 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 98 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 99 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 100 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 101 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 102 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 103 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 104 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 105 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 106 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+goal 107 is:
+ cm_first_dynamic_generation p <= cm_state_nextgen st
+goal 108 is:
+ forall slot : Z,
+ 0 <= slot < Zlength (cm_program_globals p) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 0 slot)
+goal 109 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_locals
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 1 slot)
+goal 110 is:
+ forall slot : Z,
+ 0 <= slot <
+ Zlength
+   (cm_function_params
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))) ->
+ cm_value_generation_below (cm_state_nextgen st) (cm_state_env st 2 slot)
+goal 111 is:
+ cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/structural/build/Rocq/examples/QCP_demos_human/cmc_simulation_generation_step_migration_lib.v", line 47, characters 0-4:
+Error:  (in proof cm_r_generation_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

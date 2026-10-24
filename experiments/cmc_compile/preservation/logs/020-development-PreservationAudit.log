@@ -1,0 +1,593 @@
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_step_task
+cm_annotated_step_task
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (ast : cm_astate),
+       cm_astate_task (cm_annotated_step sp ap ast) =
+       cm_step sp (cm_astate_task ast)
+Closed under the global context
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_step_target
+cm_annotated_step_target
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (ast : cm_astate),
+       cm_astate_target (cm_annotated_step sp ap ast) =
+       tvm_iter
+         (cm_update_steps
+            (cm_annotation_step sp ap (cm_astate_task ast)
+               (cm_astate_annotation ast))) (cm_astate_target ast)
+Closed under the global context
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_iter_task
+cm_annotated_iter_task
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (n : nat) (ast : cm_astate),
+       cm_astate_task (cm_annotated_iter sp ap n ast) =
+       cm_iter sp n (cm_astate_task ast)
+Closed under the global context
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_iter_add
+cm_annotated_iter_add
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (m n : nat) (ast : cm_astate),
+       cm_annotated_iter sp ap (m + n) ast =
+       cm_annotated_iter sp ap n (cm_annotated_iter sp ap m ast)
+Closed under the global context
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_iter_exec_prefix
+cm_annotated_iter_exec_prefix
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (n : nat) (ast : cm_astate) (out : tvm_outcome),
+       tvm_exec (cm_astate_target (cm_annotated_iter sp ap n ast)) out ->
+       tvm_exec (cm_astate_target ast) out
+Closed under the global context
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_start_rooted
+cm_annotated_start_rooted
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z),
+       cm_annotation_rooted
+         (cm_astate_annotation (cm_annotated_start policy p input))
+Closed under the global context
+AUDIT cmc_annotation_execution_migration_lib.cm_annotated_start_erases
+cm_annotated_start_erases
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (input : list BinNums.Z),
+       cm_annotation_erases
+         (cm_astate_task (cm_annotated_start policy p input))
+         (cm_astate_annotation (cm_annotated_start policy p input))
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_cursor_frames_app
+cm_cursor_frames_app
+     : forall xs ys : list cm_acursor,
+       cm_cursor_frames (xs ++ ys) =
+       (cm_cursor_frames xs ++ cm_cursor_frames ys)%list
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_cursor_frames_nil
+cm_cursor_frames_nil
+     : forall xs : list cm_acursor, cm_cursor_frames xs = nil <-> xs = nil
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_phase_frame_halt
+cm_phase_frame_halt
+     : forall phase : cm_aphase,
+       cm_phase_frame phase = CMHaltK <-> phase = CAHaltP
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_spill_remove_other
+cm_spill_remove_other
+     : forall (slot : BinNums.Z) (s : cm_spill) (spills : list cm_spill),
+       cm_spill_slot s <> slot ->
+       List.In s (cm_spill_remove slot spills) <-> List.In s spills
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_spill_remove_absent
+cm_spill_remove_absent
+     : forall (slot : BinNums.Z) (spills : list cm_spill) (s : cm_spill),
+       List.In s (cm_spill_remove slot spills) -> cm_spill_slot s <> slot
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_spill_put_holds
+cm_spill_put_holds
+     : forall (slot : BinNums.Z) (v : cm_value) (spills : list cm_spill),
+       cm_spill_holds slot v (cm_spill_put slot v spills)
+Closed under the global context
+AUDIT cmc_annotation_helpers_migration_lib.cm_spill_put_unique
+cm_spill_put_unique
+     : forall (slot : BinNums.Z) (v : cm_value) (spills : list cm_spill)
+         (s : cm_spill),
+       List.In s (cm_spill_put slot v spills) ->
+       cm_spill_slot s = slot -> s = CMSpill slot v
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_r_rooted
+cm_update_r_rooted
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_rooted ann ->
+       cm_annotation_rooted
+         (cm_update_annotation (cm_update_r sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_l_rooted
+cm_update_l_rooted
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_rooted ann ->
+       cm_annotation_rooted
+         (cm_update_annotation (cm_update_l sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_s_rooted
+cm_update_s_rooted
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (stmt : cm_stmt)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_rooted ann ->
+       cm_annotation_rooted
+         (cm_update_annotation (cm_update_s sp ap p fid st ann stmt))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_r_erases
+cm_update_r_erases
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_erases
+         (cm_rstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_r sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_l_erases
+cm_update_l_erases
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_erases
+         (cm_lstart sp p fid expr st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_l sp ap p fid st ann expr))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_s_erases
+cm_update_s_erases
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (stmt : cm_stmt)
+         (st : cm_src_state) (ann : cm_annotation),
+       cm_annotation_erases
+         (cm_sstart sp p fid stmt st (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation (cm_update_s sp ap p fid st ann stmt))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_v_preserves
+cm_update_v_preserves
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (v : cm_value)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp breakpc continuepc pt pb pk : BinNums.Z)
+         (rest : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp breakpc continuepc
+           (CMACursor phase pt pb pk :: rest) spills saved calls in
+       cm_annotation_rooted ann ->
+       cm_annotation_erases
+         (cm_vapply sp p fid (cm_phase_frame phase) v st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase)) /\
+       cm_annotation_rooted
+         (cm_update_annotation (cm_update_v sp ap p fid v st ann phase))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_update_c_preserves
+cm_update_c_preserves
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ctl : cm_control)
+         (st : cm_src_state) (phase : cm_aphase)
+         (pc temp breakpc continuepc pt pb pk : BinNums.Z)
+         (rest : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       let ann :=
+         CMAnnotation pc temp breakpc continuepc
+           (CMACursor phase pt pb pk :: rest) spills saved calls in
+       cm_annotation_rooted ann ->
+       cm_annotation_erases
+         (cm_capply sp p fid (cm_phase_frame phase) ctl st
+            (cm_cursor_frames rest))
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase)) /\
+       cm_annotation_rooted
+         (cm_update_annotation (cm_update_c sp ap p fid ctl st ann phase))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_annotation_step_preserves
+cm_annotation_step_preserves
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (task : cm_task) (ann : cm_annotation),
+       cm_annotation_erases task ann ->
+       cm_annotation_rooted ann ->
+       cm_annotation_erases (cm_step sp task)
+         (cm_update_annotation (cm_annotation_step sp ap task ann)) /\
+       cm_annotation_rooted
+         (cm_update_annotation (cm_annotation_step sp ap task ann))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_annotated_step_invariant
+cm_annotated_step_invariant
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (ast : cm_astate),
+       cm_annotation_erases (cm_astate_task ast) (cm_astate_annotation ast) /\
+       cm_annotation_rooted (cm_astate_annotation ast) ->
+       cm_annotation_erases (cm_astate_task (cm_annotated_step sp ap ast))
+         (cm_astate_annotation (cm_annotated_step sp ap ast)) /\
+       cm_annotation_rooted
+         (cm_astate_annotation (cm_annotated_step sp ap ast))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_annotated_iter_invariant
+cm_annotated_iter_invariant
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (n : nat) (ast : cm_astate),
+       cm_annotation_erases (cm_astate_task ast) (cm_astate_annotation ast) /\
+       cm_annotation_rooted (cm_astate_annotation ast) ->
+       cm_annotation_erases (cm_astate_task (cm_annotated_iter sp ap n ast))
+         (cm_astate_annotation (cm_annotated_iter sp ap n ast)) /\
+       cm_annotation_rooted
+         (cm_astate_annotation (cm_annotated_iter sp ap n ast))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_annotated_iter_erasure
+cm_annotated_iter_erasure
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (n : nat) (ast : cm_astate),
+       cm_annotation_erases (cm_astate_task ast) (cm_astate_annotation ast) /\
+       cm_annotation_rooted (cm_astate_annotation ast) ->
+       cm_annotation_erases (cm_iter sp n (cm_astate_task ast))
+         (cm_astate_annotation (cm_annotated_iter sp ap n ast))
+Closed under the global context
+AUDIT cmc_annotation_invariant_migration_lib.cm_annotated_iter_succeeds
+cm_annotated_iter_succeeds
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (n : nat) (ast : cm_astate),
+       cm_task_succeeds sp (cm_astate_task ast) ->
+       cm_task_succeeds sp (cm_astate_task (cm_annotated_iter sp ap n ast))
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_front
+cm_code_at_front
+     : forall fragment tail : list ?A,
+       cm_code_at (fragment ++ tail) BinNums.Z0 fragment
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_append_left
+cm_code_at_append_left
+     : forall (code lhs rhs : list ?A) (pc : BinNums.Z),
+       cm_code_at code pc (lhs ++ rhs) -> cm_code_at code pc lhs
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_append_right
+cm_code_at_append_right
+     : forall (code lhs rhs : list ?A) (pc : BinNums.Z),
+       cm_code_at code pc (lhs ++ rhs) ->
+       cm_code_at code (BinInt.Z.add pc (Zcomplements.Zlength lhs)) rhs
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_bounds
+cm_code_at_bounds
+     : forall (code fragment : list ?A) (pc : BinNums.Z),
+       cm_code_at code pc fragment ->
+       BinInt.Z.le BinNums.Z0 pc /\
+       BinInt.Z.le (BinInt.Z.add pc (Zcomplements.Zlength fragment))
+         (Zcomplements.Zlength code)
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_head
+cm_code_at_head
+     : forall (code : list ?A) (pc : BinNums.Z) (head : ?A) 
+         (rest : list ?A) (default : ?A),
+       cm_code_at code pc (head :: rest) ->
+       (BinInt.Z.le BinNums.Z0 pc /\
+        BinInt.Z.lt pc (Zcomplements.Zlength code)) /\
+       List.nth (BinInt.Z.to_nat pc) code default = head
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_tail
+cm_code_at_tail
+     : forall (code : list ?A) (pc : BinNums.Z) (head : ?A) (rest : list ?A),
+       cm_code_at code pc (head :: rest) ->
+       cm_code_at code (BinInt.Z.add pc (BinNums.Zpos BinNums.xH)) rest
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_weaken_suffix
+cm_code_at_weaken_suffix
+     : forall (code fragment suffix : list ?A) (pc : BinNums.Z),
+       cm_code_at code pc fragment -> cm_code_at (code ++ suffix) pc fragment
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_weaken_prefix
+cm_code_at_weaken_prefix
+     : forall (code fragment prefix : list ?A) (pc : BinNums.Z),
+       cm_code_at code pc fragment ->
+       cm_code_at (prefix ++ code)
+         (BinInt.Z.add (Zcomplements.Zlength prefix) pc) fragment
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_code_at_nested
+cm_code_at_nested
+     : forall (code fragment inner : list ?A) (pc offset : BinNums.Z),
+       cm_code_at code pc fragment ->
+       cm_code_at fragment offset inner ->
+       cm_code_at code (BinInt.Z.add pc offset) inner
+where
+?A : [ |- Type]
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_code_step
+cm_tvm_code_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (op : tvm_opcode) (imm : BinNums.Z) (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) (tvm_pc st) (TVMInst op imm :: rest) ->
+       tvm_step (TVMRunTask obj st) =
+       tvm_action_task obj (tvm_inst_step (tvm_object_code obj) op imm st)
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_state_step
+cm_tvm_state_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (op : tvm_opcode) (imm : BinNums.Z) (rest : list tvm_inst)
+         (next : tvm_state),
+       cm_code_at (tvm_object_code obj) (tvm_pc st) (TVMInst op imm :: rest) ->
+       tvm_inst_step (tvm_object_code obj) op imm st = TVMStepState next ->
+       tvm_step (TVMRunTask obj st) = TVMRunTask obj next
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_halt_step
+cm_tvm_halt_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (op : tvm_opcode) (imm : BinNums.Z) (rest : list tvm_inst)
+         (next : tvm_state) (status : BinNums.Z),
+       cm_code_at (tvm_object_code obj) (tvm_pc st) (TVMInst op imm :: rest) ->
+       tvm_inst_step (tvm_object_code obj) op imm st =
+       TVMStepHalt next status ->
+       tvm_step (TVMRunTask obj st) = TVMDoneTask next status BinNums.Z0
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_push_step
+cm_tvm_push_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (imm : BinNums.Z) (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) (tvm_pc st)
+         (TVMInst TVMPushOp imm :: rest) ->
+       BinInt.Z.lt (Zcomplements.Zlength (tvm_stack st))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       tvm_step (TVMRunTask obj st) =
+       TVMRunTask obj
+         (tvm_next_state st (tower_wrap64 imm :: tvm_stack st) 
+            (tvm_calls st) (tvm_mem st) (tvm_input st) 
+            (tvm_output st))
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_pop_step
+cm_tvm_pop_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (value : BinNums.Z) (stack : list BinNums.Z) 
+         (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) (tvm_pc st)
+         (TVMInst TVMPopOp BinNums.Z0 :: rest) ->
+       tvm_stack st = (value :: stack)%list ->
+       tvm_step (TVMRunTask obj st) =
+       TVMRunTask obj
+         (tvm_next_state st stack (tvm_calls st) (tvm_mem st) 
+            (tvm_input st) (tvm_output st))
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_load_step
+cm_tvm_load_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (addr : BinNums.Z) (stack : list BinNums.Z) 
+         (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) (tvm_pc st)
+         (TVMInst TVMLoadOp BinNums.Z0 :: rest) ->
+       tvm_stack st = (addr :: stack)%list ->
+       tower_word_valid addr ->
+       tvm_step (TVMRunTask obj st) =
+       TVMRunTask obj
+         (tvm_next_state st (tower_getw (tvm_mem st) addr :: stack)
+            (tvm_calls st) (tvm_mem st) (tvm_input st) 
+            (tvm_output st))
+Closed under the global context
+AUDIT cmc_simulation_code_migration_lib.cm_tvm_store_step
+cm_tvm_store_step
+     : forall (obj : tvm_object) (st : tvm_state) 
+         (addr value : BinNums.Z) (stack : list BinNums.Z)
+         (rest : list tvm_inst),
+       cm_code_at (tvm_object_code obj) (tvm_pc st)
+         (TVMInst TVMStoreOp BinNums.Z0 :: rest) ->
+       tvm_stack st = (addr :: value :: stack)%list ->
+       tower_word_valid addr ->
+       tvm_step (TVMRunTask obj st) =
+       TVMRunTask obj
+         (tvm_next_state st stack (tvm_calls st)
+            (tower_setw (tvm_mem st) addr value) (tvm_input st)
+            (tvm_output st))
+Closed under the global context
+AUDIT cmc_simulation_composition_migration_lib.cm_annotated_source_outcome
+cm_annotated_source_outcome
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (ast : cm_astate) (st : cm_src_state) (ctl : cm_control)
+         (status : BinNums.Z),
+       cm_exec sp (cm_astate_task ast) (CMOutcome st ctl status) ->
+       exists n : nat,
+         cm_astate_task (cm_annotated_iter sp ap n ast) =
+         CMDoneTask st ctl status
+Closed under the global context
+AUDIT cmc_simulation_composition_migration_lib.cm_annotated_invariant_induction
+cm_annotated_invariant_induction
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (Inv : cm_astate -> Prop),
+       (forall ast : cm_astate, Inv ast -> Inv (cm_annotated_step sp ap ast)) ->
+       forall (n : nat) (ast : cm_astate),
+       Inv ast -> Inv (cm_annotated_iter sp ap n ast)
+Closed under the global context
+AUDIT cmc_simulation_composition_migration_lib.cm_simulated_annotated_outcome
+cm_simulated_annotated_outcome
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (policy : cm_lookup_policy) (p : cm_program) 
+         (n : nat) (ast : cm_astate) (st : cm_src_state) 
+         (ctl : cm_control) (status : BinNums.Z),
+       cm_astate_task (cm_annotated_iter sp ap n ast) =
+       CMDoneTask st ctl status ->
+       cm_astate_sim policy p (cm_annotated_iter sp ap n ast) ->
+       exists vm : tvm_state,
+         tvm_exec (cm_astate_target ast) (TVMOutcome vm status BinNums.Z0) /\
+         tvm_output vm = cm_state_output st
+Closed under the global context
+AUDIT cmc_simulation_composition_migration_lib.cm_successful_exec_from_invariant
+cm_successful_exec_from_invariant
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z) 
+         (st : cm_src_state) (ctl : cm_control) (status : BinNums.Z)
+         (Inv : cm_astate -> Prop),
+       Inv (cm_annotated_start (cm_source_function_policy sp) p input) ->
+       (forall ast : cm_astate, Inv ast -> Inv (cm_annotated_step sp ap ast)) ->
+       (forall ast : cm_astate,
+        Inv ast -> cm_astate_sim (cm_source_function_policy sp) p ast) ->
+       cm_exec sp (CMStartTask p input) (CMOutcome st ctl status) ->
+       exists vm : tvm_state,
+         tvm_exec
+           (TVMBoot (cm_compile_model (cm_source_function_policy sp) p) input)
+           (TVMOutcome vm status BinNums.Z0) /\
+         tvm_output vm = cm_state_output st
+Closed under the global context
+AUDIT cmc_simulation_composition_migration_lib.cm_source_termination_from_invariant
+cm_source_termination_from_invariant
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input output : list BinNums.Z)
+         (status : BinNums.Z) (Inv : cm_astate -> Prop),
+       Inv (cm_annotated_start (cm_source_function_policy sp) p input) ->
+       (forall ast : cm_astate, Inv ast -> Inv (cm_annotated_step sp ap ast)) ->
+       (forall ast : cm_astate,
+        Inv ast -> cm_astate_sim (cm_source_function_policy sp) p ast) ->
+       cm_source_terminates sp p input output status ->
+       tvm_terminates (cm_compile_model (cm_source_function_policy sp) p)
+         input output status
+Closed under the global context
+AUDIT cmc_simulation_composition_migration_lib.cm_compile_success_from_model_termination
+cm_compile_success_from_model_termination
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (obj : tvm_object) (input output : list BinNums.Z)
+         (status : BinNums.Z),
+       cm_semantic_wf_program policy p ->
+       cm_output_decodes BinNums.Z0 (cm_rep_ops (cm_model_code policy p))
+         (cm_rep_imms (cm_model_code policy p)) (cm_model_data_bytes p) obj ->
+       tvm_terminates (cm_compile_model policy p) input output status ->
+       tvm_terminates obj input output status
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.tower_wrap64_periodic
+tower_wrap64_periodic
+     : forall z k : BinNums.Z,
+       tower_wrap64
+         (BinInt.Z.add z
+            (BinInt.Z.mul k
+               (BinNums.Zpos
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO (BinNums.xO ...)))))))))))))))))))))) =
+       tower_wrap64 z
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.tower_decode_encode
+tower_decode_encode
+     : forall z : BinNums.Z,
+       tower_decode8 (tower_encode_byte z BinNums.Z0)
+         (tower_encode_byte z (BinNums.Zpos BinNums.xH))
+         (tower_encode_byte z (BinNums.Zpos (BinNums.xO BinNums.xH)))
+         (tower_encode_byte z (BinNums.Zpos (BinNums.xI BinNums.xH)))
+         (tower_encode_byte z
+            (BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH))))
+         (tower_encode_byte z
+            (BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH))))
+         (tower_encode_byte z
+            (BinNums.Zpos (BinNums.xO (BinNums.xI BinNums.xH))))
+         (tower_encode_byte z
+            (BinNums.Zpos (BinNums.xI (BinNums.xI BinNums.xH)))) =
+       tower_wrap64 z
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.tower_getw_setw
+tower_getw_setw
+     : forall (m : BinNums.Z -> BinNums.Z) (a z : BinNums.Z),
+       tower_getw (tower_setw m a z) a = tower_wrap64 z
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.cm_store_width_positive
+cm_store_width_positive
+     : forall ty : cm_type, BinInt.Z.lt BinNums.Z0 (cm_store_width ty)
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.cm_store_mem_word_outside
+cm_store_mem_word_outside
+     : forall (ty : cm_type) (base n : BinNums.Z)
+         (mem : BinNums.Z -> BinNums.Z) (a : BinNums.Z),
+       BinInt.Z.le
+         (BinInt.Z.add a
+            (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+         base \/ BinInt.Z.le (BinInt.Z.add base (cm_store_width ty)) a ->
+       tower_getw (cm_store_mem ty base n mem) a = tower_getw mem a
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.cm_clear_tagged_survives
+cm_clear_tagged_survives
+     : forall (old : BinNums.Z -> bool) (base width a : BinNums.Z),
+       BinInt.Z.lt BinNums.Z0 width ->
+       cm_clear_tagged old base width a = true ->
+       old a = true /\
+       (BinInt.Z.le
+          (BinInt.Z.add a
+             (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+          base \/ BinInt.Z.le (BinInt.Z.add base width) a)
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.cm_store_preserved_tag
+cm_store_preserved_tag
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (a : BinNums.Z),
+       cm_clear_tagged (cm_state_tagged st) (cm_value_number st ptr)
+         (cm_store_width ty) a = true ->
+       cm_state_tagged st a = true /\
+       (BinInt.Z.le
+          (BinInt.Z.add a
+             (BinNums.Zpos (BinNums.xO (BinNums.xO (BinNums.xO BinNums.xH)))))
+          (cm_value_number st ptr) \/
+        BinInt.Z.le
+          (BinInt.Z.add (cm_value_number st ptr) (cm_store_width ty)) a) /\
+       cm_state_tags (cm_state_store ty ptr v st) a = cm_state_tags st a
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.cm_store_old_provenance_sim
+cm_store_old_provenance_sim
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (vmem : BinNums.Z -> BinNums.Z) (a : BinNums.Z),
+       cm_stored_provenance_sim st vmem ->
+       cm_clear_tagged (cm_state_tagged st) (cm_value_number st ptr)
+         (cm_store_width ty) a = true ->
+       cm_live_address st a ->
+       cm_state_init (cm_state_store ty ptr v st) a = true /\
+       tower_getw
+         (cm_store_mem ty (cm_value_number st ptr)
+            (cm_value_number st (cm_convert_value st ty v)) vmem) a =
+       cm_value_number (cm_state_store ty ptr v st)
+         (cm_state_tags (cm_state_store ty ptr v st) a)
+Closed under the global context
+AUDIT cmc_simulation_memory_migration_lib.cm_store_provenance_sim
+cm_store_provenance_sim
+     : forall (ty : cm_type) (ptr v : cm_value) (st : cm_src_state)
+         (vmem : BinNums.Z -> BinNums.Z),
+       cm_stored_provenance_sim st vmem ->
+       cm_stored_provenance_sim (cm_state_store ty ptr v st)
+         (cm_store_mem ty (cm_value_number st ptr)
+            (cm_value_number st (cm_convert_value st ty v)) vmem)
+Closed under the global context

@@ -1,0 +1,29 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.3 secs (1.221u,0.078s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 124 - 145 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 146 - 171 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 172 - 300 [Lemma~tower_getb_setw_outside~...] 0. secs (0.u,0.s)
+Chars 301 - 307 [Proof.] 0. secs (0.u,0.s)
+Chars 308 - 376 [(intro~OUT;~unfold~tower_getb,...] 0.006 secs (0.003u,0.s)
+Chars 377 - 381 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 382 - 519 [Lemma~tower_getw_setw_outside~...] 0.027 secs (0.025u,0.001s)
+Chars 520 - 526 [Proof.] 0. secs (0.u,0.s)
+Chars 527 - 636 [(intros~OUT;~apply~tower_getw_...] 0. secs (0.u,0.s)
+Chars 637 - 641 [Qed.] 0. secs (0.u,0.s)
+Chars 642 - 841 [Lemma~cm_temp_initialized_sim~...] 0. secs (0.u,0.s)
+Chars 842 - 848 [Proof.] 0. secs (0.u,0.s)
+Chars 849 - 939 [(intros~OUT~SIM~a~INIT~LIVE;~~...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_state/build/Rocq/examples/QCP_demos_human/cmc_target_temp_memory_migration_lib.v", line 11, characters 69-96:
+Error:
+In environment
+st : cm_src_state
+mem : Z -> Z
+base, value : Z
+OUT : forall a : Z, cm_live_address st a -> a < base \/ base + 8 <= a
+SIM : cm_initialized_bytes_sim st mem
+a : Z
+INIT : cm_state_init st a = true
+LIVE : cm_live_address st a
+Unable to unify "cm_initialized_bytes_sim st mem" with
+ "cm_live_address st a".
+

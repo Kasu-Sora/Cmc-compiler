@@ -1,0 +1,56 @@
+00 pc=00 PUSH 1048576: stack=[1048576], fp=0, next=1
+01 pc=01 PUSH 8: stack=[1048576, 8], fp=0, next=2
+02 pc=02 STORE 0: stack=[], fp=1048576, next=3
+03 pc=03 CALL 11: stack=[], fp=1048576, next=11
+04 pc=11 PUSH 8: stack=[8], fp=1048576, next=12
+05 pc=12 LOAD 0: stack=[1048576], fp=1048576, next=13
+06 pc=13 DUP 0: stack=[1048576, 1048576], fp=1048576, next=14
+07 pc=14 PUSH 24: stack=[1048576, 1048576, 24], fp=1048576, next=15
+08 pc=15 SUB 0: stack=[1048576, 1048552], fp=1048576, next=16
+09 pc=16 STORE 0: stack=[], fp=1048576, next=17
+10 pc=17 PUSH 8: stack=[8], fp=1048576, next=18
+11 pc=18 LOAD 0: stack=[1048576], fp=1048576, next=19
+12 pc=19 PUSH 24: stack=[1048576, 24], fp=1048576, next=20
+13 pc=20 SUB 0: stack=[1048552], fp=1048576, next=21
+14 pc=21 DUP 0: stack=[1048552, 1048552], fp=1048576, next=22
+15 pc=22 PUSH 8: stack=[1048552, 1048552, 8], fp=1048576, next=23
+16 pc=23 STORE 0: stack=[1048552], fp=1048552, next=24
+17 pc=24 POP 0: stack=[], fp=1048552, next=25
+18 pc=25 PUSH 2: stack=[2], fp=1048552, next=26
+19 pc=26 PUSH 8: stack=[2, 8], fp=1048552, next=27
+20 pc=27 LOAD 0: stack=[2, 1048552], fp=1048552, next=28
+21 pc=28 PUSH 8: stack=[2, 1048552, 8], fp=1048552, next=29
+22 pc=29 ADD 0: stack=[2, 1048560], fp=1048552, next=30
+23 pc=30 STORE 0: stack=[], fp=1048552, next=31
+24 pc=31 PUSH 8: stack=[8], fp=1048552, next=32
+25 pc=32 LOAD 0: stack=[1048552], fp=1048552, next=33
+26 pc=33 PUSH 8: stack=[1048552, 8], fp=1048552, next=34
+27 pc=34 ADD 0: stack=[1048560], fp=1048552, next=35
+28 pc=35 LOAD 0: stack=[2], fp=1048552, next=36
+29 pc=36 PUSH 8: stack=[2, 8], fp=1048552, next=37
+30 pc=37 LOAD 0: stack=[2, 1048552], fp=1048552, next=38
+31 pc=38 PUSH 16: stack=[2, 1048552, 16], fp=1048552, next=39
+32 pc=39 ADD 0: stack=[2, 1048568], fp=1048552, next=40
+33 pc=40 STORE 0: stack=[], fp=1048552, next=41
+34 pc=41 PUSH 3: stack=[3], fp=1048552, next=42
+35 pc=42 PUSH 8: stack=[3, 8], fp=1048552, next=43
+36 pc=43 LOAD 0: stack=[3, 1048552], fp=1048552, next=44
+37 pc=44 PUSH 16: stack=[3, 1048552, 16], fp=1048552, next=45
+38 pc=45 ADD 0: stack=[3, 1048568], fp=1048552, next=46
+39 pc=46 LOAD 0: stack=[3, 2], fp=1048552, next=47
+40 pc=47 SWAP 0: stack=[2, 3], fp=1048552, next=48
+41 pc=48 ADD 0: stack=[5], fp=1048552, next=49
+42 pc=49 PUSH 8: stack=[5, 8], fp=1048552, next=50
+43 pc=50 LOAD 0: stack=[5, 1048552], fp=1048552, next=51
+44 pc=51 LOAD 0: stack=[5, 1048576], fp=1048552, next=52
+45 pc=52 PUSH 8: stack=[5, 1048576, 8], fp=1048552, next=53
+46 pc=53 STORE 0: stack=[5], fp=1048576, next=54
+47 pc=54 RET 0: stack=[5], fp=1048576, next=4
+48 pc=04 PUSH 256: stack=[5, 256], fp=1048576, next=5
+49 pc=05 MOD 0: stack=[5], fp=1048576, next=6
+50 pc=06 PUSH 256: stack=[5, 256], fp=1048576, next=7
+51 pc=07 ADD 0: stack=[261], fp=1048576, next=8
+52 pc=08 PUSH 256: stack=[261, 256], fp=1048576, next=9
+53 pc=09 MOD 0: stack=[5], fp=1048576, next=10
+54 pc=10 HALT status=5
+input=[] output=[] status=5

@@ -1,0 +1,175 @@
+{
+  "groups": [
+    {
+      "id": "byte_encoding",
+      "estimated_difficulty": 5,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_word_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_1": "Encoding pattern E, byte k=7, divisor 72057594037927936: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=7 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_2": "Encoding pattern E, byte k=6, divisor 281474976710656: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=6 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_3": "Encoding pattern E, byte k=5, divisor 1099511627776: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=5 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_4": "Encoding pattern E, byte k=4, divisor 4294967296: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=4 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_5": "Encoding pattern E, byte k=3, divisor 16777216: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=3 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_6": "Encoding pattern E, byte k=2, divisor 65536: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=2 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_7": "Encoding pattern E, byte k=1, divisor 256: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=1 and normalize the numeric power. The wrapped 64-bit value is nonnegative, so C quotient agrees with floor division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_8": "Encoding pattern E, byte k=0, divisor 1: introduce the pure equality over the unchanged prefix segment; specialize tower_machine_byte__byte_encoding at k=0 and normalize the numeric power; simplify quotient by 1 for the source expression without division.",
+            "proof_of_cmc_write_word_entail_wit_1_split_goal_spatial": "Segment pattern S: replace ((cursor_pre + 1) + 1) by cursor_pre + 2 using integer arithmetic, then close the identical UCharArray.seg entailment by reflexivity. Prefix contents and data_pre coincide; no existential or heap split."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_1_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_1_pure_split_goal_1": "Encoding pattern E at k=0: leave the local scalar cells, initialized prefix and undefined suffix unused for the pure conclusion; specialize tower_machine_byte__byte_encoding, normalize 256^0; eliminate quotient by 1.",
+            "proof_of_cmc_write_word_partial_solve_wit_1_pure_split_goal_2": "Bound pattern B, k=0, lower bound: unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_1_pure_split_goal_3": "Bound pattern B, k=0, upper bound: unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_2_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_2_pure_split_goal_1": "Encoding pattern E at k=1: leave the local scalar cells, initialized prefix and undefined suffix unused for the pure conclusion; specialize tower_machine_byte__byte_encoding, normalize 256^1, and use nonnegativity of unsigned_last_nbits for quotient-to-floor conversion.",
+            "proof_of_cmc_write_word_partial_solve_wit_2_pure_split_goal_2": "Bound pattern B, k=1, lower bound: unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_2_pure_split_goal_3": "Bound pattern B, k=1, upper bound: unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "tower_mod_div_byte__byte_encoding",
+          "visibility": "public",
+          "strategy": "Prove forall z d q : Z, 0 < d -> 0 < q -> ((z mod (d * 256 * q)) / d) mod 256 = (z / d) mod 256. Use the Euclidean quotient/remainder decomposition for z by d*256*q and the positive-divisor addition/multiplication laws; division changes by a multiple of 256*q, removed by the final modulo. This holds for negative z as well. Used by the machine-byte bridge with d=256^k and q=256^(7-k)."
+        },
+        {
+          "name": "tower_machine_byte__byte_encoding",
+          "visibility": "public",
+          "strategy": "Prove forall z k : Z, 0 <= k <= 7 -> unsigned_last_nbits ((Z.quot (unsigned_last_nbits z 64) (256^k)) mod 256) 8 = tower_encode_byte z k. Unfold unsigned truncation to modulo powers of two; remove outer 8-bit truncation by modulo idempotence, use nonnegativity of z mod 2^64 to replace quot by div, apply tower_mod_div_byte__byte_encoding with d=256^k and q=256^(7-k), then enumerate k=0..7 and combine iterated positive floor divisions to division by 256^k. All positivity and power identities are numeric after the finite case split. No signed-range premise is needed, which is essential for entail_wit_1 splits."
+        }
+      ]
+    },
+    {
+      "id": "segment_transitions",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_word_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_entail_wit_2_split_goal_spatial": "Segment pattern S: replace ((cursor_pre + 2) + 1) by cursor_pre + 3 using integer arithmetic, then close the identical UCharArray.seg entailment by reflexivity. Prefix contents and data_pre coincide; no existential or heap split."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_entail_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_entail_wit_3_split_goal_spatial": "Segment pattern S: replace ((cursor_pre + 3) + 1) by cursor_pre + 4 using integer arithmetic, then close the identical UCharArray.seg entailment by reflexivity. Prefix contents and data_pre coincide; no existential or heap split."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_entail_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_entail_wit_4_split_goal_spatial": "Segment pattern S: replace ((cursor_pre + 4) + 1) by cursor_pre + 5 using integer arithmetic, then close the identical UCharArray.seg entailment by reflexivity. Prefix contents and data_pre coincide; no existential or heap split."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_entail_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_entail_wit_5_split_goal_spatial": "Segment pattern S: replace ((cursor_pre + 5) + 1) by cursor_pre + 6 using integer arithmetic, then close the identical UCharArray.seg entailment by reflexivity. Prefix contents and data_pre coincide; no existential or heap split."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_entail_wit_6",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_entail_wit_6_split_goal_spatial": "Segment pattern S: replace ((cursor_pre + 6) + 1) by cursor_pre + 7 using integer arithmetic, then close the identical UCharArray.seg entailment by reflexivity. Prefix contents and data_pre coincide; no existential or heap split."
+          }
+        }
+      ]
+    },
+    {
+      "id": "byte_bounds",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_3_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_3_pure_split_goal_1": "Bound pattern B, k=2, lower bound: rewrite b2 using the explicit PreH11 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_3_pure_split_goal_2": "Bound pattern B, k=2, upper bound: rewrite b2 using the explicit PreH11 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_3_pure_split_goal_3": "Bound pattern B, k=2, upper bound: rewrite b2 using the explicit PreH11 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_3_pure_split_goal_4": "Bound pattern B, k=2, lower bound: rewrite b2 using the explicit PreH11 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_4_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_4_pure_split_goal_1": "Bound pattern B, k=3, lower bound: rewrite b3 using the explicit PreH12 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_4_pure_split_goal_2": "Bound pattern B, k=3, upper bound: rewrite b3 using the explicit PreH12 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_4_pure_split_goal_3": "Bound pattern B, k=3, upper bound: rewrite b3 using the explicit PreH12 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_4_pure_split_goal_4": "Bound pattern B, k=3, lower bound: rewrite b3 using the explicit PreH12 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_5_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_5_pure_split_goal_1": "Bound pattern B, k=4, lower bound: rewrite b4 using the explicit PreH13 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_5_pure_split_goal_2": "Bound pattern B, k=4, upper bound: rewrite b4 using the explicit PreH13 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_5_pure_split_goal_3": "Bound pattern B, k=4, upper bound: rewrite b4 using the explicit PreH13 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_5_pure_split_goal_4": "Bound pattern B, k=4, lower bound: rewrite b4 using the explicit PreH13 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_6_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_6_pure_split_goal_1": "Bound pattern B, k=5, lower bound: rewrite b5 using the explicit PreH14 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_6_pure_split_goal_2": "Bound pattern B, k=5, upper bound: rewrite b5 using the explicit PreH14 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_6_pure_split_goal_3": "Bound pattern B, k=5, upper bound: rewrite b5 using the explicit PreH14 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_6_pure_split_goal_4": "Bound pattern B, k=5, lower bound: rewrite b5 using the explicit PreH14 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_7_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_7_pure_split_goal_1": "Bound pattern B, k=6, lower bound: rewrite b6 using the explicit PreH15 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_7_pure_split_goal_2": "Bound pattern B, k=6, upper bound: rewrite b6 using the explicit PreH15 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_7_pure_split_goal_3": "Bound pattern B, k=6, upper bound: rewrite b6 using the explicit PreH15 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_7_pure_split_goal_4": "Bound pattern B, k=6, lower bound: rewrite b6 using the explicit PreH15 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_word_partial_solve_wit_8_pure",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_partial_solve_wit_8_pure_split_goal_1": "Bound pattern B, k=7, lower bound: rewrite b7 using the explicit PreH16 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_8_pure_split_goal_2": "Bound pattern B, k=7, upper bound: rewrite b7 using the explicit PreH16 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_8_pure_split_goal_3": "Bound pattern B, k=7, upper bound: rewrite b7 using the explicit PreH16 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the upper bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation.",
+            "proof_of_cmc_write_word_partial_solve_wit_8_pure_split_goal_4": "Bound pattern B, k=7, lower bound: rewrite b7 using the explicit PreH16 equality; unfold tower_encode_byte at this fixed index and tower_u8; project the lower bound from Z.mod_pos_bound with divisor 256. Introduce the pure fact from these scalar facts; the local cells and array segments require no transformation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "final_result",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_word_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_word_return_wit_1_split_goal_spatial": "Return pattern R: normalize ((cursor_pre + 7) + 1) to cursor_pre + 8; unfold tower_word_bytes only, rewrite nested singleton appends using list append associativity and simplification to prefix ++ [byte0; ...; byte7], and close identical UCharArray.seg resources. No existential or array split is needed."
+          }
+        }
+      ]
+    }
+  ]
+}

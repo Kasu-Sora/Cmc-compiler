@@ -1,0 +1,44 @@
+{
+  "groups": [
+    {
+      "id": "zero_step",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_zeroes_entail_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_zeroes_entail_wit_2_split_goal_spatial": "Introduce the quantified values and pure premises. The antecedent and consequent each own one UCharArray.seg at data_pre with start 0. Normalize (cursor_pre + index) + 1 = cursor_pre + (index + 1) by integer associativity. Use zeros_snoc__zero_step at index, whose nonnegativity premise is PreH2, and list append associativity to identify (prefix ++ zeros index) ++ [0] with prefix ++ zeros (index + 1). Rewrite and close by entailment reflexivity/cancellation. No existential, array splitting, or refinement premise is needed."
+          }
+        }
+      ],
+      "helpers": [
+        {
+          "name": "zeros_snoc__zero_step",
+          "strategy": "Prove forall n : Z, 0 <= n -> zeros (n + 1) = zeros n ++ (0 :: nil). Unfold the library zero-list definition, use nonnegativity to turn the integer increment into the successor length, and prove the resulting constant-list append identity by the library repeat/list laws or induction on that natural length. This pure identity is applied only at index with PreH2; it needs no memory or capacity premise.",
+          "visibility": "public"
+        }
+      ]
+    },
+    {
+      "id": "boundary_rewrites",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cmc_write_zeroes_entail_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_zeroes_entail_wit_1_split_goal_spatial": "Introduce quantified values and premises. Both sides own one UCharArray.seg at data_pre, start 0. Reduce zeros 0 to nil, rewrite prefix ++ nil = prefix and cursor_pre + 0 = cursor_pre, then close the identical spatial assertion by entailment reflexivity/cancellation. No existential or additional pure premise is required."
+          }
+        },
+        {
+          "name": "proof_of_cmc_write_zeroes_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cmc_write_zeroes_return_wit_1_split_goal_spatial": "Introduce quantified values and premises. Rewrite index = count_pre using PreH1 in the endpoint cursor_pre + index and in zeros index. The single UCharArray.seg resource on each side is then identical; close by entailment reflexivity/cancellation. There are no existential witnesses, resource splits, or additional mathematical helpers."
+          }
+        }
+      ]
+    }
+  ]
+}

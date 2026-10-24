@@ -1,0 +1,520 @@
+Chars 0 - 77 [Require~Import~SimpleC.EE.QCP_...] 1.266 secs (1.183u,0.081s)
+Chars 78 - 88 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_call_layout_migration_lib.cm_layout_enter_call
+Chars 89 - 159 [idtac~"AUDIT~cmc_code_call_lay...] 0. secs (0.u,0.s)
+Chars 160 - 168 [exact~I.] 0. secs (0.u,0.s)
+Chars 169 - 173 [Qed.] 0. secs (0.u,0.s)
+cm_layout_enter_call
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (caller callee : BinNums.Z) 
+         (st : cm_src_state) (values : list cm_value) 
+         (ret : cm_type) (returnpc temp breakpc continuepc : BinNums.Z)
+         (tail : list cm_acursor) (spills : list cm_spill)
+         (saved : list cm_spill_frame) (calls : list cm_call_sim_frame),
+       BinInt.Z.le BinNums.Z0 callee /\
+       BinInt.Z.lt callee (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_code_at (cm_model_code (cm_source_function_policy sp) p) returnpc
+         (cm_cont_code sp p caller returnpc temp tail) ->
+       cm_saved_layout sp ap p
+         (cm_model_code (cm_source_function_policy sp) p) caller tail calls ->
+       cm_task_layout sp ap p
+         (CMSTask p callee
+            (cm_function_body (cm_source_function_at sp callee p))
+            (cm_enter_call sp p callee values st)
+            (CMCallK caller (cm_state_env st) (cm_state_fp st)
+               (cm_state_regions st) ret :: cm_cursor_frames tail))
+         (cm_ann_enter_call sp p caller callee st ret returnpc temp breakpc
+            continuepc tail spills saved calls)
+Chars 174 - 236 [Check~cmc_code_call_layout_mig...] 0.001 secs (0.u,0.s)
+Closed under the global context
+Chars 237 - 311 [Print~Assumptions~cmc_code_cal...] 0.115 secs (0.105u,0.004s)
+Chars 312 - 322 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_call_layout_migration_lib.cm_model_status_tail_at
+Chars 323 - 396 [idtac~"AUDIT~cmc_code_call_lay...] 0. secs (0.u,0.s)
+Chars 397 - 405 [exact~I.] 0. secs (0.u,0.s)
+Chars 406 - 410 [Qed.] 0. secs (0.u,0.s)
+cm_model_status_tail_at
+     : forall (sp : cm_source_lookup_policy) (p : cm_program),
+       cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+         (BinNums.Zpos (BinNums.xO (BinNums.xO BinNums.xH)))
+         cm_status_tail_code
+Chars 411 - 476 [Check~cmc_code_call_layout_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 477 - 554 [Print~Assumptions~cmc_code_cal...] 0. secs (0.u,0.s)
+Chars 555 - 565 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_call_layout_migration_lib.cm_start_task_layout_step
+Chars 566 - 641 [idtac~"AUDIT~cmc_code_call_lay...] 0. secs (0.u,0.s)
+Chars 642 - 650 [exact~I.] 0. secs (0.u,0.s)
+Chars 651 - 655 [Qed.] 0. secs (0.u,0.s)
+cm_start_task_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_call_ok sp p (cm_program_main p) nil (cm_initial_state sp p input) =
+       true ->
+       cm_task_layout sp ap p (cm_step sp (CMStartTask p input))
+         (cm_update_annotation
+            (cm_annotation_step sp ap (CMStartTask p input)
+               cm_initial_annotation))
+Chars 656 - 723 [Check~cmc_code_call_layout_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 724 - 803 [Print~Assumptions~cmc_code_cal...] 0.737 secs (0.728u,0.008s)
+Chars 804 - 814 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_call_layout_migration_lib.cm_r_call_nil_layout_step
+Chars 815 - 890 [idtac~"AUDIT~cmc_code_call_lay...] 0. secs (0.u,0.s)
+Chars 891 - 899 [exact~I.] 0. secs (0.u,0.s)
+Chars 900 - 904 [Qed.] 0. secs (0.u,0.s)
+cm_r_call_nil_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid callee : BinNums.Z) 
+         (ty : cm_type) (st : cm_src_state) (ann : cm_annotation),
+       cm_call_ok sp p callee nil st = true ->
+       BinInt.Z.lt (cm_call_depth (cm_cursor_frames (cm_ann_cursors ann)))
+         (BinNums.Zpos
+            (BinNums.xO
+               (BinNums.xO
+                  (BinNums.xO
+                     (BinNums.xO
+                        (BinNums.xO
+                           (BinNums.xO
+                              (BinNums.xO
+                                 (BinNums.xO
+                                    (BinNums.xO
+                                       (BinNums.xO
+                                          (BinNums.xO
+                                             (BinNums.xO
+                                                (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO
+                                                 (BinNums.xO BinNums.xH))))))))))))))))) ->
+       cm_task_layout sp ap p
+         (CMRTask p fid (CMCallE callee nil ty) st
+            (cm_cursor_frames (cm_ann_cursors ann))) ann ->
+       cm_task_layout sp ap p
+         (cm_rstart sp p fid (CMCallE callee nil ty) st
+            (cm_cursor_frames (cm_ann_cursors ann)))
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMCallE callee nil ty)))
+Chars 905 - 972 [Check~cmc_code_call_layout_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 973 - 1052 [Print~Assumptions~cmc_code_cal...] 0.118 secs (0.118u,0.s)
+Chars 1053 - 1130 [Require~Import~SimpleC.EE.QCP_...] 0.002 secs (0.001u,0.s)
+Chars 1131 - 1141 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_expr_struct_migration_lib.cm_r_putc_layout_step
+Chars 1142 - 1213 [idtac~"AUDIT~cmc_code_expr_str...] 0. secs (0.u,0.s)
+Chars 1214 - 1222 [exact~I.] 0. secs (0.u,0.s)
+Chars 1223 - 1227 [Qed.] 0. secs (0.u,0.s)
+cm_r_putc_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (arg : cm_expr) 
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMPutcE arg ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMPutcE arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMPutcE arg ty)))
+Chars 1228 - 1291 [Check~cmc_code_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1292 - 1367 [Print~Assumptions~cmc_code_exp...] 0.003 secs (0.003u,0.s)
+Chars 1368 - 1378 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_expr_struct_migration_lib.cm_r_puti_layout_step
+Chars 1379 - 1450 [idtac~"AUDIT~cmc_code_expr_str...] 0. secs (0.u,0.s)
+Chars 1451 - 1459 [exact~I.] 0. secs (0.u,0.s)
+Chars 1460 - 1464 [Qed.] 0. secs (0.u,0.s)
+cm_r_puti_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (arg : cm_expr) 
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMPutiE arg ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMPutiE arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMPutiE arg ty)))
+Chars 1465 - 1528 [Check~cmc_code_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1529 - 1604 [Print~Assumptions~cmc_code_exp...] 0.003 secs (0.003u,0.s)
+Chars 1605 - 1615 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_expr_struct_migration_lib.cm_r_exit_layout_step
+Chars 1616 - 1687 [idtac~"AUDIT~cmc_code_expr_str...] 0. secs (0.u,0.s)
+Chars 1688 - 1696 [exact~I.] 0. secs (0.u,0.s)
+Chars 1697 - 1701 [Qed.] 0. secs (0.u,0.s)
+cm_r_exit_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (arg : cm_expr) 
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMExitE arg ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMExitE arg ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMExitE arg ty)))
+Chars 1702 - 1765 [Check~cmc_code_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 1766 - 1841 [Print~Assumptions~cmc_code_exp...] 0.001 secs (0.001u,0.s)
+Chars 1842 - 1852 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_expr_struct_migration_lib.cm_r_index_layout_step
+Chars 1853 - 1925 [idtac~"AUDIT~cmc_code_expr_str...] 0. secs (0.u,0.s)
+Chars 1926 - 1934 [exact~I.] 0. secs (0.u,0.s)
+Chars 1935 - 1939 [Qed.] 0. secs (0.u,0.s)
+cm_r_index_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (base index : cm_expr)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMIndexE base index ty) st ks)
+         ann ->
+       cm_task_layout sp ap p
+         (cm_rstart sp p fid (CMIndexE base index ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMIndexE base index ty)))
+Chars 1940 - 2004 [Check~cmc_code_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2005 - 2081 [Print~Assumptions~cmc_code_exp...] 0.226 secs (0.225u,0.s)
+Chars 2082 - 2092 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_expr_struct_migration_lib.cm_r_assign_layout_step
+Chars 2093 - 2166 [idtac~"AUDIT~cmc_code_expr_str...] 0. secs (0.u,0.s)
+Chars 2167 - 2175 [exact~I.] 0. secs (0.u,0.s)
+Chars 2176 - 2180 [Qed.] 0. secs (0.u,0.s)
+cm_r_assign_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (dst src : cm_expr)
+         (ty : cm_type) (st : cm_src_state) (ks : list cm_frame)
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMAssignE dst src ty) st ks)
+         ann ->
+       cm_task_layout sp ap p
+         (cm_rstart sp p fid (CMAssignE dst src ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMAssignE dst src ty)))
+Chars 2181 - 2246 [Check~cmc_code_expr_struct_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2247 - 2324 [Print~Assumptions~cmc_code_exp...] 0.177 secs (0.176u,0.s)
+Chars 2325 - 2405 [Require~Import~~~SimpleC.EE.QC...] 0.001 secs (0.001u,0.s)
+Chars 2406 - 2416 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_function_sites_migration_lib.cm_function_code_prefix_length
+Chars 2417 - 2500 [idtac~~"AUDIT~cmc_code_functio...] 0. secs (0.u,0.s)
+Chars 2501 - 2509 [exact~I.] 0. secs (0.u,0.s)
+Chars 2510 - 2514 [Qed.] 0. secs (0.u,0.s)
+cm_function_code_prefix_length
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (functions : list cm_function_d) (start index : BinNums.Z),
+       start =
+       BinInt.Z.sub (Zcomplements.Zlength (cm_program_functions p))
+         (Zcomplements.Zlength functions) ->
+       Zcomplements.Zlength
+         (cm_function_code_prefix policy p start functions index) =
+       cm_function_prefix policy p functions index
+Chars 2515 - 2590 [Check~cmc_code_function_sites_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2591 - 2678 [Print~Assumptions~cmc_code_fun...] 0.14 secs (0.139u,0.s)
+Chars 2679 - 2689 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_function_sites_migration_lib.cm_functions_function_at
+Chars 2690 - 2767 [idtac~"AUDIT~cmc_code_function...] 0. secs (0.u,0.s)
+Chars 2768 - 2776 [exact~I.] 0. secs (0.u,0.s)
+Chars 2777 - 2781 [Qed.] 0. secs (0.u,0.s)
+cm_functions_function_at
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (functions : list cm_function_d) (start index : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 index /\
+       BinInt.Z.lt index (Zcomplements.Zlength functions) ->
+       cm_code_at (cm_emit_functions policy p start functions)
+         (Zcomplements.Zlength
+            (cm_function_code_prefix policy p start functions index))
+         (cm_emit_function policy p (BinInt.Z.add start index))
+Chars 2782 - 2851 [Check~cmc_code_function_sites_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 2852 - 2933 [Print~Assumptions~cmc_code_fun...] 0.113 secs (0.113u,0.s)
+Chars 2934 - 2944 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_function_sites_migration_lib.cm_model_function_at
+Chars 2945 - 3018 [idtac~"AUDIT~cmc_code_function...] 0. secs (0.u,0.s)
+Chars 3019 - 3027 [exact~I.] 0. secs (0.u,0.s)
+Chars 3028 - 3032 [Qed.] 0. secs (0.u,0.s)
+cm_model_function_at
+     : forall (policy : cm_lookup_policy) (p : cm_program) (fid : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_code_at (cm_model_code policy p) (cm_function_pc policy p fid)
+         (cm_emit_function policy p fid)
+Chars 3033 - 3098 [Check~cmc_code_function_sites_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3099 - 3176 [Print~Assumptions~cmc_code_fun...] 0.121 secs (0.12u,0.s)
+Chars 3177 - 3187 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_function_sites_migration_lib.cm_model_function_body_tail_at
+Chars 3188 - 3271 [idtac~~"AUDIT~cmc_code_functio...] 0. secs (0.u,0.s)
+Chars 3272 - 3280 [exact~I.] 0. secs (0.u,0.s)
+Chars 3281 - 3285 [Qed.] 0. secs (0.u,0.s)
+cm_model_function_body_tail_at
+     : forall (policy : cm_lookup_policy) (p : cm_program) (fid : BinNums.Z),
+       BinInt.Z.le BinNums.Z0 fid /\
+       BinInt.Z.lt fid (Zcomplements.Zlength (cm_program_functions p)) ->
+       cm_code_at (cm_model_code policy p)
+         (BinInt.Z.add (cm_function_pc policy p fid)
+            (cm_function_prologue_count
+               (cm_function_at policy fid (cm_program_functions p))))
+         (cm_emit_stmt policy p fid
+            (BinInt.Z.add (cm_function_pc policy p fid)
+               (cm_function_prologue_count
+                  (cm_function_at policy fid (cm_program_functions p))))
+            BinNums.Z0 BinNums.Z0 BinNums.Z0
+            (cm_function_body
+               (cm_function_at policy fid (cm_program_functions p))) ++
+          cm_fallthrough_tail_code)
+Chars 3286 - 3361 [Check~cmc_code_function_sites_...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3362 - 3449 [Print~Assumptions~cmc_code_fun...] 0.09 secs (0.09u,0.s)
+Chars 3450 - 3527 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 3528 - 3606 [Require~Import~SimpleC.EE.QCP_...] 0. secs (0.u,0.s)
+Chars 3607 - 3617 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_task_layout_done
+Chars 3618 - 3688 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 3689 - 3697 [exact~I.] 0. secs (0.u,0.s)
+Chars 3698 - 3702 [Qed.] 0. secs (0.u,0.s)
+cm_task_layout_done
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (st : cm_src_state) (ctl : cm_control)
+         (status : BinNums.Z) (ann : cm_annotation),
+       cm_task_layout sp ap p (CMDoneTask st ctl status) ann
+Chars 3703 - 3765 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 3766 - 3840 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 3841 - 3851 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_task_layout_initial
+Chars 3852 - 3925 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 3926 - 3934 [exact~I.] 0. secs (0.u,0.s)
+Chars 3935 - 3939 [Qed.] 0. secs (0.u,0.s)
+cm_task_layout_initial
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (input : list BinNums.Z),
+       cm_task_layout sp ap p (CMStartTask p input) cm_initial_annotation
+Chars 3940 - 4005 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4006 - 4083 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 4084 - 4094 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_saved_layout_plain
+Chars 4095 - 4167 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 4168 - 4176 [exact~I.] 0. secs (0.u,0.s)
+Chars 4177 - 4181 [Qed.] 0. secs (0.u,0.s)
+cm_saved_layout_plain
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid pc temp breakpc continuepc : BinNums.Z)
+         (ann : cm_annotation),
+       cm_saved_layout sp ap p
+         (cm_model_code (cm_source_function_policy sp) p) fid
+         (cm_ann_cursors (cm_ann_plain pc temp breakpc continuepc ann))
+         (cm_ann_calls (cm_ann_plain pc temp breakpc continuepc ann)) <->
+       cm_saved_layout sp ap p
+         (cm_model_code (cm_source_function_policy sp) p) fid
+         (cm_ann_cursors ann) (cm_ann_calls ann)
+Chars 4182 - 4246 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4247 - 4323 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 4324 - 4334 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_rvalue_code_length
+Chars 4335 - 4414 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 4415 - 4423 [exact~I.] 0. secs (0.u,0.s)
+Chars 4424 - 4428 [Qed.] 0. secs (0.u,0.s)
+cm_layout_rvalue_code_length
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (expr : cm_expr) (pc temp : BinNums.Z),
+       Zcomplements.Zlength (cm_emit_rvalue policy p fid pc temp expr) =
+       cm_rvalue_code_count policy p fid expr
+Chars 4429 - 4500 [Check~cmc_code_layout_facts_mi...] 0.058 secs (0.058u,0.s)
+Closed under the global context
+Chars 4501 - 4584 [Print~Assumptions~cmc_code_lay...] 0.093 secs (0.093u,0.s)
+Chars 4585 - 4595 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_lvalue_code_length
+Chars 4596 - 4675 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 4676 - 4684 [exact~I.] 0. secs (0.u,0.s)
+Chars 4685 - 4689 [Qed.] 0. secs (0.u,0.s)
+cm_layout_lvalue_code_length
+     : forall (policy : cm_lookup_policy) (p : cm_program) 
+         (fid : BinNums.Z) (expr : cm_expr) (pc temp : BinNums.Z),
+       Zcomplements.Zlength (cm_emit_lvalue policy p fid pc temp expr) =
+       cm_lvalue_code_count policy p fid expr
+Chars 4690 - 4761 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 4762 - 4845 [Print~Assumptions~cmc_code_lay...] 0.092 secs (0.091u,0.s)
+Chars 4846 - 4856 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_load_length
+Chars 4857 - 4929 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 4930 - 4938 [exact~I.] 0. secs (0.u,0.s)
+Chars 4939 - 4943 [Qed.] 0. secs (0.u,0.s)
+cm_layout_load_length
+     : forall ty : cm_type,
+       Zcomplements.Zlength (cm_load_code ty) = BinNums.Zpos BinNums.xH
+Chars 4944 - 5008 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5009 - 5085 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 5086 - 5096 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_store_length
+Chars 5097 - 5170 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 5171 - 5179 [exact~I.] 0. secs (0.u,0.s)
+Chars 5180 - 5184 [Qed.] 0. secs (0.u,0.s)
+cm_layout_store_length
+     : forall ty : cm_type,
+       Zcomplements.Zlength (cm_store_code ty) = BinNums.Zpos BinNums.xH
+Chars 5185 - 5250 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5251 - 5328 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 5329 - 5339 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_temp_store_length
+Chars 5340 - 5418 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 5419 - 5427 [exact~I.] 0. secs (0.u,0.s)
+Chars 5428 - 5432 [Qed.] 0. secs (0.u,0.s)
+cm_layout_temp_store_length
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid temp : BinNums.Z),
+       Zcomplements.Zlength (cm_temp_store_code policy p fid temp) =
+       BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH))
+Chars 5433 - 5503 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5504 - 5586 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 5587 - 5597 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_temp_load_length
+Chars 5598 - 5675 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 5676 - 5684 [exact~I.] 0. secs (0.u,0.s)
+Chars 5685 - 5689 [Qed.] 0. secs (0.u,0.s)
+cm_layout_temp_load_length
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid temp : BinNums.Z),
+       Zcomplements.Zlength (cm_temp_load_code policy p fid temp) =
+       BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH))
+Chars 5690 - 5759 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 5760 - 5841 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 5842 - 5852 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_char_normalize_length
+Chars 5853 - 5935 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 5936 - 5944 [exact~I.] 0. secs (0.u,0.s)
+Chars 5945 - 5949 [Qed.] 0. secs (0.u,0.s)
+cm_layout_char_normalize_length
+     : forall ty : cm_type,
+       Zcomplements.Zlength (cm_char_normalize_code ty) =
+       cm_char_normalize_count ty
+Chars 5950 - 6024 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6025 - 6111 [Print~Assumptions~cmc_code_lay...] 0. secs (0.u,0.s)
+Chars 6112 - 6122 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_param_store_length
+Chars 6123 - 6202 [idtac~~"AUDIT~cmc_code_layout_...] 0. secs (0.u,0.s)
+Chars 6203 - 6211 [exact~I.] 0. secs (0.u,0.s)
+Chars 6212 - 6216 [Qed.] 0. secs (0.u,0.s)
+cm_layout_param_store_length
+     : forall (policy : cm_lookup_policy) (p : cm_program)
+         (fid slot : BinNums.Z) (params : list cm_slot_d),
+       Zcomplements.Zlength (cm_emit_param_stores policy p fid slot params) =
+       cm_param_stores_count params
+Chars 6217 - 6288 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6289 - 6372 [Print~Assumptions~cmc_code_lay...] 0.086 secs (0.086u,0.s)
+Chars 6373 - 6383 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_prologue_length
+Chars 6384 - 6460 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 6461 - 6469 [exact~I.] 0. secs (0.u,0.s)
+Chars 6470 - 6474 [Qed.] 0. secs (0.u,0.s)
+cm_layout_prologue_length
+     : forall (policy : cm_lookup_policy) (p : cm_program) (fid : BinNums.Z),
+       Zcomplements.Zlength (cm_emit_prologue policy p fid) =
+       cm_function_prologue_count
+         (cm_function_at policy fid (cm_program_functions p))
+Chars 6475 - 6543 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6544 - 6624 [Print~Assumptions~cmc_code_lay...] 0.089 secs (0.088u,0.s)
+Chars 6625 - 6635 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_facts_migration_lib.cm_layout_function_length
+Chars 6636 - 6712 [idtac~"AUDIT~cmc_code_layout_f...] 0. secs (0.u,0.s)
+Chars 6713 - 6721 [exact~I.] 0. secs (0.u,0.s)
+Chars 6722 - 6726 [Qed.] 0. secs (0.u,0.s)
+cm_layout_function_length
+     : forall (policy : cm_lookup_policy) (p : cm_program) (fid : BinNums.Z),
+       Zcomplements.Zlength (cm_emit_function policy p fid) =
+       cm_function_code_count policy p fid
+Chars 6727 - 6795 [Check~cmc_code_layout_facts_mi...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 6796 - 6876 [Print~Assumptions~cmc_code_lay...] 0.093 secs (0.093u,0.s)
+Chars 6877 - 6954 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)
+Chars 6955 - 6965 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_leaf_migration_lib.cm_layout_rvalue_linear
+Chars 6966 - 7039 [idtac~"AUDIT~cmc_code_layout_l...] 0. secs (0.u,0.s)
+Chars 7040 - 7048 [exact~I.] 0. secs (0.u,0.s)
+Chars 7049 - 7053 [Qed.] 0. secs (0.u,0.s)
+cm_layout_rvalue_linear
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (expr : cm_expr)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation) (out : cm_value) (st' : cm_src_state),
+       cm_task_layout sp ap p (CMRTask p fid expr st ks) ann ->
+       cm_task_layout sp ap p (CMVTask p fid out st' ks)
+         (cm_ann_linear
+            (cm_emit_rvalue (cm_source_function_policy sp) p fid
+               (cm_ann_pc ann) (cm_ann_temp ann) expr) ann)
+Chars 7054 - 7119 [Check~cmc_code_layout_leaf_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7120 - 7197 [Print~Assumptions~cmc_code_lay...] 0.093 secs (0.093u,0.s)
+Chars 7198 - 7208 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_leaf_migration_lib.cm_r_const_layout_step
+Chars 7209 - 7281 [idtac~"AUDIT~cmc_code_layout_l...] 0. secs (0.u,0.s)
+Chars 7282 - 7290 [exact~I.] 0. secs (0.u,0.s)
+Chars 7291 - 7295 [Qed.] 0. secs (0.u,0.s)
+cm_r_const_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid n : BinNums.Z) (ty : cm_type)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMConstE n ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMConstE n ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMConstE n ty)))
+Chars 7296 - 7360 [Check~cmc_code_layout_leaf_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7361 - 7437 [Print~Assumptions~cmc_code_lay...] 0.097 secs (0.096u,0.s)
+Chars 7438 - 7448 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_leaf_migration_lib.cm_r_string_layout_step
+Chars 7449 - 7522 [idtac~"AUDIT~cmc_code_layout_l...] 0. secs (0.u,0.s)
+Chars 7523 - 7531 [exact~I.] 0. secs (0.u,0.s)
+Chars 7532 - 7536 [Qed.] 0. secs (0.u,0.s)
+cm_r_string_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid sid : BinNums.Z) (ty : cm_type)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMStringE sid ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMStringE sid ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMStringE sid ty)))
+Chars 7537 - 7602 [Check~cmc_code_layout_leaf_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7603 - 7680 [Print~Assumptions~cmc_code_lay...] 0.091 secs (0.091u,0.s)
+Chars 7681 - 7691 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_leaf_migration_lib.cm_r_sizeof_layout_step
+Chars 7692 - 7765 [idtac~"AUDIT~cmc_code_layout_l...] 0. secs (0.u,0.s)
+Chars 7766 - 7774 [exact~I.] 0. secs (0.u,0.s)
+Chars 7775 - 7779 [Qed.] 0. secs (0.u,0.s)
+cm_r_sizeof_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (asked ty : cm_type)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_task_layout sp ap p (CMRTask p fid (CMSizeofE asked ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMSizeofE asked ty) st ks)
+         (cm_update_annotation
+            (cm_update_r sp ap p fid st ann (CMSizeofE asked ty)))
+Chars 7780 - 7845 [Check~cmc_code_layout_leaf_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 7846 - 7923 [Print~Assumptions~cmc_code_lay...] 0.09 secs (0.09u,0.s)
+Chars 7924 - 7934 [Goal~True.] 0. secs (0.u,0.s)
+AUDIT cmc_code_layout_leaf_migration_lib.cm_r_getc_layout_step
+Chars 7935 - 8006 [idtac~"AUDIT~cmc_code_layout_l...] 0. secs (0.u,0.s)
+Chars 8007 - 8015 [exact~I.] 0. secs (0.u,0.s)
+Chars 8016 - 8020 [Qed.] 0. secs (0.u,0.s)
+cm_r_getc_layout_step
+     : forall (sp : cm_source_lookup_policy) (ap : cm_annotation_policy)
+         (p : cm_program) (fid : BinNums.Z) (ty : cm_type)
+         (st : cm_src_state) (ks : list cm_frame) 
+         (ann : cm_annotation),
+       cm_task_succeeds sp (cm_rstart sp p fid (CMGetcE ty) st ks) ->
+       cm_task_layout sp ap p (CMRTask p fid (CMGetcE ty) st ks) ann ->
+       cm_task_layout sp ap p (cm_rstart sp p fid (CMGetcE ty) st ks)
+         (cm_update_annotation (cm_update_r sp ap p fid st ann (CMGetcE ty)))
+Chars 8021 - 8084 [Check~cmc_code_layout_leaf_mig...] 0. secs (0.u,0.s)
+Closed under the global context
+Chars 8085 - 8160 [Print~Assumptions~cmc_code_lay...] 0.096 secs (0.095u,0.s)
+Chars 8161 - 8232 [Require~Import~SimpleC.EE.QCP_...] 0.001 secs (0.001u,0.s)

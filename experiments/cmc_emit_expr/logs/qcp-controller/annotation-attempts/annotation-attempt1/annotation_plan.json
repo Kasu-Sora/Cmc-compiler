@@ -1,0 +1,190 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "cm_emit_intrinsic_expr-calls",
+      "location": "cm_emit_intrinsic_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "cm_emit_unary_expr-calls",
+      "location": "cm_emit_unary_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "cm_emit_index_expr-calls",
+      "location": "cm_emit_index_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "cm_emit_assignment_expr-calls",
+      "location": "cm_emit_assignment_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "cm_emit_binary_expr-calls",
+      "location": "cm_emit_binary_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "cm_emit_member_expr-calls",
+      "location": "cm_emit_member_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "cm_emit_expr-calls",
+      "location": "cm_emit_expr: constructor observation and nested emission call boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "original input facts and lvalue in [0,1]",
+        "constructor/operation guards, child count and type facts, pc and temp bounds"
+      ],
+      "resources": [
+        "program and function contexts",
+        "opened expression node with exact child expression ownership",
+        "resolved emitter written prefix and pending code followed by arbitrary tail"
+      ],
+      "mathematical_state": "The exact source expression code is consumed in constructor-prescribed fragments; recursive children retain their own well-formedness/count/type facts and restore all ownership.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "binary-short-targets",
+      "location": "cm_emit_binary_expr: first_target/right_pc/final_target/short_value and emission boundaries",
+      "purpose": "semantic-phase-transition",
+      "c_facts": [
+        "short operators are exactly 0 or 1",
+        "left_count and right_count equal existing rvalue counts",
+        "first target is pc + left_count + right_count + 4; final target adds 5",
+        "right_pc is pc + left_count + 1; short_value equals the existing OR/AND result convention"
+      ],
+      "resources": [
+        "both child expressions and opened binary root",
+        "program/function contexts",
+        "resolved emitter pending short jump, right code, normalization, final jump and short value sequence"
+      ],
+      "mathematical_state": "The short-circuit sequence has exact absolute jump targets, while both control paths consume the same constructor-selected logical suffix.",
+      "internal_predicates": [
+        "cm_expr_shape"
+      ]
+    },
+    {
+      "id": "dispatcher-simple-view",
+      "location": "cm_emit_expr: CONST/STRING/VAR/SIZEOF/GETC dispatch before cm_emit_simple_expr",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "runtime kind identifies the simple-source constructor",
+        "pc == pc@pre and temp == temp@pre preserve local cells during conversion",
+        "all original lvalue/wf/typing/count/slot/safety/size/temp/pc premises remain live"
+      ],
+      "resources": [
+        "closed root expression",
+        "complete program and function contexts",
+        "emitter plan rewritten from general expression code to the existing simple view code"
+      ],
+      "mathematical_state": "A witnessed existing simple view denotes exactly the same source expression and code, so its accepted BODY contract establishes the full dispatcher result.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [
+    {
+      "name": "cm_expr_shape",
+      "meaning": "The logical expression has the stated constructor and exact children, operation/member index and result type.",
+      "parameters": [
+        "e",
+        "shape"
+      ],
+      "owns": [
+        "constructor equality only"
+      ],
+      "does_not_own": [
+        "lvalue/operation path guards",
+        "machine arithmetic bounds",
+        "program/function/expression/emitter ownership",
+        "pc and temp local stores"
+      ],
+      "spec_connection": "Unfolds to the exact constructor equality already required by static helper contracts, or inferred from the dispatcher kind observation. It connects root fields and child resources to the unchanged general expression-code model."
+    }
+  ],
+  "vc_comparisons": []
+}

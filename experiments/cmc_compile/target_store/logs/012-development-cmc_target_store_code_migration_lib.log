@@ -1,0 +1,59 @@
+Chars 0 - 80 [Require~Export~~~SimpleC.EE.QC...] 1.211 secs (1.133u,0.066s)
+Chars 81 - 126 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 127 - 148 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 149 - 174 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 175 - 571 [Lemma~cm_tvm_convert~st~v~ty~o...] 0. secs (0.u,0.s)
+Chars 572 - 578 [Proof.] 0. secs (0.u,0.s)
+Chars 580 - 730 [(intro~CODE;~rewrite~cm_conver...] 0.001 secs (0.001u,0.s)
+Chars 732 - 772 [(eapply~cm_tvm_char_normalize;...] 0. secs (0.u,0.s)
+Chars 773 - 777 [Qed.] 0. secs (0.u,0.s)
+Chars 778 - 1182 [Lemma~cm_tvm_typed_store~obj~p...] 0. secs (0.u,0.s)
+Chars 1183 - 1189 [Proof.] 0. secs (0.u,0.s)
+Chars 1191 - 1711 [(intros~WRAP~ADDR~CODE;~destru...] 0.002 secs (0.002u,0.s)
+Chars 1712 - 1716 [Qed.] 0.038 secs (0.036u,0.002s)
+Chars 1717 - 2258 [Lemma~cm_tvm_address_store~obj...] 0. secs (0.u,0.s)
+Chars 2259 - 2265 [Proof.] 0. secs (0.u,0.s)
+Chars 2267 - 2346 [(intros~WRAP~ADDR~CODE;~~~pose...] 0. secs (0.u,0.s)
+Chars 2348 - 2426 [(change~~~~(cm_code_at~(tvm_ob...] 0. secs (0.u,0.s)
+Chars 2428 - 2630 [(change~~~~(tvm_step~~~~~~~(tv...] 0. secs (0.u,0.s)
+Chars 2632 - 2688 [(rewrite~(cm_tvm_fp_address_va...] 0. secs (0.u,0.s)
+Chars 2690 - 2774 [(rewrite~(cm_tvm_typed_store~_...] 0.002 secs (0.002u,0.s)
+Chars 2775 - 2779 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 2780 - 3551 [Lemma~cm_tvm_init_code~st~v~ty...] 0. secs (0.u,0.s)
+Chars 3552 - 3558 [Proof.] 0. secs (0.u,0.s)
+Chars 3560 - 3633 [(intros~ADDR~CODE;~pose~proof~...] 0. secs (0.u,0.s)
+Chars 3635 - 3714 [(pose~proof~(cm_tvm_convert~st...] 0. secs (0.u,0.s)
+Chars 3716 - 3919 [(pose~proof~~~(cm_tvm_address_...] 0. secs (0.u,0.s)
+Chars 3921 - 4102 [(assert~~~(N~:~~~~cm_code_step...] 0. secs (0.u,0.s)
+Chars 4104 - 4309 [(rewrite~N,~tvm_iter_add,~CONV...] 0.003 secs (0.003u,0.s)
+(pc + Zlength_aux 0 tvm_inst [] + 5 =
+ pc +
+ Zlength_aux 0 tvm_inst
+   [TVMInst TVMPushOp 8; TVMInst TVMLoadOp 0; TVMInst TVMPushOp offset;
+    TVMInst TVMAddOp 0; TVMInst TVMStoreOp 0])
+(pc +
+ Zlength_aux 0 tvm_inst
+   [TVMInst TVMPushOp 256; TVMInst TVMModOp 0; TVMInst TVMPushOp 256;
+    TVMInst TVMAddOp 0; TVMInst TVMPushOp 256; TVMInst TVMModOp 0] + 5 =
+ pc +
+ Zlength_aux 0 tvm_inst
+   [TVMInst TVMPushOp 256; TVMInst TVMModOp 0; TVMInst TVMPushOp 256;
+    TVMInst TVMAddOp 0; TVMInst TVMPushOp 256; TVMInst TVMModOp 0;
+    TVMInst TVMPushOp 8; TVMInst TVMLoadOp 0; TVMInst TVMPushOp offset;
+    TVMInst TVMAddOp 0; TVMInst TVMStoreBOp 0])
+(pc + Zlength_aux 0 tvm_inst [] + 5 =
+ pc +
+ Zlength_aux 0 tvm_inst
+   [TVMInst TVMPushOp 8; TVMInst TVMLoadOp 0; TVMInst TVMPushOp offset;
+    TVMInst TVMAddOp 0; TVMInst TVMStoreOp 0])
+(pc + Zlength_aux 0 tvm_inst [] + 5 =
+ pc +
+ Zlength_aux 0 tvm_inst
+   [TVMInst TVMPushOp 8; TVMInst TVMLoadOp 0; TVMInst TVMPushOp offset;
+    TVMInst TVMAddOp 0; TVMInst TVMStoreOp 0])
+Chars 4311 - 4350 [all:~(match~goal~with~~~~~~~|~...] 0.002 secs (0.u,0.s)
+Chars 4351 - 4355 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_store/build/Rocq/examples/QCP_demos_human/cmc_target_store_code_migration_lib.v", line 49, characters 0-4:
+Error:  (in proof cm_tvm_init_code): Attempt to save an incomplete proof
+(there are remaining open goals).
+

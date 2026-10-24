@@ -1,0 +1,322 @@
+{
+  "source_sha256": "ba3dab5367de647a1d606c308c09823e77d527e0ec8b5536902f25d6ae8f6c1a",
+  "function_counts": [
+    {
+      "function": "cm_emit_plan",
+      "source_span": [
+        43,
+        75
+      ],
+      "specification": 11,
+      "annotation": 2,
+      "inline_proof": 15
+    },
+    {
+      "function": "cm_emit_call_plan",
+      "source_span": [
+        77,
+        108
+      ],
+      "specification": 9,
+      "annotation": 1,
+      "inline_proof": 18
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "source_span": [
+        110,
+        132
+      ],
+      "specification": 11,
+      "annotation": 2,
+      "inline_proof": 6
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "source_span": [
+        134,
+        152
+      ],
+      "specification": 11,
+      "annotation": 2,
+      "inline_proof": 2
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "source_span": [
+        154,
+        172
+      ],
+      "specification": 11,
+      "annotation": 2,
+      "inline_proof": 2
+    },
+    {
+      "function": "cm_emit_fp_address_plan",
+      "source_span": [
+        174,
+        195
+      ],
+      "specification": 8,
+      "annotation": 1,
+      "inline_proof": 8
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "source_span": [
+        197,
+        243
+      ],
+      "specification": 28,
+      "annotation": 6,
+      "inline_proof": 8
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "source_span": [
+        245,
+        291
+      ],
+      "specification": 28,
+      "annotation": 6,
+      "inline_proof": 8
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_plan_add_singleton_capacity",
+      "kind": "proof",
+      "span": [
+        7,
+        22
+      ],
+      "nonblank_lines": 16,
+      "text": "PROOF static void cm_plan_add_singleton_capacity(void) {\n  thm input_capacity = conv_rule(rewrite_conv(THM_LIST(\n      get_theorem_by_name(\"APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"))), assume_rule(\n      `ilength (done:(tvm_inst)list) +\n         ilength ([TVMInst (opcode:tvm_opcode)\n                    (immediate__pre:int)] ++\n                   (tail:(tvm_inst)list)) <= (capacity:int)`));\n  thm tail_nonnegative = ispec_rule(\n      `tail:(tvm_inst)list`, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  add_fact_st(by_defs_arith(\n      `ilength (done:(tvm_inst)list) + 1i <= (capacity:int)`,\n      THM_LIST(get_theorem_by_name(\"ILENGTH_APPEND\"),\n               get_theorem_by_name(\"ILENGTH_DEF\")),\n      THM_LIST(input_capacity, tail_nonnegative)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_plan_add_call_capacity",
+      "kind": "proof",
+      "span": [
+        24,
+        40
+      ],
+      "nonblank_lines": 17,
+      "text": "PROOF static void cm_plan_add_call_capacity(void) {\n  thm input_capacity = conv_rule(rewrite_conv(THM_LIST(\n      get_theorem_by_name(\"APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"))), assume_rule(\n      `ilength (done:(tvm_inst)list) +\n         ilength ([TVMInst TVMCallOp\n                    (cm_function_pc (p:cm_program)\n                      (function_id__pre:int))] ++\n                   (tail:(tvm_inst)list)) <= (capacity:int)`));\n  thm tail_nonnegative = ispec_rule(\n      `tail:(tvm_inst)list`, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  add_fact_st(by_defs_arith(\n      `ilength (done:(tvm_inst)list) + 1i <= (capacity:int)`,\n      THM_LIST(get_theorem_by_name(\"ILENGTH_APPEND\"),\n               get_theorem_by_name(\"ILENGTH_DEF\")),\n      THM_LIST(input_capacity, tail_nonnegative)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 117,
+    "annotation": 22,
+    "inline_proof": 67,
+    "private_case_proof_support": 33,
+    "case_proof": 100,
+    "proof_including_shared": 100
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_plan",
+      "kind": "where",
+      "span": [
+        68,
+        68
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_plan",
+      "kind": "where",
+      "span": [
+        69,
+        69
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_call_plan",
+      "kind": "where",
+      "span": [
+        101,
+        101
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "kind": "where",
+      "span": [
+        126,
+        126
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "kind": "where",
+      "span": [
+        127,
+        127
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "kind": "where",
+      "span": [
+        148,
+        148
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "kind": "where",
+      "span": [
+        149,
+        149
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "kind": "where",
+      "span": [
+        168,
+        168
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "kind": "where",
+      "span": [
+        169,
+        169
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_fp_address_plan",
+      "kind": "where",
+      "span": [
+        189,
+        189
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "kind": "where",
+      "span": [
+        232,
+        232
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "kind": "where",
+      "span": [
+        233,
+        233
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "kind": "where",
+      "span": [
+        234,
+        234
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "kind": "where",
+      "span": [
+        235,
+        235
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "kind": "where",
+      "span": [
+        236,
+        236
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "kind": "where",
+      "span": [
+        237,
+        237
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "kind": "where",
+      "span": [
+        280,
+        280
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "kind": "where",
+      "span": [
+        281,
+        281
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "kind": "where",
+      "span": [
+        282,
+        282
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "kind": "where",
+      "span": [
+        283,
+        283
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "kind": "where",
+      "span": [
+        284,
+        284
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "kind": "where",
+      "span": [
+        285,
+        285
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Same-file static PROOF declarations counted as private case support; source plan definition and public open/close proof dependency closure inventoried separately."
+}

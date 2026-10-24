@@ -1,0 +1,104 @@
+#pragma once
+
+#include "proof/proof.h"
+#include "cmc_lang.h"
+#include "tvm_model.h"
+
+/* Exact sizing, direct TVM generation, and stack-discipline proofs. */
+PROOF thm get_cm_lvalue_code_count_def(void);
+PROOF thm get_cm_rvalue_code_count_def(void);
+PROOF thm get_cm_expr_code_counts_def(void);
+PROOF thm get_cm_lcount_of_def(void);
+PROOF thm get_cm_rcount_of_def(void);
+PROOF thm get_cm_args_code_counts_def(void);
+PROOF thm get_cm_args_code_count_of_def(void);
+PROOF thm get_cm_args_arity_of_def(void);
+PROOF thm get_cm_i32_code_count_def(void);
+PROOF thm get_cm_code_counts_representable_def(void);
+PROOF thm get_cm_expr_count_node_representable_def(void);
+PROOF thm get_cm_expr_counts_representable_def(void);
+PROOF thm get_cm_args_counts_representable_def(void);
+PROOF thm get_cm_char_normalize_count_def(void);
+PROOF thm get_cm_binding_address_count_def(void);
+PROOF thm get_cm_binary_tail_count_def(void);
+PROOF thm get_cm_stmt_code_count_def(void);
+PROOF thm get_cm_function_code_count_def(void);
+PROOF thm get_cm_param_stores_count_def(void);
+PROOF thm get_cm_function_prologue_count_def(void);
+PROOF thm get_cm_functions_code_size_def(void);
+PROOF thm get_cm_function_prefix_def(void);
+PROOF thm get_cm_function_pc_def(void);
+PROOF thm get_cm_model_code_length_def(void);
+PROOF thm get_cm_stmt_counts_representable_def(void);
+PROOF thm get_cm_param_counts_representable_def(void);
+PROOF thm get_cm_function_counts_representable_def(void);
+PROOF thm get_cm_functions_counts_representable_def(void);
+PROOF thm get_cm_function_pcs_representable_def(void);
+PROOF thm get_cm_model_data_length_def(void);
+PROOF thm get_cm_max_function_arity_from_def(void);
+PROOF thm get_cm_max_function_arity_def(void);
+PROOF thm get_cm_stack_bound_model_def(void);
+
+PROOF thm get_cm_push_code_def(void);
+PROOF thm get_cm_const_immediate_def(void);
+PROOF thm get_cm_char_normalize_code_def(void);
+PROOF thm get_cm_load_code_def(void);
+PROOF thm get_cm_store_code_def(void);
+PROOF thm get_cm_param_offset_def(void);
+PROOF thm get_cm_local_offset_def(void);
+PROOF thm get_cm_temp_offset_def(void);
+PROOF thm get_cm_fp_relative_address_code_def(void);
+PROOF thm get_cm_binding_address_code_def(void);
+PROOF thm get_cm_temp_store_code_def(void);
+PROOF thm get_cm_temp_load_code_def(void);
+PROOF thm get_cm_binary_opcode_def(void);
+PROOF thm get_cm_pointer_scale_def(void);
+PROOF thm get_cm_binary_finish_code_def(void);
+PROOF thm get_cm_return_epilogue_def(void);
+PROOF thm get_cm_emit_expr_pair_def(void);
+PROOF thm get_cm_lcode_of_def(void);
+PROOF thm get_cm_rcode_of_def(void);
+PROOF thm get_cm_emit_args_reload_def(void);
+PROOF thm get_cm_emit_lvalue_def(void);
+PROOF thm get_cm_emit_rvalue_def(void);
+PROOF thm get_cm_emit_stmt_def(void);
+PROOF thm get_cm_emit_param_stores_def(void);
+PROOF thm get_cm_emit_prologue_def(void);
+PROOF thm get_cm_emit_function_def(void);
+PROOF thm get_cm_emit_functions_def(void);
+PROOF thm get_cm_emit_prelude_def(void);
+PROOF thm get_cm_model_code_def(void);
+PROOF thm get_cm_model_data_bytes_def(void);
+PROOF thm get_cm_global_model_size_def(void);
+PROOF thm get_cm_globals_model_size_def(void);
+PROOF thm get_cm_model_data_size_count_def(void);
+PROOF thm get_cm_global_init_bytes_def(void);
+PROOF thm get_cm_global_bytes_def(void);
+PROOF thm get_cm_globals_bytes_def(void);
+PROOF thm get_cm_strings_bytes_def(void);
+PROOF thm get_cm_bytes_patches_def(void);
+PROOF thm get_cm_model_patches_def(void);
+PROOF thm get_cm_compile_model_def(void);
+PROOF thm_list get_cm_codegen_eval_defs(void);
+
+PROOF thm get_cm_stack_height_max_def(void);
+PROOF thm get_cm_stack_at_def(void);
+PROOF thm get_cm_stack_head_ok_def(void);
+PROOF thm get_cm_stack_edges_from_def(void);
+PROOF thm get_cm_stack_call_insts_from_def(void);
+PROOF thm get_cm_stack_call_sites_def(void);
+PROOF thm get_cm_stack_certificate_def(void);
+PROOF thm get_cm_stack_summary_def(void);
+PROOF thm get_cm_codegen_fields_representable_def(void);
+PROOF thm get_cm_codegen_counts_representable_def(void);
+PROOF thm get_cm_codegen_admissible_def(void);
+PROOF thm get_cm_wf_program_def(void);
+PROOF thm get_cm_expr_code_lengths(void);
+PROOF thm get_cm_args_code_lengths(void);
+PROOF thm get_cm_prologue_length(void);
+PROOF thm get_cm_function_code_length(void);
+PROOF thm get_cm_stmt_code_length(void);
+PROOF thm get_cm_model_code_length_exact(void);
+PROOF thm get_cm_model_data_length_exact(void);
+PROOF thm get_cm_codegen_two_pass_layout(void);
+PROOF thm get_cmc_object_wf(void);

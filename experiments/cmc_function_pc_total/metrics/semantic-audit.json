@@ -1,0 +1,88 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cmc_function_prefix_total",
+      "source_contract_sha256": "cc1fe5ead5e7edc97be06cc11f18cb9c3083e8c31a1411ed7704c6cee30317cd",
+      "target_contract_sha256": "a21324df85d7f2d8a8a129fbb09b750c3146330ca1b4929a3f8c1d0b928ee173",
+      "checks": [
+        "Full program context and function list restored",
+        "wf, structs safety, nonnegative index, index/length alignment and int32 length upper bound preserved",
+        "Counts representability and complete recursive readiness retained",
+        "Exact prefix at target-index and i32 result preserved; arbitrary signed64 target"
+      ],
+      "adaptation": "Same universally quantified lookup policy/codegen obligations; source-proved emit_stmt length normalization to statement count."
+    },
+    {
+      "function": "cmc_function_pc_total",
+      "source_contract_sha256": "206c44f61d6aab6396e2243c3593ce9090c3431078140adea83b90f887820e2a",
+      "target_contract_sha256": "2a3c43362dcd85b63788c7b3fcc628f78cf24257968f26b8b5aae4c6d23f92a0",
+      "checks": [
+        "Full program context and function list restored",
+        "Original wf and complete code-ready retained",
+        "Exact function PC and i32 result preserved; arbitrary signed64 target"
+      ],
+      "adaptation": "Same universally quantified lookup policy/codegen obligations; source-proved emit_stmt length normalization to statement count."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_temp_offset",
+      "kind": "Definition",
+      "nonblank_lines": 4,
+      "sha256": "e4f965e1547d6671325d19e62f59dce18deb46006df4c9874b3e781e7cfc9205"
+    },
+    {
+      "name": "cm_concrete_function_ready",
+      "kind": "Definition",
+      "nonblank_lines": 23,
+      "sha256": "77d21b84411fd667e1edfef8d3045f7ad6306d59fb18e92153834253a4dd5cfa"
+    },
+    {
+      "name": "cm_concrete_functions_ready",
+      "kind": "Fixpoint",
+      "nonblank_lines": 7,
+      "sha256": "ee12d5aafa04b3cc186bc49774ad71ce5452e1d98aac34099d056efd902a6b5f"
+    },
+    {
+      "name": "cm_concrete_structs_ready",
+      "kind": "Definition",
+      "nonblank_lines": 1,
+      "sha256": "d0171bec0360326a5d506e48d61f265acb7a743c75bcb20e99ec18bbacd81ff5"
+    },
+    {
+      "name": "cm_concrete_code_ready",
+      "kind": "Definition",
+      "nonblank_lines": 2,
+      "sha256": "08f5bd7ce282d34d131d03fbc04a2f26d433c66469ad6c9d3c777e6af0d4b45d"
+    }
+  ],
+  "inherited_model_boundary": "Verified counts/layout definitions unchanged, same lookup policy and four universally quantified emitter/TVM obligations; no concrete TVM instantiation.",
+  "source_proved_normalization": {
+    "theorem": "cm_stmt_code_length",
+    "source": "baseline/cmc_codegen.c",
+    "lines": [
+      1460,
+      1487
+    ],
+    "meaning": "For every stmt, p, fid, pc, temp, breakpc and continuepc, emitted statement length equals cm_stmt_code_count; unconditional",
+    "source_use": "baseline/cmc_concrete_function_ready.c lines 217-234",
+    "rocq_emitter_semantics_bridge_reproved": false
+  },
+  "review_method": "Manual comparison of all source/target pre/post resources and readiness conjuncts; no automatic semantic equivalence claim.",
+  "final_verification": {
+    "run_id": "cmc_function_pc_total_migration-20261016090222",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 2
+  },
+  "proof_audit": {
+    "manual_top_level": 12,
+    "proved_splits": 16,
+    "unused_aborted_split_drafts": 2,
+    "automatic_admitted_witnesses": 11,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

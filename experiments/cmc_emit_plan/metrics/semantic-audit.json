@@ -1,0 +1,117 @@
+{
+  "status": "contract review completed; final verification passed; reviewed contract/model hashes unchanged",
+  "contracts": [
+    {
+      "function": "cm_emit_plan",
+      "source_contract_sha256": "97881cef2b011ad0ee9971e2d32a95fc9370497925133ff34d80bc8af09b0d94",
+      "target_contract_sha256": "5595716ed64e80cc732b5d8929b95428a49b9d95e8d5ca813c01095a7b8d2b6b",
+      "checks": [
+        "Original opcode encoding equality and non-CALL restriction retained",
+        "Consume singleton from todo; append exact singleton to done; arbitrary tail retained"
+      ]
+    },
+    {
+      "function": "cm_emit_call_plan",
+      "source_contract_sha256": "55acb468a27d665aa7f5d666fe09d791da5299b658ef81466e081180a005b0ce",
+      "target_contract_sha256": "c8418ae7637fe9d3e96239a2fa690e6fcea64b591baae511a4997d26b36c120d",
+      "checks": [
+        "No function-id validity, range, readiness or PC-representability premise",
+        "All signed int IDs supported by SAME existing total lookup policy",
+        "Logical resolved CALL(PC(id)) consumed/appended, physical helper called on raw ID"
+      ]
+    },
+    {
+      "function": "cm_emit_normalize_plan",
+      "source_contract_sha256": "ecffe40c9fb4ce66680ead627b32895cb84db5cc460eb2f984db7464ac1332ee",
+      "target_contract_sha256": "50e15a7c92e049e2a7233811c961f01aa57fcfb2dd925b4ab18f0026816995e0",
+      "checks": [
+        "Original encoded-type equality and type-code-wf only",
+        "Exact original normalize fragment consumed/appended; arbitrary tail retained"
+      ]
+    },
+    {
+      "function": "cm_emit_load_plan",
+      "source_contract_sha256": "b3d44d39e0f663e424c7aa44af2e281c1806dbee4015176588b9cc9258324ef5",
+      "target_contract_sha256": "d49534c4364414db3de5ec68112d2a2df9bf47dd65939cb1d3f5bceb4e31682a",
+      "checks": [
+        "Original encoded-type equality and type-code-wf only",
+        "Exact original load fragment consumed/appended; arbitrary tail retained"
+      ]
+    },
+    {
+      "function": "cm_emit_store_plan",
+      "source_contract_sha256": "cde14da6861602311eb3a84e0d974c9068bce3c5b565f29b4416b7c9143eb7fe",
+      "target_contract_sha256": "8ae4fbdab0396e6ef1a53c00e883676c4868e1b545f9f7b1acbd0648bd21d804",
+      "checks": [
+        "Original encoded-type equality and type-code-wf only",
+        "Exact original store fragment consumed/appended; arbitrary tail retained"
+      ]
+    },
+    {
+      "function": "cm_emit_fp_address_plan",
+      "source_contract_sha256": "32f1e2e64a82eebee123a803d89aabdeacba8c1c9f14ff4376ec4ac4220c2ca7",
+      "target_contract_sha256": "a60a9be5054f4445aca26cf989642054077a9849081f20f02158d58c9106c882",
+      "checks": [
+        "Original exact FP-address fragment consumed/appended",
+        "No additional offset, pc or readiness assumptions; arbitrary tail retained"
+      ]
+    },
+    {
+      "function": "cm_emit_temp_store_plan",
+      "source_contract_sha256": "0aff815e67dd21e06fe63adfa6384c9bea6dec7399718727b6ae683b5c99805c",
+      "target_contract_sha256": "ab3a9e323afe33eede18c3d2fbf7db542450ac69e139ad80c610e7f472523823",
+      "checks": [
+        "Original eight pure facts retained in both pre and post",
+        "Full function context ownership and exact store fragment transformation",
+        "Same total lookup policy; no new fid bound; arbitrary tail retained"
+      ]
+    },
+    {
+      "function": "cm_emit_temp_load_plan",
+      "source_contract_sha256": "cf30331348d6d7bde85a39fc943f2267a1d96daca3bb6f7e8e2fadb5f21c3721",
+      "target_contract_sha256": "9fa12407f6a60ead89eb874d93c73131c875a0e86d5a0bd75ec3207f4e2b1753",
+      "checks": [
+        "Original eight pure facts retained in both pre and post",
+        "Full function context ownership and exact load fragment transformation",
+        "Same total lookup policy; no new fid bound; arbitrary tail retained"
+      ]
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_resolved_emitter_plan_rep",
+      "kind": "Definition",
+      "nonblank_lines": 4,
+      "sha256": "b7ccc06104b4d3bf7e8307b81f15f6e1e16640f41678781061b6bc2167a3454c",
+      "source_declaration": "cm_resolved_emitter_plan_rep_def"
+    }
+  ],
+  "model_review": [
+    "Plan is pure Zlength(done)+Zlength(todo)<=capacity plus EXISTING resolved representation of done",
+    "todo is a logical remaining capacity budget, with no extra physical ownership",
+    "No reachability, program-wide code equality, readiness or valid-call constraint added",
+    "Existing raw-buffer and patch logical semantics and same total lookup policy reused unchanged"
+  ],
+  "adaptations": [
+    "Consistent explicit existing cm_lookup_policy parameter",
+    "Rocq Zlength represents original ilength; plan assertion maps conjunction of pure bound and resolved heap predicate",
+    "Eight identical helper contracts reused from verified resolved case"
+  ],
+  "scope_boundary": "Concrete plan wrappers under existing logical patch view; no physical CALL rewrite pass, full TVM execution or compiler preservation claim.",
+  "review_method": "Manual comparison of contracts and representation; hashes detect later drift, not semantic equivalence.",
+  "final_verification": {
+    "run_id": "cmc_emit_plan_migration-20261017135154",
+    "phase": "done",
+    "status": "passed",
+    "runtime_tokens_equal": true,
+    "abi_unchanged": true,
+    "function_coverage": 8
+  },
+  "proof_audit": {
+    "manual_top_level": 16,
+    "proved_splits": 32,
+    "unused_aborted_split_drafts": 0,
+    "automatic_admitted_witnesses": 16,
+    "manual_and_new_library_have_no_admitted_axiom_parameter": true
+  }
+}

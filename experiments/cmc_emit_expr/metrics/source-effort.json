@@ -1,0 +1,2731 @@
+{
+  "source_sha256": "c16ef59537ba53c346a9abb0dd7c473a0e662d13e01acb1dd2a14a6d172146ad",
+  "function_counts": [
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "source_span": [
+        543,
+        823
+      ],
+      "specification": 62,
+      "annotation": 13,
+      "inline_proof": 175
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "source_span": [
+        825,
+        1193
+      ],
+      "specification": 67,
+      "annotation": 25,
+      "inline_proof": 240
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "source_span": [
+        1195,
+        1542
+      ],
+      "specification": 67,
+      "annotation": 49,
+      "inline_proof": 207
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "source_span": [
+        1828,
+        2173
+      ],
+      "specification": 67,
+      "annotation": 46,
+      "inline_proof": 209
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "source_span": [
+        2655,
+        3212
+      ],
+      "specification": 67,
+      "annotation": 116,
+      "inline_proof": 315
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "source_span": [
+        3242,
+        3549
+      ],
+      "specification": 67,
+      "annotation": 16,
+      "inline_proof": 201
+    },
+    {
+      "function": "cm_emit_expr",
+      "source_span": [
+        3581,
+        3880
+      ],
+      "specification": 64,
+      "annotation": 51,
+      "inline_proof": 136
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_selected_expr_code_shape",
+      "kind": "proof",
+      "span": [
+        13,
+        33
+      ],
+      "nonblank_lines": 21,
+      "text": "PROOF static thm cm_selected_expr_code_shape(const thm shape,\n                                         const thm lvalue_case,\n                                         const term code) {\n  thm selected = by_rewrite(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       (if lvalue__pre == 0i\n        then cm_rcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e)\n        else cm_lcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e))`,\n      THM_LIST(cm_expr_code_for_def, lvalue_case,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def()));\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code), THM_LIST(\n        shape, get_cm_emit_expr_pair_def(), get_cm_rcode_of_def(),\n        get_cm_lcode_of_def(), cm_expr_code_for_def,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def(), lvalue_case,\n        eqf_intro_rule(int_arith_rule(`~(1i == 0i)`)),\n        get_theorem_by_name(\"APPEND_NIL\"))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_rvalue_child_facts",
+      "kind": "proof",
+      "span": [
+        36,
+        75
+      ],
+      "nonblank_lines": 40,
+      "text": "PROOF static void cm_add_rvalue_child_facts(\n    const thm code_shape, const thm temp_shape,\n    const term suffix) {\n  thm child_temp = conv_rule(rewrite_conv(THM_LIST(temp_shape)),\n      assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  add_fact_st(child_temp);\n  thm parent_pc = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count (pc__pre:int) <=> true`)));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def(), code_shape,\n        get_theorem_by_name(\"ILENGTH_APPEND\"))),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count\n          ((pc__pre:int) + ilength\n            (cm_expr_code_for (p:cm_program) (fid__pre:int)\n              pc__pre (temp__pre:int) (e:cm_expr) (lvalue__pre:int)))\n         <=> true`)));\n  thm child_nonnegative = ispec_rule(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int) (arg_:cm_expr) 0i`,\n      get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm suffix_nonnegative = conv_rule(\n      rewrite_conv(THM_LIST(get_theorem_by_name(\"ILENGTH_APPEND\"))),\n      ispec_rule(suffix, get_theorem_by_name(\"ILENGTH_NONNEG\")));\n  thm child_i32 = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) + ilength\n          (cm_expr_code_for (p:cm_program) (fid__pre:int)\n            pc__pre (temp__pre:int) (arg_:cm_expr) 0i))`,\n      THM_LIST(get_cm_i32_code_count_def(), code_shape,\n        get_theorem_by_name(\"ILENGTH_APPEND\")),\n      THM_LIST(parent_pc, parent_end, child_nonnegative,\n        suffix_nonnegative));\n  add_fact_st(eqt_intro_rule(child_i32));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_lvalue_child_facts",
+      "kind": "proof",
+      "span": [
+        77,
+        116
+      ],
+      "nonblank_lines": 40,
+      "text": "PROOF static void cm_add_lvalue_child_facts(\n    const thm code_shape, const thm temp_shape,\n    const term suffix) {\n  thm child_temp = conv_rule(rewrite_conv(THM_LIST(temp_shape)),\n      assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  add_fact_st(child_temp);\n  thm parent_pc = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count (pc__pre:int) <=> true`)));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def(), code_shape,\n        get_theorem_by_name(\"ILENGTH_APPEND\"))),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count\n          ((pc__pre:int) + ilength\n            (cm_expr_code_for (p:cm_program) (fid__pre:int)\n              pc__pre (temp__pre:int) (e:cm_expr) (lvalue__pre:int)))\n         <=> true`)));\n  thm child_nonnegative = ispec_rule(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int) (arg_:cm_expr) 1i`,\n      get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm suffix_nonnegative = conv_rule(\n      rewrite_conv(THM_LIST(get_theorem_by_name(\"ILENGTH_APPEND\"))),\n      ispec_rule(suffix, get_theorem_by_name(\"ILENGTH_NONNEG\")));\n  thm child_i32 = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) + ilength\n          (cm_expr_code_for (p:cm_program) (fid__pre:int)\n            pc__pre (temp__pre:int) (arg_:cm_expr) 1i))`,\n      THM_LIST(get_cm_i32_code_count_def(), code_shape,\n        get_theorem_by_name(\"ILENGTH_APPEND\")),\n      THM_LIST(parent_pc, parent_end, child_nonnegative,\n        suffix_nonnegative));\n  add_fact_st(eqt_intro_rule(child_i32));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_unary_code_shape",
+      "kind": "proof",
+      "span": [
+        118,
+        143
+      ],
+      "nonblank_lines": 26,
+      "text": "PROOF static thm cm_unary_code_shape(const thm shape,\n                                     const thm lvalue_case,\n                                     const thm_list op_cases,\n                                     const term code) {\n  thm selected = by_rewrite(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       (if lvalue__pre == 0i\n        then cm_rcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e)\n        else cm_lcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e))`,\n      THM_LIST(cm_expr_code_for_def, lvalue_case,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def()));\n  thm_list rules = THM_LIST(\n      shape, get_cm_emit_expr_pair_def(), get_cm_rcode_of_def(),\n      get_cm_lcode_of_def(), cm_expr_code_for_def,\n      get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def(), lvalue_case,\n      eqf_intro_rule(int_arith_rule(`~(1i == 0i)`)),\n      get_theorem_by_name(\"APPEND_NIL\"));\n  for (size_t i = 0; i < vector_size(op_cases); ++i) {\n    vector_add(&rules, op_cases[i]);\n  }\n  return trans_rule(selected,\n      by_rewrite(mk_eq(rhs_of(selected), code), rules));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_index_code_shape",
+      "kind": "proof",
+      "span": [
+        146,
+        175
+      ],
+      "nonblank_lines": 30,
+      "text": "PROOF static thm cm_index_code_shape(const thm shape) {\n  term target =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       cm_expr_code_for p fid__pre pc__pre temp__pre\n         (left_:cm_expr) 0i ++\n       cm_temp_store_code p fid__pre temp__pre ++\n       cm_expr_code_for p fid__pre\n         (pc__pre + cm_rvalue_code_count p fid__pre left_ + 5i)\n         (temp__pre + 1i) (right_:cm_expr) 0i ++\n       [TVMInst TVMPushOp\n          (cm_type_size (cm_program_structs p) (ty_:cm_type));\n        TVMInst TVMMulOp 0i] ++\n       cm_temp_load_code p fid__pre temp__pre ++\n       [TVMInst TVMAddOp 0i] ++\n       cm_expr_load_suffix ty_ lvalue__pre`;\n  gnode root = gnode_new_with_ccl(mk_imp(concl(shape), target));\n  gnode leaf = DISCH_TAC(root, \"Hshape\");\n  gnode_list cases = BOOL_CASES_TAC(\n      leaf, `(lvalue__pre:int) == 0i`, \"Hlvalue\");\n  thm_list rules = THM_LIST(\n      cm_expr_code_for_def, shape, get_cm_emit_expr_pair_def(),\n      get_cm_rcode_of_def(), get_cm_lcode_of_def(),\n      get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def(),\n      cm_expr_load_suffix_def, get_theorem_by_name(\"APPEND_NIL\"));\n  for (size_t i = 0; i < vector_size(cases); ++i) {\n    CONV_WITH_ASMP_TAC(cases[i], reduce_rewrite_conv, rules);\n  }\n  return mp_rule(gnode_prove(root), shape);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_rvalue_code_length_at",
+      "kind": "proof",
+      "span": [
+        177,
+        195
+      ],
+      "nonblank_lines": 19,
+      "text": "PROOF static thm cm_rvalue_code_length_at(\n    const term expr, const term pc, const term temp) {\n  thm lengths = conjunct2_rule(\n      spec_rule(expr, get_cm_expr_code_lengths()));\n  thm result = specl_rule(TERM_LIST(\n      `p:cm_program`, `fid__pre:int`, pc, temp), lengths);\n  term selection_target = subst(TERM_PAIR_LIST(\n      (term_pair){expr, `expr_:cm_expr`},\n      (term_pair){pc, `pc_:int`},\n      (term_pair){temp, `temp_:int`}),\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc_:int) (temp_:int) (expr_:cm_expr) 0i ==\n       cm_emit_rvalue p fid__pre pc_ temp_ expr_`);\n  thm selection = by_rewrite(selection_target, THM_LIST(\n      cm_expr_code_for_def,\n      eqt_intro_rule(int_arith_rule(`0i == 0i`))));\n  return conv_rule(rewrite_conv(THM_LIST(gsym_rule(selection))),\n      result);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_expr_result_refs_st",
+      "kind": "proof",
+      "span": [
+        197,
+        213
+      ],
+      "nonblank_lines": 17,
+      "text": "PROOF static void cm_add_expr_result_refs_st(void) {\n  thm result = specl_rule(TERM_LIST(\n      `e:cm_expr`, `p:cm_program`, `f:cm_function_d`),\n      cm_expr_result_refs);\n  result = mp_rule(result, eqt_elim_rule(assume_rule(\n      `cm_typed_program (p:cm_program) <=> true`)));\n  result = mp_rule(result, eqt_elim_rule(assume_rule(\n      `cm_slots_wf (cm_program_structs (p:cm_program))\n        (cm_function_params (f:cm_function_d)) <=> true`)));\n  result = mp_rule(result, eqt_elim_rule(assume_rule(\n      `cm_slots_wf (cm_program_structs (p:cm_program))\n        (cm_function_locals (f:cm_function_d)) <=> true`)));\n  result = mp_rule(result, eqt_elim_rule(assume_rule(\n      `cm_expr_wf (p:cm_program) (f:cm_function_d)\n        (e:cm_expr) <=> true`)));\n  add_fact_st(eqt_intro_rule(result));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_child_expr_facts_st",
+      "kind": "proof",
+      "span": [
+        214,
+        243
+      ],
+      "nonblank_lines": 29,
+      "text": "PROOF static void cm_add_child_expr_facts_st(const term child) {\n  term child_count_fact = subst(TERM_PAIR_LIST(\n      (term_pair){child, `child_:cm_expr`}),\n      `cm_expr_counts_representable (p:cm_program)\n         (fid__pre:int) child_`);\n  thm node = mp_rule(specl_rule(TERM_LIST(\n      `p:cm_program`, `fid__pre:int`, child), cm_expr_counts_node),\n      from_state_bool(child_count_fact));\n  thm node_facts = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_expr_count_node_representable_def(),\n      get_cm_code_counts_representable_def())), node);\n  cm_add_count_facts(node_facts);\n\n  term child_wf_fact = subst(TERM_PAIR_LIST(\n      (term_pair){child, `child_:cm_expr`}),\n      `cm_expr_wf (p:cm_program) (f:cm_function_d) child_`);\n  thm refs = specl_rule(TERM_LIST(\n      child, `p:cm_program`, `f:cm_function_d`),\n      cm_expr_result_refs);\n  refs = mp_rule(refs, from_state_bool(\n      `cm_typed_program (p:cm_program)`));\n  refs = mp_rule(refs, from_state_bool(\n      `cm_slots_wf (cm_program_structs (p:cm_program))\n        (cm_function_params (f:cm_function_d))`));\n  refs = mp_rule(refs, from_state_bool(\n      `cm_slots_wf (cm_program_structs (p:cm_program))\n        (cm_function_locals (f:cm_function_d))`));\n  refs = mp_rule(refs, from_state_bool(child_wf_fact));\n  add_fact_st(eqt_intro_rule(refs));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_rep_members_size_nonnegative",
+      "kind": "proof",
+      "span": [
+        244,
+        270
+      ],
+      "nonblank_lines": 27,
+      "text": "PROOF static thm cm_prove_rep_members_size_nonnegative(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(members:(cm_slot_d)list).\n         cm_rep_members_safe members ==>\n         0i <= cm_rep_members_size members`);\n  gnode_list cases = INDUCT_TAC(root, `members:(cm_slot_d)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm safe = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_rep_members_safe_def())),\n        assume_rule(\n          `cm_rep_members_safe\n            ((a0:cm_slot_d) :: (a1:(cm_slot_d)list))`));\n    gnode reduced = CONV_TAC(leaf, rewrite_conv(THM_LIST(\n        get_cm_rep_members_size_def())));\n    thm inputs = conj_rule(conjunct1_rule(safe),\n        conjunct1_rule(conjunct2_rule(safe)));\n    ACCEPT_TAC(reduced, mp_rule(int_arith_rule(mk_imp(\n        concl(inputs), goal_ccl(reduced->g))), inputs));\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_rep_members_size_nonnegative",
+      "kind": "proof",
+      "span": [
+        271,
+        272
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_rep_members_size_nonnegative =\n    cm_prove_rep_members_size_nonnegative();",
+      "dependencies": [
+        "cm_prove_rep_members_size_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_index_temp_facts",
+      "kind": "proof",
+      "span": [
+        275,
+        388
+      ],
+      "nonblank_lines": 114,
+      "text": "PROOF static void cm_add_index_temp_facts(const thm shape) {\n  thm parent_shape = by_rewrite(\n      `cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) ==\n       cm_imax (cm_rtemps (left_:cm_expr))\n         (1i + cm_rtemps (right_:cm_expr))`,\n      THM_LIST(cm_expr_temps_for_def, shape,\n        get_cm_ltemps_def(), get_cm_rtemps_def(),\n        get_cm_expr_tpair_def(), get_cm_tleft_def(),\n        get_cm_tright_def(), get_theorem_by_name(\"COND_ID\")));\n  thm parent_bound = conv_rule(rewrite_conv(THM_LIST(\n      parent_shape)), assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  thm left_nonnegative = conjunct2_rule(spec_rule(\n      `left_:cm_expr`, cm_expr_temps_nonnegative));\n  thm right_nonnegative = conjunct2_rule(spec_rule(\n      `right_:cm_expr`, cm_expr_temps_nonnegative));\n  thm left_max = specl_rule(TERM_LIST(\n      `cm_rtemps (left_:cm_expr)`,\n      `1i + cm_rtemps (right_:cm_expr)`),\n      cm_imax_left_bound);\n  thm right_max = specl_rule(TERM_LIST(\n      `cm_rtemps (left_:cm_expr)`,\n      `1i + cm_rtemps (right_:cm_expr)`),\n      cm_imax_right_bound);\n  thm left_bound = by_defs_arith(\n      `(temp__pre:int) +\n         cm_expr_temps_for (left_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, left_max));\n  thm right_bound = by_defs_arith(\n      `(temp__pre:int) + 1i +\n         cm_expr_temps_for (right_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, right_max));\n  add_fact_st(left_bound);\n  add_fact_st(right_bound);\n  add_fact_st(mp_rule(int_arith_rule(\n      `0i <= (temp__pre:int) ==> 0i <= temp__pre + 1i`),\n      assume_rule(`0i <= (temp__pre:int)`)));\n  add_fact_st(mp_rule(mp_rule(int_arith_rule(\n      `(temp__pre:int) + 1i +\n         cm_rtemps (right_:cm_expr) <=\n           (temp_limit__pre:int) ==>\n       0i <= cm_rtemps right_ ==>\n       temp__pre + 1i <= temp_limit__pre`),\n      conv_rule(rewrite_conv(THM_LIST(cm_expr_temps_for_def)),\n        right_bound)), right_nonnegative));\n  cm_add_temp_offset_bound_st(`temp__pre:int`);\n  cm_add_temp_offset_bound_st(`(temp__pre:int) + 1i`);\n  {\n    term params =\n        `cm_function_params (f:cm_function_d)`;\n    term locals =\n        `cm_function_locals (f:cm_function_d)`;\n    thm params_safe = from_state_bool(\n        `cm_rep_members_safe\n          (cm_function_params (f:cm_function_d))`);\n    thm locals_safe = from_state_bool(\n        `cm_rep_members_safe\n          (cm_function_locals (f:cm_function_d))`);\n    thm params_rep_nonnegative = mp_rule(\n        spec_rule(params, cm_rep_members_size_nonnegative),\n        params_safe);\n    thm locals_rep_nonnegative = mp_rule(\n        spec_rule(locals, cm_rep_members_size_nonnegative),\n        locals_safe);\n    thm params_match = mp_rule(specl_rule(TERM_LIST(\n        `cm_program_structs (p:cm_program)`, params),\n        cm_rep_members_size_matches), from_state_bool(\n          `cm_slots_wf (cm_program_structs (p:cm_program))\n            (cm_function_params (f:cm_function_d))`));\n    thm locals_match = mp_rule(specl_rule(TERM_LIST(\n        `cm_program_structs (p:cm_program)`, locals),\n        cm_rep_members_size_matches), from_state_bool(\n          `cm_slots_wf (cm_program_structs (p:cm_program))\n            (cm_function_locals (f:cm_function_d))`));\n    thm params_nonnegative = by_rewrite(\n        `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n          (cm_function_params (f:cm_function_d))`,\n        THM_LIST(sym_rule(params_match), params_rep_nonnegative));\n    thm locals_nonnegative = by_rewrite(\n        `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n          (cm_function_locals (f:cm_function_d))`,\n        THM_LIST(sym_rule(locals_match), locals_rep_nonnegative));\n    thm params_at_fid = conv_rule(rewrite_conv(THM_LIST(\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n        params_nonnegative);\n    thm locals_at_fid = conv_rule(rewrite_conv(THM_LIST(\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n        locals_nonnegative);\n    thm offset_bound = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_temp_offset_def())), assume_rule(\n          `cm_temp_offset (p:cm_program) (fid__pre:int)\n            ((temp__pre:int) + 1i) <= 2147483647i`));\n    thm temp_upper = by_defs_arith(\n        `(temp__pre:int) + 1i <= 2147483647i`,\n        THM_LIST(get_cm_temp_offset_def()),\n        THM_LIST(params_at_fid, locals_at_fid, offset_bound));\n    thm temp_cast = mp_rule(mp_rule(spec_rule(\n        `(temp__pre:int) + 1i`, cm_nonnegative_i32_cast),\n        assume_rule(`0i <= (temp__pre:int) + 1i`)), temp_upper);\n    add_fact_st(temp_upper);\n    add_fact_st(temp_cast);\n  }\n  add_fact_st(left_nonnegative);\n}",
+      "dependencies": [
+        "cm_rep_members_size_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_index_pc_facts",
+      "kind": "proof",
+      "span": [
+        390,
+        541
+      ],
+      "nonblank_lines": 152,
+      "text": "PROOF static void cm_add_index_pc_facts(\n    const thm code_shape, const term fixed_suffix) {\n  term base_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int) (left_:cm_expr) 0i`;\n  term right_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         ((pc__pre:int) +\n           cm_rvalue_code_count p fid__pre left_ + 5i)\n         ((temp__pre:int) + 1i) (right_:cm_expr) 0i`;\n  term after_base = subst(TERM_PAIR_LIST(\n      (term_pair){right_code, `right_code_:(tvm_inst)list`},\n      (term_pair){fixed_suffix, `fixed_:(tvm_inst)list`}),\n      `cm_temp_store_code (p:cm_program) (fid__pre:int)\n         (temp__pre:int) ++ right_code_ ++ fixed_`);\n  term after_store = subst(TERM_PAIR_LIST(\n      (term_pair){right_code, `right_code_:(tvm_inst)list`},\n      (term_pair){fixed_suffix, `fixed_:(tvm_inst)list`}),\n      `(right_code_:(tvm_inst)list) ++\n       (fixed_:(tvm_inst)list)`);\n  thm parent_pc = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count (pc__pre:int) <=> true`)));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count\n          ((pc__pre:int) + ilength\n            (cm_expr_code_for (p:cm_program) (fid__pre:int)\n              pc__pre (temp__pre:int) (e:cm_expr) (lvalue__pre:int)))\n         <=> true`)));\n  thm base_length = cm_rvalue_code_length_at(\n      `left_:cm_expr`, `pc__pre:int`, `temp__pre:int`);\n  thm right_length = cm_rvalue_code_length_at(\n      `right_:cm_expr`,\n      `(pc__pre:int) +\n        cm_rvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr) + 5i`,\n      `(temp__pre:int) + 1i`);\n  thm after_base_nonnegative = ispec_rule(\n      after_base, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm fixed_nonnegative = ispec_rule(\n      fixed_suffix, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm after_store_nonnegative = ispec_rule(\n      after_store, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm base_nonnegative = ispec_rule(\n      base_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm right_nonnegative = ispec_rule(\n      right_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm_list rules = THM_LIST(\n      get_cm_i32_code_count_def(), code_shape,\n      get_theorem_by_name(\"ILENGTH_APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"),\n      get_cm_temp_store_code_def(),\n      get_cm_fp_relative_address_code_def(), base_length,\n      right_length);\n  thm parent_end_shape = conv_rule(rewrite_conv(rules), parent_end);\n  thm after_base_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), after_base_nonnegative);\n  thm fixed_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), fixed_nonnegative);\n  thm after_store_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), after_store_nonnegative);\n  thm right_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), right_nonnegative);\n  thm base_end = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) + ilength\n          (cm_expr_code_for (p:cm_program) (fid__pre:int)\n            pc__pre (temp__pre:int) (left_:cm_expr) 0i))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        after_base_nonnegative_shape, base_nonnegative,\n        base_length));\n  thm right_start = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n          cm_rvalue_code_count (p:cm_program)\n            (fid__pre:int) (left_:cm_expr) + 5i)`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        after_store_nonnegative_shape, base_nonnegative,\n        base_length));\n  thm right_start_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      right_start);\n  thm right_partial_bounds;\n  thm right_partial_cast;\n  thm right_start_cast;\n  thm base_increment_bounds;\n  thm base_increment_cast;\n  thm right_partial = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n          cm_rvalue_code_count (p:cm_program)\n            (fid__pre:int) (left_:cm_expr))`,\n      rules, THM_LIST(parent_pc, right_start_bounds,\n        base_nonnegative, base_length));\n  right_partial_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      right_partial);\n  right_partial_cast = mp_rule(mp_rule(spec_rule(\n      `(pc__pre:int) +\n        cm_rvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr)`,\n      cm_nonnegative_i32_cast), conjunct1_rule(right_partial_bounds)),\n      conjunct2_rule(right_partial_bounds));\n  right_start_cast = mp_rule(mp_rule(spec_rule(\n      `(pc__pre:int) +\n        cm_rvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr) + 5i`,\n      cm_nonnegative_i32_cast), conjunct1_rule(right_start_bounds)),\n      conjunct2_rule(right_start_bounds));\n  base_increment_bounds = by_defs_arith(\n      `0i <=\n         cm_rvalue_code_count (p:cm_program)\n           (fid__pre:int) (left_:cm_expr) + 5i &&\n       cm_rvalue_code_count p fid__pre left_ + 5i <= 2147483647i`,\n      rules, THM_LIST(parent_pc, right_start_bounds,\n        base_nonnegative, base_length));\n  base_increment_cast = mp_rule(mp_rule(spec_rule(\n      `cm_rvalue_code_count (p:cm_program)\n         (fid__pre:int) (left_:cm_expr) + 5i`,\n      cm_nonnegative_i32_cast),\n      conjunct1_rule(base_increment_bounds)),\n      conjunct2_rule(base_increment_bounds));\n  thm right_end = by_defs_arith(\n      `cm_i32_code_count\n        (((pc__pre:int) +\n           cm_rvalue_code_count (p:cm_program)\n             (fid__pre:int) (left_:cm_expr) + 5i) +\n         ilength\n           (cm_expr_code_for p fid__pre\n             (pc__pre +\n               cm_rvalue_code_count p fid__pre left_ + 5i)\n             (temp__pre + 1i) (right_:cm_expr) 0i))`,\n      rules, THM_LIST(parent_pc, right_start_bounds,\n        parent_end_shape, fixed_nonnegative_shape,\n        right_nonnegative_shape, base_length, right_length));\n  add_fact_st(eqt_intro_rule(base_end));\n  add_fact_st(eqt_intro_rule(right_start));\n  add_fact_st(eqt_intro_rule(right_partial));\n  add_fact_st(eqt_intro_rule(right_end));\n  add_fact_st(conjunct1_rule(right_partial_bounds));\n  add_fact_st(conjunct2_rule(right_partial_bounds));\n  add_fact_st(conjunct1_rule(right_start_bounds));\n  add_fact_st(conjunct2_rule(right_start_bounds));\n  add_fact_st(conjunct1_rule(base_increment_bounds));\n  add_fact_st(conjunct2_rule(base_increment_bounds));\n  add_fact_st(right_partial_cast);\n  add_fact_st(right_start_cast);\n  add_fact_st(base_increment_cast);\n}",
+      "dependencies": [
+        "cm_rvalue_code_length_at"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_lvalue_code_length_at",
+      "kind": "proof",
+      "span": [
+        1544,
+        1562
+      ],
+      "nonblank_lines": 19,
+      "text": "PROOF static thm cm_lvalue_code_length_at(\n    const term expr, const term pc, const term temp) {\n  thm lengths = conjunct1_rule(\n      spec_rule(expr, get_cm_expr_code_lengths()));\n  thm result = specl_rule(TERM_LIST(\n      `p:cm_program`, `fid__pre:int`, pc, temp), lengths);\n  thm selection = by_rewrite(\n      subst(TERM_PAIR_LIST(\n        (term_pair){expr, `expr_:cm_expr`},\n        (term_pair){pc, `pc_:int`},\n        (term_pair){temp, `temp_:int`}),\n        `cm_expr_code_for (p:cm_program) (fid__pre:int)\n           (pc_:int) (temp_:int) (expr_:cm_expr) 1i ==\n         cm_emit_lvalue p fid__pre pc_ temp_ expr_`),\n      THM_LIST(cm_expr_code_for_def,\n        eqf_intro_rule(int_arith_rule(`~(1i == 0i)`))));\n  return conv_rule(rewrite_conv(THM_LIST(gsym_rule(selection))),\n      result);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_assignment_temp_facts",
+      "kind": "proof",
+      "span": [
+        1564,
+        1678
+      ],
+      "nonblank_lines": 115,
+      "text": "PROOF static void cm_add_assignment_temp_facts(\n    const thm shape, const thm lvalue_case) {\n  thm parent_shape = by_rewrite(\n      `cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) ==\n       cm_imax (cm_ltemps (left_:cm_expr))\n         (1i + cm_rtemps (right_:cm_expr))`,\n      THM_LIST(cm_expr_temps_for_def, shape,\n        get_cm_ltemps_def(), get_cm_rtemps_def(),\n        get_cm_expr_tpair_def(), get_cm_tleft_def(),\n        get_cm_tright_def(), lvalue_case));\n  thm parent_bound = conv_rule(rewrite_conv(THM_LIST(\n      parent_shape)), assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  thm left_nonnegative = conjunct1_rule(spec_rule(\n      `left_:cm_expr`, cm_expr_temps_nonnegative));\n  thm right_nonnegative = conjunct2_rule(spec_rule(\n      `right_:cm_expr`, cm_expr_temps_nonnegative));\n  thm left_max = specl_rule(TERM_LIST(\n      `cm_ltemps (left_:cm_expr)`,\n      `1i + cm_rtemps (right_:cm_expr)`),\n      cm_imax_left_bound);\n  thm right_max = specl_rule(TERM_LIST(\n      `cm_ltemps (left_:cm_expr)`,\n      `1i + cm_rtemps (right_:cm_expr)`),\n      cm_imax_right_bound);\n  thm left_bound = by_defs_arith(\n      `(temp__pre:int) +\n         cm_expr_temps_for (left_:cm_expr) 1i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, left_max));\n  thm right_bound = by_defs_arith(\n      `(temp__pre:int) + 1i +\n         cm_expr_temps_for (right_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, right_max));\n  add_fact_st(left_bound);\n  add_fact_st(right_bound);\n  add_fact_st(mp_rule(int_arith_rule(\n      `0i <= (temp__pre:int) ==> 0i <= temp__pre + 1i`),\n      assume_rule(`0i <= (temp__pre:int)`)));\n  add_fact_st(mp_rule(mp_rule(int_arith_rule(\n      `(temp__pre:int) + 1i +\n         cm_rtemps (right_:cm_expr) <=\n           (temp_limit__pre:int) ==>\n       0i <= cm_rtemps right_ ==>\n       temp__pre + 1i <= temp_limit__pre`),\n      conv_rule(rewrite_conv(THM_LIST(cm_expr_temps_for_def)),\n        right_bound)), right_nonnegative));\n  cm_add_temp_offset_bound_st(`temp__pre:int`);\n  cm_add_temp_offset_bound_st(`(temp__pre:int) + 1i`);\n  {\n    term params =\n        `cm_function_params (f:cm_function_d)`;\n    term locals =\n        `cm_function_locals (f:cm_function_d)`;\n    thm params_safe = from_state_bool(\n        `cm_rep_members_safe\n          (cm_function_params (f:cm_function_d))`);\n    thm locals_safe = from_state_bool(\n        `cm_rep_members_safe\n          (cm_function_locals (f:cm_function_d))`);\n    thm params_rep_nonnegative = mp_rule(\n        spec_rule(params, cm_rep_members_size_nonnegative),\n        params_safe);\n    thm locals_rep_nonnegative = mp_rule(\n        spec_rule(locals, cm_rep_members_size_nonnegative),\n        locals_safe);\n    thm params_match = mp_rule(specl_rule(TERM_LIST(\n        `cm_program_structs (p:cm_program)`, params),\n        cm_rep_members_size_matches), from_state_bool(\n          `cm_slots_wf (cm_program_structs (p:cm_program))\n            (cm_function_params (f:cm_function_d))`));\n    thm locals_match = mp_rule(specl_rule(TERM_LIST(\n        `cm_program_structs (p:cm_program)`, locals),\n        cm_rep_members_size_matches), from_state_bool(\n          `cm_slots_wf (cm_program_structs (p:cm_program))\n            (cm_function_locals (f:cm_function_d))`));\n    thm params_nonnegative = by_rewrite(\n        `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n          (cm_function_params (f:cm_function_d))`,\n        THM_LIST(sym_rule(params_match), params_rep_nonnegative));\n    thm locals_nonnegative = by_rewrite(\n        `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n          (cm_function_locals (f:cm_function_d))`,\n        THM_LIST(sym_rule(locals_match), locals_rep_nonnegative));\n    thm params_at_fid = conv_rule(rewrite_conv(THM_LIST(\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n        params_nonnegative);\n    thm locals_at_fid = conv_rule(rewrite_conv(THM_LIST(\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n        locals_nonnegative);\n    thm offset_bound = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_temp_offset_def())), assume_rule(\n          `cm_temp_offset (p:cm_program) (fid__pre:int)\n            ((temp__pre:int) + 1i) <= 2147483647i`));\n    thm temp_upper = by_defs_arith(\n        `(temp__pre:int) + 1i <= 2147483647i`,\n        THM_LIST(get_cm_temp_offset_def()),\n        THM_LIST(params_at_fid, locals_at_fid, offset_bound));\n    thm temp_cast = mp_rule(mp_rule(spec_rule(\n        `(temp__pre:int) + 1i`, cm_nonnegative_i32_cast),\n        assume_rule(`0i <= (temp__pre:int) + 1i`)), temp_upper);\n    add_fact_st(temp_upper);\n    add_fact_st(temp_cast);\n  }\n  add_fact_st(left_nonnegative);\n}",
+      "dependencies": [
+        "cm_rep_members_size_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_assignment_pc_facts",
+      "kind": "proof",
+      "span": [
+        1680,
+        1826
+      ],
+      "nonblank_lines": 147,
+      "text": "PROOF static void cm_add_assignment_pc_facts(\n    const thm code_shape, const term fixed_suffix) {\n  term left_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int) (left_:cm_expr) 1i`;\n  term right_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         ((pc__pre:int) +\n           cm_lvalue_code_count p fid__pre left_ + 5i)\n         ((temp__pre:int) + 1i) (right_:cm_expr) 0i`;\n  term after_left = subst(TERM_PAIR_LIST(\n      (term_pair){right_code, `right_code_:(tvm_inst)list`},\n      (term_pair){fixed_suffix, `fixed_:(tvm_inst)list`}),\n      `cm_temp_store_code (p:cm_program) (fid__pre:int)\n         (temp__pre:int) ++ right_code_ ++ fixed_`);\n  term after_store = subst(TERM_PAIR_LIST(\n      (term_pair){right_code, `right_code_:(tvm_inst)list`},\n      (term_pair){fixed_suffix, `fixed_:(tvm_inst)list`}),\n      `(right_code_:(tvm_inst)list) ++\n       (fixed_:(tvm_inst)list)`);\n  thm parent_pc = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count (pc__pre:int) <=> true`)));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count\n          ((pc__pre:int) + ilength\n            (cm_expr_code_for (p:cm_program) (fid__pre:int)\n              pc__pre (temp__pre:int) (e:cm_expr) (lvalue__pre:int)))\n         <=> true`)));\n  thm left_length = cm_lvalue_code_length_at(\n      `left_:cm_expr`, `pc__pre:int`, `temp__pre:int`);\n  thm right_length = cm_rvalue_code_length_at(\n      `right_:cm_expr`,\n      `(pc__pre:int) +\n        cm_lvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr) + 5i`,\n      `(temp__pre:int) + 1i`);\n  thm after_left_nonnegative = ispec_rule(\n      after_left, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm fixed_nonnegative = ispec_rule(\n      fixed_suffix, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm after_store_nonnegative = ispec_rule(\n      after_store, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm left_nonnegative = ispec_rule(\n      left_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm right_nonnegative = ispec_rule(\n      right_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm_list rules = THM_LIST(\n      get_cm_i32_code_count_def(), code_shape,\n      get_theorem_by_name(\"ILENGTH_APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"),\n      get_cm_temp_store_code_def(),\n      get_cm_fp_relative_address_code_def(), left_length,\n      right_length);\n  thm parent_end_shape = conv_rule(rewrite_conv(rules), parent_end);\n  thm after_left_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), after_left_nonnegative);\n  thm fixed_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), fixed_nonnegative);\n  thm after_store_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), after_store_nonnegative);\n  thm right_nonnegative_shape =\n      conv_rule(rewrite_conv(rules), right_nonnegative);\n  thm left_end = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) + ilength\n          (cm_expr_code_for (p:cm_program) (fid__pre:int)\n            pc__pre (temp__pre:int) (left_:cm_expr) 1i))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        after_left_nonnegative_shape, left_nonnegative,\n        left_length));\n  thm right_start = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n          cm_lvalue_code_count (p:cm_program)\n            (fid__pre:int) (left_:cm_expr) + 5i)`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        after_store_nonnegative_shape, left_nonnegative,\n        left_length));\n  thm right_start_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      right_start);\n  thm right_partial = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n          cm_lvalue_code_count (p:cm_program)\n            (fid__pre:int) (left_:cm_expr))`,\n      rules, THM_LIST(parent_pc, right_start_bounds,\n        left_nonnegative, left_length));\n  thm right_partial_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      right_partial);\n  thm right_partial_cast = mp_rule(mp_rule(spec_rule(\n      `(pc__pre:int) +\n        cm_lvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr)`,\n      cm_nonnegative_i32_cast), conjunct1_rule(right_partial_bounds)),\n      conjunct2_rule(right_partial_bounds));\n  thm right_start_cast = mp_rule(mp_rule(spec_rule(\n      `(pc__pre:int) +\n        cm_lvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr) + 5i`,\n      cm_nonnegative_i32_cast), conjunct1_rule(right_start_bounds)),\n      conjunct2_rule(right_start_bounds));\n  thm left_increment_bounds = by_defs_arith(\n      `0i <=\n         cm_lvalue_code_count (p:cm_program)\n           (fid__pre:int) (left_:cm_expr) + 5i &&\n       cm_lvalue_code_count p fid__pre left_ + 5i <= 2147483647i`,\n      rules, THM_LIST(parent_pc, right_start_bounds,\n        left_nonnegative, left_length));\n  thm left_increment_cast = mp_rule(mp_rule(spec_rule(\n      `cm_lvalue_code_count (p:cm_program)\n         (fid__pre:int) (left_:cm_expr) + 5i`,\n      cm_nonnegative_i32_cast),\n      conjunct1_rule(left_increment_bounds)),\n      conjunct2_rule(left_increment_bounds));\n  thm right_end = by_defs_arith(\n      `cm_i32_code_count\n        (((pc__pre:int) +\n           cm_lvalue_code_count (p:cm_program)\n             (fid__pre:int) (left_:cm_expr) + 5i) +\n         ilength\n           (cm_expr_code_for p fid__pre\n             (pc__pre +\n               cm_lvalue_code_count p fid__pre left_ + 5i)\n             (temp__pre + 1i) (right_:cm_expr) 0i))`,\n      rules, THM_LIST(parent_pc, right_start_bounds,\n        parent_end_shape, fixed_nonnegative_shape,\n        right_nonnegative_shape, left_length, right_length));\n  add_fact_st(eqt_intro_rule(left_end));\n  add_fact_st(eqt_intro_rule(right_start));\n  add_fact_st(eqt_intro_rule(right_partial));\n  add_fact_st(eqt_intro_rule(right_end));\n  add_fact_st(conjunct1_rule(right_partial_bounds));\n  add_fact_st(conjunct2_rule(right_partial_bounds));\n  add_fact_st(conjunct1_rule(right_start_bounds));\n  add_fact_st(conjunct2_rule(right_start_bounds));\n  add_fact_st(conjunct1_rule(left_increment_bounds));\n  add_fact_st(conjunct2_rule(left_increment_bounds));\n  add_fact_st(right_partial_cast);\n  add_fact_st(right_start_cast);\n  add_fact_st(left_increment_cast);\n}",
+      "dependencies": [
+        "cm_lvalue_code_length_at",
+        "cm_rvalue_code_length_at"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_binary_code_shape",
+      "kind": "proof",
+      "span": [
+        2175,
+        2181
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static thm cm_binary_code_shape(const thm shape,\n                                      const thm lvalue_case,\n                                      const thm short_case,\n                                      const term code) {\n  return cm_unary_code_shape(shape, lvalue_case,\n      THM_LIST(short_case), code);\n}",
+      "dependencies": [
+        "cm_unary_code_shape"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_binary_ordinary_temp_facts",
+      "kind": "proof",
+      "span": [
+        2183,
+        2288
+      ],
+      "nonblank_lines": 106,
+      "text": "PROOF static void cm_add_binary_ordinary_temp_facts(const thm shape,\n                                                     const thm short_case,\n                                                     const thm lvalue_case) {\n  thm parent_shape = by_rewrite(\n      `cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) ==\n       cm_imax (cm_rtemps (left_:cm_expr))\n         (1i + cm_rtemps (right_:cm_expr))`,\n      THM_LIST(cm_expr_temps_for_def, shape,\n        get_cm_ltemps_def(), get_cm_rtemps_def(),\n        get_cm_expr_tpair_def(), get_cm_tleft_def(),\n        get_cm_tright_def(), short_case, lvalue_case));\n  thm parent_bound = conv_rule(rewrite_conv(THM_LIST(parent_shape)),\n      assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  thm left_nonnegative = conjunct2_rule(spec_rule(\n      `left_:cm_expr`, cm_expr_temps_nonnegative));\n  thm right_nonnegative = conjunct2_rule(spec_rule(\n      `right_:cm_expr`, cm_expr_temps_nonnegative));\n  thm left_max = specl_rule(TERM_LIST(\n      `cm_rtemps (left_:cm_expr)`,\n      `1i + cm_rtemps (right_:cm_expr)`), cm_imax_left_bound);\n  thm right_max = specl_rule(TERM_LIST(\n      `cm_rtemps (left_:cm_expr)`,\n      `1i + cm_rtemps (right_:cm_expr)`), cm_imax_right_bound);\n  thm left_bound = by_defs_arith(\n      `(temp__pre:int) +\n         cm_expr_temps_for (left_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, left_max));\n  thm right_bound = by_defs_arith(\n      `(temp__pre:int) + 1i +\n         cm_expr_temps_for (right_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, right_max));\n  add_fact_st(left_bound);\n  add_fact_st(right_bound);\n  add_fact_st(mp_rule(int_arith_rule(\n      `0i <= (temp__pre:int) ==> 0i <= temp__pre + 1i`),\n      assume_rule(`0i <= (temp__pre:int)`)));\n  add_fact_st(mp_rule(mp_rule(int_arith_rule(\n      `(temp__pre:int) + 1i +\n         cm_rtemps (right_:cm_expr) <=\n           (temp_limit__pre:int) ==>\n       0i <= cm_rtemps right_ ==>\n       temp__pre + 1i <= temp_limit__pre`),\n      conv_rule(rewrite_conv(THM_LIST(cm_expr_temps_for_def)),\n        right_bound)), right_nonnegative));\n  cm_add_temp_offset_bound_st(`temp__pre:int`);\n  cm_add_temp_offset_bound_st(`(temp__pre:int) + 1i`);\n  {\n    term params = `cm_function_params (f:cm_function_d)`;\n    term locals = `cm_function_locals (f:cm_function_d)`;\n    thm params_safe = from_state_bool(\n        `cm_rep_members_safe (cm_function_params (f:cm_function_d))`);\n    thm locals_safe = from_state_bool(\n        `cm_rep_members_safe (cm_function_locals (f:cm_function_d))`);\n    thm params_rep_nonnegative = mp_rule(\n        spec_rule(params, cm_rep_members_size_nonnegative), params_safe);\n    thm locals_rep_nonnegative = mp_rule(\n        spec_rule(locals, cm_rep_members_size_nonnegative), locals_safe);\n    thm params_match = mp_rule(specl_rule(TERM_LIST(\n        `cm_program_structs (p:cm_program)`, params),\n        cm_rep_members_size_matches), from_state_bool(\n          `cm_slots_wf (cm_program_structs (p:cm_program))\n            (cm_function_params (f:cm_function_d))`));\n    thm locals_match = mp_rule(specl_rule(TERM_LIST(\n        `cm_program_structs (p:cm_program)`, locals),\n        cm_rep_members_size_matches), from_state_bool(\n          `cm_slots_wf (cm_program_structs (p:cm_program))\n            (cm_function_locals (f:cm_function_d))`));\n    thm params_nonnegative = by_rewrite(\n        `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n          (cm_function_params (f:cm_function_d))`,\n        THM_LIST(sym_rule(params_match), params_rep_nonnegative));\n    thm locals_nonnegative = by_rewrite(\n        `0i <= cm_slots_size (cm_program_structs (p:cm_program))\n          (cm_function_locals (f:cm_function_d))`,\n        THM_LIST(sym_rule(locals_match), locals_rep_nonnegative));\n    thm params_at_fid = conv_rule(rewrite_conv(THM_LIST(assume_rule(\n        `(f:cm_function_d) ==\n         inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n        params_nonnegative);\n    thm locals_at_fid = conv_rule(rewrite_conv(THM_LIST(assume_rule(\n        `(f:cm_function_d) ==\n         inth (fid__pre:int) (cm_program_functions (p:cm_program))`))),\n        locals_nonnegative);\n    thm offset_bound = conv_rule(rewrite_conv(THM_LIST(\n        get_cm_temp_offset_def())), assume_rule(\n          `cm_temp_offset (p:cm_program) (fid__pre:int)\n            ((temp__pre:int) + 1i) <= 2147483647i`));\n    thm temp_upper = by_defs_arith(\n        `(temp__pre:int) + 1i <= 2147483647i`,\n        THM_LIST(get_cm_temp_offset_def()),\n        THM_LIST(params_at_fid, locals_at_fid, offset_bound));\n    thm temp_cast = mp_rule(mp_rule(spec_rule(\n        `(temp__pre:int) + 1i`, cm_nonnegative_i32_cast),\n        assume_rule(`0i <= (temp__pre:int) + 1i`)), temp_upper);\n    add_fact_st(temp_upper);\n    add_fact_st(temp_cast);\n  }\n  add_fact_st(left_nonnegative);\n}",
+      "dependencies": [
+        "cm_rep_members_size_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_binary_short_temp_facts",
+      "kind": "proof",
+      "span": [
+        2290,
+        2324
+      ],
+      "nonblank_lines": 35,
+      "text": "PROOF static void cm_add_binary_short_temp_facts(const thm shape,\n                                                  const thm short_case,\n                                                  const thm lvalue_case) {\n  thm parent_shape = by_rewrite(\n      `cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) ==\n       cm_imax (cm_rtemps (left_:cm_expr))\n         (cm_rtemps (right_:cm_expr))`,\n      THM_LIST(cm_expr_temps_for_def, shape,\n        get_cm_ltemps_def(), get_cm_rtemps_def(),\n        get_cm_expr_tpair_def(), get_cm_tleft_def(),\n        get_cm_tright_def(), short_case, lvalue_case));\n  thm parent_bound = conv_rule(rewrite_conv(THM_LIST(parent_shape)),\n      assume_rule(\n        `(temp__pre:int) +\n           cm_expr_temps_for (e:cm_expr) (lvalue__pre:int) <=\n         (temp_limit__pre:int)`));\n  thm left_max = specl_rule(TERM_LIST(\n      `cm_rtemps (left_:cm_expr)`, `cm_rtemps (right_:cm_expr)`),\n      cm_imax_left_bound);\n  thm right_max = specl_rule(TERM_LIST(\n      `cm_rtemps (left_:cm_expr)`, `cm_rtemps (right_:cm_expr)`),\n      cm_imax_right_bound);\n  add_fact_st(by_defs_arith(\n      `(temp__pre:int) +\n         cm_expr_temps_for (left_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, left_max)));\n  add_fact_st(by_defs_arith(\n      `(temp__pre:int) +\n         cm_expr_temps_for (right_:cm_expr) 0i <=\n       (temp_limit__pre:int)`,\n      THM_LIST(cm_expr_temps_for_def),\n      THM_LIST(parent_bound, right_max)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_add_binary_short_pc_facts",
+      "kind": "proof",
+      "span": [
+        2326,
+        2501
+      ],
+      "nonblank_lines": 176,
+      "text": "PROOF static void cm_add_binary_short_pc_facts(const thm code_shape) {\n  term left_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int) (left_:cm_expr) 0i`;\n  term right_code =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         ((pc__pre:int) +\n           (cm_rvalue_code_count p fid__pre (left_:cm_expr) + 1i))\n         (temp__pre:int) (right_:cm_expr) 0i`;\n  thm parent_pc = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count (pc__pre:int) <=> true`)));\n  thm parent_end = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      eqt_elim_rule(assume_rule(\n        `cm_i32_code_count\n          ((pc__pre:int) + ilength\n            (cm_expr_code_for (p:cm_program) (fid__pre:int)\n              pc__pre (temp__pre:int) (e:cm_expr) (lvalue__pre:int)))\n         <=> true`)));\n  thm left_length = cm_rvalue_code_length_at(\n      `left_:cm_expr`, `pc__pre:int`, `temp__pre:int`);\n  thm right_length = cm_rvalue_code_length_at(\n      `right_:cm_expr`,\n      `(pc__pre:int) +\n        (cm_rvalue_code_count (p:cm_program)\n          (fid__pre:int) (left_:cm_expr) + 1i)`,\n      `temp__pre:int`);\n  thm left_nonnegative = ispec_rule(\n      left_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm right_nonnegative = ispec_rule(\n      right_code, get_theorem_by_name(\"ILENGTH_NONNEG\"));\n  thm_list rules = THM_LIST(\n      get_cm_i32_code_count_def(), code_shape,\n      get_theorem_by_name(\"ILENGTH_APPEND\"),\n      get_theorem_by_name(\"ILENGTH_DEF\"),\n      left_length, right_length);\n  thm parent_end_shape = conv_rule(rewrite_conv(rules), parent_end);\n  thm left_nonnegative_shape = conv_rule(\n      rewrite_conv(rules), left_nonnegative);\n  thm right_nonnegative_shape = conv_rule(\n      rewrite_conv(rules), right_nonnegative);\n  thm left_end = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) + ilength\n          (cm_expr_code_for (p:cm_program) (fid__pre:int)\n            pc__pre (temp__pre:int) (left_:cm_expr) 0i))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm right_start = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n         (cm_rvalue_code_count (p:cm_program)\n           (fid__pre:int) (left_:cm_expr) + 1i))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm right_end = by_defs_arith(\n      `cm_i32_code_count\n        (((pc__pre:int) +\n          (cm_rvalue_code_count (p:cm_program)\n            (fid__pre:int) (left_:cm_expr) + 1i)) +\n         ilength\n           (cm_expr_code_for p fid__pre\n             (pc__pre +\n              (cm_rvalue_code_count p fid__pre left_ + 1i))\n             (temp__pre:int) (right_:cm_expr) 0i))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm first_target = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n         (cm_rvalue_code_count (p:cm_program) fid__pre left_ +\n          (cm_rvalue_code_count p fid__pre (right_:cm_expr) + 4i)))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm final_target = by_defs_arith(\n      `cm_i32_code_count\n        ((pc__pre:int) +\n         (cm_rvalue_code_count (p:cm_program) fid__pre left_ +\n          (cm_rvalue_code_count p fid__pre (right_:cm_expr) + 5i)))`,\n      rules, THM_LIST(parent_pc, parent_end_shape,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm first_target_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      first_target);\n  thm final_target_bounds = conv_rule(\n      rewrite_conv(THM_LIST(get_cm_i32_code_count_def())),\n      final_target);\n  thm first_right_bounds = by_defs_arith(\n      `0i <=\n         cm_rvalue_code_count (p:cm_program) (fid__pre:int)\n           (right_:cm_expr) + 4i &&\n       cm_rvalue_code_count p fid__pre right_ + 4i <= 2147483647i`,\n      rules, THM_LIST(first_target_bounds, parent_pc,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm first_middle_bounds = by_defs_arith(\n      `0i <=\n         cm_rvalue_code_count (p:cm_program) (fid__pre:int)\n           (left_:cm_expr) +\n         (cm_rvalue_code_count p fid__pre (right_:cm_expr) + 4i) &&\n       cm_rvalue_code_count p fid__pre left_ +\n         (cm_rvalue_code_count p fid__pre right_ + 4i) <=\n         2147483647i`,\n      rules, THM_LIST(first_target_bounds, parent_pc,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm final_right_bounds = by_defs_arith(\n      `0i <=\n         cm_rvalue_code_count (p:cm_program) (fid__pre:int)\n           (right_:cm_expr) + 5i &&\n       cm_rvalue_code_count p fid__pre right_ + 5i <= 2147483647i`,\n      rules, THM_LIST(final_target_bounds, parent_pc,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  thm final_middle_bounds = by_defs_arith(\n      `0i <=\n         cm_rvalue_code_count (p:cm_program) (fid__pre:int)\n           (left_:cm_expr) +\n         (cm_rvalue_code_count p fid__pre (right_:cm_expr) + 5i) &&\n       cm_rvalue_code_count p fid__pre left_ +\n         (cm_rvalue_code_count p fid__pre right_ + 5i) <=\n         2147483647i`,\n      rules, THM_LIST(final_target_bounds, parent_pc,\n        left_nonnegative_shape, right_nonnegative_shape,\n        left_length, right_length));\n  add_fact_st(eqt_intro_rule(left_end));\n  add_fact_st(eqt_intro_rule(right_start));\n  add_fact_st(eqt_intro_rule(right_end));\n  add_fact_st(eqt_intro_rule(first_target));\n  add_fact_st(eqt_intro_rule(final_target));\n  add_fact_st(conjunct1_rule(first_target_bounds));\n  add_fact_st(conjunct2_rule(first_target_bounds));\n  add_fact_st(conjunct1_rule(first_right_bounds));\n  add_fact_st(conjunct2_rule(first_right_bounds));\n  add_fact_st(conjunct1_rule(first_middle_bounds));\n  add_fact_st(conjunct2_rule(first_middle_bounds));\n  add_fact_st(conjunct1_rule(final_target_bounds));\n  add_fact_st(conjunct2_rule(final_target_bounds));\n  add_fact_st(conjunct1_rule(final_right_bounds));\n  add_fact_st(conjunct2_rule(final_right_bounds));\n  add_fact_st(conjunct1_rule(final_middle_bounds));\n  add_fact_st(conjunct2_rule(final_middle_bounds));\n  {\n    thm right_start_bounds = conv_rule(\n        rewrite_conv(THM_LIST(get_cm_i32_code_count_def())), right_start);\n    thm right_start_cast = mp_rule(mp_rule(spec_rule(\n        `(pc__pre:int) +\n         (cm_rvalue_code_count (p:cm_program) fid__pre left_ + 1i)`,\n        cm_nonnegative_i32_cast), conjunct1_rule(right_start_bounds)),\n        conjunct2_rule(right_start_bounds));\n    thm increment_bounds = by_defs_arith(\n        `0i <= cm_rvalue_code_count (p:cm_program)\n                   (fid__pre:int) (left_:cm_expr) + 1i &&\n         cm_rvalue_code_count p fid__pre left_ + 1i <= 2147483647i`,\n        rules, THM_LIST(parent_pc, right_start_bounds,\n          left_nonnegative_shape, left_length));\n    thm increment_cast = mp_rule(mp_rule(spec_rule(\n        `cm_rvalue_code_count (p:cm_program)\n           (fid__pre:int) (left_:cm_expr) + 1i`,\n        cm_nonnegative_i32_cast), conjunct1_rule(increment_bounds)),\n        conjunct2_rule(increment_bounds));\n    add_fact_st(conjunct1_rule(right_start_bounds));\n    add_fact_st(conjunct2_rule(right_start_bounds));\n    add_fact_st(conjunct1_rule(increment_bounds));\n    add_fact_st(conjunct2_rule(increment_bounds));\n    add_fact_st(right_start_cast);\n    add_fact_st(increment_cast);\n  }\n}",
+      "dependencies": [
+        "cm_rvalue_code_length_at"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_binary_short_code_shape",
+      "kind": "proof",
+      "span": [
+        2503,
+        2528
+      ],
+      "nonblank_lines": 26,
+      "text": "PROOF static thm cm_binary_short_code_shape(const thm shape,\n                                             const thm lvalue_case,\n                                             const thm short_case) {\n  return cm_binary_code_shape(\n      shape, lvalue_case, short_case,\n      `cm_expr_code_for (p:cm_program) (fid__pre:int)\n         (pc__pre:int) (temp__pre:int) (left_:cm_expr) 0i ++\n       [TVMInst\n          (if (op_:int) == 0i then TVMJnzOp else TVMJzOp)\n          (pc__pre +\n            (cm_rvalue_code_count p fid__pre left_ +\n             (cm_rvalue_code_count p fid__pre\n               (right_:cm_expr) + 4i)))] ++\n       cm_expr_code_for p fid__pre\n         (pc__pre +\n          (cm_rvalue_code_count p fid__pre left_ + 1i))\n         temp__pre right_ 0i ++\n       [TVMInst TVMPushOp 0i;\n        TVMInst TVMNeOp 0i;\n        TVMInst TVMJmpOp\n          (pc__pre +\n            (cm_rvalue_code_count p fid__pre left_ +\n             (cm_rvalue_code_count p fid__pre right_ + 5i)));\n        TVMInst TVMPushOp\n          (if op_ == 0i then 1i else 0i)]`);\n}",
+      "dependencies": [
+        "cm_binary_code_shape"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prepare_binary_short_st",
+      "kind": "proof",
+      "span": [
+        2530,
+        2541
+      ],
+      "nonblank_lines": 12,
+      "text": "PROOF static void cm_prepare_binary_short_st(const thm shape,\n                                              const thm lvalue_case,\n                                              const thm short_case,\n                                              const thm or_case) {\n  thm code_shape =\n      cm_binary_short_code_shape(shape, lvalue_case, short_case);\n  code_shape = conv_rule(\n      reduce_rewrite_conv(THM_LIST(or_case)), code_shape);\n  cm_add_binary_short_temp_facts(shape, short_case, lvalue_case);\n  cm_add_binary_short_pc_facts(code_shape);\n  cm_select_code_plan_st(code_shape);\n}",
+      "dependencies": [
+        "cm_add_binary_short_pc_facts",
+        "cm_add_binary_short_temp_facts",
+        "cm_binary_short_code_shape"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_restore_binary_short_st",
+      "kind": "proof",
+      "span": [
+        2543,
+        2556
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static void cm_restore_binary_short_st(const thm shape,\n                                              const thm lvalue_case,\n                                              const thm short_case,\n                                              const thm or_case) {\n  thm code_shape =\n      cm_binary_short_code_shape(shape, lvalue_case, short_case);\n  code_shape = conv_rule(\n      reduce_rewrite_conv(THM_LIST(or_case)), code_shape);\n  code_shape = conv_rule(rewrite_conv(THM_LIST(\n      gsym_rule(get_theorem_by_name(\"APPEND_ASSOC\")),\n      get_theorem_by_name(\"APPEND\"),\n      get_theorem_by_name(\"APPEND_NIL\"))), code_shape);\n  cm_restore_code_plan_end_st(code_shape);\n}",
+      "dependencies": [
+        "cm_binary_short_code_shape"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_select_binary_short_right_st",
+      "kind": "proof",
+      "span": [
+        2558,
+        2653
+      ],
+      "nonblank_lines": 95,
+      "text": "PROOF static void cm_select_binary_short_right_st(\n    const term branch_opcode, const term short_value) {\n  term child_tail =\n      `TVMInst TVMPushOp 0i ::\n       TVMInst TVMNeOp 0i ::\n       TVMInst TVMJmpOp\n         ((pc__pre:int) +\n           (cm_rvalue_code_count (p:cm_program)\n              (fid__pre:int) (left_:cm_expr) +\n            (cm_rvalue_code_count p fid__pre\n              (right_:cm_expr) + 5i))) ::\n       TVMInst TVMPushOp short_value_ ::\n       (tail:(tvm_inst)list)`;\n  term child_done =\n      `((done:(tvm_inst)list) ++\n          cm_expr_code_for (p:cm_program) (fid__pre:int)\n            (pc__pre:int) (temp__pre:int)\n            (left_:cm_expr) 0i) ++\n        [TVMInst branch_opcode_\n           (pc__pre +\n             (cm_rvalue_code_count p fid__pre left_ +\n              (cm_rvalue_code_count p fid__pre\n                (right_:cm_expr) + 4i)))]`;\n  child_tail = subst(TERM_PAIR_LIST(\n      (term_pair){branch_opcode, `branch_opcode_:tvm_opcode`},\n      (term_pair){short_value, `short_value_:int`}), child_tail);\n  child_done = subst(TERM_PAIR_LIST(\n      (term_pair){branch_opcode, `branch_opcode_:tvm_opcode`}),\n      child_done);\n  term child_resources =\n      `cm_program_context_rep (program__pre:int) (p:cm_program)\n         (functions_ptr:int) **\n       cm_function_context_rep (fn__pre:int) (f:cm_function_d)\n         (body:int) (next:int) **\n       cm_expr_rep (zb:int) (right_:cm_expr) **\n       cm_resolved_emitter_plan_rep p (emitter__pre:int)\n         (out:int) (capacity:int) child_done_\n         (cm_expr_code_for p (fid__pre:int)\n            ((pc__pre:int) +\n              (cm_rvalue_code_count p fid__pre\n                (left_:cm_expr) + 1i))\n            (temp__pre:int) right_ 0i ++ child_tail_)`;\n  child_resources = subst(TERM_PAIR_LIST(\n      (term_pair){child_done, `child_done_:(tvm_inst)list`},\n      (term_pair){child_tail, `child_tail_:(tvm_inst)list`}),\n      child_resources);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      refl_slrule(child_resources)));\n\n  term child_facts =\n      `fact(0i <= 0i) ** fact(0i <= 1i) **\n       fact(cm_wf_program (p:cm_program) <=> true) **\n       fact(cm_typed_program p <=> true) **\n       fact((f:cm_function_d) ==\n         inth (fid__pre:int) (cm_program_functions p)) **\n       fact(cm_expr_wf p f (right_:cm_expr) <=> true) **\n       fact(cm_expr_counts_representable p fid__pre right_\n         <=> true) **\n       fact(cm_slots_wf (cm_program_structs p)\n         (cm_function_params f) <=> true) **\n       fact(cm_slots_wf (cm_program_structs p)\n         (cm_function_locals f) <=> true) **\n       fact(cm_rep_structs_safe (cm_program_structs p)\n         <=> true) **\n       fact(cm_rep_globals_safe (cm_program_globals p)\n         <=> true) **\n       fact(cm_rep_strings_safe (cm_program_strings p)\n         <=> true) **\n       fact(cm_rep_members_safe (cm_function_params f)\n         <=> true) **\n       fact(cm_rep_members_safe (cm_function_locals f)\n         <=> true) **\n       fact(cm_rep_globals_size (cm_program_globals p) +\n         cm_rep_strings_size (cm_program_strings p) <= 1048560i) **\n       fact(0i <= (temp__pre:int)) **\n       fact(temp__pre <= (temp_limit__pre:int)) **\n       fact(temp__pre +\n         cm_expr_temps_for (right_:cm_expr) 0i <=\n           temp_limit__pre) **\n       fact(cm_temp_offset p (fid__pre:int)\n         (temp_limit__pre:int) <= 2147483647i) **\n       fact(cm_i32_code_count\n         ((pc__pre:int) +\n          (cm_rvalue_code_count p fid__pre\n            (left_:cm_expr) + 1i)) <=> true) **\n       fact(cm_i32_code_count\n         (((pc__pre:int) +\n           (cm_rvalue_code_count p fid__pre left_ + 1i)) +\n          ilength\n            (cm_expr_code_for p fid__pre\n              (pc__pre +\n                (cm_rvalue_code_count p fid__pre left_ + 1i))\n              temp__pre right_ 0i)) <=> true)`;\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      refl_slrule(child_facts)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_member_code_shape",
+      "kind": "proof",
+      "span": [
+        3213,
+        3240
+      ],
+      "nonblank_lines": 28,
+      "text": "PROOF static thm cm_member_code_shape(const thm shape) {\n  term target =\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       cm_expr_code_for p fid__pre pc__pre temp__pre\n         (arg_:cm_expr) 0i ++\n       [TVMInst TVMPushOp\n          (cm_member_offset (cm_program_structs p)\n            (cm_struct_id (cm_pointee (cm_expr_type arg_)))\n            (mid_:int));\n        TVMInst TVMAddOp 0i] ++\n       cm_member_load_suffix p (cm_expr_type arg_) mid_\n         (ty_:cm_type) lvalue__pre`;\n  gnode root = gnode_new_with_ccl(mk_imp(concl(shape), target));\n  gnode leaf = DISCH_TAC(root, \"Hshape\");\n  gnode_list cases = BOOL_CASES_TAC(\n      leaf, `(lvalue__pre:int) == 0i`, \"Hlvalue\");\n  thm_list rules = THM_LIST(\n      cm_expr_code_for_def, shape, get_cm_emit_expr_pair_def(),\n      get_cm_rcode_of_def(), get_cm_lcode_of_def(),\n      get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def(),\n      cm_member_load_suffix_def,\n      get_theorem_by_name(\"APPEND_NIL\"));\n  for (size_t i = 0; i < vector_size(cases); ++i) {\n    CONV_WITH_ASMP_TAC(cases[i], reduce_rewrite_conv, rules);\n  }\n  return mp_rule(gnode_prove(root), shape);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_dispatch_add_simple_st",
+      "kind": "proof",
+      "span": [
+        3551,
+        3565
+      ],
+      "nonblank_lines": 15,
+      "text": "PROOF static void cm_dispatch_add_simple_st(const thm kind) {\n  term expanded =\n      `(cm_rep_expr_kind (e:cm_expr) == 0i ||\n        cm_rep_expr_kind e == 1i ||\n        cm_rep_expr_kind e == 9i ||\n        cm_rep_expr_kind e == 10i) ||\n       cm_rep_expr_kind e == 2i`;\n  thm expanded_fact = mp_rule(\n      int_arith_rule(mk_imp(concl(kind), expanded)), kind);\n  thm shape = by_rewrite(\n      mk_eq(`cm_simple_expr (e:cm_expr)`, expanded),\n      THM_LIST(cm_simple_expr_def, cm_leaf_expr_def));\n  add_fact_st(eqt_intro_rule(\n      eq_mp_rule(sym_rule(shape), expanded_fact)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_dispatch_add_intrinsic_st",
+      "kind": "proof",
+      "span": [
+        3567,
+        3579
+      ],
+      "nonblank_lines": 13,
+      "text": "PROOF static void cm_dispatch_add_intrinsic_st(const thm kind) {\n  term expanded =\n      `cm_rep_expr_kind (e:cm_expr) == 11i ||\n       cm_rep_expr_kind e == 12i ||\n       cm_rep_expr_kind e == 13i`;\n  thm expanded_fact = mp_rule(\n      int_arith_rule(mk_imp(concl(kind), expanded)), kind);\n  thm shape = by_rewrite(\n      mk_eq(`cm_intrinsic_expr (e:cm_expr)`, expanded),\n      THM_LIST(cm_intrinsic_expr_def));\n  add_fact_st(eqt_intro_rule(\n      eq_mp_rule(sym_rule(shape), expanded_fact)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 461,
+    "annotation": 316,
+    "inline_proof": 1483,
+    "private_case_proof_support": 1325,
+    "case_proof": 2808,
+    "proof_including_shared": 2808
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        642,
+        642
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        642,
+        642
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        643,
+        643
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        650,
+        650
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        650,
+        650
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        653,
+        653
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        653,
+        653
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        705,
+        705
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        705,
+        705
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        706,
+        706
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        713,
+        713
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        713,
+        713
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        716,
+        716
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        716,
+        716
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        778,
+        778
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        778,
+        778
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        779,
+        779
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        792,
+        792
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        793,
+        793
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        799,
+        799
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "kind": "where",
+      "span": [
+        799,
+        799
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        936,
+        936
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        937,
+        937
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        938,
+        938
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        941,
+        941
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        942,
+        942
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        977,
+        977
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        978,
+        978
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        979,
+        979
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1019,
+        1019
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1020,
+        1020
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1021,
+        1021
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1078,
+        1078
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1079,
+        1079
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1080,
+        1080
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1087,
+        1087
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1088,
+        1088
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1093,
+        1093
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1094,
+        1094
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1137,
+        1137
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1138,
+        1138
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1139,
+        1139
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1146,
+        1146
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1147,
+        1147
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1152,
+        1152
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "kind": "where",
+      "span": [
+        1153,
+        1153
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1287,
+        1287
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1288,
+        1288
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1289,
+        1289
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1290,
+        1290
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1308,
+        1308
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1309,
+        1309
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1310,
+        1310
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1333,
+        1333
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1334,
+        1334
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1335,
+        1335
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1341,
+        1341
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1342,
+        1342
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1343,
+        1343
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1344,
+        1344
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1430,
+        1430
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1431,
+        1431
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1432,
+        1432
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1433,
+        1433
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1434,
+        1434
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1435,
+        1435
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1436,
+        1436
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1437,
+        1437
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1438,
+        1438
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1439,
+        1443
+      ],
+      "nonblank_lines": 5
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1444,
+        1452
+      ],
+      "nonblank_lines": 9
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1459,
+        1459
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1460,
+        1460
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1465,
+        1465
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1466,
+        1466
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1471,
+        1471
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1472,
+        1472
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1473,
+        1473
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1474,
+        1474
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1480,
+        1480
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1481,
+        1481
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1493,
+        1493
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "kind": "where",
+      "span": [
+        1494,
+        1494
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1922,
+        1922
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1923,
+        1923
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1924,
+        1924
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1925,
+        1925
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1972,
+        1972
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1973,
+        1973
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1974,
+        1974
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1980,
+        1980
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1981,
+        1981
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1982,
+        1982
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        1983,
+        1983
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2071,
+        2071
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2072,
+        2072
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2073,
+        2073
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2074,
+        2074
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2075,
+        2075
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2076,
+        2076
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2077,
+        2077
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2078,
+        2078
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2079,
+        2079
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2080,
+        2084
+      ],
+      "nonblank_lines": 5
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2085,
+        2091
+      ],
+      "nonblank_lines": 7
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2097,
+        2097
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2098,
+        2098
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2103,
+        2103
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2104,
+        2104
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2105,
+        2105
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2106,
+        2106
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2111,
+        2111
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2112,
+        2112
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2117,
+        2117
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2118,
+        2118
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2119,
+        2119
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2120,
+        2120
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2125,
+        2125
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "kind": "where",
+      "span": [
+        2126,
+        2126
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2747,
+        2747
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2748,
+        2748
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2749,
+        2749
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2750,
+        2750
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2768,
+        2768
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2769,
+        2769
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2770,
+        2770
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2771,
+        2771
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2826,
+        2826
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2827,
+        2827
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2828,
+        2828
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2841,
+        2841
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2842,
+        2842
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2848,
+        2848
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2849,
+        2849
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2858,
+        2858
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2859,
+        2859
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2860,
+        2860
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2861,
+        2861
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2862,
+        2862
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2863,
+        2863
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2864,
+        2864
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2865,
+        2865
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2866,
+        2866
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2867,
+        2876
+      ],
+      "nonblank_lines": 10
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2877,
+        2887
+      ],
+      "nonblank_lines": 11
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2894,
+        2894
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2895,
+        2895
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2896,
+        2896
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2897,
+        2897
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2898,
+        2898
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2899,
+        2899
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2900,
+        2900
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2901,
+        2901
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2902,
+        2902
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2903,
+        2912
+      ],
+      "nonblank_lines": 10
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2913,
+        2923
+      ],
+      "nonblank_lines": 11
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2931,
+        2931
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2932,
+        2932
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2937,
+        2937
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2938,
+        2938
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2946,
+        2946
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2947,
+        2947
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2954,
+        2954
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        2955,
+        2955
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3026,
+        3026
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3027,
+        3027
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3028,
+        3028
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3034,
+        3034
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3035,
+        3035
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3036,
+        3036
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3037,
+        3037
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3124,
+        3124
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3125,
+        3125
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3126,
+        3126
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3127,
+        3127
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3128,
+        3128
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3129,
+        3129
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3130,
+        3130
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3131,
+        3131
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3132,
+        3132
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3133,
+        3138
+      ],
+      "nonblank_lines": 6
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3139,
+        3142
+      ],
+      "nonblank_lines": 4
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3148,
+        3148
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3149,
+        3149
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3150,
+        3150
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3151,
+        3151
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3152,
+        3152
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3153,
+        3153
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "kind": "where",
+      "span": [
+        3154,
+        3154
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3359,
+        3359
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3372,
+        3372
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3373,
+        3373
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3374,
+        3374
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3384,
+        3384
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3385,
+        3385
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3386,
+        3386
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3421,
+        3421
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3422,
+        3422
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3423,
+        3423
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3430,
+        3430
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3431,
+        3431
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3436,
+        3436
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3437,
+        3437
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3459,
+        3459
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "kind": "where",
+      "span": [
+        3460,
+        3460
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3657,
+        3657
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3658,
+        3658
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3659,
+        3659
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3668,
+        3668
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3669,
+        3669
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3670,
+        3670
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3679,
+        3679
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3680,
+        3680
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3681,
+        3681
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3695,
+        3695
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3696,
+        3696
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3697,
+        3697
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3698,
+        3698
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3712,
+        3712
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3713,
+        3713
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3714,
+        3714
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3715,
+        3715
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3729,
+        3729
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3730,
+        3730
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3731,
+        3731
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3732,
+        3732
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3746,
+        3746
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3747,
+        3747
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3748,
+        3748
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3749,
+        3749
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3763,
+        3763
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3764,
+        3764
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3765,
+        3765
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3766,
+        3766
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3771,
+        3771
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3772,
+        3772
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3773,
+        3773
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3774,
+        3774
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3783,
+        3783
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3784,
+        3784
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3785,
+        3785
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3794,
+        3794
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3795,
+        3795
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3796,
+        3796
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3805,
+        3805
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3806,
+        3806
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3807,
+        3807
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3808,
+        3808
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3817,
+        3817
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3818,
+        3818
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3819,
+        3819
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3820,
+        3820
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3873,
+        3873
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3874,
+        3874
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3875,
+        3875
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_expr",
+      "kind": "where",
+      "span": [
+        3876,
+        3876
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines deduplicated per function/category; body contracts counted once; forward/header duplicates excluded. Same-file private proof support and source model definitions are classified separately; header duplicate contracts excluded."
+}

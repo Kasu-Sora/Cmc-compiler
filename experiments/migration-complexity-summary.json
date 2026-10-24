@@ -1,0 +1,712 @@
+{
+  "as_of": "2026-10-21",
+  "direction": "C* -> QCP",
+  "method": "Aggregate existing verified final artifact metrics; this analysis does not rerun verification. Nonblank non-comment physical regions; proof includes statements and wrappers. Generated VC text excluded.",
+  "normalization": [
+    "write_word and write_char body_annotation used; their 8-line helper contracts each moved to helper_contract_integration.",
+    "Public library costs are separate from case_proof. Reused libraries are zero incremental cost.",
+    "65 duplicate prototype specification lines are separate from the main totals. Imports, external declarations and scaffold are excluded.",
+    "These are artifact sizes, not historical work time or intrinsic difficulty. Source precise whole-project dependency cost is unavailable; no whole-project efficiency ratio is computed."
+  ],
+  "implementation_units": 31,
+  "runtime_functions": 132,
+  "totals": {
+    "cstar": {
+      "specification": 3118,
+      "annotation": 1196,
+      "case_proof": 19589,
+      "specification_plus_annotation": 4314
+    },
+    "qcp": {
+      "specification": 738,
+      "annotation": 4051,
+      "case_proof": 21765,
+      "helper_contract_integration": 581,
+      "duplicate_prototype_specification": 65,
+      "new_shared_definition_lines": 1005,
+      "new_shared_proof_lines": 1733,
+      "specification_plus_annotation": 4789
+    }
+  },
+  "manual_top_level": 937,
+  "automatic_exported_witnesses": 1945,
+  "qcp_shared_increments": [
+    {
+      "category": "First 30 implementation units",
+      "definition_lines": 929,
+      "proof_lines": 1621
+    },
+    {
+      "category": "Six readiness support units",
+      "definition_lines": 11,
+      "proof_lines": 428
+    },
+    {
+      "category": "Compile semantics and preservation (22 batches, 198 modules)",
+      "definition_lines": 1998,
+      "proof_lines": 8165
+    },
+    {
+      "category": "Compile heap wrappers and public bridges",
+      "definition_lines": 76,
+      "proof_lines": 112
+    }
+  ],
+  "units": [
+    {
+      "unit": "cmc_copy_bytes",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_copy_bytes/metrics/effort.json",
+      "cstar": {
+        "specification": 16,
+        "annotation": 25,
+        "case_proof": 232
+      },
+      "qcp": {
+        "specification": 12,
+        "annotation": 12,
+        "case_proof": 75,
+        "helper_contract_integration": 0,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 2,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 4,
+      "automatic_exported_witnesses": 7
+    },
+    {
+      "unit": "cmc_count_context",
+      "runtime_functions": 4,
+      "source_metrics": "experiments/cmc_count_context/metrics/effort.json",
+      "cstar": {
+        "specification": 75,
+        "annotation": 16,
+        "case_proof": 39
+      },
+      "qcp": {
+        "specification": 12,
+        "annotation": 76,
+        "case_proof": 98,
+        "helper_contract_integration": 9,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 8,
+      "automatic_exported_witnesses": 6
+    },
+    {
+      "unit": "cmc_counts",
+      "runtime_functions": 15,
+      "source_metrics": "experiments/cmc_counts/metrics/effort.json",
+      "cstar": {
+        "specification": 426,
+        "annotation": 243,
+        "case_proof": 3939
+      },
+      "qcp": {
+        "specification": 44,
+        "annotation": 1020,
+        "case_proof": 4807,
+        "helper_contract_integration": 19,
+        "duplicate_prototype_specification": 3,
+        "new_shared_definition_lines": 255,
+        "new_shared_proof_lines": 355
+      },
+      "manual_top_level": 150,
+      "automatic_exported_witnesses": 184
+    },
+    {
+      "unit": "cmc_emit_ast",
+      "runtime_functions": 2,
+      "source_metrics": "experiments/cmc_emit_ast/metrics/effort.json",
+      "cstar": {
+        "specification": 73,
+        "annotation": 13,
+        "case_proof": 196
+      },
+      "qcp": {
+        "specification": 55,
+        "annotation": 50,
+        "case_proof": 201,
+        "helper_contract_integration": 15,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 30,
+        "new_shared_proof_lines": 34
+      },
+      "manual_top_level": 9,
+      "automatic_exported_witnesses": 14
+    },
+    {
+      "unit": "cmc_emit_binary_finish",
+      "runtime_functions": 3,
+      "source_metrics": "experiments/cmc_emit_binary_finish/metrics/effort.json",
+      "cstar": {
+        "specification": 122,
+        "annotation": 89,
+        "case_proof": 388
+      },
+      "qcp": {
+        "specification": 9,
+        "annotation": 42,
+        "case_proof": 713,
+        "helper_contract_integration": 18,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 40,
+      "automatic_exported_witnesses": 127
+    },
+    {
+      "unit": "cmc_emit_code",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_code/metrics/effort.json",
+      "cstar": {
+        "specification": 41,
+        "annotation": 0,
+        "case_proof": 23
+      },
+      "qcp": {
+        "specification": 3,
+        "annotation": 21,
+        "case_proof": 46,
+        "helper_contract_integration": 6,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 2,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 3,
+      "automatic_exported_witnesses": 5
+    },
+    {
+      "unit": "cmc_emit_core",
+      "runtime_functions": 9,
+      "source_metrics": "experiments/cmc_emit_core/metrics/effort.json",
+      "cstar": {
+        "specification": 116,
+        "annotation": 0,
+        "case_proof": 635
+      },
+      "qcp": {
+        "specification": 26,
+        "annotation": 76,
+        "case_proof": 613,
+        "helper_contract_integration": 3,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 75,
+        "new_shared_proof_lines": 49
+      },
+      "manual_top_level": 50,
+      "automatic_exported_witnesses": 83
+    },
+    {
+      "unit": "cmc_emit_data",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_data/metrics/effort.json",
+      "cstar": {
+        "specification": 40,
+        "annotation": 9,
+        "case_proof": 54
+      },
+      "qcp": {
+        "specification": 24,
+        "annotation": 15,
+        "case_proof": 43,
+        "helper_contract_integration": 34,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 4,
+      "automatic_exported_witnesses": 7
+    },
+    {
+      "unit": "cmc_emit_expr",
+      "runtime_functions": 7,
+      "source_metrics": "experiments/cmc_emit_expr/metrics/effort.json",
+      "cstar": {
+        "specification": 461,
+        "annotation": 316,
+        "case_proof": 2808
+      },
+      "qcp": {
+        "specification": 147,
+        "annotation": 960,
+        "case_proof": 4144,
+        "helper_contract_integration": 76,
+        "duplicate_prototype_specification": 21,
+        "new_shared_definition_lines": 19,
+        "new_shared_proof_lines": 356
+      },
+      "manual_top_level": 176,
+      "automatic_exported_witnesses": 449
+    },
+    {
+      "unit": "cmc_emit_expr_call",
+      "runtime_functions": 3,
+      "source_metrics": "experiments/cmc_emit_expr_call/metrics/effort.json",
+      "cstar": {
+        "specification": 180,
+        "annotation": 35,
+        "case_proof": 988
+      },
+      "qcp": {
+        "specification": 51,
+        "annotation": 40,
+        "case_proof": 613,
+        "helper_contract_integration": 36,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 74,
+        "new_shared_proof_lines": 134
+      },
+      "manual_top_level": 21,
+      "automatic_exported_witnesses": 60
+    },
+    {
+      "unit": "cmc_emit_expr_dispatch",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_expr_dispatch/metrics/effort.json",
+      "cstar": {
+        "specification": 40,
+        "annotation": 8,
+        "case_proof": 64
+      },
+      "qcp": {
+        "specification": 12,
+        "annotation": 51,
+        "case_proof": 143,
+        "helper_contract_integration": 12,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 3,
+        "new_shared_proof_lines": 16
+      },
+      "manual_top_level": 13,
+      "automatic_exported_witnesses": 28
+    },
+    {
+      "unit": "cmc_emit_expr_leaf",
+      "runtime_functions": 9,
+      "source_metrics": "experiments/cmc_emit_expr_leaf/metrics/effort.json",
+      "cstar": {
+        "specification": 195,
+        "annotation": 25,
+        "case_proof": 512
+      },
+      "qcp": {
+        "specification": 27,
+        "annotation": 74,
+        "case_proof": 506,
+        "helper_contract_integration": 17,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 34,
+        "new_shared_proof_lines": 125
+      },
+      "manual_top_level": 27,
+      "automatic_exported_witnesses": 49
+    },
+    {
+      "unit": "cmc_emit_expr_simple",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_expr_simple/metrics/effort.json",
+      "cstar": {
+        "specification": 52,
+        "annotation": 4,
+        "case_proof": 23
+      },
+      "qcp": {
+        "specification": 16,
+        "annotation": 29,
+        "case_proof": 93,
+        "helper_contract_integration": 25,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 11,
+        "new_shared_proof_lines": 22
+      },
+      "manual_top_level": 7,
+      "automatic_exported_witnesses": 14
+    },
+    {
+      "unit": "cmc_emit_expr_var",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_expr_var/metrics/effort.json",
+      "cstar": {
+        "specification": 45,
+        "annotation": 21,
+        "case_proof": 160
+      },
+      "qcp": {
+        "specification": 13,
+        "annotation": 27,
+        "case_proof": 167,
+        "helper_contract_integration": 33,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 9,
+        "new_shared_proof_lines": 11
+      },
+      "manual_top_level": 9,
+      "automatic_exported_witnesses": 22
+    },
+    {
+      "unit": "cmc_emit_function",
+      "runtime_functions": 3,
+      "source_metrics": "experiments/cmc_emit_function/metrics/effort.json",
+      "cstar": {
+        "specification": 194,
+        "annotation": 78,
+        "case_proof": 694
+      },
+      "qcp": {
+        "specification": 9,
+        "annotation": 64,
+        "case_proof": 826,
+        "helper_contract_integration": 45,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 24,
+        "new_shared_proof_lines": 26
+      },
+      "manual_top_level": 41,
+      "automatic_exported_witnesses": 106
+    },
+    {
+      "unit": "cmc_emit_functions",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_functions/metrics/effort.json",
+      "cstar": {
+        "specification": 40,
+        "annotation": 7,
+        "case_proof": 173
+      },
+      "qcp": {
+        "specification": 3,
+        "annotation": 17,
+        "case_proof": 336,
+        "helper_contract_integration": 6,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 6,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 12,
+      "automatic_exported_witnesses": 20
+    },
+    {
+      "unit": "cmc_emit_globals",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_globals/metrics/effort.json",
+      "cstar": {
+        "specification": 24,
+        "annotation": 9,
+        "case_proof": 537
+      },
+      "qcp": {
+        "specification": 13,
+        "annotation": 47,
+        "case_proof": 147,
+        "helper_contract_integration": 26,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 6,
+        "new_shared_proof_lines": 113
+      },
+      "manual_top_level": 9,
+      "automatic_exported_witnesses": 9
+    },
+    {
+      "unit": "cmc_emit_plan",
+      "runtime_functions": 8,
+      "source_metrics": "experiments/cmc_emit_plan/metrics/effort.json",
+      "cstar": {
+        "specification": 117,
+        "annotation": 22,
+        "case_proof": 100
+      },
+      "qcp": {
+        "specification": 24,
+        "annotation": 43,
+        "case_proof": 336,
+        "helper_contract_integration": 24,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 4,
+        "new_shared_proof_lines": 7
+      },
+      "manual_top_level": 16,
+      "automatic_exported_witnesses": 16
+    },
+    {
+      "unit": "cmc_emit_prelude",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_prelude/metrics/effort.json",
+      "cstar": {
+        "specification": 11,
+        "annotation": 21,
+        "case_proof": 24
+      },
+      "qcp": {
+        "specification": 3,
+        "annotation": 28,
+        "case_proof": 64,
+        "helper_contract_integration": 6,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 6,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 3,
+      "automatic_exported_witnesses": 41
+    },
+    {
+      "unit": "cmc_emit_resolved",
+      "runtime_functions": 8,
+      "source_metrics": "experiments/cmc_emit_resolved/metrics/effort.json",
+      "cstar": {
+        "specification": 115,
+        "annotation": 22,
+        "case_proof": 460
+      },
+      "qcp": {
+        "specification": 24,
+        "annotation": 62,
+        "case_proof": 259,
+        "helper_contract_integration": 21,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 14,
+        "new_shared_proof_lines": 42
+      },
+      "manual_top_level": 16,
+      "automatic_exported_witnesses": 16
+    },
+    {
+      "unit": "cmc_emit_return",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_return/metrics/effort.json",
+      "cstar": {
+        "specification": 8,
+        "annotation": 12,
+        "case_proof": 12
+      },
+      "qcp": {
+        "specification": 3,
+        "annotation": 14,
+        "case_proof": 65,
+        "helper_contract_integration": 3,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 4,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 2,
+      "automatic_exported_witnesses": 24
+    },
+    {
+      "unit": "cmc_emit_stmt",
+      "runtime_functions": 2,
+      "source_metrics": "experiments/cmc_emit_stmt/metrics/effort.json",
+      "cstar": {
+        "specification": 141,
+        "annotation": 119,
+        "case_proof": 1047
+      },
+      "qcp": {
+        "specification": 38,
+        "annotation": 351,
+        "case_proof": 3580,
+        "helper_contract_integration": 69,
+        "duplicate_prototype_specification": 38,
+        "new_shared_definition_lines": 33,
+        "new_shared_proof_lines": 27
+      },
+      "manual_top_level": 120,
+      "automatic_exported_witnesses": 224
+    },
+    {
+      "unit": "cmc_emit_strings",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_emit_strings/metrics/effort.json",
+      "cstar": {
+        "specification": 21,
+        "annotation": 5,
+        "case_proof": 229
+      },
+      "qcp": {
+        "specification": 13,
+        "annotation": 21,
+        "case_proof": 86,
+        "helper_contract_integration": 20,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 3,
+      "automatic_exported_witnesses": 12
+    },
+    {
+      "unit": "cmc_function_pc_total",
+      "runtime_functions": 2,
+      "source_metrics": "experiments/cmc_function_pc_total/metrics/effort.json",
+      "cstar": {
+        "specification": 42,
+        "annotation": 0,
+        "case_proof": 403
+      },
+      "qcp": {
+        "specification": 6,
+        "annotation": 63,
+        "case_proof": 263,
+        "helper_contract_integration": 3,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 37,
+        "new_shared_proof_lines": 80
+      },
+      "manual_top_level": 12,
+      "automatic_exported_witnesses": 11
+    },
+    {
+      "unit": "cmc_layout",
+      "runtime_functions": 39,
+      "source_metrics": "experiments/cmc_layout/metrics/effort.json",
+      "cstar": {
+        "specification": 421,
+        "annotation": 10,
+        "case_proof": 4568
+      },
+      "qcp": {
+        "specification": 109,
+        "annotation": 564,
+        "case_proof": 2753,
+        "helper_contract_integration": 0,
+        "duplicate_prototype_specification": 3,
+        "new_shared_definition_lines": 261,
+        "new_shared_proof_lines": 113
+      },
+      "manual_top_level": 148,
+      "automatic_exported_witnesses": 332
+    },
+    {
+      "unit": "cmc_patch_calls",
+      "runtime_functions": 2,
+      "source_metrics": "experiments/cmc_patch_calls/metrics/effort.json",
+      "cstar": {
+        "specification": 36,
+        "annotation": 8,
+        "case_proof": 453
+      },
+      "qcp": {
+        "specification": 6,
+        "annotation": 27,
+        "case_proof": 120,
+        "helper_contract_integration": 3,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 4,
+        "new_shared_proof_lines": 52
+      },
+      "manual_top_level": 6,
+      "automatic_exported_witnesses": 14
+    },
+    {
+      "unit": "cmc_write_byte",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_write_byte/metrics/effort.json",
+      "cstar": {
+        "specification": 14,
+        "annotation": 0,
+        "case_proof": 19
+      },
+      "qcp": {
+        "specification": 8,
+        "annotation": 0,
+        "case_proof": 0,
+        "helper_contract_integration": 0,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 0,
+      "automatic_exported_witnesses": 2
+    },
+    {
+      "unit": "cmc_write_char",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_write_char/metrics/effort.json",
+      "cstar": {
+        "specification": 13,
+        "annotation": 3,
+        "case_proof": 10
+      },
+      "qcp": {
+        "specification": 8,
+        "annotation": 1,
+        "case_proof": 33,
+        "helper_contract_integration": 8,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 0
+      },
+      "manual_top_level": 1,
+      "automatic_exported_witnesses": 3
+    },
+    {
+      "unit": "cmc_write_word",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_write_word/metrics/effort.json",
+      "cstar": {
+        "specification": 13,
+        "annotation": 59,
+        "case_proof": 219
+      },
+      "qcp": {
+        "specification": 8,
+        "annotation": 100,
+        "case_proof": 435,
+        "helper_contract_integration": 8,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 16,
+        "new_shared_proof_lines": 51
+      },
+      "manual_top_level": 15,
+      "automatic_exported_witnesses": 37
+    },
+    {
+      "unit": "cmc_write_zeroes",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_write_zeroes/metrics/effort.json",
+      "cstar": {
+        "specification": 14,
+        "annotation": 15,
+        "case_proof": 81
+      },
+      "qcp": {
+        "specification": 8,
+        "annotation": 9,
+        "case_proof": 39,
+        "helper_contract_integration": 0,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 0,
+        "new_shared_proof_lines": 8
+      },
+      "manual_top_level": 3,
+      "automatic_exported_witnesses": 6
+    },
+    {
+      "unit": "cmc_compile",
+      "runtime_functions": 1,
+      "source_metrics": "experiments/cmc_compile/metrics/final-effort.json",
+      "cstar": {
+        "specification": 12,
+        "annotation": 2,
+        "case_proof": 499
+      },
+      "qcp": {
+        "specification": 4,
+        "annotation": 147,
+        "case_proof": 161,
+        "helper_contract_integration": 36,
+        "duplicate_prototype_specification": 0,
+        "new_shared_definition_lines": 76,
+        "new_shared_proof_lines": 112
+      },
+      "manual_top_level": 9,
+      "automatic_exported_witnesses": 17
+    }
+  ],
+  "qcp_shared_total": {
+    "definition_lines": 3014,
+    "proof_lines": 10326
+  }
+}

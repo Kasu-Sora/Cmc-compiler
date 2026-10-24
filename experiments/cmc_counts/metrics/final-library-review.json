@@ -1,0 +1,120 @@
+{
+  "status": "Main declaration review completed; identical final library passed controller verification",
+  "candidate_sha256": "d703265a1d86d57fd1ec04e1a9a13d42693e85b986348e02e19c0417f128ec2f",
+  "new_definition_count_during_proving": 0,
+  "additional_proved_bridge_declarations": [
+    {
+      "name": "cm_type_depth_nonnegative__expression_assignment_safety",
+      "statement": "Lemma cm_type_depth_nonnegative__expression_assignment_safety t :\n  0 <= cm_type_depth t."
+    },
+    {
+      "name": "cm_type_base_bounds__expression_assignment_safety",
+      "statement": "Lemma cm_type_base_bounds__expression_assignment_safety t :\n  cm_type_code_wf t -> 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_normalize_encode__expression_assignment_safety",
+      "statement": "Lemma cm_normalize_encode__expression_assignment_safety t :\n  cm_type_code_wf t ->\n  cm_normalize_code_value (cm_type_encode t) = cm_char_normalize_count t."
+    },
+    {
+      "name": "cm_type_encoding_bounds__expression_add_safety",
+      "statement": "Lemma cm_type_encoding_bounds__expression_add_safety : forall t,\n cm_type_code_wf t -> 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_pointer_encode__expression_add_safety",
+      "statement": "Lemma cm_pointer_encode__expression_add_safety : forall t,\n cm_type_code_wf t ->\n cm_rep_is_pointer_code (cm_type_encode t) = (if cm_pointerb t then 1 else 0)."
+    },
+    {
+      "name": "cm_type_bounds__expression_sub_safety",
+      "statement": "Lemma cm_type_bounds__expression_sub_safety t :\n cm_type_code_wf t -> 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_pointer_encode__expression_sub_safety",
+      "statement": "Lemma cm_pointer_encode__expression_sub_safety t :\n cm_type_code_wf t ->\n cm_rep_is_pointer_code (cm_type_encode t) = (if cm_pointerb t then 1 else 0)."
+    },
+    {
+      "name": "cm_type_encoding_bounds__expression_assignment_result",
+      "statement": "Lemma cm_type_encoding_bounds__expression_assignment_result t :\n cm_type_code_wf t -> 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_normalize_encode__expression_assignment_result",
+      "statement": "Lemma cm_normalize_encode__expression_assignment_result t :\n cm_type_code_wf t ->\n cm_normalize_code_value (cm_type_encode t) = cm_char_normalize_count t."
+    },
+    {
+      "name": "cm_type_encoding_bounds__expression_add_results",
+      "statement": "Lemma cm_type_encoding_bounds__expression_add_results t :\n cm_type_code_wf t -> 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_pointer_encode__expression_add_results",
+      "statement": "Lemma cm_pointer_encode__expression_add_results t :\n cm_type_code_wf t -> cm_rep_is_pointer_code (cm_type_encode t) =\n (if cm_pointerb t then 1 else 0)."
+    },
+    {
+      "name": "cm_type_bounds__expression_sub_results",
+      "statement": "Lemma cm_type_bounds__expression_sub_results t :\n cm_type_code_wf t -> 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_pointer_encode__expression_sub_results",
+      "statement": "Lemma cm_pointer_encode__expression_sub_results t :\n cm_type_code_wf t -> cm_rep_is_pointer_code (cm_type_encode t) = (if cm_pointerb t then 1 else 0)."
+    },
+    {
+      "name": "cm_type_bounds__statement_normalization_safety",
+      "statement": "Lemma cm_type_bounds__statement_normalization_safety t :\n cm_type_code_wf t -> 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_normalize_encode__statement_normalization_safety",
+      "statement": "Lemma cm_normalize_encode__statement_normalization_safety t :\n cm_type_code_wf t -> cm_normalize_code_value (cm_type_encode t) = cm_char_normalize_count t."
+    },
+    {
+      "name": "cm_slot_type_encode__statement_normalization_safety",
+      "statement": "Lemma cm_slot_type_encode__statement_normalization_safety : forall l i,\n 0 <= i < Zlength l -> cm_rep_slot_type l i = cm_type_encode (cm_slot_ty (cm_slot_at i l))."
+    },
+    {
+      "name": "cm_type_bounds__statement_expression_results",
+      "statement": "Lemma cm_type_bounds__statement_expression_results t : cm_type_code_wf t ->\n 0 <= cm_type_depth t /\\ 0 <= cm_type_base_code t < 1024."
+    },
+    {
+      "name": "cm_normalize_encode__statement_expression_results",
+      "statement": "Lemma cm_normalize_encode__statement_expression_results t : cm_type_code_wf t ->\n cm_normalize_code_value (cm_type_encode t) = cm_char_normalize_count t."
+    },
+    {
+      "name": "cm_slot_encode__statement_expression_results",
+      "statement": "Lemma cm_slot_encode__statement_expression_results l i :\n 0 <= i < Zlength l -> cm_rep_slot_type l i = cm_type_encode (cm_slot_ty (cm_slot_at i l))."
+    },
+    {
+      "name": "cm_normalize_encode__parameter_stores",
+      "statement": "Lemma cm_normalize_encode__parameter_stores : forall t,\n cm_type_code_wf t -> cm_normalize_code_value (cm_type_encode t) = cm_char_normalize_count t."
+    },
+    {
+      "name": "cm_function_list_cons__prefix_open",
+      "statement": "Lemma cm_function_list_cons__prefix_open root f rest :\n cm_function_list_rep root (f::rest) --||--\n (EX bp np:Z, \u201croot<>0\u201d && cm_function_context_rep root f bp np **\n cm_stmt_rep bp (cm_function_body f) ** cm_function_list_rep np rest)."
+    },
+    {
+      "name": "cm_function_prefix_nonnegative__prefix_transition",
+      "statement": "Lemma cm_function_prefix_nonnegative__prefix_transition policy p fs index remaining :\n cm_functions_counts_representable policy p fs index ->\n index = Zlength (cm_program_functions p) - Zlength fs ->\n 0 <= remaining <= Zlength fs ->\n 0 <= cm_function_prefix policy p fs remaining."
+    },
+    {
+      "name": "cm_function_list_cons__prefix_results",
+      "statement": "Lemma cm_function_list_cons__prefix_results root f rest :\n cm_function_list_rep root (f::rest) --||--\n (EX bp np:Z, \u201croot<>0\u201d && cm_function_context_rep root f bp np **\n cm_stmt_rep bp (cm_function_body f) ** cm_function_list_rep np rest)."
+    },
+    {
+      "name": "cm_function_list_cons__functions_open",
+      "statement": "Lemma cm_function_list_cons__functions_open root f rest :\n cm_function_list_rep root (f::rest) --||--\n (EX bp np:Z, \u201croot<>0\u201d && cm_function_context_rep root f bp np **\n cm_stmt_rep bp (cm_function_body f) ** cm_function_list_rep np rest)."
+    },
+    {
+      "name": "cm_function_list_cons__functions_results",
+      "statement": "Lemma cm_function_list_cons__functions_results root f rest :\n cm_function_list_rep root (f::rest) --||--\n (EX bp np:Z, \u201croot<>0\u201d &&\n cm_function_context_rep root f bp np ** cm_stmt_rep bp (cm_function_body f) ** cm_function_list_rep np rest)."
+    },
+    {
+      "name": "cm_param_count_nonnegative__model_length_bound",
+      "statement": "Lemma cm_param_count_nonnegative__model_length_bound params :\n  0 <= cm_param_stores_count params."
+    },
+    {
+      "name": "cm_function_code_positive__model_length_bound",
+      "statement": "Lemma cm_function_code_positive__model_length_bound policy p fid f :\n  cm_function_counts_representable policy p fid f ->\n  21 <= cm_function_code_count policy p fid."
+    },
+    {
+      "name": "cm_functions_length_bound__model_length_bound",
+      "statement": "Lemma cm_functions_length_bound__model_length_bound policy p fs fid :\n  cm_functions_counts_representable policy p fs fid ->\n  21 * Zlength fs <= cm_functions_code_size policy p fs fid."
+    }
+  ],
+  "review": "Added bridges concern type encoding/normalization, slot types, function-list ownership, prefix nonnegativity and function/code length bounds. They do not redefine the audited specification models. Same-purpose duplicates remain separately counted."
+}

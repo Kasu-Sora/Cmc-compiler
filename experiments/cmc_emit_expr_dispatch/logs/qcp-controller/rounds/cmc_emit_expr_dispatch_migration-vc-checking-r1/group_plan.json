@@ -1,0 +1,103 @@
+{
+  "groups": [
+    {
+      "id": "return_projection",
+      "estimated_difficulty": 1,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_leaf_expr_return_wit_1",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_return_wit_1_split_goal_1": "Introduce all quantified values and hypotheses. The pure equality e = cm_leaf_source_expr leaf is already a premise; discharge by assumption. No spatial resources, new witnesses, arithmetic or helpers are needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_return_wit_2",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_return_wit_2_split_goal_1": "Introduce all quantified values and hypotheses. The pure equality e = cm_leaf_source_expr leaf is already a premise; discharge by assumption. No spatial resources, new witnesses, arithmetic or helpers are needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_return_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_return_wit_3_split_goal_1": "Introduce all quantified values and hypotheses. The pure equality e = cm_leaf_source_expr leaf is already a premise; discharge by assumption. No spatial resources, new witnesses, arithmetic or helpers are needed."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_return_wit_4",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_return_wit_4_split_goal_1": "Introduce all quantified values and hypotheses. The pure equality e = cm_leaf_source_expr leaf is already a premise; discharge by assumption. No spatial resources, new witnesses, arithmetic or helpers are needed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expression_representation",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_1",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Select one identical whole-goal disjunct. Introduce e and expr; destruct e to expose cm_expr_rep, unfold cm_expr_node and cm_expr_payload. Extract the existing node nonnull fact and a/b/args witnesses; instantiate the consequent in its xargs, xb, xa order with those same pointers. Preserve every field and payload, handling the call-list fixpoint by definitional equality; cancel the identical resources. No new helper required."
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_3",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_which_implies_wit_3_split_goal_spatial": "Introduce the expression, pointer witnesses and pure bounds/nonnull premises. Destruct e, expose cm_expr_rep/cm_expr_node and cm_expr_payload, and instantiate the target node with the existing xa, xb and xargs. Use expr <> 0 from the premise and cancel all seven field cells and the unchanged payload. The call-list nested fixpoint matches its public payload definition by reduction. No new helper or frame change."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_5",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_which_implies_wit_5_split_goal_spatial": "Introduce the expression, pointer witnesses and pure bounds/nonnull premises. Destruct e, expose cm_expr_rep/cm_expr_node and cm_expr_payload, and instantiate the target node with the existing xa, xb and xargs. Use expr <> 0 from the premise and cancel all seven field cells and the unchanged payload. The call-list nested fixpoint matches its public payload definition by reduction. No new helper or frame change."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_7",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_which_implies_wit_7_split_goal_spatial": "Introduce the expression, pointer witnesses and pure bounds/nonnull premises. Destruct e, expose cm_expr_rep/cm_expr_node and cm_expr_payload, and instantiate the target node with the existing xa, xb and xargs. Use expr <> 0 from the premise and cancel all seven field cells and the unchanged payload. The call-list nested fixpoint matches its public payload definition by reduction. No new helper or frame change."
+          }
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_9",
+          "proof_mode": "aggressive_pre_process",
+          "split_strategies": {
+            "proof_of_cm_emit_leaf_expr_which_implies_wit_9_split_goal_spatial": "Introduce the expression, pointer witnesses and pure bounds/nonnull premises. Destruct e, expose cm_expr_rep/cm_expr_node and cm_expr_payload, and instantiate the target node with the existing xa, xb and xargs. Use expr <> 0 from the premise and cancel all seven field cells and the unchanged payload. The call-list nested fixpoint matches its public payload definition by reduction. No new helper or frame change."
+          }
+        }
+      ]
+    },
+    {
+      "id": "branch_refinement",
+      "estimated_difficulty": 2,
+      "witnesses": [
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_2",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose one whole-goal disjunct, introduce parameters and preserve a copy of cm_expr_wf. Substitute e = cm_leaf_source_expr leaf and destruct leaf. Kind = 0 rejects String/Sizeof/Getc and leaves CMLeafConst n ty. Instantiate n and ty. Unfold the Const expression well-formedness to cm_integer_type ty; its Char/Int alternatives imply cm_type_code_wf ty by reduction. Preserve the original wf/counts facts, establish constructor and dispatch equalities, and cancel the unchanged emitter plan after constructor substitution. No emitter-state transition occurs."
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_4",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose one whole-goal disjunct and introduce parameters, preserving wf/counts premises. Substitute the source-expression equality and destruct leaf; kind = 1 leaves CMLeafString sid ty. Instantiate sid and ty. The String counts-representable premise contains cm_i32_code_count sid, which supplies 0 <= sid <= INT_MAX after unfolding the bound constant (wf also supplies nonnegativity). Preserve wf/counts and dispatch facts; the constructor equality rewrites the plan to exactly the same resource, which cancels."
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_6",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose one whole-goal disjunct and introduce parameters, preserving wf/counts premises. Substitute e = cm_leaf_source_expr leaf and destruct leaf; kind = 9 leaves CMLeafSizeof asked ty. Instantiate asked and ty. The Sizeof cm_expr_wf conjunction provides cm_type_code_wf asked and cm_type_refs (cm_program_structs p) asked; retain its full original conjunction and counts premise. Constructor equalities establish the leaf identity and make the source/target emitter plans identical for cancellation."
+        },
+        {
+          "name": "proof_of_cm_emit_leaf_expr_which_implies_wit_8",
+          "proof_mode": "LLM_pre_process",
+          "strategy": "Choose one whole-goal disjunct and introduce parameters. Substitute the source-expression equality and destruct leaf. The three exclusions kind <> 0, <> 1, <> 9 eliminate Const, String and Sizeof, leaving CMLeafGetc ty. Instantiate ty, preserve wf/counts premises and establish both duplicate dispatch facts by reduction. Constructor substitution makes the emitter plan identical, so cancel it. No new bounds or helper are needed."
+        }
+      ]
+    }
+  ]
+}

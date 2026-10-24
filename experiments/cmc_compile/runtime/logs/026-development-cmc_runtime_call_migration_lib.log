@@ -1,0 +1,43 @@
+Chars 0 - 83 [Require~Export~~~SimpleC.EE.QC...] 1.533 secs (1.322u,0.12s)
+Chars 84 - 129 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 130 - 151 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 152 - 177 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 178 - 300 [Lemma~cm_store_params_fp~sp~p~...] 0. secs (0.u,0.s)
+Chars 301 - 307 [Proof.] 0. secs (0.u,0.s)
+Chars 308 - 418 [(revert~index~st;~induction~va...] 0. secs (0.u,0.s)
+Chars 419 - 423 [Qed.] 0. secs (0.u,0.s)
+Chars 424 - 646 [Lemma~cm_call_ok_function_wf~s...] 0. secs (0.u,0.s)
+Chars 647 - 653 [Proof.] 0. secs (0.u,0.s)
+Chars 655 - 749 [(intros~[_~[_~[_~[F~_]]]]~OK;~...] 0.012 secs (0.011u,0.s)
+Chars 751 - 863 [(repeat~match~goal~with~~~~~~~...] 0. secs (0.u,0.s)
+Chars 864 - 868 [Qed.] 0.005 secs (0.005u,0.s)
+Chars 869 - 1168 [Lemma~cm_call_frame_segment~sp...] 0. secs (0.u,0.s)
+Chars 1169 - 1175 [Proof.] 0. secs (0.u,0.s)
+Chars 1177 - 1249 [(intros~WF~OK;~pose~proof~(cm_...] 0. secs (0.u,0.s)
+Chars 1251 - 1306 [(destruct~FW~as~[_~[[PW~_]~[LW...] 0. secs (0.u,0.s)
+Chars 1308 - 1439 [(pose~proof~(cm_slots_size_non...] 0. secs (0.u,0.s)
+Chars 1441 - 1516 [(assert~(ST~:~16~<=~cm_static_...] 0.001 secs (0.001u,0.s)
+Chars 1518 - 1635 [(unfold~cm_call_ok~in~OK;~repe...] 0.024 secs (0.023u,0.001s)
+Chars 1637 - 1747 [(repeat~~~match~goal~with~~~|~...] 0. secs (0.u,0.s)
+Chars 1749 - 1848 [(unfold~cm_frame_segment,~cm_t...] 0.006 secs (0.004u,0.s)
+Chars 1849 - 1853 [Qed.] 0.009 secs (0.009u,0.s)
+Chars 1854 - 2417 [Lemma~cm_runtime_core_enter_ca...] 0. secs (0.u,0.s)
+Chars 2418 - 2424 [Proof.] 0. secs (0.u,0.s)
+Chars 2426 - 2502 [(intros~WF~OK~[BEFORE~RUN];~sp...] 0. secs (0.u,0.s)
+Chars 2504 - 2621 [(pose~proof~(cm_call_ok_functi...] 0. secs (0.u,0.s)
+Chars 2623 - 2696 [(unfold~cm_enter_call;~rewrite...] 0. secs (0.u,0.s)
+Chars 2698 - 2851 [(cbv[cm_call_base_state~cm_sta...] 0. secs (0.u,0.s)
+Chars 2853 - 3060 [(cbn[cm_runtime_stack~cm_curso...] 0. secs (0.u,0.s)
+Chars 3062 - 3114 [(split;~[~now~apply~cm_paramet...] 0. secs (0.u,0.s)
+Chars 3116 - 3136 [(split;~[~exact~SEG~|~~]).] 0. secs (0.u,0.s)
+Chars 3137 - 3222 [(repeat~(first~~~[~exact~~~I~~...] 0.002 secs (0.002u,0.s)
+Chars 3224 - 3277 [(apply~cm_runtime_stack_region...] 0. secs (0.u,0.s)
+Chars 3278 - 3282 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 3283 - 3552 [Lemma~cm_runtime_stack_halt_in...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/build/Rocq/examples/QCP_demos_human/cmc_runtime_call_migration_lib.v", line 37, characters 44-49:
+Error: Cannot infer the type of input in
+environment:
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+

@@ -1,0 +1,205 @@
+[
+  {
+    "name": "cm_expr_type_code_context",
+    "prototype": false,
+    "source_span": [
+      5,
+      24
+    ],
+    "specification": [
+      [
+        6,
+        6
+      ],
+      [
+        7,
+        8
+      ],
+      [
+        9,
+        11
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        13,
+        17
+      ],
+      [
+        19,
+        23
+      ]
+    ],
+    "runtime": "void cm_expr_type_code_context(struct cm_expr *expr, int *code)\n{\n  *code = expr->ty;\n}\n"
+  },
+  {
+    "name": "cm_expr_lvalue_count_context",
+    "prototype": false,
+    "source_span": [
+      26,
+      68
+    ],
+    "specification": [
+      [
+        29,
+        30
+      ],
+      [
+        31,
+        39
+      ],
+      [
+        40,
+        51
+      ]
+    ],
+    "annotation": [
+      [
+        57,
+        57
+      ],
+      [
+        58,
+        58
+      ],
+      [
+        59,
+        59
+      ],
+      [
+        60,
+        60
+      ],
+      [
+        61,
+        61
+      ]
+    ],
+    "inline_proof": [
+      [
+        53,
+        56
+      ],
+      [
+        63,
+        66
+      ]
+    ],
+    "runtime": "int cm_expr_lvalue_count_context(struct cm_program *program, int fid,\n                                 struct cm_function *fn,\n                                 struct cm_expr *expr)\n{\n  int result = cm_expr_lvalue_count(program, fid, fn, expr);\n  return result;\n}\n"
+  },
+  {
+    "name": "cm_expr_rvalue_count_context",
+    "prototype": false,
+    "source_span": [
+      70,
+      112
+    ],
+    "specification": [
+      [
+        73,
+        74
+      ],
+      [
+        75,
+        83
+      ],
+      [
+        84,
+        95
+      ]
+    ],
+    "annotation": [
+      [
+        101,
+        101
+      ],
+      [
+        102,
+        102
+      ],
+      [
+        103,
+        103
+      ],
+      [
+        104,
+        104
+      ],
+      [
+        105,
+        105
+      ]
+    ],
+    "inline_proof": [
+      [
+        97,
+        100
+      ],
+      [
+        107,
+        110
+      ]
+    ],
+    "runtime": "int cm_expr_rvalue_count_context(struct cm_program *program, int fid,\n                                 struct cm_function *fn,\n                                 struct cm_expr *expr)\n{\n  int result = cm_expr_rvalue_count(program, fid, fn, expr);\n  return result;\n}\n"
+  },
+  {
+    "name": "cm_stmt_code_count_context",
+    "prototype": false,
+    "source_span": [
+      114,
+      163
+    ],
+    "specification": [
+      [
+        117,
+        119
+      ],
+      [
+        120,
+        128
+      ],
+      [
+        129,
+        139
+      ]
+    ],
+    "annotation": [
+      [
+        145,
+        145
+      ],
+      [
+        146,
+        146
+      ],
+      [
+        147,
+        147
+      ],
+      [
+        148,
+        148
+      ],
+      [
+        149,
+        149
+      ],
+      [
+        150,
+        150
+      ]
+    ],
+    "inline_proof": [
+      [
+        141,
+        144
+      ],
+      [
+        152,
+        160
+      ]
+    ],
+    "runtime": "int cm_stmt_code_count_context(struct cm_program *program, int fid,\n                               struct cm_function *fn,\n                               struct cm_stmt *stmt)\n{\n  int result = cmc_stmt_code_count(program, fid, fn, stmt);\n  return result;\n}\n"
+  }
+]

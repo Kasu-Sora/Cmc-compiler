@@ -1,0 +1,125 @@
+Chars 0 - 75 [Require~Export~SimpleC.EE.QCP_...] 1.351 secs (1.239u,0.11s)
+Chars 76 - 111 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 112 - 157 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 158 - 179 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 180 - 205 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 206 - 627 [Lemma~cm_tvm_fp_load_stack~obj...] 0. secs (0.u,0.s)
+Chars 628 - 634 [Proof.] 0. secs (0.u,0.s)
+Chars 636 - 728 [(intros~CAP~ADDR~CODE;~destruc...] 0. secs (0.u,0.s)
+Chars 730 - 786 [(pose~proof~(cm_code_at_append...] 0. secs (0.u,0.s)
+Chars 788 - 868 [(change~~~~(cm_code_at~(tvm_ob...] 0. secs (0.u,0.s)
+Chars 870 - 1064 [(change~~~~(tvm_step~~~~~~~(tv...] 0. secs (0.u,0.s)
+Chars 1066 - 1216 [(rewrite~~~(cm_tvm_fp_address_...] 0.001 secs (0.001u,0.s)
+Chars 1218 - 1297 [(rewrite~tower_wrap64_fixed~by...] 0. secs (0.u,0.s)
+Chars 1299 - 1456 [(rewrite~~~(cm_tvm_load_step~o...] 0. secs (0.u,0.s)
+Chars 1458 - 1575 [(cbv[tvm_next_state~tvm_pc~tvm...] 0.006 secs (0.006u,0.s)
+Chars 1576 - 1580 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 1581 - 1790 [Lemma~cm_args_reload_app~polic...] 0. secs (0.u,0.s)
+Chars 1791 - 1797 [Proof.] 0. secs (0.u,0.s)
+Chars 1799 - 1906 [(revert~base;~induction~left~a...] 0. secs (0.u,0.s)
+Chars 1908 - 1962 [(rewrite~IH,~app_assoc,~Zlengt...] 0.001 secs (0.001u,0.s)
+Chars 1963 - 1967 [Qed.] 0.001 secs (0.001u,0.s)
+Chars 1968 - 2165 [Lemma~cm_args_reload_snoc~poli...] 0. secs (0.u,0.s)
+Chars 2166 - 2172 [Proof.] 0. secs (0.u,0.s)
+Chars 2173 - 2247 [(rewrite~cm_args_reload_app;~c...] 0. secs (0.u,0.s)
+Chars 2248 - 2252 [Qed.] 0. secs (0.u,0.s)
+Chars 2253 - 3235 [Lemma~cm_tvm_reload_staged~pol...] 0.001 secs (0.001u,0.s)
+Chars 3236 - 3242 [Proof.] 0. secs (0.u,0.s)
+Chars 3244 - 3358 [(revert~values~pc~rest;~induct...] 0. secs (0.u,0.s)
+Chars 3360 - 3361 [-] 0. secs (0.u,0.s)
+Chars 3362 - 3561 [(destruct~values;~~~[~cbn[cm_e...] 0.001 secs (0.001u,0.s)
+Chars 3563 - 3564 [-] 0. secs (0.u,0.s)
+Chars 3565 - 3705 [(destruct~values~as~[|~v~value...] 0. secs (0.u,0.s)
+Chars 3709 - 3806 [(rewrite~Zlength_app,~!Zlength...] 0. secs (0.u,0.s)
+Chars 3810 - 3842 [(destruct~STAGED~as~[HOLD~STAG...] 0. secs (0.u,0.s)
+Chars 3846 - 3927 [(rewrite~cm_args_reload_snoc~i...] 0. secs (0.u,0.s)
+Chars 3931 - 3959 [(rewrite~<-~app_assoc~in~CODE).] 0. secs (0.u,0.s)
+Chars 3963 - 4234 [(rewrite~~~(IHargs~values~pc~_...] 0.002 secs (0.002u,0.s)
+Chars 4238 - 4294 [(pose~proof~(cm_code_at_append...] 0. secs (0.u,0.s)
+Chars 4298 - 4359 [(unfold~cm_temp_load_code~in~L...] 0. secs (0.u,0.s)
+Chars 4363 - 4446 [(change~~~~(cm_code_steps~(cm_...] 0. secs (0.u,0.s)
+Chars 4450 - 4942 [(rewrite~~~(cm_tvm_fp_load_sta...] 0.002 secs (0.002u,0.s)
+Chars 4946 - 5004 [(rewrite~L,~(cm_spill_sim_hold...] 0. secs (0.u,0.s)
+Chars 5008 - 5103 [(rewrite~Zlength_app;~~~change...] 0. secs (0.u,0.s)
+Chars 5107 - 5119 [reflexivity.] 0.001 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/build/Rocq/examples/QCP_demos_human/cmc_target_args_reload_migration_lib.v", line 53, characters 3-14:
+Error:
+In environment
+policy : cm_lookup_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+vm : tvm_state
+spills : list cm_spill
+base : Z
+x : cm_expr
+args : list cm_expr
+held : list Z
+IHargs :
+  forall (values : list cm_value) (pc : Z) (rest : list tvm_inst),
+  Zlength args = Zlength values ->
+  0 <= base ->
+  base + Zlength args <=
+  cm_temp_slots (cm_function_at policy fid (cm_program_functions p)) ->
+  Zlength values + Zlength held + 1 < 65536 ->
+  (forall slot : Z,
+   base <= slot < base + Zlength args ->
+   tower_word_valid
+     (tower_getw (tvm_mem vm) 8 + cm_temp_offset policy p fid slot)) ->
+  cm_spill_list_sim policy p st (tvm_mem vm) fid (tower_getw (tvm_mem vm) 8)
+    spills ->
+  cm_staged_spills base values spills ->
+  cm_code_at (tvm_object_code (cm_compile_model policy p)) pc
+    (cm_emit_args_reload policy p fid base args ++ rest) ->
+  tvm_iter (cm_code_steps (cm_emit_args_reload policy p fid base args))
+    (TVMRunTask (cm_compile_model policy p)
+       (TVMState pc held (tvm_calls vm) (tvm_mem vm) 
+          (tvm_input vm) (tvm_output vm))) =
+  TVMRunTask (cm_compile_model policy p)
+    (TVMState (pc + Zlength (cm_emit_args_reload policy p fid base args))
+       (cm_encode_values st values ++ held) (tvm_calls vm) 
+       (tvm_mem vm) (tvm_input vm) (tvm_output vm))
+v : cm_value
+values : list cm_value
+pc : Z
+rest : list tvm_inst
+LEN : Zlength args + Z.succ 0 = Z.succ (Zlength values)
+BASE : 0 <= base
+BOUND :
+  base + Zlength (args ++ [x]) <=
+  cm_temp_slots (cm_function_at policy fid (cm_program_functions p))
+CAP : Zlength (v :: values) + Zlength held + 1 < 65536
+VALID :
+  forall slot : Z,
+  base <= slot < base + Zlength (args ++ [x]) ->
+  tower_word_valid
+    (tower_getw (tvm_mem vm) 8 + cm_temp_offset policy p fid slot)
+SIM :
+  cm_spill_list_sim policy p st (tvm_mem vm) fid (tower_getw (tvm_mem vm) 8)
+    spills
+HOLD : cm_spill_holds (base + Zlength values) v spills
+STAGED : cm_staged_spills base values spills
+CODE :
+  cm_code_at (tvm_object_code (cm_compile_model policy p)) pc
+    (cm_emit_args_reload policy p fid base args ++
+     cm_temp_load_code policy p fid (base + Zlength args) ++ rest)
+L : Zlength args = Zlength values
+LAST :
+  cm_code_at (tvm_object_code (cm_compile_model policy p))
+    (pc + Zlength (cm_emit_args_reload policy p fid base args))
+    (cm_fp_relative_address_code
+       (cm_temp_offset policy p fid (base + Zlength args)) ++
+     [TVMInst TVMLoadOp 0] ++ rest)
+Unable to unify
+ "TVMRunTask (cm_compile_model policy p)
+    (TVMState
+       (pc + (Zlength (cm_emit_args_reload policy p fid base args) + 5))
+       (cm_encode_values st (v :: values) ++ held) 
+       (tvm_calls vm) (tvm_mem vm) (tvm_input vm) 
+       (tvm_output vm))" with
+ "TVMRunTask (cm_compile_model policy p)
+    (TVMState (pc + Zlength (cm_emit_args_reload policy p fid base args) + 5)
+       (cm_value_number st v :: cm_encode_values st values ++ held)
+       (tvm_calls vm) (tvm_mem vm) (tvm_input vm) 
+       (tvm_output vm))".
+

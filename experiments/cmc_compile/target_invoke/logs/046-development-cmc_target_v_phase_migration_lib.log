@@ -1,0 +1,50 @@
+Chars 0 - 81 [Require~Export~~~SimpleC.EE.QC...] 1.168 secs (1.079u,0.075s)
+Chars 82 - 117 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 118 - 163 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 164 - 185 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 186 - 211 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 212 - 1747 [Lemma~cm_target_v_phase_step~s...] 0.001 secs (0.001u,0.s)
+Chars 1748 - 1754 [Proof.] 0. secs (0.u,0.s)
+Chars 1756 - 1855 [(cbn~zeta;~~~intros~WF~SUCCESS...] 0. secs (0.u,0.s)
+Chars 1857 - 1891 [(assert~(NG~:~0~<=~cm_state_ne...] 0. secs (0.u,0.s)
+Chars 1893 - 1894 [{] 0. secs (0.u,0.s)
+Chars 1895 - 2058 [(destruct~GEN~as~[G~_];~unfold...] 0.001 secs (0.001u,0.s)
+Chars 2059 - 2060 [}] 0. secs (0.u,0.s)
+Chars 2062 - 2191 [(assert~~~(HELD~:~~~~forall~sl...] 0. secs (0.u,0.s)
+Chars 2193 - 2194 [{] 0. secs (0.u,0.s)
+Chars 2195 - 2279 [(intros;~eapply~cm_runtime_hel...] 0. secs (0.u,0.s)
+Chars 2280 - 2281 [}] 0. secs (0.u,0.s)
+Chars 2283 - 2965 [(destruct~phase;~cbn[cm_v_phas...] 4.824 secs (4.782u,0.035s)
+Chars 2967 - 2968 [-] 0. secs (0.u,0.s)
+Chars 2969 - 3075 [(eapply~cm_target_v_load_step;...] 0. secs (0.u,0.s)
+Chars 3077 - 3078 [-] 0. secs (0.u,0.s)
+Chars 3079 - 3140 [(pose~proof~(cm_expr_temps_non...] 0. secs (0.u,0.s)
+Chars 3144 - 3235 [(eapply~cm_target_v_assign_lef...] 0.001 secs (0.001u,0.s)
+Chars 3237 - 3238 [-] 0. secs (0.u,0.s)
+Chars 3239 - 3350 [(destruct~SP~as~[_~HOLD];~eapp...] 0. secs (0.u,0.s)
+Chars 3352 - 3353 [-] 0. secs (0.u,0.s)
+Chars 3354 - 3527 [(destruct~(Z.eq_dec~op~0)~as~[...] 0.001 secs (0.001u,0.s)
+Chars 3531 - 3705 [(destruct~(Z.eq_dec~op~1)~as~[...] 0.001 secs (0.001u,0.s)
+Chars 3709 - 3841 [(assert~(E0~:~(op~=?~0)~=~fals...] 0. secs (0.u,0.s)
+Chars 3845 - 3905 [(pose~proof~(cm_expr_temps_non...] 0. secs (0.u,0.s)
+Chars 3909 - 4000 [(eapply~cm_target_v_binary_lef...] 0.001 secs (0.001u,0.s)
+Chars 4002 - 4003 [-] 0. secs (0.u,0.s)
+Chars 4004 - 4101 [(destruct~(Z.eq_dec~op~0)~as~[...] 0.001 secs (0.001u,0.s)
+Chars 4105 - 4203 [(destruct~(Z.eq_dec~op~1)~as~[...] 0.001 secs (0.001u,0.s)
+Chars 4207 - 4287 [(destruct~SP~as~[_~[[BAD|~BAD]...] 0. secs (0.u,0.s)
+Chars 4291 - 4312 [(cbn[cm_expr_wf]~in~EW).] 0. secs (0.u,0.s)
+Chars 4316 - 4429 [(eapply~cm_target_v_binary_ord...] 0.002 secs (0.002u,0.s)
+Chars 4431 - 4432 [-] 0. secs (0.u,0.s)
+(cm_target_step_result sp ap p
+   (CMVTask p fid v st
+      (cm_cursor_frames
+         (cm_ann_cursors
+            (CMAnnotation pc temp b c
+               (CMACursor (CAUnaryP op) owner ob oc :: tail) spills saved
+               calls)))) target
+   (CMAnnotation pc temp b c (CMACursor (CAUnaryP op) owner ob oc :: tail)
+      spills saved calls))
+Chars 4433 - 4531 [(match~goal~with~~|~|-~?G~=>~i...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/build/Rocq/examples/QCP_demos_human/cmc_target_v_phase_migration_lib.v", line 46, characters 91-95:
+Error: The variable expr was not found in the current environment.
+

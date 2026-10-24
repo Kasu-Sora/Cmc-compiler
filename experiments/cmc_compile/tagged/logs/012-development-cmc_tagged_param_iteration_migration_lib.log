@@ -1,0 +1,65 @@
+Chars 0 - 82 [Require~Export~~~SimpleC.EE.QC...] 1.256 secs (1.181u,0.075s)
+Chars 83 - 128 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 129 - 150 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 151 - 176 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 177 - 800 [Lemma~cm_store_params_tagged_e...] 0. secs (0.u,0.s)
+Chars 801 - 807 [Proof.] 0. secs (0.u,0.s)
+Chars 809 - 887 [(revert~index~st;~induction~va...] 0. secs (0.u,0.s)
+Chars 889 - 890 [-] 0. secs (0.u,0.s)
+Chars 891 - 934 [(rewrite~Zlength_nil,~Z.add_0_...] 0. secs (0.u,0.s)
+Chars 936 - 937 [-] 0. secs (0.u,0.s)
+Chars 938 - 1030 [(rewrite~Zlength_cons;~replace...] 0.002 secs (0.u,0.s)
+Chars 1034 - 1066 [(cbn[cm_store_params];~apply~IH).] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/tagged/build/Rocq/examples/QCP_demos_human/cmc_tagged_param_iteration_migration_lib.v", line 16, characters 32-34:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid : Z
+v : cm_value
+rest : list cm_value
+address : Z -> Z
+finish : Z
+IH :
+  forall (index : Z) (st : cm_src_state),
+  (forall j : Z,
+   index <= j < index + Zlength rest ->
+   cm_value_number st (cm_state_env st 2 j) = address j /\
+   address j +
+   cm_store_width
+     (cm_slot_ty
+        (cm_source_slot_at sp j
+           (cm_function_params (cm_source_function_at sp fid p)))) =
+   address (j + 1) /\
+   (cm_is_pointerb
+      (cm_slot_ty
+         (cm_source_slot_at sp j
+            (cm_function_params (cm_source_function_at sp fid p)))) = true ->
+    cm_live_span st (address j) 8)) ->
+  cm_tagged_span_except st (address index) finish ->
+  cm_tagged_span_except (cm_store_params sp p fid rest index st)
+    (address (index + Zlength rest)) finish
+index : Z
+st : cm_src_state
+FACT :
+  forall j : Z,
+  index <= j < index + Zlength (v :: rest) ->
+  cm_value_number st (cm_state_env st 2 j) = address j /\
+  address j +
+  cm_store_width
+    (cm_slot_ty
+       (cm_source_slot_at sp j
+          (cm_function_params (cm_source_function_at sp fid p)))) =
+  address (j + 1) /\
+  (cm_is_pointerb
+     (cm_slot_ty
+        (cm_source_slot_at sp j
+           (cm_function_params (cm_source_function_at sp fid p)))) = true ->
+   cm_live_span st (address j) 8)
+VALID : cm_tagged_span_except st (address index) finish
+a : Z
+e : cm_state_tagged (cm_store_params sp p fid rest ?M2562 ?M2563) a = true
+c : cm_live_address (cm_store_params sp p fid rest ?M2562 ?M2563) a
+Unable to unify "a < address (?M2562 + Zlength rest) \/ finish <= a" with
+ "a < address (index + Z.succ (Zlength rest)) \/ finish <= a".
+

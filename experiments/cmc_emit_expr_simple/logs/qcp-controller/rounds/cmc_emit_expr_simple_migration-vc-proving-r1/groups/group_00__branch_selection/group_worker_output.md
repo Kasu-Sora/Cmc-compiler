@@ -1,0 +1,3 @@
+Both assigned whole-goal witnesses are proved using LLM_pre_process with an explicit arithmetic closer. Constructor case analysis selects variable or leaf; existing well-formedness/count predicates supply binding validity, slot bounds and type validity. The leaf branch reuses cm_dispatch_leaf_coverage. Emitter resources cancel after reducing the constructor-specific code function. No helper, import, library change, contract change or additional assumption was needed.
+
+Development effort: one coq-debug inspection (passed), one group-development check (passed), zero failed proof checks; no exact precheck. Final controller validation remains the main agent’s responsibility.

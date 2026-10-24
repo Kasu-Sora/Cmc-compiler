@@ -1,0 +1,28 @@
+{
+  "basis": "Controller reports plus zero_step owner retrospective in this conversation after final-check; owner details were not persisted by controller as individual command logs.",
+  "vc_report_format_repairs": 2,
+  "proving_failures": [
+    {
+      "group": "zero_step",
+      "stage": "group-development",
+      "kind": "import-contract",
+      "coqc_started": false,
+      "reason": "New AUXLib.ListLib import rejected by group helper import policy.",
+      "repair": "Express helper using stdlib repeat and Z.to_nat; remove new project import."
+    },
+    {
+      "group": "zero_step",
+      "stage": "group-development",
+      "kind": "coqc",
+      "reason": "zeros_snoc__zero_step was not found in the current environment: manual does not import case lib.",
+      "repair": "Prove the split goal directly with Z2Nat.inj_add, repeat_app and app_assoc. Retain helper as separate reusable artifact."
+    }
+  ],
+  "supplemental_check_reason": "Completed controller checks did not demonstrate compilation of unused helper. Independently compile an exact hash-checked copy outside the QCP C run and print helper assumptions.",
+  "measurement_script_repairs": ["Corrected ListLib physical path from Rocq/AUXLib to Rocq/auxlibs; no formal artifact changed."],
+  "model_probe_parser_repair": "Definition probe printed a theorem before its JSON result; parse the JSON suffix. This was a parser correction, not a proof failure.",
+  "new_helper_currently_referenced_by_manual": false,
+  "historical_cstar_development_seconds": null,
+  "human_active_seconds": null,
+  "model_active_seconds": null
+}

@@ -1,0 +1,29 @@
+1 goal
+  
+  policy : cm_lookup_policy
+  f : cm_function_d
+  functions : list cm_function_d
+  p : cm_program
+  IH :
+    forall index : Z,
+    0 <= index < Zlength functions ->
+    cm_function_prefix policy p functions (index + 1) =
+    cm_function_prefix policy p functions index +
+    cm_function_code_count policy p
+      (Zlength (cm_program_functions p) - Zlength functions + index)
+  Hindex : 0 <= 0 < Z.succ (Zlength functions)
+  Hz : cm_function_prefix policy p functions 0 = 0
+  ============================
+  (if 0 + 1 =? 0
+   then 0
+   else
+    cm_function_code_count policy p
+      (Zlength (cm_program_functions p) - Zlength (f :: functions)) +
+    cm_function_prefix policy p functions (0 + 1 - 1)) =
+  0 +
+  cm_function_code_count policy p
+    (Zlength (cm_program_functions p) - Z.succ (Zlength functions) + 0)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_function_readiness/build/Rocq/examples/QCP_demos_human/cmc_function_ready_migration_lib.v", line 22, characters 11-21:
+Error: Found no subterm matching "cm_function_prefix policy p functions 0"
+in the current goal.
+

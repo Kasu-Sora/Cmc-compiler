@@ -1,0 +1,7 @@
+- 函数列表发射的原模型在 cons 分支按当前 fid 查找并生成函数，再递归处理 fid+1；列表元素本身不直接参与代码方程。保持这一方程，通过既有 readiness 把实际链表头与 lookup 结果联系起来。
+- 空列表时 readiness 为 True，不能为了简化递归证明新增 fid 非负或 functions 等于程序函数全列表的限制。非空分支需要的 fid+1 与下一 PC 的范围、PC 递推等式均从原 readiness 获取。
+- 既有 readiness 使用 statement count 形式，单函数发射契约保留精确 statement 长度形式。本例直接复用 `cm_emit_stmt_length__stmt_capacity` 完成衔接，无新增数学引理或假定。
+- `cm_function_list_rep` 包含 header/body 两个对应的列表视图。展开时对齐两者的 body 指针序列，恢复时同时重建两部分，不能只恢复 next 指针或函数 header。
+- 返回前的冗余 list-fold 标注会影响局部 next_fn 单元回收；本例删除该冗余断言，由 return VC 在保留局部资源的情况下恢复整个链表。原运行体和 BODY 契约保持不变。
+- 裁剪复制来的 Extern 声明时，kind 与 value 声明需要分块；保留实际使用的逻辑声明并单列其接入成本。证明时若预处理已经关闭目标，不追加多余 tactic；整数上界记号也不应当成可 unfold 的定义。
+- 本例完整终检通过 12 条顶层手工义务和 29 个 split；自动层另有 20 条 Admitted witness。公共库仅新增精确 emission 和透明 tail 两项定义，0 条引理；保留全部失败检查记录，并同时比较物理行与词法 token。

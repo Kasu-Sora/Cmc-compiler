@@ -1,0 +1,3753 @@
+{
+  "direction": "C*/HOL -> QCP/Rocq",
+  "unit": "cmc_concrete_emit_expr_leaf.c",
+  "function_count": 9,
+  "counts": {
+    "cstar": {
+      "specification": 195,
+      "annotation": 25,
+      "inline_proof": 386,
+      "exported_shared_proof_closure": 0,
+      "private_case_proof_support": 126,
+      "case_proof": 512,
+      "proof_including_shared": 512,
+      "specification_plus_annotation": 220
+    },
+    "qcp": {
+      "external_declarations": 57,
+      "coq_imports": 1,
+      "integration_helper_specification": 17,
+      "specification": 27,
+      "annotation": 74,
+      "case_proof": 506,
+      "new_common_proof": 125,
+      "new_common_imports_or_scopes": 5,
+      "new_common_definitions": 34,
+      "proof_including_shared": 631,
+      "total_annotation_with_integration": 91,
+      "specification_plus_annotation_with_integration": 118,
+      "specification_plus_annotation": 101
+    }
+  },
+  "regions": [
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        8,
+        11
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 71,
+      "characters": 221,
+      "name": null
+    },
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        13,
+        65
+      ],
+      "nonblank_lines": 53,
+      "new_counted_lines": 53,
+      "lexical_tokens": 573,
+      "characters": 2596,
+      "name": null
+    },
+    {
+      "category": "coq_imports",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        67,
+        67
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 16,
+      "characters": 92,
+      "name": null
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        71,
+        73
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 133,
+      "characters": 728,
+      "name": "cmc_string_address"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        77,
+        79
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 59,
+      "characters": 261,
+      "name": "cmc_type_size_at"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        84,
+        86
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 85,
+      "characters": 348,
+      "name": "cmc_member_offset_at"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        90,
+        91
+      ],
+      "nonblank_lines": 2,
+      "new_counted_lines": 2,
+      "lexical_tokens": 27,
+      "characters": 89,
+      "name": "cmc_pointee"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        95,
+        97
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 230,
+      "characters": 833,
+      "name": "cmc_member_array"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        102,
+        104
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 118,
+      "characters": 465,
+      "name": "cm_emit_plan"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        108,
+        110
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 54,
+      "characters": 231,
+      "name": "cmc_const_immediate"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        126,
+        128
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 283,
+      "characters": 1016,
+      "name": "cm_emit_const_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        131,
+        138
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 293,
+      "characters": 879,
+      "name": "cm_emit_const_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        143,
+        143
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 22,
+      "characters": 78,
+      "name": "cm_emit_const_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        144,
+        144
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 107,
+      "characters": 399,
+      "name": "cm_emit_const_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        145,
+        145
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 42,
+      "characters": 164,
+      "name": "cm_emit_const_expr"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        154,
+        156
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 387,
+      "characters": 1500,
+      "name": "cm_emit_string_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        159,
+        166
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 345,
+      "characters": 1122,
+      "name": "cm_emit_string_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        171,
+        178
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 153,
+      "characters": 565,
+      "name": "cm_emit_string_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        180,
+        180
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 32,
+      "characters": 143,
+      "name": "cm_emit_string_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        181,
+        181
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 131,
+      "characters": 511,
+      "name": "cm_emit_string_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        182,
+        182
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 42,
+      "characters": 162,
+      "name": "cm_emit_string_expr"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        191,
+        193
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 258,
+      "characters": 947,
+      "name": "cm_emit_getc_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        197,
+        197
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 100,
+      "characters": 372,
+      "name": "cm_emit_getc_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        198,
+        198
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 42,
+      "characters": 156,
+      "name": "cm_emit_getc_expr"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        205,
+        207
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 142,
+      "characters": 630,
+      "name": "cm_sizeof_value"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        214,
+        214
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 39,
+      "characters": 149,
+      "name": "cm_sizeof_value"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        216,
+        223
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 153,
+      "characters": 565,
+      "name": "cm_sizeof_value"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        224,
+        224
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 24,
+      "characters": 103,
+      "name": "cm_sizeof_value"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        231,
+        233
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 142,
+      "characters": 630,
+      "name": "cm_type_size_value"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        236,
+        236
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 29,
+      "characters": 122,
+      "name": "cm_type_size_value"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        243,
+        245
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 339,
+      "characters": 1298,
+      "name": "cm_emit_sizeof_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        248,
+        255
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 324,
+      "characters": 1035,
+      "name": "cm_emit_sizeof_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        259,
+        259
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 35,
+      "characters": 141,
+      "name": "cm_emit_sizeof_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        260,
+        260
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 110,
+      "characters": 421,
+      "name": "cm_emit_sizeof_expr"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        261,
+        261
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 42,
+      "characters": 159,
+      "name": "cm_emit_sizeof_expr"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        268,
+        270
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 151,
+      "characters": 657,
+      "name": "cm_member_array_value_context"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        273,
+        281
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 246,
+      "characters": 865,
+      "name": "cm_member_array_value_context"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        284,
+        284
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 32,
+      "characters": 120,
+      "name": "cm_member_array_value_context"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        290,
+        292
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 160,
+      "characters": 699,
+      "name": "cm_member_offset_value_context"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        295,
+        303
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 246,
+      "characters": 865,
+      "name": "cm_member_offset_value_context"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_expr_leaf_migration.c",
+      "span": [
+        308,
+        308
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 28,
+      "characters": 115,
+      "name": "cm_member_offset_value_context"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        24,
+        30
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 44,
+      "characters": 316,
+      "name": "proof_of_cmc_const_immediate_return_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        32,
+        36
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 190,
+      "name": "proof_of_cmc_const_immediate_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        38,
+        53
+      ],
+      "nonblank_lines": 16,
+      "new_counted_lines": 16,
+      "lexical_tokens": 169,
+      "characters": 845,
+      "name": "proof_of_cmc_const_immediate_return_wit_2_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        55,
+        59
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 190,
+      "name": "proof_of_cmc_const_immediate_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        61,
+        67
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 42,
+      "characters": 270,
+      "name": "proof_of_cm_emit_const_expr_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        69,
+        77
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 70,
+      "characters": 376,
+      "name": "proof_of_cm_emit_const_expr_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        79,
+        84
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 265,
+      "name": "proof_of_cm_emit_const_expr_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        86,
+        99
+      ],
+      "nonblank_lines": 14,
+      "new_counted_lines": 14,
+      "lexical_tokens": 96,
+      "characters": 595,
+      "name": "proof_of_cm_emit_const_expr_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        101,
+        105
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 193,
+      "name": "proof_of_cm_emit_const_expr_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        107,
+        119
+      ],
+      "nonblank_lines": 13,
+      "new_counted_lines": 13,
+      "lexical_tokens": 102,
+      "characters": 589,
+      "name": "proof_of_cm_emit_const_expr_return_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        121,
+        125
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 193,
+      "name": "proof_of_cm_emit_const_expr_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        127,
+        131
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 31,
+      "characters": 230,
+      "name": "proof_of_cm_emit_const_expr_which_implies_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        133,
+        136
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 16,
+      "characters": 171,
+      "name": "proof_of_cm_emit_const_expr_which_implies_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        138,
+        144
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 53,
+      "characters": 328,
+      "name": "proof_of_cm_emit_const_expr_which_implies_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        146,
+        152
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 370,
+      "name": "proof_of_cm_emit_const_expr_which_implies_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        154,
+        160
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 42,
+      "characters": 272,
+      "name": "proof_of_cm_emit_string_expr_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        162,
+        170
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 62,
+      "characters": 352,
+      "name": "proof_of_cm_emit_string_expr_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        172,
+        178
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 271,
+      "name": "proof_of_cm_emit_string_expr_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        180,
+        192
+      ],
+      "nonblank_lines": 13,
+      "new_counted_lines": 13,
+      "lexical_tokens": 89,
+      "characters": 580,
+      "name": "proof_of_cm_emit_string_expr_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        194,
+        199
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 15,
+      "characters": 200,
+      "name": "proof_of_cm_emit_string_expr_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        201,
+        213
+      ],
+      "nonblank_lines": 13,
+      "new_counted_lines": 13,
+      "lexical_tokens": 97,
+      "characters": 534,
+      "name": "proof_of_cm_emit_string_expr_return_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        215,
+        220
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 15,
+      "characters": 200,
+      "name": "proof_of_cm_emit_string_expr_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        222,
+        231
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 47,
+      "characters": 320,
+      "name": "proof_of_cm_emit_string_expr_which_implies_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        233,
+        237
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 31,
+      "characters": 232,
+      "name": "proof_of_cm_emit_string_expr_which_implies_wit_2_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        239,
+        242
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 184,
+      "name": "proof_of_cm_emit_string_expr_which_implies_wit_2_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        244,
+        251
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 66,
+      "characters": 405,
+      "name": "proof_of_cm_emit_string_expr_which_implies_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        253,
+        260
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 377,
+      "name": "proof_of_cm_emit_string_expr_which_implies_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        262,
+        269
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 36,
+      "characters": 252,
+      "name": "proof_of_cm_emit_getc_expr_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        271,
+        275
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 190,
+      "name": "proof_of_cm_emit_getc_expr_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        277,
+        285
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 46,
+      "characters": 305,
+      "name": "proof_of_cm_emit_getc_expr_return_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        287,
+        291
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 190,
+      "name": "proof_of_cm_emit_getc_expr_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        293,
+        299
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 31,
+      "characters": 232,
+      "name": "proof_of_cm_emit_getc_expr_which_implies_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        301,
+        304
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 16,
+      "characters": 169,
+      "name": "proof_of_cm_emit_getc_expr_which_implies_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        306,
+        313
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 42,
+      "characters": 293,
+      "name": "proof_of_cm_emit_getc_expr_which_implies_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        315,
+        321
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 365,
+      "name": "proof_of_cm_emit_getc_expr_which_implies_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        323,
+        329
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 49,
+      "characters": 318,
+      "name": "proof_of_cm_sizeof_value_return_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        331,
+        335
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 178,
+      "name": "proof_of_cm_sizeof_value_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        337,
+        344
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 53,
+      "characters": 320,
+      "name": "proof_of_cm_sizeof_value_return_wit_2_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        346,
+        354
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 42,
+      "characters": 310,
+      "name": "proof_of_cm_sizeof_value_return_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        356,
+        361
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 253,
+      "name": "proof_of_cm_sizeof_value_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        363,
+        371
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 55,
+      "characters": 423,
+      "name": "proof_of_cm_sizeof_value_which_implies_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        373,
+        377
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 199,
+      "name": "proof_of_cm_sizeof_value_which_implies_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        379,
+        388
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 47,
+      "characters": 359,
+      "name": "proof_of_cm_sizeof_value_which_implies_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        390,
+        396
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 42,
+      "characters": 265,
+      "name": "proof_of_cm_emit_sizeof_expr_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        398,
+        405
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 62,
+      "characters": 350,
+      "name": "proof_of_cm_emit_sizeof_expr_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        407,
+        412
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 270,
+      "name": "proof_of_cm_emit_sizeof_expr_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        414,
+        425
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 70,
+      "characters": 464,
+      "name": "proof_of_cm_emit_sizeof_expr_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        427,
+        431
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 197,
+      "name": "proof_of_cm_emit_sizeof_expr_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        433,
+        444
+      ],
+      "nonblank_lines": 10,
+      "new_counted_lines": 10,
+      "lexical_tokens": 96,
+      "characters": 524,
+      "name": "proof_of_cm_emit_sizeof_expr_return_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        446,
+        450
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 197,
+      "name": "proof_of_cm_emit_sizeof_expr_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        452,
+        456
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 31,
+      "characters": 232,
+      "name": "proof_of_cm_emit_sizeof_expr_which_implies_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        458,
+        461
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 22,
+      "characters": 184,
+      "name": "proof_of_cm_emit_sizeof_expr_which_implies_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        463,
+        469
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 51,
+      "characters": 324,
+      "name": "proof_of_cm_emit_sizeof_expr_which_implies_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        471,
+        477
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 376,
+      "name": "proof_of_cm_emit_sizeof_expr_which_implies_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        479,
+        501
+      ],
+      "nonblank_lines": 23,
+      "new_counted_lines": 23,
+      "lexical_tokens": 217,
+      "characters": 1028,
+      "name": "proof_of_cm_member_array_value_context_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        503,
+        511
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 42,
+      "characters": 338,
+      "name": "proof_of_cm_member_array_value_context_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        513,
+        517
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 227,
+      "name": "proof_of_cm_member_array_value_context_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        519,
+        524
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 48,
+      "characters": 291,
+      "name": "proof_of_cm_member_offset_value_context_safety_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        526,
+        531
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 48,
+      "characters": 291,
+      "name": "proof_of_cm_member_offset_value_context_safety_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        533,
+        538
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 308,
+      "name": "proof_of_cm_member_offset_value_context_safety_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        540,
+        562
+      ],
+      "nonblank_lines": 23,
+      "new_counted_lines": 23,
+      "lexical_tokens": 217,
+      "characters": 1030,
+      "name": "proof_of_cm_member_offset_value_context_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        564,
+        583
+      ],
+      "nonblank_lines": 20,
+      "new_counted_lines": 20,
+      "lexical_tokens": 180,
+      "characters": 847,
+      "name": "proof_of_cm_member_offset_value_context_return_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        585,
+        593
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 42,
+      "characters": 340,
+      "name": "proof_of_cm_member_offset_value_context_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "span": [
+        595,
+        600
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 17,
+      "characters": 310,
+      "name": "proof_of_cm_member_offset_value_context_return_wit_1"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        45,
+        46
+      ],
+      "nonblank_lines": 2,
+      "new_counted_lines": 2,
+      "lexical_tokens": 22,
+      "characters": 133,
+      "name": "cm_leaf_source_roundtrip"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        47,
+        50
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 42,
+      "characters": 191,
+      "name": "cm_leaf_const_source_equation"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        51,
+        54
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 42,
+      "characters": 197,
+      "name": "cm_leaf_string_source_equation"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        55,
+        58
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 36,
+      "characters": 161,
+      "name": "cm_leaf_getc_source_equation"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        59,
+        62
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 45,
+      "characters": 219,
+      "name": "cm_leaf_sizeof_source_equation"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        64,
+        77
+      ],
+      "nonblank_lines": 14,
+      "new_counted_lines": 14,
+      "lexical_tokens": 193,
+      "characters": 796,
+      "name": "cm_rep_globals_size_matches"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        78,
+        81
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 56,
+      "characters": 336,
+      "name": "cm_rep_string_address_matches"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        83,
+        84
+      ],
+      "nonblank_lines": 2,
+      "new_counted_lines": 2,
+      "lexical_tokens": 44,
+      "characters": 204,
+      "name": "cm_scalar_struct_leaf_size"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        85,
+        99
+      ],
+      "nonblank_lines": 15,
+      "new_counted_lines": 15,
+      "lexical_tokens": 176,
+      "characters": 760,
+      "name": "cm_slots_struct_size_matches"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        100,
+        114
+      ],
+      "nonblank_lines": 15,
+      "new_counted_lines": 15,
+      "lexical_tokens": 197,
+      "characters": 838,
+      "name": "cm_slots_struct_prefix_matches"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        115,
+        125
+      ],
+      "nonblank_lines": 11,
+      "new_counted_lines": 11,
+      "lexical_tokens": 157,
+      "characters": 628,
+      "name": "cm_rep_struct_size_nth"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        126,
+        149
+      ],
+      "nonblank_lines": 24,
+      "new_counted_lines": 24,
+      "lexical_tokens": 388,
+      "characters": 1587,
+      "name": "cm_rep_type_size_matches"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        150,
+        160
+      ],
+      "nonblank_lines": 11,
+      "new_counted_lines": 11,
+      "lexical_tokens": 160,
+      "characters": 668,
+      "name": "cm_rep_struct_member_prefix_nth"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        161,
+        171
+      ],
+      "nonblank_lines": 11,
+      "new_counted_lines": 11,
+      "lexical_tokens": 126,
+      "characters": 612,
+      "name": "cm_rep_struct_member_prefix_matches"
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        3,
+        3
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 9,
+      "characters": 45,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        4,
+        4
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 6,
+      "characters": 35,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        5,
+        5
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 10,
+      "characters": 69,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        6,
+        6
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 3,
+      "characters": 21,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        7,
+        7
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 5,
+      "characters": 25,
+      "name": null
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        9,
+        10
+      ],
+      "nonblank_lines": 2,
+      "new_counted_lines": 2,
+      "lexical_tokens": 29,
+      "characters": 104,
+      "name": "cm_const_immediate"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        11,
+        11
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 6,
+      "characters": 54,
+      "name": "cm_strings_prefix"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        12,
+        14
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 25,
+      "characters": 156,
+      "name": "cm_string_address"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        15,
+        18
+      ],
+      "nonblank_lines": 4,
+      "new_counted_lines": 4,
+      "lexical_tokens": 53,
+      "characters": 209,
+      "name": "cm_member_offset_slots"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        19,
+        21
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 41,
+      "characters": 190,
+      "name": "cm_member_offset"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        24,
+        28
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 44,
+      "characters": 155,
+      "name": "cm_leaf_expr"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        29,
+        31
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 44,
+      "characters": 213,
+      "name": "cm_leaf_source_expr"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        32,
+        37
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 64,
+      "characters": 265,
+      "name": "cm_leaf_of_expr"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        38,
+        42
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 63,
+      "characters": 319,
+      "name": "cm_leaf_rvalue"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "span": [
+        43,
+        44
+      ],
+      "nonblank_lines": 2,
+      "new_counted_lines": 2,
+      "lexical_tokens": 25,
+      "characters": 104,
+      "name": "cm_leaf_code_for"
+    }
+  ],
+  "source_effort": {
+    "source_sha256": "ca5391cbcb4c72498246c8bf6e244c89fb75d5d3c400e0e6313f25a12f508643",
+    "function_counts": [
+      {
+        "function": "cmc_const_immediate",
+        "source_span": [
+          9,
+          72
+        ],
+        "specification": 9,
+        "annotation": 0,
+        "inline_proof": 45
+      },
+      {
+        "function": "cm_emit_const_expr",
+        "source_span": [
+          130,
+          220
+        ],
+        "specification": 24,
+        "annotation": 3,
+        "inline_proof": 52
+      },
+      {
+        "function": "cm_emit_string_expr",
+        "source_span": [
+          240,
+          360
+        ],
+        "specification": 34,
+        "annotation": 6,
+        "inline_proof": 68
+      },
+      {
+        "function": "cm_emit_getc_expr",
+        "source_span": [
+          362,
+          420
+        ],
+        "specification": 22,
+        "annotation": 2,
+        "inline_proof": 25
+      },
+      {
+        "function": "cm_sizeof_value",
+        "source_span": [
+          438,
+          524
+        ],
+        "specification": 18,
+        "annotation": 2,
+        "inline_proof": 55
+      },
+      {
+        "function": "cm_type_size_value",
+        "source_span": [
+          526,
+          551
+        ],
+        "specification": 18,
+        "annotation": 3,
+        "inline_proof": 0
+      },
+      {
+        "function": "cm_emit_sizeof_expr",
+        "source_span": [
+          553,
+          652
+        ],
+        "specification": 30,
+        "annotation": 5,
+        "inline_proof": 54
+      },
+      {
+        "function": "cm_member_array_value_context",
+        "source_span": [
+          699,
+          733
+        ],
+        "specification": 19,
+        "annotation": 3,
+        "inline_proof": 7
+      },
+      {
+        "function": "cm_member_offset_value_context",
+        "source_span": [
+          735,
+          844
+        ],
+        "specification": 21,
+        "annotation": 1,
+        "inline_proof": 80
+      }
+    ],
+    "source_top_level_proof_helpers": [
+      {
+        "name": "cm_leaf_code_shape",
+        "kind": "proof",
+        "span": [
+          75,
+          87
+        ],
+        "nonblank_lines": 13,
+        "text": "PROOF static thm cm_leaf_code_shape(const thm shape,\n                                    const thm lvalue_case) {\n  return by_rewrite(\n      `cm_expr_code_for (p:cm_program) (fid__pre:int) (pc__pre:int)\n         (temp__pre:int) (e:cm_expr) (lvalue__pre:int) ==\n       (if lvalue__pre == 0i\n        then cm_rcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e)\n        else cm_lcode_of\n          (cm_emit_expr_pair p fid__pre pc__pre temp__pre e))`,\n      THM_LIST(cm_expr_code_for_def, lvalue_case,\n        get_cm_emit_rvalue_def(), get_cm_emit_lvalue_def()));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_push_leaf_code_shape",
+        "kind": "proof",
+        "span": [
+          89,
+          98
+        ],
+        "nonblank_lines": 10,
+        "text": "PROOF static thm cm_push_leaf_code_shape(const thm shape,\n                                     const thm lvalue_case,\n                                     const term code) {\n  thm selected = cm_leaf_code_shape(shape, lvalue_case);\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code),\n      THM_LIST(shape, get_cm_emit_expr_pair_def(),\n        get_cm_rcode_of_def(), get_cm_lcode_of_def(),\n        get_cm_push_code_def(), lvalue_case)));\n}",
+        "dependencies": [
+          "cm_leaf_code_shape"
+        ],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_getc_code_shape",
+        "kind": "proof",
+        "span": [
+          100,
+          109
+        ],
+        "nonblank_lines": 10,
+        "text": "PROOF static thm cm_getc_code_shape(const thm shape,\n                                    const thm lvalue_case,\n                                    const term code) {\n  thm selected = cm_leaf_code_shape(shape, lvalue_case);\n  return trans_rule(selected, by_rewrite(\n      mk_eq(rhs_of(selected), code),\n      THM_LIST(shape, get_cm_emit_expr_pair_def(),\n        get_cm_rcode_of_def(), get_cm_lcode_of_def(),\n        lvalue_case)));\n}",
+        "dependencies": [
+          "cm_leaf_code_shape"
+        ],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_leaf_prepare_code",
+        "kind": "proof",
+        "span": [
+          111,
+          114
+        ],
+        "nonblank_lines": 4,
+        "text": "PROOF static void cm_leaf_prepare_code(const thm code_shape) {\n  substitute_st(code_shape);\n  rewrite_st(THM_LIST(get_theorem_by_name(\"APPEND\")));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_leaf_finish_code",
+        "kind": "proof",
+        "span": [
+          116,
+          128
+        ],
+        "nonblank_lines": 13,
+        "text": "PROOF static void cm_leaf_finish_code(const thm code_shape,\n                                      const int emitted) {\n  if (!emitted) {\n    substitute_st(sym_rule(ispec_rule(\n        `done:(tvm_inst)list`,\n        get_theorem_by_name(\"APPEND_NIL\"))));\n  }\n  thm prefix_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         (done:(tvm_inst)list) ++ code`,\n      sym_rule(code_shape)));\n  substitute_st(prefix_shape);\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_leaf_string_address_bridge",
+        "kind": "proof",
+        "span": [
+          222,
+          238
+        ],
+        "nonblank_lines": 17,
+        "text": "PROOF static thm cm_leaf_string_address_bridge(void) {\n  thm typed = eqt_elim_rule(assume_rule(\n      `cm_typed_program (p:cm_program) <=> true`));\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  thm all_wf = conjunct1_rule(conjunct2_rule(opened));\n  thm concrete = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`,\n      `cm_program_globals (p:cm_program)`,\n      `cm_program_strings (p:cm_program)`, `sid:int`),\n      cm_rep_string_address_matches), all_wf);\n  return by_rewrite(\n      `cm_rep_string_address (cm_program_globals (p:cm_program))\n         (cm_program_strings p) (sid:int) ==\n       cm_string_address p sid`,\n      THM_LIST(concrete, get_cm_string_address_def()));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_leaf_type_size_bridge",
+        "kind": "proof",
+        "span": [
+          422,
+          436
+        ],
+        "nonblank_lines": 15,
+        "text": "PROOF static thm cm_leaf_type_size_bridge(void) {\n  thm typed = eqt_elim_rule(assume_rule(\n      `cm_typed_program (p:cm_program) <=> true`));\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  return mp_rule(mp_rule(mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`, `asked:cm_type`),\n      cm_rep_type_size_matches),\n      eqt_elim_rule(assume_rule(\n        `cm_type_code_wf (asked:cm_type) <=> true`))),\n      eqt_elim_rule(assume_rule(\n        `cm_type_refs (cm_program_structs (p:cm_program))\n          (asked:cm_type) <=> true`))),\n      conjunct1_rule(opened));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_add_member_value_facts_st",
+        "kind": "proof",
+        "span": [
+          654,
+          697
+        ],
+        "nonblank_lines": 44,
+        "text": "PROOF static void cm_add_member_value_facts_st(void) {\n  cm_add_count_facts(from_state_bool(\n      `cm_i32_code_count (base_ty__pre:int)`));\n  thm code_eq = assume_rule(\n      `(base_ty__pre:int) == cm_type_encode (base:cm_type)`);\n  thm type_wf = from_state_bool(\n      `cm_type_code_wf (base:cm_type)`);\n  thm valid = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_member_valid_def())), from_state_bool(\n        `cm_member_valid (p:cm_program) (base:cm_type)\n          (mid__pre:int)`));\n  thm pointer = conjunct1_rule(valid);\n  thm rest = conjunct2_rule(valid);\n  thm structure = conjunct1_rule(rest);\n  rest = conjunct2_rule(rest);\n  thm sid_nonnegative = conjunct1_rule(rest);\n  rest = conjunct2_rule(rest);\n  thm sid_upper = conjunct1_rule(rest);\n  rest = conjunct2_rule(rest);\n  thm mid_nonnegative = conjunct1_rule(rest);\n  thm sid_eq = match_mp_rule(match_mp_rule(match_mp_rule(\n      spec_rule(`base:cm_type`, cm_encoded_member_sid),\n      type_wf), pointer), structure);\n  thm threshold = mp_rule(spec_rule(\n      `base:cm_type`, cm_pointer_encode_threshold), type_wf);\n  thm encoded_threshold = eq_mp_rule(sym_rule(threshold), pointer);\n  add_fact_st(conv_rule(rewrite_conv(THM_LIST(\n      sym_rule(code_eq))), encoded_threshold));\n  add_fact_st(conv_rule(rewrite_conv(THM_LIST(\n      sym_rule(code_eq), sym_rule(sid_eq))), sid_nonnegative));\n  add_fact_st(sid_nonnegative);\n  add_fact_st(mid_nonnegative);\n  thm typed = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), from_state_bool(\n        `cm_typed_program (p:cm_program)`));\n  thm structs_wf = conjunct1_rule(typed);\n  thm selected = mp_rule(mp_rule(spec_rule(\n      `cm_struct_id (cm_pointee (base:cm_type))`, structs_wf),\n      sid_nonnegative), sid_upper);\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_struct_wf_def())), selected);\n  thm slots_wf = conjunct1_rule(conjunct2_rule(opened));\n  add_fact_st(eqt_intro_rule(slots_wf));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      }
+    ],
+    "totals": {
+      "specification": 195,
+      "annotation": 25,
+      "inline_proof": 386,
+      "private_case_proof_support": 126,
+      "case_proof": 512,
+      "proof_including_shared": 512
+    },
+    "annotation_entries": [
+      {
+        "function": "cm_emit_const_expr",
+        "kind": "where",
+        "span": [
+          175,
+          175
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_const_expr",
+        "kind": "where",
+        "span": [
+          187,
+          187
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_const_expr",
+        "kind": "where",
+        "span": [
+          188,
+          188
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_string_expr",
+        "kind": "where",
+        "span": [
+          298,
+          299
+        ],
+        "nonblank_lines": 2
+      },
+      {
+        "function": "cm_emit_string_expr",
+        "kind": "where",
+        "span": [
+          300,
+          301
+        ],
+        "nonblank_lines": 2
+      },
+      {
+        "function": "cm_emit_string_expr",
+        "kind": "where",
+        "span": [
+          321,
+          321
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_string_expr",
+        "kind": "where",
+        "span": [
+          322,
+          322
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_getc_expr",
+        "kind": "where",
+        "span": [
+          399,
+          399
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_getc_expr",
+        "kind": "where",
+        "span": [
+          400,
+          400
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_sizeof_value",
+        "kind": "where",
+        "span": [
+          505,
+          506
+        ],
+        "nonblank_lines": 2
+      },
+      {
+        "function": "cm_type_size_value",
+        "kind": "where",
+        "span": [
+          547,
+          547
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_type_size_value",
+        "kind": "where",
+        "span": [
+          548,
+          548
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_type_size_value",
+        "kind": "where",
+        "span": [
+          549,
+          549
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_sizeof_expr",
+        "kind": "where",
+        "span": [
+          599,
+          599
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_sizeof_expr",
+        "kind": "where",
+        "span": [
+          600,
+          600
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_sizeof_expr",
+        "kind": "where",
+        "span": [
+          601,
+          601
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_sizeof_expr",
+        "kind": "where",
+        "span": [
+          619,
+          619
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_sizeof_expr",
+        "kind": "where",
+        "span": [
+          620,
+          620
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_member_array_value_context",
+        "kind": "where",
+        "span": [
+          725,
+          725
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_member_array_value_context",
+        "kind": "where",
+        "span": [
+          726,
+          726
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_member_array_value_context",
+        "kind": "where",
+        "span": [
+          727,
+          727
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_member_offset_value_context",
+        "kind": "where",
+        "span": [
+          812,
+          812
+        ],
+        "nonblank_lines": 1
+      }
+    ],
+    "public_proof_roots": [],
+    "public_wrappers_not_called_by_runtime_proof": [],
+    "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Eight same-file static PROOF declarations counted as private case support; new leaf-model and semantic size/address bridge closure inventoried separately."
+  },
+  "target_per_function": {
+    "cmc_const_immediate": {
+      "specification": 3,
+      "annotation": 0,
+      "case_proof": 33,
+      "specification_plus_annotation": 3
+    },
+    "cm_emit_const_expr": {
+      "specification": 3,
+      "annotation": 11,
+      "case_proof": 82,
+      "specification_plus_annotation": 14
+    },
+    "cm_emit_string_expr": {
+      "specification": 3,
+      "annotation": 19,
+      "case_proof": 92,
+      "specification_plus_annotation": 22
+    },
+    "cm_emit_getc_expr": {
+      "specification": 3,
+      "annotation": 2,
+      "case_proof": 53,
+      "specification_plus_annotation": 5
+    },
+    "cm_sizeof_value": {
+      "specification": 3,
+      "annotation": 10,
+      "case_proof": 59,
+      "specification_plus_annotation": 13
+    },
+    "cm_type_size_value": {
+      "specification": 3,
+      "annotation": 1,
+      "case_proof": 0,
+      "specification_plus_annotation": 4
+    },
+    "cm_emit_sizeof_expr": {
+      "specification": 3,
+      "annotation": 11,
+      "case_proof": 74,
+      "specification_plus_annotation": 14
+    },
+    "cm_member_array_value_context": {
+      "specification": 3,
+      "annotation": 10,
+      "case_proof": 37,
+      "specification_plus_annotation": 13
+    },
+    "cm_member_offset_value_context": {
+      "specification": 3,
+      "annotation": 10,
+      "case_proof": 76,
+      "specification_plus_annotation": 13
+    }
+  },
+  "runtime_tokens_equal": true,
+  "abi_unchanged": true,
+  "coverage": {
+    "cmc_const_immediate": [
+      "proof_of_cmc_const_immediate_return_wit_1",
+      "proof_of_cmc_const_immediate_return_wit_2",
+      "proof_of_cmc_const_immediate_safety_wit_1",
+      "proof_of_cmc_const_immediate_safety_wit_2"
+    ],
+    "cm_emit_const_expr": [
+      "proof_of_cm_emit_const_expr_entail_wit_1",
+      "proof_of_cm_emit_const_expr_return_wit_1",
+      "proof_of_cm_emit_const_expr_return_wit_2",
+      "proof_of_cm_emit_const_expr_which_implies_wit_1",
+      "proof_of_cm_emit_const_expr_safety_wit_1",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_2",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_3"
+    ],
+    "cm_emit_string_expr": [
+      "proof_of_cm_emit_string_expr_entail_wit_1",
+      "proof_of_cm_emit_string_expr_return_wit_1",
+      "proof_of_cm_emit_string_expr_return_wit_2",
+      "proof_of_cm_emit_string_expr_which_implies_wit_1",
+      "proof_of_cm_emit_string_expr_which_implies_wit_2",
+      "proof_of_cm_emit_string_expr_safety_wit_1",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_2",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_3",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_4_pure",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_4"
+    ],
+    "cm_emit_getc_expr": [
+      "proof_of_cm_emit_getc_expr_return_wit_1",
+      "proof_of_cm_emit_getc_expr_return_wit_2",
+      "proof_of_cm_emit_getc_expr_which_implies_wit_1",
+      "proof_of_cm_emit_getc_expr_safety_wit_1",
+      "proof_of_cm_emit_getc_expr_safety_wit_2",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_2"
+    ],
+    "cm_sizeof_value": [
+      "proof_of_cm_sizeof_value_return_wit_1",
+      "proof_of_cm_sizeof_value_return_wit_2",
+      "proof_of_cm_sizeof_value_which_implies_wit_1",
+      "proof_of_cm_sizeof_value_which_implies_wit_2",
+      "proof_of_cm_sizeof_value_safety_wit_1",
+      "proof_of_cm_sizeof_value_safety_wit_2",
+      "proof_of_cm_sizeof_value_partial_solve_wit_1_pure",
+      "proof_of_cm_sizeof_value_partial_solve_wit_1",
+      "proof_of_cm_sizeof_value_partial_solve_wit_2",
+      "proof_of_cm_sizeof_value_partial_solve_wit_3_pure",
+      "proof_of_cm_sizeof_value_partial_solve_wit_3"
+    ],
+    "cm_type_size_value": [
+      "proof_of_cm_type_size_value_return_wit_1",
+      "proof_of_cm_type_size_value_partial_solve_wit_1_pure",
+      "proof_of_cm_type_size_value_partial_solve_wit_1"
+    ],
+    "cm_emit_sizeof_expr": [
+      "proof_of_cm_emit_sizeof_expr_entail_wit_1",
+      "proof_of_cm_emit_sizeof_expr_return_wit_1",
+      "proof_of_cm_emit_sizeof_expr_return_wit_2",
+      "proof_of_cm_emit_sizeof_expr_which_implies_wit_1",
+      "proof_of_cm_emit_sizeof_expr_safety_wit_1",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_2",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_3"
+    ],
+    "cm_member_array_value_context": [
+      "proof_of_cm_member_array_value_context_entail_wit_1",
+      "proof_of_cm_member_array_value_context_return_wit_1",
+      "proof_of_cm_member_array_value_context_partial_solve_wit_1_pure",
+      "proof_of_cm_member_array_value_context_partial_solve_wit_1"
+    ],
+    "cm_member_offset_value_context": [
+      "proof_of_cm_member_offset_value_context_safety_wit_1",
+      "proof_of_cm_member_offset_value_context_entail_wit_1",
+      "proof_of_cm_member_offset_value_context_return_wit_1",
+      "proof_of_cm_member_offset_value_context_safety_wit_2",
+      "proof_of_cm_member_offset_value_context_safety_wit_3",
+      "proof_of_cm_member_offset_value_context_safety_wit_4",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_1_pure",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_1",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_2_pure",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_2"
+    ]
+  },
+  "entries": {
+    "manual_top_level": 27,
+    "manual_splits": 37,
+    "automatic_witnesses": 49,
+    "new_helpers": [
+      "cm_leaf_source_roundtrip",
+      "cm_leaf_const_source_equation",
+      "cm_leaf_string_source_equation",
+      "cm_leaf_getc_source_equation",
+      "cm_leaf_sizeof_source_equation",
+      "cm_rep_globals_size_matches",
+      "cm_rep_string_address_matches",
+      "cm_scalar_struct_leaf_size",
+      "cm_slots_struct_size_matches",
+      "cm_slots_struct_prefix_matches",
+      "cm_rep_struct_size_nth",
+      "cm_rep_type_size_matches",
+      "cm_rep_struct_member_prefix_nth",
+      "cm_rep_struct_member_prefix_matches"
+    ],
+    "new_model_declarations": [
+      "cm_const_immediate",
+      "cm_strings_prefix",
+      "cm_string_address",
+      "cm_member_offset_slots",
+      "cm_member_offset",
+      "cm_leaf_expr",
+      "cm_leaf_source_expr",
+      "cm_leaf_of_expr",
+      "cm_leaf_rvalue",
+      "cm_leaf_code_for"
+    ]
+  },
+  "proof_body_lines": 314,
+  "proof_wrapper_lines": 192,
+  "verification": {
+    "cstar": {
+      "command": [
+        "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/arr_sum/toolchain/cstar_v0.5.7_darwin-aarch64/bin/cstarc",
+        "verify",
+        "cmc_concrete_emit_expr_leaf.c",
+        "--port",
+        "55656"
+      ],
+      "exit_code": 0,
+      "report": {
+        "verification_conditions": [],
+        "axioms": [],
+        "strategies": []
+      },
+      "clean": true,
+      "verification_seconds": 42.691967,
+      "source_sha256": "ca5391cbcb4c72498246c8bf6e244c89fb75d5d3c400e0e6313f25a12f508643",
+      "log_directory": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_expr_leaf/logs/20261017T064306Z-cstar-source"
+    },
+    "qcp_final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T07:15:30.764661Z",
+      "cleanup_removed_count": 0
+    },
+    "phase": "done",
+    "trusted_auto": [
+      "proof_of_cmc_const_immediate_safety_wit_1",
+      "proof_of_cmc_const_immediate_safety_wit_2",
+      "proof_of_cm_emit_const_expr_safety_wit_1",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_2",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_const_expr_partial_solve_wit_3",
+      "proof_of_cm_emit_string_expr_safety_wit_1",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_2",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_3",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_4_pure",
+      "proof_of_cm_emit_string_expr_partial_solve_wit_4",
+      "proof_of_cm_emit_getc_expr_safety_wit_1",
+      "proof_of_cm_emit_getc_expr_safety_wit_2",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_getc_expr_partial_solve_wit_2",
+      "proof_of_cm_sizeof_value_safety_wit_1",
+      "proof_of_cm_sizeof_value_safety_wit_2",
+      "proof_of_cm_sizeof_value_partial_solve_wit_1_pure",
+      "proof_of_cm_sizeof_value_partial_solve_wit_1",
+      "proof_of_cm_sizeof_value_partial_solve_wit_2",
+      "proof_of_cm_sizeof_value_partial_solve_wit_3_pure",
+      "proof_of_cm_sizeof_value_partial_solve_wit_3",
+      "proof_of_cm_type_size_value_return_wit_1",
+      "proof_of_cm_type_size_value_partial_solve_wit_1_pure",
+      "proof_of_cm_type_size_value_partial_solve_wit_1",
+      "proof_of_cm_emit_sizeof_expr_safety_wit_1",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_1",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_2",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_sizeof_expr_partial_solve_wit_3",
+      "proof_of_cm_member_array_value_context_partial_solve_wit_1_pure",
+      "proof_of_cm_member_array_value_context_partial_solve_wit_1",
+      "proof_of_cm_member_offset_value_context_safety_wit_2",
+      "proof_of_cm_member_offset_value_context_safety_wit_3",
+      "proof_of_cm_member_offset_value_context_safety_wit_4",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_1_pure",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_1",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_2_pure",
+      "proof_of_cm_member_offset_value_context_partial_solve_wit_2"
+    ],
+    "remaining_manual": 0
+  },
+  "process": {
+    "timing": {
+      "run": {
+        "status": "completed",
+        "phase": "done",
+        "created_at": "2026-10-17T06:43:15.455117Z",
+        "finished_at": "2026-10-17T07:15:30.764661Z",
+        "elapsed_seconds": 1935.309544
+      },
+      "annotation_metrics": {
+        "attempt_count": 1,
+        "annotation_repair_count": 0,
+        "validation_only_attempt_count": 0,
+        "owner_generation_invocation_count": 5,
+        "tool_failure_invocation_count": 0,
+        "controller_tool_failure_invocation_count": 0,
+        "same_attempt_tool_retry_count": 0,
+        "same_attempt_controller_tool_retry_count": 0,
+        "controller_acceptance_run_count": 1,
+        "controller_acceptance_rerun_count": 0,
+        "owner_generation_seconds": 0.971,
+        "controller_main_refresh_seconds": 0,
+        "clean_replay_seconds": 0.532,
+        "wasted_timeout_seconds": 0,
+        "legacy_unclassified_symexec_seconds": 0
+      },
+      "annotation_attempts": [
+        {
+          "attempt": "annotation-attempt1",
+          "round": "cmc_emit_expr_leaf_migration-annotation-r1",
+          "activity": "spec-and-annotation",
+          "owner_generation_invocations": 5,
+          "tool_failure_invocations": 0,
+          "same_attempt_tool_retries": 0,
+          "controller_acceptance_runs": 1,
+          "controller_tool_failure_invocations": 0,
+          "same_attempt_controller_tool_retries": 0,
+          "status": "accepted",
+          "created_at": "2026-10-17T06:43:20.590997Z",
+          "finished_at": "2026-10-17T06:54:25.470756Z",
+          "elapsed_seconds": 664.879759,
+          "stages": [
+            {
+              "name": "annotation-work",
+              "started_at": "2026-10-17T06:43:27.758417Z",
+              "finished_at": "2026-10-17T06:53:17.558705Z",
+              "elapsed_seconds": 589.800288
+            },
+            {
+              "name": "formal-case-lib-design-coq-check",
+              "started_at": "2026-10-17T06:47:56.084554Z",
+              "calls": 6,
+              "finished_at": "2026-10-17T06:50:51.844544Z",
+              "elapsed_seconds": 3.40413
+            },
+            {
+              "name": "owner-generation",
+              "started_at": "2026-10-17T06:48:38.818042Z",
+              "calls": 5,
+              "finished_at": "2026-10-17T06:51:00.369296Z",
+              "elapsed_seconds": 0.971
+            },
+            {
+              "name": "clean-replay",
+              "started_at": "2026-10-17T06:53:50.870256Z",
+              "finished_at": "2026-10-17T06:53:51.402256Z",
+              "elapsed_seconds": 0.532
+            },
+            {
+              "name": "formal-case-lib-coq-check",
+              "started_at": "2026-10-17T06:51:14.110874Z",
+              "calls": 2,
+              "finished_at": "2026-10-17T06:53:50.865327Z",
+              "elapsed_seconds": 0.137476
+            },
+            {
+              "name": "controller-validation",
+              "started_at": "2026-10-17T06:53:17.536930Z",
+              "finished_at": "2026-10-17T06:53:17.601946Z",
+              "elapsed_seconds": 0.06157
+            },
+            {
+              "name": "controller-acceptance-check",
+              "started_at": "2026-10-17T06:53:34.190637Z",
+              "finished_at": "2026-10-17T06:53:51.418218Z",
+              "elapsed_seconds": 17.222162
+            },
+            {
+              "name": "dune-build",
+              "started_at": "2026-10-17T06:54:14.971599Z",
+              "finished_at": "2026-10-17T06:54:25.470756Z",
+              "elapsed_seconds": 10.493454
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "round": "cmc_emit_expr_leaf_migration-vc-checking-r1",
+          "phase": "vc-checking",
+          "status": "accepted",
+          "created_at": "2026-10-17T06:54:31.021862Z",
+          "finished_at": "2026-10-17T07:00:03.079704Z",
+          "elapsed_seconds": 332.057842,
+          "stages": [
+            {
+              "name": "witness-analysis",
+              "started_at": "2026-10-17T06:56:01.449935Z",
+              "finished_at": "2026-10-17T06:59:47.519486Z",
+              "elapsed_seconds": 226.069551
+            },
+            {
+              "name": "controller-validation",
+              "started_at": "2026-10-17T06:59:47.487580Z",
+              "finished_at": "2026-10-17T06:59:47.551324Z",
+              "elapsed_seconds": 0.057723
+            },
+            {
+              "name": "controller-plan-check",
+              "started_at": "2026-10-17T07:00:02.512662Z",
+              "finished_at": "2026-10-17T07:00:03.079704Z",
+              "elapsed_seconds": 0.560417
+            }
+          ]
+        },
+        {
+          "round": "cmc_emit_expr_leaf_migration-vc-proving-r1",
+          "phase": "vc-proving",
+          "status": "verified",
+          "created_at": "2026-10-17T07:00:06.873086Z",
+          "finished_at": "2026-10-17T07:15:04.536776Z",
+          "elapsed_seconds": 897.66369,
+          "stages": [
+            {
+              "name": "group-work",
+              "started_at": "2026-10-17T07:00:16.304895Z",
+              "finished_at": "2026-10-17T07:14:06.083115Z",
+              "elapsed_seconds": 829.77822
+            },
+            {
+              "name": "preparing",
+              "started_at": "2026-10-17T07:00:11.788846Z",
+              "finished_at": "2026-10-17T07:00:11.878342Z",
+              "elapsed_seconds": 0.081848
+            },
+            {
+              "name": "group-development-check",
+              "started_at": "2026-10-17T07:01:56.801237Z",
+              "calls": 41,
+              "finished_at": "2026-10-17T07:13:07.325628Z",
+              "elapsed_seconds": 205.741665
+            },
+            {
+              "name": "group-coq-check",
+              "started_at": "2026-10-17T07:03:30.342820Z",
+              "calls": 10,
+              "finished_at": "2026-10-17T07:13:30.476298Z",
+              "elapsed_seconds": 64.78257
+            },
+            {
+              "name": "group-validation",
+              "started_at": "2026-10-17T07:04:40.226312Z",
+              "calls": 8,
+              "finished_at": "2026-10-17T07:14:07.942285Z",
+              "elapsed_seconds": 15.305286
+            },
+            {
+              "name": "parent-verify",
+              "started_at": "2026-10-17T07:14:27.033456Z",
+              "finished_at": "2026-10-17T07:15:04.536776Z",
+              "elapsed_seconds": 37.494569
+            }
+          ]
+        }
+      ],
+      "finalization": {
+        "status": "passed",
+        "started_at": "2026-10-17T07:15:04.536776Z",
+        "applied_at": "2026-10-17T07:15:12.756237Z",
+        "finished_at": "2026-10-17T07:15:30.764661Z",
+        "elapsed_seconds": 26.227885
+      }
+    },
+    "notes": {
+      "status": "completed; controller done and final-check passed",
+      "historical_cstar_active_seconds": null,
+      "human_active_seconds": null,
+      "model_active_seconds": null,
+      "public_reuse": "Existing layout/counts/word/core/resolved/plan/AST libraries; six exact helper contracts",
+      "source_baseline_note": "Verified C body contracts. cm_emit_const_expr header omits type_code_wf, recorded separately; other six public header contracts match.",
+      "annotation_development": {
+        "attempts": 1,
+        "formal_case_lib_design_checks": 6,
+        "design_failures": 1,
+        "symexec_runs": 5,
+        "symexec_failures": 4,
+        "post_symexec_library_checks": 1,
+        "post_symexec_library_failures": 0,
+        "main_annotation_check_rounds": 1,
+        "main_annotation_status": "accepted",
+        "repairs": [
+          "Fix sid+2 versus2+sid rewrite",
+          "Explicit leaf singleton call boundary",
+          "Use equivalent lvalue inequalities to prevent premature syntactic substitution during matching",
+          "String call boundary matches representation address; semantic equality remains proof obligation",
+          "Remove where binding to out-of-scope existential"
+        ],
+        "non_controller_failures": [
+          "Python launch omitted controller.py",
+          "Notes-writing script syntax error; no writes"
+        ]
+      },
+      "proof_development": {
+        "groups": {
+          "member_results": {
+            "development_runs": 2,
+            "development_failures": 2,
+            "debug_runs": 2,
+            "debug_failures": 0,
+            "exact_runs": 2,
+            "exact_failures": 1,
+            "new_helpers": 0,
+            "repairs": [
+              "Repeat cancellation",
+              "Z.rem_small under derived bounds",
+              "Aggressive spatial/pure branch order"
+            ]
+          },
+          "sizeof_value": {
+            "development_runs": 3,
+            "development_failures": 2,
+            "debug_runs": 3,
+            "debug_failures": 2,
+            "exact_runs": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "repairs": [
+              "Repeat cancellation",
+              "Explicit Intros names avoiding temporary collision",
+              "Aggressive spatial/pure branch order"
+            ]
+          },
+          "leaf_string": {
+            "development_runs": 7,
+            "development_failures": 7,
+            "debug_runs": 6,
+            "debug_failures": 0,
+            "exact_runs": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "repair_details": "See sealed group_worker_output.md; local tactic repair only"
+          },
+          "constant_value": {
+            "development_runs": 3,
+            "development_failures": 2,
+            "debug_runs": 0,
+            "debug_failures": 0,
+            "exact_runs": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "repairs": [
+              "Replace unavailable mod lemma names with Z.mod_eq, Zminus_mod and Zmult_mod"
+            ]
+          },
+          "member_context": {
+            "development_runs": 5,
+            "development_failures": 4,
+            "debug_runs": 4,
+            "debug_failures": 0,
+            "exact_runs": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "repairs": [
+              "Use Z.rem_small and Z.rem_bound_pos for C remainder",
+              "Other local tactic repairs recorded in group_worker_output.md"
+            ]
+          },
+          "leaf_const": {
+            "development_runs": 8,
+            "development_failures": 8,
+            "debug_runs": 3,
+            "debug_failures": 0,
+            "exact_runs": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "repairs": [
+              "Intros auto extraction and payload conjunction",
+              "Spatial/pure branch order",
+              "Explicit leaf unfolding and emitter cancellation",
+              "Z.eqb scope",
+              "Remove redundant tactic after closed pure goal"
+            ]
+          },
+          "leaf_sizeof": {
+            "development_runs": 11,
+            "development_failures": 10,
+            "debug_runs": 0,
+            "debug_failures": 0,
+            "exact_runs": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "development_diagnostic_show_runs": 3,
+            "repairs": [
+              "Intros auto extraction and payload conjunction",
+              "Spatial/pure branch order",
+              "Explicit leaf unfolding and sepcon association",
+              "Z.eqb scope",
+              "Remove redundant tactic after closed pure goal"
+            ]
+          },
+          "leaf_getc": {
+            "development_runs": 2,
+            "development_failures": 2,
+            "debug_runs": 2,
+            "debug_failures": 0,
+            "exact_runs": 2,
+            "exact_failures": 1,
+            "new_helpers": 0,
+            "repairs": [
+              "Use leaf source equation explicitly",
+              "Remove redundant tactic after closed pure goal",
+              "Spatial/pure branch order"
+            ]
+          }
+        },
+        "owner_command_totals": {
+          "development_runs": 41,
+          "development_failures": 37,
+          "debug_runs": 20,
+          "debug_failures": 2,
+          "exact_runs": 10,
+          "exact_failures": 2,
+          "new_helpers": 0
+        },
+        "counts_note": "Owner-reported command attempts, distinct from controller acceptance checks. Includes 3 Show diagnostic development failures; details in sealed group outputs.",
+        "controller_group_repair_count": 0,
+        "controller_group_validation_count": 8,
+        "accepted_group_attempts": {
+          "constant_value": 1,
+          "leaf_const": 1,
+          "leaf_string": 1,
+          "leaf_getc": 1,
+          "sizeof_value": 1,
+          "leaf_sizeof": 1,
+          "member_context": 1,
+          "member_results": 1
+        }
+      },
+      "vc_checking": {
+        "attempts": 1,
+        "top_level_scanned": 27,
+        "no_split_checked_first": 4,
+        "splits_reviewed": 37,
+        "definite_blockers": 0,
+        "owner_debug_checks": 0,
+        "owner_coq_checks": 0,
+        "owner_failures": 0,
+        "groups": 8,
+        "aggressive_top_level": 23,
+        "llm_top_level": 4
+      },
+      "proof_progress_snapshot": {
+        "accepted_groups": 8,
+        "planned_groups": 8,
+        "status": "complete"
+      },
+      "main_bookkeeping_failures": [
+        "Read guessed final-check workflow filename failed; actual referenced workflow read before action. No verification command failure."
+      ],
+      "final_verification": {
+        "phase": "done",
+        "final_check": {
+          "status": "passed",
+          "checked_at": "2026-10-17T07:15:30.764661Z",
+          "cleanup_removed_count": 0
+        },
+        "controller_updated_at": "2026-10-17T07:15:30.771923Z"
+      }
+    },
+    "historical_cstar_active_seconds": null,
+    "human_active_seconds": null,
+    "model_active_seconds": null
+  },
+  "artifacts": [
+    {
+      "role": "c_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_emit_expr_leaf_migration.c",
+      "snapshot": "target/cmc_emit_expr_leaf_migration.c",
+      "sha256": "08b5e15a02c81f1968112128ad8e2522c33f21cde726c47164350ea6621d1ad6"
+    },
+    {
+      "role": "formal_case_lib",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_lib.v",
+      "snapshot": "target/cmc_emit_expr_leaf_migration_lib.v",
+      "sha256": "3bef8a22c660256602e800fe36d11062a005c26b5ce951718f96c2c4f643f396"
+    },
+    {
+      "role": "goal_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal.v",
+      "snapshot": "target/cmc_emit_expr_leaf_migration_goal.v",
+      "sha256": "4ef865953a4a28e14ffa782ec9674869e4159f0870629e7829b26219cd993a8f"
+    },
+    {
+      "role": "proof_auto_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_auto.v",
+      "snapshot": "target/cmc_emit_expr_leaf_migration_proof_auto.v",
+      "sha256": "29cfbca8d4d1f63f10a6b5a81a6a8c5305a65cc0a6029ea8fad56c1ab1c53567"
+    },
+    {
+      "role": "proof_manual_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "snapshot": "target/cmc_emit_expr_leaf_migration_proof_manual.v",
+      "sha256": "4346c80856973d484ea614b5fccdd24eabae6c7828abfe1c0350a3306bb72ffd"
+    },
+    {
+      "role": "goal_check_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_expr_leaf_migration_goal_check.v",
+      "snapshot": "target/cmc_emit_expr_leaf_migration_goal_check.v",
+      "sha256": "a27b037309997718954151325b4bc12e468c397623dbf337c3a325818cc18efe"
+    },
+    {
+      "role": "runtime_abi_header",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_layout_migration_abi.h",
+      "sha256": "44da3388c0964c59aaf92cd1bd4505ac3a1eadcad5aad7b90a6119581625fb6a"
+    }
+  ],
+  "counting_note": "Nonblank exact regions, statement/Proof/Qed wrappers included, generated VC texts and unused aborted split drafts excluded; new shared definitions/proofs separate. The nine runtime bodies and reviewed contracts/models retain their audited identities; case proof equals the per-function sum. Library declarations and all final proved helpers reviewed in final merged form.",
+  "verified_reused_dependencies": [
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_layout_migration_lib.v",
+      "sha256": "dd0537765f50a8d5ea9227206c095d3e0e34b8792b3e2e48f4143049c31ae109",
+      "verified_case": "cmc_layout",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_counts_migration_lib.v",
+      "sha256": "d703265a1d86d57fd1ec04e1a9a13d42693e85b986348e02e19c0417f128ec2f",
+      "verified_case": "cmc_counts",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_copy_bytes_migration_lib.v",
+      "sha256": "49f1103d5501eff2e60a94b04518ff4e7858f795e4953de90bb5cc05529c7924",
+      "verified_case": "cmc_copy_bytes",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_function_pc_total_migration_lib.v",
+      "sha256": "6960f17de8bbdee02c9d28f789cd5aff3d376de97817b2b20d34c0bea198f656",
+      "verified_case": "cmc_function_pc_total",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_layout_migration_abi.h",
+      "sha256": "44da3388c0964c59aaf92cd1bd4505ac3a1eadcad5aad7b90a6119581625fb6a",
+      "verified_case": "cmc_layout",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_globals_migration_lib.v",
+      "sha256": "f102e109bde27bafa875fedfca03f5453201c1408852802843838c4aa6b49d78",
+      "verified_case": "cmc_emit_globals",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_write_word_migration_lib.v",
+      "sha256": "86fa9e40c7960d2469a767fd58da08c301d0f4f138f4dff06d60b827345d6660",
+      "verified_case": "cmc_write_word",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_core_migration_lib.v",
+      "sha256": "367c7727d55fc73470ca881062ef5ff80c067c337310a96e8c6c4f0fde8453bb",
+      "verified_case": "cmc_emit_core",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_emit_resolved_migration.c",
+      "sha256": "bac45e4c2459a8d7803ca212a59c9b244afb893219a6a1a22e8e82c9697a3394"
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_resolved_migration_lib.v",
+      "sha256": "06bf635cf1d0d7cbb9ceaa8cb3c6aa49ab7034e432d3e8bd628761e7372d66bf"
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_lib.v",
+      "sha256": "d1ce410f2381e1aa565b400718ecd9d411110e307b74fc0fc1f132d6dbba8acd",
+      "verified_case": "cmc_emit_plan",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_lib.v",
+      "sha256": "7e7371def2ddb93da848a8199c93b2858c13bd170d873b8a2faa8a9ae6f7e21e",
+      "verified_case": "cmc_emit_ast",
+      "incremental_lines": 0
+    }
+  ],
+  "helper_contract_audit": [
+    {
+      "function": "cmc_string_address",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cmc_type_size_at",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cmc_member_offset_at",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cmc_pointee",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cmc_member_array",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_plan",
+      "normalized_contract_identical": true
+    }
+  ],
+  "shared_helper_usage": [
+    {
+      "name": "cm_leaf_source_roundtrip",
+      "direct_manual_references": 0,
+      "other_library_references": 0,
+      "lines": 2
+    },
+    {
+      "name": "cm_leaf_const_source_equation",
+      "direct_manual_references": 0,
+      "other_library_references": 0,
+      "lines": 4
+    },
+    {
+      "name": "cm_leaf_string_source_equation",
+      "direct_manual_references": 0,
+      "other_library_references": 0,
+      "lines": 4
+    },
+    {
+      "name": "cm_leaf_getc_source_equation",
+      "direct_manual_references": 3,
+      "other_library_references": 0,
+      "lines": 4
+    },
+    {
+      "name": "cm_leaf_sizeof_source_equation",
+      "direct_manual_references": 0,
+      "other_library_references": 0,
+      "lines": 4
+    },
+    {
+      "name": "cm_rep_globals_size_matches",
+      "direct_manual_references": 0,
+      "other_library_references": 1,
+      "lines": 14
+    },
+    {
+      "name": "cm_rep_string_address_matches",
+      "direct_manual_references": 2,
+      "other_library_references": 0,
+      "lines": 4
+    },
+    {
+      "name": "cm_scalar_struct_leaf_size",
+      "direct_manual_references": 0,
+      "other_library_references": 2,
+      "lines": 2
+    },
+    {
+      "name": "cm_slots_struct_size_matches",
+      "direct_manual_references": 0,
+      "other_library_references": 1,
+      "lines": 15
+    },
+    {
+      "name": "cm_slots_struct_prefix_matches",
+      "direct_manual_references": 0,
+      "other_library_references": 1,
+      "lines": 15
+    },
+    {
+      "name": "cm_rep_struct_size_nth",
+      "direct_manual_references": 0,
+      "other_library_references": 1,
+      "lines": 11
+    },
+    {
+      "name": "cm_rep_type_size_matches",
+      "direct_manual_references": 1,
+      "other_library_references": 0,
+      "lines": 24
+    },
+    {
+      "name": "cm_rep_struct_member_prefix_nth",
+      "direct_manual_references": 0,
+      "other_library_references": 1,
+      "lines": 11
+    },
+    {
+      "name": "cm_rep_struct_member_prefix_matches",
+      "direct_manual_references": 1,
+      "other_library_references": 0,
+      "lines": 11
+    }
+  ],
+  "common_cost_by_stage": {
+    "annotation_definitions": 34,
+    "annotation_helpers": 125,
+    "final_helpers_added_during_proving": []
+  },
+  "source_text_size": [
+    {
+      "function": "cmc_const_immediate",
+      "category": "specification",
+      "characters": 347,
+      "lexical_tokens": 88,
+      "nonblank_lines": 9
+    },
+    {
+      "function": "cmc_const_immediate",
+      "category": "annotation",
+      "characters": 0,
+      "lexical_tokens": 0,
+      "nonblank_lines": 0
+    },
+    {
+      "function": "cmc_const_immediate",
+      "category": "inline_proof",
+      "characters": 1868,
+      "lexical_tokens": 352,
+      "nonblank_lines": 45
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "category": "specification",
+      "characters": 1191,
+      "lexical_tokens": 291,
+      "nonblank_lines": 24
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "category": "annotation",
+      "characters": 130,
+      "lexical_tokens": 59,
+      "nonblank_lines": 3
+    },
+    {
+      "function": "cm_emit_const_expr",
+      "category": "inline_proof",
+      "characters": 1954,
+      "lexical_tokens": 454,
+      "nonblank_lines": 52
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "category": "specification",
+      "characters": 1839,
+      "lexical_tokens": 421,
+      "nonblank_lines": 34
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "category": "annotation",
+      "characters": 263,
+      "lexical_tokens": 82,
+      "nonblank_lines": 6
+    },
+    {
+      "function": "cm_emit_string_expr",
+      "category": "inline_proof",
+      "characters": 2562,
+      "lexical_tokens": 559,
+      "nonblank_lines": 68
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "category": "specification",
+      "characters": 1088,
+      "lexical_tokens": 261,
+      "nonblank_lines": 22
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "category": "annotation",
+      "characters": 83,
+      "lexical_tokens": 38,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_emit_getc_expr",
+      "category": "inline_proof",
+      "characters": 957,
+      "lexical_tokens": 224,
+      "nonblank_lines": 25
+    },
+    {
+      "function": "cm_sizeof_value",
+      "category": "specification",
+      "characters": 871,
+      "lexical_tokens": 199,
+      "nonblank_lines": 18
+    },
+    {
+      "function": "cm_sizeof_value",
+      "category": "annotation",
+      "characters": 84,
+      "lexical_tokens": 22,
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cm_sizeof_value",
+      "category": "inline_proof",
+      "characters": 2228,
+      "lexical_tokens": 460,
+      "nonblank_lines": 55
+    },
+    {
+      "function": "cm_type_size_value",
+      "category": "specification",
+      "characters": 871,
+      "lexical_tokens": 199,
+      "nonblank_lines": 18
+    },
+    {
+      "function": "cm_type_size_value",
+      "category": "annotation",
+      "characters": 141,
+      "lexical_tokens": 63,
+      "nonblank_lines": 3
+    },
+    {
+      "function": "cm_type_size_value",
+      "category": "inline_proof",
+      "characters": 0,
+      "lexical_tokens": 0,
+      "nonblank_lines": 0
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "category": "specification",
+      "characters": 1573,
+      "lexical_tokens": 371,
+      "nonblank_lines": 30
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "category": "annotation",
+      "characters": 231,
+      "lexical_tokens": 101,
+      "nonblank_lines": 5
+    },
+    {
+      "function": "cm_emit_sizeof_expr",
+      "category": "inline_proof",
+      "characters": 1991,
+      "lexical_tokens": 415,
+      "nonblank_lines": 54
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "category": "specification",
+      "characters": 925,
+      "lexical_tokens": 215,
+      "nonblank_lines": 19
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "category": "annotation",
+      "characters": 147,
+      "lexical_tokens": 64,
+      "nonblank_lines": 3
+    },
+    {
+      "function": "cm_member_array_value_context",
+      "category": "inline_proof",
+      "characters": 150,
+      "lexical_tokens": 32,
+      "nonblank_lines": 7
+    },
+    {
+      "function": "cm_member_offset_value_context",
+      "category": "specification",
+      "characters": 990,
+      "lexical_tokens": 224,
+      "nonblank_lines": 21
+    },
+    {
+      "function": "cm_member_offset_value_context",
+      "category": "annotation",
+      "characters": 64,
+      "lexical_tokens": 22,
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_member_offset_value_context",
+      "category": "inline_proof",
+      "characters": 3261,
+      "lexical_tokens": 679,
+      "nonblank_lines": 80
+    }
+  ],
+  "source_additional_dependency_definitions": {
+    "scope": "New source size/address/member bridge closure after subtracting previous size/prefix/encoding closure; expression-model support plus four leaf equations only",
+    "declarations": [
+      {
+        "name": "cm_member_offset_slots_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          302,
+          310
+        ],
+        "nonblank_lines": 9,
+        "sha256": "202263a81eb75f6531055fd0dbc5a6b322ad19b9107d94d9b5cb1c0cfbb193d2",
+        "category": "definition"
+      },
+      {
+        "name": "cm_member_offset_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          314,
+          319
+        ],
+        "nonblank_lines": 6,
+        "sha256": "7da6cd812b403c129ad7eb6fdc2b8e291c2fafe835438a67a3eab122ffd9fed0",
+        "category": "definition"
+      },
+      {
+        "name": "cm_strings_prefix_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          2234,
+          2242
+        ],
+        "nonblank_lines": 9,
+        "sha256": "89e71abfe3e3f192304c625d737889dcf7e73deb8c7054e6130103888c2220ed",
+        "category": "definition"
+      },
+      {
+        "name": "cm_string_address_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          2250,
+          2254
+        ],
+        "nonblank_lines": 5,
+        "sha256": "a22c182000f478d2c598ab8963b933dbc94eb0fdc088638c3790be166265c3cb",
+        "category": "definition"
+      },
+      {
+        "name": "cm_const_immediate_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          587,
+          589
+        ],
+        "nonblank_lines": 3,
+        "sha256": "9a160b73be7079245222106bdb6c59a1ffe94c448844d5ef27667310be1ce352",
+        "category": "definition"
+      },
+      {
+        "name": "cm_emit_pair_ty",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          567,
+          568
+        ],
+        "nonblank_lines": 2,
+        "sha256": "387bc6dbc68ca6940ebbfb78eb75bc6cd87a3746b2e19c8967e14d1494513840",
+        "category": "definition"
+      },
+      {
+        "name": "cm_lcode_of_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          573,
+          577
+        ],
+        "nonblank_lines": 5,
+        "sha256": "61d031d437be2483a2996c5a270c75fb25b27f8c3cdb2a9dbde34de5fb53db71",
+        "category": "definition"
+      },
+      {
+        "name": "cm_rcode_of_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          578,
+          582
+        ],
+        "nonblank_lines": 5,
+        "sha256": "381d6913b83f3dae248ca3365eb3a8dd9e4484ac5114318a94a401e3cb07e50d",
+        "category": "definition"
+      },
+      {
+        "name": "cm_emit_lvalue_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          878,
+          881
+        ],
+        "nonblank_lines": 4,
+        "sha256": "5f2546f7e63dd1ee3b154f05821bfa1b7b4928405455f41a294effd265c4f75c",
+        "category": "definition"
+      },
+      {
+        "name": "cm_emit_rvalue_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          882,
+          885
+        ],
+        "nonblank_lines": 4,
+        "sha256": "723ed4c1a62db2afab0d21f092ba4d04ea88604bdd1229db1101c3a1fe266cbd",
+        "category": "definition"
+      },
+      {
+        "name": "cm_expr_code_for_def",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          581,
+          586
+        ],
+        "nonblank_lines": 6,
+        "sha256": "862330dd724783298ec35e8534927ab1b543ca6ee53c9aefe1d5430c30f85ca0",
+        "category": "definition"
+      },
+      {
+        "name": "cm_prove_rep_globals_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2023,
+          2067
+        ],
+        "nonblank_lines": 45,
+        "sha256": "7122cb66a545f03d9a1459b2f3ca64354c8582d20fcbec561740bf49a762b6e7",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_string_address_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2102,
+          2123
+        ],
+        "nonblank_lines": 22,
+        "sha256": "aacf6fe94f6b7665b1db079611ceb3241c571074e4a0b75451aec0e826e74adc",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_strings_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2071,
+          2099
+        ],
+        "nonblank_lines": 29,
+        "sha256": "e5acaf9061bd4f298381d6348f4e37abfae3d493dee48a5c2643dc337d5943c9",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_member_prefix_at",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1753,
+          1817
+        ],
+        "nonblank_lines": 65,
+        "sha256": "242f5b0503819b023cb68bff7ab68e8904275d9bf3111eb07c4732e96f7c7686",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_member_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1821,
+          1856
+        ],
+        "nonblank_lines": 36,
+        "sha256": "25ca9adf5049d22782799d1363540a114c3dd59e5e210c5c1376f72fa86968bc",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_member_prefix_slots_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1708,
+          1749
+        ],
+        "nonblank_lines": 42,
+        "sha256": "b4108651e2c2fd583232f447a80614f1f93eb69ecda2c12dbc799a9f3bf1fd2f",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_member_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1261,
+          1281
+        ],
+        "nonblank_lines": 21,
+        "sha256": "b7401ec76513cfaa585119c507994b00c2fad86e923b06279a3624ca2849cee2",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_members_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1399,
+          1436
+        ],
+        "nonblank_lines": 38,
+        "sha256": "e1e665a15a4923e4c2b3fdd988a6ea6080969a3267932fb9a1b9febf81f30e06",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_size_at",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1439,
+          1501
+        ],
+        "nonblank_lines": 63,
+        "sha256": "d8d9bd01015a3d795f86e9b63c4881e365c1e4b9223538e7058f2a2f611f3801",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_struct_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1505,
+          1538
+        ],
+        "nonblank_lines": 34,
+        "sha256": "50fafbd390c2c810cfb5676a365e67492ee89f418c837d1ec3725601ec6d438f",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_type_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1541,
+          1640
+        ],
+        "nonblank_lines": 100,
+        "sha256": "bc7edd32af94beb155c56f8225b95160b759d4f3a7d6139ec315001a7f75e215",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_type_encode_nonnegative",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1643,
+          1661
+        ],
+        "nonblank_lines": 19,
+        "sha256": "af0733b280de36e7cd94f7cd14b354ce742a396fe77014f57de3bf24aa07210e",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_globals_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2068,
+          2069
+        ],
+        "nonblank_lines": 2,
+        "sha256": "daa80a65245fd28fbed7f1311b0b66c10eaae98cde88337e09b51c022c895b7e",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_string_address_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2124,
+          2125
+        ],
+        "nonblank_lines": 2,
+        "sha256": "bc76695d7f74aa274be3eac55c450538b396ad6e024fbb2b5ad9d30886546745",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_strings_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2100,
+          2101
+        ],
+        "nonblank_lines": 2,
+        "sha256": "916dbd9c3b1560b88ba39244f59687776da3fa0bab08041d5f9fe7147b533d63",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_member_prefix_at",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1818,
+          1819
+        ],
+        "nonblank_lines": 2,
+        "sha256": "af9f7b037a7efe3b489ddac85d28a115e1db3bdedb2eb45518b94e183ec673ae",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_member_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1857,
+          1858
+        ],
+        "nonblank_lines": 2,
+        "sha256": "d654ef90a93bedd9d2cd5a8570abd7d1f312f42599aa3c593833a7125430f6b7",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_member_prefix_slots_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1750,
+          1751
+        ],
+        "nonblank_lines": 2,
+        "sha256": "925a027f087d7d3dd809d7205f365f74b6617c28321873e83a00f22b2c4d210b",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_member_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1282,
+          1283
+        ],
+        "nonblank_lines": 2,
+        "sha256": "92971a082cc9330ae0c2e14284d473b63de32483ef42cfbe4c558c4d3912c762",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_members_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1437,
+          1438
+        ],
+        "nonblank_lines": 2,
+        "sha256": "c1ab2691d3c7ad5195abac84f2a2a540d24d050ccce4d9b181b071627bbb9e7d",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_size_at",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1502,
+          1503
+        ],
+        "nonblank_lines": 2,
+        "sha256": "09b6b13e3da86972d19303182021547c5e1c1cd6902fc8c7f92debf2641da382",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_struct_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1539,
+          1540
+        ],
+        "nonblank_lines": 2,
+        "sha256": "e6afe840827e89a595c03b815d0d146d6c78c6b3411a4001051aa44f6ae1f11f",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_type_size_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1641,
+          1642
+        ],
+        "nonblank_lines": 2,
+        "sha256": "4742fcbc2d572702af342d6254cea83ba5fdf551d03325a48ab8a46969e1a9c9",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_type_encode_nonnegative",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1662,
+          1663
+        ],
+        "nonblank_lines": 2,
+        "sha256": "d509bd1651bc9599b7e4912068a5b757760bb9b93709a7fe3943cbdc37cd8398",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_emit_expr_pair.Const",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          712,
+          716
+        ],
+        "category": "definition_equation_slice",
+        "nonblank_lines": 5,
+        "sha256": "54b5e8ffc5a05089a951cef1e0bfd1333e351b253a2704cbb280dde4fb873b8b"
+      },
+      {
+        "name": "cm_emit_expr_pair.String",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          717,
+          720
+        ],
+        "category": "definition_equation_slice",
+        "nonblank_lines": 4,
+        "sha256": "46ffe3de2328f2c8fd053dff123fe952cedc910c5d42889440594ab011a9d44e"
+      },
+      {
+        "name": "cm_emit_expr_pair.Sizeof",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          832,
+          836
+        ],
+        "category": "definition_equation_slice",
+        "nonblank_lines": 5,
+        "sha256": "fa0285c4921826bed110906e20120cae93e2b73165113a1f8d74616abe178dde"
+      },
+      {
+        "name": "cm_emit_expr_pair.Getc",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          837,
+          840
+        ],
+        "category": "definition_equation_slice",
+        "nonblank_lines": 4,
+        "sha256": "80249c362e86bf95ec4f192b12ee4204bebdbe8924766391f2f9c10aa99464a8"
+      }
+    ],
+    "definition_count": 11,
+    "leaf_equation_slices": 4,
+    "definition_lines": 76,
+    "public_lemma_count": 12,
+    "public_proof_lines": 538,
+    "historical_development_seconds": null,
+    "reused_public_roots": [
+      "cm_rep_members_size_matches",
+      "cm_rep_global_size_matches",
+      "cm_rep_member_prefix_matches",
+      "cm_rep_globals_prefix_matches",
+      "cm_char_encode",
+      "cm_pointer_encode_threshold"
+    ],
+    "new_public_roots": [
+      "cm_rep_type_size_matches",
+      "cm_rep_struct_member_prefix_matches",
+      "cm_rep_string_address_matches",
+      "cm_type_encode_nonnegative"
+    ],
+    "reused_proof_closure": [
+      "cm_char_encode",
+      "cm_encoded_leaf_size",
+      "cm_globals_wf_head",
+      "cm_globals_wf_tail",
+      "cm_nonstruct_type_size",
+      "cm_pointer_depth",
+      "cm_pointer_encode_threshold",
+      "cm_prove_char_encode",
+      "cm_prove_encoded_leaf_size",
+      "cm_prove_globals_wf_head",
+      "cm_prove_globals_wf_tail",
+      "cm_prove_nonstruct_type_size",
+      "cm_prove_pointer_depth",
+      "cm_prove_pointer_encode_threshold",
+      "cm_prove_rep_global_size_matches",
+      "cm_prove_rep_globals_prefix_matches",
+      "cm_prove_rep_member_prefix_matches",
+      "cm_prove_rep_member_size_matches",
+      "cm_prove_rep_members_size_matches",
+      "cm_prove_slots_wf_head",
+      "cm_prove_slots_wf_tail",
+      "cm_rep_global_size_matches",
+      "cm_rep_globals_prefix_matches",
+      "cm_rep_member_prefix_matches",
+      "cm_rep_member_size_matches",
+      "cm_rep_members_size_matches",
+      "cm_slots_wf_head",
+      "cm_slots_wf_tail"
+    ],
+    "note": "Selected source proof graph excludes definition getters/export scaffolding and previously migrated source closure. Leaf model counts exact four selected emitter equations plus selectors; full recursive emitter is not counted as migrated."
+  },
+  "unused_split_drafts_aborted": [],
+  "dependency_snapshot_metrics": {
+    "batch_count": 9,
+    "coqdep_process_count": 9,
+    "elapsed_seconds": 10.258089,
+    "node_count": 158,
+    "source_count": 158,
+    "status": "resolved",
+    "strategy": "breadth-batched-coqdep"
+  },
+  "prior_dependency_function_proofs_imported": false
+}

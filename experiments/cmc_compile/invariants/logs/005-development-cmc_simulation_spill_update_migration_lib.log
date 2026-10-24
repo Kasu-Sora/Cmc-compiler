@@ -1,0 +1,133 @@
+4 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, fid0 : Z
+  args : list cm_expr
+  ty : cm_type
+  st : cm_src_state
+  ann : cm_annotation
+  H :
+    (fix cm_cursors_spill_consistent
+       (ap : cm_annotation_policy) (limit : Z) (cursors : list cm_acursor)
+       (spills : list cm_spill) (saved : list cm_spill_frame) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CABinRP op _ _ v _ =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit /\
+               ((op = 0 \/ op = 1) \/
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end < limit /\
+                cm_spill_holds
+                  match cursor with
+                  | CMACursor _ temp _ _ => temp
+                  end v spills)
+           | CAAssignRP v _ | CAIndexRP v _ =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end < limit /\
+               cm_spill_holds
+                 match cursor with
+                 | CMACursor _ temp _ _ => temp
+                 end v spills
+           | CAArgP _ rest0 values _ all_args base current scratch =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit /\
+               base = match cursor with
+                      | CMACursor _ temp _ _ => temp
+                      end /\
+               current = base + Zlength values /\
+               scratch = base + Zlength all_args /\
+               Zlength all_args = Zlength values + 1 + Zlength rest0 /\
+               current <= limit /\ cm_staged_spills base values spills
+           | CACallP _ _ _ _ _ => True
+           | _ =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit
+           end /\
+           (if
+             match
+               match cursor with
+               | CMACursor phase _ _ _ => phase
+               end
+             with
+             | CACallP _ _ _ _ _ => true
+             | _ => false
+             end
+            then
+             saved <> [] /\
+             cm_cursors_spill_consistent ap
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end rest
+               match
+                 match saved with
+                 | [] => cm_saved_nil ap
+                 | x :: _ => x
+                 end
+               with
+               | CMSpillFrame _ _ spills0 => spills0
+               end match saved with
+                   | [] => []
+                   | _ :: m => m
+                   end
+            else
+             cm_cursors_spill_consistent ap
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end rest spills saved)
+       end) ap match ann with
+               | CMAnnotation _ temp _ _ _ _ _ _ => temp
+               end match ann with
+                   | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                   end
+      match ann with
+      | CMAnnotation _ _ _ _ _ ss _ _ => ss
+      end match ann with
+          | CMAnnotation _ _ _ _ _ _ ss _ => ss
+          end
+  Heqb : match args with
+         | [] => true
+         | _ :: _ => false
+         end = false
+  ============================
+  match ann with
+  | CMAnnotation _ temp _ _ _ _ _ _ => temp
+  end <=
+  match ann with
+  | CMAnnotation _ temp _ _ _ _ _ _ => temp
+  end + Zlength args
+
+goal 2 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end =
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength []
+goal 3 is:
+ Zlength args =
+ Zlength [] + 1 + Zlength match args with
+                          | [] => []
+                          | _ :: m => m
+                          end
+goal 4 is:
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end <=
+ match ann with
+ | CMAnnotation _ temp _ _ _ _ _ _ => temp
+ end + Zlength args
+Error:
+There are pending proofs in file /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/invariants/build/Rocq/examples/QCP_demos_human/cmc_simulation_spill_update_migration_lib.v: cm_update_r_spill_consistent.

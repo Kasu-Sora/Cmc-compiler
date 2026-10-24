@@ -1,0 +1,10 @@
+{
+  "status": "blocked",
+  "blocker": {
+    "failure_class": "dependency-gap",
+    "kind": "missing-verified-semantic-dependency",
+    "vcs": [],
+    "message": "Before VC generation, the exact cm_output_ok success contract requires actual cm_source_terminates (source cmc_lang.c:4296), tvm_terminates (tvm_model.c:1295), cm_output_decodes (cmc_rep.c:1966), and cmc_compile_success_bridge (cmc.c:95) backed by cmc_preservation (cmc_correct.c:145). All are absent from Rocq/**/*.v. The existing counts/readiness/emitter libraries establish code/data models and safety, not the source-to-TVM termination simulation. No verified semantic dependency is available to express and discharge the unchanged success clause; no VCs exist yet. Exact source locations, dependency closure, and recovery order are recorded in agent_output.md.",
+    "repair_boundary": "Supply and verify shared source/TVM operational semantics, concrete codegen obligations/object decoding, and compiler preservation support before resuming this same annotation owner. Current annotation writable topology is only the target C and one canonical case-lib; this role cannot write shared/second libraries or proof bodies. Do not weaken Ensure, strengthen Require with preservation, introduce arbitrary semantic Parameters/Axioms/Admitted, or treat unverified prerequisites as proved."
+  }
+}

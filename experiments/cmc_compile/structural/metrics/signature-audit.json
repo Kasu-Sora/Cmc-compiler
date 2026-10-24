@@ -1,0 +1,15 @@
+{
+  "audited_constants": 101,
+  "closed_constants": 101,
+  "new_axioms": [],
+  "original_preservation_declared": false,
+  "original_success_bridge_declared": false,
+  "top_level_contract_modified": false,
+  "local_variants": {
+    "cm_task_static_step_coordinate": "Uses typed program, source success and coordinates rather than assuming layout readiness. Concrete wf-to-static, initial/step/iter proofs discharge these inputs.",
+    "cm_task_budget_step_coordinate": "Uses proved erasure/coordinates/success. No additional capacity bound; original phase/task budget formulas retained.",
+    "cm_task_generation_step_coordinate": "Uses static validity, generation and successful-source coordinates. Annotation payload is proved independently with spill consistency and monotone generation limits.",
+    "cm_task_static_bases_step_generation": "Uses proved generation bounds plus a local saved-region base refinement. That refinement is initialized and preserved by actual source transitions.",
+    "cm_source_termination_base_invariants": "Eleven original components with proved local active-fid, payload and saved-region refinements hold after every n source-annotated steps. No target simulation, TVM termination or cmc_preservation conclusion."
+  }
+}

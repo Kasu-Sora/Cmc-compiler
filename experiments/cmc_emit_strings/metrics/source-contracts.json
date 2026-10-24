@@ -1,0 +1,6 @@
+[
+  {
+    "function": "cmc_emit_strings",
+    "contract": "    [[cst::param(`strings:(cm_string_d)list`, `prefix:(int)list`)]]\n    [[cst::require(\n      `fact(cm_rep_strings_safe strings <=> true) **\n       fact(0i <= cursor) **\n       fact(cursor + cm_rep_strings_size strings <= capacity) **\n       fact(capacity <= 2147483647i) **\n       cm_string_list_rep node strings **\n       store_uint8_array data cursor prefix **\n       store_undef_uint8_array\n         (data + cursor * sizeof Tuchar) (capacity - cursor)`)]]\n    [[cst::ensure(\n      `fact(cm_rep_strings_safe strings <=> true) **\n       cm_string_list_rep node strings **\n       store_uint8_array data\n         (cursor + cm_rep_strings_size strings)\n         (prefix ++ cm_strings_bytes strings) **\n       store_undef_uint8_array\n         (data + (cursor + cm_rep_strings_size strings) * sizeof Tuchar)\n         (capacity - (cursor + cm_rep_strings_size strings)) **\n       fact((__return:int) ==\n         cursor + cm_rep_strings_size strings)`)]]"
+  }
+]

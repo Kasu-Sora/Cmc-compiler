@@ -1,0 +1,30 @@
+Chars 0 - 72 [Require~Export~SimpleC.EE.QCP_...] 1.267 secs (1.182u,0.074s)
+Chars 73 - 118 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 119 - 140 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 141 - 166 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 167 - 317 [Lemma~cm_pointer_retype_type_r...] 0. secs (0.u,0.s)
+Chars 318 - 324 [Proof.] 0. secs (0.u,0.s)
+Chars 325 - 466 [(destruct~v,~ty;~~~cbv~beta~io...] 0.001 secs (0.001u,0.s)
+Chars 467 - 471 [Qed.] 0. secs (0.u,0.s)
+Chars 472 - 624 [Lemma~cm_load_value_type_ready...] 0. secs (0.u,0.s)
+Chars 625 - 631 [Proof.] 0. secs (0.u,0.s)
+Chars 633 - 690 [(destruct~ty;~intros~SC~OK;~tr...] 0. secs (0.u,0.s)
+Chars 692 - 693 [-] 0. secs (0.u,0.s)
+Chars 694 - 750 [(destruct~SC~as~[[E|~E]|~E];~d...] 0. secs (0.u,0.s)
+Chars 752 - 753 [-] 0. secs (0.u,0.s)
+Chars 754 - 868 [(cbn[cm_load_value];~~~destruc...] 0. secs (0.u,0.s)
+Chars 872 - 919 [(apply~cm_pointer_retype_type_...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/types/build/Rocq/examples/QCP_demos_human/cmc_type_operations_migration_lib.v", line 12, characters 9-37:
+Error:
+In environment
+st : cm_src_state
+ptr : cm_value
+ty : cm_type
+SC : cm_scalar_expr_type (CMPtrTy ty)
+OK : cm_load_ok (CMPtrTy ty) ptr st = true
+ZERO : (tower_getw (cm_state_mem st) (cm_value_number st ptr) =? 0) = true
+Unable to unify
+ "cm_value_type (cm_pointer_retype ?M2562 ?M2561) = ?M2562 \/
+  cm_pointer_retype ?M2562 ?M2561 = CMNullV /\ cm_is_pointer ?M2562" with
+ "CMNullV = CMNullV /\ cm_is_pointer (CMPtrTy ty)".
+

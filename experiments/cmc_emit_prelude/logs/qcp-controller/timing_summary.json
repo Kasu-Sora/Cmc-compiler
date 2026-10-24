@@ -1,0 +1,180 @@
+{
+  "run": {
+    "status": "completed",
+    "phase": "done",
+    "created_at": "2026-10-19T03:06:55.862552Z",
+    "finished_at": "2026-10-19T03:21:34.281300Z",
+    "elapsed_seconds": 878.418748
+  },
+  "annotation_metrics": {
+    "attempt_count": 1,
+    "annotation_repair_count": 0,
+    "validation_only_attempt_count": 0,
+    "owner_generation_invocation_count": 5,
+    "tool_failure_invocation_count": 0,
+    "controller_tool_failure_invocation_count": 0,
+    "same_attempt_tool_retry_count": 0,
+    "same_attempt_controller_tool_retry_count": 0,
+    "controller_acceptance_run_count": 1,
+    "controller_acceptance_rerun_count": 0,
+    "owner_generation_seconds": 0.139,
+    "controller_main_refresh_seconds": 0,
+    "clean_replay_seconds": 0.066,
+    "wasted_timeout_seconds": 0,
+    "legacy_unclassified_symexec_seconds": 0
+  },
+  "annotation_attempts": [
+    {
+      "attempt": "annotation-attempt1",
+      "round": "cmc_emit_prelude_migration-annotation-r1",
+      "activity": "spec-and-annotation",
+      "owner_generation_invocations": 5,
+      "tool_failure_invocations": 0,
+      "same_attempt_tool_retries": 0,
+      "controller_acceptance_runs": 1,
+      "controller_tool_failure_invocations": 0,
+      "same_attempt_controller_tool_retries": 0,
+      "status": "accepted",
+      "created_at": "2026-10-19T03:07:10.251791Z",
+      "finished_at": "2026-10-19T03:13:22.119147Z",
+      "elapsed_seconds": 371.867356,
+      "stages": [
+        {
+          "name": "annotation-work",
+          "started_at": "2026-10-19T03:07:15.591325Z",
+          "finished_at": "2026-10-19T03:12:29.444756Z",
+          "elapsed_seconds": 313.853431
+        },
+        {
+          "name": "formal-case-lib-design-coq-check",
+          "started_at": "2026-10-19T03:09:27.554143Z",
+          "calls": 5,
+          "finished_at": "2026-10-19T03:11:26.320555Z",
+          "elapsed_seconds": 2.090834
+        },
+        {
+          "name": "owner-generation",
+          "started_at": "2026-10-19T03:09:35.399890Z",
+          "calls": 5,
+          "finished_at": "2026-10-19T03:11:31.683977Z",
+          "elapsed_seconds": 0.139
+        },
+        {
+          "name": "clean-replay",
+          "started_at": "2026-10-19T03:13:01.349793Z",
+          "finished_at": "2026-10-19T03:13:01.415793Z",
+          "elapsed_seconds": 0.066
+        },
+        {
+          "name": "formal-case-lib-coq-check",
+          "started_at": "2026-10-19T03:11:44.261243Z",
+          "calls": 2,
+          "finished_at": "2026-10-19T03:13:01.345353Z",
+          "elapsed_seconds": 0.134259
+        },
+        {
+          "name": "controller-validation",
+          "started_at": "2026-10-19T03:12:29.425715Z",
+          "finished_at": "2026-10-19T03:12:29.490821Z",
+          "elapsed_seconds": 0.061251
+        },
+        {
+          "name": "controller-acceptance-check",
+          "started_at": "2026-10-19T03:12:46.736824Z",
+          "finished_at": "2026-10-19T03:13:01.429407Z",
+          "elapsed_seconds": 14.765354
+        },
+        {
+          "name": "dune-build",
+          "started_at": "2026-10-19T03:13:12.513524Z",
+          "finished_at": "2026-10-19T03:13:22.119147Z",
+          "elapsed_seconds": 9.600207
+        }
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "round": "cmc_emit_prelude_migration-vc-checking-r1",
+      "phase": "vc-checking",
+      "status": "accepted",
+      "created_at": "2026-10-19T03:13:36.602480Z",
+      "finished_at": "2026-10-19T03:16:04.476723Z",
+      "elapsed_seconds": 147.874243,
+      "stages": [
+        {
+          "name": "witness-analysis",
+          "started_at": "2026-10-19T03:13:41.704029Z",
+          "finished_at": "2026-10-19T03:15:53.749939Z",
+          "elapsed_seconds": 132.04591
+        },
+        {
+          "name": "controller-validation",
+          "started_at": "2026-10-19T03:15:53.725765Z",
+          "finished_at": "2026-10-19T03:15:53.781481Z",
+          "elapsed_seconds": 0.050133
+        },
+        {
+          "name": "controller-plan-check",
+          "started_at": "2026-10-19T03:16:04.360209Z",
+          "finished_at": "2026-10-19T03:16:04.476723Z",
+          "elapsed_seconds": 0.109398
+        }
+      ]
+    },
+    {
+      "round": "cmc_emit_prelude_migration-vc-proving-r1",
+      "phase": "vc-proving",
+      "status": "verified",
+      "created_at": "2026-10-19T03:16:10.575145Z",
+      "finished_at": "2026-10-19T03:21:04.769820Z",
+      "elapsed_seconds": 294.194675,
+      "stages": [
+        {
+          "name": "group-work",
+          "started_at": "2026-10-19T03:16:23.756015Z",
+          "finished_at": "2026-10-19T03:20:44.138653Z",
+          "elapsed_seconds": 260.382638
+        },
+        {
+          "name": "preparing",
+          "started_at": "2026-10-19T03:16:15.280689Z",
+          "finished_at": "2026-10-19T03:16:15.341986Z",
+          "elapsed_seconds": 0.053712
+        },
+        {
+          "name": "group-development-check",
+          "started_at": "2026-10-19T03:17:31.962622Z",
+          "calls": 5,
+          "finished_at": "2026-10-19T03:20:08.297649Z",
+          "elapsed_seconds": 28.782741
+        },
+        {
+          "name": "group-coq-check",
+          "started_at": "2026-10-19T03:20:15.168686Z",
+          "finished_at": "2026-10-19T03:20:18.001791Z",
+          "elapsed_seconds": 2.833105
+        },
+        {
+          "name": "group-validation",
+          "started_at": "2026-10-19T03:20:44.117042Z",
+          "finished_at": "2026-10-19T03:20:45.779470Z",
+          "elapsed_seconds": 1.654602
+        },
+        {
+          "name": "parent-verify",
+          "started_at": "2026-10-19T03:21:04.568270Z",
+          "finished_at": "2026-10-19T03:21:04.769820Z",
+          "elapsed_seconds": 0.192871
+        }
+      ]
+    }
+  ],
+  "finalization": {
+    "status": "passed",
+    "started_at": "2026-10-19T03:21:04.769820Z",
+    "applied_at": "2026-10-19T03:21:21.986068Z",
+    "finished_at": "2026-10-19T03:21:34.281300Z",
+    "elapsed_seconds": 29.51148
+  }
+}

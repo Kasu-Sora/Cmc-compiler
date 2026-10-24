@@ -1,0 +1,92 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.29 secs (1.21u,0.078s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 124 - 159 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 160 - 181 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 182 - 207 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 208 - 492 [Lemma~cm_r_unary_layout_step~s...] 0. secs (0.u,0.s)
+Chars 493 - 499 [Proof.] 0. secs (0.u,0.s)
+Chars 501 - 542 [(intros~[CODE~SAVED];~cm_code_...] 0.006 secs (0.006u,0.s)
+Chars 544 - 972 [(destruct~(op~=?~2)~eqn:TWO;~[...] 0.167 secs (0.16u,0.007s)
+Chars 974 - 1111 [all:~~(match~type~of~CODE~with...] 0. secs (0.u,0.s)
+Chars 1113 - 1484 [all:~~(unfold~cm_emit_rvalue,~...] 0.003 secs (0.003u,0.s)
+Chars 1486 - 1546 [all:~(cbn[Zlength];~repeat~rew...] 0.002 secs (0.001u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_expr/build/Rocq/examples/QCP_demos_human/cmc_code_unary_migration_lib.v", line 12, characters 49-60:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid, op : Z
+arg : cm_expr
+ty : cm_type
+st : cm_src_state
+ks : list cm_frame
+ann : cm_annotation
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_rvalue (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end (CMUnaryE op arg ty) ++
+     cm_cursor_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_rvalue_code_count (cm_source_function_policy sp) p fid
+          (CMUnaryE op arg ty))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end false match ann with
+                 | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                 end)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end
+TWO : (op =? 2) = true
+Unable to unify
+ "cm_rcode_of
+    (cm_emit_expr_pair (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end arg) ++
+  cm_load_code ty ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end + cm_rvalue_code_count (cm_source_function_policy sp) p fid arg + 1)
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end false match ann with
+              | CMAnnotation _ _ _ _ cs _ _ _ => cs
+              end" with
+ "cm_rcode_of
+    (cm_emit_expr_pair (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end arg) ++
+  cm_load_code ty ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end +
+     cm_rvalue_code_count (cm_source_function_policy sp) p fid
+       (CMUnaryE op arg ty))
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end false match ann with
+              | CMAnnotation _ _ _ _ cs _ _ _ => cs
+              end".
+

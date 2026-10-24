@@ -1,0 +1,19 @@
+{
+  "status": "Main declaration review completed; identical final library passed controller verification",
+  "candidate_sha256": "06bf635cf1d0d7cbb9ceaa8cb3c6aa49ab7034e432d3e8bd628761e7372d66bf",
+  "definitions": [
+    "cm_patch_inst: only opcode-code 22 maps operand through existing total cm_function_pc",
+    "cm_patch_code: map preserving order and cardinality",
+    "cm_resolved_emitter_rep: raw buffer ownership plus exact patch equality"
+  ],
+  "proof_review": [
+    "Length by structural induction and Zlength_cons",
+    "Append by map_app",
+    "Non-CALL by Z.eqb_neq with original code exclusion",
+    "CALL by concrete opcode reduction, no fid restriction",
+    "normalize/load/store by destructing cm_type; no scalar/wf restriction in equalities",
+    "FP address/temp-store/temp-load by reduction of unchanged core fragments"
+  ],
+  "new_helpers_during_proving": 0,
+  "manual_review": "All 16 top-level and 8 split proofs inspected: entries derive raw capacity via patch length; returns choose raw-prefix appended with raw fragment and rewrite exact patch append; temporary function contexts cancel unchanged. No new case-local automation or assumptions."
+}

@@ -1,0 +1,1795 @@
+{
+  "direction": "C*/HOL -> QCP/Rocq",
+  "unit": "cmc_concrete_emit_ast.c",
+  "function_count": 2,
+  "counts": {
+    "cstar": {
+      "specification": 73,
+      "annotation": 13,
+      "inline_proof": 113,
+      "exported_shared_proof_closure": 0,
+      "private_case_proof_support": 83,
+      "case_proof": 196,
+      "proof_including_shared": 196,
+      "specification_plus_annotation": 86
+    },
+    "qcp": {
+      "external_declarations": 37,
+      "coq_imports": 1,
+      "integration_helper_specification": 15,
+      "specification": 55,
+      "annotation": 50,
+      "case_proof": 201,
+      "new_common_proof": 34,
+      "new_common_imports_or_scopes": 5,
+      "new_common_definitions": 30,
+      "proof_including_shared": 235,
+      "total_annotation_with_integration": 65,
+      "specification_plus_annotation_with_integration": 120,
+      "specification_plus_annotation": 105
+    }
+  },
+  "regions": [
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        8,
+        12
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 71,
+      "characters": 246,
+      "name": null
+    },
+    {
+      "category": "external_declarations",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        14,
+        45
+      ],
+      "nonblank_lines": 32,
+      "new_counted_lines": 32,
+      "lexical_tokens": 378,
+      "characters": 1945,
+      "name": null
+    },
+    {
+      "category": "coq_imports",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        47,
+        47
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 16,
+      "characters": 86,
+      "name": null
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        50,
+        52
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 71,
+      "characters": 308,
+      "name": "cmc_global_address"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        56,
+        58
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 176,
+      "characters": 643,
+      "name": "cmc_local_offset"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        62,
+        64
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 100,
+      "characters": 360,
+      "name": "cmc_param_offset"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        69,
+        71
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 109,
+      "characters": 419,
+      "name": "cm_emit_resolved"
+    },
+    {
+      "category": "integration_helper_specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        76,
+        78
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 85,
+      "characters": 372,
+      "name": "cm_emit_resolved_fp_address"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        85,
+        112
+      ],
+      "nonblank_lines": 28,
+      "new_counted_lines": 28,
+      "lexical_tokens": 387,
+      "characters": 1746,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        115,
+        143
+      ],
+      "nonblank_lines": 29,
+      "new_counted_lines": 29,
+      "lexical_tokens": 455,
+      "characters": 1708,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        146,
+        146
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 26,
+      "characters": 110,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        147,
+        147
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 38,
+      "characters": 153,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        149,
+        149
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 30,
+      "characters": 126,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        150,
+        150
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 32,
+      "characters": 130,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        152,
+        152
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 23,
+      "characters": 94,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        153,
+        153
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 32,
+      "characters": 130,
+      "name": "cm_emit_binding_address"
+    },
+    {
+      "category": "specification",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        161,
+        187
+      ],
+      "nonblank_lines": 27,
+      "new_counted_lines": 27,
+      "lexical_tokens": 388,
+      "characters": 1751,
+      "name": "cm_emit_binding_address_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        190,
+        203
+      ],
+      "nonblank_lines": 14,
+      "new_counted_lines": 14,
+      "lexical_tokens": 235,
+      "characters": 973,
+      "name": "cm_emit_binding_address_plan"
+    },
+    {
+      "category": "annotation",
+      "file": "target/cmc_emit_ast_migration.c",
+      "span": [
+        205,
+        205
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 70,
+      "characters": 264,
+      "name": "cm_emit_binding_address_plan"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        24,
+        35
+      ],
+      "nonblank_lines": 12,
+      "new_counted_lines": 12,
+      "lexical_tokens": 87,
+      "characters": 484,
+      "name": "proof_of_cm_emit_binding_address_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        37,
+        53
+      ],
+      "nonblank_lines": 17,
+      "new_counted_lines": 17,
+      "lexical_tokens": 147,
+      "characters": 878,
+      "name": "proof_of_cm_emit_binding_address_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        55,
+        59
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 208,
+      "name": "proof_of_cm_emit_binding_address_return_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        61,
+        76
+      ],
+      "nonblank_lines": 16,
+      "new_counted_lines": 16,
+      "lexical_tokens": 112,
+      "characters": 735,
+      "name": "proof_of_cm_emit_binding_address_return_wit_2_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        78,
+        82
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 208,
+      "name": "proof_of_cm_emit_binding_address_return_wit_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        84,
+        99
+      ],
+      "nonblank_lines": 16,
+      "new_counted_lines": 16,
+      "lexical_tokens": 141,
+      "characters": 817,
+      "name": "proof_of_cm_emit_binding_address_return_wit_3_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        101,
+        105
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 208,
+      "name": "proof_of_cm_emit_binding_address_return_wit_3"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        107,
+        112
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 24,
+      "characters": 228,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        114,
+        119
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 24,
+      "characters": 229,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        121,
+        128
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 37,
+      "characters": 289,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure_split_goal_3"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        130,
+        136
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 414,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        138,
+        146
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 48,
+      "characters": 330,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        148,
+        156
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 48,
+      "characters": 330,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        158,
+        163
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 327,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        165,
+        176
+      ],
+      "nonblank_lines": 12,
+      "new_counted_lines": 12,
+      "lexical_tokens": 101,
+      "characters": 555,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        178,
+        189
+      ],
+      "nonblank_lines": 12,
+      "new_counted_lines": 12,
+      "lexical_tokens": 101,
+      "characters": 555,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        191,
+        196
+      ],
+      "nonblank_lines": 6,
+      "new_counted_lines": 6,
+      "lexical_tokens": 19,
+      "characters": 327,
+      "name": "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        198,
+        206
+      ],
+      "nonblank_lines": 9,
+      "new_counted_lines": 9,
+      "lexical_tokens": 44,
+      "characters": 346,
+      "name": "proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        208,
+        215
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 40,
+      "characters": 315,
+      "name": "proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_2"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        217,
+        223
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 32,
+      "characters": 287,
+      "name": "proof_of_cm_emit_binding_address_plan_entail_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        225,
+        231
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 23,
+      "characters": 385,
+      "name": "proof_of_cm_emit_binding_address_plan_entail_wit_1"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        233,
+        240
+      ],
+      "nonblank_lines": 8,
+      "new_counted_lines": 8,
+      "lexical_tokens": 38,
+      "characters": 325,
+      "name": "proof_of_cm_emit_binding_address_plan_return_wit_1_split_goal_spatial"
+    },
+    {
+      "category": "case_proof",
+      "file": "target/cmc_emit_ast_migration_proof_manual.v",
+      "span": [
+        242,
+        246
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 14,
+      "characters": 223,
+      "name": "proof_of_cm_emit_binding_address_plan_return_wit_1"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        45,
+        61
+      ],
+      "nonblank_lines": 17,
+      "new_counted_lines": 17,
+      "lexical_tokens": 209,
+      "characters": 884,
+      "name": "cm_rep_member_prefix_matches"
+    },
+    {
+      "category": "new_common_proof",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        62,
+        78
+      ],
+      "nonblank_lines": 17,
+      "new_counted_lines": 17,
+      "lexical_tokens": 243,
+      "characters": 1005,
+      "name": "cm_rep_globals_prefix_matches"
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        6,
+        6
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 8,
+      "characters": 40,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        7,
+        7
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 6,
+      "characters": 35,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        8,
+        8
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 10,
+      "characters": 70,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        9,
+        9
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 3,
+      "characters": 21,
+      "name": null
+    },
+    {
+      "category": "new_common_imports_or_scopes",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        10,
+        10
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 5,
+      "characters": 25,
+      "name": null
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        12,
+        18
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 62,
+      "characters": 256,
+      "name": "cm_slots_prefix"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        19,
+        25
+      ],
+      "nonblank_lines": 7,
+      "new_counted_lines": 7,
+      "lexical_tokens": 62,
+      "characters": 268,
+      "name": "cm_globals_prefix"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        26,
+        27
+      ],
+      "nonblank_lines": 2,
+      "new_counted_lines": 2,
+      "lexical_tokens": 19,
+      "characters": 117,
+      "name": "cm_global_address"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        28,
+        30
+      ],
+      "nonblank_lines": 3,
+      "new_counted_lines": 3,
+      "lexical_tokens": 29,
+      "characters": 176,
+      "name": "cm_param_offset"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        31,
+        35
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 47,
+      "characters": 295,
+      "name": "cm_local_offset"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        36,
+        36
+      ],
+      "nonblank_lines": 1,
+      "new_counted_lines": 1,
+      "lexical_tokens": 15,
+      "characters": 63,
+      "name": "cm_push_code"
+    },
+    {
+      "category": "new_common_definitions",
+      "file": "target/cmc_emit_ast_migration_lib.v",
+      "span": [
+        37,
+        41
+      ],
+      "nonblank_lines": 5,
+      "new_counted_lines": 5,
+      "lexical_tokens": 45,
+      "characters": 267,
+      "name": "cm_binding_address_code"
+    }
+  ],
+  "source_effort": {
+    "source_sha256": "5cc5b36dc7756a7541d137284004e7421ec867c731b3a52ca31dbe804f402c48",
+    "function_counts": [
+      {
+        "function": "cm_emit_binding_address",
+        "source_span": [
+          95,
+          257
+        ],
+        "specification": 37,
+        "annotation": 8,
+        "inline_proof": 103
+      },
+      {
+        "function": "cm_emit_binding_address_plan",
+        "source_span": [
+          259,
+          316
+        ],
+        "specification": 36,
+        "annotation": 5,
+        "inline_proof": 10
+      }
+    ],
+    "source_top_level_proof_helpers": [
+      {
+        "name": "cm_ast_open_fragment",
+        "kind": "proof",
+        "span": [
+          5,
+          11
+        ],
+        "nonblank_lines": 7,
+        "text": "PROOF static void cm_ast_open_fragment(const thm code_shape) {\n  thm capacity_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         ilength (done:(tvm_inst)list) + ilength code <= (capacity:int)`,\n      code_shape));\n  substitute_st(capacity_shape);\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_ast_close_fragment",
+        "kind": "proof",
+        "span": [
+          13,
+          19
+        ],
+        "nonblank_lines": 7,
+        "text": "PROOF static void cm_ast_close_fragment(const thm code_shape) {\n  thm done_shape = beta_norm(ap_term_rule(\n      `\\code:(tvm_inst)list.\n         (done:(tvm_inst)list) ++ code`,\n      sym_rule(code_shape)));\n  substitute_st(done_shape);\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_ast_typed_program",
+        "kind": "proof",
+        "span": [
+          21,
+          29
+        ],
+        "nonblank_lines": 9,
+        "text": "PROOF static thm cm_ast_typed_program(void) {\n  thm wf = eqt_elim_rule(assume_rule(\n      `cm_wf_program (p:cm_program) <=> true`));\n  thm admissible = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_wf_program_def())), wf);\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_codegen_admissible_def())), admissible);\n  return conjunct1_rule(opened);\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_ast_globals_wf",
+        "kind": "proof",
+        "span": [
+          31,
+          36
+        ],
+        "nonblank_lines": 6,
+        "text": "PROOF static thm cm_ast_globals_wf(void) {\n  thm typed = cm_ast_typed_program();\n  thm opened = conv_rule(rewrite_conv(THM_LIST(\n      get_cm_typed_program_def())), typed);\n  return conjunct1_rule(conjunct2_rule(opened));\n}",
+        "dependencies": [
+          "cm_ast_typed_program"
+        ],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_ast_global_address_bridge",
+        "kind": "proof",
+        "span": [
+          38,
+          49
+        ],
+        "nonblank_lines": 12,
+        "text": "PROOF static thm cm_ast_global_address_bridge(void) {\n  thm prefix = mp_rule(specl_rule(TERM_LIST(\n      `cm_program_structs (p:cm_program)`,\n      `cm_program_globals (p:cm_program)`, `slot__pre:int`),\n      cm_rep_globals_prefix_matches), cm_ast_globals_wf());\n  return by_rewrite(\n      `cm_rep_global_address (cm_program_globals (p:cm_program))\n         (slot__pre:int) ==\n       cm_global_address p slot__pre`,\n      THM_LIST(get_cm_rep_global_address_def(),\n        get_cm_global_address_def(), prefix));\n}",
+        "dependencies": [
+          "cm_ast_globals_wf"
+        ],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_ast_local_offset_bridge",
+        "kind": "proof",
+        "span": [
+          51,
+          74
+        ],
+        "nonblank_lines": 24,
+        "text": "PROOF static thm cm_ast_local_offset_bridge(void) {\n  thm params = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_params (f:cm_function_d)`),\n      cm_rep_members_size_matches), eqt_elim_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (cm_function_params (f:cm_function_d)) <=> true`)));\n  thm locals = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_locals (f:cm_function_d)`, `slot__pre:int`),\n      cm_rep_member_prefix_matches), eqt_elim_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (cm_function_locals (f:cm_function_d)) <=> true`)));\n  return by_rewrite(\n      `8i + cm_rep_members_size (cm_function_params (f:cm_function_d)) +\n         cm_rep_member_prefix (cm_function_locals f) (slot__pre:int) ==\n       cm_local_offset (p:cm_program) (fid:int) slot__pre`,\n      THM_LIST(get_cm_local_offset_def(), params, locals,\n        assume_rule(\n          `structs == cm_program_structs (p:cm_program)`),\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid:int) (cm_program_functions p)`)));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      },
+      {
+        "name": "cm_ast_param_offset_bridge",
+        "kind": "proof",
+        "span": [
+          76,
+          93
+        ],
+        "nonblank_lines": 18,
+        "text": "PROOF static thm cm_ast_param_offset_bridge(void) {\n  thm params = mp_rule(specl_rule(TERM_LIST(\n      `structs:(cm_struct_d)list`,\n      `cm_function_params (f:cm_function_d)`, `slot__pre:int`),\n      cm_rep_member_prefix_matches), eqt_elim_rule(assume_rule(\n        `cm_slots_wf (structs:(cm_struct_d)list)\n           (cm_function_params (f:cm_function_d)) <=> true`)));\n  return by_rewrite(\n      `8i + cm_rep_member_prefix\n         (cm_function_params (f:cm_function_d)) (slot__pre:int) ==\n       cm_param_offset (p:cm_program) (fid:int) slot__pre`,\n      THM_LIST(get_cm_param_offset_def(), params,\n        assume_rule(\n          `structs == cm_program_structs (p:cm_program)`),\n        assume_rule(\n          `(f:cm_function_d) ==\n           inth (fid:int) (cm_program_functions p)`)));\n}",
+        "dependencies": [],
+        "category": "private_case_proof_support"
+      }
+    ],
+    "totals": {
+      "specification": 73,
+      "annotation": 13,
+      "inline_proof": 113,
+      "private_case_proof_support": 83,
+      "case_proof": 196,
+      "proof_including_shared": 196
+    },
+    "annotation_entries": [
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          153,
+          153
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          172,
+          172
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          172,
+          172
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          188,
+          188
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          189,
+          189
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          209,
+          209
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          224,
+          224
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address",
+        "kind": "where",
+        "span": [
+          242,
+          242
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address_plan",
+        "kind": "where",
+        "span": [
+          305,
+          305
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address_plan",
+        "kind": "where",
+        "span": [
+          306,
+          306
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address_plan",
+        "kind": "where",
+        "span": [
+          307,
+          307
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address_plan",
+        "kind": "where",
+        "span": [
+          308,
+          308
+        ],
+        "nonblank_lines": 1
+      },
+      {
+        "function": "cm_emit_binding_address_plan",
+        "kind": "where",
+        "span": [
+          309,
+          309
+        ],
+        "nonblank_lines": 1
+      }
+    ],
+    "public_proof_roots": [],
+    "public_wrappers_not_called_by_runtime_proof": [],
+    "counting_note": "Nonblank non-comment physical lines; body contracts counted once; header duplicates excluded. Seven same-file static PROOF helpers are private case proof support; semantic address definitions and incremental public prefix bridge closure separately inventoried."
+  },
+  "target_per_function": {
+    "cm_emit_binding_address": {
+      "specification": 28,
+      "annotation": 35,
+      "case_proof": 157,
+      "specification_plus_annotation": 63
+    },
+    "cm_emit_binding_address_plan": {
+      "specification": 27,
+      "annotation": 15,
+      "case_proof": 44,
+      "specification_plus_annotation": 42
+    }
+  },
+  "runtime_tokens_equal": true,
+  "abi_unchanged": true,
+  "coverage": {
+    "cm_emit_binding_address": [
+      "proof_of_cm_emit_binding_address_entail_wit_1",
+      "proof_of_cm_emit_binding_address_return_wit_1",
+      "proof_of_cm_emit_binding_address_return_wit_2",
+      "proof_of_cm_emit_binding_address_return_wit_3",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_2_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_4_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_6_pure",
+      "proof_of_cm_emit_binding_address_safety_wit_1",
+      "proof_of_cm_emit_binding_address_safety_wit_2",
+      "proof_of_cm_emit_binding_address_safety_wit_3",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_1",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_2",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_3",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_4",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_5_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_5",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_6"
+    ],
+    "cm_emit_binding_address_plan": [
+      "proof_of_cm_emit_binding_address_plan_entail_wit_1",
+      "proof_of_cm_emit_binding_address_plan_return_wit_1",
+      "proof_of_cm_emit_binding_address_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_binding_address_plan_partial_solve_wit_1"
+    ]
+  },
+  "entries": {
+    "manual_top_level": 9,
+    "manual_splits": 14,
+    "automatic_witnesses": 14,
+    "new_helpers": [
+      "cm_rep_member_prefix_matches",
+      "cm_rep_globals_prefix_matches"
+    ],
+    "new_model_declarations": [
+      "cm_slots_prefix",
+      "cm_globals_prefix",
+      "cm_global_address",
+      "cm_param_offset",
+      "cm_local_offset",
+      "cm_push_code",
+      "cm_binding_address_code"
+    ]
+  },
+  "proof_body_lines": 132,
+  "proof_wrapper_lines": 69,
+  "verification": {
+    "cstar": {
+      "command": [
+        "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/arr_sum/toolchain/cstar_v0.5.7_darwin-aarch64/bin/cstarc",
+        "verify",
+        "cmc_concrete_emit_ast.c",
+        "--port",
+        "53576"
+      ],
+      "exit_code": 0,
+      "report": {
+        "verification_conditions": [],
+        "axioms": [],
+        "strategies": []
+      },
+      "clean": true,
+      "verification_seconds": 40.570594459,
+      "source_sha256": "5cc5b36dc7756a7541d137284004e7421ec867c731b3a52ca31dbe804f402c48",
+      "log_directory": "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_emit_ast/logs/20261017T062013Z-cstar-source"
+    },
+    "qcp_final_check": {
+      "status": "passed",
+      "checked_at": "2026-10-17T06:38:24.497257Z",
+      "cleanup_removed_count": 0
+    },
+    "phase": "done",
+    "trusted_auto": [
+      "proof_of_cm_emit_binding_address_safety_wit_1",
+      "proof_of_cm_emit_binding_address_safety_wit_2",
+      "proof_of_cm_emit_binding_address_safety_wit_3",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_1",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_2",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_3_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_3",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_4",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_5_pure",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_5",
+      "proof_of_cm_emit_binding_address_partial_solve_wit_6",
+      "proof_of_cm_emit_binding_address_plan_partial_solve_wit_1_pure",
+      "proof_of_cm_emit_binding_address_plan_partial_solve_wit_1"
+    ],
+    "remaining_manual": 0
+  },
+  "process": {
+    "timing": {
+      "run": {
+        "status": "completed",
+        "phase": "done",
+        "created_at": "2026-10-17T06:19:40.101716Z",
+        "finished_at": "2026-10-17T06:38:24.497257Z",
+        "elapsed_seconds": 1124.395541
+      },
+      "annotation_metrics": {
+        "attempt_count": 1,
+        "annotation_repair_count": 0,
+        "validation_only_attempt_count": 0,
+        "owner_generation_invocation_count": 1,
+        "tool_failure_invocation_count": 0,
+        "controller_tool_failure_invocation_count": 0,
+        "same_attempt_tool_retry_count": 0,
+        "same_attempt_controller_tool_retry_count": 0,
+        "controller_acceptance_run_count": 1,
+        "controller_acceptance_rerun_count": 0,
+        "owner_generation_seconds": 0.379,
+        "controller_main_refresh_seconds": 0,
+        "clean_replay_seconds": 0.41,
+        "wasted_timeout_seconds": 0,
+        "legacy_unclassified_symexec_seconds": 0
+      },
+      "annotation_attempts": [
+        {
+          "attempt": "annotation-attempt1",
+          "round": "cmc_emit_ast_migration-annotation-r1",
+          "activity": "spec-and-annotation",
+          "owner_generation_invocations": 1,
+          "tool_failure_invocations": 0,
+          "same_attempt_tool_retries": 0,
+          "controller_acceptance_runs": 1,
+          "controller_tool_failure_invocations": 0,
+          "same_attempt_controller_tool_retries": 0,
+          "status": "accepted",
+          "created_at": "2026-10-17T06:19:48.647998Z",
+          "finished_at": "2026-10-17T06:26:24.908134Z",
+          "elapsed_seconds": 396.260136,
+          "stages": [
+            {
+              "name": "annotation-work",
+              "started_at": "2026-10-17T06:19:57.433600Z",
+              "finished_at": "2026-10-17T06:25:27.008795Z",
+              "elapsed_seconds": 329.575195
+            },
+            {
+              "name": "formal-case-lib-design-coq-check",
+              "started_at": "2026-10-17T06:23:14.410766Z",
+              "finished_at": "2026-10-17T06:23:15.950581Z",
+              "elapsed_seconds": 1.539815
+            },
+            {
+              "name": "owner-generation",
+              "started_at": "2026-10-17T06:23:27.996379Z",
+              "finished_at": "2026-10-17T06:23:28.375379Z",
+              "elapsed_seconds": 0.379
+            },
+            {
+              "name": "clean-replay",
+              "started_at": "2026-10-17T06:26:02.969924Z",
+              "finished_at": "2026-10-17T06:26:03.379924Z",
+              "elapsed_seconds": 0.41
+            },
+            {
+              "name": "formal-case-lib-coq-check",
+              "started_at": "2026-10-17T06:24:05.617039Z",
+              "calls": 2,
+              "finished_at": "2026-10-17T06:26:02.964477Z",
+              "elapsed_seconds": 0.135058
+            },
+            {
+              "name": "controller-validation",
+              "started_at": "2026-10-17T06:25:26.989451Z",
+              "finished_at": "2026-10-17T06:25:27.052804Z",
+              "elapsed_seconds": 0.059584
+            },
+            {
+              "name": "controller-acceptance-check",
+              "started_at": "2026-10-17T06:25:47.727444Z",
+              "finished_at": "2026-10-17T06:26:03.395824Z",
+              "elapsed_seconds": 15.662239
+            },
+            {
+              "name": "dune-build",
+              "started_at": "2026-10-17T06:26:15.195218Z",
+              "finished_at": "2026-10-17T06:26:24.908134Z",
+              "elapsed_seconds": 9.707064
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "round": "cmc_emit_ast_migration-vc-checking-r1",
+          "phase": "vc-checking",
+          "status": "accepted",
+          "created_at": "2026-10-17T06:26:32.337809Z",
+          "finished_at": "2026-10-17T06:30:10.257354Z",
+          "elapsed_seconds": 217.919545,
+          "stages": [
+            {
+              "name": "witness-analysis",
+              "started_at": "2026-10-17T06:26:39.470387Z",
+              "finished_at": "2026-10-17T06:29:53.198691Z",
+              "elapsed_seconds": 193.728304
+            },
+            {
+              "name": "controller-validation",
+              "started_at": "2026-10-17T06:29:53.172423Z",
+              "finished_at": "2026-10-17T06:29:53.231922Z",
+              "elapsed_seconds": 0.053047
+            },
+            {
+              "name": "controller-plan-check",
+              "started_at": "2026-10-17T06:30:09.811554Z",
+              "finished_at": "2026-10-17T06:30:10.257354Z",
+              "elapsed_seconds": 0.438888
+            }
+          ]
+        },
+        {
+          "round": "cmc_emit_ast_migration-vc-proving-r1",
+          "phase": "vc-proving",
+          "status": "verified",
+          "created_at": "2026-10-17T06:30:14.521179Z",
+          "finished_at": "2026-10-17T06:37:57.844866Z",
+          "elapsed_seconds": 463.323687,
+          "stages": [
+            {
+              "name": "group-work",
+              "started_at": "2026-10-17T06:30:27.185167Z",
+              "finished_at": "2026-10-17T06:36:38.762006Z",
+              "elapsed_seconds": 371.576839
+            },
+            {
+              "name": "preparing",
+              "started_at": "2026-10-17T06:30:20.846130Z",
+              "finished_at": "2026-10-17T06:30:20.914527Z",
+              "elapsed_seconds": 0.061222
+            },
+            {
+              "name": "group-development-check",
+              "started_at": "2026-10-17T06:31:55.923884Z",
+              "calls": 15,
+              "finished_at": "2026-10-17T06:36:00.470038Z",
+              "elapsed_seconds": 155.90394
+            },
+            {
+              "name": "group-coq-check",
+              "started_at": "2026-10-17T06:34:52.019444Z",
+              "calls": 3,
+              "finished_at": "2026-10-17T06:36:09.440601Z",
+              "elapsed_seconds": 8.85885
+            },
+            {
+              "name": "group-validation",
+              "started_at": "2026-10-17T06:35:42.056231Z",
+              "calls": 3,
+              "finished_at": "2026-10-17T06:36:40.440237Z",
+              "elapsed_seconds": 5.244718
+            },
+            {
+              "name": "parent-verify",
+              "started_at": "2026-10-17T06:37:07.413936Z",
+              "finished_at": "2026-10-17T06:37:57.844866Z",
+              "elapsed_seconds": 50.422342
+            }
+          ]
+        }
+      ],
+      "finalization": {
+        "status": "passed",
+        "started_at": "2026-10-17T06:37:57.844866Z",
+        "applied_at": "2026-10-17T06:38:10.334474Z",
+        "finished_at": "2026-10-17T06:38:24.497257Z",
+        "elapsed_seconds": 26.652391
+      }
+    },
+    "notes": {
+      "status": "completed; controller done and final-check passed",
+      "historical_cstar_active_seconds": null,
+      "human_active_seconds": null,
+      "model_active_seconds": null,
+      "public_reuse": "Existing plan/core/resolved/layout/counts closure; five exact helper contracts",
+      "annotation_development": {
+        "attempts": 1,
+        "formal_case_lib_design_checks": 1,
+        "design_failures": 0,
+        "symexec_runs": 1,
+        "symexec_failures": 0,
+        "post_symexec_library_checks": 1,
+        "post_symexec_library_failures": 0,
+        "main_annotation_check_rounds": 1,
+        "main_annotation_status": "accepted",
+        "repairs": []
+      },
+      "proof_development": {
+        "group_worker_checks": {
+          "return_contexts": {
+            "dev": 3,
+            "dev_failures": 2,
+            "debug": 3,
+            "debug_failures": 0,
+            "exact": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "status": "accepted",
+            "repairs": [
+              "Repeated progressing spatial cancellation",
+              "Reduce Pos.eqb alongside Z.eqb for local scope"
+            ],
+            "debug_note": "First successful debug output was not readable; added String import for second inspection"
+          },
+          "call_capacity": {
+            "dev": 3,
+            "dev_failures": 2,
+            "debug": 3,
+            "debug_failures": 2,
+            "exact": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "status": "accepted",
+            "repairs": [
+              "Use explicit definitional change for fragment lengths instead of insufficient cbn"
+            ],
+            "debug_repairs": [
+              "Correct sac import order",
+              "Import Psatz for lia"
+            ]
+          },
+          "context_plan": {
+            "dev": 9,
+            "dev_failures": 8,
+            "debug": 0,
+            "debug_failures": 0,
+            "exact": 1,
+            "exact_failures": 0,
+            "new_helpers": 0,
+            "status": "accepted",
+            "repairs": [
+              "Correct unsupported multi-name Intros_p syntax",
+              "Remove redundant pure extraction",
+              "Avoid hypothesis name collision",
+              "Use repeated progressing cancellation",
+              "Apply spatial aggressive subgoal before pure subgoals"
+            ]
+          }
+        },
+        "group_worker_check_totals": {
+          "dev": 15,
+          "dev_failures": 12,
+          "debug": 6,
+          "debug_failures": 2,
+          "exact": 3,
+          "exact_failures": 0,
+          "new_helpers": 0
+        },
+        "controller_group_repair_count": 0,
+        "controller_group_validation_count": 3,
+        "accepted_group_attempts": {
+          "return_contexts": 1,
+          "call_capacity": 1,
+          "context_plan": 1
+        }
+      },
+      "vc_checking": {
+        "attempts": 1,
+        "main_acceptance_checks": 1,
+        "status": "accepted",
+        "top_level_scanned": 9,
+        "no_split_checked_first": 1,
+        "definite_blockers": 0,
+        "split_count": 14,
+        "planned_group_count": 3,
+        "worker_debug_or_validation_invocations": 0,
+        "worker_command_failures": 0
+      },
+      "proof_progress_snapshot": {
+        "accepted_groups": 3,
+        "planned_groups": 3,
+        "status": "complete"
+      },
+      "final_verification": {
+        "phase": "done",
+        "final_check": {
+          "status": "passed",
+          "checked_at": "2026-10-17T06:38:24.497257Z",
+          "cleanup_removed_count": 0
+        },
+        "controller_updated_at": "2026-10-17T06:38:24.504565Z"
+      }
+    },
+    "historical_cstar_active_seconds": null,
+    "human_active_seconds": null,
+    "model_active_seconds": null
+  },
+  "artifacts": [
+    {
+      "role": "c_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_emit_ast_migration.c",
+      "snapshot": "target/cmc_emit_ast_migration.c",
+      "sha256": "f682f7c87b276e0cdd6b3d7562d813b3f03a26ddcd47472a9fc3de364497a10a"
+    },
+    {
+      "role": "formal_case_lib",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_lib.v",
+      "snapshot": "target/cmc_emit_ast_migration_lib.v",
+      "sha256": "7e7371def2ddb93da848a8199c93b2858c13bd170d873b8a2faa8a9ae6f7e21e"
+    },
+    {
+      "role": "goal_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_goal.v",
+      "snapshot": "target/cmc_emit_ast_migration_goal.v",
+      "sha256": "42f0918fb6b4a22891d1e67fbb95b7fe984a436d4e8bdc19b470a8a745db64ad"
+    },
+    {
+      "role": "proof_auto_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_proof_auto.v",
+      "snapshot": "target/cmc_emit_ast_migration_proof_auto.v",
+      "sha256": "f09e7bd50da13608eb8eeb7310f697e27250df8cb3f303aee84f08659b4d2a2c"
+    },
+    {
+      "role": "proof_manual_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_proof_manual.v",
+      "snapshot": "target/cmc_emit_ast_migration_proof_manual.v",
+      "sha256": "78a783a700c3c13132cef31a0310c48add924e63092c8f0408a795da7e6a4afd"
+    },
+    {
+      "role": "goal_check_file",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_ast_migration_goal_check.v",
+      "snapshot": "target/cmc_emit_ast_migration_goal_check.v",
+      "sha256": "38069bbffca40a81a990513a2bb918de3dd130d50277b90da6d6dbab30dabb7e"
+    },
+    {
+      "role": "runtime_abi_header",
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_layout_migration_abi.h",
+      "sha256": "44da3388c0964c59aaf92cd1bd4505ac3a1eadcad5aad7b90a6119581625fb6a"
+    }
+  ],
+  "counting_note": "Nonblank exact regions, statement/Proof/Qed wrappers included, generated VC texts and unused aborted split drafts excluded; new shared definitions/proofs separate. The two runtime bodies and reviewed contracts/models retain their audited identities; case proof equals the per-function sum. Library declarations and all final proved helpers reviewed in final merged form.",
+  "verified_reused_dependencies": [
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_layout_migration_lib.v",
+      "sha256": "dd0537765f50a8d5ea9227206c095d3e0e34b8792b3e2e48f4143049c31ae109",
+      "verified_case": "cmc_layout",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_counts_migration_lib.v",
+      "sha256": "d703265a1d86d57fd1ec04e1a9a13d42693e85b986348e02e19c0417f128ec2f",
+      "verified_case": "cmc_counts",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_copy_bytes_migration_lib.v",
+      "sha256": "49f1103d5501eff2e60a94b04518ff4e7858f795e4953de90bb5cc05529c7924",
+      "verified_case": "cmc_copy_bytes",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_function_pc_total_migration_lib.v",
+      "sha256": "6960f17de8bbdee02c9d28f789cd5aff3d376de97817b2b20d34c0bea198f656",
+      "verified_case": "cmc_function_pc_total",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_layout_migration_abi.h",
+      "sha256": "44da3388c0964c59aaf92cd1bd4505ac3a1eadcad5aad7b90a6119581625fb6a",
+      "verified_case": "cmc_layout",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_globals_migration_lib.v",
+      "sha256": "f102e109bde27bafa875fedfca03f5453201c1408852802843838c4aa6b49d78",
+      "verified_case": "cmc_emit_globals",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_write_word_migration_lib.v",
+      "sha256": "86fa9e40c7960d2469a767fd58da08c301d0f4f138f4dff06d60b827345d6660",
+      "verified_case": "cmc_write_word",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_core_migration_lib.v",
+      "sha256": "367c7727d55fc73470ca881062ef5ff80c067c337310a96e8c6c4f0fde8453bb",
+      "verified_case": "cmc_emit_core",
+      "incremental_lines": 0
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/QCP_examples/QCP_demos_human/cmc_emit_resolved_migration.c",
+      "sha256": "bac45e4c2459a8d7803ca212a59c9b244afb893219a6a1a22e8e82c9697a3394"
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_resolved_migration_lib.v",
+      "sha256": "06bf635cf1d0d7cbb9ceaa8cb3c6aa49ab7034e432d3e8bd628761e7372d66bf"
+    },
+    {
+      "canonical_path": "/Users/nizitong/QCP/qcp-binary-democases/Rocq/examples/QCP_demos_human/cmc_emit_plan_migration_lib.v",
+      "sha256": "d1ce410f2381e1aa565b400718ecd9d411110e307b74fc0fc1f132d6dbba8acd",
+      "verified_case": "cmc_emit_plan",
+      "incremental_lines": 0
+    }
+  ],
+  "helper_contract_audit": [
+    {
+      "function": "cmc_global_address",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cmc_local_offset",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cmc_param_offset",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved",
+      "normalized_contract_identical": true
+    },
+    {
+      "function": "cm_emit_resolved_fp_address",
+      "normalized_contract_identical": true
+    }
+  ],
+  "shared_helper_usage": [
+    {
+      "name": "cm_rep_member_prefix_matches",
+      "direct_manual_references": 2,
+      "other_library_references": 0,
+      "lines": 17
+    },
+    {
+      "name": "cm_rep_globals_prefix_matches",
+      "direct_manual_references": 1,
+      "other_library_references": 0,
+      "lines": 17
+    }
+  ],
+  "common_cost_by_stage": {
+    "annotation_definitions": 30,
+    "annotation_helpers": 34,
+    "final_helpers_added_during_proving": []
+  },
+  "source_text_size": [
+    {
+      "function": "cm_emit_binding_address",
+      "category": "specification",
+      "characters": 1987,
+      "lexical_tokens": 430,
+      "nonblank_lines": 37
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "category": "annotation",
+      "characters": 513,
+      "lexical_tokens": 206,
+      "nonblank_lines": 8
+    },
+    {
+      "function": "cm_emit_binding_address",
+      "category": "inline_proof",
+      "characters": 4431,
+      "lexical_tokens": 832,
+      "nonblank_lines": 103
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "category": "specification",
+      "characters": 1980,
+      "lexical_tokens": 431,
+      "nonblank_lines": 36
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "category": "annotation",
+      "characters": 237,
+      "lexical_tokens": 111,
+      "nonblank_lines": 5
+    },
+    {
+      "function": "cm_emit_binding_address_plan",
+      "category": "inline_proof",
+      "characters": 290,
+      "lexical_tokens": 74,
+      "nonblank_lines": 10
+    }
+  ],
+  "source_additional_dependency_definitions": {
+    "scope": "Incremental source AST dependency definitions and prefix proof closure; previously used slot size/slots head-tail and global size proofs excluded",
+    "declarations": [
+      {
+        "name": "cm_slots_prefix_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          2209,
+          2218
+        ],
+        "nonblank_lines": 10,
+        "sha256": "e62cb6356f93960990804443e02f6d64bed2f2861fdcee53da553af3ef98d882",
+        "category": "definition"
+      },
+      {
+        "name": "cm_globals_prefix_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          2221,
+          2230
+        ],
+        "nonblank_lines": 10,
+        "sha256": "5ab0a8f59bfdf7ea2be6c45d3d7b1ddc8efd859e98eebb16587403b8a040b3ee",
+        "category": "definition"
+      },
+      {
+        "name": "cm_global_address_def",
+        "file": "baseline/cmc_lang.c",
+        "span": [
+          2246,
+          2249
+        ],
+        "nonblank_lines": 4,
+        "sha256": "a27df0c6065f8e6bc22feea8556518c1fe5b3864d7b8405e7d8f6b44c6e0a281",
+        "category": "definition"
+      },
+      {
+        "name": "cm_param_offset_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          606,
+          610
+        ],
+        "nonblank_lines": 5,
+        "sha256": "e626bc14a18d2d302a5488dc17ef228aa4c28150c42d4e058a66786af438bc75",
+        "category": "definition"
+      },
+      {
+        "name": "cm_local_offset_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          611,
+          619
+        ],
+        "nonblank_lines": 9,
+        "sha256": "22a2d9322b9966d7bad3701e3d57fcfb4c82dfe471e1041c54b0747bfd820575",
+        "category": "definition"
+      },
+      {
+        "name": "cm_binding_address_code_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          634,
+          641
+        ],
+        "nonblank_lines": 8,
+        "sha256": "3ae205d35d4df60ba6d8025860c0bc3af0120697a5915aa47d7f57a89f10d951",
+        "category": "definition"
+      },
+      {
+        "name": "cm_push_code_def",
+        "file": "baseline/cmc_codegen.c",
+        "span": [
+          584,
+          586
+        ],
+        "nonblank_lines": 3,
+        "sha256": "a58c22bdf4dbe93a7d7537d8db47eefa753cf817aa79c38bef02295d7eaa162e",
+        "category": "definition"
+      },
+      {
+        "name": "cm_rep_member_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1706,
+          1707
+        ],
+        "nonblank_lines": 2,
+        "sha256": "377b3a39137c97a2defddf060d3c5fe4ec2b402811df9fd4e8d7211299ed9629",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_member_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1665,
+          1705
+        ],
+        "nonblank_lines": 41,
+        "sha256": "e25eab3a7f60f54172cec3676f6b56ce149ab6ac2812879d9fde0d408956339c",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_rep_globals_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          2020,
+          2021
+        ],
+        "nonblank_lines": 2,
+        "sha256": "52af21d96a91797ea0bfb7fc78fb192fbb62e1f45ef4e30cf261c50438352991",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_rep_globals_prefix_matches",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1971,
+          2019
+        ],
+        "nonblank_lines": 49,
+        "sha256": "9bf2a1948a75a0894c27f3112347511374587aefc8f347a891a140ff8d0092f7",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_globals_wf_head",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1925,
+          1925
+        ],
+        "nonblank_lines": 1,
+        "sha256": "652c8042c1e30edd01c84c81abe556a4f2bcf6b3428c529f63370e77face13f9",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_globals_wf_head",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1894,
+          1924
+        ],
+        "nonblank_lines": 31,
+        "sha256": "1b06c5580e3e564097db90fc2f3f2da5a40ed16ea9f12c7f72baac9034bac7a5",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_globals_wf_tail",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1969,
+          1969
+        ],
+        "nonblank_lines": 1,
+        "sha256": "ef1f66a7ad27c55d4234256ed34bd4a75c92df2aba0db11e06b39f63faff223d",
+        "category": "public_proof_support"
+      },
+      {
+        "name": "cm_prove_globals_wf_tail",
+        "file": "baseline/cmc_concrete_defs.c",
+        "span": [
+          1927,
+          1968
+        ],
+        "nonblank_lines": 42,
+        "sha256": "c3c2c9c5b66a463a7640e492c4303404064f3f0b8c210331be5450e8ddac8703",
+        "category": "public_proof_support"
+      }
+    ],
+    "definition_count": 7,
+    "definition_lines": 49,
+    "public_lemma_count": 4,
+    "public_proof_lines": 169,
+    "historical_development_seconds": null,
+    "note": "Two prefix lemmas plus global list head/tail wf lemmas and their private proof constructors counted once. Existing cm_slots_wf_head/tail and size bridge closure were already needed in emit-core; cm_rep_global_size_matches in emit-globals. Context, opcode, binding nonnegativity and plan open/close reused."
+  },
+  "unused_split_drafts_aborted": [],
+  "dependency_snapshot_metrics": {
+    "batch_count": 8,
+    "coqdep_process_count": 8,
+    "elapsed_seconds": 9.454675,
+    "node_count": 157,
+    "source_count": 157,
+    "status": "resolved",
+    "strategy": "breadth-batched-coqdep"
+  },
+  "prior_dependency_function_proofs_imported": false
+}

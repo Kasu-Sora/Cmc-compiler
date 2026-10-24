@@ -1,0 +1,61 @@
+cm_slots_nonnegative
+:
+forall (structs : list cm_struct_d) (slots : list cm_slot_d),
+cm_slots_wf structs slots -> 0 <= cm_rep_members_size slots
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d),
+       cm_slots_wf structs slots -> 0 <= cm_rep_members_size slots
+cm_slots_safe
+:
+forall (structs : list cm_struct_d) (slots : list cm_slot_d),
+cm_slots_wf structs slots ->
+cm_rep_members_size slots <= 1048576 -> cm_rep_members_safe slots
+     : forall (structs : list cm_struct_d) (slots : list cm_slot_d),
+       cm_slots_wf structs slots ->
+       cm_rep_members_size slots <= 1048576 -> cm_rep_members_safe slots
+cm_structs_wf_head
+:
+forall (structs : list cm_struct_d) (h : cm_struct_d) (t : list cm_struct_d),
+(forall i : Z,
+ 0 <= i < Zlength (h :: t) -> cm_struct_wf structs (cm_struct_at i (h :: t))) ->
+cm_struct_wf structs h
+     : forall (structs : list cm_struct_d) (h : cm_struct_d)
+         (t : list cm_struct_d),
+       (forall i : Z,
+        0 <= i < Zlength (h :: t) ->
+        cm_struct_wf structs (cm_struct_at i (h :: t))) ->
+       cm_struct_wf structs h
+cm_structs_wf_tail
+:
+forall (structs : list cm_struct_d) (h : cm_struct_d) (t : list cm_struct_d),
+(forall i : Z,
+ 0 <= i < Zlength (h :: t) -> cm_struct_wf structs (cm_struct_at i (h :: t))) ->
+forall i : Z, 0 <= i < Zlength t -> cm_struct_wf structs (cm_struct_at i t)
+     : forall (structs : list cm_struct_d) (h : cm_struct_d)
+         (t : list cm_struct_d),
+       (forall i : Z,
+        0 <= i < Zlength (h :: t) ->
+        cm_struct_wf structs (cm_struct_at i (h :: t))) ->
+       forall i : Z,
+       0 <= i < Zlength t -> cm_struct_wf structs (cm_struct_at i t)
+cm_structs_safe
+:
+forall structs items : list cm_struct_d,
+(forall i : Z,
+ 0 <= i < Zlength items -> cm_struct_wf structs (cm_struct_at i items)) ->
+cm_rep_structs_safe items
+     : forall structs items : list cm_struct_d,
+       (forall i : Z,
+        0 <= i < Zlength items -> cm_struct_wf structs (cm_struct_at i items)) ->
+       cm_rep_structs_safe items
+cmc_structs_ready_from_typed
+:
+forall (policy : cm_lookup_policy) (p : cm_program),
+cm_typed_program policy p -> cm_concrete_structs_ready p
+     : forall (policy : cm_lookup_policy) (p : cm_program),
+       cm_typed_program policy p -> cm_concrete_structs_ready p
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context
+Closed under the global context

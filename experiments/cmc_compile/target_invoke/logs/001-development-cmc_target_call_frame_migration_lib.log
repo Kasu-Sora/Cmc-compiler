@@ -1,0 +1,252 @@
+Chars 0 - 87 [Require~Export~~~SimpleC.EE.QC...] 1.525 secs (1.18u,0.153s)
+Chars 88 - 133 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 134 - 155 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 156 - 181 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 182 - 746 [Lemma~cm_machine_save_call_fra...] 0.002 secs (0.u,0.s)
+Chars 747 - 753 [Proof.] 0. secs (0.u,0.s)
+Chars 755 - 811 [(intros~TAG~OUT~[D~[CR~SR]]~SI...] 0.001 secs (0.u,0.s)
+Chars 813 - 926 [(unfold~cm_machine_state_sim;~...] 0. secs (0.u,0.s)
+Chars 928 - 1000 [(split;~~~[~cbn[tvm_mem];~rewr...] 0. secs (0.u,0.s)
+Chars 1002 - 1008 [split.] 0. secs (0.u,0.s)
+Chars 1010 - 1011 [-] 0. secs (0.u,0.s)
+Chars 1012 - 1252 [(cbn[cm_call_frames_sim~tvm_me...] 0. secs (0.u,0.s)
+Chars 1254 - 1255 [-] 0. secs (0.u,0.s)
+Chars 1256 - 1400 [(split;~[~now~apply~cm_spill_f...] 0. secs (0.u,0.s)
+Chars 1401 - 1405 [Qed.] 0.002 secs (0.002u,0.s)
+Chars 1406 - 2654 [Lemma~cm_machine_prologue_pend...] 0.001 secs (0.001u,0.s)
+Chars 2655 - 2661 [Proof.] 0. secs (0.u,0.s)
+Chars 2663 - 2738 [(cbn~zeta;~intros~FW~BEFORE~GE...] 0. secs (0.u,0.s)
+Chars 2740 - 2922 [(pose~proof~~~(cm_machine_save...] 0. secs (0.u,0.s)
+Chars 2924 - 2977 [(eapply~cm_machine_call_pendin...] 0.008 secs (0.007u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_invoke/build/Rocq/examples/QCP_demos_human/cmc_target_call_frame_migration_lib.v", line 36, characters 8-37:
+Error:
+In environment
+sp : cm_source_lookup_policy
+p : cm_program
+fid : Z
+st : cm_src_state
+vm : tvm_state
+calls : list cm_call_sim_frame
+frames : list cm_spill_frame
+values : list cm_value
+returnpc, pc : Z
+FW :
+  cm_function_wf (cm_source_function_policy sp) p
+    (cm_source_function_at sp fid p)
+BEFORE : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+GEN : cm_tags_generation_below (cm_state_nextgen st) (cm_state_tags st)
+FGEN : cm_spill_frames_generation_below (cm_state_nextgen st) frames
+TAG : cm_tagged_span_valid st
+OUT :
+  forall a : Z,
+  cm_live_address st a ->
+  a < cm_state_fp (cm_call_base_state sp p fid st) \/
+  cm_state_fp (cm_call_base_state sp p fid st) + 8 <= a
+OUT8 : forall a : Z, cm_live_address st a -> a < 8 \/ 16 <= a
+SAFE :
+  cm_machine_range_safe (cm_source_function_policy sp) p
+    (cm_state_fp (cm_call_base_state sp p fid st)) 8 calls frames
+CR : cm_call_frames_range_safe 8 8 calls
+SR : cm_spill_frames_range_safe (cm_source_function_policy sp) p 8 8 frames
+BSIGN : tower_signed64 (cm_state_fp (cm_call_base_state sp p fid st))
+FSIGN : tower_signed64 (cm_state_fp st)
+SIM :
+  cm_machine_state_sim (cm_source_function_policy sp) p st vm calls frames
+    values []
+SAVE :
+  cm_machine_state_sim (cm_source_function_policy sp) p st
+    (TVMState pc (cm_encode_values st values) (returnpc :: tvm_calls vm)
+       (tower_setw (tvm_mem vm)
+          (cm_state_fp (cm_call_base_state sp p fid st)) 
+          (cm_state_fp st)) (tvm_input vm) (tvm_output vm))
+    (CMCallSimFrame (cm_state_fp (cm_call_base_state sp p fid st))
+       (cm_state_fp st) returnpc :: calls) frames values []
+Unable to unify
+ "cm_initialized_bytes_sim (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531)
+    (tvm_mem
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532))) /\
+  cm_stored_provenance_sim (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531)
+    (tvm_mem
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532))) /\
+  tower_getw
+    (tvm_mem
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532))) 8 =
+  cm_state_fp (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) /\
+  cm_call_frames_sim
+    (tvm_mem
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532))) 
+    ?M2533
+    (tvm_calls
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532))) /\
+  cm_spill_frames_sim (cm_source_function_policy ?M2528) 
+    ?M2529 (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531)
+    (tvm_mem
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532)))
+    (CMSpillFrame ?M2530
+       (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)) []
+     :: ?M2534) /\
+  tvm_input
+    (TVMState ?M2536
+       (cm_encode_values (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531)
+          ?M2535) (tvm_calls ?M2532)
+       (tower_setw (tvm_mem ?M2532) 8
+          (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+       (tvm_input ?M2532) (tvm_output ?M2532)) =
+  cm_state_input (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) /\
+  tvm_output
+    (TVMState ?M2536
+       (cm_encode_values (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531)
+          ?M2535) (tvm_calls ?M2532)
+       (tower_setw (tvm_mem ?M2532) 8
+          (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+       (tvm_input ?M2532) (tvm_output ?M2532)) =
+  cm_state_output (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) /\
+  cm_operand_suffix_sim (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531)
+    ?M2535 []
+    (tvm_stack
+       (TVMState ?M2536
+          (cm_encode_values
+             (cm_call_pending_base ?M2528 ?M2529 ?M2530 ?M2531) 
+             ?M2535) (tvm_calls ?M2532)
+          (tower_setw (tvm_mem ?M2532) 8
+             (cm_state_fp (cm_call_base_state ?M2528 ?M2529 ?M2530 ?M2531)))
+          (tvm_input ?M2532) (tvm_output ?M2532)))" with
+ "cm_initialized_bytes_sim (cm_call_pending_base sp p fid st)
+    (tvm_mem
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm))) /\
+  cm_stored_provenance_sim (cm_call_pending_base sp p fid st)
+    (tvm_mem
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm))) /\
+  tower_getw
+    (tvm_mem
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm))) 8 =
+  cm_state_fp (cm_call_pending_base sp p fid st) /\
+  cm_call_frames_sim
+    (tvm_mem
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm)))
+    (CMCallSimFrame (cm_state_fp (cm_call_base_state sp p fid st))
+       (cm_state_fp st) returnpc :: calls)
+    (tvm_calls
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm))) /\
+  cm_spill_frames_sim (cm_source_function_policy sp) p
+    (cm_call_pending_base sp p fid st)
+    (tvm_mem
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm)))
+    (CMSpillFrame fid (cm_state_fp (cm_call_base_state sp p fid st)) []
+     :: frames) /\
+  tvm_input
+    (TVMState pc (cm_encode_values (cm_call_pending_base sp p fid st) values)
+       (returnpc :: tvm_calls vm)
+       (tower_setw
+          (tower_setw (tvm_mem vm)
+             (cm_state_fp (cm_call_base_state sp p fid st)) 
+             (cm_state_fp st)) 8
+          (cm_state_fp (cm_call_base_state sp p fid st))) 
+       (tvm_input vm) (tvm_output vm)) =
+  cm_state_input (cm_call_pending_base sp p fid st) /\
+  tvm_output
+    (TVMState pc (cm_encode_values (cm_call_pending_base sp p fid st) values)
+       (returnpc :: tvm_calls vm)
+       (tower_setw
+          (tower_setw (tvm_mem vm)
+             (cm_state_fp (cm_call_base_state sp p fid st)) 
+             (cm_state_fp st)) 8
+          (cm_state_fp (cm_call_base_state sp p fid st))) 
+       (tvm_input vm) (tvm_output vm)) =
+  cm_state_output (cm_call_pending_base sp p fid st) /\
+  cm_operand_suffix_sim (cm_call_pending_base sp p fid st) values []
+    (tvm_stack
+       (TVMState pc
+          (cm_encode_values (cm_call_pending_base sp p fid st) values)
+          (returnpc :: tvm_calls vm)
+          (tower_setw
+             (tower_setw (tvm_mem vm)
+                (cm_state_fp (cm_call_base_state sp p fid st))
+                (cm_state_fp st)) 8
+             (cm_state_fp (cm_call_base_state sp p fid st))) 
+          (tvm_input vm) (tvm_output vm)))".
+

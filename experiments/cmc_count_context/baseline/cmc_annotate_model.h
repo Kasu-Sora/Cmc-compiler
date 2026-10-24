@@ -1,0 +1,61 @@
+#pragma once
+
+#include "proof/proof.h"
+#include "cmc_sim.h"
+
+PROOF thm get_cm_aphase_recursion(void);
+PROOF extern thm cm_phase_frame_def;
+PROOF extern thm cm_cursor_phase_def;
+PROOF extern thm cm_cursor_temp_def;
+PROOF extern thm cm_cursor_break_def;
+PROOF extern thm cm_cursor_continue_def;
+PROOF extern thm cm_cursor_frames_def;
+PROOF extern thm cm_ann_pc_def;
+PROOF extern thm cm_ann_temp_def;
+PROOF extern thm cm_ann_break_def;
+PROOF extern thm cm_ann_continue_def;
+PROOF extern thm cm_ann_cursors_def;
+PROOF extern thm cm_ann_spills_def;
+PROOF extern thm cm_ann_saved_def;
+PROOF extern thm cm_ann_calls_def;
+PROOF extern thm cm_update_steps_def;
+PROOF extern thm cm_update_annotation_def;
+PROOF extern thm cm_astate_task_def;
+PROOF extern thm cm_astate_target_def;
+PROOF extern thm cm_astate_annotation_def;
+PROOF extern thm cm_code_steps_def;
+PROOF extern thm cm_ann_plain_def;
+PROOF extern thm cm_ann_done_def;
+PROOF extern thm cm_ann_linear_def;
+PROOF extern thm cm_ann_push_def;
+PROOF extern thm cm_ann_replace_def;
+PROOF extern thm cm_ann_pop_def;
+PROOF extern thm cm_ann_spills_set_def;
+PROOF extern thm cm_spill_remove_def;
+PROOF extern thm cm_spill_put_def;
+PROOF extern thm cm_call_body_pc_def;
+PROOF extern thm cm_ann_enter_call_def;
+PROOF extern thm cm_update_r_def;
+PROOF extern thm cm_update_l_def;
+PROOF extern thm cm_update_s_def;
+PROOF extern thm cm_assign_tail_code_def;
+PROOF extern thm cm_index_tail_code_def;
+PROOF extern thm cm_member_tail_code_def;
+PROOF extern thm cm_init_tail_code_def;
+PROOF extern thm cm_status_tail_code_def;
+PROOF extern thm cm_return_tail_code_def;
+PROOF extern thm cm_fallthrough_tail_code_def;
+PROOF extern thm cm_arg_final_code_def;
+PROOF extern thm cm_ann_put_spill_def;
+PROOF extern thm cm_ann_leave_call_def;
+PROOF extern thm cm_update_v_def;
+PROOF extern thm cm_update_c_def;
+PROOF extern thm cm_initial_annotation_def;
+PROOF extern thm cm_entry_steps_def;
+PROOF extern thm cm_annotation_step_def;
+PROOF extern thm cm_annotated_start_def;
+PROOF extern thm cm_annotated_step_def;
+PROOF extern thm cm_annotated_iter_def;
+PROOF extern thm cm_annotation_erases_def;
+PROOF extern thm cm_cursors_rooted_def;
+PROOF extern thm cm_annotation_rooted_def;

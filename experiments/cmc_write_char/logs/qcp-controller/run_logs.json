@@ -1,0 +1,30 @@
+{"at": "2026-10-15T11:33:38.807347Z", "details": {"run_id": "cmc_write_char_migration-20261015193338"}, "event": "run-initialized", "phase": "intake"}
+{"at": "2026-10-15T11:33:45.380092Z", "details": {"actions": ["spawn-cmc_write_char_migration-annotation-r1-attempt-1"]}, "event": "controller-step", "phase": "annotation"}
+{"at": "2026-10-15T11:33:51.100432Z", "details": {"action": "spawn-cmc_write_char_migration-annotation-r1-attempt-1", "attempt": "cmc_write_char_migration-annotation-r1-attempt-1", "owner": "annotation/cmc_write_char_migration-20261015193338"}, "event": "attempt-claimed", "phase": "annotation"}
+{"at": "2026-10-15T11:36:45.949358Z", "details": {"attempt": "cmc_write_char_migration-annotation-r1-attempt-1", "owner": "annotation/cmc_write_char_migration-20261015193338"}, "event": "delivery-finalized", "phase": "annotation"}
+{"at": "2026-10-15T11:36:45.974320Z", "details": {"attempt": "cmc_write_char_migration-annotation-r1-attempt-1", "errors": [], "status": "ready-for-main-check"}, "event": "round-attempt-validated", "phase": "annotation"}
+{"at": "2026-10-15T11:36:53.516110Z", "details": {"actions": ["annotation-check-cmc_write_char_migration-annotation-r1"]}, "event": "controller-step", "phase": "annotation"}
+{"at": "2026-10-15T11:37:00.232003Z", "details": {"round": "cmc_write_char_migration-annotation-r1"}, "event": "annotation-round-accepted", "phase": "annotation"}
+{"at": "2026-10-15T11:37:08.983269Z", "details": {"actions": ["dune-build"]}, "event": "controller-step", "phase": "dune-build"}
+{"at": "2026-10-15T11:37:14.878773Z", "details": {}, "event": "dune-preparation-started", "phase": "dune-build"}
+{"at": "2026-10-15T11:37:22.956648Z", "details": {"dependency_count": 144, "snapshot_digest": "5f862e06f65d3953c05a0577030577509208d2ff28a9775d4933e8a063671170"}, "event": "dune-preparation-passed", "phase": "dune-build"}
+{"at": "2026-10-15T11:37:40.318091Z", "details": {"actions": ["spawn-cmc_write_char_migration-vc-checking-r1-attempt-1"]}, "event": "controller-step", "phase": "vc-checking"}
+{"at": "2026-10-15T11:37:47.116455Z", "details": {"action": "spawn-cmc_write_char_migration-vc-checking-r1-attempt-1", "attempt": "cmc_write_char_migration-vc-checking-r1-attempt-1", "owner": "vc-checking/cmc_write_char_migration-vc-checking-r1-attempt-1"}, "event": "attempt-claimed", "phase": "vc-checking"}
+{"at": "2026-10-15T11:40:02.204518Z", "details": {"attempt": "cmc_write_char_migration-vc-checking-r1-attempt-1", "error_count": 2, "first_error": "Structural Blocker Scan status must be passed"}, "event": "vc-checking-candidate-preflight-failed", "phase": "vc-checking"}
+{"at": "2026-10-15T11:40:36.618977Z", "details": {"attempt": "cmc_write_char_migration-vc-checking-r1-attempt-1", "owner": "vc-checking/cmc_write_char_migration-vc-checking-r1-attempt-1"}, "event": "delivery-finalized", "phase": "vc-checking"}
+{"at": "2026-10-15T11:40:36.642852Z", "details": {"attempt": "cmc_write_char_migration-vc-checking-r1-attempt-1", "errors": [], "status": "ready-for-main-check"}, "event": "round-attempt-validated", "phase": "vc-checking"}
+{"at": "2026-10-15T11:40:44.197483Z", "details": {"actions": ["vc-checking-check-cmc_write_char_migration-vc-checking-r1"]}, "event": "controller-step", "phase": "vc-checking"}
+{"at": "2026-10-15T11:40:50.912893Z", "details": {"round": "cmc_write_char_migration-vc-checking-r1"}, "event": "vc-checking-round-accepted", "phase": "vc-checking"}
+{"at": "2026-10-15T11:41:02.523459Z", "details": {"actions": ["vc-proving-preparing-cmc_write_char_migration-vc-proving-r1"]}, "event": "controller-step", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T11:41:09.131177Z", "details": {"group_count": 1, "previous_proving_round": null, "round": "cmc_write_char_migration-vc-proving-r1"}, "event": "vc-proving-prepared", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T11:41:20.224463Z", "details": {"action": "spawn-cmc_write_char_migration-vc-proving-r1-char-byte-conversion", "attempt": "cmc_write_char_migration-vc-proving-r1:char-byte-conversion", "owner": "group-worker/cmc_write_char_migration-vc-proving-r1/char-byte-conversion"}, "event": "attempt-claimed", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T11:43:14.645812Z", "details": {"attempt": "cmc_write_char_migration-vc-proving-r1:char-byte-conversion", "owner": "group-worker/cmc_write_char_migration-vc-proving-r1/char-byte-conversion"}, "event": "delivery-finalized", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T11:43:16.363334Z", "details": {"errors": [], "group_id": "char-byte-conversion", "status": "accepted"}, "event": "group-attempt-validated", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T11:43:28.128151Z", "details": {"actions": ["vc-proving-verify-cmc_write_char_migration-vc-proving-r1"]}, "event": "controller-step", "phase": "vc-proving-preparing"}
+{"at": "2026-10-15T11:43:35.695526Z", "details": {"round": "cmc_write_char_migration-vc-proving-r1"}, "event": "vc-proving-verified", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T11:43:43.061634Z", "details": {"actions": ["final-candidate-apply"]}, "event": "controller-step", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T11:43:51.619318Z", "details": {"transaction_id": "3da67b65797d46fcaf765905a8b7590b"}, "event": "final-apply-transaction-prepared", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T11:43:51.630484Z", "details": {"transaction_id": "3da67b65797d46fcaf765905a8b7590b"}, "event": "final-apply-backups-sealed", "phase": "final-candidate-apply"}
+{"at": "2026-10-15T11:43:51.639455Z", "details": {"files": ["Rocq/examples/QCP_demos_human/cmc_write_char_migration_proof_manual.v"]}, "event": "final-candidate-applied", "phase": "final-check"}
+{"at": "2026-10-15T11:43:58.042334Z", "details": {"actions": ["final-check"]}, "event": "controller-step", "phase": "final-check"}
+{"at": "2026-10-15T11:44:04.528734Z", "details": {"failure_classes": []}, "event": "final-check-passed", "phase": "done"}

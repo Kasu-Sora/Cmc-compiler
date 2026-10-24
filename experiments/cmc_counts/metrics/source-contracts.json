@@ -1,0 +1,122 @@
+[
+  {
+    "function": "cmc_expr_type_code_value",
+    "source_span": [
+      13,
+      32
+    ],
+    "contract": "    [[cst::param(`e:cm_expr`)]]\n    [[cst::require(\n      `cm_expr_rep expr e ** undef_data_at code Tint`)]]\n    [[cst::ensure(\n      `cm_expr_rep expr e **\n       data_at code Tint (cm_type_encode (cm_expr_type e))`)]]"
+  },
+  {
+    "function": "cm_expr_lvalue_count",
+    "source_span": [
+      88,
+      145
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`, `e:cm_expr`,\n                 `structs:(cm_struct_d)list`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`,\n                 `zs:int`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_expr_wf p f e <=> true) **\n       fact(cm_expr_counts_representable p fid e <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_expr_rep expr e`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_expr_wf p f e <=> true) **\n       fact(cm_expr_counts_representable p fid e <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_expr_rep expr e **\n       fact((__return:int) ==\n         cm_lcount_of (cm_expr_code_counts p fid e)) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cm_expr_rvalue_count",
+    "source_span": [
+      147,
+      204
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`, `e:cm_expr`,\n                 `structs:(cm_struct_d)list`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`,\n                 `zs:int`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_expr_wf p f e <=> true) **\n       fact(cm_expr_counts_representable p fid e <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_expr_rep expr e`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_expr_wf p f e <=> true) **\n       fact(cm_expr_counts_representable p fid e <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_expr_rep expr e **\n       fact((__return:int) ==\n         cm_rcount_of (cm_expr_code_counts p fid e)) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_args_code_count",
+    "source_span": [
+      206,
+      454
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`,\n                 `args:(cm_expr)list`, `slots:(cm_slot_d)list`,\n                 `structs:(cm_struct_d)list`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`,\n                 `zs:int`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_args_wf p f args slots <=> true) **\n       fact(cm_args_counts_representable p fid args <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_arg_list_rep arg args **\n       undef_data_at count Tint`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_args_wf p f args slots <=> true) **\n       fact(cm_args_counts_representable p fid args <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_arg_list_rep arg args **\n       data_at count Tint\n         (cm_args_code_count_of (cm_args_code_counts p fid args)) **\n       fact(cm_i32_code_count\n         (cm_args_code_count_of\n           (cm_args_code_counts p fid args)) <=> true)`)]]"
+  },
+  {
+    "function": "cm_binding_address_count_value",
+    "source_span": [
+      661,
+      707
+    ],
+    "contract": "    [[cst::require(\n      `undef_data_at count Tint`)]]\n    [[cst::ensure(\n      `data_at count Tint\n         (cm_binding_address_count (scope:int)) **\n       fact(cm_i32_code_count\n         (cm_binding_address_count (scope:int)) <=> true)`)]]"
+  },
+  {
+    "function": "cm_expr_counts",
+    "source_span": [
+      709,
+      2629
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`, `e:cm_expr`,\n                 `structs:(cm_struct_d)list`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`,\n                 `zs:int`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_expr_wf p f e <=> true) **\n       fact(cm_expr_counts_representable p fid e <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_expr_rep expr e **\n       undef_data_at lvalue Tint **\n       undef_data_at rvalue Tint`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_expr_wf p f e <=> true) **\n       fact(cm_expr_counts_representable p fid e <=> true) **\n       fact(cm_type_code_wf (cm_expr_type e) <=> true) **\n       fact(cm_i32_code_count\n         (cm_type_encode (cm_expr_type e)) <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_expr_rep expr e **\n       data_at lvalue Tint\n         (cm_lcount_of (cm_expr_code_counts p fid e)) **\n       data_at rvalue Tint\n         (cm_rcount_of (cm_expr_code_counts p fid e)) **\n       fact(cm_i32_code_count\n         (cm_lcount_of (cm_expr_code_counts p fid e)) <=> true) **\n       fact(cm_i32_code_count\n         (cm_rcount_of (cm_expr_code_counts p fid e)) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_stmt_code_count",
+    "source_span": [
+      3118,
+      3852
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`, `s:cm_stmt`,\n                 `loop_:bool`, `structs:(cm_struct_d)list`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`,\n                 `zs:int`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_stmt_wf p f loop_ s <=> true) **\n       fact(cm_stmt_counts_representable p fid s <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Fret_ty) Tint\n         (cm_type_encode (cm_function_ret f)) **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_stmt_rep stmt s`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(structs == cm_program_structs p) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(cm_stmt_wf p f loop_ s <=> true) **\n       fact(cm_stmt_counts_representable p fid s <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       fact(cm_i32_code_count (cm_stmt_code_count p fid s) <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Fret_ty) Tint\n         (cm_type_encode (cm_function_ret f)) **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       cm_stmt_rep stmt s **\n       fact((__return:int) == cm_stmt_code_count p fid s)`)]]"
+  },
+  {
+    "function": "cmc_param_stores_count",
+    "source_span": [
+      3854,
+      3999
+    ],
+    "contract": "    [[cst::param(`params:(cm_slot_d)list`)]]\n    [[cst::require(\n      `fact(cm_param_counts_representable params <=> true) **\n       cm_slot_list_rep param params`)]]\n    [[cst::ensure(\n      `fact(cm_param_counts_representable params <=> true) **\n       cm_slot_list_rep param params **\n       fact((__return:int) == cm_param_stores_count params) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_function_prologue_count",
+    "source_span": [
+      4001,
+      4065
+    ],
+    "contract": "    [[cst::param(`f:cm_function_d`, `body:int`, `next:int`)]]\n    [[cst::require(\n      `fact(cm_param_counts_representable\n              (cm_function_params f) <=> true) **\n       fact(cm_i32_code_count\n              (cm_function_prologue_count f) <=> true) **\n       cm_function_context_rep fn f body next`)]]\n    [[cst::ensure(\n      `fact(cm_param_counts_representable\n              (cm_function_params f) <=> true) **\n       fact(cm_i32_code_count\n              (cm_function_prologue_count f) <=> true) **\n       cm_function_context_rep fn f body next **\n       fact((__return:int) == cm_function_prologue_count f) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_function_code_count",
+    "source_span": [
+      4067,
+      4216
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`,\n                 `functions_ptr:int`, `body_ptr:int`,\n                 `next_ptr:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_function_counts_representable p fid f <=> true) **\n       fact(cm_stmt_wf p f F (cm_function_body f) <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_context_rep fn f body_ptr next_ptr **\n       cm_stmt_rep body_ptr (cm_function_body f)`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_function_counts_representable p fid f <=> true) **\n       fact(cm_stmt_wf p f F (cm_function_body f) <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_context_rep fn f body_ptr next_ptr **\n       cm_stmt_rep body_ptr (cm_function_body f) **\n       fact((__return:int) == cm_function_code_count p fid) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_function_prefix_count",
+    "source_span": [
+      4218,
+      4646
+    ],
+    "contract": "    [[cst::param(`p:cm_program`,\n                 `functions:(cm_function_d)list`,\n                 `functions_ptr:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       fact(0i <= index) **\n       fact(0i <= remaining) **\n       fact(remaining <= ilength functions) **\n       fact(index ==\n         ilength (cm_program_functions p) -\n         ilength functions) **\n       fact(index + remaining <= 2147483647i) **\n       fact(cm_functions_counts_representable\n              p functions index <=> true) **\n       fact(cm_i32_code_count\n              (11i + cm_function_prefix\n                p functions remaining) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep fn functions`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       fact(0i <= index) **\n       fact(0i <= remaining) **\n       fact(remaining <= ilength functions) **\n       fact(index ==\n         ilength (cm_program_functions p) -\n         ilength functions) **\n       fact(index + remaining <= 2147483647i) **\n       fact(cm_functions_counts_representable\n              p functions index <=> true) **\n       fact(cm_i32_code_count\n              (11i + cm_function_prefix\n                p functions remaining) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep fn functions **\n       fact((__return:int) ==\n         cm_function_prefix p functions remaining) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_function_pc",
+    "source_span": [
+      4648,
+      4747
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `functions_ptr:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       fact(0i <= fid) **\n       fact(fid <= ilength (cm_program_functions p)) **\n       fact(cm_i32_code_count\n              (cm_function_pc p fid) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep functions_ptr\n         (cm_program_functions p)`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       fact(0i <= fid) **\n       fact(fid <= ilength (cm_program_functions p)) **\n       fact(cm_i32_code_count\n              (cm_function_pc p fid) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep functions_ptr\n         (cm_program_functions p) **\n       fact((__return:int) == cm_function_pc p fid) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_functions_code_size_count",
+    "source_span": [
+      4749,
+      5112
+    ],
+    "contract": "    [[cst::param(`p:cm_program`,\n                 `functions:(cm_function_d)list`,\n                 `functions_ptr:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       fact(0i <= index) **\n       fact(index ==\n         ilength (cm_program_functions p) -\n         ilength functions) **\n       fact(index + ilength functions <= 2147483647i) **\n       fact(cm_functions_counts_representable\n              p functions index <=> true) **\n       fact(cm_i32_code_count\n              (cm_functions_code_size\n                p functions index) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep fn functions`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       fact(0i <= index) **\n       fact(index ==\n         ilength (cm_program_functions p) -\n         ilength functions) **\n       fact(index + ilength functions <= 2147483647i) **\n       fact(cm_functions_counts_representable\n              p functions index <=> true) **\n       fact(cm_i32_code_count\n              (cm_functions_code_size\n                p functions index) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep fn functions **\n       fact((__return:int) ==\n         cm_functions_code_size p functions index) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_model_code_length",
+    "source_span": [
+      5114,
+      5279
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `functions_ptr:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep functions_ptr\n         (cm_program_functions p)`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_structs_safe\n              (cm_program_structs p) <=> true) **\n       cm_program_context_rep program p functions_ptr **\n       cm_function_list_rep functions_ptr\n         (cm_program_functions p) **\n       fact((__return:int) == cm_model_code_length p) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  },
+  {
+    "function": "cmc_model_data_length",
+    "source_span": [
+      5281,
+      5441
+    ],
+    "contract": "    [[cst::param(`p:cm_program`, `functions_ptr:int`)]]\n    [[cst::require(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_globals_safe\n              (cm_program_globals p) <=> true) **\n       fact(cm_rep_strings_safe\n              (cm_program_strings p) <=> true) **\n       fact(cm_model_data_length p ==\n         (8i + cm_rep_globals_size\n           (cm_program_globals p)) +\n         cm_rep_strings_size\n           (cm_program_strings p)) **\n       cm_program_context_rep program p functions_ptr`)]]\n    [[cst::ensure(\n      `fact(cm_wf_program p <=> true) **\n       fact(cm_rep_globals_safe\n              (cm_program_globals p) <=> true) **\n       fact(cm_rep_strings_safe\n              (cm_program_strings p) <=> true) **\n       fact(cm_model_data_length p ==\n         (8i + cm_rep_globals_size\n           (cm_program_globals p)) +\n         cm_rep_strings_size\n           (cm_program_strings p)) **\n       cm_program_context_rep program p functions_ptr **\n       fact((__return:int) == cm_model_data_length p) **\n       fact(cm_i32_code_count (__return:int) <=> true)`)]]"
+  }
+]

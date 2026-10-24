@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cmc_patch_code_arrays",
+      "target_contract_sha256": "73f11645617a3b0fbab478e0927a709be39ab81da5fe30f3275dbd008a74e888",
+      "source_contract_sha256": "a56738a04602fc581a20592cc79e30a527ba619706aef41ff295341b80f4bd9a",
+      "status": "reviewed",
+      "review": "Original wf/code-ready, context and complete function-list retained; exact array patching or resolved-to-physical output. No new valid-id, raw=model-code or nonnull-empty-array premise. Existing policy/cg boundary unchanged."
+    },
+    {
+      "function": "cmc_patch_resolved_calls",
+      "target_contract_sha256": "cfcb77c03747065571379662284509a8f7f1b4374726df3d2c1f17caa8acdec3",
+      "source_contract_sha256": "d5aa0c0f87bac7839651a38ccb4ccdee1cb80616fef9b72ac8a1af163d73934f",
+      "status": "reviewed",
+      "review": "Original wf/code-ready, context and complete function-list retained; exact array patching or resolved-to-physical output. No new valid-id, raw=model-code or nonnull-empty-array premise. Existing policy/cg boundary unchanged."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_patch_tail",
+      "kind": "Definition",
+      "span": [
+        9,
+        9
+      ],
+      "sha256": "392425cb5736c79aa6d1c835a79e8ffee85df8cf3cdb30936ef37fcb6c0ba867",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_patch_arrays_rep",
+      "kind": "Definition",
+      "span": [
+        11,
+        13
+      ],
+      "sha256": "b073530525f7038f7c2535a131843fb577743385a848c46ef5628a92e0d43685",
+      "nonblank_lines": 3
+    }
+  ],
+  "annotation_stage_model_review": {
+    "cm_patch_tail": "Total tl: nil maps to nil, cons maps to tail, exactly matching source exported observation.",
+    "cm_patch_arrays_rep": "Transparent abbreviation exactly equal to original two full-array resources. No new pure condition, nonnull restriction or hidden state. Allows raw inference at recursive and wrapper call sites."
+  },
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "source_model": "baseline/cmc_concrete_patch_calls.c:9",
+  "array_mapping": "store_int_array and store_int64_array map to IntArray.full and Int64Array.full: complete indexed cell ownership with corresponding 4/8 byte element stores; empty full arrays impose no extra base nonnull condition. Existing emitter uses matching seg/undef_seg resources.",
+  "model_review": "Reused exact patch_inst/code definitions: opcode unchanged; only code22 immediate mapped through unrestricted total function PC. Resolved wrapper existential raw buffer is not identified with resolved. Final merged proof and any helpers separately reviewed.",
+  "final_library_review": "final-library-review.json",
+  "final_model_hashes_unchanged": true,
+  "new_assumptions": false
+}

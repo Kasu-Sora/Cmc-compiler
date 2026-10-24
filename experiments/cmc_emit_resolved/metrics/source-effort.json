@@ -1,0 +1,532 @@
+{
+  "source_sha256": "94dca30a65c5dea078a7527f072b57f7ebe6e918f563c20d6f1137f774a15beb",
+  "function_counts": [
+    {
+      "function": "cm_emit_resolved",
+      "source_span": [
+        264,
+        314
+      ],
+      "specification": 10,
+      "annotation": 0,
+      "inline_proof": 36
+    },
+    {
+      "function": "cm_emit_resolved_call",
+      "source_span": [
+        316,
+        376
+      ],
+      "specification": 9,
+      "annotation": 0,
+      "inline_proof": 48
+    },
+    {
+      "function": "cm_emit_resolved_normalize",
+      "source_span": [
+        378,
+        416
+      ],
+      "specification": 11,
+      "annotation": 1,
+      "inline_proof": 23
+    },
+    {
+      "function": "cm_emit_resolved_load",
+      "source_span": [
+        418,
+        450
+      ],
+      "specification": 10,
+      "annotation": 1,
+      "inline_proof": 18
+    },
+    {
+      "function": "cm_emit_resolved_store",
+      "source_span": [
+        452,
+        484
+      ],
+      "specification": 10,
+      "annotation": 1,
+      "inline_proof": 18
+    },
+    {
+      "function": "cm_emit_resolved_fp_address",
+      "source_span": [
+        486,
+        521
+      ],
+      "specification": 9,
+      "annotation": 1,
+      "inline_proof": 21
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "source_span": [
+        523,
+        589
+      ],
+      "specification": 28,
+      "annotation": 9,
+      "inline_proof": 25
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "source_span": [
+        591,
+        657
+      ],
+      "specification": 28,
+      "annotation": 9,
+      "inline_proof": 25
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_resolved_add_opcode_fact",
+      "kind": "proof",
+      "span": [
+        3,
+        10
+      ],
+      "nonblank_lines": 8,
+      "text": "PROOF static void cm_resolved_add_opcode_fact(const term concrete,\n                                               const term opcode) {\n  thm code_fact = eqt_elim_rule(apply_conversion(\n      reduce_rewrite_conv(THM_LIST(get_tvm_opcode_code_def())),\n      mk_eq(concrete,\n        mk_comb(`tvm_opcode_code:tvm_opcode->int`, opcode))));\n  add_fact_st(code_fact);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_resolved_emitter_fold_hconv",
+      "kind": "proof",
+      "span": [
+        12,
+        33
+      ],
+      "nonblank_lines": 22,
+      "text": "PROOF static thm cm_resolved_emitter_fold_hconv(\n    const term program, const term emitter, const term out,\n    const term capacity, const term resolved_prefix,\n    const term raw_prefix) {\n  term subject = mk_comb(\n      mk_comb(\n        mk_comb(\n          mk_comb(\n            mk_comb(`cm_resolved_emitter_rep`, program), emitter),\n          out),\n        capacity),\n      resolved_prefix);\n  thm view = apply_conversion(\n      pure_rewrite_conv(THM_LIST(cm_resolved_emitter_rep_def)), subject);\n  term existential = dest_eq(concl(view)).tm2;\n  dest_binder_results outer = dest_sl_exists(existential);\n  term body = subst(TERM_PAIR_LIST(\n      (term_pair){raw_prefix, outer.v}), outer.tm);\n  thm introduced = refl_slrule(body);\n  introduced = exists_slrule(existential, raw_prefix, introduced);\n  return trans_slrule(introduced, eq2ent(sym_rule(view)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_open_resolved_emitter",
+      "kind": "proof",
+      "span": [
+        35,
+        43
+      ],
+      "nonblank_lines": 9,
+      "text": "PROOF static void cm_open_resolved_emitter(void) {\n  thm view = apply_conversion(\n      pure_rewrite_conv(THM_LIST(cm_resolved_emitter_rep_def)),\n      `cm_resolved_emitter_rep (p:cm_program) (emitter__pre:int)\n        (out:int) (capacity:int) (done:(tvm_inst)list)`);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      rename_exists_hconv(eq2ent(view),\n        TERM_LIST(`raw_prefix_:((tvm_inst)list)`))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prepare_resolved_fragment",
+      "kind": "proof",
+      "span": [
+        45,
+        84
+      ],
+      "nonblank_lines": 38,
+      "text": "PROOF static void cm_prepare_resolved_fragment(\n    const term raw_fragment, const term resolved_fragment,\n    const thm fragment_patch, const thm resolved_capacity_fact) {\n  thm prefix_patch = assume_rule(\n      `cm_patch_code (p:cm_program) (raw_prefix_:(tvm_inst)list) ==\n       (done:(tvm_inst)list)`);\n  thm prefix_patch_length = specl_rule(TERM_LIST(\n      `p:cm_program`, `raw_prefix_:(tvm_inst)list`),\n      cm_patch_code_length);\n  thm prefix_length = trans_rule(sym_rule(prefix_patch_length),\n      ap_term_rule(`ilength:(tvm_inst)list->int`, prefix_patch));\n  add_fact_st(prefix_length);\n\n  thm fragment_patch_length = specl_rule(TERM_LIST(\n      `p:cm_program`, raw_fragment), cm_patch_code_length);\n  thm fragment_length = trans_rule(sym_rule(fragment_patch_length),\n      ap_term_rule(`ilength:(tvm_inst)list->int`, fragment_patch));\n  add_fact_st(fragment_length);\n  thm sum_length = mk_binop_rule(`(+):int->int->int`,\n      prefix_length, fragment_length);\n  thm capacity_shape = mk_binop_rule(`(<=):int->int->bool`,\n      sum_length, refl_rule(`capacity:int`));\n  thm raw_capacity = eq_mp_rule(sym_rule(capacity_shape),\n                                resolved_capacity_fact);\n  add_fact_st(raw_capacity);\n\n  term plan = mk_comb(\n      mk_comb(\n        mk_comb(\n          mk_comb(\n            mk_comb(`cm_emitter_plan_rep`, `emitter__pre:int`),\n            `out:int`),\n          `capacity:int`),\n        `raw_prefix_:(tvm_inst)list`),\n      raw_fragment);\n  thm plan_view = apply_conversion(\n      pure_rewrite_conv(THM_LIST(cm_emitter_plan_rep_def)), plan);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(sym_rule(plan_view))));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_expose_core_fragment",
+      "kind": "proof",
+      "span": [
+        86,
+        96
+      ],
+      "nonblank_lines": 11,
+      "text": "PROOF static void cm_expose_core_fragment(const term raw_fragment) {\n  thm append_nil = ispec_rule(\n      raw_fragment, get_theorem_by_name(\"APPEND_NIL\"));\n  thm plan_shape = beta_norm(ap_term_rule(\n      `\\todo:(tvm_inst)list.\n         cm_emitter_plan_rep (emitter__pre:int) (out:int)\n           (capacity:int) (raw_prefix_:(tvm_inst)list) todo`,\n      sym_rule(append_nil)));\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(plan_shape)));\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_finish_resolved_fragment",
+      "kind": "proof",
+      "span": [
+        98,
+        137
+      ],
+      "nonblank_lines": 39,
+      "text": "PROOF static void cm_finish_resolved_fragment(\n    const term raw_fragment, const term resolved_fragment,\n    const thm fragment_patch) {\n  term raw_extended = mk_binop(\n      `APPEND:(tvm_inst)list->(tvm_inst)list->(tvm_inst)list`,\n      `raw_prefix_:(tvm_inst)list`, raw_fragment);\n  term resolved_extended = mk_binop(\n      `APPEND:(tvm_inst)list->(tvm_inst)list->(tvm_inst)list`,\n      `done:(tvm_inst)list`, resolved_fragment);\n  term plan = mk_comb(\n      mk_comb(\n        mk_comb(\n          mk_comb(\n            mk_comb(`cm_emitter_plan_rep`, `emitter__pre:int`),\n            `out:int`),\n          `capacity:int`),\n        raw_extended),\n      `[]:(tvm_inst)list`);\n  thm plan_view = apply_conversion(\n      pure_rewrite_conv(THM_LIST(\n        cm_emitter_plan_rep_def, get_theorem_by_name(\"ILENGTH_DEF\"))),\n      plan);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      eq2ent(plan_view)));\n\n  thm extended_patch = by_rewrite(\n      mk_eq(mk_comb(mk_comb(`cm_patch_code`, `p:cm_program`),\n                     raw_extended),\n            resolved_extended),\n      THM_LIST(cm_patch_code_append, fragment_patch,\n        assume_rule(\n          `cm_patch_code (p:cm_program)\n             (raw_prefix_:(tvm_inst)list) ==\n           (done:(tvm_inst)list)`)));\n  add_fact_st(extended_patch);\n  cst_set_symbolic_state(local_apply(cst_get_symbolic_state(),\n      cm_resolved_emitter_fold_hconv(\n        `p:cm_program`, `emitter__pre:int`, `out:int`, `capacity:int`,\n        resolved_extended, raw_extended)));\n}",
+      "dependencies": [
+        "cm_resolved_emitter_fold_hconv"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_patch_char_normalize",
+      "kind": "proof",
+      "span": [
+        139,
+        162
+      ],
+      "nonblank_lines": 24,
+      "text": "PROOF static thm cm_prove_patch_char_normalize(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (ty:cm_type).\n         cm_patch_code p (cm_char_normalize_code ty) ==\n         cm_char_normalize_code ty`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = BOOL_CASES_TAC(\n      leaf, `(ty:cm_type) == CMCharTy`, \"Hchar\");\n  CONV_TAC(cases[0], then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_char_normalize_code_def(),\n        eqt_intro_rule(assume_rule(`(ty:cm_type) == CMCharTy`)),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  CONV_TAC(cases[1], then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_char_normalize_code_def(),\n        eqf_intro_rule(assume_rule(`~((ty:cm_type) == CMCharTy)`)),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_char_normalize",
+      "kind": "proof",
+      "span": [
+        163,
+        164
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cm_patch_char_normalize =\n    cm_prove_patch_char_normalize();",
+      "dependencies": [
+        "cm_prove_patch_char_normalize"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_patch_load",
+      "kind": "proof",
+      "span": [
+        166,
+        188
+      ],
+      "nonblank_lines": 23,
+      "text": "PROOF static thm cm_prove_patch_load(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (ty:cm_type).\n         cm_patch_code p (cm_load_code ty) == cm_load_code ty`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = BOOL_CASES_TAC(\n      leaf, `(ty:cm_type) == CMCharTy`, \"Hchar\");\n  CONV_TAC(cases[0], then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_load_code_def(),\n        eqt_intro_rule(assume_rule(`(ty:cm_type) == CMCharTy`)),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  CONV_TAC(cases[1], then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_load_code_def(),\n        eqf_intro_rule(assume_rule(`~((ty:cm_type) == CMCharTy)`)),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_load",
+      "kind": "proof",
+      "span": [
+        189,
+        189
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_patch_load = cm_prove_patch_load();",
+      "dependencies": [
+        "cm_prove_patch_load"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_patch_store",
+      "kind": "proof",
+      "span": [
+        191,
+        213
+      ],
+      "nonblank_lines": 23,
+      "text": "PROOF static thm cm_prove_patch_store(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (ty:cm_type).\n         cm_patch_code p (cm_store_code ty) == cm_store_code ty`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  gnode_list cases = BOOL_CASES_TAC(\n      leaf, `(ty:cm_type) == CMCharTy`, \"Hchar\");\n  CONV_TAC(cases[0], then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_store_code_def(),\n        eqt_intro_rule(assume_rule(`(ty:cm_type) == CMCharTy`)),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  CONV_TAC(cases[1], then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_store_code_def(),\n        eqf_intro_rule(assume_rule(`~((ty:cm_type) == CMCharTy)`)),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_store",
+      "kind": "proof",
+      "span": [
+        214,
+        214
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_patch_store = cm_prove_patch_store();",
+      "dependencies": [
+        "cm_prove_patch_store"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_patch_fp_address",
+      "kind": "proof",
+      "span": [
+        216,
+        229
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static thm cm_prove_patch_fp_address(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (offset:int).\n         cm_patch_code p (cm_fp_relative_address_code offset) ==\n         cm_fp_relative_address_code offset`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  CONV_TAC(leaf, then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_fp_relative_address_code_def(),\n        cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_fp_address",
+      "kind": "proof",
+      "span": [
+        230,
+        230
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_patch_fp_address = cm_prove_patch_fp_address();",
+      "dependencies": [
+        "cm_prove_patch_fp_address"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_patch_temp_store",
+      "kind": "proof",
+      "span": [
+        232,
+        245
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static thm cm_prove_patch_temp_store(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (fid:int) (temp:int).\n         cm_patch_code p (cm_temp_store_code p fid temp) ==\n         cm_temp_store_code p fid temp`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  CONV_TAC(leaf, then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_temp_store_code_def(), cm_patch_code_append,\n        cm_patch_fp_address, cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  return gnode_prove(root);\n}",
+      "dependencies": [
+        "cm_patch_fp_address"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_temp_store",
+      "kind": "proof",
+      "span": [
+        246,
+        246
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_patch_temp_store = cm_prove_patch_temp_store();",
+      "dependencies": [
+        "cm_prove_patch_temp_store"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_patch_temp_load",
+      "kind": "proof",
+      "span": [
+        248,
+        261
+      ],
+      "nonblank_lines": 14,
+      "text": "PROOF static thm cm_prove_patch_temp_load(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(p:cm_program) (fid:int) (temp:int).\n         cm_patch_code p (cm_temp_load_code p fid temp) ==\n         cm_temp_load_code p fid temp`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  CONV_TAC(leaf, then_conv(\n      rewrite_conv(THM_LIST(\n        get_cm_temp_load_code_def(), cm_patch_code_append,\n        cm_patch_fp_address, cm_patch_code_def, cm_patch_inst_def,\n        get_tvm_opcode_code_def())),\n      get_conversion_by_name(\"INT_REDUCE_CONV\")));\n  return gnode_prove(root);\n}",
+      "dependencies": [
+        "cm_patch_fp_address"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_patch_temp_load",
+      "kind": "proof",
+      "span": [
+        262,
+        262
+      ],
+      "nonblank_lines": 1,
+      "text": "PROOF static thm cm_patch_temp_load = cm_prove_patch_temp_load();",
+      "dependencies": [
+        "cm_prove_patch_temp_load"
+      ],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 115,
+    "annotation": 22,
+    "inline_proof": 214,
+    "private_case_proof_support": 246,
+    "case_proof": 460,
+    "proof_including_shared": 460
+  },
+  "annotation_entries": [
+    {
+      "function": "cm_emit_resolved_normalize",
+      "kind": "where",
+      "span": [
+        406,
+        406
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_load",
+      "kind": "where",
+      "span": [
+        442,
+        442
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_store",
+      "kind": "where",
+      "span": [
+        476,
+        476
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_fp_address",
+      "kind": "where",
+      "span": [
+        512,
+        512
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        571,
+        571
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        572,
+        572
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        573,
+        573
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        574,
+        574
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        575,
+        575
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        576,
+        576
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        577,
+        577
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        578,
+        578
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_store",
+      "kind": "where",
+      "span": [
+        579,
+        579
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        639,
+        639
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        640,
+        640
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        641,
+        641
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        642,
+        642
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        643,
+        643
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        644,
+        644
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        645,
+        645
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        646,
+        646
+      ],
+      "nonblank_lines": 1
+    },
+    {
+      "function": "cm_emit_resolved_temp_load",
+      "kind": "where",
+      "span": [
+        647,
+        647
+      ],
+      "nonblank_lines": 1
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. All 18 same-file static PROOF declarations counted as private case support; three patch/resolved definitions and two exported patch laws in cmc_concrete_defs.c inventoried separately."
+}

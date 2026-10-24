@@ -1,0 +1,376 @@
+[
+  {
+    "name": "cm_emit_raw",
+    "prototype": false,
+    "source_span": [
+      157,
+      264
+    ],
+    "specification": [
+      [
+        159,
+        160
+      ],
+      [
+        161,
+        163
+      ],
+      [
+        164,
+        166
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        168,
+        188
+      ],
+      [
+        190,
+        201
+      ],
+      [
+        203,
+        209
+      ],
+      [
+        211,
+        263
+      ]
+    ],
+    "runtime": "static void cm_emit_raw(struct cm_emitter *emitter, int op,\n                        long long immediate)\n{\n  emitter->output->ops[emitter->pc] = op;\n  emitter->output->imms[emitter->pc] = immediate;\n  emitter->pc = emitter->pc + 1;\n}\n"
+  },
+  {
+    "name": "cm_emit",
+    "prototype": false,
+    "source_span": [
+      266,
+      388
+    ],
+    "specification": [
+      [
+        267,
+        268
+      ],
+      [
+        269,
+        272
+      ],
+      [
+        273,
+        275
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        277,
+        307
+      ],
+      [
+        309,
+        387
+      ]
+    ],
+    "runtime": "void cm_emit(struct cm_emitter *emitter, int op, long long immediate)\n{\n  cm_emit_raw(emitter, op, immediate);\n}\n"
+  },
+  {
+    "name": "cm_emit_normalize",
+    "prototype": false,
+    "source_span": [
+      390,
+      501
+    ],
+    "specification": [
+      [
+        391,
+        392
+      ],
+      [
+        393,
+        397
+      ],
+      [
+        398,
+        400
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        403,
+        437
+      ],
+      [
+        444,
+        468
+      ],
+      [
+        470,
+        499
+      ]
+    ],
+    "runtime": "void cm_emit_normalize(struct cm_emitter *emitter, int ty)\n{\n  if (ty == CMC_TYPE_CHAR) {\n    cm_emit(emitter, CMC_OP_PUSH, 256);\n    cm_emit(emitter, CMC_OP_MOD, 0);\n    cm_emit(emitter, CMC_OP_PUSH, 256);\n    cm_emit(emitter, CMC_OP_ADD, 0);\n    cm_emit(emitter, CMC_OP_PUSH, 256);\n    cm_emit(emitter, CMC_OP_MOD, 0);\n  } else {\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_load",
+    "prototype": false,
+    "source_span": [
+      503,
+      554
+    ],
+    "specification": [
+      [
+        504,
+        505
+      ],
+      [
+        506,
+        510
+      ],
+      [
+        511,
+        513
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        516,
+        524
+      ],
+      [
+        526,
+        533
+      ],
+      [
+        535,
+        543
+      ],
+      [
+        545,
+        552
+      ]
+    ],
+    "runtime": "void cm_emit_load(struct cm_emitter *emitter, int ty)\n{\n  if (ty == CMC_TYPE_CHAR) {\n    cm_emit(emitter, CMC_OP_LOADB, 0);\n  } else {\n    cm_emit(emitter, CMC_OP_LOAD, 0);\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_store",
+    "prototype": false,
+    "source_span": [
+      556,
+      607
+    ],
+    "specification": [
+      [
+        557,
+        558
+      ],
+      [
+        559,
+        563
+      ],
+      [
+        564,
+        566
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        569,
+        577
+      ],
+      [
+        579,
+        586
+      ],
+      [
+        588,
+        596
+      ],
+      [
+        598,
+        605
+      ]
+    ],
+    "runtime": "void cm_emit_store(struct cm_emitter *emitter, int ty)\n{\n  if (ty == CMC_TYPE_CHAR) {\n    cm_emit(emitter, CMC_OP_STOREB, 0);\n  } else {\n    cm_emit(emitter, CMC_OP_STORE, 0);\n  }\n}\n"
+  },
+  {
+    "name": "cm_emit_fp_address",
+    "prototype": false,
+    "source_span": [
+      609,
+      640
+    ],
+    "specification": [
+      [
+        610,
+        611
+      ],
+      [
+        612,
+        614
+      ],
+      [
+        615,
+        617
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        619,
+        628
+      ],
+      [
+        633,
+        639
+      ]
+    ],
+    "runtime": "void cm_emit_fp_address(struct cm_emitter *emitter, long long offset)\n{\n  cm_emit(emitter, CMC_OP_PUSH, 8);\n  cm_emit(emitter, CMC_OP_LOAD, 0);\n  cm_emit(emitter, CMC_OP_PUSH, offset);\n  cm_emit(emitter, CMC_OP_ADD, 0);\n}\n"
+  },
+  {
+    "name": "cm_emit_temp_store",
+    "prototype": false,
+    "source_span": [
+      642,
+      712
+    ],
+    "specification": [
+      [
+        644,
+        647
+      ],
+      [
+        648,
+        659
+      ],
+      [
+        660,
+        671
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        673,
+        682
+      ],
+      [
+        684,
+        701
+      ],
+      [
+        704,
+        711
+      ]
+    ],
+    "runtime": "void cm_emit_temp_store(struct cm_function *fn, int temp,\n                               struct cm_emitter *emitter)\n{\n  long long offset = cmc_temp_offset(fn, temp);\n  cm_emit_fp_address(emitter, offset);\n  cm_emit(emitter, CMC_OP_STORE, 0);\n}\n"
+  },
+  {
+    "name": "cm_emit_temp_load",
+    "prototype": false,
+    "source_span": [
+      714,
+      784
+    ],
+    "specification": [
+      [
+        716,
+        719
+      ],
+      [
+        720,
+        731
+      ],
+      [
+        732,
+        743
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        745,
+        754
+      ],
+      [
+        756,
+        773
+      ],
+      [
+        776,
+        783
+      ]
+    ],
+    "runtime": "void cm_emit_temp_load(struct cm_function *fn, int temp,\n                              struct cm_emitter *emitter)\n{\n  long long offset = cmc_temp_offset(fn, temp);\n  cm_emit_fp_address(emitter, offset);\n  cm_emit(emitter, CMC_OP_LOAD, 0);\n}\n"
+  },
+  {
+    "name": "cmc_binary_opcode",
+    "prototype": false,
+    "source_span": [
+      786,
+      861
+    ],
+    "specification": [
+      [
+        787,
+        787
+      ],
+      [
+        788,
+        791
+      ]
+    ],
+    "annotation": [],
+    "inline_proof": [
+      [
+        796,
+        799
+      ],
+      [
+        802,
+        805
+      ],
+      [
+        808,
+        811
+      ],
+      [
+        814,
+        817
+      ],
+      [
+        820,
+        823
+      ],
+      [
+        826,
+        829
+      ],
+      [
+        832,
+        835
+      ],
+      [
+        838,
+        841
+      ],
+      [
+        844,
+        847
+      ],
+      [
+        850,
+        853
+      ],
+      [
+        856,
+        858
+      ]
+    ],
+    "runtime": "int cmc_binary_opcode(int op)\n{\n  int result;\n  if (op == CMC_BIN_EQ) {\n    result = CMC_OP_EQ;\n  } else if (op == CMC_BIN_NE) {\n    result = CMC_OP_NE;\n  } else if (op == CMC_BIN_LT) {\n    result = CMC_OP_LT;\n  } else if (op == CMC_BIN_LE) {\n    result = CMC_OP_LE;\n  } else if (op == CMC_BIN_GT) {\n    result = CMC_OP_GT;\n  } else if (op == CMC_BIN_GE) {\n    result = CMC_OP_GE;\n  } else if (op == CMC_BIN_ADD) {\n    result = CMC_OP_ADD;\n  } else if (op == CMC_BIN_SUB) {\n    result = CMC_OP_SUB;\n  } else if (op == CMC_BIN_MUL) {\n    result = CMC_OP_MUL;\n  } else if (op == CMC_BIN_DIV) {\n    result = CMC_OP_DIV;\n  } else {\n    result = CMC_OP_MOD;\n  }\n  return result;\n}\n"
+  }
+]

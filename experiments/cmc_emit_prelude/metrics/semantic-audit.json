@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "contracts": [
+    {
+      "function": "cmc_emit_prelude",
+      "target_contract_sha256": "112dc1f531451c2f16c456d7a97b036ef6c516e45d6ee0a01b95026c6d7addf3",
+      "source_contract_sha256": "cc84abd03494940550698f42e8ec0ee1d4e36c30681d21fcab293f3dbc2cb8d3",
+      "status": "reviewed",
+      "review": "Only context and emitter-plan resources required and preserved; exact 11-instruction code appended to done, arbitrary tail retained. Arbitrary represented main_id; no wf/typed/readiness/valid-main premise added."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_emit_prelude",
+      "kind": "Definition",
+      "span": [
+        7,
+        12
+      ],
+      "sha256": "a45cc29c1d6640715cf32c43342e06e91e41feb007efd9c0578dc6d716bdec3e",
+      "nonblank_lines": 6
+    }
+  ],
+  "annotation_stage_model_review": {
+    "cm_emit_prelude": "Compared exact 11 instruction source list and unrestricted total CALL lookup; no new assumptions."
+  },
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "source_model": "baseline/cmc_codegen.c:1034",
+  "model_review": "Exact source opcode/immediate order and CALL total lookup; final merged proofs require separate review.",
+  "final_library_review": "final-library-review.json",
+  "final_model_hashes_unchanged": true,
+  "new_assumptions": false
+}

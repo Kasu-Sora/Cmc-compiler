@@ -1,0 +1,107 @@
+7 goals
+  
+  policy : cm_lookup_policy
+  p : cm_program
+  fid : Z
+  a : cm_expr
+  args : list cm_expr
+  IH :
+    (forall e : cm_expr,
+     In e args ->
+     cm_expr_counts_representable policy p fid e ->
+     cm_rep_expr_temps_safe e /\
+     cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+     cm_tright (cm_expr_tpair e) <= cm_rvalue_code_count policy p fid e) ->
+    cm_args_counts_representable policy p fid args ->
+    cm_rep_args_temps_safe args /\
+    cm_acount (cm_args_apair args) + cm_adepth (cm_args_apair args) <=
+    cm_args_code_count_of (cm_args_code_counts policy p fid args)
+  He :
+    forall e : cm_expr,
+    In e (a :: args) ->
+    cm_expr_counts_representable policy p fid e ->
+    cm_rep_expr_temps_safe e /\
+    cm_ltemps e <= cm_lvalue_code_count policy p fid e /\
+    cm_tright (cm_expr_tpair e) <= cm_rvalue_code_count policy p fid e
+  Ha : cm_expr_counts_representable policy p fid a
+  Htail : cm_args_counts_representable policy p fid args
+  Hsafe : cm_rep_expr_temps_safe a
+  Hl : cm_ltemps a <= cm_lvalue_code_count policy p fid a
+  Hr : cm_tright (cm_expr_tpair a) <= cm_rvalue_code_count policy p fid a
+  HsafeTail : cm_rep_args_temps_safe args
+  Hbound :
+    cm_acount (cm_args_apair args) + cm_adepth (cm_args_apair args) <=
+    cm_args_code_count_of (cm_args_code_counts policy p fid args)
+  H :
+    0 <=
+    cm_rcount_of (cm_expr_code_counts policy p fid a) + 10 +
+    cm_args_code_count_of (cm_args_code_counts policy p fid args)
+  H0 :
+    cm_rcount_of (cm_expr_code_counts policy p fid a) + 10 +
+    cm_args_code_count_of (cm_args_code_counts policy p fid args) <=
+    2147483647
+  H3 : 0 <= cm_ltemps a
+  H4 : 0 <= cm_tright (cm_expr_tpair a)
+  H5 : 0 <= cm_acount (cm_args_apair args)
+  H6 : cm_acount (cm_args_apair args) <= 2147483647
+  H7 :
+    cm_acount (cm_args_apair args) + cm_adepth (cm_args_apair args) <=
+    2147483647
+  H2 : 0 <= cm_adepth (cm_args_apair args)
+  H8 : cm_adepth (cm_args_apair args) <= 2147483647
+  ============================
+  0 <=
+  cm_acount
+    {|
+      cm_acount := 1 + cm_acount (cm_args_apair args);
+      cm_adepth :=
+        Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args))
+    |}
+
+goal 2 is:
+ cm_acount
+   {|
+     cm_acount := 1 + cm_acount (cm_args_apair args);
+     cm_adepth :=
+       Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args))
+   |} <= 2147483647
+goal 3 is:
+ 0 <=
+ cm_adepth
+   {|
+     cm_acount := 1 + cm_acount (cm_args_apair args);
+     cm_adepth :=
+       Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args))
+   |}
+goal 4 is:
+ cm_adepth
+   {|
+     cm_acount := 1 + cm_acount (cm_args_apair args);
+     cm_adepth :=
+       Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args))
+   |} <= 2147483647
+goal 5 is:
+ cm_acount
+   {|
+     cm_acount := 1 + cm_acount (cm_args_apair args);
+     cm_adepth :=
+       Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args))
+   |} +
+ cm_adepth
+   {|
+     cm_acount := 1 + cm_acount (cm_args_apair args);
+     cm_adepth :=
+       Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args))
+   |} <= 2147483647
+goal 6 is:
+ cm_acount (cm_args_apair args) < 2147483647
+goal 7 is:
+ 1 + cm_acount (cm_args_apair args) +
+ Z.max (cm_tright (cm_expr_tpair a)) (cm_adepth (cm_args_apair args)) <=
+ cm_rcount_of (cm_expr_code_counts policy p fid a) + 10 +
+ cm_args_code_count_of (cm_args_code_counts policy p fid args)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_temp_readiness/build/Rocq/examples/QCP_demos_human/cmc_temp_ready_migration_lib.v", line 54, characters 0-4:
+Error:
+ (in proof cm_args_temps_ready_from_elements): Attempt to save an incomplete proof
+(there are remaining open goals).
+

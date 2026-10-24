@@ -1,0 +1,101 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.329 secs (1.22u,0.091s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.011u,0.s)
+Chars 124 - 145 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 146 - 171 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 172 - 677 [Lemma~cm_target_v_halt_step~sp...] 0. secs (0.u,0.s)
+Chars 678 - 684 [Proof.] 0. secs (0.u,0.s)
+Chars 686 - 757 [(cbn~zeta;~intros~[CODE~SAVED]...] 0. secs (0.u,0.s)
+Chars 759 - 846 [(destruct~vm~as~[vpc~stack~vca...] 0. secs (0.u,0.s)
+Chars 848 - 948 [(destruct~SIM~as~[M~[P~[F~[C~[...] 0. secs (0.u,0.s)
+Chars 950 - 1063 [(assert~~~(CODE'~:~~~~cm_code_...] 0. secs (0.u,0.s)
+Chars 1065 - 1066 [{] 0. secs (0.u,0.s)
+Chars 1067 - 1283 [(cbn[cm_task_code~cm_cont_code...] 0. secs (0.u,0.s)
+Chars 1284 - 1285 [}] 0. secs (0.u,0.s)
+Chars 1287 - 1345 [(pose~proof~(cm_tvm_status_tai...] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_value/build/Rocq/examples/QCP_demos_human/cmc_target_halt_migration_lib.v", line 16, characters 43-44:
+Error: Cannot infer this placeholder of type "list Z" in
+environment:
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+v : cm_value
+st : cm_src_state
+pc, temp, b, c, owner, ob, oc : Z
+tail : list cm_acursor
+spills : list cm_spill
+saved : list cm_spill_frame
+calls : list cm_call_sim_frame
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    (cm_ann_pc
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+    (cm_task_code sp p
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor CAHaltP owner ob oc :: tail) spills saved calls))))
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    (cm_task_fid
+       (CMVTask p fid v st
+          (cm_cursor_frames
+             (cm_ann_cursors
+                (CMAnnotation pc temp b c
+                   (CMACursor CAHaltP owner ob oc :: tail) spills saved calls)))))
+    (cm_ann_cursors
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+vcalls : list Z
+mem : Z -> Z
+input, output : list Z
+O :
+  tvm_output (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_output st
+I :
+  tvm_input (TVMState pc [cm_value_number st v] vcalls mem input output) =
+  cm_state_input st
+S :
+  cm_spill_frames_sim (cm_source_function_policy sp) p st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+C :
+  cm_call_frames_sim
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+    (cm_ann_calls
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+    (tvm_calls (TVMState pc [cm_value_number st v] vcalls mem input output))
+F :
+  tower_getw
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output)) 8 =
+  cm_state_fp st
+P :
+  cm_stored_provenance_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+M :
+  cm_initialized_bytes_sim st
+    (tvm_mem (TVMState pc [cm_value_number st v] vcalls mem input output))
+OLD :
+  cm_machine_state_sim (cm_source_function_policy sp) p st
+    (TVMState pc [cm_value_number st v] vcalls mem input output)
+    (cm_ann_calls
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls))
+    (cm_active_spill_frames fid st
+       (CMAnnotation pc temp b c (CMACursor CAHaltP owner ob oc :: tail)
+          spills saved calls)) [v] []
+CODE' :
+  cm_code_at
+    (tvm_object_code (cm_compile_model (cm_source_function_policy sp) p)) pc
+    cm_status_tail_code
+

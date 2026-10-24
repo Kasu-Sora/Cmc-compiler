@@ -1,0 +1,34 @@
+[
+  {
+    "function": "cm_emit_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `done:(tvm_inst)list`,\n                 `tail:(tvm_inst)list`, `opcode:tvm_opcode`,\n                 `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `fact(op == tvm_opcode_code opcode) **\n       fact(~(tvm_opcode_code opcode == 22i)) **\n       cm_resolved_emitter_plan_rep p emitter out capacity done\n         (TVMInst opcode immediate :: tail)`)]]\n    [[cst::ensure(\n      `cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ [TVMInst opcode immediate]) tail`)]]"
+  },
+  {
+    "function": "cm_emit_call_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `done:(tvm_inst)list`,\n                 `tail:(tvm_inst)list`, `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `cm_resolved_emitter_plan_rep p emitter out capacity done\n         (TVMInst TVMCallOp (cm_function_pc p function_id) :: tail)`)]]\n    [[cst::ensure(\n      `cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ [TVMInst TVMCallOp\n                    (cm_function_pc p function_id)]) tail`)]]"
+  },
+  {
+    "function": "cm_emit_normalize_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `model_ty:cm_type`,\n                 `done:(tvm_inst)list`, `tail:(tvm_inst)list`,\n                 `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `fact(ty == cm_type_encode model_ty) **\n       fact(cm_type_code_wf model_ty <=> true) **\n       cm_resolved_emitter_plan_rep p emitter out capacity done\n         (cm_char_normalize_code model_ty ++ tail)`)]]\n    [[cst::ensure(\n      `cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ cm_char_normalize_code model_ty) tail`)]]"
+  },
+  {
+    "function": "cm_emit_load_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `model_ty:cm_type`,\n                 `done:(tvm_inst)list`, `tail:(tvm_inst)list`,\n                 `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `fact(ty == cm_type_encode model_ty) **\n       fact(cm_type_code_wf model_ty <=> true) **\n       cm_resolved_emitter_plan_rep p emitter out capacity done\n         (cm_load_code model_ty ++ tail)`)]]\n    [[cst::ensure(\n      `cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ cm_load_code model_ty) tail`)]]"
+  },
+  {
+    "function": "cm_emit_store_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `model_ty:cm_type`,\n                 `done:(tvm_inst)list`, `tail:(tvm_inst)list`,\n                 `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `fact(ty == cm_type_encode model_ty) **\n       fact(cm_type_code_wf model_ty <=> true) **\n       cm_resolved_emitter_plan_rep p emitter out capacity done\n         (cm_store_code model_ty ++ tail)`)]]\n    [[cst::ensure(\n      `cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ cm_store_code model_ty) tail`)]]"
+  },
+  {
+    "function": "cm_emit_fp_address_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `done:(tvm_inst)list`,\n                 `tail:(tvm_inst)list`, `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `cm_resolved_emitter_plan_rep p emitter out capacity done\n         (cm_fp_relative_address_code offset ++ tail)`)]]\n    [[cst::ensure(\n      `cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ cm_fp_relative_address_code offset) tail`)]]"
+  },
+  {
+    "function": "cm_emit_temp_store_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`, `fid:int`,\n                 `structs:(cm_struct_d)list`, `body:int`, `next:int`,\n                 `done:(tvm_inst)list`, `tail:(tvm_inst)list`,\n                 `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `fact(0i <= temp) **\n       fact(structs == cm_program_structs p) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_slots_wf structs (cm_function_params f) <=> true) **\n       fact(cm_slots_wf structs (cm_function_locals f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_params f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_locals f) <=> true) **\n       fact(cm_temp_offset p fid temp <= 2147483647i) **\n       cm_function_context_rep fn f body next **\n       cm_resolved_emitter_plan_rep p emitter out capacity done\n         (cm_temp_store_code p fid temp ++ tail)`)]]\n    [[cst::ensure(\n      `fact(0i <= temp) **\n       fact(structs == cm_program_structs p) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_slots_wf structs (cm_function_params f) <=> true) **\n       fact(cm_slots_wf structs (cm_function_locals f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_params f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_locals f) <=> true) **\n       fact(cm_temp_offset p fid temp <= 2147483647i) **\n       cm_function_context_rep fn f body next **\n       cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ cm_temp_store_code p fid temp) tail`)]]"
+  },
+  {
+    "function": "cm_emit_temp_load_plan",
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`, `fid:int`,\n                 `structs:(cm_struct_d)list`, `body:int`, `next:int`,\n                 `done:(tvm_inst)list`, `tail:(tvm_inst)list`,\n                 `out:int`, `capacity:int`)]]\n    [[cst::require(\n      `fact(0i <= temp) **\n       fact(structs == cm_program_structs p) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_slots_wf structs (cm_function_params f) <=> true) **\n       fact(cm_slots_wf structs (cm_function_locals f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_params f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_locals f) <=> true) **\n       fact(cm_temp_offset p fid temp <= 2147483647i) **\n       cm_function_context_rep fn f body next **\n       cm_resolved_emitter_plan_rep p emitter out capacity done\n         (cm_temp_load_code p fid temp ++ tail)`)]]\n    [[cst::ensure(\n      `fact(0i <= temp) **\n       fact(structs == cm_program_structs p) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_slots_wf structs (cm_function_params f) <=> true) **\n       fact(cm_slots_wf structs (cm_function_locals f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_params f) <=> true) **\n       fact(cm_rep_members_safe (cm_function_locals f) <=> true) **\n       fact(cm_temp_offset p fid temp <= 2147483647i) **\n       cm_function_context_rep fn f body next **\n       cm_resolved_emitter_plan_rep p emitter out capacity\n         (done ++ cm_temp_load_code p fid temp) tail`)]]"
+  }
+]

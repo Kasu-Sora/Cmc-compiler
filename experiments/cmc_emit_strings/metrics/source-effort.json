@@ -1,0 +1,86 @@
+{
+  "source_sha256": "a890c908e9997c5afeb76227c0ba487b2665ab92ba823fe0484510286286a982",
+  "function_counts": [
+    {
+      "function": "cmc_emit_strings",
+      "source_span": [
+        31,
+        295
+      ],
+      "specification": 21,
+      "annotation": 5,
+      "inline_proof": 211
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cmc_ilength_nonnegative",
+      "kind": "proof",
+      "span": [
+        11,
+        21
+      ],
+      "nonblank_lines": 11,
+      "text": "PROOF static thm cmc_ilength_nonnegative(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(xs:(int)list). 0i <= ilength xs`);\n  gnode leaf = AUTO_INTROS_TAC(root);\n  thm model = spec_rule(`xs:(int)list`, mk_ilength_of_num_length());\n  thm lifted = beta_norm(ap_term_rule(`\\x:int. 0i <= x`, model));\n  thm positive = spec_rule(`LENGTH (xs:(int)list)`,\n      get_theorem_by_name(\"INT_POS\"));\n  ACCEPT_TAC(leaf, eq_mp_rule(sym_rule(lifted), positive));\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cmc_ilength_nonnegative_rule",
+      "kind": "proof",
+      "span": [
+        22,
+        23
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF static thm cmc_ilength_nonnegative_rule =\n    cmc_ilength_nonnegative();",
+      "dependencies": [
+        "cmc_ilength_nonnegative"
+      ],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cmc_string_length_model",
+      "kind": "proof",
+      "span": [
+        25,
+        29
+      ],
+      "nonblank_lines": 5,
+      "text": "PROOF static thm cmc_string_length_model(const term string_model) {\n  return inst_rule(TERM_PAIR_LIST(\n      (term_pair){string_model, `string:cm_string_d`}),\n      get_cm_rep_string_length_def());\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 21,
+    "annotation": 5,
+    "inline_proof": 211,
+    "private_case_proof_support": 18,
+    "case_proof": 229,
+    "proof_including_shared": 229
+  },
+  "annotation_entries": [
+    {
+      "function": "cmc_emit_strings",
+      "kind": "where",
+      "span": [
+        225,
+        226
+      ],
+      "nonblank_lines": 2
+    },
+    {
+      "function": "cmc_emit_strings",
+      "kind": "where",
+      "span": [
+        227,
+        229
+      ],
+      "nonblank_lines": 3
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Exported proof helper wrappers and transitive same-file support counted once as shared; unused source readiness definitions/getters inventoried separately."
+}

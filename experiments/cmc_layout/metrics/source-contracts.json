@@ -1,0 +1,407 @@
+[
+  {
+    "function": "cm_max",
+    "contract": "    [[cst::require(`emp`)]]\n    [[cst::ensure(`emp ** fact((__return:int) == cm_imax a b)`)]]",
+    "source_identifiers": [
+      "cm_imax"
+    ]
+  },
+  {
+    "function": "cmc_is_pointer",
+    "contract": "    [[cst::require(`emp`)]]\n    [[cst::ensure(`emp **\n      fact((__return:int) == cm_rep_is_pointer_code ty)`)]]",
+    "source_identifiers": [
+      "cm_rep_is_pointer_code"
+    ]
+  },
+  {
+    "function": "cmc_is_pointer_value",
+    "contract": "    [[cst::require(`undef_data_at pointer Tint`)]]\n    [[cst::ensure(\n      `data_at pointer Tint (cm_rep_is_pointer_code (ty:int))`)]]",
+    "source_identifiers": [
+      "cm_rep_is_pointer_code"
+    ]
+  },
+  {
+    "function": "cmc_pointee",
+    "contract": "    [[cst::require(\n      `fact(1024i <= ty) ** fact(ty <= 2147483647i)`)]]\n    [[cst::ensure(`fact((__return:int) == ty - 1024i)`)]]",
+    "source_identifiers": []
+  },
+  {
+    "function": "cmc_leaf_size",
+    "contract": "    [[cst::require(`emp`)]]\n    [[cst::ensure(`emp ** fact((__return:int) == cm_rep_leaf_size ty)`)]]",
+    "source_identifiers": [
+      "cm_rep_leaf_size"
+    ]
+  },
+  {
+    "function": "cmc_code_slot_size",
+    "contract": "    [[cst::require(`emp`)]]\n    [[cst::ensure(`emp **\n      fact((__return:int) == cm_rep_code_slot_size code count)`)]]",
+    "source_identifiers": [
+      "cm_rep_code_slot_size"
+    ]
+  },
+  {
+    "function": "cmc_members_size",
+    "contract": "    [[cst::param(`members:(cm_slot_d)list`)]]\n    [[cst::require(`fact(cm_rep_members_safe members <=> true) **\n      cm_member_list_rep member members`)]]\n    [[cst::ensure(`fact(cm_rep_members_safe members <=> true) **\n      cm_member_list_rep member members **\n      fact((__return:int) == cm_rep_members_size members)`)]]",
+    "source_identifiers": [
+      "cm_member_list_rep",
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_slot_d"
+    ]
+  },
+  {
+    "function": "cmc_struct_size_at",
+    "contract": "    [[cst::param(`structs:(cm_struct_d)list`)]]\n    [[cst::require(`fact(0i <= sid) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep item structs`)]]\n    [[cst::ensure(`fact(0i <= sid) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep item structs **\n      fact((__return:int) == cm_rep_struct_size structs sid)`)]]",
+    "source_identifiers": [
+      "cm_rep_struct_size",
+      "cm_rep_structs_safe",
+      "cm_struct_d",
+      "cm_struct_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_nonzero",
+    "contract": "    [[cst::require(`emp`)]]\n    [[cst::ensure(`fact((__return:int) == cm_rep_nonzero n)`)]]",
+    "source_identifiers": [
+      "cm_rep_nonzero"
+    ]
+  },
+  {
+    "function": "cmc_global_array_at",
+    "contract": "    [[cst::param(`globals:(cm_global_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      cm_global_list_rep item globals`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      cm_global_list_rep item globals **\n      fact((__return:int) == cm_rep_global_array globals index)`)]]",
+    "source_identifiers": [
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_rep_global_array"
+    ]
+  },
+  {
+    "function": "cmc_slot_array_at",
+    "contract": "    [[cst::param(`slots:(cm_slot_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      cm_slot_list_rep item slots`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      cm_slot_list_rep item slots **\n      fact((__return:int) == cm_rep_member_array slots index)`)]]",
+    "source_identifiers": [
+      "cm_rep_member_array",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_slot_type_at",
+    "contract": "    [[cst::param(`slots:(cm_slot_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      cm_slot_list_rep item slots`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      cm_slot_list_rep item slots **\n      fact((__return:int) == cm_rep_slot_type slots index)`)]]",
+    "source_identifiers": [
+      "cm_rep_slot_type",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_member_array_at",
+    "contract": "    [[cst::param(`members:(cm_slot_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      cm_member_list_rep item members`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      cm_member_list_rep item members **\n      fact((__return:int) == cm_rep_member_array members index)`)]]",
+    "source_identifiers": [
+      "cm_member_list_rep",
+      "cm_rep_member_array",
+      "cm_slot_d"
+    ]
+  },
+  {
+    "function": "cmc_type_size_at",
+    "contract": "    [[cst::param(`structs:(cm_struct_d)list`)]]\n    [[cst::require(`fact(0i <= ty) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep items structs`)]]\n    [[cst::ensure(`fact(0i <= ty) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep items structs **\n      fact((__return:int) == cm_rep_type_size structs ty)`)]]",
+    "source_identifiers": [
+      "cm_rep_structs_safe",
+      "cm_rep_type_size",
+      "cm_struct_d",
+      "cm_struct_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_slots_size",
+    "contract": "    [[cst::param(`slots:(cm_slot_d)list`)]]\n    [[cst::require(`fact(cm_rep_members_safe slots <=> true) **\n      cm_slot_list_rep slot slots`)]]\n    [[cst::ensure(`fact(cm_rep_members_safe slots <=> true) **\n      cm_slot_list_rep slot slots **\n      fact((__return:int) == cm_rep_members_size slots) **\n      fact(0i <= cm_rep_members_size slots) **\n      fact(cm_rep_members_size slots <= 1048576i)`)]]",
+    "source_identifiers": [
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_slots_prefix",
+    "contract": "    [[cst::param(`slots:(cm_slot_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      fact(cm_rep_members_safe slots <=> true) **\n      cm_slot_list_rep slot slots`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      fact(cm_rep_members_safe slots <=> true) **\n      cm_slot_list_rep slot slots **\n      fact((__return:int) == cm_rep_member_prefix slots index) **\n      fact(0i <= cm_rep_member_prefix slots index) **\n      fact(cm_rep_member_prefix slots index <=\n        cm_rep_members_size slots) **\n      fact(cm_rep_member_prefix slots index <= 1048576i)`)]]",
+    "source_identifiers": [
+      "cm_rep_member_prefix",
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_members_prefix",
+    "contract": "    [[cst::param(`members:(cm_slot_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      fact(cm_rep_members_safe members <=> true) **\n      cm_member_list_rep node members`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      fact(cm_rep_members_safe members <=> true) **\n      cm_member_list_rep node members **\n      fact((__return:int) == cm_rep_member_prefix members index) **\n      fact(0i <= (__return:int)) **\n      fact((__return:int) <= cm_rep_members_size members) **\n      fact((__return:int) <= 1048576i)`)]]",
+    "source_identifiers": [
+      "cm_member_list_rep",
+      "cm_rep_member_prefix",
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_slot_d"
+    ]
+  },
+  {
+    "function": "cmc_member_offset_at",
+    "contract": "    [[cst::param(`structs:(cm_struct_d)list`)]]\n    [[cst::require(`fact(0i <= sid) ** fact(0i <= index) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep item structs`)]]\n    [[cst::ensure(`fact(0i <= sid) ** fact(0i <= index) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep item structs **\n      fact((__return:int) ==\n        cm_rep_struct_member_prefix structs sid index) **\n      fact(0i <= (__return:int)) ** fact((__return:int) <= 1048576i)`)]]",
+    "source_identifiers": [
+      "cm_rep_struct_member_prefix",
+      "cm_rep_structs_safe",
+      "cm_struct_d",
+      "cm_struct_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_struct_member_array_at",
+    "contract": "    [[cst::param(`structs:(cm_struct_d)list`)]]\n    [[cst::require(`fact(0i <= sid) ** fact(0i <= index) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep item structs`)]]\n    [[cst::ensure(`fact(0i <= sid) ** fact(0i <= index) **\n      fact(cm_rep_structs_safe structs <=> true) **\n      cm_struct_list_rep item structs **\n      fact((__return:int) ==\n        cm_rep_struct_member_array structs sid index)`)]]",
+    "source_identifiers": [
+      "cm_rep_struct_member_array",
+      "cm_rep_structs_safe",
+      "cm_struct_d",
+      "cm_struct_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_globals_size",
+    "contract": "    [[cst::param(`globals:(cm_global_d)list`)]]\n    [[cst::require(`fact(cm_rep_globals_safe globals <=> true) **\n      cm_global_list_rep node globals`)]]\n    [[cst::ensure(`fact(cm_rep_globals_safe globals <=> true) **\n      cm_global_list_rep node globals **\n      fact((__return:int) == cm_rep_globals_size globals) **\n      fact(0i <= (__return:int)) ** fact((__return:int) <= 1048560i)`)]]",
+    "source_identifiers": [
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_rep_globals_safe",
+      "cm_rep_globals_size"
+    ]
+  },
+  {
+    "function": "cmc_globals_prefix",
+    "contract": "    [[cst::param(`globals:(cm_global_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      fact(cm_rep_globals_safe globals <=> true) **\n      cm_global_list_rep node globals`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      fact(cm_rep_globals_safe globals <=> true) **\n      cm_global_list_rep node globals **\n      fact((__return:int) == cm_rep_globals_prefix globals index) **\n      fact(0i <= (__return:int)) **\n      fact((__return:int) <= cm_rep_globals_size globals) **\n      fact((__return:int) <= 1048560i)`)]]",
+    "source_identifiers": [
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_rep_globals_prefix",
+      "cm_rep_globals_safe",
+      "cm_rep_globals_size"
+    ]
+  },
+  {
+    "function": "cmc_strings_size",
+    "contract": "    [[cst::param(`strings:(cm_string_d)list`)]]\n    [[cst::require(`fact(cm_rep_strings_safe strings <=> true) **\n      cm_string_list_rep node strings`)]]\n    [[cst::ensure(`fact(cm_rep_strings_safe strings <=> true) **\n      cm_string_list_rep node strings **\n      fact((__return:int) == cm_rep_strings_size strings) **\n      fact(0i <= (__return:int)) ** fact((__return:int) <= 1048560i)`)]]",
+    "source_identifiers": [
+      "cm_rep_strings_safe",
+      "cm_rep_strings_size",
+      "cm_string_d",
+      "cm_string_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_strings_prefix",
+    "contract": "    [[cst::param(`strings:(cm_string_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      fact(cm_rep_strings_safe strings <=> true) **\n      cm_string_list_rep node strings`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      fact(cm_rep_strings_safe strings <=> true) **\n      cm_string_list_rep node strings **\n      fact((__return:int) == cm_rep_strings_prefix strings index) **\n      fact(0i <= (__return:int)) **\n      fact((__return:int) <= cm_rep_strings_size strings) **\n      fact((__return:int) <= 1048560i)`)]]",
+    "source_identifiers": [
+      "cm_rep_strings_prefix",
+      "cm_rep_strings_safe",
+      "cm_rep_strings_size",
+      "cm_string_d",
+      "cm_string_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_global_address",
+    "contract": "    [[cst::param(`items:(cm_global_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      fact(cm_rep_globals_safe items <=> true) **\n      cm_global_list_rep globals items`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      fact(cm_rep_globals_safe items <=> true) **\n      cm_global_list_rep globals items **\n      fact((__return:int) == cm_rep_global_address items index) **\n      fact(16i <= (__return:int)) ** fact((__return:int) <= 1048576i)`)]]",
+    "source_identifiers": [
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_rep_global_address",
+      "cm_rep_globals_safe"
+    ]
+  },
+  {
+    "function": "cmc_string_address",
+    "contract": "    [[cst::param(`global_items:(cm_global_d)list`,\n                 `string_items:(cm_string_d)list`)]]\n    [[cst::require(`fact(0i <= index) **\n      fact(cm_rep_globals_safe global_items <=> true) **\n      fact(cm_rep_strings_safe string_items <=> true) **\n      fact(cm_rep_globals_size global_items +\n        cm_rep_strings_size string_items <= 1048560i) **\n      cm_global_list_rep globals global_items **\n      cm_string_list_rep strings string_items`)]]\n    [[cst::ensure(`fact(0i <= index) **\n      fact(cm_rep_globals_safe global_items <=> true) **\n      fact(cm_rep_strings_safe string_items <=> true) **\n      fact(cm_rep_globals_size global_items +\n        cm_rep_strings_size string_items <= 1048560i) **\n      cm_global_list_rep globals global_items **\n      cm_string_list_rep strings string_items **\n      fact((__return:int) ==\n        cm_rep_string_address global_items string_items index) **\n      fact(16i <= (__return:int)) ** fact((__return:int) <= 1048576i)`)]]",
+    "source_identifiers": [
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_rep_globals_safe",
+      "cm_rep_globals_size",
+      "cm_rep_string_address",
+      "cm_rep_strings_safe",
+      "cm_rep_strings_size",
+      "cm_string_d",
+      "cm_string_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_binding_array_value",
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(0i <= slot) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_binding_valid p f scope slot <=> true) **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       undef_data_at array Tint`)]]\n    [[cst::ensure(\n      `fact(0i <= slot) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_binding_valid p f scope slot <=> true) **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       data_at array Tint\n         (cm_binding_array_code p fid scope slot)`)]]",
+    "source_identifiers": [
+      "cm_binding_array_code",
+      "cm_binding_valid",
+      "cm_function_d",
+      "cm_function_locals",
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_program",
+      "cm_program_functions",
+      "cm_program_globals",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_binding_array",
+    "contract": "    [[cst::param(`p:cm_program`, `f:cm_function_d`,\n                 `globals:(cm_global_d)list`,\n                 `locals:(cm_slot_d)list`, `zg:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(0i <= slot) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_binding_valid p f scope slot <=> true) **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals`)]]\n    [[cst::ensure(\n      `fact(0i <= slot) **\n       fact(globals == cm_program_globals p) **\n       fact(locals == cm_function_locals f) **\n       fact(f == inth fid (cm_program_functions p)) **\n       fact(cm_binding_valid p f scope slot <=> true) **\n       data_at (field_addr program Tcm_program Fglobals) Tptr zg **\n       cm_global_list_rep zg globals **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zl locals **\n       fact((__return:int) ==\n         cm_binding_array_code p fid scope slot)`)]]",
+    "source_identifiers": [
+      "cm_binding_array_code",
+      "cm_binding_valid",
+      "cm_function_d",
+      "cm_function_locals",
+      "cm_global_d",
+      "cm_global_list_rep",
+      "cm_program",
+      "cm_program_functions",
+      "cm_program_globals",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_member_array",
+    "contract": "    [[cst::param(`p:cm_program`, `base:cm_type`,\n                 `structs:(cm_struct_d)list`, `zs:int`)]]\n    [[cst::require(\n      `fact(1024i <= base_ty) **\n       fact(base_ty <= 2147483647i) **\n       fact(0i <= ((base_ty - 1024i) rem 1024i) - 2i) **\n       fact(0i <= mid) **\n       fact(structs == cm_program_structs p) **\n       fact(base_ty == cm_type_encode base) **\n       fact(cm_type_code_wf base <=> true) **\n       fact(cm_member_valid p base mid <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs`)]]\n    [[cst::ensure(\n      `fact(1024i <= base_ty) **\n       fact(base_ty <= 2147483647i) **\n       fact(0i <= ((base_ty - 1024i) rem 1024i) - 2i) **\n       fact(0i <= mid) **\n       fact(structs == cm_program_structs p) **\n       fact(base_ty == cm_type_encode base) **\n       fact(cm_type_code_wf base <=> true) **\n       fact(cm_member_valid p base mid <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       fact((__return:int) == cm_member_array_code p base mid)`)]]",
+    "source_identifiers": [
+      "cm_member_array_code",
+      "cm_member_valid",
+      "cm_program",
+      "cm_program_structs",
+      "cm_rep_structs_safe",
+      "cm_struct_d",
+      "cm_struct_list_rep",
+      "cm_type",
+      "cm_type_code_wf",
+      "cm_type_encode"
+    ]
+  },
+  {
+    "function": "cmc_member_array_value",
+    "contract": "    [[cst::param(`p:cm_program`, `base:cm_type`,\n                 `structs:(cm_struct_d)list`, `zs:int`)]]\n    [[cst::require(\n      `fact(1024i <= base_ty) **\n       fact(base_ty <= 2147483647i) **\n       fact(0i <= ((base_ty - 1024i) rem 1024i) - 2i) **\n       fact(0i <= mid) **\n       fact(structs == cm_program_structs p) **\n       fact(base_ty == cm_type_encode base) **\n       fact(cm_type_code_wf base <=> true) **\n       fact(cm_member_valid p base mid <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       undef_data_at array Tint`)]]\n    [[cst::ensure(\n      `fact(1024i <= base_ty) **\n       fact(base_ty <= 2147483647i) **\n       fact(0i <= ((base_ty - 1024i) rem 1024i) - 2i) **\n       fact(0i <= mid) **\n       fact(structs == cm_program_structs p) **\n       fact(base_ty == cm_type_encode base) **\n       fact(cm_type_code_wf base <=> true) **\n       fact(cm_member_valid p base mid <=> true) **\n       fact(cm_rep_structs_safe structs <=> true) **\n       data_at (field_addr program Tcm_program Fstructs) Tptr zs **\n       cm_struct_list_rep zs structs **\n       data_at array Tint\n         (cm_member_array_code p base mid)`)]]",
+    "source_identifiers": [
+      "cm_member_array_code",
+      "cm_member_valid",
+      "cm_program",
+      "cm_program_structs",
+      "cm_rep_structs_safe",
+      "cm_struct_d",
+      "cm_struct_list_rep",
+      "cm_type",
+      "cm_type_code_wf",
+      "cm_type_encode"
+    ]
+  },
+  {
+    "function": "cm_args_length",
+    "contract": "    [[cst::param(`args:(cm_expr)list`)]]\n    [[cst::require(`fact(cm_rep_args_safe args <=> true) **\n      cm_arg_list_rep arg args`)]]\n    [[cst::ensure(`fact(cm_rep_args_safe args <=> true) **\n      cm_arg_list_rep arg args **\n      fact((__return:int) == cm_rep_args_length args)`)]]",
+    "source_identifiers": [
+      "cm_arg_list_rep",
+      "cm_expr",
+      "cm_rep_args_length",
+      "cm_rep_args_safe"
+    ]
+  },
+  {
+    "function": "cmc_args_tpair",
+    "contract": "    [[cst::param(`args:(cm_expr)list`)]]\n    [[cst::require(\n      `fact(cm_rep_args_temps_safe args <=> true) **\n       cm_arg_list_rep arg args **\n       undef_data_at count Tint **\n       undef_data_at depth Tint`)]]\n    [[cst::ensure(\n      `fact(cm_rep_args_temps_safe args <=> true) **\n       cm_arg_list_rep arg args **\n       data_at count Tint (cm_acount (cm_args_apair args)) **\n       data_at depth Tint (cm_adepth (cm_args_apair args))`)]]",
+    "source_identifiers": [
+      "cm_acount",
+      "cm_adepth",
+      "cm_arg_list_rep",
+      "cm_args_apair",
+      "cm_expr",
+      "cm_rep_args_temps_safe"
+    ]
+  },
+  {
+    "function": "cm_expr_temps",
+    "contract": "    [[cst::param(`e:cm_expr`)]]\n    [[cst::require(\n      `fact(cm_rep_expr_temps_safe e <=> true) **\n       cm_expr_rep expr e **\n       undef_data_at lvalue Tint **\n       undef_data_at rvalue Tint`)]]\n    [[cst::ensure(\n      `fact(cm_rep_expr_temps_safe e <=> true) **\n       cm_expr_rep expr e **\n       data_at lvalue Tint (cm_tleft (cm_expr_tpair e)) **\n       data_at rvalue Tint (cm_tright (cm_expr_tpair e))`)]]",
+    "source_identifiers": [
+      "cm_expr",
+      "cm_expr_rep",
+      "cm_expr_tpair",
+      "cm_rep_expr_temps_safe",
+      "cm_tleft",
+      "cm_tright"
+    ]
+  },
+  {
+    "function": "cm_expr_rtemps",
+    "contract": "    [[cst::param(`e:cm_expr`)]]\n    [[cst::require(\n      `fact(cm_rep_expr_temps_safe e <=> true) **\n       cm_expr_rep expr e`)]]\n    [[cst::ensure(\n      `fact(cm_rep_expr_temps_safe e <=> true) **\n       cm_expr_rep expr e **\n       fact((__return:int) == cm_tright (cm_expr_tpair e))`)]]",
+    "source_identifiers": [
+      "cm_expr",
+      "cm_expr_rep",
+      "cm_expr_tpair",
+      "cm_rep_expr_temps_safe",
+      "cm_tright"
+    ]
+  },
+  {
+    "function": "cmc_stmt_temps",
+    "contract": "    [[cst::param(`s:cm_stmt`)]]\n    [[cst::require(\n      `fact(cm_rep_stmt_temps_safe s <=> true) **\n       cm_stmt_rep stmt s`)]]\n    [[cst::ensure(\n      `fact(cm_rep_stmt_temps_safe s <=> true) **\n       cm_stmt_rep stmt s **\n       fact((__return:int) == cm_stemps s) **\n       fact(0i <= cm_stemps s) **\n       fact(cm_stemps s <= 2147483647i)`)]]",
+    "source_identifiers": [
+      "cm_rep_stmt_temps_safe",
+      "cm_stemps",
+      "cm_stmt",
+      "cm_stmt_rep"
+    ]
+  },
+  {
+    "function": "cmc_frame_size",
+    "contract": "    [[cst::param(`params:(cm_slot_d)list`,\n                 `locals:(cm_slot_d)list`, `body:cm_stmt`,\n                 `zp:int`, `zl:int`, `zb:int`)]]\n    [[cst::require(\n      `fact(cm_rep_members_safe params <=> true) **\n       fact(cm_rep_members_safe locals <=> true) **\n       fact(cm_rep_stmt_temps_safe body <=> true) **\n       fact(8i + cm_rep_members_size params +\n         cm_rep_members_size locals + 8i * cm_stemps body <=\n         2147483647i) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       data_at (field_addr fn Tcm_function Fbody) Tptr zb **\n       cm_slot_list_rep zp params **\n       cm_slot_list_rep zl locals **\n       cm_stmt_rep zb body`)]]\n    [[cst::ensure(\n      `fact(cm_rep_members_safe params <=> true) **\n       fact(cm_rep_members_safe locals <=> true) **\n       fact(cm_rep_stmt_temps_safe body <=> true) **\n       fact(8i + cm_rep_members_size params +\n         cm_rep_members_size locals + 8i * cm_stemps body <=\n         2147483647i) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       data_at (field_addr fn Tcm_function Fbody) Tptr zb **\n       cm_slot_list_rep zp params **\n       cm_slot_list_rep zl locals **\n       cm_stmt_rep zb body **\n       fact((__return:int) == 8i + cm_rep_members_size params +\n         cm_rep_members_size locals + 8i * cm_stemps body)`)]]",
+    "source_identifiers": [
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_rep_stmt_temps_safe",
+      "cm_slot_d",
+      "cm_slot_list_rep",
+      "cm_stemps",
+      "cm_stmt",
+      "cm_stmt_rep"
+    ]
+  },
+  {
+    "function": "cmc_param_offset",
+    "contract": "    [[cst::param(`params:(cm_slot_d)list`, `zp:int`)]]\n    [[cst::require(\n      `fact(0i <= slot) **\n       fact(cm_rep_members_safe params <=> true) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       cm_slot_list_rep zp params`)]]\n    [[cst::ensure(\n      `fact(0i <= slot) **\n       fact(cm_rep_members_safe params <=> true) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       cm_slot_list_rep zp params **\n       fact((__return:int) == 8i + cm_rep_member_prefix params slot)`)]]",
+    "source_identifiers": [
+      "cm_rep_member_prefix",
+      "cm_rep_members_safe",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_local_offset",
+    "contract": "    [[cst::param(`params:(cm_slot_d)list`,\n                 `locals:(cm_slot_d)list`, `zp:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(0i <= slot) **\n       fact(cm_rep_members_safe params <=> true) **\n       fact(cm_rep_members_safe locals <=> true) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zp params **\n       cm_slot_list_rep zl locals`)]]\n    [[cst::ensure(\n      `fact(0i <= slot) **\n       fact(cm_rep_members_safe params <=> true) **\n       fact(cm_rep_members_safe locals <=> true) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zp params **\n       cm_slot_list_rep zl locals **\n       fact((__return:int) == 8i + cm_rep_members_size params +\n         cm_rep_member_prefix locals slot)`)]]",
+    "source_identifiers": [
+      "cm_rep_member_prefix",
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cmc_temp_offset",
+    "contract": "    [[cst::param(`params:(cm_slot_d)list`,\n                 `locals:(cm_slot_d)list`, `zp:int`, `zl:int`)]]\n    [[cst::require(\n      `fact(0i <= temp) **\n       fact(8i + cm_rep_members_size params +\n         cm_rep_members_size locals + 8i * temp <= 2147483647i) **\n       fact(cm_rep_members_safe params <=> true) **\n       fact(cm_rep_members_safe locals <=> true) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zp params **\n       cm_slot_list_rep zl locals`)]]\n    [[cst::ensure(\n      `fact(0i <= temp) **\n       fact(8i + cm_rep_members_size params +\n         cm_rep_members_size locals + 8i * temp <= 2147483647i) **\n       fact(cm_rep_members_safe params <=> true) **\n       fact(cm_rep_members_safe locals <=> true) **\n       data_at (field_addr fn Tcm_function Fparams) Tptr zp **\n       data_at (field_addr fn Tcm_function Flocals) Tptr zl **\n       cm_slot_list_rep zp params **\n       cm_slot_list_rep zl locals **\n       fact((__return:int) == 8i + cm_rep_members_size params +\n         cm_rep_members_size locals + 8i * temp)`)]]",
+    "source_identifiers": [
+      "cm_rep_members_safe",
+      "cm_rep_members_size",
+      "cm_slot_d",
+      "cm_slot_list_rep"
+    ]
+  },
+  {
+    "function": "cm_normalize_count",
+    "contract": "    [[cst::require(`emp`)]]\n    [[cst::ensure(\n      `fact((__return:int) == cm_normalize_code_value ty)`)]]",
+    "source_identifiers": [
+      "cm_normalize_code_value"
+    ]
+  }
+]

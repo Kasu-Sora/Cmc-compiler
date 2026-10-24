@@ -1,0 +1,92 @@
+{
+  "version": 2,
+  "status": "planning",
+  "key_points": [
+    {
+      "id": "measure",
+      "location": "cmc_compile: calls to cmc_model_code_length and cmc_model_data_length",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "program and output equal entry pointers",
+        "both returned lengths fit signed int by original well-formedness"
+      ],
+      "resources": [
+        "full unchanged cm_program_rep",
+        "full cm_output_pre including all buffer tails"
+      ],
+      "mathematical_state": "Derive mathematical code/data lengths from the same source program; no added caller hypothesis.",
+      "internal_predicates": []
+    },
+    {
+      "id": "capacity",
+      "location": "cmc_compile: each CMC_CAPACITY return after writing lengths and entry",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "code_length and data_length are model lengths",
+        "entry=-1",
+        "code_length>code_capacity or data_length>data_capacity"
+      ],
+      "resources": [
+        "unchanged program heap",
+        "all output fields",
+        "entire unwritten buffers"
+      ],
+      "mathematical_state": "Return the original insufficient-capacity result while retaining all output resources.",
+      "internal_predicates": []
+    },
+    {
+      "id": "emit",
+      "location": "cmc_compile: cmc_emit_code and cmc_patch_resolved_calls boundaries",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "both model lengths fit corresponding capacities",
+        "emitter.output=output",
+        "emitter.pc starts at zero and finishes at code length"
+      ],
+      "resources": [
+        "program heap",
+        "emitter representation",
+        "output data and remaining output fields"
+      ],
+      "mathematical_state": "Code emission followed by patching establishes exact cm_model_code opcodes/immediates.",
+      "internal_predicates": []
+    },
+    {
+      "id": "data",
+      "location": "cmc_compile: cmc_emit_data boundary",
+      "purpose": "function-call-boundary",
+      "c_facts": [
+        "globals/strings come from program",
+        "data/output_data_capacity come from output",
+        "emitted_data is model data length"
+      ],
+      "resources": [
+        "global/string representations",
+        "written code prefix and unused tails",
+        "data buffer"
+      ],
+      "mathematical_state": "The emitted data is the exact model byte sequence while code resources remain owned.",
+      "internal_predicates": []
+    },
+    {
+      "id": "preservation",
+      "location": "cmc_compile: success exit after output->entry=0",
+      "purpose": "exit-bridge",
+      "c_facts": [
+        "entry=0",
+        "lengths equal mathematical lengths",
+        "both capacity inequalities hold"
+      ],
+      "resources": [
+        "unchanged full program rep",
+        "exact output prefixes",
+        "all unused tails",
+        "output field ownership"
+      ],
+      "mathematical_state": "For every object decoded from these model buffers, every successful source termination on input has the same TVM output and status; requires actual source/TVM semantics and compiler preservation.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

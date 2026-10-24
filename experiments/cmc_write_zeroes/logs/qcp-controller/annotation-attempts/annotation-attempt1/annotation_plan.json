@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "zeroes-loop-head",
+      "location": "cmc_write_zeroes: while (index != count) loop head",
+      "purpose": "loop-state",
+      "c_facts": [
+        "data, capacity, cursor, and count equal their @pre values",
+        "0 <= index <= count; 0 <= cursor; 0 <= count",
+        "cursor + count <= capacity <= 2147483647",
+        "The true guard implies index < count, cursor + index < capacity, and index + 1 <= count, ensuring both signed additions are in range"
+      ],
+      "resources": [
+        "Live scalar and pointer local stores are maintained by the invariant's variable references",
+        "UCharArray::seg(data, 0, cursor + index, app(prefix, zeros(index)))",
+        "UCharArray::undef_seg(data, cursor + index, capacity)"
+      ],
+      "mathematical_state": "The original prefix is unchanged and exactly index zero bytes follow it; the remaining suffix is uninitialized and separately owned. At index=0, zeros(0)=nil initializes this state. One store appends one zero; at index=count the invariant is exactly the output contract. Existing zeros uses repeat 0 (Z.to_nat index), with index nonnegative.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

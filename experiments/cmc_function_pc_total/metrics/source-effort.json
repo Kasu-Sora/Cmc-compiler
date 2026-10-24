@@ -1,0 +1,104 @@
+{
+  "source_sha256": "cf7cfc08e40d552c4bed915eba2a1c4ba5ba78f07eb8be40f50c4d343053be23",
+  "function_counts": [
+    {
+      "function": "cmc_function_prefix_total",
+      "source_span": [
+        149,
+        448
+      ],
+      "specification": 29,
+      "annotation": 0,
+      "inline_proof": 245
+    },
+    {
+      "function": "cmc_function_pc_total",
+      "source_span": [
+        450,
+        587
+      ],
+      "specification": 13,
+      "annotation": 0,
+      "inline_proof": 116
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_total_join_facts",
+      "kind": "proof",
+      "span": [
+        6,
+        14
+      ],
+      "nonblank_lines": 9,
+      "text": "PROOF static thm cm_total_join_facts(const thm_list facts) {\n  size_t count = vector_size(facts);\n  if (count == 0) abort();\n  thm result = facts[count - 1];\n  for (size_t i = count - 1; i > 0; --i) {\n    result = conj_rule(facts[i - 1], result);\n  }\n  return result;\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_total_i32_from_bounds",
+      "kind": "proof",
+      "span": [
+        16,
+        22
+      ],
+      "nonblank_lines": 7,
+      "text": "PROOF static thm cm_total_i32_from_bounds(\n    const term value, const thm bounds) {\n  thm view = apply_conversion(rewrite_conv(THM_LIST(\n      get_cm_i32_code_count_def())),\n      mk_comb(`cm_i32_code_count:int->bool`, value));\n  return eq_mp_rule(sym_rule(view), bounds);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    },
+    {
+      "name": "cm_prove_function_prefix_total_bounds",
+      "kind": "proof",
+      "span": [
+        25,
+        118
+      ],
+      "nonblank_lines": 94,
+      "text": "PROOF static thm cm_prove_function_prefix_total_bounds(void) {\n  gnode root = gnode_new_with_ccl(\n      `!(functions:(cm_function_d)list). !(p:cm_program) remaining.\n         0i <= cm_function_prefix p functions remaining &&\n         cm_function_prefix p functions remaining <=\n           cm_functions_code_size p functions\n             (ilength (cm_program_functions p) - ilength functions)`);\n  gnode_list cases = INDUCT_TAC(root,\n      `functions:(cm_function_d)list`);\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[0]);\n    CONV_TAC(leaf, reduce_rewrite_conv(THM_LIST(\n        get_cm_function_prefix_def(),\n        get_cm_functions_code_size_def())));\n  }\n  {\n    gnode leaf = AUTO_INTROS_TAC(cases[1]);\n    thm induction = assume_rule(\n        `!(p:cm_program) remaining.\n           0i <= cm_function_prefix p\n             (a1:(cm_function_d)list) remaining &&\n           cm_function_prefix p a1 remaining <=\n             cm_functions_code_size p a1\n               (ilength (cm_program_functions p) - ilength a1)`);\n    gnode_list branches = BOOL_CASES_TAC(\n        leaf, `(remaining:int) == 0i`, \"hremaining\");\n    {\n      thm head_nonnegative = specl_rule(TERM_LIST(\n          `p:cm_program`,\n          `ilength (cm_program_functions (p:cm_program)) -\n            ilength ((a0:cm_function_d) ::\n              (a1:(cm_function_d)list))`),\n          cm_function_code_count_nonnegative);\n      thm tail_nonnegative = specl_rule(TERM_LIST(\n          `a1:(cm_function_d)list`, `p:cm_program`,\n          `ilength (cm_program_functions (p:cm_program)) -\n            ilength ((a0:cm_function_d) ::\n              (a1:(cm_function_d)list)) + 1i`),\n          cm_functions_code_size_nonnegative);\n      gnode reduced = CONV_TAC(\n          branches[0], reduce_rewrite_conv(THM_LIST(\n            assume_rule(`(remaining:int) == 0i`),\n            get_cm_function_prefix_def(),\n            get_cm_functions_code_size_def(),\n            get_theorem_by_name(\"ILENGTH_DEF\"))));\n      if (IS_NULL(reduced->solved)) {\n        thm facts = conj_rule(head_nonnegative, tail_nonnegative);\n        thm cons_length = apply_conversion(rewrite_conv(THM_LIST(\n            get_theorem_by_name(\"ILENGTH_DEF\"))),\n            `ilength ((a0:cm_function_d) ::\n              (a1:(cm_function_d)list))`);\n        thm normalized_facts = conv_rule(rewrite_conv(THM_LIST(\n            cons_length)), facts);\n        ACCEPT_TAC(reduced, mp_rule(int_arith_rule(mk_imp(\n            concl(normalized_facts), goal_ccl(reduced->g))),\n            normalized_facts));\n      }\n    }\n    {\n      thm tail_bounds = specl_rule(TERM_LIST(\n          `p:cm_program`, `(remaining:int) - 1i`), induction);\n      thm head_nonnegative = specl_rule(TERM_LIST(\n          `p:cm_program`,\n          `ilength (cm_program_functions (p:cm_program)) -\n            ilength ((a0:cm_function_d) ::\n              (a1:(cm_function_d)list))`),\n          cm_function_code_count_nonnegative);\n      gnode reduced = CONV_WITH_ASMP_TAC(\n          branches[1], reduce_rewrite_conv, THM_LIST(\n            get_cm_function_prefix_def(),\n            get_cm_functions_code_size_def(),\n            get_theorem_by_name(\"ILENGTH_DEF\")));\n      if (IS_NULL(reduced->solved)) {\n        thm cons_length = apply_conversion(rewrite_conv(THM_LIST(\n            get_theorem_by_name(\"ILENGTH_DEF\"))),\n            `ilength ((a0:cm_function_d) ::\n              (a1:(cm_function_d)list))`);\n        thm tail_index = int_arith_rule(\n            `ilength (cm_program_functions (p:cm_program)) -\n               ilength (a1:(cm_function_d)list) ==\n             ilength (cm_program_functions p) -\n               (1i + ilength a1) + 1i`);\n        thm normalized_head = conv_rule(rewrite_conv(THM_LIST(\n            cons_length)), head_nonnegative);\n        thm normalized_tail = conv_rule(once_rewrite_conv(THM_LIST(\n            tail_index)), tail_bounds);\n        thm facts = conj_rule(normalized_tail, normalized_head);\n        ACCEPT_TAC(reduced, mp_rule(int_arith_rule(mk_imp(\n            concl(facts), goal_ccl(reduced->g))), facts));\n      }\n    }\n  }\n  return gnode_prove(root);\n}",
+      "dependencies": [],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_function_prefix_total_bounds",
+      "kind": "proof",
+      "span": [
+        119,
+        120
+      ],
+      "nonblank_lines": 2,
+      "text": "PROOF thm cm_function_prefix_total_bounds =\n    cm_prove_function_prefix_total_bounds();",
+      "dependencies": [
+        "cm_prove_function_prefix_total_bounds"
+      ],
+      "category": "exported_shared_proof_closure"
+    },
+    {
+      "name": "cm_add_total_ready_facts",
+      "kind": "proof",
+      "span": [
+        122,
+        147
+      ],
+      "nonblank_lines": 26,
+      "text": "PROOF static void cm_add_total_ready_facts(const thm theorem) {\n  if (is_conj(concl(theorem))) {\n    cm_add_total_ready_facts(conjunct1_rule(theorem));\n    cm_add_total_ready_facts(conjunct2_rule(theorem));\n    return;\n  }\n  term head = concl(theorem);\n  while (is_comb(head)) head = dest_comb(head).tm1;\n  bool encode = false;\n  if (is_const(head)) {\n    const char *name = dest_const(head).s;\n    encode =\n        strcmp(name, \"cm_i32_code_count\") == 0 ||\n        strcmp(name, \"cm_function_counts_representable\") == 0 ||\n        strcmp(name, \"cm_functions_counts_representable\") == 0 ||\n        strcmp(name, \"cm_stmt_wf\") == 0 ||\n        strcmp(name, \"cm_stmt_counts_representable\") == 0 ||\n        strcmp(name, \"cm_param_counts_representable\") == 0 ||\n        strcmp(name, \"cm_slots_wf\") == 0 ||\n        strcmp(name, \"cm_rep_members_safe\") == 0 ||\n        strcmp(name, \"cm_rep_stmt_temps_safe\") == 0 ||\n        strcmp(name, \"cm_concrete_function_ready\") == 0 ||\n        strcmp(name, \"cm_concrete_functions_ready\") == 0;\n  }\n  add_fact_st(encode ? eqt_intro_rule(theorem) : theorem);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 42,
+    "annotation": 0,
+    "inline_proof": 361,
+    "exported_shared_proof_closure": 96,
+    "private_case_proof_support": 42,
+    "case_proof": 403,
+    "proof_including_shared": 499
+  },
+  "annotation_entries": [],
+  "public_proof_roots": [
+    "cm_function_prefix_total_bounds"
+  ],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines; body contracts counted once; forward/header duplicates excluded. Exported proof helper wrappers and transitive same-file support counted once as shared; unused source readiness definitions/getters inventoried separately."
+}

@@ -1,0 +1,349 @@
+8 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid : Z
+  v : cm_value
+  st : cm_src_state
+  op : Z
+  lhs, rhs : cm_expr
+  ty : cm_type
+  pc, pt, pb, pk : Z
+  rest : list cm_acursor
+  spills : list cm_spill
+  saved : list cm_spill_frame
+  calls : list cm_call_sim_frame
+  NC : false = false
+  H3 : True
+  H4 :
+    (fix cm_cursors_coordinate
+       (policy : cm_lookup_policy) (p : cm_program)
+       (fid temp breakpc continuepc : Z) (cursors : list cm_acursor) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           temp =
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CABinRP op _ _ _ _ =>
+               if if op =? 0 then true else op =? 1
+               then match cursor with
+                    | CMACursor _ temp0 _ _ => temp0
+                    end
+               else
+                match cursor with
+                | CMACursor _ temp0 _ _ => temp0
+                end + 1
+           | CAAssignRP _ _ | CAIndexRP _ _ =>
+               match cursor with
+               | CMACursor _ temp0 _ _ => temp0
+               end + 1
+           | CAArgP _ _ _ _ _ _ _ scratch => scratch
+           | CACallP _ _ _ _ _ => 0
+           | _ => match cursor with
+                  | CMACursor _ temp0 _ _ => temp0
+                  end
+           end /\
+           (match match cursor with
+                  | CMACursor phase _ _ _ => phase
+                  end with
+            | CAWhileGuardP _ _ _ _ | CAWhileBodyP _ _ _ _ _ _ |
+              CACallP _ _ _ _ _ => false
+            | _ => true
+            end = true ->
+            breakpc = match cursor with
+                      | CMACursor _ _ b _ => b
+                      end /\
+            continuepc = match cursor with
+                         | CMACursor _ _ _ c => c
+                         end) /\
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CAWhileGuardP guard body start finish =>
+               finish =
+               start + cm_rvalue_code_count policy p fid guard + 1 +
+               cm_stmt_code_count policy p fid body + 1
+           | CAWhileBodyP guard body _ _ start finish =>
+               breakpc = finish /\
+               continuepc = start /\
+               finish =
+               start + cm_rvalue_code_count policy p fid guard + 1 +
+               cm_stmt_code_count policy p fid body + 1
+           | _ => True
+           end /\
+           cm_cursors_coordinate policy p
+             match
+               match cursor with
+               | CMACursor phase _ _ _ => phase
+               end
+             with
+             | CACallP caller _ _ _ _ => caller
+             | _ => fid
+             end match cursor with
+                 | CMACursor _ temp0 _ _ => temp0
+                 end match cursor with
+                     | CMACursor _ _ b _ => b
+                     end match cursor with
+                         | CMACursor _ _ _ c => c
+                         end rest
+       end) (cm_source_function_policy sp) p fid pt pb pk rest
+  H : pt <= pt
+  H0 :
+    (fix cm_cursors_spill_consistent
+       (ap : cm_annotation_policy) (limit : Z) (cursors : list cm_acursor)
+       (spills : list cm_spill) (saved : list cm_spill_frame) {struct
+        cursors} : Prop :=
+       match cursors with
+       | [] => True
+       | cursor :: rest =>
+           match match cursor with
+                 | CMACursor phase _ _ _ => phase
+                 end with
+           | CABinRP op _ _ v _ =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit /\
+               ((op = 0 \/ op = 1) \/
+                match cursor with
+                | CMACursor _ temp _ _ => temp
+                end < limit /\
+                cm_spill_holds
+                  match cursor with
+                  | CMACursor _ temp _ _ => temp
+                  end v spills)
+           | CAAssignRP v _ | CAIndexRP v _ =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end < limit /\
+               cm_spill_holds
+                 match cursor with
+                 | CMACursor _ temp _ _ => temp
+                 end v spills
+           | CAArgP _ rest0 values _ all_args base current scratch =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit /\
+               base = match cursor with
+                      | CMACursor _ temp _ _ => temp
+                      end /\
+               current = base + Zlength values /\
+               scratch = base + Zlength all_args /\
+               Zlength all_args = Zlength values + 1 + Zlength rest0 /\
+               current <= limit /\ cm_staged_spills base values spills
+           | CACallP _ _ _ _ _ => True
+           | _ =>
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit
+           end /\
+           (if
+             match
+               match cursor with
+               | CMACursor phase _ _ _ => phase
+               end
+             with
+             | CACallP _ _ _ _ _ => true
+             | _ => false
+             end
+            then
+             saved <> [] /\
+             cm_cursors_spill_consistent ap
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end rest
+               match
+                 match saved with
+                 | [] => cm_saved_nil ap
+                 | x :: _ => x
+                 end
+               with
+               | CMSpillFrame _ _ spills0 => spills0
+               end match saved with
+                   | [] => []
+                   | _ :: m => m
+                   end
+            else
+             cm_cursors_spill_consistent ap
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end rest spills saved)
+       end) ap pt rest spills saved
+  Heqb0 :
+    (if if op =? 0 then cm_truth st v else false
+     then true
+     else if op =? 1 then negb (cm_truth st v) else false) = false
+  Heqb1 : (if op =? 0 then true else op =? 1) = true
+  ============================
+  (op = 0 \/ op = 1) \/ pt < pt /\ cm_spill_holds pt v spills
+
+goal 2 is:
+ (op = 0 \/ op = 1) \/
+ pt < pt + 1 /\ cm_spill_holds pt v (cm_spill_put pt v spills)
+goal 3 is:
+ (fix cm_cursors_spill_consistent
+    (ap0 : cm_annotation_policy) (limit : Z) (cursors : list cm_acursor)
+    (spills0 : list cm_spill) (saved0 : list cm_spill_frame) {struct cursors} :
+      Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest1 =>
+        match match cursor with
+              | CMACursor phase _ _ _ => phase
+              end with
+        | CABinRP op _ _ v0 _ =>
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end <= limit /\
+            ((op = 0 \/ op = 1) \/
+             match cursor with
+             | CMACursor _ temp _ _ => temp
+             end < limit /\
+             cm_spill_holds
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end v0 spills0)
+        | CAAssignRP v0 _ | CAIndexRP v0 _ =>
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end < limit /\
+            cm_spill_holds
+              match cursor with
+              | CMACursor _ temp _ _ => temp
+              end v0 spills0
+        | CAArgP _ rest2 values0 _ all_args base current scratch =>
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end <= limit /\
+            base = match cursor with
+                   | CMACursor _ temp _ _ => temp
+                   end /\
+            current = base + Zlength values0 /\
+            scratch = base + Zlength all_args /\
+            Zlength all_args = Zlength values0 + 1 + Zlength rest2 /\
+            current <= limit /\ cm_staged_spills base values0 spills0
+        | CACallP _ _ _ _ _ => True
+        | _ => match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit
+        end /\
+        (if
+          match match cursor with
+                | CMACursor phase _ _ _ => phase
+                end with
+          | CACallP _ _ _ _ _ => true
+          | _ => false
+          end
+         then
+          saved0 <> [] /\
+          cm_cursors_spill_consistent ap0
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end rest1
+            match
+              match saved0 with
+              | [] => cm_saved_nil ap0
+              | x :: _ => x
+              end
+            with
+            | CMSpillFrame _ _ spills1 => spills1
+            end match saved0 with
+                | [] => []
+                | _ :: m => m
+                end
+         else
+          cm_cursors_spill_consistent ap0
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end rest1 spills0 saved0)
+    end) ap pt rest (cm_spill_put (pt + Zlength values) v spills) saved
+goal 4 is:
+ pt + Zlength values + 1 = pt + Zlength (v :: values)
+goal 5 is:
+ Zlength args = Zlength (v :: values) + 1 + Zlength rest0
+goal 6 is:
+ pt + Zlength values + 1 <= pt + Zlength args
+goal 7 is:
+ cm_staged_spills pt values (cm_spill_put (pt + Zlength values) v spills)
+goal 8 is:
+ (fix cm_cursors_spill_consistent
+    (ap0 : cm_annotation_policy) (limit : Z) (cursors : list cm_acursor)
+    (spills0 : list cm_spill) (saved0 : list cm_spill_frame) {struct cursors} :
+      Prop :=
+    match cursors with
+    | [] => True
+    | cursor :: rest1 =>
+        match match cursor with
+              | CMACursor phase _ _ _ => phase
+              end with
+        | CABinRP op _ _ v0 _ =>
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end <= limit /\
+            ((op = 0 \/ op = 1) \/
+             match cursor with
+             | CMACursor _ temp _ _ => temp
+             end < limit /\
+             cm_spill_holds
+               match cursor with
+               | CMACursor _ temp _ _ => temp
+               end v0 spills0)
+        | CAAssignRP v0 _ | CAIndexRP v0 _ =>
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end < limit /\
+            cm_spill_holds
+              match cursor with
+              | CMACursor _ temp _ _ => temp
+              end v0 spills0
+        | CAArgP _ rest2 values0 _ all_args base current scratch =>
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end <= limit /\
+            base = match cursor with
+                   | CMACursor _ temp _ _ => temp
+                   end /\
+            current = base + Zlength values0 /\
+            scratch = base + Zlength all_args /\
+            Zlength all_args = Zlength values0 + 1 + Zlength rest2 /\
+            current <= limit /\ cm_staged_spills base values0 spills0
+        | CACallP _ _ _ _ _ => True
+        | _ => match cursor with
+               | CMACursor _ temp _ _ => temp
+               end <= limit
+        end /\
+        (if
+          match match cursor with
+                | CMACursor phase _ _ _ => phase
+                end with
+          | CACallP _ _ _ _ _ => true
+          | _ => false
+          end
+         then
+          saved0 <> [] /\
+          cm_cursors_spill_consistent ap0
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end rest1
+            match
+              match saved0 with
+              | [] => cm_saved_nil ap0
+              | x :: _ => x
+              end
+            with
+            | CMSpillFrame _ _ spills1 => spills1
+            end match saved0 with
+                | [] => []
+                | _ :: m => m
+                end
+         else
+          cm_cursors_spill_consistent ap0
+            match cursor with
+            | CMACursor _ temp _ _ => temp
+            end rest1 spills0 saved0)
+    end) ap pt rest (cm_spill_put (pt + Zlength values) v spills) saved
+Error:
+There are pending proofs in file /Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/invariants/build/Rocq/examples/QCP_demos_human/cmc_simulation_spill_update_migration_lib.v: cm_update_v_spill_coordinate.

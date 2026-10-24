@@ -1,0 +1,180 @@
+{
+  "status": "annotation boundary reviewed; final proof pending",
+  "contracts": [
+    {
+      "function": "cm_emit_intrinsic_expr",
+      "target_contract_sha256": "af11815a435a1b7f02f78c74e1c3609900dcd9a0af02efcb0985fb596f5f38aa",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_unary_expr",
+      "target_contract_sha256": "6565beb31bd31de1faaea3cacfe736b69a09194bab483a2d75b7409bab43bd71",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_index_expr",
+      "target_contract_sha256": "b2167e42bcce36997c1d050fc65d04fb03976f4fbeeab63f8872024d79070104",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_assignment_expr",
+      "target_contract_sha256": "83693cc9219798c1bcbebedc00ce80e431c379f81791246998356f17302b16a5",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_binary_expr",
+      "target_contract_sha256": "5e4079b22433cdf60d2eb5869e155994ff12fd3ea7b0addc3cd7b9f45d608bc4",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_member_expr",
+      "target_contract_sha256": "713689aa2b257f7a39d43cd6cb3b85fb95bd31914e3ece7fc1b7c0a258c7a59f",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    },
+    {
+      "function": "cm_emit_expr",
+      "target_contract_sha256": "cdaa8adb5cf85dafae1486888a52538e5d31cebed8e5f2346f18fd1ea87f8cc1",
+      "status": "reviewed against exact source body contract",
+      "review": "All source pre/post pure facts retained; total lookup unchanged; complete owned contexts and arbitrary plan tail retained; no stronger input premise."
+    }
+  ],
+  "annotation_stage_model_declarations": [
+    {
+      "name": "cm_intrinsic_expr",
+      "kind": "Definition",
+      "span": [
+        8,
+        9
+      ],
+      "sha256": "86b44d72ad233057e1fbffa8550524e9266b9c1aa558c2d1af71a38837828d20",
+      "nonblank_lines": 2
+    },
+    {
+      "name": "cm_expr_child",
+      "kind": "Definition",
+      "span": [
+        10,
+        14
+      ],
+      "sha256": "9d0e4324505d43b9f22f27b1aca37115b73df705bd52620d9b5e65071da34a87",
+      "nonblank_lines": 5
+    },
+    {
+      "name": "cm_expr_second",
+      "kind": "Definition",
+      "span": [
+        15,
+        17
+      ],
+      "sha256": "70b53f21e700f1290c19f26e9ee61255d62fb7550d59a95d1785e60d3eea555c",
+      "nonblank_lines": 3
+    },
+    {
+      "name": "cm_optional_load",
+      "kind": "Definition",
+      "span": [
+        18,
+        19
+      ],
+      "sha256": "f2e1b28a84ef6c7c5985d4d9baa2bcf5535a13e88792802bba021797b7a90c4c",
+      "nonblank_lines": 2
+    },
+    {
+      "name": "cm_member_load_suffix",
+      "kind": "Definition",
+      "span": [
+        20,
+        23
+      ],
+      "sha256": "8b4b099e26e88189d27a8305b6ac3c210b7dcbaf7b86cd3b2329b9e21b274126",
+      "nonblank_lines": 4
+    },
+    {
+      "name": "cm_short_opcode",
+      "kind": "Definition",
+      "span": [
+        24,
+        24
+      ],
+      "sha256": "c12d0d19c161c55ea09c459b3f2cc36a6e55bd6425ddc6c139979204a7eadfda",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_short_value",
+      "kind": "Definition",
+      "span": [
+        25,
+        25
+      ],
+      "sha256": "14a7beabf7912482dc0e1b829033b4d03b64c4b3f6d5aeb11c58e9c696132d44",
+      "nonblank_lines": 1
+    },
+    {
+      "name": "cm_expr_shape",
+      "kind": "Definition",
+      "span": [
+        27,
+        27
+      ],
+      "sha256": "52ca4c5617e1106f979d223aeb9fa65f6a5f2211641a4927077c0a89de9ba68a",
+      "nonblank_lines": 1
+    }
+  ],
+  "source_to_target": [
+    "HOL int/list -> Z/list; existing lookup policy unchanged",
+    "General expression code, temporary and count models imported unchanged from verified call library",
+    "Seven original constructor-specific domains, lvalue and exact code ordering retained",
+    "All original resources and pure pre/post facts retained",
+    "All fifteen imported helper implementations previously verified; mutual recursive implementation linkage audited separately"
+  ],
+  "additional_input_restrictions": false,
+  "source_to_target_meta_equivalence_theorem": false,
+  "model_review": [
+    {
+      "name": "cm_intrinsic_expr",
+      "meaning": "Exactly the Putc/Puti/Exit constructor classifier; no widened domain",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_expr_child",
+      "meaning": "First constructor child selected only under a matching constructor condition; dummy default is not used to strengthen contracts",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_expr_second",
+      "meaning": "Second child selected only for assignment, binary and index constructors",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_optional_load",
+      "meaning": "Original expression load suffix: load exactly when lvalue=0",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_member_load_suffix",
+      "meaning": "Original member suffix specialized to arg expression type, preserving member-array and lvalue branches",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_short_opcode",
+      "meaning": "OR op=0 uses Jnz; AND op=1 uses Jz",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_short_value",
+      "meaning": "OR op=0 emits 1; AND op=1 emits 0",
+      "status": "reviewed"
+    },
+    {
+      "name": "cm_expr_shape",
+      "meaning": "Transparent equality wrapper e=shape; no axiom and no additional input premise",
+      "status": "reviewed"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+Chars 0 - 80 [Require~Export~~~SimpleC.EE.QC...] 1.236 secs (1.155u,0.072s)
+Chars 81 - 126 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.011u,0.s)
+Chars 127 - 148 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 149 - 174 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 175 - 571 [Lemma~cm_tvm_convert~st~v~ty~o...] 0. secs (0.u,0.s)
+Chars 572 - 578 [Proof.] 0. secs (0.u,0.s)
+Chars 580 - 730 [(intro~CODE;~rewrite~cm_conver...] 0.001 secs (0.001u,0.s)
+Chars 732 - 772 [(eapply~cm_tvm_char_normalize;...] 0. secs (0.u,0.s)
+Chars 773 - 777 [Qed.] 0. secs (0.u,0.s)
+Chars 778 - 1182 [Lemma~cm_tvm_typed_store~obj~p...] 0. secs (0.u,0.s)
+Chars 1183 - 1189 [Proof.] 0. secs (0.u,0.s)
+Chars 1191 - 1649 [(intros~WRAP~ADDR~CODE;~destru...] 0.003 secs (0.002u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_store/build/Rocq/examples/QCP_demos_human/cmc_target_store_code_migration_lib.v", line 23, characters 141-152:
+Error:
+In environment
+obj : tvm_object
+pc, addr, value : Z
+calls : list Z
+mem : Z -> Z
+input, output : list Z
+rest : list tvm_inst
+WRAP : tower_wrap64 value = value
+ADDR : tower_addr_validb addr = true
+CODE : cm_code_at (tvm_object_code obj) pc (cm_store_code CMCharTy ++ rest)
+Unable to unify
+ "TVMRunTask obj
+    (TVMState (pc + 1) [] calls (tower_setb mem addr (tower_u8 value)) input
+       output)" with
+ "TVMRunTask obj
+    (TVMState (pc + 1) [] calls (tower_setb mem addr value) input output)".
+

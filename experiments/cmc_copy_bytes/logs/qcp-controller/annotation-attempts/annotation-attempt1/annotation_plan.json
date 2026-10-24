@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "status": "ready",
+  "key_points": [
+    {
+      "id": "copy-loop-head",
+      "location": "cmc_copy_bytes: while head before index < length",
+      "purpose": "loop-state",
+      "c_facts": [
+        "source, length, data, capacity and cursor equal their @pre values",
+        "0 < length and Zlength(bytes) = length; the zero-length branch returned",
+        "source != 0, obtained from cmc_uint8_buffer_nonnull(source,bytes), Zlength(bytes)=length and positive length",
+        "0 <= index <= length",
+        "0 <= cursor and cursor + length <= capacity <= 2147483647",
+        "the guard index < length bounds the source read and destination cursor + index write; index + 1 and cursor + index cannot overflow",
+        "the builtin full-array read binds local byte to Znth(index, bytes, 0)"
+      ],
+      "resources": [
+        "UCharArray::full(source, length, bytes), preserved exactly",
+        "UCharArray::seg(data, 0, cursor + index, app(prefix, sublist(0,index,bytes)))",
+        "UCharArray::undef_seg(data, cursor + index, capacity)",
+        "live parameter and index local stores retained by the annotation bridges and loop variable"
+      ],
+      "mathematical_state": "The original destination prefix is unchanged, followed by exactly the first index bytes of the immutable source; the remaining destination suffix is uninitialized. At index = 0 the copied list is empty; extending by source[index] gives the next prefix; at index = length the source prefix is all bytes and yields the exact postcondition.",
+      "internal_predicates": []
+    }
+  ],
+  "internal_predicates": [],
+  "vc_comparisons": []
+}

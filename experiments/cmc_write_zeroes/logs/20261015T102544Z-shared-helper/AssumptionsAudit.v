@@ -1,0 +1,2 @@
+Require Import cmc_write_zeroes_migration_lib.
+Print Assumptions zeros_snoc__zero_step.

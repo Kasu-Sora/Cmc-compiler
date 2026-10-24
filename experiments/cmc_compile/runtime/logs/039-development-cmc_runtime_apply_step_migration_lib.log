@@ -1,0 +1,116 @@
+Chars 0 - 82 [Require~Export~~~SimpleC.EE.QC...] 1.253 secs (1.187u,0.065s)
+Chars 83 - 128 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.01u,0.s)
+Chars 129 - 150 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 151 - 176 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 177 - 923 [Lemma~cm_v_runtime_step~sp~ap~...] 0. secs (0.u,0.s)
+Chars 924 - 930 [Proof.] 0. secs (0.u,0.s)
+Chars 932 - 992 [(intros~WF~CUR~F~B~COORD~S~R;~...] 0. secs (0.u,0.s)
+Chars 994 - 1094 [(rewrite~CUR~in~B;~cbn[cm_curs...] 0. secs (0.u,0.s)
+Chars 1096 - 1261 [(unfold~cm_annotation_child_re...] 0. secs (0.u,0.s)
+Chars 1263 - 1464 [(destruct~phase;~~~cbn[cm_fram...] 0.095 secs (0.09u,0.002s)
+Chars 1466 - 1496 [all:~(try~(solve~[~exact~BEFOR...] 0. secs (0.u,0.s)
+2 goals
+  
+  sp : cm_source_lookup_policy
+  ap : cm_annotation_policy
+  p : cm_program
+  fid, callee : Z
+  rest0 : list cm_expr
+  values : list cm_value
+  ret : cm_type
+  args : list cm_expr
+  pc, index, temp, owner, ob, oc : Z
+  rest : list cm_acursor
+  v : cm_value
+  st : cm_src_state
+  ann : cm_annotation
+  WF : cm_typed_program (cm_source_function_policy sp) p
+  Heql : rest0 = []
+  CUR :
+    cm_ann_cursors ann =
+    CMACursor (CAArgP callee [] values ret args pc index temp) owner ob oc
+    :: rest
+  bound4 : 0 <= fid
+  bound6 : fid < Zlength (cm_program_functions p)
+  bound : 0 <= pc
+  bound1 : 0 <= index
+  bound0 : 0 <= temp
+  bound2 :
+    index <
+    cm_temp_slots
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))
+  bound3 : index + 1 + Zlength [] = temp
+  bound5 :
+    temp + cm_adepth (cm_args_apair []) <=
+    cm_temp_slots
+      (cm_function_at (cm_source_function_policy sp) fid
+         (cm_program_functions p))
+  BT :
+    cm_cursors_budget (cm_source_function_policy sp) p
+      (cm_frame_parent_fid (CMArgK callee [] values ret) fid) rest
+  TEMP : cm_ann_temp ann = temp
+  COORD :
+    (cm_phase_control_regular
+       (CAArgP callee [] values ret args pc index temp) = true ->
+     cm_ann_break ann =
+     cm_cursor_break
+       (CMACursor (CAArgP callee [] values ret args pc index temp) owner ob
+          oc) /\
+     cm_ann_continue ann =
+     cm_cursor_continue
+       (CMACursor (CAArgP callee [] values ret args pc index temp) owner ob
+          oc)) /\
+    cm_phase_code_ready_at (cm_source_function_policy sp) p fid
+      (cm_ann_break ann) (cm_ann_continue ann)
+      (CAArgP callee [] values ret args pc index temp) /\
+    cm_cursors_coordinate (cm_source_function_policy sp) p
+      (cm_phase_next_fid fid (CAArgP callee [] values ret args pc index temp))
+      owner
+      (cm_cursor_break
+         (CMACursor (CAArgP callee [] values ret args pc index temp) owner ob
+            oc))
+      (cm_cursor_continue
+         (CMACursor (CAArgP callee [] values ret args pc index temp) owner ob
+            oc)) rest
+  Heqb : cm_call_ok sp p callee (rev (v :: values)) st = true
+  Heqb0 : (cm_call_depth (cm_cursor_frames rest) <? 65536) = true
+  S :
+    cm_task_succeeds sp
+      (CMSTask p callee
+         (cm_function_body (cm_source_function_at sp callee p))
+         (cm_enter_call sp p callee (rev (v :: values)) st)
+         (CMCallK fid (cm_state_env st) (cm_state_fp st)
+            (cm_state_regions st) ret :: cm_cursor_frames rest))
+  R : cm_runtime_core (cm_source_function_policy sp) ap p fid st ann
+  BEFORE : cm_regions_before (cm_state_regions st) (cm_state_nextgen st)
+  ============================
+  cm_runtime_core (cm_source_function_policy sp) ap p callee
+    (cm_enter_call sp p callee (rev (v :: values)) st)
+    (cm_ann_enter_call sp p fid callee st ret
+       (cm_ann_pc ann +
+        Zlength
+          (cm_temp_store_code (cm_source_function_policy sp) p fid index) +
+        Zlength
+          (cm_emit_args_reload (cm_source_function_policy sp) p fid pc args) +
+        1)
+       (cm_cursor_temp
+          (CMACursor (CAArgP callee [] values ret args pc index temp) owner
+             ob oc))
+       (cm_cursor_break
+          (CMACursor (CAArgP callee [] values ret args pc index temp) owner
+             ob oc))
+       (cm_cursor_continue
+          (CMACursor (CAArgP callee [] values ret args pc index temp) owner
+             ob oc)) rest (cm_spill_put index v (cm_ann_spills ann))
+       (cm_ann_saved ann) (cm_ann_calls ann))
+
+goal 2 is:
+ cm_runtime_core (cm_source_function_policy sp) ap p fid st
+   (cm_ann_pop ap (cm_ann_pc ann) ann)
+Chars 1498 - 1503 [Show.] 0. secs (0.u,0.s)
+Chars 1504 - 1508 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/runtime/build/Rocq/examples/QCP_demos_human/cmc_runtime_apply_step_migration_lib.v", line 20, characters 0-4:
+Error:  (in proof cm_v_runtime_step): Attempt to save an incomplete proof
+(there are remaining open goals).
+

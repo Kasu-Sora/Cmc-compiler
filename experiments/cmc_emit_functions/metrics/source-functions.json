@@ -1,0 +1,69 @@
+[
+  {
+    "name": "cmc_emit_functions",
+    "prototype": false,
+    "source_span": [
+      34,
+      246
+    ],
+    "specification": [
+      [
+        37,
+        40
+      ],
+      [
+        41,
+        58
+      ],
+      [
+        59,
+        76
+      ]
+    ],
+    "annotation": [
+      [
+        166,
+        168
+      ],
+      [
+        169,
+        172
+      ]
+    ],
+    "inline_proof": [
+      [
+        79,
+        100
+      ],
+      [
+        104,
+        134
+      ],
+      [
+        137,
+        165
+      ],
+      [
+        174,
+        179
+      ],
+      [
+        182,
+        191
+      ],
+      [
+        193,
+        209
+      ],
+      [
+        211,
+        224
+      ],
+      [
+        227,
+        245
+      ]
+    ],
+    "runtime": "void cmc_emit_functions(\n    struct cm_program *program, struct cm_function *fn,\n    int fid, int function_pc, struct cm_emitter *emitter)\n{\n  if (fn == 0) {\n    return;\n  };\n  int head_count = cmc_function_code_count(program, fid, fn);\n  cmc_emit_function(program, fn, fid, function_pc, emitter);\n  struct cm_function *next_fn;\n  next_fn = fn->next;\n  int next_pc = function_pc + head_count;\n  cmc_emit_functions(program, next_fn, fid + 1, next_pc, emitter);\n}\n"
+  }
+]

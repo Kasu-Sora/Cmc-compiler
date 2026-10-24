@@ -1,0 +1,25 @@
+{
+  "status": "kernel_checked_and_canonically_published",
+  "complete_original_invariants": 17,
+  "total_original_invariants": 18,
+  "top_level_verified": false,
+  "new_actual_steps": [
+    "C: return and fallthrough restore caller",
+    "C: complete control dispatch derived from the original seventeen support invariants"
+  ],
+  "new_support": [
+    "actual return epilogue and return/fallthrough instruction sequences",
+    "restore frame pointer without changing live memory/call stack/saved temporaries",
+    "derive call cursor shape and return type from runtime and type invariants"
+  ],
+  "local_premises": "cm_code_support_c_target_step uses original code_support_invariants plus the current target simulation and original semantic WF. No extra C preconditions.",
+  "remaining": [
+    "Start/prelude",
+    "empty/final argument call entry",
+    "remaining R/V/S whole-dispatch wiring",
+    "full target-step induction",
+    "original preservation",
+    "success bridge",
+    "top QCP validation"
+  ]
+}

@@ -1,0 +1,53 @@
+Chars 0 - 83 [Require~Export~~~SimpleC.EE.QC...] 1.174 secs (1.076u,0.075s)
+Chars 84 - 119 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 120 - 165 [From~Coq~Require~Import~ZArith...] 0.011 secs (0.011u,0.s)
+Chars 166 - 187 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 188 - 213 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 214 - 1103 [Lemma~cm_tvm_parameter_sequenc...] 0.001 secs (0.u,0.s)
+Chars 1104 - 1110 [Proof.] 0. secs (0.u,0.s)
+Chars 1112 - 1244 [(revert~values~index~st~vm~hel...] 0. secs (0.u,0.s)
+Chars 1246 - 1247 [-] 0. secs (0.u,0.s)
+Chars 1248 - 1291 [(destruct~values;~cbn~in~LEN;~...] 0. secs (0.u,0.s)
+Chars 1292 - 1435 [(exists~vm;~cbn[cm_emit_param_...] 0. secs (0.u,0.s)
+Chars 1437 - 1438 [-] 0. secs (0.u,0.s)
+Chars 1439 - 1517 [(destruct~values~as~[|~v~value...] 0. secs (0.u,0.s)
+Chars 1521 - 1550 [(destruct~READY~as~[HEAD~TAIL]).] 0. secs (0.u,0.s)
+Chars 1551 - 1584 [(cbn[cm_emit_param_stores]~in~...] 0. secs (0.u,0.s)
+Chars 1588 - 1616 [(rewrite~<-~app_assoc~in~CODE).] 0. secs (0.u,0.s)
+Chars 1620 - 1727 [(assert~~~(SIM0~:~~~~cm_machin...] 0. secs (0.u,0.s)
+Chars 1731 - 1732 [{] 0. secs (0.u,0.s)
+Chars 1733 - 1785 [(cbn[rev]~in~SIM;~rewrite~<-~a...] 0. secs (0.u,0.s)
+Chars 1786 - 1787 [}] 0. secs (0.u,0.s)
+Chars 1791 - 2084 [(destruct~~~(IH~values~(index~...] 0.003 secs (0.001u,0.s)
+Chars 2088 - 2144 [(pose~proof~(cm_code_at_append...] 0. secs (0.u,0.s)
+Chars 2148 - 2169 [(rewrite~<-~PC~in~LAST).] 0. secs (0.u,0.s)
+Chars 2173 - 2240 [(set~(after~:=~cm_store_params...] 0. secs (0.u,0.s)
+Chars 2244 - 2346 [(destruct~~~(cm_parameter_read...] 0. secs (0.u,0.s)
+Chars 2350 - 2427 [(change~~~~(cm_store_ok~(cm_sl...] 0. secs (0.u,0.s)
+Chars 2431 - 2584 [(change~~~~(cm_value_number~af...] 0. secs (0.u,0.s)
+Chars 2588 - 2638 [(destruct~mid~as~[pc~stack~vca...] 0. secs (0.u,0.s)
+Chars 2642 - 2688 [(pose~proof~MSIM~as~[_~[_~[_~[...] 0. secs (0.u,0.s)
+Chars 2689 - 2789 [(unfold~cm_operand_suffix_sim~...] 0. secs (0.u,0.s)
+Chars 2793 - 3199 [(pose~proof~~~(cm_parameter_st...] 0.001 secs (0.u,0.s)
+Chars 3203 - 3217 [(eexists;~split).] 0. secs (0.u,0.s)
+Chars 3221 - 3222 [+] 0. secs (0.u,0.s)
+Chars 3223 - 3306 [(cbn[cm_emit_param_stores];~re...] 0. secs (0.u,0.s)
+Chars 3310 - 3311 [+] 0. secs (0.u,0.s)
+(pc +
+ (Zlength (cm_char_normalize_code (cm_slot_ty s)) +
+  Zlength
+    (cm_fp_relative_address_code
+       (cm_param_offset (cm_source_function_policy sp) p fid index) ++
+     cm_store_code (cm_slot_ty s))) =
+ tvm_pc vm +
+ Zlength
+   (cm_emit_param_stores (cm_source_function_policy sp) p fid 
+      (index + 1) params ++
+    cm_char_normalize_code (cm_slot_ty s) ++
+    cm_fp_relative_address_code
+      (cm_param_offset (cm_source_function_policy sp) p fid index) ++
+    cm_store_code (cm_slot_ty s)))
+Chars 3312 - 3432 [(split;~~~[~cbn[tvm_pc]~in~*;~...] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_entry/build/Rocq/examples/QCP_demos_human/cmc_target_parameter_sequence_migration_lib.v", line 37, characters 5-125:
+Error: Tactic failure.
+

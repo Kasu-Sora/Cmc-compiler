@@ -1,0 +1,61 @@
+{
+  "source_sha256": "2248473163e4402d2dfb9d782a518c4cb924f14b1b820ef3b1ab0198350a934f",
+  "function_counts": [
+    {
+      "function": "cmc_emit_functions",
+      "source_span": [
+        34,
+        246
+      ],
+      "specification": 40,
+      "annotation": 7,
+      "inline_proof": 147
+    }
+  ],
+  "source_top_level_proof_helpers": [
+    {
+      "name": "cm_add_ready_facts",
+      "kind": "proof",
+      "span": [
+        7,
+        32
+      ],
+      "nonblank_lines": 26,
+      "text": "PROOF static void cm_add_ready_facts(const thm theorem) {\n  if (is_conj(concl(theorem))) {\n    cm_add_ready_facts(conjunct1_rule(theorem));\n    cm_add_ready_facts(conjunct2_rule(theorem));\n    return;\n  }\n  term head = concl(theorem);\n  while (is_comb(head)) {\n    head = dest_comb(head).tm1;\n  }\n  bool encode = false;\n  if (is_const(head)) {\n    const char *name = dest_const(head).s;\n    encode =\n        strcmp(name, \"cm_i32_code_count\") == 0 ||\n        strcmp(name, \"cm_function_counts_representable\") == 0 ||\n        strcmp(name, \"cm_stmt_wf\") == 0 ||\n        strcmp(name, \"cm_stmt_counts_representable\") == 0 ||\n        strcmp(name, \"cm_param_counts_representable\") == 0 ||\n        strcmp(name, \"cm_slots_wf\") == 0 ||\n        strcmp(name, \"cm_rep_members_safe\") == 0 ||\n        strcmp(name, \"cm_rep_stmt_temps_safe\") == 0 ||\n        strcmp(name, \"cm_concrete_functions_ready\") == 0;\n  }\n  add_fact_st(encode ? eqt_intro_rule(theorem) : theorem);\n}",
+      "dependencies": [],
+      "category": "private_case_proof_support"
+    }
+  ],
+  "totals": {
+    "specification": 40,
+    "annotation": 7,
+    "inline_proof": 147,
+    "private_case_proof_support": 26,
+    "case_proof": 173,
+    "proof_including_shared": 173
+  },
+  "annotation_entries": [
+    {
+      "function": "cmc_emit_functions",
+      "kind": "where",
+      "span": [
+        166,
+        168
+      ],
+      "nonblank_lines": 3
+    },
+    {
+      "function": "cmc_emit_functions",
+      "kind": "where",
+      "span": [
+        169,
+        172
+      ],
+      "nonblank_lines": 4
+    }
+  ],
+  "public_proof_roots": [],
+  "public_wrappers_not_called_by_runtime_proof": [],
+  "counting_note": "Nonblank non-comment physical lines deduplicated per function/category; body contracts counted once; forward/header duplicates excluded. Same-file private proof support and source model definitions are classified separately; header duplicate contracts excluded.",
+  "public_linkage_note": "Static source proof helpers used only by this case are counted in case proof; externally linked theorem constants, if any, count as shared support."
+}

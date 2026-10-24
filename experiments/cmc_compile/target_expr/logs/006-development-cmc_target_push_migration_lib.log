@@ -1,0 +1,80 @@
+Chars 0 - 78 [Require~Export~SimpleC.EE.QCP_...] 1.416 secs (1.315u,0.098s)
+Chars 79 - 124 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.012u,0.s)
+Chars 125 - 160 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 161 - 182 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 183 - 208 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 209 - 628 [Lemma~cm_target_push_sim~sp~p~...] 0. secs (0.u,0.s)
+Chars 629 - 635 [Proof.] 0. secs (0.u,0.s)
+Chars 637 - 674 [(intros~[vm~[->~[PC~SIM]]]~COD...] 0. secs (0.u,0.s)
+Chars 676 - 749 [(destruct~SIM~as~[MEM~[PROV~[F...] 0. secs (0.u,0.s)
+Chars 751 - 785 [(change~(tvm_stack~vm~=~[])~in...] 0. secs (0.u,0.s)
+Chars 787 - 885 [(pose~proof~~~(cm_tvm_push_ste...] 0. secs (0.u,0.s)
+Chars 887 - 954 [(assert~(CAP~:~Zlength~(tvm_st...] 0.002 secs (0.u,0.s)
+Chars 956 - 1037 [(specialize~(STEP~ltac:((rewri...] 0. secs (0.u,0.s)
+Chars 1039 - 1157 [exists~~~~(tvm_next_state~vm~(...] 0. secs (0.u,0.s)
+Chars 1159 - 1293 [(split;~~~[~reflexivity~~~|~sp...] 0. secs (0.u,0.s)
+Chars 1295 - 1545 [(unfold~cm_machine_state_sim,~...] 0. secs (0.u,0.s)
+Chars 1547 - 1616 [(repeat~split;~try~assumption;...] 0. secs (0.u,0.s)
+4 goals
+  
+  sp : cm_source_lookup_policy
+  p : cm_program
+  fid : Z
+  st : cm_src_state
+  ann : cm_annotation
+  imm : Z
+  v : cm_value
+  rest : list tvm_inst
+  vm : tvm_state
+  PC : tvm_pc vm = cm_ann_pc ann
+  MEM : cm_initialized_bytes_sim st (tvm_mem vm)
+  PROV : cm_stored_provenance_sim st (tvm_mem vm)
+  FP : tower_getw (tvm_mem vm) 8 = cm_state_fp st
+  CALL : cm_call_frames_sim (tvm_mem vm) (cm_ann_calls ann) (tvm_calls vm)
+  SPILLS :
+    cm_spill_frames_sim (cm_source_function_policy sp) p st 
+      (tvm_mem vm) (cm_active_spill_frames fid st ann)
+  INPUT : tvm_input vm = cm_state_input st
+  OUTPUT : tvm_output vm = cm_state_output st
+  STACK : tvm_stack vm = []
+  CODE :
+    cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+      (cm_ann_pc ann) (TVMInst TVMPushOp imm :: rest)
+  VALUE : cm_value_number st v = tower_wrap64 imm
+  STEP :
+    tvm_step
+      (TVMRunTask (cm_compile_model (cm_source_function_policy sp) p) vm) =
+    TVMRunTask (cm_compile_model (cm_source_function_policy sp) p)
+      (tvm_next_state vm (tower_wrap64 imm :: tvm_stack vm) 
+         (tvm_calls vm) (tvm_mem vm) (tvm_input vm) 
+         (tvm_output vm))
+  CAP : Zlength (tvm_stack vm) < 65536
+  addr : Z
+  H : cm_state_tagged st addr = true
+  H0 : cm_live_address st addr
+  ============================
+  cm_state_init st addr = true
+
+goal 2 is:
+ tower_getw (tvm_mem vm) addr = cm_value_number st (cm_state_tags st addr)
+goal 3 is:
+ cm_spill_list_sim (cm_source_function_policy sp) p st 
+   (tvm_mem vm)
+   (cm_spill_frame_fid
+      (CMSpillFrame fid (cm_state_fp st)
+         (cm_ann_spills (cm_ann_linear (cm_push_code imm) ann))))
+   (cm_spill_frame_fp
+      (CMSpillFrame fid (cm_state_fp st)
+         (cm_ann_spills (cm_ann_linear (cm_push_code imm) ann))))
+   (cm_spill_frame_spills
+      (CMSpillFrame fid (cm_state_fp st)
+         (cm_ann_spills (cm_ann_linear (cm_push_code imm) ann))))
+goal 4 is:
+ cm_spill_frames_sim (cm_source_function_policy sp) p st 
+   (tvm_mem vm) (cm_ann_saved (cm_ann_linear (cm_push_code imm) ann))
+Chars 1617 - 1622 [Show.] 0. secs (0.u,0.s)
+Chars 1623 - 1627 [Qed.] 0. secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/target_expr/build/Rocq/examples/QCP_demos_human/cmc_target_push_migration_lib.v", line 24, characters 0-4:
+Error:  (in proof cm_target_push_sim): Attempt to save an incomplete proof
+(there are remaining open goals).
+

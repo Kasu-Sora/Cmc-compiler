@@ -1,0 +1,92 @@
+Chars 0 - 77 [Require~Export~SimpleC.EE.QCP_...] 1.381 secs (1.298u,0.067s)
+Chars 78 - 123 [From~Coq~Require~Import~ZArith...] 0.012 secs (0.011u,0.s)
+Chars 124 - 159 [From~AUXLib~Require~Import~Lis...] 0. secs (0.u,0.s)
+Chars 160 - 181 [Import~ListNotations.] 0. secs (0.u,0.s)
+Chars 182 - 207 [#[local]~Open~Scope~Z_scope.] 0. secs (0.u,0.s)
+Chars 208 - 743 [Ltac~~cm_code_expr_reduce~:=~~...] 0. secs (0.u,0.s)
+Chars 744 - 1012 [Lemma~cm_r_putc_layout_step~sp...] 0. secs (0.u,0.s)
+Chars 1013 - 1019 [Proof.] 0. secs (0.u,0.s)
+Chars 1021 - 1102 [(intros~[CODE~SAVED];~cm_code_...] 0. secs (0.u,0.s)
+Chars 1104 - 1236 [(match~type~of~CODE~with~~|~cm...] 0. secs (0.u,0.s)
+Chars 1238 - 1360 [(cbn[cm_emit_rvalue~cm_expr_co...] 0. secs (0.u,0.s)
+Chars 1362 - 1389 [(repeat~rewrite~<-~app_assoc).] 0. secs (0.u,0.s)
+Chars 1391 - 1401 [(cbn[orb]).] 0. secs (0.u,0.s)
+Chars 1403 - 1468 [(change~(Zlength~[TVMInst~TVMD...] 0. secs (0.u,0.s)
+Chars 1470 - 1497 [(repeat~rewrite~Z.add_assoc).] 0. secs (0.u,0.s)
+Chars 1499 - 1511 [reflexivity.] 0.001 secs (0.u,0.s)
+File "/Users/nizitong/Documents/ChatGPT/Cmc/experiments/cmc_compile/code_layout/build/Rocq/examples/QCP_demos_human/cmc_code_expr_struct_migration_lib.v", line 16, characters 1-12:
+Error:
+In environment
+sp : cm_source_lookup_policy
+ap : cm_annotation_policy
+p : cm_program
+fid : Z
+arg : cm_expr
+ty : cm_type
+st : cm_src_state
+ks : list cm_frame
+ann : cm_annotation
+CODE :
+  cm_code_at (cm_model_code (cm_source_function_policy sp) p)
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end
+    (cm_emit_rvalue (cm_source_function_policy sp) p fid
+       match ann with
+       | CMAnnotation pc _ _ _ _ _ _ _ => pc
+       end match ann with
+           | CMAnnotation _ temp _ _ _ _ _ _ => temp
+           end (CMPutcE arg ty) ++
+     cm_cursor_code sp p fid
+       (match ann with
+        | CMAnnotation pc _ _ _ _ _ _ _ => pc
+        end +
+        cm_rvalue_code_count (cm_source_function_policy sp) p fid
+          (CMPutcE arg ty))
+       match ann with
+       | CMAnnotation _ temp _ _ _ _ _ _ => temp
+       end false match ann with
+                 | CMAnnotation _ _ _ _ cs _ _ _ => cs
+                 end)
+SAVED :
+  cm_saved_layout sp ap p (cm_model_code (cm_source_function_policy sp) p)
+    fid match ann with
+        | CMAnnotation _ _ _ _ cs _ _ _ => cs
+        end match ann with
+            | CMAnnotation _ _ _ _ _ _ _ cs => cs
+            end
+Unable to unify
+ "cm_emit_rvalue (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end arg ++
+  [TVMInst TVMDupOp 0; TVMInst TVMPutcOp 0] ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end + cm_rvalue_code_count (cm_source_function_policy sp) p fid arg + 2)
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end false match ann with
+              | CMAnnotation _ _ _ _ cs _ _ _ => cs
+              end" with
+ "cm_emit_rvalue (cm_source_function_policy sp) p fid
+    match ann with
+    | CMAnnotation pc _ _ _ _ _ _ _ => pc
+    end match ann with
+        | CMAnnotation _ temp _ _ _ _ _ _ => temp
+        end (CMPutcE arg ty) ++
+  cm_cursor_code sp p fid
+    (match ann with
+     | CMAnnotation pc _ _ _ _ _ _ _ => pc
+     end +
+     cm_rcount_of
+       (cm_expr_code_counts (cm_source_function_policy sp) p fid arg) + 2)
+    match ann with
+    | CMAnnotation _ temp _ _ _ _ _ _ => temp
+    end false match ann with
+              | CMAnnotation _ _ _ _ cs _ _ _ => cs
+              end".
+

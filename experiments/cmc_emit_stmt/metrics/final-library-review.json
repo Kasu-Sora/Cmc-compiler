@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "manual_sha256": "1f98f2711c872ee0ebdaceda64c11d1413f17b460379bfdfd435da854db6dbfa",
+  "lib_sha256": "3b726a97d983e2e2da33f66d6bb05693a0a022f911701a08637ef81f5d8984f0",
+  "new_library_declarations": [
+    {
+      "kind": "From",
+      "name": "Coq",
+      "ending": null
+    },
+    {
+      "kind": "From",
+      "name": "AUXLib",
+      "ending": null
+    },
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "Require",
+      "name": "Export",
+      "ending": null
+    },
+    {
+      "kind": "Import",
+      "name": "ListNotations",
+      "ending": null
+    },
+    {
+      "kind": "Open",
+      "name": "Scope",
+      "ending": null
+    },
+    {
+      "kind": "Fixpoint",
+      "name": "cm_emit_stmt",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_stmt_expr",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_stmt_first",
+      "ending": null
+    },
+    {
+      "kind": "Definition",
+      "name": "cm_stmt_second",
+      "ending": null
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_expr_rvalue_length__stmt_capacity",
+      "ending": "Qed"
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_emit_stmt_length__stmt_capacity",
+      "ending": "Qed"
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_stmt_count_nonnegative__stmt_capacity",
+      "ending": "Qed"
+    },
+    {
+      "kind": "Lemma",
+      "name": "cm_rvalue_count_nonnegative__stmt_capacity",
+      "ending": "Qed"
+    }
+  ],
+  "no_new_manual_or_library_admitted_axiom_parameter": true,
+  "reused_dependencies_unchanged": true,
+  "prior_helper_function_proofs_imported": false,
+  "new_helper_review": {
+    "cm_expr_rvalue_length__stmt_capacity": "A specialization of the previously proved paired expression length theorem to rvalue selection 0; no additional premise.",
+    "cm_emit_stmt_length__stmt_capacity": "Structural induction over all statement constructors; ordered append lengths, prior expression/primitive lengths, and recursive IH at updated PCs prove exact equality to the original count model.",
+    "cm_stmt_count_nonnegative__stmt_capacity": "Derived from the new statement length equality and Zlength_nonneg, not assumed from a strengthened precondition.",
+    "cm_rvalue_count_nonnegative__stmt_capacity": "Derived from the reused expression length theorem and Zlength_nonneg; no additional assumption."
+  },
+  "model_review": "Final four model/projection declarations match the constructor-by-constructor reviewed annotation-stage bytes.",
+  "manual_review": "Reviewed arithmetic, capacity, AST open/close, call facts and plan concatenation proof patterns. All 416 final proof regions end in Qed, with 120 original top-level obligations and 296 splits. Controller verifies unchanged statements, routes, helper/import safety and full goal-check; no unused Abort blocks.",
+  "support_mapping": {
+    "statement representation open/close": "Existing cm_stmt_rep_node and cm_stmt_node/payload, explicit spatial resource proofs.",
+    "well-formedness and conjunct extraction": "Constructor elimination, existing cm_stmt_wf/count/temporary-slot definitions, conjunction tactics.",
+    "statement code shape": "Transparent cm_emit_stmt constructor equations and append associativity.",
+    "expression and statement code lengths": "Four proved library helpers, reusing paired expression and primitive length theorems.",
+    "call result retargeting": "Count-return equality annotations with explicit preservation of the local cell.",
+    "i32 fragment and conversion bounds": "Existing i32/count semantics, exact code lengths and nonnegativity, checked lia/nia/int_auto proofs."
+  },
+  "scope": "Two runtime BODY contracts and necessary statement support; no new TVM execution, termination, linking or compilation-preservation theorem."
+}
